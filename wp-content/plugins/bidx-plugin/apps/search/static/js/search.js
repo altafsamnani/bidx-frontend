@@ -381,7 +381,8 @@
             {
 
                 facetValues    = bidx.utils.getValue( facetItems, "facetValues" );
-                facetLabel     = bidx.i18n.i( facetItems.name, appName );
+
+                facetLabel     = facetItems.name.replace(/facet_/g,'').toLowerCase(); //removing fact_industry
 
                 if ( !$.isEmptyObject(facetValues) )
                 {
@@ -394,9 +395,9 @@
                     $.each( facetValues , function ( idx, item )
                     {
 
-                        if ( facetItems.name !== 'facet_entityType' )
+                        if ( facetLabel !== 'entitytype' ) //facet_entityType to entitytype through facetLabel
                         {
-                            item.name    = bidx.data.i( item.name, facetLabel.toLowerCase() );  // ict.services in industry
+                            item.name    = bidx.data.i( item.name, facetLabel );  // ict.services in industry
                         }
                         else
                         {
@@ -761,6 +762,8 @@
         ,   pagerOptions    = {}
         ,   fullName
         ,   nextPageStart
+        ,   numFound
+        ,   pageNumber
         ,   criteria        = options.criteria
         ,   data            = options.response
         ,   $list           = $views.find( ".search-list" )
@@ -783,6 +786,24 @@
             ,   totalPages:             Math.ceil( data.numFound / tempLimit )
             ,   numberOfPages:          CONSTANTS.NUMBER_OF_PAGES_IN_PAGINATOR
             ,   useBootstrapTooltip:    true
+            ,   tooltipTitles:          function (type, page, current)
+                                        {
+                                            switch (type)
+                                            {
+                                                case "first":
+                                                    return bidx.i18n.i( 'toolTipFirstPage' );
+                                                case "prev":
+                                                    return bidx.i18n.i( 'toolTipPreviousPage' );
+                                                case "next":
+                                                    return bidx.i18n.i( 'toolTipNextPage' );
+                                                case "last":
+                                                    return bidx.i18n.i( 'toolTipLastPage' );
+                                                case "page":
+                                                    pageNumber  =   bidx.i18n.i( 'toolTipForPage' )
+                                                                    .replace(/%num%/g, page);
+                                                    return pageNumber;
+                                            }
+                                        }
 
             ,   itemContainerClass:     function ( type, page, current )
                 {
@@ -825,10 +846,13 @@
 
             tempLimit = data.docs.length;
 
-            bidx.utils.log("pagerOptions", pagerOptions);
-            if( data.numFound ) {
+            if( data.numFound )
+            {
+                numFound    =   bidx.i18n.i( "paginationTotal", appName );
 
-                $searchPagerContainer.find('.pagerTotal').empty().append('<h5>' + data.numFound + ' results:</h5>');
+                numFound    =   numFound.replace(/%num%/g, data.numFound);
+
+                $searchPagerContainer.find('.pagerTotal').empty().append('<h5>' + numFound + ':</h5>');
             }
 
             $searchPager.bootstrapPaginator( pagerOptions );

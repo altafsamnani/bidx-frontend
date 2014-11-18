@@ -17,7 +17,8 @@ class SessionService extends APIBridge {
 	 * Constructs the API bridge.
 	 * Needed for operational logging.
 	 */
-	public function __construct() {
+	public function __construct()
+    {
 		parent :: __construct();
 	}
 
@@ -27,12 +28,33 @@ class SessionService extends APIBridge {
 	 * In case of no API service check, the data in the Session profile will be very limited.
 	 * @return boolean if user is logged in
 	 */
-	function isLoggedIn(  ) {
-		
+	function isLoggedIn(  )
+    {
+
 		$this->sessionData = $this->callBidxAPI($this->sessionUrl, array(), 'GET');
+
 		return $this->sessionData;
-		
+
 	}
+
+    /**
+     * Checks if the user is having Frontend and session set
+     * @param boolean $serviceCheck define if a service check is needed or a simple check on the API cookie is sufficient.
+     * In case of no API service check, the data in the Session profile will be very limited.
+     * @return boolean if user is having Frontend and session set
+     */
+    function isFrontendSessionSet(  )
+    {
+
+        $sessionData = BidxCommon::$staticSession;
+
+        if ($sessionData->authenticated === "true")
+        {
+                return true;
+        }
+
+        return false;
+    }
 
     /**
 	 * Checks if the user is having particular profile ex Investor, Entrprepneur,
@@ -40,7 +62,7 @@ class SessionService extends APIBridge {
 	 * @return boolean if having profile or not
 	 */
     function isHavingProfile( $type ) {
-    	
+
         $sessionData = BidxCommon::$staticSession;
         $entities = (isset($sessionData->data->entities)) ? $sessionData->data->entities : NULL;
         if ($entities) {
@@ -51,7 +73,7 @@ class SessionService extends APIBridge {
             }
         }
         return false;
-        
+
     }
 
     /**
@@ -60,7 +82,7 @@ class SessionService extends APIBridge {
      * @return entity object if having the profilem or boolean if not
      */
     function returnEntity ( $type ) {
-    	
+
         $sessionData = BidxCommon::$staticSession;
         $entities = (isset($sessionData->data->entities)) ? $sessionData->data->entities : NULL;
         if ($entities) {
@@ -71,7 +93,7 @@ class SessionService extends APIBridge {
             }
         }
         return false;
-        
+
     }
 
 
@@ -97,7 +119,7 @@ class SessionService extends APIBridge {
 		    }
         }
         return $result;
-        
+
     }
 
     /**
@@ -118,11 +140,11 @@ class SessionService extends APIBridge {
     }
 
     /**
-     * 
+     *
      * @return multitype:NULL
      */
     function getGroupOwnerIds() {
-    	
+
         $groupOwnerIdArr = array();
         $sessionData = BidxCommon::$staticSession;
         $groupOwners = $sessionData->data->groupOwners;
@@ -131,7 +153,7 @@ class SessionService extends APIBridge {
         }
 
         return $groupOwnerIdArr;
-        
+
     }
 
     /**

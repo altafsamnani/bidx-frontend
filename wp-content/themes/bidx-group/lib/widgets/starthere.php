@@ -97,7 +97,7 @@ class Start_Here_Widget extends WP_Widget {
 <?php                 
             endif; 
 ?>
-                <a href="/join" class="btn btn-secondary btn-lg start-btn btn-block"><?php _e('Start Here', 'wp_widget_plugin'); ?></a>
+                <a href="<?php echo _l('join');?>" class="btn btn-secondary btn-lg start-btn btn-block"><?php _e('Start Here', 'wp_widget_plugin'); ?></a>
 <?php 
             if ( $add_container ) :
 ?>

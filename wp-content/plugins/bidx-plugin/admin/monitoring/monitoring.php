@@ -71,6 +71,12 @@ class Bidx_Admin_Monitoring
 		/* Enqueue WordPress' script for handling the metaboxes */
 		wp_enqueue_script( 'postbox' );
 
+		/* For Datepicker
+		Commented because currently there is no functinality to fetch stats on date and nsearch
+		wp_enqueue_script('jquery-ui-datepicker');
+		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css'); */
+
+
 		/* Add callbacks for this screen only */
 		add_action('admin_print_footer_scripts', array(&$this,'monitoring_footer_scripts'));
 		add_action('admin_enqueue_scripts', array(&$this, 'register_monitoring_bidx_ui_libs'));
@@ -87,7 +93,7 @@ class Bidx_Admin_Monitoring
 		$view->userId 			= 	$this->userId;
 		$view->body_content_cb 	= 	$this->admin_body_content();
 		$view->className        =   $this->className;
-
+		//$view->topContent	    =   $this->view->render('criteria.phtml', false); //Commented because currently there is no functinality to fetch stats on date and nsearch
         echo $view->render( 'two-column.phtml' );
 	}
 

@@ -50,8 +50,8 @@
                 <div class="pull-right col-sm-8 text-right">
                     <div class="copyright">&copy; <?php echo date("Y") ?> bidx.net  <?php _e( 'All rights reserved','roots' ) ?></div>
                     <div class="inline-list footer-menu">
-                        <div><a href="/terms-of-service" target="_blank"><?php _e('Terms of service','roots')?></a></div>
-                        <div><a href="/privacy"><?php _e('Privacy','roots')?></a></div>
+                        <div><a href="<?php echo _l('terms-of-service');?>" target="_blank"><?php _e('Terms of service','roots')?></a></div>
+                        <div><a href="<?php echo _l('privacy');?>"><?php _e('Privacy','roots')?></a></div>
                     </div>
                 </div>
             </div>

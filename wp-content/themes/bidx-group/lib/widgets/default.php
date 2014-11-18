@@ -127,7 +127,7 @@ With just a few adjustments, you will be ready to welcome your first members.</p
     $widgets[$count] = array(
         'title' => 'More Button',
         'buttontext' => 'Find out more',
-        'buttonlink' => '/welcome',
+        'buttonlink' => _l('welcome'),
         'buttonblock' => 'checked="checked"',
         'buttonalign' => 'text-center',
         'buttonstyle' => 'btn-primary',

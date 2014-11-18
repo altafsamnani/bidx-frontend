@@ -14,7 +14,7 @@
 		NOTE: adding comment between the xml childs will break the import
 	-->
 	<posts>
-		 <post>
+		<post>
             <post_id>0</post_id>
             <name>homepage</name>
             <title>Home</title>
@@ -74,7 +74,6 @@
 			<content></content>
 			<setTranslate>true</setTranslate>
 		</post>
-
 		<post>
 			<post_id>5</post_id>
 			<name>Register as member</name>
@@ -85,7 +84,6 @@
 			<content></content>
 			<setTranslate>true</setTranslate>
 		</post>
-
 		<post>
 			<post_id>6</post_id>
 			<name>Getting started investor</name>
@@ -147,5 +145,4 @@
 			<setTranslate>true</setTranslate>
 		</post>
 	</posts>
-
 </data>

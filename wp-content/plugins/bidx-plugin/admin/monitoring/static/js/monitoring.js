@@ -210,11 +210,14 @@
 
             listItem.push( [countryLabel, countryNameLabel, growthLabel ] );
 
+
             $.each( facetList.facetValues, function( idx, item )
             {
                 labelName   =   bidx.data.i( item.name, "country" );
                 label       =   item.name;
+
                 listItem.push( [ label, labelName, item.count] );
+
             } );
 
             data = google.visualization.arrayToDataTable( listItem );
@@ -224,12 +227,17 @@
         // Set chart option
 
         options     =   {
-                            title   :         bidx.i18n.i('regionTitle', appName)
-                        ,   sizeAxis:         { minValue: 0, maxValue: 100 }
-                        ,   magnifyingGlass:  {enable: true, zoomFactor: 5.0}
-                        ,   displayMode:      'markers'
-                        ,   colorAxis:        {colors: ['#e7711c', '#4374e0']} // orange to blue
+                            title   :               bidx.i18n.i('regionTitle', appName)
                         };
+                        //,   sizeAxis:             { minValue: 0, maxValue: 100 }
+                        //,   magnifyingGlass:        {enable: true, zoomFactor: 5.0}
+                        //,   displayMode:          'markers'
+                        //,   colorAxis:            {colors: ['#e7711c', '#4374e0']} // orange to blue
+                        //,   colorAxis:              {colors: ['#00853f', '#000000', '#e31b23']}
+                        //,   colorAxis:              {minValue: 0,  colors: ['#FF0000', '#00FF00']}
+                        //,   backgroundColor:        '#FFFFF'
+                        //,   datalessRegionColor:    '#ecf1ee'
+
 
         chart = new google.visualization.GeoChart(document.getElementById('country_geo_chart'));
 
@@ -676,8 +684,8 @@
         /********** Filter Handling *************/
         $entityDiv      =   $element.find( "#entity-listitem" );
         snippitEntity   =   $entityDiv.html().replace(/(<!--)*(-->)*/g, "");
-        $("div.toolbar").html(snippitEntity);
-        $('.entity_type').on('click', function( e )
+        $element.find("div.toolbar").html(snippitEntity);
+        $element.find('.entity_type').on('click', function( e )
         {
             e.preventDefault();
             userTable.draw();
@@ -1146,8 +1154,8 @@
                      //search for placeholders in snippit
                      listItemMentor = snippitMentor
                          .replace( /%summary%/g,                summaryMentor   ? summaryMentor     : emptyValMentor )
-                         .replace( /%institutionName%/g,        investorType   ? investorType     : emptyValMentor )
-                         .replace( /%institutionWebsite%/g,     i18nMentor.focusIndustry   ? i18nMentor.focusIndustry     : emptyValMentor )
+                         .replace( /%institutionName%/g,        bidxMentorProfile.institutionName   ? bidxMentorProfile.institutionName     : emptyValMentor )
+                         .replace( /%institutionWebsite%/g,     bidxMentorProfile.institutionWebsite   ? bidxMentorProfile.institutionWebsite     : emptyValMentor )
                          .replace( /%focusGender%/g,            i18nMentor.focusGender    ? i18nMentor.focusGender      : emptyValMentor )
                          .replace( /%focusStageBusiness%/g,     i18nMentor.focusStageBusiness  ? i18nMentor.focusStageBusiness    : emptyValMentor )
                          .replace( /%focusLanguage%/g,          i18nMentor.focusLanguage  ? i18nMentor.focusLanguage    : emptyValMentor )
@@ -1566,6 +1574,18 @@
         google.load("visualization", "1.0", {packages:["corechart","table"]});
 
         google.setOnLoadCallback(_getData);
+
+        /*Commented because currently there is no functinality to fetch stats on date and nsearch
+        $element.find('.monitoring-date').datepicker({
+            dateFormat : 'dd-mm-yy'
+        });
+
+        $element('.monitoring-submit').on('click', function( e )
+        {
+            e.preventDefault();
+            _getData( );
+        } ); */
+
 
     }
 
