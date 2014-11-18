@@ -48,9 +48,12 @@ class businesssummary
         $sessionData = BidxCommon::$staticSession;
 
         $businessSummaryId = null;
-        if (isset ($atts) && isset ($atts['id'])) {
+
+        if (isset ($atts) && isset ($atts['id']))
+        {
             $businessSummaryId = $atts['id'];
-        } else if (isset ($sessionData->requestedBusinessSummaryId)) {
+        } else if (isset ($sessionData->requestedBusinessSummaryId))
+        {
             $businessSummaryId = $sessionData->requestedBusinessSummaryId;
         }
 
@@ -84,7 +87,7 @@ class businesssummary
 
             /* Fetch the detailed rating if needed. The count and average are available in
              * the Entity API as well, but if the current user can rate we need more details,
-             * such as the user's rating, for which we need to make another API call. 
+             * such as the user's rating, for which we need to make another API call.
              */
             if( $businessSummaryData->data->bidxMeta->bidxCanRate ) {
                 require_once (BIDX_PLUGIN_DIR . '/../services/rating-service.php');
@@ -94,7 +97,17 @@ class businesssummary
             }
         }
 
-        $view->render('businesssummary.phtml');
+        /*************** Is investor or groupadmin *****************/
+        $sessionSvc             = new SessionService( );
+        $isFrontendSessionSet   = $sessionSvc->isFrontendSessionSet( );
+        $template               = 'businesssummary-anonymous.phtml';
+
+        if( $isFrontendSessionSet )
+        {
+            $template = 'businesssummary.phtml';
+        }
+
+        $view->render( $template );
     }
 }
 
