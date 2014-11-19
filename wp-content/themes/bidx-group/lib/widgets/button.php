@@ -1,4 +1,4 @@
-<?php 
+<?php
 // register widget
 add_action( 'widgets_init', function()
 {
@@ -9,7 +9,7 @@ class Button_Widget extends WP_Widget {
 
     ///////////////////////////
     // Initialise the widget //
-    /////////////////////////// 
+    ///////////////////////////
     function Button_Widget()
     {
         $this->WP_Widget
@@ -180,7 +180,7 @@ class Button_Widget extends WP_Widget {
 <?php
 
 
-    } // END: function form( $instance ) 
+    } // END: function form( $instance )
 
     //////////////////////////////////////////////////////////////////
     // The update function to insert the chosen values in to the db //
@@ -221,7 +221,7 @@ class Button_Widget extends WP_Widget {
         {
             $add_container = true;
         }
-        
+
         if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) !== true )
         {
             $add_container = true;
@@ -234,42 +234,42 @@ class Button_Widget extends WP_Widget {
             if ( $add_container ) :
 ?>
                 <div class="container">
-<?php                 
-            endif; 
+<?php
+            endif;
 ?>
             <div class="<?php echo $buttonalign; ?>">
 <?php
-                if ( $buttonlink ) { echo '<a class="btn' . ' ' . $buttonsize . ' ' . $buttonstyle . ' ' . $buttonblock .' " href="' . $buttonlink . '">'; } 
+                if ( $buttonlink ) { echo '<a class="btn' . ' ' . $buttonsize . ' ' . $buttonstyle . ' ' . $buttonblock .' " href="' . $buttonlink . '">'; }
                     if ($buttonicon) { echo '<i class="fa '.$buttonicon.'"></i>&nbsp;'; }
-                    echo $buttontext; 
+                    echo $buttontext;
                 if ( $buttonlink ) { echo '</a>'; }
 ?>
             </div>
-<?php             
+<?php
             if ( $add_container ) :
 ?>
                 </div>
-<?php                 
-            endif; 
+<?php
+            endif;
         }
         else
         {
             if ( $add_container ) :
 ?>
                 <div class="container">
-<?php                 
-            endif; 
+<?php
+            endif;
 ?>
             <div class="alert alert-danger">
                 <blockquote>
-                    <p><?php _e('Please add button text and a link', 'bidxtheme') ?></p>
+                    <p><?php _e('Please add button text and a link', 'bidxplugin') ?></p>
                 </blockquote>
                 <p class="hide-overflow">
                     <span class="pull-left">
-                        <?php _e('Sidebar', 'bidxtheme') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
+                        <?php _e('Sidebar', 'bidxplugin') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
                     </span>
                     <span class="pull-right">
-                        <?php _e('Widget', 'bidxtheme') ?>: <strong><?php echo $args['widget_name']; ?></strong>
+                        <?php _e('Widget', 'bidxplugin') ?>: <strong><?php echo $args['widget_name']; ?></strong>
                     </span>
                 </p>
             </div>
@@ -277,8 +277,8 @@ class Button_Widget extends WP_Widget {
             if ( $add_container ) :
 ?>
                 </div>
-<?php                 
-            endif; 
+<?php
+            endif;
 
         }
 

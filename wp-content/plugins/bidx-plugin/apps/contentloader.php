@@ -83,7 +83,7 @@ class ContentLoader
         $this->logger->trace( 'Start loading default data from location : ' . $this->location );
         // Include WPML API
         include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
- 
+
         foreach ( glob( BIDX_PLUGIN_DIR . '/../' . $this->location . '/*.xml' ) as $filename ) {
             //try /catch / log ignore
             $document = simplexml_load_file( $filename );
@@ -136,7 +136,7 @@ class ContentLoader
 
                 // $msp: if htmpTemplate is available, replace the content with the source from the template file
                 //
-                if ( isset( $post->htmlTemplate ) && $post->htmlTemplate != '' ) 
+                if ( isset( $post->htmlTemplate ) && $post->htmlTemplate != '' )
                 {
                     $this->logger->trace( 'Getting content from htmlTemplate ' . $post->htmlTemplate . '.phtml' );
                     // open template file and get content
@@ -185,15 +185,15 @@ class ContentLoader
 
                     $post_id = wp_insert_post( $insertPostArr );
 
-                    if (!$post_id) 
+                    if (!$post_id)
                     {
                         wp_die ('Error creating page');
-                    } 
+                    }
                     else
                     {   //If Multilanguage is enabled then add or link all translated pages
                         if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
                         {
-                            $this->add_static_translations_on_deactivation ( $post_id, $insertPostArr );
+                            $this->add_static_translations_on_activation ( $post_id, $insertPostArr );
                         }
                     }
                 }
@@ -370,7 +370,7 @@ class ContentLoader
         delete_option( 'BIDX_REWRITE_RULES' );
     }
 
-    public function add_static_translations_on_deactivation( $post_id, $insertPostArr )
+    public function add_static_translations_on_activation( $post_id, $insertPostArr )
     {
         // Associate original post and translated post
         global $wpdb;
@@ -426,8 +426,8 @@ class ContentLoader
                 $this->logger->trace( 'Deleting Translated Page: ' .  $translatedPageId);
                 $force_delete   =   true;
                 $isDeleted      =   wp_delete_post( $translatedPageId, $force_delete );
-            } 
-            else 
+            }
+            else
             {
                 $modifiedTranslatedPage[$post_id][$language]   =   $translatedPageId;
             }
@@ -447,7 +447,6 @@ class ContentLoader
         $this->logger->trace (sprintf ('POST data export: %s' , var_export ($_POST, true)));
 
         $langArr  = explode(',',$langs);
-
 
         $filename = BIDX_PLUGIN_DIR . '/../pages/page.xml';
 

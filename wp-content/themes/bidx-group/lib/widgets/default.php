@@ -1,11 +1,11 @@
-<?php 
+<?php
 // DEFAULT WIDGET ACTIVATION
 //
 function set_default_theme_widgets ( $old_theme, $WP_theme = null ) {
 
 
     ////////////////////////////
-    // Query the posts to check if there is already one with the title "Welcome" 
+    // Query the posts to check if there is already one with the title "Welcome"
     //
     $args = array(
                   'post_type' => 'post',
@@ -47,7 +47,7 @@ With just a few adjustments, you will be ready to welcome your first members.</p
             <dd class="text">
                 As the main eye catcher for your homepage, select images for the bidx Carousel widget that will welcome the visitors to your Portal. This tool let\'s you add a header and a url for taking viewers to, for example, news on a special event or a registration page.
             </dd>
-            <br> 
+            <br>
             <dt class="title">Create Buttons: bidx Start button</dt>
             <dd class="text">
                 Help potential new members find their way around your Portal.<br>Buttons are a great tool to encourage visitors\' curiosity to keep exploring or to take action.
@@ -102,7 +102,7 @@ With just a few adjustments, you will be ready to welcome your first members.</p
 
 
     // Add widget to sidebar:
-    // 
+    //
     $widget_name = 'carousel_widget';
     $widgets = get_option('widget_'.$widget_name);
     $sidebar_options[$add_to_sidebar[0]][] = $widget_name.'-'.$count;
@@ -137,10 +137,11 @@ With just a few adjustments, you will be ready to welcome your first members.</p
     update_option('widget_'.$widget_name,$widgets);
 
     // Add widget to sidebar:
-    // 
-    $widget_name = 'promo_widget';
-    $widgets = get_option('widget_'.$widget_name);
+    //
+    $widget_name    = 'promo_widget';
+    $widgets        = get_option('widget_'.$widget_name);
     $sidebar_options[$add_to_sidebar[0]][] = $widget_name.'-'.$count;
+
     $widgets[$count] = array(
         'title' => 'Promo Widget',
         'promotext' => 'Customize the layout',
@@ -148,12 +149,29 @@ With just a few adjustments, you will be ready to welcome your first members.</p
         'promobold' => '',
         'promoalign' => 'text-center',
     );
+
+    if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
+    {
+        $langArr            =   wpml_get_active_languages( );
+
+        unset($langArr['en']);
+
+        foreach($langArr as $lang => $langVal)
+        {
+            $labelPromoText =   'promotext'.$lang;
+            $labelPromoLink =   'promolink'.$lang;
+
+            $widgets[$count][$labelPromoText]  =  __('Customize the layout','bidxplugin');
+            $widgets[$count][$labelPromoLink]  =  '/wp-admin/customize.php';
+        }
+    }
+
     $count++;
     update_option('widget_'.$widget_name,$widgets);
 
 
     // Add widget to sidebar:
-    // 
+    //
     $widget_name = 'latest_businesses_widget';
     $widgets = get_option('widget_'.$widget_name);
     $sidebar_options[$add_to_sidebar[6]][] = $widget_name.'-'.$count;
@@ -164,7 +182,7 @@ With just a few adjustments, you will be ready to welcome your first members.</p
     update_option('widget_'.$widget_name,$widgets);
 
     // Add widget to sidebar:
-    // 
+    //
     $widget_name = 'latest_members_widget';
     $widgets = get_option('widget_'.$widget_name);
     $sidebar_options[$add_to_sidebar[6]][] = $widget_name.'-'.$count;
@@ -175,7 +193,7 @@ With just a few adjustments, you will be ready to welcome your first members.</p
     update_option('widget_'.$widget_name,$widgets);
 
     // Add widget to sidebar:
-    // 
+    //
     $widget_name = 'latest_posts_widget';
     $widgets = get_option('widget_'.$widget_name);
     $sidebar_options[$add_to_sidebar[6]][] = $widget_name.'-'.$count;
@@ -186,7 +204,7 @@ With just a few adjustments, you will be ready to welcome your first members.</p
     update_option('widget_'.$widget_name,$widgets);
 
     // Add widget to sidebar:
-    // 
+    //
     $widget_name = 'start_here_widget';
     $widgets = get_option('widget_'.$widget_name);
     $sidebar_options[$add_to_sidebar[2]][] = $widget_name.'-'.$count;
@@ -197,7 +215,7 @@ With just a few adjustments, you will be ready to welcome your first members.</p
     update_option('widget_'.$widget_name,$widgets);
 
     // Add widget to sidebar:
-    // 
+    //
     $widget_name = 'post_widget';
     $widgets = get_option('widget_'.$widget_name);
     $sidebar_options[$add_to_sidebar[1]][] = $widget_name.'-'.$count;
@@ -209,7 +227,7 @@ With just a few adjustments, you will be ready to welcome your first members.</p
     update_option('widget_'.$widget_name,$widgets);
 
     // Add widget to sidebar:
-    // 
+    //
     $widget_name = 'multicolumn_widget';
     $widgets = get_option('widget_'.$widget_name);
     $sidebar_options[$add_to_sidebar[3]][] = $widget_name.'-'.$count;
@@ -226,7 +244,7 @@ With just a few adjustments, you will be ready to welcome your first members.</p
     update_option('widget_'.$widget_name,$widgets);
 
     // Add widget to sidebar:
-    // 
+    //
     // $widget_name = 'sponsors_widget';
     // $widgets = get_option('widget_'.$widget_name);
     // $sidebar_options[$add_to_sidebar[3]][] = $widget_name.'-'.$count;
@@ -235,9 +253,9 @@ With just a few adjustments, you will be ready to welcome your first members.</p
     // );
     // $count++;
     // update_option('widget_'.$widget_name,$widgets);
-    
+
     // Add widget to sidebar:
-    // 
+    //
     // $widget_name = 'videoBox_widget';
     // $widgets = get_option('widget_'.$widget_name);
     // $sidebar_options[$add_to_sidebar[0]][] = $widget_name.'-'.$count;

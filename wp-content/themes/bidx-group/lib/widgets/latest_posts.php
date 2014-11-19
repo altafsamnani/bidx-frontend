@@ -1,4 +1,4 @@
-<?php 
+<?php
 // register widget
 add_action( 'widgets_init', function()
 {
@@ -9,7 +9,7 @@ class Latest_Posts_Widget extends WP_Widget {
 
     ///////////////////////////
     // Initialise the widget //
-    /////////////////////////// 
+    ///////////////////////////
     function Latest_Posts_Widget()
     {
         $this->WP_Widget
@@ -50,7 +50,7 @@ class Latest_Posts_Widget extends WP_Widget {
 <?php
 
 
-    } // END: function form( $instance ) 
+    } // END: function form( $instance )
 
     //////////////////////////////////////////////////////////////////
     // The update function to insert the chosen values in to the db //
@@ -80,7 +80,7 @@ class Latest_Posts_Widget extends WP_Widget {
             $add_container = true;
             $items = 6;
         }
-        
+
         if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) !== true )
         {
             $add_container = true;
@@ -92,13 +92,13 @@ class Latest_Posts_Widget extends WP_Widget {
         if ( $add_container ) :
 ?>
             <div class="container">
-<?php                 
-        endif; 
+<?php
+        endif;
 ?>
                 <div class="panel panel-primary panel-members">
                     <div class="panel-heading hide-overflow">
                         <h4 class="pull-left">
-                            <?php _e('News &amp; Events', 'wp_widget_plugin')?>
+                            <?php _e('News and Events', 'bidxplugin')?>
                         </h4>
                         <a href="#" class="hide pull-right btn btn-default"><?php _e('view all','bidxplugin')?></a>
                     </div>
@@ -109,12 +109,12 @@ class Latest_Posts_Widget extends WP_Widget {
 ?>
                     </div>
                 </div>
-<?php 
+<?php
         if ( $add_container ) :
 ?>
             </div>
-<?php                 
-        endif; 
+<?php
+        endif;
 
         echo $after_widget;
     }

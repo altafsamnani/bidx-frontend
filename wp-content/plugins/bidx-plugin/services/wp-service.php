@@ -2001,23 +2001,23 @@ function bidx_options ()
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=fr&path=" . WP_PLUGIN_DIR . "/bidx-plugin" . "&app=apps'>here</a> to create Apps Demo Fr PO <br/><br/>";
 
         /* 1.3. Bidx Apps Pot Generator */
-        echo "<b>Bidx Wp Plugin Pot Generator (bidx-plugin) (Text domain bidxplugin)</b><br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&path=" . WP_PLUGIN_DIR . "/bidx-plugin'>here</a> to create Apps PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=es&path=" . WP_PLUGIN_DIR . "/bidx-plugin'>here</a> to create Apps Demo Es PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=fr&path=" . WP_PLUGIN_DIR . "/bidx-plugin'>here</a> to create Apps Demo Fr PO <br/><br/>";
+        echo "<b>Bidx Wp Plugin Pot Generator (bidx-plugin + bidx-group theme) (Text domain bidxplugin)</b><br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&path=" . WP_CONTENT_DIR . "'>here</a> to create Apps PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=es&path=" . WP_CONTENT_DIR . "'>here</a> to create Apps Demo Es PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=fr&path=" . WP_CONTENT_DIR . "'>here</a> to create Apps Demo Fr PO <br/><br/>";
 
         /* 1.4. Bidx Theme Pot Generator */
-        echo "<b>Bidx Main Theme Pot Generator (Bidx Theme) (Text domain bidxtheme)</b><br/>";
+        echo "<b>Bidx Main Theme Pot Generator (Bidx Theme Main site bidx.net) (Text domain bidxtheme)</b><br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=es&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Es PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=fr&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Fr PO <br/><br/>";
 
-        /* 1.4. Bidx Group Theme Pot Generator */
+        /* 1.4. Bidx Group Theme Pot Generator
         echo "<b>Bidx Group Theme Pot Generator (Bidx Theme) (Text domain bidxtheme)</b><br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxgrouptheme&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxgrouptheme&lang=es&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Es PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxgrouptheme&lang=fr&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Fr PO <br/>";
-
+         */
 
         /* 2 Bidx Push Notification */
         $entrepreneurNotification = get_site_option ('entrepreneur-notification');

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 // register widget
 add_action( 'widgets_init', function()
@@ -10,7 +10,7 @@ class Start_Here_Widget extends WP_Widget {
 
     ///////////////////////////
     // Initialise the widget //
-    /////////////////////////// 
+    ///////////////////////////
     function Start_Here_Widget()
     {
         $this->WP_Widget
@@ -52,7 +52,7 @@ class Start_Here_Widget extends WP_Widget {
 <?php
 
 
-    } // END: function form( $instance ) 
+    } // END: function form( $instance )
 
     //////////////////////////////////////////////////////////////////
     // The update function to insert the chosen values in to the db //
@@ -80,7 +80,7 @@ class Start_Here_Widget extends WP_Widget {
         {
             $add_container = true;
         }
-        
+
         if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) !== true )
         {
             $add_container = true;
@@ -94,16 +94,16 @@ class Start_Here_Widget extends WP_Widget {
             if ( $add_container ) :
 ?>
                 <div class="container">
-<?php                 
-            endif; 
+<?php
+            endif;
 ?>
-                <a href="<?php echo _l('join');?>" class="btn btn-secondary btn-lg start-btn btn-block"><?php _e('Start Here', 'wp_widget_plugin'); ?></a>
-<?php 
+                <a href="<?php echo _l('join');?>" class="btn btn-secondary btn-lg start-btn btn-block"><?php _e('Start Here', 'bidxplugin'); ?></a>
+<?php
             if ( $add_container ) :
 ?>
                 </div>
-<?php                 
-            endif; 
+<?php
+            endif;
 
             echo $after_widget;
         }
