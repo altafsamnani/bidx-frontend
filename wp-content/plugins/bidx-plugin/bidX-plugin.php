@@ -68,6 +68,8 @@ if (!BidxCommon :: isWPInternalFunction ()) {
 
     require_once( BIDX_PLUGIN_DIR . '/../admin/admin.php' );
 
+    //delete_option('widget_promo_widget');
+
 }
 
 
