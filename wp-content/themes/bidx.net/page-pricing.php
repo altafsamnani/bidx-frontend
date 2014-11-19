@@ -53,7 +53,7 @@
                                         </div>
                                         <ul class="details">
                                             <li>Max Users<br><strong>Unlimited</strong></li>
-                                            <li>Discounts<br><strong>$2000 after the 1st time</strong></li>
+                                            <li>Discounts<br><strong>$3000 for each next competiton</strong></li>
                                             <li>Customization<br><strong>$1000 per day</strong></li>
                                             <li>Delivery time<br><strong>2 weeks, max</strong></li>
                                             <li>Customer support response time<br><strong>2 days, max</strong></li>
