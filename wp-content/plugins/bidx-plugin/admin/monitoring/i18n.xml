@@ -23,10 +23,9 @@
      <!-- Chart Label -->
     <Item value="chart_growth">Growth</Item>
     <Item value="memberOnlyLbl">Member only</Item>
-    <Item value="country_lbl_name">Name</Item>
+    <Item value="name">Name</Item>
 
     <!-- User Table Labels -->
-    <Item value="name">Name</Item>
     <Item value="dob">Date of birth</Item>
     <Item value="email">Email</Item>
     <Item value="mobile">Mobile</Item>

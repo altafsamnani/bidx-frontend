@@ -666,9 +666,17 @@ function create_bidx_po ()
                 }
                 break;
             case 'bidxplugin' :
-                $plugin = $_GET['path'];
                 global $pluginStrings;
-                bidx_st_scan_plugin_files ($plugin);
+
+                $pluginPath         = WP_CONTENT_DIR.'/plugins/bidx-plugin';
+                bidx_st_scan_plugin_files ($pluginPath); // Plugin
+
+                $themePath          = WP_CONTENT_DIR.'/themes/bidx-group';
+                bidx_st_scan_plugin_files ($themePath); // Group Theme
+
+                $competitionPath    = WP_CONTENT_DIR.'/plugins/bidx-competition-plugin';
+                bidx_st_scan_plugin_files ($competitionPath); // Group Theme
+
                 $po = plugin_theme_po_action ($pluginStrings, $_GET);
 
                 break;
@@ -2002,9 +2010,9 @@ function bidx_options ()
 
         /* 1.3. Bidx Apps Pot Generator */
         echo "<b>Bidx Wp Plugin Pot Generator (bidx-plugin + bidx-group theme) (Text domain bidxplugin)</b><br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&path=" . WP_CONTENT_DIR . "'>here</a> to create Apps PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=es&path=" . WP_CONTENT_DIR . "'>here</a> to create Apps Demo Es PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=fr&path=" . WP_CONTENT_DIR . "'>here</a> to create Apps Demo Fr PO <br/><br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin'>here</a> to create Apps PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=es'>here</a> to create Apps Demo Es PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=fr'>here</a> to create Apps Demo Fr PO <br/><br/>";
 
         /* 1.4. Bidx Theme Pot Generator */
         echo "<b>Bidx Main Theme Pot Generator (Bidx Theme Main site bidx.net) (Text domain bidxtheme)</b><br/>";

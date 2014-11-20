@@ -183,39 +183,39 @@ function bidx_status_text ( $textId, $replaceString ) {
     switch($textId) {
 
     case '1' :
-        $text = __("Your session expired. Please login again, sorry for any inconvenience and appreciate your patience.",'bidxgrouptheme');
+        $text = __("Your session expired. Please login again, sorry for any inconvenience and appreciate your patience.",'bidxplugin');
         break;
 
     case '2' :
-        $text = __("Welcome in the group!",'bidxgrouptheme');
+        $text = __("Welcome in the group!",'bidxplugin');
         break;
 
     case '3' :
-        $text = __("Successfully left the group!",'bidxgrouptheme');
+        $text = __("Successfully left the group!",'bidxplugin');
         break;
 
     case '4' :
-        $text = __("Thank you! You are successful registered as a member of the bidX platform and this group. Feel free to browse around and see what <!--groupname--> can offer you.",'bidxgrouptheme');
+        $text = __("Thank you! You are successful registered as a member of the bidX platform and this group. Feel free to browse around and see what <!--groupname--> can offer you.",'bidxplugin');
         break;
 
     case '5':
-        $text = __('Successfully published!','bidxgrouptheme');
+        $text = __('Successfully published!','bidxplugin');
         break;
 
     case '6':
-        $text = __('Request accepted!','bidxgrouptheme');
+        $text = __('Request accepted!','bidxplugin');
         break;
 
     case '7':
-        $text = __('Request refused!','bidxgrouptheme');
+        $text = __('Request refused!','bidxplugin');
         break;
 
     case '8':
-        $text = __('You have successfully %action% the request!','bidxgrouptheme');
+        $text = __('You have successfully %action% the request!','bidxplugin');
         break;
 
     default :
-        $text = __('Add your notification message to custom.php with id ','bidxgrouptheme');
+        $text = __('Add your notification message to custom.php with id ','bidxplugin');
 
      }
 
@@ -396,7 +396,7 @@ function languages_list_header( )
             {
                 $htmlInactive .=  "<li class='icl-".$l['language_code']."'>
                                       <a href='".$l['url']."' class='lang_sel icl-".$l['language_code']."'>
-                                        <span class='icl_lang_sel_native'>".$nameHtml."</span>                                        
+                                        <span class='icl_lang_sel_native'>".$nameHtml."</span>
                                       </a>
                                   </li>";
             }
