@@ -199,7 +199,7 @@
         ,   data
         ,   countryLabel    =   bidx.i18n.i('facet_country',appName)
         ,   growthLabel     =   bidx.i18n.i('chart_growth', appName)
-        ,   countryNameLabel =  bidx.i18n.i('country_lbl_name', appName)
+        ,   countryNameLabel =  bidx.i18n.i('name', appName)
         ,   labelName
         ;
 
