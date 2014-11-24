@@ -6,8 +6,8 @@
 */
 class businesssummary
 {
-    static $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2',
-        'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-industries', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
+    static $deps = array( 'jquery', 'jquery-ui-draggable', 'bootstrap', 'underscore', 'backbone', 'json2',
+        'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-industries','bidx-cover', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
         'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
         'bidx-location', 'bidx-chosen', 'jquery-fitvids', 'jquery-raty'
     );

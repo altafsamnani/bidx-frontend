@@ -1,0 +1,129 @@
+<?php
+
+$businessSummary    = $this->data;
+
+$progress           = $this -> completenessScore ? $this -> completenessScore : '0';
+
+$businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
+    ? $businessSummary->bidxMeta
+    : null;
+
+$canEdit        = $this->exst($businessSummaryBidxMeta->bidxCanEdit, false);
+$canRate        = $this->exst($businessSummaryBidxMeta->bidxCanRate, false);
+$ratingCount    = $this->exst($businessSummaryBidxMeta->bidxRatingCount, 0);
+$ratingAverage  = $this->exst($businessSummaryBidxMeta->bidxRatingAverage, null);
+$entityStatus   = $this->exst($businessSummaryBidxMeta->bidxEntityStatus, '');
+
+// get the enitities of the current user
+$ownerId 		= $businessSummary->bidxMeta->bidxOwnerId;
+
+$businessSummaryId = $businessSummaryBidxMeta->bidxEntityId;
+
+// check, is access granted?
+$hasAccess = false;
+
+d($this);
+
+// To display Company Tab
+//
+$company    = $this->exst ($businessSummary->company);
+$attachment = $this->exst ($businessSummary->attachment);
+
+?>
+<div class="businessSummary anonymous">
+<?php             
+            if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
+            {
+?>
+    <div class="businessCover">
+        <div class="coverImageContainer">
+<?php
+            if ( $businessSummary->cover && $businessSummary->cover->document ):
+?>            
+            <div class="coverImage">
+                <img src="<?php echo $businessSummary->cover->document ?>" alt="Cover Image" style="position: relative; top: <?php echo $businessSummary->cover->top?>px">
+            </div>
+<?php
+            endif;
+?>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <h1>
+                <?php echo $this->exst( $businessSummary->name ); ?>
+                <small>&nbsp;<?php echo _e( 'by', 'bidxplugin' ); ?>&nbsp;
+                    <a href="/member/<?php echo $this->exst( $businessSummaryBidxMeta->bidxOwnerId ); ?>"><?php echo $this->exst( $businessSummaryBidxMeta->bidxOwnerDisplayName ); ?></a>
+                </small>
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <h4><?php echo $this->exst( $businessSummary->slogan ); ?></h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+<?php
+            $videoUrl = $this->exst($businessSummary->externalVideoPitch);
+            $parsedVideo = $this->parseVideos( $videoUrl );
+
+            if ( $parsedVideo )
+            {
+                $theVideo .= '<div class="video-wrapper">'.$parsedVideo[0]['videoplayer'].'</div>';
+            }
+
+            echo $theVideo;
+?>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+
+<?php
+            $rowValues = array (
+
+                __('Industry','bidxplugin')
+                    => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry'),
+
+                __('Finance Needed','bidxplugin')
+                    => $this->exst($businessSummary->financingNeeded),
+
+                __('Countries','bidxplugin')
+                    => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' ),
+
+                __('Date Created','bidxplugin')
+                    => $this->exst($businessSummary->bidxMeta->bidxCreationDateTime),
+
+                __('Rating','bidxplugin')
+                    => $this->exst($businessSummary->bidxMeta->bidxRatingAverage),
+
+                __('Stage of business','bidxplugin')
+                    => $this->getStaticVal( 'stageBusiness', $this->exst($businessSummary->stageBusiness)),
+
+
+            );
+            echo $this->pairRows( $rowValues );
+
+            if ( $attachment )
+            {
+?>
+                <h4>Has attachment</h4>
+<?php                
+            }
+?>
+        </div>
+    </div>
+<?php
+            }
+?>
+
+
+</div>

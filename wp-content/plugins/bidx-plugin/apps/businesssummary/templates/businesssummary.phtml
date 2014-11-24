@@ -74,6 +74,52 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
 ?>
 <div class="businessSummary" id="businessSummary" data-bsid=<?php echo $businessSummaryId; ?>>
+    <div class="businessCover">
+        <div class="coverImageContainer">
+<?php
+            if ( $businessSummary->cover && $businessSummary->cover->document ):
+?>            
+            <div class="coverImage">
+                <img src="<?php echo $businessSummary->cover->document ?>" alt="Cover Image" style="position: relative; top: <?php echo $businessSummary->cover->top?>px">
+            </div>
+<?php
+            endif;
+?>
+            <div class="view viewEdit">
+<?php
+            if ( $canEdit )
+            {
+    ?>
+                <a class="btn btn-primary btn-large btnCover" data-toggle="modal" href="#coverImage"><?php echo _e( 'Add or Change Cover', 'bidxplugin' ); ?></a>
+
+                <div class="coverModal modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h3><?php _e('Check the file you want to use as your cover', 'bidxplugin' ); ?></h3>
+                            </div>
+                            <div class="modal-body">
+<?php
+                                // Media app will only be inserted once, this is by design!
+                                //
+                                echo do_shortcode( '[bidx app="media"]' );
+?>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></button>
+                                <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<?php           
+            }
+?>        
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-sm-12">

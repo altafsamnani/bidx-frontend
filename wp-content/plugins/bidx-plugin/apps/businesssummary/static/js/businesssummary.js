@@ -86,6 +86,13 @@
     ,   $financialSummary                   = $element.find( ".financialSummary")
     ,   $financialSummaryYearsContainer     = $financialSummary.find( ".fs-col-years" )
 
+        // Cover Image
+        //
+    ,   $coverImage                         = $element.find( ".businessCover" )
+    ,   $coverImageBtn                      = $coverImage.find( "[href$='#coverImage']" )
+    ,   $coverImageModal                    = $coverImage.find( ".coverModal" )
+    ,   $coverImageContainer                = $coverImage.find( ".coverImageContainer" )
+
         // Managament Team
         //
     ,   $btnAddManagementTeam               = forms.aboutYouAndYourTeam.$el.find( "[href$='#addManagementTeam']" )
@@ -283,6 +290,7 @@
     {
         _snippets();
         _setupValidation();
+        _coverImage();
         _financialSummary();
         _managementTeam();
         _companyDetails();
@@ -575,6 +583,79 @@
                 {
                     _doSave();
                 }
+            } );
+        }
+
+        function _coverImage()
+        {
+            $coverImageContainer.cover();
+
+            $coverImageBtn.click( function( e )
+            {
+                e.preventDefault();
+
+                // Make sure the media app is within our modal container
+                //
+                $( "#media" ).appendTo( $coverImageModal.find( ".modal-body" ) );
+
+                var $selectBtn = $coverImageModal.find(".btnSelectFile")
+                ,   $cancelBtn = $coverImageModal.find(".btnCancelSelectFile");
+
+                // Navigate the media app into list mode for selecting files
+                //
+                bidx.media.navigate(
+                {
+                    requestedState:         "list"
+                ,   slaveApp:               true
+                ,   selectFile:             true
+                ,   multiSelect:            false
+                ,   showEditBtn:            false
+                ,   btnSelect:              $selectBtn
+                ,   btnCancel:              $cancelBtn
+                ,   callbacks:
+                    {
+                        ready:                  function( state )
+                        {
+                            bidx.utils.log( "[Cover Image] ready in state", state );
+                        }
+
+                    ,   cancel:                 function()
+                        {
+                            // Stop selecting files, back to previous stage
+                            //
+                            $coverImageModal.modal('hide');
+                        }
+
+                    ,   success:                function( file )
+                        {
+                            bidx.utils.log( "[Cover Image] uploaded", file );
+
+                            // NOOP.. the parent app is not interested in when the file is uploaded
+                            // only when it is attached / selected
+                        }
+
+                    ,   select:               function( file )
+                        {
+                            bidx.utils.log( "[Cover Image] selected cover", file );
+
+                            $coverImageContainer.data( "bidxData", file );
+                            
+                            $coverImageModal.modal( "hide" );
+
+                            if ( $coverImageContainer.find( "img" ).length )
+                            {
+                                $coverImageContainer.cover( "updateCover", file );
+                            }
+                            else
+                            {
+                                $coverImageContainer.cover( "constructHtml", file );
+                            }
+
+                        }
+                    }
+                } );
+
+                $coverImageModal.modal();
             } );
         }
 
@@ -1741,6 +1822,17 @@
             $industrySectors.industries( "populateInEditScreen",  data );
         }
 
+        var coverImage = bidx.utils.getValue( businessSummary, "cover" );
+
+        if ( coverImage )
+        {
+            $coverImageContainer.cover( "repositionCover" );
+        }
+        else
+        {
+            $coverImageContainer.cover( "constructEmpty" );
+        }
+
         // Now the nested objects
         //
         var managementTeam = bidx.utils.getValue( businessSummary, "managementTeam", true );
@@ -2087,6 +2179,26 @@
         } );
 
         bidx.utils.setValue( businessSummary, "attachment", attachments );
+
+        // Cover Image
+        //
+        var coverImageData = $coverImageContainer.data( "bidxData" )
+        ,   coverImgTopPos = parseInt( $coverImageContainer.find( "img" ).css( "top" ), 10)
+        ;
+
+        if ( coverImageData )
+        {
+            bidx.utils.setValue( businessSummary, "cover.fileUpload", coverImageData.fileUpload );
+        }
+
+        if ( coverImgTopPos <= 0 )
+        {
+            bidx.utils.setValue( businessSummary, "cover.top", coverImgTopPos );
+        }
+        else
+        {
+            bidx.utils.setValue( businessSummary, "cover.top", 0 );
+        }
     }
 
     function showEntity( options )
