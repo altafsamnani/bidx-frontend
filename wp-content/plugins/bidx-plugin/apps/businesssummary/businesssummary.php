@@ -6,7 +6,7 @@
 */
 class businesssummary
 {
-    static $deps = array( 'jquery', 'jquery-ui-draggable', 'bootstrap', 'underscore', 'backbone', 'json2',
+    static $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2',
         'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-industries','bidx-cover', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
         'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
         'bidx-location', 'bidx-chosen', 'jquery-fitvids', 'jquery-raty'
@@ -48,9 +48,12 @@ class businesssummary
         $sessionData = BidxCommon::$staticSession;
 
         $businessSummaryId = null;
-        if (isset ($atts) && isset ($atts['id'])) {
+
+        if (isset ($atts) && isset ($atts['id']))
+        {
             $businessSummaryId = $atts['id'];
-        } else if (isset ($sessionData->requestedBusinessSummaryId)) {
+        } else if (isset ($sessionData->requestedBusinessSummaryId))
+        {
             $businessSummaryId = $sessionData->requestedBusinessSummaryId;
         }
 
@@ -65,26 +68,26 @@ class businesssummary
             $view->data = $businessSummaryData->data;
 
             if ( isset( $businessSummaryData -> data -> completeness ) ) {
-            	$completeness = $businessSummaryData -> data -> completeness;
+                $completeness = $businessSummaryData -> data -> completeness;
 
-            	//TODO : structurally fix this using the scoring service
-            	$view->completenessScore = round(($completeness / 68)*100);
-            	if ( $view->completenessScore < 30 ) {
-            		$view->completenessColour = 'incomplete';
-            	} else if ( $view->completenessScore < 60 ) {
-            		$view->completenessColour = 'medium';
-            	} else {
-            		$view->completenessColour = 'good';
-            	}
+                //TODO : structurally fix this using the scoring service
+                $view->completenessScore = round(($completeness / 68)*100);
+                if ( $view->completenessScore < 30 ) {
+                    $view->completenessColour = 'incomplete';
+                } else if ( $view->completenessScore < 60 ) {
+                    $view->completenessColour = 'medium';
+                } else {
+                    $view->completenessColour = 'good';
+                }
             }
             else {
-            	$view->completenessScore = 0;
-            	$view->completenessColour = 'red';
+                $view->completenessScore = 0;
+                $view->completenessColour = 'red';
             }
 
             /* Fetch the detailed rating if needed. The count and average are available in
              * the Entity API as well, but if the current user can rate we need more details,
-             * such as the user's rating, for which we need to make another API call. 
+             * such as the user's rating, for which we need to make another API call.
              */
             if( $businessSummaryData->data->bidxMeta->bidxCanRate ) {
                 require_once (BIDX_PLUGIN_DIR . '/../services/rating-service.php');
@@ -94,7 +97,17 @@ class businesssummary
             }
         }
 
-        $view->render('businesssummary.phtml');
+        /*************** Is investor or groupadmin *****************/
+        $sessionSvc             = new SessionService( );
+        $isFrontendSessionSet   = $sessionSvc->isFrontendSessionSet( );
+        $template               = 'businesssummary-anonymous.phtml';
+
+        if( $isFrontendSessionSet )
+        {
+            $template = 'businesssummary.phtml';
+        }
+
+        $view->render( $template );
     }
 }
 
