@@ -23,7 +23,7 @@
             var widget     = this
             ,   options    = widget.options
             ,   $el        = widget.element
-            ,   file       = $el.data( "bidxData" )
+            // ,   file       = $el.data( "bidxData" )
             ;
 
         }
@@ -90,8 +90,7 @@
             ,   imgHeight       = $img.height()
             ;
 
-            $img.css('cursor', 'ns-resize')
-                .draggable(
+            $img.draggable(
                 {
                     scroll: false,
                     axis: "y",
@@ -108,6 +107,19 @@
                         }
                     }
                 } );
+
+            $img.css('cursor', 'ns-resize').draggable( "enable");
+        }
+    ,   disable: function ()
+        {
+            var widget  = this
+            ,   options = widget.options
+            ,   $el     = widget.element
+            ,   $img    = $el.find( "img" )
+            ,   initTop = $img.attr( "data-initop" )
+            ;
+
+            $img.css('cursor', 'default').draggable( "disable").css( { "top": initTop + "px" } );
         }
 
     } );

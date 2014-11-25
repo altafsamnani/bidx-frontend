@@ -80,7 +80,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             if ( $businessSummary->cover && $businessSummary->cover->document ):
 ?>            
             <div class="coverImage">
-                <img src="<?php echo $businessSummary->cover->document ?>" alt="Cover Image" style="position: relative; top: <?php echo $businessSummary->cover->top?>px">
+                <img src="<?php echo $businessSummary->cover->document ?>" alt="Cover Image" data-initop="<?php echo $businessSummary->cover->top?>" style="position: relative; top: <?php echo $businessSummary->cover->top?>px">
             </div>
 <?php
             endif;
@@ -90,7 +90,10 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             if ( $canEdit )
             {
     ?>
-                <a class="btn btn-primary btn-large btnCover" data-toggle="modal" href="#coverImage"><?php echo _e( 'Add or Change Cover', 'bidxplugin' ); ?></a>
+                <div class="btn-group coverBtns">
+                    <a class="btn btn-primary btn-large btnCover" data-toggle="modal" href="#coverImage"><?php echo _e( 'Add or Change', 'bidxplugin' ); ?></a>
+                    <a class="btn btn-primary btn-large btnRemove" data-toggle="modal" href="#coverRemove"><?php echo _e( 'Remove', 'bidxplugin' ); ?></a>
+                </div>
 
                 <div class="coverModal modal fade">
                     <div class="modal-dialog">

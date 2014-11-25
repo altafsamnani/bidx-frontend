@@ -70,7 +70,7 @@ $attachment = $this->exst ($businessSummary->attachment);
 
             if ( $parsedVideo )
             {
-                $theVideo .= '<div class="video-wrapper">'.$parsedVideo[0]['videoplayer'].'</div>';
+                $theVideo .= '<div class="video-wrapper embed-responsive embed-responsive-16by9">'.$parsedVideo[0]['videoplayer'].'</div>';
             }
 
             echo $theVideo;

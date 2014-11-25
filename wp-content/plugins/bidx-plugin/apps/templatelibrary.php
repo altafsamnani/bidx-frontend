@@ -912,7 +912,7 @@ class TemplateLibrary
                         if (preg_match($videoIdRegex, $link, $results)) {
                             if ( in_array( "youtube", $results ) ) {
                                 $video_str = 'http://www.youtube.com/v/%s?fs=1&amp;autoplay=1';
-                                $videoPlayer = '<iframe src="//www.youtube.com/embed/%s" frameborder="0" allowfullscreen></iframe>';
+                                $videoPlayer = '<iframe src="//www.youtube.com/embed/%s" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>';
                                 $thumbnail_str = 'http://img.youtube.com/vi/%s/2.jpg';
                                 $fullsize_str = 'http://img.youtube.com/vi/%s/0.jpg';
                                 $video_id = $results[2];
@@ -923,7 +923,7 @@ class TemplateLibrary
                                     $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$video_id.php"));
                                     if (!empty($hash) && is_array($hash)) {
                                         $video_str = 'http://vimeo.com/moogaloop.swf?clip_id=%s';
-                                        $videoPlayer = '<iframe src="//player.vimeo.com/video/%s?title=0&amp;byline=0&amp;portrait=0" frameborder="0"></iframe>';
+                                        $videoPlayer = '<iframe src="//player.vimeo.com/video/%s?title=0&amp;byline=0&amp;portrait=0" class="embed-responsive-item" frameborder="0"></iframe>';
                                         $thumbnail_str = $hash[0]['thumbnail_small'];
                                         $fullsize_str = $hash[0]['thumbnail_large'];
                                     } else {

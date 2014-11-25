@@ -90,6 +90,7 @@
         //
     ,   $coverImage                         = $element.find( ".businessCover" )
     ,   $coverImageBtn                      = $coverImage.find( "[href$='#coverImage']" )
+    ,   $coverRemoveBtn                     = $coverImage.find( "[href$='#coverRemove']" )
     ,   $coverImageModal                    = $coverImage.find( ".coverModal" )
     ,   $coverImageContainer                = $coverImage.find( ".coverImageContainer" )
 
@@ -657,6 +658,16 @@
 
                 $coverImageModal.modal();
             } );
+
+            $coverRemoveBtn.click( function( e )
+            {
+                e.preventDefault();
+
+                $coverImageContainer.find( "img" ).remove();
+
+                delete businessSummary.cover.fileUpload;
+            } );
+
         }
 
         // Setup the management team components
@@ -2183,7 +2194,7 @@
         // Cover Image
         //
         var coverImageData = $coverImageContainer.data( "bidxData" )
-        ,   coverImgTopPos = parseInt( $coverImageContainer.find( "img" ).css( "top" ), 10)
+        ,   coverImgTopPos = $coverImageContainer.data( "bidxData" ) ? parseInt( $coverImageContainer.find( "img" ).css( "top" ), 10) : false
         ;
 
         if ( coverImageData )
@@ -2191,13 +2202,16 @@
             bidx.utils.setValue( businessSummary, "cover.fileUpload", coverImageData.fileUpload );
         }
 
-        if ( coverImgTopPos <= 0 )
+        if ( coverImgTopPos )
         {
-            bidx.utils.setValue( businessSummary, "cover.top", coverImgTopPos );
-        }
-        else
-        {
-            bidx.utils.setValue( businessSummary, "cover.top", 0 );
+            if ( coverImgTopPos <= 0 )
+            {
+                bidx.utils.setValue( businessSummary, "cover.top", coverImgTopPos );
+            }
+            else
+            {
+                bidx.utils.setValue( businessSummary, "cover.top", 0 );
+            }
         }
     }
 
@@ -3231,6 +3245,8 @@
                 _showAllView( "mentor" );
                 _hideView( "matchingmentors" );
             }
+
+            $coverImageContainer.cover( "disable" );
         } );
 
         $btnSave.bind( "click", function( e )
