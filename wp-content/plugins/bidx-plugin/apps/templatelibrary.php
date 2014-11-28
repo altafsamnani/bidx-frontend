@@ -348,6 +348,73 @@ class TemplateLibrary
         return $pairRow;
     }
 
+
+    /**
+     * Create pairs of labels / values inline
+     * @param Array $pairs
+     * @param Array $properties Label's Tag and Value's Tag
+     *
+     * @return String $inlineRow Row html
+     *
+     */
+    public function inlineRow ( $rowValues, $properties = array () )
+    {
+        /** Class * */
+        $classLabel = (isset ($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
+        $classValue = (isset ($properties['class_value']) && $properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
+
+        /** Tag * */
+        $tagLabel = (isset ($properties['tag_label']) && $properties['tag_label']) ? $properties['tag_label'] : 'strong';
+        $tagValue = (isset ($properties['tag_value']) && $properties['tag_value']) ? $properties['tag_value'] : 'span';
+
+        $rowHtml = '';
+        foreach ($rowValues as $label => $value) {
+        $rowHtml .= "<div>";
+            if ($value && $value != 'null') {
+                //Display Label
+                $rowHtml .= "<$tagLabel " . $classLabel . " > " . $label . " </$tagLabel>";
+                //Display Value
+                $rowHtml .= "<$tagValue " . $classValue . " > " . $value . " </$tagValue>";
+            }
+        $rowHtml .="</div>";
+        }
+        return $rowHtml;
+    }
+
+
+    /**
+     * Create pairs of labels / values in a table
+     * @param Array $pairs
+     * @param Array $properties Label's Tag and Value's Tag
+     *
+     * @return String $tableRow Row html
+     *
+     */
+    public function tableRow ( $rowValues, $properties = array () )
+    {
+        /** Class * */
+        $classLabel = (isset ($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
+        $classValue = (isset ($properties['class_value']) && $properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
+
+        /** Tag * */
+        $tagLabel = (isset ($properties['tag_label']) && $properties['tag_label']) ? $properties['tag_label'] : 'td';
+        $tagValue = (isset ($properties['tag_value']) && $properties['tag_value']) ? $properties['tag_value'] : 'td';
+
+        $rowHtml = '<table class="table table-condensed"><tbody>';
+        foreach ($rowValues as $label => $value) {
+        $rowHtml .= "<tr>";
+            if ($value && $value != 'null') {
+                //Display Label
+                $rowHtml .= "<$tagLabel " . $classLabel . " > " . $label . " </$tagLabel>";
+                //Display Value
+                $rowHtml .= "<$tagValue " . $classValue . " > " . $value . " </$tagValue>";
+            }
+        $rowHtml .="</tr>";
+        }
+        $rowHtml .="</tbody></table>";
+        return $rowHtml;
+    }
+
     /**
      * Add bootstrap rows values/labels through views
      * @param int $gridColumnVal length of spangrid
@@ -589,10 +656,13 @@ class TemplateLibrary
         return $returnHtml;
     }
 
-    public function displayDocuments( $docs, $label )
+    public function displayDocuments( $docs, $label = NULL )
     {
         $html = '<div class="row"><div class="col-sm-12">';
-        $html .= '<h4>' . $label . '</h4>';
+        if ( $label )
+        {
+            $html .= '<h4>' . $label . '</h4>';
+        }
         $html .= '<table class="table table-bordered"> <tbody>';
         $html .= '<tr>';
         $html .= '<th>' . __('Name', 'bidxplugin') . '</th>';

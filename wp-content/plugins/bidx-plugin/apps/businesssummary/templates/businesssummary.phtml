@@ -124,37 +124,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-12">
-<?php
-            if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
-            {
-?>
-                <h1>
-                    <?php echo $this->exst( $businessSummary->name ); ?>
-                    <small>&nbsp;<?php echo _e( 'by', 'bidxplugin' ); ?>&nbsp;
-                        <a href="/member/<?php echo $this->exst( $businessSummaryBidxMeta->bidxOwnerId ); ?>"><?php echo $this->exst( $businessSummaryBidxMeta->bidxOwnerDisplayName ); ?></a>
-                    </small>
-                </h1>
-<?php
-            }
-            else
-            {
-?>
-                <h1><?php echo _e( 'Create Business Summary', 'bidxplugin' ); ?></h1>
-<?php
-
-            }
-?>
-        </div>
-
-    </div>
-
 <?php
     if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
     {
 ?>
-    <div class="well">
+    <div class="main-padding bg-info">
         <div class="row">
             <div class="col-sm-4">
                 <div class="completeness-score <?php echo $this->completenessColour ?>" >
@@ -283,6 +257,306 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
     }
 ?>
 
+
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+<?php
+            if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
+            {
+?>
+                <h1>
+                    <?php echo $this->exst( $businessSummary->name ); ?>
+                    <small>&nbsp;<?php echo _e( 'by', 'bidxplugin' ); ?>&nbsp;
+                        <a href="/member/<?php echo $this->exst( $businessSummaryBidxMeta->bidxOwnerId ); ?>"><?php echo $this->exst( $businessSummaryBidxMeta->bidxOwnerDisplayName ); ?></a>
+                    </small>
+                </h1>
+<?php
+            }
+            else
+            {
+?>
+                <h1><?php echo _e( 'Create Business Summary', 'bidxplugin' ); ?></h1>
+<?php
+
+            }
+?>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <h4><?php echo $this->exst( $businessSummary->slogan ); ?></h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+<?php
+            $videoUrl = $this->exst($businessSummary->externalVideoPitch);
+            $parsedVideo = $this->parseVideos( $videoUrl );
+
+            if ( $parsedVideo )
+            {
+                $theVideo .= '<div class="video-wrapper embed-responsive embed-responsive-16by9">'.$parsedVideo[0]['videoplayer'].'</div>';
+            }
+
+            echo $theVideo;
+?>
+        </div>
+    </div>
+<?php
+    if ( $this->exst($businessSummary->summary) )
+    {
+?>
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <label><?php _e('In a few words', 'bidxplugin')?></label>
+            <div>
+<?php
+                echo $this->exst($businessSummary->summary);
+?>
+            </div>
+        </div>
+    </div>
+
+<?php
+    }
+?>
+
+    <div class="row main-padding-vertical table-label-width">
+        <div class="col-sm-8 col-sm-offset-2">
+            <h3 class="to-uppercase"><?php _e('General Overview', 'bidxplugin')?></h3>
+<?php
+
+            $rowValues = array
+            (
+                __('Reason for financing','bidxplugin') => $this->exst($businessSummary->summaryFinancingNeeded),
+                __('Reason for submission','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->reasonForSubmission), ', ', 'reasonForSubmission' ),
+                __('Equity currently retained','bidxplugin') => $this->exst($businessSummary->equityRetained),
+                __('Investment type','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->investmentType), ', ', 'investmentType' )
+
+            );
+            echo $this->tableRow ( $rowValues );
+?>
+        </div>
+    </div>
+
+    <div class="row main-padding-vertical table-label-width">
+        <div class="col-sm-8 col-sm-offset-2">
+            <h3 class="to-uppercase"><?php _e('The Business', 'bidxplugin')?></h3>
+
+<?php
+
+            $rowValues = array
+            (
+                __('Stage of business','bidxplugin') => $this->getStaticVal( 'stageBusiness', $this->exst($businessSummary->stageBusiness)),
+                __('Industry') => $this->getMultiValues( $this->exst($businessSummary->industrySector), ', ','industrySector'),
+                __('Product / Service','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->productService), ', ', 'productService' ),
+                __('Country of business','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' ),
+                __('Social impact','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->socialImpact), ', ', 'socialImpact' ),
+                __('Environmental impact','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->envImpact), ', ', 'envImpact' ),
+                __('Customer type','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->consumerType), ', ', 'consumerType' )
+
+            );
+            echo $this->tableRow ( $rowValues );
+?>
+
+
+
+
+        </div>
+    </div>
+
+    <div class="row main-padding-vertical table-label-width">
+        <div class="col-sm-8 col-sm-offset-2">
+            <h3 class="to-uppercase"><?php _e('The Team', 'bidxplugin')?></h3>
+<?php
+            $rowValues = array
+            (
+                __('Role of Entrepreneur','bidxplugin') => $this->exst($businessSummary->personalRole),
+                __('Applicable Expertise') => $this->exst($businessSummary->personalExpertise)
+
+            );
+            echo $this->tableRow ( $rowValues );
+
+            // Supporting members
+            //
+            $tableHeader = array (
+                ''                                      => 'profilePicture',
+                __('Name','bidxplugin')                 => 'name',
+                __('Role','bidxplugin')                 => 'role',
+                __('Relevant Expertise','bidxplugin')   => 'expertise',
+                'LinkedIn'                              => 'linkedIn'
+            );
+
+            $merge['name'] = array ('firstName', 'lastName');
+
+            $supportingMembersHtml = $this->addTableRows(
+                $tableHeader,
+                $this->exst( $businessSummary->managementTeam ),
+                'table table-bordered',
+                $merge,
+                array( 'profilePicture' => 'bidx-profilepicture' )
+            );
+
+            $rowValues = array (
+                __('Supporting members of management team','bidxplugin') => $supportingMembersHtml
+            );
+
+            echo $this->addRowsWithLabelBelow ('col-sm-12', 'col-sm-12', $rowValues, array ('tag_label' => 'h5'));
+?>
+
+
+        </div>
+    </div>
+
+    <div class="row main-padding-vertical">
+        <div class="col-sm-8 col-sm-offset-2">
+            <h3 class="to-uppercase"><?php _e('Financial Details', 'bidxplugin')?></h3>
+<?php
+            $rowValues = array
+            (
+                __('Business sales started in','bidxplugin')=> $this->exst($businessSummary->yearSalesStarted)
+            );
+
+            echo $this->inlineRow ( $rowValues );
+
+            // $this->render('financialsummary.phtml');
+
+            // echo $this->financialDetails ( $this->exst( $businessSummary->financialSummaries ) );
+?>
+        <table class="table table-bordered">
+            <tr>
+                <th rowspan="2"><?php _e('Year', 'bidxplugin')?></th>
+                <th colspan="3"><?php _e('Income statement', 'bidxplugin')?></th>
+                <th rowspan="2"><?php _e('Finance needed', 'bidxplugin')?> <br><small><?php _e('from external financiers in US Dollars', 'bidxplugin')?></small> </th>
+                <th rowspan="2"><?php _e('Employees', 'bidxplugin')?> <br><small><?php _e('being directly paid in this business', 'bidxplugin')?></small> </th>
+            </tr>
+            <tr>
+                <td><?php _e('Sales revenues', 'bidxplugin')?></td>
+                <td><?php _e('Operational costs', 'bidxplugin')?></td>
+                <td><?php _e('Total income', 'bidxplugin')?></td>
+            </tr>
+<?php
+            $financialDetails = $this->exst( $businessSummary->financialSummaries );
+
+            foreach ( $financialDetails as $year => $yearDetails )
+            {
+                $currentYear = date("Y");
+                $yd;
+
+                if ( $year < $currentYear )
+                {
+                    $yd = __('Actuals', 'bidxplugin');
+                }
+                elseif ( $year > $currentYear )
+                {
+                    $yd = __('Forecast', 'bidxplugin');
+                }
+                else
+                {
+                    $yd = __('Current year', 'bidxplugin');
+                }
+
+                echo '<tr>';
+                echo '<td>' . $year . '<br><small>' . $yd . '</small></td>';
+                echo '<td>' . '<small>$</small>' . $yearDetails->salesRevenue . '<small></td>';
+                echo '<td>' . '<small>$</small>' . $yearDetails->operationalCosts . '<small></td>';
+                echo '<td>' . '<small>$</small>' . $yearDetails->totalIncome . '<small></td>';
+                echo '<td>' . '<small>$</small>' . $yearDetails->financeNeeded . '<small></td>';
+                echo '<td>' . '<small>$</small>' . $yearDetails->numberOfEmployees . '<small></td>';
+                echo '</tr>';
+
+            }
+?>            
+        </table>
+
+        </div>
+    </div>
+
+
+<?php
+    if ( $this->exst( $company )) :
+?>
+    <div class="row main-padding-vertical table-label-width">
+        <div class="col-sm-8 col-sm-offset-2">
+            <h3 class="to-uppercase"><?php _e('Company Details', 'bidxplugin')?></h3>
+<?php
+                $companyWebsite = null;
+
+                if ( $this->exst( $company->website ) ) {
+                    $companyWebsite = sprintf( '<a href="%1$s" target="_blank">%1$s</a>', $this->exst($company->website) );
+                }
+
+            $rowValues = array
+            (
+                __('Company name','bidxplugin') => $this->exst($company->name),
+                __('Company website') => $companyWebsite,
+                __('Registered') => $this->exst($company->registered) == true ? __('Yes','bidxplugin') : __('No','bidxplugin'),
+                __('Legal form') => $this->getStaticVal( 'legalForm', $this->exst($company->legalFormBusiness) ),
+                __('Registration number') => $this->exst($company->registrationNumber),
+                __('Fiscal number') => $this->exst($company->fiscalNumber),
+                __('Date company established') => $this->exst($company->dateCompanyEstab),
+                __('Number permanent male employees') => $this->exst($company->numPermMaleEmp ),
+                __('Number permanent female employees') => $this->exst($company->numPermFemaleEmp ),
+                __('Number temporary male employees') => $this->exst($company->numTempMaleEmp ),
+                __('Number temporary female employees') => $this->exst($company->numTempFemaleEmp ),
+                __('Street') => $this->exst($company->statutoryAddress->street),
+                __('Street number') => $this->exst($company->statutoryAddress->streetNumber),
+                __('Neighborhood') => $this->exst($company->statutoryAddress->neighborhood),
+                __('Postalcode') => $this->exst($company->statutoryAddress->postalCode),
+                __('Postbox') => $this->exst($company->statutoryAddress->postBox),
+                __('City') => $this->exst($company->statutoryAddress->cityTown),
+                __('Country') => $this->getStaticVal( 'country', $this->exst($company->statutoryAddress->country) )
+
+            );
+            echo $this->tableRow ( $rowValues );
+?>
+<?php
+    endif;
+?>
+        </div>
+    </div>
+
+<?php
+    if ( $this->exst( $businessSummary->mentorAdvisory )) :
+?>
+    <div class="row main-padding-vertical table-label-width">
+        <div class="col-sm-8 col-sm-offset-2">
+            <h3 class="to-uppercase"><?php _e('For Potential Mentors', 'bidxplugin')?></h3>
+<?php
+                $rowValues = array
+                (
+                    __('Expertise needed') => $this->getMultiValues( $this->exst($businessSummary->expertiseNeeded), ', ', 'mentorExpertise' ),
+                    __('Expertise needed in detail') => $this->exst($businessSummary->expertiseNeededDetail)
+                );
+
+                echo $this->tableRow ( $rowValues );
+?>            
+        </div>
+    </div>
+<?php
+    endif;
+?>
+<?php
+    if ( $this->exst( $businessSummary->attachment )) :
+?>
+
+    <div class="row main-padding-vertical">
+        <div class="col-sm-8 col-sm-offset-2">
+            <h3 class="to-uppercase"><?php _e('Attached Documents', 'bidxplugin')?></h3>
+<?php
+            echo $this->displayDocuments ( $businessSummary->attachment );
+?>
+        </div>
+    </div>
+<?php
+    endif;
+?>
+
+
+
+<hr>
     <!-- Accordion -->
 <div class="row tabs-vertical">
 
@@ -316,20 +590,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
 <?php
                         $rowValues = array (
-                            __('Business name','bidxplugin')
-                                => $this->exst($businessSummary->name),
-
-                            __('Describe your business (max. 140 characters) ','bidxplugin')
-                                => $this->exst($businessSummary->slogan),
-
-                            __('Summary of this business','bidxplugin')
-                                => $this->exst($businessSummary->summary),
-
                             __('Reason for submission of business summary','bidxplugin')
                                 => $this->getMultiValues( $this->exst($businessSummary->reasonForSubmission), ', ', 'reasonForSubmission' ),
-
-                            __('Expertise needed','bidxplugin')
-                                => $this->getMultiValues( $this->exst($businessSummary->expertiseNeeded), ', ', 'mentorExpertise' ),
 
                             __('Percentage equity you currently retain','bidxplugin')
                                 => $this->exst($businessSummary->equityRetained),
@@ -346,23 +608,6 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         echo $this->pairRows( $rowValues );
 ?>
                         <hr>
-<?php
-                        $videoUrl = $this->exst($businessSummary->externalVideoPitch);
-                        $parsedVideo = $this->parseVideos( $videoUrl );
-
-                        if ( $parsedVideo ) {
-                            $theVideo .= '<div class="video-wrapper">'.$parsedVideo[0]['videoplayer'].'</div>';
-                        }
-
-                        $rowValues = array (
-                            __('Video pitch','bidxplugin')
-                                => $theVideo,
-
-                            __('Audio pitch','bidxplugin')
-                                => $this->exst($businessSummary->externalAudioPitch)
-                        );
-                        echo $this->pairRows( $rowValues );
-?>
 
                     </div>
 

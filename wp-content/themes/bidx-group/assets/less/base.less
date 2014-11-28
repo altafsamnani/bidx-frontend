@@ -2000,7 +2000,10 @@ hr
 {
     font-size: @font-size-base;
 }
-
+.table-label-width td:first-child
+{
+    width: 180px;
+}
 /*!
  * bootstrap-vertical-tabs - v1.1.0
  * https://dbtek.github.io/bootstrap-vertical-tabs
@@ -2263,9 +2266,21 @@ hr
 {
     padding: 0 @font-size-base;
 }
+.big-padding-vertical
+{
+    padding: ceil(@font-size-base * 4.5) 0;
+}
+.big-padding-horizontal
+{
+    padding: 0 ceil(@font-size-base * 4.5);
+}
 .clearboth
 {
     clear: both;
+}
+.to-uppercase
+{
+    text-transform: uppercase;
 }
 
 // wells.less
