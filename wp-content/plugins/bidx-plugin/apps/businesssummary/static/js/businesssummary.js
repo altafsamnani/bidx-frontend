@@ -215,7 +215,7 @@
             [
                 "industry"
             // ,   "suggestedIndustry"
-            ,   "productService"
+            // ,   "productService"
             // ,   "suggestedProductService"
             ,   "countryOperation"
             ,   "socialImpact"
@@ -316,20 +316,20 @@
         ,   emptyValue:         bidx.i18n.i( "selectReasonForSubmission", appName )
         });
 
-        $industry.bidx_chosen(
-        {
-            dataKey:            "industry"
-        });
+        // $industry.bidx_chosen(
+        // {
+        //     dataKey:            "industry"
+        // });
 
         $expertiseNeeded.bidx_chosen(
         {
             dataKey:            "mentorExpertise"
         });
 
-        $productService.bidx_chosen(
-        {
-            dataKey:            "productService"
-        });
+        // $productService.bidx_chosen(
+        // {
+        //     dataKey:            "productService"
+        // });
 
         $countryOperation.bidx_chosen(
         {
@@ -1826,7 +1826,7 @@
 
         // Industry Sectors
         //
-        var data = bidx.utils.getValue( businessSummary, "industrySector", true );
+        var data = bidx.utils.getValue( businessSummary, "industry", true );
 
         if ( data )
         {
@@ -1996,7 +1996,7 @@
                     return n;
                 });
 
-                bidx.utils.setValue( businessSummary, "industrySector", arr );
+                bidx.utils.setValue( businessSummary, "industry", arr );
             }
 
 

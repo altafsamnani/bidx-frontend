@@ -180,6 +180,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 </div>
             </div>
             <div class="col-sm-3 text-right">
+                <div class="btn-group">
+                    <button class="btn btn-warning btn-feedback"><i class="fa fa-comments fa-big fa-above"></i><span>Feedback</span></button>
 <?php
                 // if a user is allowed to request full access to a business summary and it NOT The owner of the business summary
                 //
@@ -232,12 +234,12 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <?php
                     }
 ?>
+                </div>
                 <div class="editControlsContainer">
                     <div class="editControls pull-right">
 
                         <!-- SHOW -->
-                        <div class="view viewShow">
-                        </div>
+                        <div class="view viewShow"></div>
 
                         <!-- EDIT, conditionally filled by the app -->
                         <div class="view viewEdit btn-group"></div>

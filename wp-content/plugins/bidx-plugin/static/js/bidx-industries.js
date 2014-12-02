@@ -22,7 +22,7 @@
     ,   endSectorArr = []
     ;
 
-    bidx.data.getContext( "industrySector", function( err, industrySectors )
+    bidx.data.getContext( "industry", function( err, industrySectors )
     {
         $.each(industrySectors, function(index, val)
         {
@@ -414,8 +414,8 @@
                     var splitted         = row[0].split( "." )
                     ,   main             = splitted[0]
                     ,   sub              = splitted[1]
-                    ,   mainLabel        = bidx.data.i( main, "industrySector" )
-                    ,   subLabel         = bidx.data.i( main+"."+sub, "industrySector" )
+                    ,   mainLabel        = bidx.data.i( main, "industry" )
+                    ,   subLabel         = bidx.data.i( main+"."+sub, "industry" )
                     ,   $industryRowItem = ""
                     ,   selectClass      = splitted[2] ? "col-sm-5" : "col-sm-8"
                     ,   key              = splitted[2] ? main+"."+sub : main
