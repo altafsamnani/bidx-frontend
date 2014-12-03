@@ -34,7 +34,7 @@
     // Investor Form elements
     ,   $investorType               = $frmBecomeInvestor.find( "[name='investorType']" )
     ,   $institutionAddressCountry  = $frmBecomeInvestor.find( "[name='institutionAddress.country']" )
-    ,   $focusIndustry              = $frmBecomeInvestor.find( "[name='focusIndustry']" )
+    ,   $focusIndustry              = $frmBecomeInvestor.find( ".industrySectors" )
     ,   $focusSocialImpact          = $frmBecomeInvestor.find( "[name='focusSocialImpact']" )
     ,   $focusEnvImpact             = $frmBecomeInvestor.find( "[name='focusEnvImpact']" )
     ,   $investmentType             = $frmBecomeInvestor.find( "[name='investmentType']" )
@@ -47,9 +47,8 @@
     ,   $prefCommChkBoxes           = $prefComm.find( "[type='checkbox']" )
 
     // Entrepreneur Form elements
-    ,   $industry                   = $frmBecomeEntrepreneur.find( "[name='industry']" )
+    ,   $industry                   = $frmBecomeEntrepreneur.find( ".industrySectors" )
     ,   $expertiseNeeded            = $frmBecomeEntrepreneur.find( "[name='expertiseNeeded']" )
-    ,   $productService             = $frmBecomeEntrepreneur.find( "[name='productService']" )
     ,   $countryOperation           = $frmBecomeEntrepreneur.find( "[name='countryOperation']" )
     ,   $reasonForSubmission        = $frmBecomeEntrepreneur.find( "[name='reasonForSubmission']" )
     ,   $yearSalesStarted           = $frmBecomeEntrepreneur.find( "[name='yearSalesStarted']" )
@@ -128,7 +127,6 @@
         ,   'mentorAdvisory'
         ,   'expertiseNeeded'
         ,   'expertiseNeededDetail'
-        ,   'productService'
         ,   'countryOperation'
         ,   'yearSalesStarted'
         ,   'personalRole'
@@ -145,10 +143,7 @@
     {
         // Populate the selects
         //
-        $focusIndustry.bidx_chosen(
-        {
-            dataKey:            "industry"
-        });
+        $focusIndustry.industries();
 
         $focusSocialImpact.bidx_chosen(
         {
@@ -193,19 +188,11 @@
         ,   emptyValue:         bidx.i18n.i( "selectReasonForSubmission", appName )
         });
 
-        $industry.bidx_chosen(
-        {
-            dataKey:            "industry"
-        });
+        $industry.industries();
 
         $expertiseNeeded.bidx_chosen(
         {
             dataKey:            "mentorExpertise"
-        });
-
-        $productService.bidx_chosen(
-        {
-            dataKey:            "productService"
         });
 
         $countryOperation.bidx_chosen(
@@ -702,10 +689,6 @@
                 {
                     required:               { depends: function () { return !$( ".toggle-mentorAdvisory" ).is(':hidden'); } }
                 ,   maxlength:              300
-                }
-            ,   "productService":
-                {
-                    required:               true
                 }
             ,   "countryOperation":
                 {

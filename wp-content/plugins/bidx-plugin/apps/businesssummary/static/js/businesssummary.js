@@ -124,7 +124,7 @@
 
         // Industy Sectors
         //
-    // ,   $industrySectors                    = $element.find( ".industrySectors" )
+    ,   $industrySectors                    = $element.find( ".industrySectors" )
 
     ,   businessSummary
     ,   businessSummaryId
@@ -207,7 +207,7 @@
             [
                 "industry"
             // ,   "suggestedIndustry"
-            ,   "productService"
+            // ,   "productService"
             // ,   "suggestedProductService"
             ,   "countryOperation"
             ,   "socialImpact"
@@ -307,20 +307,20 @@
         ,   emptyValue:         bidx.i18n.i( "selectReasonForSubmission", appName )
         });
 
-        $industry.bidx_chosen(
-        {
-            dataKey:            "industry"
-        });
+        // $industry.bidx_chosen(
+        // {
+        //     dataKey:            "industry"
+        // });
 
         $expertiseNeeded.bidx_chosen(
         {
             dataKey:            "mentorExpertise"
         });
 
-        $productService.bidx_chosen(
-        {
-            dataKey:            "productService"
-        });
+        // $productService.bidx_chosen(
+        // {
+        //     dataKey:            "productService"
+        // });
 
         $countryOperation.bidx_chosen(
         {
@@ -339,7 +339,7 @@
 
         // Run the industry widget on the selector
         //
-        // $industrySectors.industries();
+        $industrySectors.industries();
 
         forms.financialDetails.$el.find( "[name='yearSalesStarted']" ).bidx_chosen();
 
@@ -433,22 +433,22 @@
             ,   ignore:         ""
             ,   rules:
                 {
-                    industry:
-                    {
-                        // required:      true
-                    }
-                ,   productService:
-                    {
-                        // required:      true
-                    }
-                ,   countryOperation:
-                    {
-                        // required:      true
-                    }
-                ,   "consumerType[]":
-                    {
-                        // required:      true
-                    }
+                //     industry:
+                //     {
+                //         required:      true
+                //     }
+                // ,   productService:
+                //     {
+                //         required:      true
+                //     }
+                // ,   countryOperation:
+                //     {
+                //         required:      true
+                //     }
+                // ,   "consumerType[]":
+                //     {
+                //         required:      true
+                //     }
                 }
             ,   messages:
                 {
@@ -1736,12 +1736,12 @@
 
         // // Industry Sectors
         // //
-        // var data = bidx.utils.getValue( businessSummary, "industrySector", true );
+        var data = bidx.utils.getValue( businessSummary, "industry", true );
 
-        // if ( data )
-        // {
-        //     $industrySectors.industries( "populateInEditScreen",  data );
-        // }
+        if ( data )
+        {
+            $industrySectors.industries( "populateInEditScreen",  data );
+        }
 
         // Now the nested objects
         //
@@ -1821,9 +1821,9 @@
 
         // Update the chosen components with our set values
         //
-        $industry.trigger( "chosen:updated" );
+        // $industry.trigger( "chosen:updated" );
         $expertiseNeeded.trigger( "chosen:updated" );
-        $productService.trigger( "chosen:updated" );
+        // $productService.trigger( "chosen:updated" );
         $countryOperation.trigger( "chosen:updated" );
         $reasonForSubmission.trigger( "chosen:updated" );
         $envImpact.trigger( "chosen:updated" );
@@ -1875,28 +1875,28 @@
 
 
             // Industry Sectors
-            // var endSectors = $industrySectors.find( "[name*='endSector']" );
+            var endSectors = $industrySectors.find( "[name*='endSector']" );
 
-            // if ( endSectors )
-            // {
-            //     var arr = [];
-            //     $.each( endSectors, function(i, f)
-            //     {
-            //         var value   = bidx.utils.getElementValue( $(f) );
+            if ( endSectors )
+            {
+                var arr = [];
+                $.each( endSectors, function(i, f)
+                {
+                    var value   = bidx.utils.getElementValue( $(f) );
 
-            //         if ( value )
-            //         {
-            //             arr.push( value );
-            //         }
-            //     });
+                    if ( value )
+                    {
+                        arr.push( value );
+                    }
+                });
 
-            //     arr = $.map( arr, function( n )
-            //     {
-            //         return n;
-            //     });
+                arr = $.map( arr, function( n )
+                {
+                    return n;
+                });
 
-            //     bidx.utils.setValue( businessSummary, "industrySector", arr );
-            // }
+                bidx.utils.setValue( businessSummary, "industry", arr );
+            }
 
 
             // Collect the nested objects

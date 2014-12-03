@@ -22,23 +22,23 @@
     ,   endSectorArr = []
     ;
 
-    bidx.data.getContext( "industrySector", function( err, industrySectors )
+    bidx.data.getContext( "industry", function( err, industrySectors )
     {
         $.each(industrySectors, function(index, val)
         {
             var key = val.value;
 
-            if ( !key.match(/A[0-9]{2}./) )
+            if ( !key.match(/[A-Z]{1}\./) )
             {
                 mainSectorArr.push( val );
             }
 
-            if ( !key.match(/A[0-9]{2}.B[0-9]{2}.C[0-9]{2}/) && key.match(/A[0-9]{2}./) )
+            if ( !key.match(/[A-Z]{1}\.[0-9]+\./) && key.match(/[A-Z]{1}\./) )
             {
                 subSectorArr.push( val );
             }
 
-            if ( key.match(/A[0-9]{2}.B[0-9]{2}.C[0-9]{2}/) )
+            if ( key.match(/[A-Z]{1}\.[0-9]+\./) )
             {
                 endSectorArr.push( val );
             }
@@ -101,26 +101,7 @@
             {
                 var opt
                 ,   key = $(this).find(":selected" ).val()
-                ,   noEndSector = false
-                ,   thirdLevel
                 ;
-
-                // Check if the there is an End Sector of the chosen key
-                // The key we are looking should be only from main sector
-                //
-                if ( !key.match(/A[0-9]{2}./) )
-                {
-                    thirdLevel = $.grep( options.endSectorArr, function( obj, i )
-                    {
-                        // There should always be a (key + .B00.C00) as first End Sector option
-                        return obj.value.indexOf( key+".B00.C00" ) !== -1;
-                    });
-
-                    if ( !thirdLevel.length )
-                    {
-                        noEndSector = true;
-                    }
-                }
             
                 // Populate the array of matched options
                 opt = widget._filterSelected( key );
@@ -128,7 +109,7 @@
                 // Populate the dropdown
                 if ( opt.length )
                 {
-                    widget._populateDropdown( opt, $(this), noEndSector );
+                    widget._populateDropdown( opt, $(this) );
                 }
             });
         }
@@ -141,7 +122,7 @@
 
             elem.bind( "change", function( e )
             {
-                $( "." + options.sectorClass )
+                $(this).parents( "." + options.sectorClass )
                     .append
                     (
                         widget._addRow().fadeIn( 100, function()
@@ -157,7 +138,7 @@
             } );
         }
 
-    ,   _populateDropdown: function( opt, $elem, noEndSector )
+    ,   _populateDropdown: function( opt, $elem )
         {
             var widget   = this
             ,   options  = widget.options
@@ -167,7 +148,7 @@
             ;
 
             // Figure out in which sector are we
-            sector = ( opt[0].value.match(/A[0-9]{2}.B[0-9]{2}./) || noEndSector ) ? "subSector" : "mainSector";
+            sector = ( opt[0].value.match(/[A-Z]{1}\.[0-9]+\./)  ) ? "subSector" : "mainSector";
 
             $sector       = $elem.parents( "." + options.selectionClass ).find( "." + sector ).next();
             $sectorSelect = $sector.find( "select" );
@@ -175,12 +156,6 @@
             // Empty options in select before populating it
             $sectorSelect.find( "option" ).remove().end();
 
-            // Replace width if there is no end sector
-            if ( noEndSector )
-            {
-                $sector.addClass( "col-sm-8" ).removeClass( "col-sm-5" );
-            }
-            
             // Add an empty option for sub sector
             // Don't get confused the "mainSector" is the starting point (what was triggered)
             if ( sector === "mainSector" )
@@ -197,13 +172,6 @@
             // Show the populated select
             $sector.removeClass( "hide" );
 
-            // Change the sector if no third level
-            // Needed at this level for the _disableSelect function (we skip the sub sector )
-            if ( noEndSector )
-            {
-                sector = "mainSector";
-            }
-
             // Disable the previous sector
             this._disableSelect( $elem.parents( "." + sector ), $elem.find(":selected" ).html() );
         }
@@ -218,7 +186,7 @@
             ;
 
             // Select the according level by checking the key from the selected option
-            arr = ( key.match(/A[0-9]{2}.B[0-9]{2}/) ) ? options.endSectorArr : options.subSectorArr;
+            arr = ( key.match(/[A-Z]{1}\./) ) ? options.endSectorArr : options.subSectorArr;
             
             // Filter that level by checking the key
             results = $.grep( arr, function( obj, i )
@@ -251,15 +219,15 @@
                             $( "<div />", { "class": options.actionsClass } )
                             .append
                             (
-                                $( "<i />", { "class": "fa fa-arrow-circle-right text-muted fa-block industryIndicate hide" })
+                                $( "<i />", { "class": "fa fa-arrow-circle-right text-muted fa-big industryIndicate hide" })
                             )
                             .append
                             (
-                                $( "<i />", { "class": "fa fa-times-circle text-danger fa-block industryDelete hide" })
+                                $( "<i />", { "class": "fa fa-times-circle text-danger fa-big industryDelete hide" })
                             )
                             .append
                             (
-                                $( "<i />", { "class": "fa fa-plus-circle text-success fa-block industryAdd hide" })
+                                $( "<i />", { "class": "fa fa-plus-circle text-success fa-big industryAdd hide" })
                             )
                         )
                         .append
@@ -414,8 +382,8 @@
                     var splitted         = row[0].split( "." )
                     ,   main             = splitted[0]
                     ,   sub              = splitted[1]
-                    ,   mainLabel        = bidx.data.i( main, "industrySector" )
-                    ,   subLabel         = bidx.data.i( main+"."+sub, "industrySector" )
+                    ,   mainLabel        = bidx.data.i( main, "industry" )
+                    ,   subLabel         = bidx.data.i( main+"."+sub, "industry" )
                     ,   $industryRowItem = ""
                     ,   selectClass      = splitted[2] ? "col-sm-5" : "col-sm-8"
                     ,   key              = splitted[2] ? main+"."+sub : main
@@ -433,7 +401,7 @@
                                     $( "<div />", { "class": options.actionsClass } )
                                     .append
                                     (
-                                        $( "<i />", { "class": "fa fa-times-circle text-danger fa-block industryDelete" })
+                                        $( "<i />", { "class": "fa fa-times-circle text-danger fa-big industryDelete" })
                                     )
                                 )
                                 .append
