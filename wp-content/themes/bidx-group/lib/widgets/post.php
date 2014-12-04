@@ -133,6 +133,11 @@ class Bidx_Post_Widget extends WP_Widget {
 <?php                 
         endif; 
 
+		//if wpml replace post_id by the one matching the language
+		if( function_exists('icl_object_id' ) ) {
+			$post_id = icl_object_id( $post_id, 'post', true );
+		}
+
         $the_query = new WP_Query( array( 'post_id' => $post_id, 'post_status' => 'publish' ) );
         
         if ( $the_query->have_posts() )
