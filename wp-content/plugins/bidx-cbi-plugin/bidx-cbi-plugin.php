@@ -158,7 +158,7 @@ class CBIShortCode {
 			}
 		}	
 		?>
-			<div class="container cbi-content">
+			<div class="cbi-content">
 				<div id="cbi-container">
 					<?php echo $data ?>
 				</div>
@@ -199,6 +199,14 @@ class CBIShortCode {
 	}
 	
 }
+
+/*  Enqueue css
+/* ------------------------------------ */ 
+function cbi_style() 
+{
+    wp_enqueue_style( 'cbi', plugins_url('/bidx-cbi-plugin/cbi.css') );
+}
+add_action( 'wp_enqueue_scripts', 'cbi_style' ); 
 
 /**
  * CBI viewing widget 

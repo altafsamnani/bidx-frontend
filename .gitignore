@@ -11,6 +11,7 @@
 ######################
 wp-config.php
 wp-content/plugins/bidx-plugin/node_modules
+wp-content/uploads
  
 # Packages #
 ############

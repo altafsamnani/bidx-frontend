@@ -48,6 +48,7 @@ get_header();
                                         </div>
                                         <div class="portfolio-details">
                                             <p>Shape & Lead</p>
+                                            <p><small>Rwanda</small></p>
                                         </div>
                                     </div>
                                 </div>
@@ -60,6 +61,7 @@ get_header();
                                         </div>
                                         <div class="portfolio-details">
                                             <p>Ondernemen Zonder Grenzen</p>
+                                            <p><small>The Netherlands</small></p>
                                         </div>
                                     </div>
                                 </div>
@@ -74,6 +76,7 @@ get_header();
                                         </div>
                                         <div class="portfolio-details">
                                             <p>Clean Cookstoves</p>
+                                            <p><small>International</small></p>
                                         </div>
                                     </div>
                                 </div>
@@ -88,6 +91,7 @@ get_header();
                                         </div>
                                         <div class="portfolio-details">
                                             <p>BC Zvecan</p>
+                                            <p><small>North-Kosovo</small></p>
                                         </div>
                                     </div>
                                 </div>
@@ -102,6 +106,7 @@ get_header();
                                         </div>
                                         <div class="portfolio-details">
                                             <p>BSC Monrovia</p>
+                                            <p><small>Liberia</small></p>
                                         </div>
                                     </div>
                                 </div>
@@ -116,24 +121,12 @@ get_header();
                                         </div>
                                         <div class="portfolio-details">
                                             <p>JCI Rwanda</p>
+                                            <p><small>Rwanda</small></p>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- /.portfolio-item-wrapper -->
 
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo15.png" class="img-responsive" alt="4th Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="http://demogroup.demo.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>Demo Group</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
 
                                 <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
                                     <div class="portfolio-item">
@@ -144,6 +137,7 @@ get_header();
                                         </div>
                                         <div class="portfolio-details">
                                             <p>Somaliland Afrifood</p>
+                                            <p><small>Somalia</small></p>
                                         </div>
                                     </div>
                                 </div>
@@ -158,6 +152,7 @@ get_header();
                                         </div>
                                         <div class="portfolio-details">
                                             <p>Puntland Afrifood</p>
+                                            <p><small>Somalia</small></p>
                                         </div>
                                     </div>
                                 </div>
@@ -172,6 +167,7 @@ get_header();
                                         </div>
                                         <div class="portfolio-details">
                                             <p>Somalia Afrifood</p>
+                                            <p><small>Somalia</small></p>
                                         </div>
                                     </div>
                                 </div>
@@ -186,6 +182,7 @@ get_header();
                                         </div>
                                         <div class="portfolio-details">
                                             <p>IFDC Catalist Uganda</p>
+                                            <p><small>Uganda</small></p>
                                         </div>
                                     </div>
                                 </div>
@@ -200,11 +197,26 @@ get_header();
                                         </div>
                                         <div class="portfolio-details">
                                             <p>BTI Palestine</p>
+                                            <p><small>Palestine</small></p>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- /.portfolio-item-wrapper -->
 
+                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
+                                    <div class="portfolio-item">
+                                        <div class="portfolio-thumb">
+                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo15.png" class="img-responsive" alt="4th Portfolio Thumb">
+                                            <div class="image-overlay"></div>
+                                            <a href="http://demogroup.demo.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
+                                        </div>
+                                        <div class="portfolio-details">
+                                            <p>Demo Group</p>
+                                            <p><small>Demonstration</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.portfolio-item-wrapper -->
                             </div>
                             <!-- /.isotope-portfolio-container -->
                         </div>
