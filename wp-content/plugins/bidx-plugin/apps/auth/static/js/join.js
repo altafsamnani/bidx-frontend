@@ -34,7 +34,6 @@
     // Investor Form elements
     ,   $investorType               = $frmBecomeInvestor.find( "[name='investorType']" )
     ,   $institutionAddressCountry  = $frmBecomeInvestor.find( "[name='institutionAddress.country']" )
-    ,   $focusIndustry              = $frmBecomeInvestor.find( ".industrySectors" )
     ,   $focusSocialImpact          = $frmBecomeInvestor.find( "[name='focusSocialImpact']" )
     ,   $focusEnvImpact             = $frmBecomeInvestor.find( "[name='focusEnvImpact']" )
     ,   $investmentType             = $frmBecomeInvestor.find( "[name='investmentType']" )
@@ -47,7 +46,6 @@
     ,   $prefCommChkBoxes           = $prefComm.find( "[type='checkbox']" )
 
     // Entrepreneur Form elements
-    ,   $industry                   = $frmBecomeEntrepreneur.find( ".industrySectors" )
     ,   $expertiseNeeded            = $frmBecomeEntrepreneur.find( "[name='expertiseNeeded']" )
     ,   $countryOperation           = $frmBecomeEntrepreneur.find( "[name='countryOperation']" )
     ,   $reasonForSubmission        = $frmBecomeEntrepreneur.find( "[name='reasonForSubmission']" )
@@ -108,7 +106,6 @@
         ,   'investorType'
         ,   'institutionAddress.country'
         ,   'institutionAddress.cityTown'
-        ,   'focusIndustry'
         ,   'focusSocialImpact'
         ,   'focusEnvImpact'
         ,   'investmentType'
@@ -123,7 +120,6 @@
             'name'
         ,   'summary'
         ,   'reasonForSubmission'
-        ,   'industry'
         ,   'mentorAdvisory'
         ,   'expertiseNeeded'
         ,   'expertiseNeededDetail'
@@ -143,8 +139,6 @@
     {
         // Populate the selects
         //
-        $focusIndustry.industries();
-
         $focusSocialImpact.bidx_chosen(
         {
             dataKey:            "socialImpact"
@@ -187,8 +181,6 @@
             dataKey:            "reasonForSubmission"
         ,   emptyValue:         bidx.i18n.i( "selectReasonForSubmission", appName )
         });
-
-        $industry.industries();
 
         $expertiseNeeded.bidx_chosen(
         {
@@ -367,7 +359,6 @@
             // Default values
             //
             bidx.utils.setValue( member, "bidxEntrepreneurProfile.summary", ".." );
-            bidx.utils.setValue( member, "bidxEntrepreneurProfile.focusIndustry", ["services"] );
             bidx.utils.setValue( member, "bidxEntrepreneurProfile.prevRunBusiness", false );
             bidx.utils.setValue( member, "bidxEntrepreneurProfile.cv", {} );
 
@@ -540,10 +531,6 @@
                 {
                     required:               true
                 }
-            ,   "focusIndustry":
-                {
-                    required:               true
-                }
             ,   "focusSocialImpact":
                 {
                     required:               true
@@ -670,10 +657,6 @@
                 ,   maxlength:              900
                 }
             ,   "reasonForSubmission":
-                {
-                    required:               true
-                }
-            ,   "industry":
                 {
                     required:               true
                 }
