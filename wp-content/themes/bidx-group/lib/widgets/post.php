@@ -145,7 +145,7 @@ class Bidx_Post_Widget extends WP_Widget {
             $selected_post = get_post($post_id);
 ?>
             <h1><?php echo $selected_post->post_title; ?></h1>
-            <p><?php echo $selected_post->post_content; ?></p>
+            <p><? echo apply_filters('the_content', $selected_post->post_content) ?></p>
 <?php 
         }
         else
