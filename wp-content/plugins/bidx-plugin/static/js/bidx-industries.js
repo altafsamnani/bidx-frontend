@@ -161,6 +161,9 @@
             if ( sector === "mainSector" )
             {
                 $sectorSelect.append( $( "<option />", { text: bidx.i18n.i( "selectSubSector" ) } ) );
+
+                // Hide the endSector
+                $sector.parent().find( ".endSector" ).addClass( "hide" );
             }
 
             // Populate the select dropdown
@@ -171,9 +174,6 @@
 
             // Show the populated select
             $sector.removeClass( "hide" );
-
-            // Disable the previous sector
-            this._disableSelect( $elem.parents( "." + sector ), $elem.find(":selected" ).html() );
         }
 
     ,   _filterSelected: function( key )
@@ -286,32 +286,14 @@
             return $industryRowItem;
         }
 
-    ,   _disableSelect: function( el, label )
-        {
-            // Replace the select with a disabled input
-            //
-            el.find( ".chosen-container" ).remove();
-            el.find( ".form-group" )
-                .append
-                (
-                    $("<input/>", { value: label, "type": "text", "class": "form-control", "disabled": "disabled" } )
-                )
-                .append
-                (
-                    $("<span/>", { "class": "sectorArrow" } )
-                )
-                ;
-        }
-
         // Public function to populate the edit screen
-    
+        //
     ,   populateInEditScreen: function( data )
         {
             var widget  = this
             ,   options = widget.options
             ,   $el     = widget.element
             ,   rows    = _createRows( data )
-            // ,   opt
             ;
 
             $el.find( "." + options.rowClass ).remove();
@@ -382,12 +364,8 @@
                     var splitted         = row[0].split( "." )
                     ,   main             = splitted[0]
                     ,   sub              = splitted[1]
-                    ,   mainLabel        = bidx.data.i( main, "industry" )
-                    ,   subLabel         = bidx.data.i( main+"."+sub, "industry" )
                     ,   $industryRowItem = ""
                     ,   selectClass      = splitted[2] ? "col-sm-5" : "col-sm-8"
-                    ,   key              = splitted[2] ? main+"."+sub : main
-                    ,   dsf              = splitted[2] ? main+"."+sub : main
                     ,   opt
                     ;
 
@@ -415,11 +393,31 @@
                                             $( "<div />", { "class": "form-group" })
                                             .append
                                             (
-                                                $("<input/>", { value: mainLabel, "type": "text", "class": "form-control", "disabled": "disabled" } )
+                                                $( "<select />", { "name": "focusIndustrySector["+i+"]mainSector" })
                                             )
+                                        )
+                                    )
+                                    .append
+                                    (
+                                        $( "<div />", { "class": "col-sm-3 subSector" })
+                                        .append
+                                        (
+                                            $( "<div />", { "class": "form-group" })
                                             .append
                                             (
-                                                $("<span/>", { "class": "sectorArrow" } )
+                                                $( "<select />", { "name": "focusIndustrySector["+i+"]subSector" })
+                                            )
+                                        )
+                                    )
+                                    .append
+                                    (
+                                        $( "<div />", { "class": "col-sm-5 endSector" })
+                                        .append
+                                        (
+                                            $( "<div />", { "class": "form-group" })
+                                            .append
+                                            (
+                                                $( "<select />", { "name": "focusIndustrySector["+i+"]endSector", "multiple": "multiple" })
                                             )
                                         )
                                     )
@@ -427,45 +425,26 @@
                             )
                         ;
 
-                    if ( splitted[2] )
-                    {
-                        $industryRowItem.find( "." + options.selectionClass ).append
-                        (
-                             $( "<div />", { "class": "col-sm-3 subSector" })
-                            .append
-                            (
-                                $( "<div />", { "class": "form-group" })
-                                .append
-                                (
-                                    $("<input/>", { value: subLabel, "type": "text", "class": "form-control", "disabled": "disabled" } )
-                                )
-                                .append
-                                (
-                                    $("<span/>", { "class": "sectorArrow" } )
-                                )
-                            )
-                        );
-                    }
 
-                    $industryRowItem.find( "." + options.selectionClass ).append
-                    (
-                        $( "<div />", { "class": selectClass + " endSector" })
-                        .append
-                        (
-                            $( "<div />", { "class": "form-group" })
-                            .append
-                            (
-                                $( "<select />", { "name": "focusIndustrySector["+i+"]endSector", "multiple": "multiple" })
-                            )
-                        )
-                    );
+                    var $mainSectorSelect = $industryRowItem.find( ".mainSector select" )
+                    ,   $subSectorSelect  = $industryRowItem.find( ".subSector select" )
+                    ,   $endSectorSelect  = $industryRowItem.find( ".endSector select" )
+                    ;
 
-                    var $select = $industryRowItem.find( "select" );
+                    bidx.utils.populateDropdown( $mainSectorSelect, options.mainSectorArr );
+                    bidx.utils.setElementValue(  $mainSectorSelect, main );
 
-                    opt = widget._filterSelected( key );
-                    bidx.utils.populateDropdown( $select, opt );
-                    bidx.utils.setElementValue( $select, row );
-                    $select.bidx_chosen();
+                    opt = widget._filterSelected( main );
+                    bidx.utils.populateDropdown( $subSectorSelect, opt );
+                    bidx.utils.setElementValue(  $subSectorSelect, main+"."+sub );
+                    
+                    opt = widget._filterSelected( main+"."+sub );
+                    bidx.utils.populateDropdown( $endSectorSelect, opt );
+                    bidx.utils.setElementValue(  $endSectorSelect, row );
+                    
+                    $mainSectorSelect.bidx_chosen();
+                    $subSectorSelect.bidx_chosen();
+                    $endSectorSelect.bidx_chosen();
 
                     $el.append( $industryRowItem );
                 });
