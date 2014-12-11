@@ -10,7 +10,7 @@
     ,   $focusLanguage                      = $editForm.find( "[name='focusLanguage']" )
     ,   $focusSocialImpact                  = $editForm.find( "[name='focusSocialImpact']" )
     ,   $focusEnvImpact                     = $editForm.find( "[name='focusEnvImpact']" )
-    ,   $focusIndustry                      = $editForm.find( "[name='focusIndustry']" )
+    // ,   $focusIndustry                      = $editForm.find( "[name='focusIndustry']" )
     ,   $focusExpertise                     = $editForm.find( "[name='focusExpertise']" )
     ,   $focusCountry                       = $editForm.find( "[name='focusCountry']" )
 
@@ -31,7 +31,7 @@
 
         // Industy Sectors
         //
-    // ,   $industrySectors         = $editForm.find( ".industrySectors" )
+    ,   $industrySectors         = $editForm.find( ".industrySectors" )
 
     ,   member
     ,   memberId
@@ -64,7 +64,7 @@
         ,   'focusCountry'
         ,   'focusLanguage'
         ,   'focusExpertise'
-        ,   'focusIndustry'
+        // ,   'focusIndustry'
         ,   'focusGender'
         ,   'focusStageBusiness'
         ,   'focusSocialImpact'
@@ -121,10 +121,10 @@
 
         // Populate the selects
         //
-        $focusIndustry.bidx_chosen(
-        {
-            dataKey:            "industry"
-        });
+        // $focusIndustry.bidx_chosen(
+        // {
+        //     dataKey:            "industry"
+        // });
 
         $focusExpertise.bidx_chosen(
         {
@@ -153,7 +153,7 @@
 
         // Run the industry widget on the selector
         //
-        // $industrySectors.industries();
+        $industrySectors.industries();
 
         // Grab the snippets from the DOM
         //
@@ -409,12 +409,12 @@
 
         // Industry Sectors
         //
-        // var data = bidx.utils.getValue( member, "bidxMentorProfile.focusIndustrySector", true );
+        var data = bidx.utils.getValue( member, "bidxMentorProfile.focusIndustry", true );
 
-        // if ( data )
-        // {
-        //     $industrySectors.industries( "populateInEditScreen",  data );
-        // }
+        if ( data )
+        {
+            $industrySectors.industries( "populateInEditScreen",  data );
+        }
 
         $.each( fields.preferredCommunication, function( i, f )
         {
@@ -558,7 +558,7 @@
 
         // Update the chosen components with our set values
         //
-        $focusIndustry.trigger( "chosen:updated" );
+        // $focusIndustry.trigger( "chosen:updated" );
         $focusExpertise.trigger( "chosen:updated" );
         $focusLanguage.trigger( "chosen:updated" );
         $focusCountry.trigger( "chosen:updated" );
@@ -583,28 +583,28 @@
         } );
 
         // Industry Sectors
-        // var endSectors = $industrySectors.find( "[name*='endSector']" );
+        var endSectors = $industrySectors.find( "[name*='endSector']" );
 
-        // if ( endSectors )
-        // {
-        //     var arr = [];
-        //     $.each( endSectors, function(i, f)
-        //     {
-        //         var value   = bidx.utils.getElementValue( $(f) );
+        if ( endSectors )
+        {
+            var arr = [];
+            $.each( endSectors, function(i, f)
+            {
+                var value   = bidx.utils.getElementValue( $(f) );
 
-        //         if ( value )
-        //         {
-        //             arr.push( value );
-        //         }
-        //     });
+                if ( value )
+                {
+                    arr.push( value );
+                }
+            });
 
-        //     arr = $.map( arr, function( n )
-        //     {
-        //         return n;
-        //     });
+            arr = $.map( arr, function( n )
+            {
+                return n;
+            });
 
-        //     bidx.utils.setValue( member, "bidxMentorProfile.focusIndustrySector", arr );
-        // }
+            bidx.utils.setValue( member, "bidxMentorProfile.focusIndustry", arr );
+        }
 
         $.each( fields.preferredCommunication, function( i, f )
         {

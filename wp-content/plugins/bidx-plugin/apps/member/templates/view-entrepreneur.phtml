@@ -50,8 +50,7 @@ if ($entrepreneurDetails &&
                     <?php
                     $rowValues = array(
                         __('Summary','bidxplugin')          =>  $this->exst ($entrepreneurDetails->summary),
-                        __('Focus Industry','bidxplugin')   =>  $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustry), ', ','industry')
-                        // __('Focus industry','bidxplugin')  =>  $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustrySector), '<br> ','industrySector')
+                        __('Focus industry','bidxplugin')  =>  $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustry), '<br> ','industry')
                         );
                     echo $this->pairRows( $rowValues );
 ?>
