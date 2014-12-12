@@ -2,8 +2,6 @@
 {
     "use strict";
     var $body               = $( "body" )
-    ,   $mainElement        = $( "#commenting" )
-    
     ,   bidx                = window.bidx
     ,   currentGroupId      = bidx.common.getCurrentGroupId( "currentGroup ")
     ,   currentUserId       = bidx.common.getCurrentUserId( "id" )
@@ -37,31 +35,23 @@
         $btnFeedback.on('click', function()
         {
             var $el = $(this)
-            ,   $feedbackPanel  = $el.closest(".panel-feedback")
-            ,   $feedbackBox    = $feedbackPanel.find(".feedback-box")
-            ,   $feedbackScope  = $feedbackPanel.find(".feedback-scope")
-            ,   $attachmentItem = $feedbackScope.find(".attachmentItem")
-            ,   $halfs          = $feedbackPanel.find(".feedback-scope .row > div")
-            ,   txt             = $feedbackBox.is( ":visible" ) ? bidx.i18n.i( "showFeedback" ) : bidx.i18n.i( "hideFeedback" )
+            ,   txt             = $panelFeedback.is( ":visible" ) ? bidx.i18n.i( "showFeedback" ) : bidx.i18n.i( "hideFeedback" )
+            ,   mainBsHeight    = $panelFeedback.prev().height() - 180
             ;
 
-            if ( $feedbackBox.hasClass( "hide" ) )
+            if ( $panelFeedback.hasClass( "hide" ) )
             {
-                $feedbackBox.removeClass( "hide" );
-                $feedbackScope.removeClass( "col-sm-12" ).addClass( "col-sm-8 hidden-xs" );
-                $attachmentItem.removeClass( "col-md-6" ).addClass( "col-md-12" );
-                $halfs.removeClass( "col-sm-6" ).addClass( "col-sm-12" );
+                $panelFeedback.removeClass( "hide" );
+                $panelFeedback.prev().removeClass( "col-sm-offset-2" ).addClass( "col-pull hidden-xs" );
+                $panelFeedback.find( ".feedback-posts" ).height( mainBsHeight );
             }
             else
             {
-                $feedbackBox.addClass( "hide" );
-                $feedbackScope.removeClass( "col-sm-8 hidden-xs" ).addClass( "col-sm-12" );
-                $attachmentItem.removeClass( "col-md-12" ).addClass( "col-md-6" );
-                $halfs.removeClass( "col-sm-12" ).addClass( "col-sm-6" );
+                $panelFeedback.addClass( "hide" );
+                $panelFeedback.prev().addClass( "col-sm-offset-2" ).removeClass( "col-pull hidden-xs" );
             }
 
             $el.find( "span" ).text( txt );
-            $feedbackPanel.find(".panel-body").css( { overflow: 'hidden' } );
         });
     }
 
@@ -141,22 +131,21 @@
     //
     function _createFeedbackPanelStructure()
     {
-        var $btnFeedbackSnippet   = $( "<button />", { "class": "btn btn-warning btn-xs btn-feedback" })
+        var $btnFeedbackSnippet   = $( "<button />", { "class": "btn btn-warning btn-feedback" })
                                     .prepend
                                     (
-                                        $("<i/>", { "class": "fa fa-comments" })
+                                        $("<i/>", { "class": "fa fa-comments fa-big fa-above" })
                                     )
                                     .append
                                     (
                                         $("<span/>", { text: bidx.i18n.i( "showFeedback" ) })
                                     )
-        ,   $addFeedbackBtn       = $( "<button />", { "class": "btn btn-primary btn-add-feedback btn-sm btn-block bottom-margin-lineheight", "data-purpose": "addFeedback", html: bidx.i18n.i( "addNewFeedback" ) } )
+        ,   $addFeedbackBtn       = $( "<button />", { "class": "btn btn-primary btn-add-feedback btn-block bottom-margin-lineheight", "data-purpose": "addFeedback", html: bidx.i18n.i( "addNewFeedback" ) } )
         ,   $textarea             = $( "<textarea />", { "class": "form-control" } )
-        ,   $divCol12             = $( "<div />", { "class": "col-sm-12 feedback-scope" } )
         ,   $divRow               = $( "<div />", { "class": "row" } )
         ,   $cancelFeedbackBtn    = $( "<button />", { "class": "btn btn-link btn-cancel-feedback btn-xs pull-right", "data-purpose": "cancelFeedback", html: bidx.i18n.i( "btnCancel" ) } )
         ,   $submitFeedbackBtn    = $( "<button />", { "class": "btn btn-success btn-submit-feedback btn-xs pull-left", "data-purpose": "submitFeedback", html: bidx.i18n.i( "submitFeedback" ) } )
-        ,   $feedbackBoxSnippet   = $( "<div />", { "class": "col-sm-4 main-padding feedback-box bg-warning hide" } )
+        ,   $feedbackBoxSnippet   = $( "<div />", { "class": "main-padding feedback-box bg-warning" } )
                                     .append
                                     (
                                         $( "<div />", { "class": "feedback-notifications" } )
@@ -223,23 +212,8 @@
                                     )
         ;
 
-        $.each( $panelFeedback, function( index, panel )
-        {
-            var $tabPane  = $(panel).first()
-            ,   $showView = $tabPane.find( ".feedback-tabs" )
-            ,   tabScope  = "bs" + $tabPane.find( ".feedback-tabs" ).attr("id").split("-")[1]
-            ;
-
-            $tabPane.append( $btnFeedbackSnippet.clone() );
-
-            $showView
-                .wrapInner( $divCol12.clone() )
-                .wrapInner( $divRow.clone() )
-                .children().first()
-                .append( $feedbackBoxSnippet.clone() );
-
-            $showView.find( ".feedback-box" ).attr( "data-scope", tabScope );
-        });
+        $( ".text-right .btn-group" ).append( $btnFeedbackSnippet.clone() );
+        $panelFeedback.append( $feedbackBoxSnippet.clone() );
 
         // Run this only if there are feedback panels created
         //
@@ -262,11 +236,11 @@
                                 $("<small/>")
                                 .append
                                 (
-                                    $("<span/>", { "class": "feedback-date", text: bidx.utils.parseTimestampToDateTime( feedback.created, "date" ) + " by " })
+                                    $("<a/>", { "class": "feedback-commentor-name", href: "/member/" + feedback.commentorId, text: feedback.commentorDisplayName })
                                 )
                                 .append
                                 (
-                                    $("<a/>", { "class": "feedback-commentor-name", href: "/member/" + feedback.commentorId, text: feedback.commentorDisplayName })
+                                    $("<span/>", { "class": "feedback-date", text: " " + bidx.utils.parseTimestampToDateTime( feedback.created, "date" ) })
                                 )
                             )
                         )
@@ -311,7 +285,7 @@
                 )
             );
 
-        $('*[data-scope="'+feedback.scope+'"]').find( ".feedback-posts" ).prepend( $html.fadeIn( "slow" ) );
+        $( ".feedback-posts" ).prepend( $html.fadeIn( "slow" ) );
     }
 
     // Regular expression to change "returns" to <breaks> || Used in post listing
@@ -357,7 +331,6 @@
         ,   postData   = {
                              commentorId:     currentUserId
                          ,   comment:         $elem.message
-                         ,   scope:           $elem.scope
                          }
         ;
 
@@ -659,7 +632,6 @@
         ,   $notiError              = $notifications.find( ".feedback-notification-error" )
         ,   comment                 = $feedbackPost.find( ".feedback-comment" ).html()
         ,   feedbackId              = $feedbackPost.attr( "data-feedbackid" )
-        ,   scope                   = $feedbackBox.attr( "data-scope" )
         ,   message                 = $textarea.val()
         ,   params
         ;
@@ -667,7 +639,6 @@
         params =
         {
             entityId                : entityId
-        ,   scope                   : scope
         ,   message                 : message
         ,   feedbackId              : feedbackId
         ,   comment                 : comment
@@ -691,20 +662,6 @@
 
         return params;
     }
-
-    //expose
-    // var commenting =
-    //         {
-    //             navigate    : navigate
-    //         ,   refresh     : _setCountsAndDisplays
-    //         };
-
-
-    // if (!window.bidx)
-    // {
-    //     window.bidx = {};
-    // }
-    // window.bidx.commenting = commenting;
 
     // Make sure the i18n translations for this app are available before initing
     //

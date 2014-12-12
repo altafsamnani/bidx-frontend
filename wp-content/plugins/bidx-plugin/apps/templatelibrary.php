@@ -666,8 +666,8 @@ class TemplateLibrary
         $html .= '<table class="table table-bordered"> <tbody>';
         $html .= '<tr>';
         $html .= '<th>' . __('Name', 'bidxplugin') . '</th>';
-        $html .= '<th>' . __('Purpose', 'bidxplugin') . '</th>';
-        $html .= '<th>' . __('Type', 'bidxplugin') . '</th>';
+        $html .= '<th class="hidden-sm hidden-xs">' . __('Purpose', 'bidxplugin') . '</th>';
+        $html .= '<th class="hidden-sm hidden-xs">' . __('Type', 'bidxplugin') . '</th>';
         $html .= '</tr>';
         foreach ($docs as $doc) {
             if ( isset( $doc->bidxMeta->bidxUploadId ) )
@@ -675,8 +675,8 @@ class TemplateLibrary
                 $purpose = $doc->purpose ? $doc->purpose : '-';
                 $html .= '<tr>';
                 $html .= '<td><a class="word-break" href="'.$doc->document.'">'. $doc->documentName .'</a></td>';
-                $html .= '<td>'. $purpose .'</td>';
-                $html .= '<td>'. $this->getMultiReplacedValues( 'documentType', $doc->documentType ) .'</td>';
+                $html .= '<td class="hidden-sm hidden-xs">'. $purpose .'</td>';
+                $html .= '<td class="hidden-sm hidden-xs">'. $this->getMultiReplacedValues( 'documentType', $doc->documentType ) .'</td>';
                 $html .= '</tr>';
             }
         }

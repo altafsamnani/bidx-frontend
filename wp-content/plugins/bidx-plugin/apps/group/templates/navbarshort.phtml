@@ -125,32 +125,6 @@
 <?php
         }
  ?>
-
- <?php
- 
-        // only when a has grous, show the group dropdown
-        //
-        if ( $hasGroups )
-        {
- ?>
-            <div class="btn-group groups">
-                <a href="#" type="button" class="text-white dropdown-toggle" data-toggle="dropdown" title="<?php _e('Groups', 'bidxplugin')?>">
-                    <i class="fa fa-users"></i>
-                    <span class="iconbar-text"><?php _e('Groups','bidxplugin')?></span>
-                </a>
-                <ul class="dropdown-menu bg-primary-darker">
-<?php
-                    foreach ( $groups as $groupKey => $groupValue ) {
-?>
-                        <li><a href="<?php echo $groupValue[ "url" ] ?>"><i class="fa fa-angle-right"></i>&nbsp;<?php echo $groupValue[ "name" ] ?></a></li>
-<?php
-                    }
-?>
-                </ul>
-            </div>
-<?php
-        }
- ?>
         <div class="btn-group">
 <?php
             if ( $inGroup )

@@ -591,7 +591,7 @@
 
         // Industry Sectors
         //
-        var data = bidx.utils.getValue( member, "bidxEntrepreneurProfile.focusIndustrySector", true );
+        var data = bidx.utils.getValue( member, "bidxEntrepreneurProfile.focusIndustry", true );
 
         if ( data )
         {
@@ -637,7 +637,7 @@
                 return n;
             });
 
-            bidx.utils.setValue( member, "bidxEntrepreneurProfile.focusIndustrySector", arr );
+            bidx.utils.setValue( member, "bidxEntrepreneurProfile.focusIndustry", arr );
         }
 
         // Collect the nested objects

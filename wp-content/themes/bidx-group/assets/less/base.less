@@ -1491,7 +1491,6 @@ select
 .rating-wrapper
 {
     position: relative;
-    margin-right: 1em;
 }
 .rating-total
 {
@@ -1537,12 +1536,6 @@ select
     text-align: center;
     margin-bottom: ceil(@font-size-base * 1.0);
 }
-.rating-score,
-.rating-no-score
-{
-    line-height: 5;
-}
-
 .cancel-on-png, .cancel-off-png, .star-on-png, .star-off-png, .star-half-png
 {
   font-size: ceil(@font-size-base * 2.5);
@@ -1733,16 +1726,19 @@ select
 }
 .feedback-box
 {
-    margin: -15px 0;
     // min-height: 200px;
     border-left: 1px solid darken(spin(@state-warning-bg, -10), 5%);
     margin-bottom: -1000em !important;
     padding-bottom: 1000em !important;
-    padding-top: 50px !important;
+    padding-top: 15px !important;
+}
+.col-pull
+{
+    margin-right: -15px;
+    margin-left: 15px;
 }
 .feedback-posts
 {
-    max-height: 580px;
     overflow-y: auto;
 }
 .bidx-edit .btn-feedback,
@@ -1783,6 +1779,10 @@ select
 .feedback-to-remove
 {
     .opacity();
+}
+.feedback-date
+{
+    text-transform: capitalize;
 }
 
 
@@ -1994,6 +1994,12 @@ hr
 {
     width: 180px;
 }
+
+.td-15
+{
+    width: 15%;
+}
+
 /*!
  * bootstrap-vertical-tabs - v1.1.0
  * https://dbtek.github.io/bootstrap-vertical-tabs
@@ -2184,6 +2190,10 @@ hr
   padding-bottom: 0;
   margin: 0 0 @line-height-computed;
   border-bottom: 0;
+}
+.bg-gray
+{
+    background-color: #f2f2f2;
 }
 
 // utilities.less

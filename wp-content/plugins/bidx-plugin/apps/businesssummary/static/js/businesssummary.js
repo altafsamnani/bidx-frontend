@@ -33,7 +33,6 @@
     ,   $ratingWrapper              = $element.find( ".rating-wrapper" )
     ,   $ratingAverage              = $ratingWrapper.find( ".rating-average" )
     ,   $ratingVote                 = $ratingWrapper.find( ".rating-vote" )
-    ,   $ratingTotal                = $ratingWrapper.find( ".rating-total" )
     ,   $ratingTotalVoters          = $ratingWrapper.find( ".rating-total-voters-count" )
     ,   $ratingUserLabel            = $ratingWrapper.find( ".rating-user-label" )
     ,   $ratingScore                = $ratingWrapper.find( ".rating-score" )
@@ -473,26 +472,26 @@
             //
             forms.aboutYouAndYourTeam.$el.validate(
             {
-                ignore:         ""
-            ,   debug:          false
-            ,   rules:
-                {
-                    personalRole:
-                    {
-                        // required:               true
-                        maxlength:              30
-                    }
-                ,   personalExpertise:
-                    {
-                        // required:               true
-                        maxlength:              180
-                    }
-                }
-            ,   messages:
-                {
+            //     ignore:         ""
+            // ,   debug:          false
+            // ,   rules:
+            //     {
+            //         personalRole:
+            //         {
+            //             // required:               true
+            //             maxlength:              30
+            //         }
+            //     ,   personalExpertise:
+            //         {
+            //             // required:               true
+            //             maxlength:              180
+            //         }
+            //     }
+            // ,   messages:
+            //     {
 
-                }
-            ,   submitHandler:          function( e )
+            //     }
+                submitHandler:          function( e )
                 {
                     _doSave();
                 }
@@ -665,7 +664,7 @@
 
                 $coverImageContainer.find( "img" ).remove();
 
-                delete businessSummary.cover.fileUpload;
+                businessSummary.cover = null;
             } );
 
         }
@@ -2194,7 +2193,7 @@
         // Cover Image
         //
         var coverImageData = $coverImageContainer.data( "bidxData" )
-        ,   coverImgTopPos = $coverImageContainer.data( "bidxData" ) ? parseInt( $coverImageContainer.find( "img" ).css( "top" ), 10) : false
+        ,   coverImgTopPos = $coverImageContainer.length ? parseInt( $coverImageContainer.find( "img" ).css( "top" ), 10) : false
         ;
 
         if ( coverImageData )

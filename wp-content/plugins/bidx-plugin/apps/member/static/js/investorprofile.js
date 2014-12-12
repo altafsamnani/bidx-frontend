@@ -11,7 +11,6 @@
 
     ,   $investorType                   = $editForm.find( "[name='investorType']" )
 
-    ,   $focusIndustry                  = $editForm.find( "[name='focusIndustry']" )
     ,   $focusLanguage                  = $editForm.find( "[name='focusLanguage']" )
     ,   $focusSocialImpact              = $editForm.find( "[name='focusSocialImpact']" )
     ,   $focusEnvImpact                 = $editForm.find( "[name='focusEnvImpact']" )
@@ -174,11 +173,6 @@
 
         // Populate the selects
         //
-        $focusIndustry.bidx_chosen(
-        {
-            dataKey:            "industry"
-        });
-
         $focusLanguage.bidx_chosen(
         {
             dataKey:            "language"
@@ -1076,7 +1070,6 @@
 
         // Update the chosen components with our set values
         //
-        $focusIndustry.trigger( "chosen:updated" );
         $focusLanguage.trigger( "chosen:updated" );
         $focusSocialImpact.trigger( "chosen:updated" );
         $focusEnvImpact.trigger( "chosen:updated" );
@@ -1122,7 +1115,7 @@
                 return n;
             });
 
-            bidx.utils.setValue( member, "bidxInvestorProfile.focusIndustrySector", arr );
+            bidx.utils.setValue( member, "bidxInvestorProfile.focusIndustry", arr );
         }
 
 
