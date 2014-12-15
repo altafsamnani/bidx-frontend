@@ -1,7 +1,6 @@
 <?php
 
 $businessSummary    = $this->data;
-d($businessSummary);
 $progress           = $this -> completenessScore ? $this -> completenessScore : '0';
 
 $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
@@ -34,6 +33,11 @@ $requestStatus = isset( $businessSummary->accessAuthorization ) ? $businessSumma
 
 // check, is access granted?
 $hasAccess = false;
+
+if ( $requestStatus === "granted" || $canEdit )
+{
+    $hasAccess = true;
+}
 
 // Financial
 $currentYear = date("Y");
@@ -188,8 +192,26 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             $accessGranted = 'hide';
                     }
 ?>
-                    <div class="bs-cell main-padding pull-left <?php echo $accessGranted; ?>"><i class="fa fa-check"></i> <span class="hidden-xs"><?php echo _e('Full Access Granted', 'bidxplugin')?></span></div>
-                    <div class="bs-cell main-padding pull-left <?php echo $accessRequestProgress; ?>"><i class="fa fa-exclamation-circle"></i> <span class="hidden-xs"><?php echo _e('Access request pending', 'bidxplugin')?></span></div>
+                    <div class="bs-cell main-padding pull-left hidden-xs <?php echo $accessGranted; ?>"><i class="fa fa-check"></i> <?php echo _e('Full Access Granted', 'bidxplugin')?></div>
+                    <div class="bs-cell main-padding pull-left hidden-xs <?php echo $accessRequestProgress; ?>"><i class="fa fa-exclamation-circle"></i> <?php echo _e('Access request pending', 'bidxplugin')?></div>
+<?php
+                    if ( $hasAccess && $this->exst ( $businessSummary->attachmentCount ) ) :
+
+                        $attCount = $businessSummary->attachmentCount;
+                        $attText;
+                        if ( $attCount === "1" )
+                        {
+                            $attText = __('Attachment', 'bidxplugin');
+                        }
+                        else
+                        {
+                            $attText = __('Attachments', 'bidxplugin');
+                        }
+?>                    
+                    <div class="bs-cell main-padding pull-left hidden-xs"><i class="fa fa-file"></i> <?php echo $attCount; ?> <?php echo $attText; ?></div>
+<?php
+                    endif;
+?>
 <?php                    
                 }
 ?>
@@ -572,15 +594,14 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <?php
     endif;
 
-    if ( $this->exst( $businessSummary->attachment )) :
+    if ( $this->exst( $businessSummary->attachment ) || $hasAccess ) :
 ?>
-
-    <div class="main-padding-vertical">
-            <h3 class="to-uppercase"><?php _e('Attached Documents', 'bidxplugin')?></h3>
+            <div class="main-padding-vertical">
+                <h3 class="to-uppercase"><?php _e('Attached Documents', 'bidxplugin')?></h3>
 <?php
-            echo $this->displayDocuments ( $businessSummary->attachment );
+                echo $this->displayDocuments ( $businessSummary->attachment );
 ?>
-    </div>
+            </div>
 <?php
     endif;
 ?>
