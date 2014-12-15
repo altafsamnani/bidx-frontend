@@ -1,7 +1,6 @@
 <?php
 
 $businessSummary    = $this->data;
-
 $progress           = $this -> completenessScore ? $this -> completenessScore : '0';
 
 $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
@@ -27,6 +26,8 @@ $hasAccess = false;
 $company    = $this->exst ($businessSummary->company);
 $attachment = $this->exst ($businessSummary->attachment);
 
+$currentYear = date("Y");
+
 ?>
 <div class="businessSummary anonymous">
 <?php             
@@ -46,9 +47,48 @@ $attachment = $this->exst ($businessSummary->attachment);
 ?>
         </div>
     </div>
-    
+
+<?php
+
+        $updatedDate = date( 'd M Y', $businessSummaryBidxMeta->bidxLastUpdateDateTime );
+
+?>
+    <div class="bg-gray control-bar">
+
+
+        <div class="bs-info hide-overflow">
+            <div class="bs-cell main-padding pull-left"><i class="fa fa-line-chart"></i> <span class="hidden-xs"><?php echo _e('Completed', 'bidxplugin')?>:</span> <?php echo $progress; ?><span>%</span></div>
+            <div class="bs-cell main-padding pull-left hidden-xs">
+                <div class="rating-wrapper">
+                    <div class="rating-no-score <?php echo !$ratingAverage ? '' : 'hide' ?>">
+                        <span class="rating-score-text"><?php echo _e('No Score', 'bidxplugin'); ?></span>
+                    </div>
+                    <div class="rating-score <?php echo $ratingAverage ? '' : 'hide' ?>">
+                        <i class="fa fa-star"></i> 
+                        <?php echo _e('Score', 'bidxplugin')?>: <span class="rating-average"><?php echo $ratingAverage ? $ratingAverage : "?"; ?></span>
+                    </div>
+                </div>
+            </div>
+            <div class="bs-cell main-padding pull-left"><i class="fa fa-refresh"></i> <span class="hidden-xs"><?php echo _e('Last Update', 'bidxplugin')?>:</span> <?php echo $updatedDate; ?></div>
+<?php
+            foreach ($businessSummary->financialSummaries as $key => $year)
+            {
+                if ( $key === $currentYear ) :
+            ?>
+                    <div class="bs-cell main-padding pull-left"><i class="fa fa-dollar"></i> <span class="hidden-xs"><?php echo _e('Finance Needed', 'bidxplugin')?>:</span> <?php echo $year->financeNeeded; ?></div>
+            <?php 
+                endif;
+            }
+?>            
+        </div>
+
+
+    </div>
+
+
+
     <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
+        <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
             <h1>
                 <?php echo $this->exst( $businessSummary->name ); ?>
                 <small>&nbsp;<?php echo _e( 'by', 'bidxplugin' ); ?>&nbsp;
@@ -58,19 +98,19 @@ $attachment = $this->exst ($businessSummary->attachment);
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
+        <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
             <h4><?php echo $this->exst( $businessSummary->slogan ); ?></h4>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
+        <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
 <?php
             $videoUrl = $this->exst($businessSummary->externalVideoPitch);
             $parsedVideo = $this->parseVideos( $videoUrl );
 
             if ( $parsedVideo )
             {
-                $theVideo .= '<div class="video-wrapper embed-responsive embed-responsive-16by9">'.$parsedVideo[0]['videoplayer'].'</div>';
+                $theVideo .= '<div class="video-wrapper embed-responsive embed-responsive-16by9 bottom-margin-lineheight">'.$parsedVideo[0]['videoplayer'].'</div>';
             }
 
             echo $theVideo;
@@ -83,32 +123,22 @@ $attachment = $this->exst ($businessSummary->attachment);
 
 
     <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
+        <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
 
 <?php
             $rowValues = array (
 
-                __('Industry','bidxplugin')
-                    => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry'),
-
-                __('Finance Needed','bidxplugin')
-                    => $this->exst($businessSummary->financingNeeded),
+                __('Stage of business','bidxplugin')
+                    => $this->getStaticVal( 'stageBusiness', $this->exst($businessSummary->stageBusiness)),
 
                 __('Countries','bidxplugin')
                     => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' ),
 
-                __('Date Created','bidxplugin')
-                    => $this->exst($businessSummary->bidxMeta->bidxCreationDateTime),
-
-                __('Rating','bidxplugin')
-                    => $this->exst($businessSummary->bidxMeta->bidxRatingAverage),
-
-                __('Stage of business','bidxplugin')
-                    => $this->getStaticVal( 'stageBusiness', $this->exst($businessSummary->stageBusiness)),
-
+                __('Industry','bidxplugin')
+                    => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry')
 
             );
-            echo $this->pairRows( $rowValues );
+            echo $this->tableRow( $rowValues );
 
             if ( $attachment )
             {

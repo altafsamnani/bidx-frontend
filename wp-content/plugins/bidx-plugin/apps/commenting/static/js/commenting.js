@@ -140,7 +140,6 @@
                                     (
                                         $("<span/>", { text: bidx.i18n.i( "showFeedback" ) })
                                     )
-        ,   $addFeedbackBtn       = $( "<button />", { "class": "btn btn-primary btn-add-feedback btn-block bottom-margin-lineheight", "data-purpose": "addFeedback", html: bidx.i18n.i( "addNewFeedback" ) } )
         ,   $textarea             = $( "<textarea />", { "class": "form-control" } )
         ,   $divRow               = $( "<div />", { "class": "row" } )
         ,   $cancelFeedbackBtn    = $( "<button />", { "class": "btn btn-link btn-cancel-feedback btn-xs pull-right", "data-purpose": "cancelFeedback", html: bidx.i18n.i( "btnCancel" ) } )
@@ -188,11 +187,7 @@
                                     )
                                     .append
                                     (
-                                        $addFeedbackBtn
-                                    )
-                                    .append
-                                    (
-                                        $( "<div />", { "class": "feedback-submit hide-overflow hide" } )
+                                        $( "<div />", { "class": "feedback-submit hide-overflow" } )
                                         .append
                                         (
                                             $textarea
@@ -382,7 +377,7 @@
     {
         $elem.$btnSubmitFeedback.removeClass( "disabled" );
         $elem.$textarea.val( "" ).attr( "disabled" , false);
-        $elem.$feedbackSubmitBox.addClass( "hide" );
+        // $elem.$feedbackSubmitBox.addClass( "hide" );
         $elem.$feedbackBox.find( ".btn-edit-feedback" ).removeClass( "disabled" );
         $elem.$feedbackBox.find( ".btn-delete-feedback" ).removeClass( "disabled" );
         $elem.$feedbackBox.find( ".feedback-post" ).removeClass( "feedback-to-remove" );

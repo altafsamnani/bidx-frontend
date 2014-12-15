@@ -1,7 +1,7 @@
 <?php
 
 $businessSummary    = $this->data;
-
+d($businessSummary);
 $progress           = $this -> completenessScore ? $this -> completenessScore : '0';
 
 $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
@@ -34,6 +34,10 @@ $requestStatus = isset( $businessSummary->accessAuthorization ) ? $businessSumma
 
 // check, is access granted?
 $hasAccess = false;
+
+// Financial
+$currentYear = date("Y");
+$yd;
 
 $attachmentItem = <<<EOT
     <div class="attachmentItem col-md-6">
@@ -132,6 +136,30 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
     <div class="bg-gray control-bar">
 
+        <div class="bs-info hide-overflow">
+            <div class="bs-cell main-padding pull-left"><i class="fa fa-line-chart"></i> <span class="hidden-xs"><?php echo _e('Completed', 'bidxplugin')?>:</span> <?php echo $progress; ?><span>%</span></div>
+            <div class="bs-cell main-padding pull-left hidden-xs">
+                <div class="rating-wrapper">
+                    <div class="rating-no-score <?php echo !$ratingAverage ? '' : 'hide' ?>">
+                        <span class="rating-score-text"><?php echo _e('No Score', 'bidxplugin'); ?></span>
+                    </div>
+                    <div class="rating-score <?php echo $ratingAverage ? '' : 'hide' ?>">
+                        <i class="fa fa-star"></i> 
+                        <span class="hidden-xs"><?php echo _e('Score', 'bidxplugin')?>:</span> <span class="rating-average"><?php echo $ratingAverage ? $ratingAverage : "?"; ?></span>
+                    </div>
+                </div>
+            </div>
+            <div class="bs-cell main-padding pull-left"><i class="fa fa-refresh"></i> <span class="hidden-xs"><?php echo _e('Last Update', 'bidxplugin')?>:</span> <?php echo $updatedDate; ?></div>
+<?php
+                foreach ($businessSummary->financialSummaries as $key => $year)
+                {
+                    if ( $key === $currentYear ) :
+                ?>
+                        <div class="bs-cell main-padding pull-left"><i class="fa fa-dollar"></i> <span class="hidden-xs"><?php echo _e('Finance Needed', 'bidxplugin')?>:</span> <?php echo $year->financeNeeded; ?></div>
+                <?php 
+                    endif;
+                }
+?>            
 <?php
                 if ( $canRequestAccess && !$canEdit )
                 {
@@ -159,27 +187,13 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             $accessRequestProgress = 'hide';
                             $accessGranted = 'hide';
                     }
+?>
+                    <div class="bs-cell main-padding pull-left <?php echo $accessGranted; ?>"><i class="fa fa-check"></i> <span class="hidden-xs"><?php echo _e('Full Access Granted', 'bidxplugin')?></span></div>
+                    <div class="bs-cell main-padding pull-left <?php echo $accessRequestProgress; ?>"><i class="fa fa-exclamation-circle"></i> <span class="hidden-xs"><?php echo _e('Access request pending', 'bidxplugin')?></span></div>
+<?php                    
                 }
-
 ?>
 
-
-        <div class="bs-info hide-overflow">
-            <div class="bs-cell main-padding pull-left"><i class="fa fa-line-chart"></i> <?php echo _e('Completed', 'bidxplugin')?>: <?php echo $progress; ?><span>%</span></div>
-            <div class="bs-cell main-padding pull-left">
-                <div class="rating-wrapper">
-                    <div class="rating-no-score <?php echo !$ratingAverage ? '' : 'hide' ?>">
-                        <span class="rating-score-text"><?php echo _e('No Score', 'bidxplugin'); ?></span>
-                    </div>
-                    <div class="rating-score <?php echo $ratingAverage ? '' : 'hide' ?>">
-                        <i class="fa fa-star"></i> 
-                        <?php echo _e('Score', 'bidxplugin')?>: <span class="rating-average"><?php echo $ratingAverage ? $ratingAverage : "?"; ?></span>
-                    </div>
-                </div>
-            </div>
-            <div class="bs-cell main-padding pull-left"><i class="fa fa-refresh"></i> <?php echo _e('Last Update', 'bidxplugin')?>: <?php echo $updatedDate; ?></div>
-            <div class="bs-cell main-padding pull-left <?php echo $accessGranted; ?>"><i class="fa fa-check"></i> <?php echo _e('Full Access granted', 'bidxplugin')?></div>
-            <div class="bs-cell main-padding pull-left <?php echo $accessRequestProgress; ?>"><i class="fa fa-exclamation-circle"></i> <?php echo _e('Access request pending', 'bidxplugin')?></div>
         </div>
 
 
@@ -310,7 +324,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
             if ( $parsedVideo )
             {
-                $theVideo .= '<div class="video-wrapper embed-responsive embed-responsive-16by9">'.$parsedVideo[0]['videoplayer'].'</div>';
+                $theVideo .= '<div class="video-wrapper embed-responsive embed-responsive-16by9 bottom-margin-lineheight">'.$parsedVideo[0]['videoplayer'].'</div>';
             }
 
             echo $theVideo;
@@ -376,6 +390,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             );
             echo $this->tableRow ( $rowValues );
 
+            if ( $this->exst( $businessSummary->managementTeam ) ) :
 ?>
             <h4><?php echo _e('Supporting members of management team', 'bidxplugin')?></h4>
             <table class="table">
@@ -435,6 +450,9 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             }
 ?>
             </table>
+<?php
+            endif;
+?>
 
     </div>
 
@@ -465,9 +483,6 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
             foreach ( $financialDetails as $year => $yearDetails )
             {
-                $currentYear = date("Y");
-                $yd;
-
                 if ( $year < $currentYear )
                 {
                     $yd = __('Actuals', 'bidxplugin');
