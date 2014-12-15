@@ -78,7 +78,7 @@
                         color: @white;
                         background-color: darken(@brand-primary, 15%);
                     }
-                    > ul.dropdown-menu
+                    ul.dropdown-menu
                     {
                         .transition-all;
                         .opacity(1);
@@ -121,8 +121,9 @@
                 }
             }
         }
-        .menu-sub
+        li.dropdown
         {
+            clear: both;
             &.open
             {
                 a
@@ -130,11 +131,16 @@
                     color: @white;
                     background-color: darken(@brand-primary, 15%);
                 }
+                .dropdown-menu
+                {
+                    display: block;
+                }
             }
             .dropdown-menu
             {
                 position: relative;
                 width: 100%;
+                margin: 0;
                 li
                 {
                     padding: 0;
