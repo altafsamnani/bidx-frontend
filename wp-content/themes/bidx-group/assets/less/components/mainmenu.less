@@ -16,6 +16,10 @@
                 {
                     background-color: darken( @brand-primary, 15%);
                 }
+                &.active.menu-sub
+                {
+                    background-color: @brand-primary;
+                }
                 &:last-child
                 {
                     margin-right: 0;
@@ -65,7 +69,16 @@
                     {
                         color: @white;
                     }
-                    > ul.dropdown-menu
+                }
+                &.open
+                {
+                    background-color: darken(@brand-primary, 15%);
+                    a
+                    {
+                        color: @white;
+                        background-color: darken(@brand-primary, 15%);
+                    }
+                    ul.dropdown-menu
                     {
                         .transition-all;
                         .opacity(1);
@@ -101,6 +114,40 @@
                 &:hover
                 {
                     background-color: @brand-primary;
+                }
+                &:focus
+                {
+                    background-color: @brand-primary;
+                }
+            }
+        }
+        li.dropdown
+        {
+            clear: both;
+            &.open
+            {
+                a
+                {
+                    color: @white;
+                    background-color: darken(@brand-primary, 15%);
+                }
+                .dropdown-menu
+                {
+                    display: block;
+                }
+            }
+            .dropdown-menu
+            {
+                position: relative;
+                width: 100%;
+                margin: 0;
+                li
+                {
+                    padding: 0;
+                    a
+                    {
+                        padding: 10px 20px 10px 30px;
+                    }
                 }
             }
         }
