@@ -1,6 +1,7 @@
 <?php
 
 $businessSummary    = $this->data;
+d($businessSummary);
 $progress           = $this -> completenessScore ? $this -> completenessScore : '0';
 
 $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
@@ -195,25 +196,26 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                     <div class="bs-cell main-padding pull-left hidden-xs <?php echo $accessGranted; ?>"><i class="fa fa-check"></i> <?php echo _e('Full Access Granted', 'bidxplugin')?></div>
                     <div class="bs-cell main-padding pull-left hidden-xs <?php echo $accessRequestProgress; ?>"><i class="fa fa-exclamation-circle"></i> <?php echo _e('Access request pending', 'bidxplugin')?></div>
 <?php
-                    if ( $hasAccess && $this->exst ( $businessSummary->attachmentCount ) ) :
+                }
+                
+                if ( $hasAccess && $this->exst ( $businessSummary->attachmentCount ) ) :
 
-                        $attCount = $businessSummary->attachmentCount;
-                        $attText;
-                        if ( $attCount === "1" )
-                        {
-                            $attText = __('Attachment', 'bidxplugin');
-                        }
-                        else
-                        {
-                            $attText = __('Attachments', 'bidxplugin');
-                        }
+                    $attCount = $businessSummary->attachmentCount;
+                    $attText;
+                    if ( $attCount === "1" )
+                    {
+                        $attText = __('Attachment', 'bidxplugin');
+                    }
+                    else
+                    {
+                        $attText = __('Attachments', 'bidxplugin');
+                    }
 ?>                    
-                    <div class="bs-cell main-padding pull-left hidden-xs"><i class="fa fa-file"></i> <?php echo $attCount; ?> <?php echo $attText; ?></div>
+                <div class="bs-cell main-padding pull-left hidden-xs"><i class="fa fa-file"></i> <?php echo $attCount; ?> <?php echo $attText; ?></div>
 <?php
-                    endif;
+                endif;
 ?>
 <?php                    
-                }
 ?>
 
         </div>
