@@ -6,28 +6,38 @@
     $comLogo = $this->exst($this->company->logo->document);
     $countryOperationSpecifics = isset ($this->company->countryOperationSpecifics) ? $this->company->countryOperationSpecifics : NULL;
 ?>
-<div class="panel-heading">
-    <h3 class="panel-title"><?php _e('Company details','bidxplugin'); ?></h3>
+<div class="bg-primary-light main-padding">
+    <h1 class="text-center"><?php echo ($this->companyTitle) ? ucwords( $this->company->name) :''; ?></h1>
 </div>
-<div class="panel-body">
+
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+
 <?php
         if ($companyBidxMeta->bidxCanEdit) {
 ?>
-                <div class="btn-group controls pull-right">
-                    <a class="btn btn-primary" href="#editCompany/<?php echo $companyBidxMeta->bidxEntityId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                <div class="btn-group controls pull-right top-margin-lineheight">
+                    <a class="btn btn-primary" href="#editCompany/<?php echo $companyBidxMeta->bidxEntityId; ?>"><i class="fa fa-big fa-above fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
                 </div>
 <?php
         }
+?>
+    </div>
+</div>
 
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+    <div class="text-center bottom-margin-lineheight top-margin-lineheight">
+<?php
         if (!$comLogo){
             echo '<div class="icons-rounded"><i class="fa fa-tasks text-primary-light"></i></div>';
         }
         else
         {
-            echo '<img class="img-thumbnail" src="'.$comLogo.'"/>';
+            echo '<img class="img-responsive center-img" src="'.$comLogo.'"/>';
         }
 ?>
-<hr>
+    </div>
 <?php
 
     $companySite = $this->exst( $this->company->website ) ? sprintf( '<a href="%1$s" target="_blank">%1$s</a>', $this->exst( $this->company->website )) : NULL;
@@ -35,7 +45,7 @@
         __('Company name','bidxplugin') => $this->exst( $this->company->name ),
         __('Company website','bidxplugin') => $companySite
     );
-    echo $this->pairRows( $rowValues );
+    echo $this->tableRow( $rowValues );
 
     if (!empty($this->company->registered)) {
 
@@ -58,8 +68,7 @@
             __('Fiscal number','bidxplugin') => $this->exst($this->company->fiscalNumber),
             __('Company registration number','bidxplugin') => $this->exst($this->company->registrationNumber)
         );
-        echo '<hr>';
-        echo $this->pairRows( $rowValues );
+        echo $this->tableRow( $rowValues );
     }
 
     if ( $this->exst($this->company->numPermFemaleEmpl) ||
@@ -73,8 +82,7 @@
             __('Number of temporary male employees','bidxplugin') => $this->exst($this->company->numTempMaleEmpl),
             __('Number of temporary female employees','bidxplugin') => $this->exst($this->company->numTempFemaleEmpl)
         );
-        echo '<hr>';
-        echo $this->pairRows( $rowValues );
+        echo $this->tableRow( $rowValues );
     }
 
     if ( $countryOperationSpecifics )
@@ -90,8 +98,8 @@
         
         $rowValues = array ( __('Country Operation Specifics','bidxplugin') => $countryOperationSpecificsHtml);
         
-        echo '<hr>';
         echo $this->addRowsWithLabelBelow ('col-sm-12', 'col-sm-12', $rowValues, array ('tag_label' => 'h5'));
     }
 ?>
+    </div>
 </div>

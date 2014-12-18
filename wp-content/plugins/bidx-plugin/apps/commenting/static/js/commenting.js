@@ -142,7 +142,7 @@
                                     )
         ,   $textarea             = $( "<textarea />", { "class": "form-control" } )
         ,   $divRow               = $( "<div />", { "class": "row" } )
-        ,   $cancelFeedbackBtn    = $( "<button />", { "class": "btn btn-link btn-cancel-feedback btn-xs pull-right", "data-purpose": "cancelFeedback", html: bidx.i18n.i( "btnCancel" ) } )
+        ,   $cancelFeedbackBtn    = $( "<button />", { "class": "btn btn-link btn-cancel-feedback btn-xs pull-right", "data-purpose": "cancelFeedback", html: bidx.i18n.i( "btnClear" ) } )
         ,   $submitFeedbackBtn    = $( "<button />", { "class": "btn btn-success btn-submit-feedback btn-xs pull-left", "data-purpose": "submitFeedback", html: bidx.i18n.i( "submitFeedback" ) } )
         ,   $feedbackBoxSnippet   = $( "<div />", { "class": "main-padding feedback-box bg-warning" } )
                                     .append
@@ -314,7 +314,7 @@
     //
     function _hideFeedbackSubmitionForm( $elem )
     {
-        $elem.$feedbackSubmitBox.addClass( "hide" );
+        // $elem.$feedbackSubmitBox.addClass( "hide" );
         $elem.$element.show();
     }
 
@@ -381,7 +381,7 @@
         $elem.$feedbackBox.find( ".btn-edit-feedback" ).removeClass( "disabled" );
         $elem.$feedbackBox.find( ".btn-delete-feedback" ).removeClass( "disabled" );
         $elem.$feedbackBox.find( ".feedback-post" ).removeClass( "feedback-to-remove" );
-        $elem.$btnAddFeedback.show();
+        // $elem.$btnAddFeedback.show();
     }
 
     // Show a notification message according the action that was taken

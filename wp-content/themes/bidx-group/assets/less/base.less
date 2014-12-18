@@ -1604,7 +1604,18 @@ select
   content: "\f123";
 }
 
-
+/* Cover Image */
+.coverImage
+{
+    // overflow: hidden;
+    // img
+    // {
+    //     .transform(translateY(-50%) translateX(-50%));
+    //     position: absolute;
+    //     left: 50%;
+    //     top: 50%;
+    // }
+}
 
 /* Counter */
 .counter-block
@@ -2072,17 +2083,20 @@ hr
                 border: none;
                 border-right-color: transparent;
                 border-left: 6px solid lighten(@text-copy, 10%);
+                background-color: lighten(@gray-light, 36%);
                 &:focus
                 {
                     border: none;
                     border-right-color: transparent;
                     border-left: 6px solid lighten(@text-copy, 10%);
+                    background-color: lighten(@gray-light, 36%);
                 }
                 &:hover
                 {
                     border: none;
                     border-right-color: transparent;
                     border-left: 6px solid lighten(@text-copy, 10%);
+                    background-color: lighten(@gray-light, 36%);
                 }
             }
         }
@@ -2156,6 +2170,10 @@ hr
     .rounded(3px);
     padding: @padding-base-horizontal;
     min-height: 400px;
+}
+.bidx-edit .tab-pane
+{
+    background-color: lighten(@gray-light, 36%);
 }
 .tabs-nav
 {
@@ -2296,6 +2314,16 @@ hr
 {
     text-transform: uppercase;
 }
+
+// Skinning
+// -------------------------
+.box-border
+{
+    border: 1px solid;
+    border-color: lighten(@gray-light, 30%) lighten(@gray-light, 24%) lighten(@gray-light, 21%);
+    background-color: @white;
+}
+
 
 // wells.less
 // -------------------------

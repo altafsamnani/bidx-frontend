@@ -352,18 +352,50 @@
     background-color: #FFF;
     position: relative;
     overflow: hidden;
+    @media (max-width: @screen-sm-min)
+    {
+        height: 170px;
+    }
+    @media (max-width: @screen-xs-min)
+    {
+        height: 170px;
+    }
     .coverBtns
     {
+        .transform(translateY(-50%) translateX(-50%));
         position: absolute;
         top: 50%;
         left: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
         z-index: 1;
     }
     img
     {
-        width: 100%;
+        width: 1140px;
         height: auto;
+        .transform(translateY(0) translateX(-50%));
+        position: absolute;
+        // top: 50%;
+        left: 50%;
+        @media (max-width: @screen-md-min)
+        {
+            position: absolute !important;
+            top: 50% !important;
+            .transform(translateY(-50%) translateX(-50%));
+            width: 940px;
+        }
+        @media (max-width: @screen-sm-min)
+        {
+            position: absolute !important;
+            top: 50% !important;
+            .transform(translateY(-50%) translateX(-50%));
+            width: 786px;
+        }
+        @media (max-width: @screen-xs-min)
+        {
+            position: absolute !important;
+            top: 50% !important;
+            .transform(translateY(-50%) translateX(-50%));
+            width: 480px;
+        }
     }
 }

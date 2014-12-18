@@ -4,21 +4,12 @@ $companyBidxMeta = isset( $this->company->bidxMeta )
     : $this->company;
 
 ?>
-<?php
-    if($this->noheader != 'true') {
-?>
-    <div class="clearfix">
-        <h1 class="pull-left"><?php echo ($this->companyTitle) ? ucwords( $this->company->name) :''; ?></h1>
-        <div class="editControls btn-group pull-right"></div>
-    </div>
-<?php
-    }
-?>
-<div class="mainState mainStateShow">
-    <div class="panel panel-default">
+<div class="company box-border top-margin-lineheight">
+
+    <div class="mainState mainStateShow clearfix">
         <?php $this->render('view-company.phtml'); ?>
     </div>
-</div>
 <?php
     $this->render('edit-company.phtml');
 ?>
+</div>

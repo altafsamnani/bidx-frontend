@@ -1,7 +1,6 @@
 <?php
 
 $businessSummary    = $this->data;
-d($businessSummary);
 $progress           = $this -> completenessScore ? $this -> completenessScore : '0';
 
 $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
@@ -81,7 +80,7 @@ $dlpage = get_page_by_title( 'Download financial templates' );
 $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
 ?>
-<div class="businessSummary" id="businessSummary" data-bsid=<?php echo $businessSummaryId; ?>>
+<div class="businessSummary box-border top-margin-lineheight" id="businessSummary" data-bsid=<?php echo $businessSummaryId; ?>>
     <div class="businessCover">
         <div class="coverImageContainer">
 <?php
@@ -100,7 +99,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
     ?>
                 <div class="btn-group coverBtns">
                     <a class="btn btn-primary btn-large btnCover" data-toggle="modal" href="#coverImage"><?php echo _e( 'Add or Change', 'bidxplugin' ); ?></a>
-                    <a class="btn btn-primary btn-large btnRemove" data-toggle="modal" href="#coverRemove"><?php echo _e( 'Remove', 'bidxplugin' ); ?></a>
+                    <!-- <a class="btn btn-primary btn-large btnRemove" data-toggle="modal" href="#coverRemove"><?php echo _e( 'Remove', 'bidxplugin' ); ?></a> -->
                 </div>
 
                 <div class="coverModal modal fade">
@@ -198,7 +197,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <?php
                 }
                 
-                if ( $hasAccess && $this->exst ( $businessSummary->attachmentCount ) ) :
+                if ( $this->exst ( $businessSummary->attachmentCount ) ) :
 
                     $attCount = $businessSummary->attachmentCount;
                     $attText;
@@ -614,17 +613,21 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 </div>
 </div>
 <!-- LOAD -->
-<div class="view viewLoad alert alert-info text-center">
-    <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Retrieving business summary information...','bidxplugin'); ?>
+<div class="view viewLoad main-padding">
+    <div class="alert alert-info text-center">
+        <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Retrieving business summary information...','bidxplugin'); ?>
+    </div>
 </div>
 
 
 <!-- ERROR -->
-<div class="view viewError alert alert-warning">
-    <p class="errorMsg"></p>
+<div class="view viewError main-padding">
+    <div class="alert alert-warning">
+        <p class="errorMsg"></p>
+    </div>
 </div>
 
-<div class="view viewEdit">
+<div class="view viewEdit main-padding">
     <!-- Accordion -->
 <div class="row tabs-vertical">
 
