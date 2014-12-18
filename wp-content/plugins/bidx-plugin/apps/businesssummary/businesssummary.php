@@ -71,7 +71,7 @@ class businesssummary
             	$completeness = $businessSummaryData -> data -> completeness;
 
             	//TODO : structurally fix this using the scoring service
-            	$view->completenessScore = max(round(($completeness / 68)*100), 100);
+            	$view->completenessScore = min(round(($completeness / 68)*100), 100);
             	if ( $view->completenessScore < 30 ) {
             		$view->completenessColour = 'incomplete';
             	} else if ( $view->completenessScore < 60 ) {
