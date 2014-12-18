@@ -205,6 +205,15 @@
                             color: @white;
                         }
                     }
+                    &.open
+                    {
+                        background-color: darken(@brand-primary, 15%);
+                        a
+                        {
+                            color: @white;
+                            background-color: darken(@brand-primary, 15%);
+                        }
+                    }
                 }
             }
         }
@@ -234,6 +243,17 @@
                 &:hover
                 {
                     background-color: @brand-primary;
+                }
+            }
+        }
+        li.dropdown
+        {
+            &.open
+            {
+                a
+                {
+                    color: @white;
+                    background-color: darken(@brand-primary, 15%);
                 }
             }
         }
