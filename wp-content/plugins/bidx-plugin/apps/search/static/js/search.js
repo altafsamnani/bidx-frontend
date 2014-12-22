@@ -877,36 +877,36 @@
 
                     case 'bidxInvestorProfile':
                         //response.entityType = 'bidxMemberProfile';
-                       // if ( options.criteria.facetFilters.length !== 0 )
-                       // {
+                       if ( options.criteria.facetFilters.length !== 0 )
+                       {
                             showMemberProfile(
                             {
                                 response : response
                             //,   criteria : data.criteria
                             ,   cb       : options.cb
                             } );
-                       // }
+                       }
 
                     break;
 
                     case 'bidxEntrepreneurProfile':
                         //response.entityType = 'bidxMemberProfile';
-                       // if ( options.criteria.facetFilters.length !== 0 )
-                       // {
+                       if ( options.criteria.facetFilters.length !== 0 )
+                       {
                             showMemberProfile(
                             {
                                 response : response
                             //,   criteria : data.criteria
                             ,   cb       : options.cb
                             } );
-                       // }
+                       }
 
                     break;
 
                     case 'bidxMentorProfile':
                         //response.entityType = 'bidxMemberProfile';
-                       // if ( options.criteria.facetFilters.length !== 0 )
-                       // {
+                       if ( options.criteria.facetFilters.length !== 0 )
+                       {
 
                             showMemberProfile(
                             {
@@ -914,7 +914,7 @@
                            // ,   criteria : data.criteria
                             ,   cb       : options.cb
                             } );
-                       // }
+                       }
 
                     break;
 
