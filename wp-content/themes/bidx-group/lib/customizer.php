@@ -804,9 +804,9 @@ class Bidx_Group_Customizer {
 	{
 		$WPLessPlugin = WPLessPlugin::getInstance( );
 		$variables = array (
-			'color-main' => get_option( 'brand-primary' ) ? get_option( 'brand-primary' ) : '#3498db',
-			'brand-primary' => get_option( 'brand-primary' ) ? get_option( 'brand-primary' ) : '#3498db',
-			'color-secondary' => get_option( 'brand-secondary' ) ? get_option( 'brand-secondary' ) : '#1abc9c',
+			'color-main' => get_option( 'brand-primary' ) ? get_option( 'brand-primary' ) : '#222222',
+			'brand-primary' => get_option( 'brand-primary' ) ? get_option( 'brand-primary' ) : '#222222',
+			'color-secondary' => get_option( 'brand-secondary' ) ? get_option( 'brand-secondary' ) : '#aaaaaaa',
 			'color-background' => get_option( 'brand-background-color' ) ? get_option( 'brand-background-color' ) : '#fff',
 			'bg-image' => "'".get_option( 'brand-background-color-image' )."'",
 			'text-font' => get_option( 'text_font' ) ? get_option( 'text_font' ) : "Lato",
