@@ -81,7 +81,7 @@
 
         if ( $fakecrop )
         {
-           // $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+            $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
         }
 
         $frmSearch.validate(
@@ -381,8 +381,7 @@
             {
 
                 facetValues    = bidx.utils.getValue( facetItems, "facetValues" );
-
-                facetLabel     = facetItems.name.replace(/facet_/g,'').toLowerCase(); //removing fact_industry
+                facetLabel     = bidx.i18n.i( facetItems.name, appName );
 
                 if ( !$.isEmptyObject(facetValues) )
                 {
@@ -395,9 +394,9 @@
                     $.each( facetValues , function ( idx, item )
                     {
 
-                        if ( facetLabel !== 'entitytype' ) //facet_entityType to entitytype through facetLabel
+                        if ( facetItems.name !== 'facet_entityType' )
                         {
-                            item.name    = bidx.data.i( item.name, facetLabel );  // ict.services in industry
+                            item.name    = bidx.data.i( item.name, facetLabel.toLowerCase() );  // ict.services in industry
                         }
                         else
                         {
@@ -762,8 +761,6 @@
         ,   pagerOptions    = {}
         ,   fullName
         ,   nextPageStart
-        ,   numFound
-        ,   pageNumber
         ,   criteria        = options.criteria
         ,   data            = options.response
         ,   $list           = $views.find( ".search-list" )
@@ -786,24 +783,6 @@
             ,   totalPages:             Math.ceil( data.numFound / tempLimit )
             ,   numberOfPages:          CONSTANTS.NUMBER_OF_PAGES_IN_PAGINATOR
             ,   useBootstrapTooltip:    true
-            ,   tooltipTitles:          function (type, page, current)
-                                        {
-                                            switch (type)
-                                            {
-                                                case "first":
-                                                    return bidx.i18n.i( 'toolTipFirstPage' );
-                                                case "prev":
-                                                    return bidx.i18n.i( 'toolTipPreviousPage' );
-                                                case "next":
-                                                    return bidx.i18n.i( 'toolTipNextPage' );
-                                                case "last":
-                                                    return bidx.i18n.i( 'toolTipLastPage' );
-                                                case "page":
-                                                    pageNumber  =   bidx.i18n.i( 'toolTipForPage' )
-                                                                    .replace(/%num%/g, page);
-                                                    return pageNumber;
-                                            }
-                                        }
 
             ,   itemContainerClass:     function ( type, page, current )
                 {
@@ -846,13 +825,10 @@
 
             tempLimit = data.docs.length;
 
-            if( data.numFound )
-            {
-                numFound    =   bidx.i18n.i( "paginationTotal", appName );
+            bidx.utils.log("pagerOptions", pagerOptions);
+            if( data.numFound ) {
 
-                numFound    =   numFound.replace(/%num%/g, data.numFound);
-
-                $searchPagerContainer.find('.pagerTotal').empty().append('<h5>' + numFound + ':</h5>');
+                $searchPagerContainer.find('.pagerTotal').empty().append('<h5>' + data.numFound + ' results:</h5>');
             }
 
             $searchPager.bootstrapPaginator( pagerOptions );
@@ -861,7 +837,6 @@
             //
             $.each( data.docs, function( idx, response )
             {
-
                 switch( response.entityType )
                 {
                     case 'bidxMemberProfile':
@@ -877,36 +852,36 @@
 
                     case 'bidxInvestorProfile':
                         //response.entityType = 'bidxMemberProfile';
-                       // if ( options.criteria.facetFilters.length !== 0 )
-                       // {
+                        if ( options.criteria.facetFilters.length !== 0 )
+                        {
                             showMemberProfile(
                             {
                                 response : response
                             //,   criteria : data.criteria
                             ,   cb       : options.cb
                             } );
-                       // }
+                        }
 
                     break;
 
                     case 'bidxEntrepreneurProfile':
                         //response.entityType = 'bidxMemberProfile';
-                       // if ( options.criteria.facetFilters.length !== 0 )
-                       // {
+                        if ( options.criteria.facetFilters.length !== 0 )
+                        {
                             showMemberProfile(
                             {
                                 response : response
                             //,   criteria : data.criteria
                             ,   cb       : options.cb
                             } );
-                       // }
+                        }
 
                     break;
 
                     case 'bidxMentorProfile':
                         //response.entityType = 'bidxMemberProfile';
-                       // if ( options.criteria.facetFilters.length !== 0 )
-                       // {
+                        if ( options.criteria.facetFilters.length !== 0 )
+                        {
 
                             showMemberProfile(
                             {
@@ -914,7 +889,7 @@
                            // ,   criteria : data.criteria
                             ,   cb       : options.cb
                             } );
-                       // }
+                        }
 
                     break;
 
@@ -955,7 +930,6 @@
                     break;
 
                     default:
-                    bidx.utils.log('Not Loaded Plz Check',response.entityType);
 
                     break;
                 }
@@ -1243,7 +1217,7 @@
                 ,   imageWidth
                 ,   imageLeft
                 ,   imageTop
-                ,   personalDetails
+                ,    personalDetails
                 ,   highestEducation
                 ,   gender
                 ,   isEntrepreneur
@@ -1449,6 +1423,7 @@
 
                                                         if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
                                                         {
+
                                                             if( $.isFunction( options.cb ) )
                                                             {
                                                                 options.cb();

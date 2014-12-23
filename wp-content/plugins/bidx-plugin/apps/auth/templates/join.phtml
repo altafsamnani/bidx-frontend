@@ -1,10 +1,10 @@
-<?php 
+<?php
     $sessionData = BidxCommon::$staticSession;
     $data = $sessionData->data;
     $groupData = $this->group->data;
  ?>
 <div id="join">
-    
+
     <div class="view viewAuth">
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
@@ -19,7 +19,7 @@
                         </div>
                         <div class="col-sm-6">
                             <a href="/bidx-soca/bidxauth?id=linkedin" class="btn btn-linkedin btn-block btn-lg" role="button"><i class="fa fa-linkedin-square"></i> LinkedIn</a>
-                        </div>    
+                        </div>
                     </div>
                     <br />
                     <div class="row">
@@ -28,7 +28,7 @@
                         </div>
                         <div class="col-sm-6">
                             <a href="/bidx-soca/bidxauth?id=hotmail" class="btn btn-hotmail btn-block btn-lg" role="button"><i class="fa fa-windows"></i> Hotmail</a>
-                        </div>            
+                        </div>
                     </div>
                     <br>
                     <label class="label-center"><?php echo _e('Or manually','bidxplugin') ?></label>
@@ -38,7 +38,7 @@
                             <a href="#join/register" class="btn btn-secondary btn-block btn-lg" role="button"><i class="fa fa-check"></i> <?php _e('Register','bidxplugin'); ?></a>
                         </div>
                         <div class="col-sm-5">
-                            <a href="/auth" class="btn btn-primary btn-block btn-lg" role="button"><i class="fa fa-lock"></i> <?php _e('Login','bidxplugin'); ?></a>
+                            <a href="<?php echo _l('auth');?>" class="btn btn-primary btn-block btn-lg" role="button"><i class="fa fa-lock"></i> <?php _e('Login','bidxplugin'); ?></a>
                         </div>
                     </div>
                 </div>
@@ -402,7 +402,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="view viewRegister">
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
