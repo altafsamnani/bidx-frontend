@@ -44,7 +44,7 @@ ga('send', 'pageview', location.pathname + location.search + location.hash);
 		$tracker_name = str_replace( "-", "", $tracker );
 		if ( !empty ( $tracker ) ) {
 ?>ga('create', '<?php echo $tracker ?>' , 'auto', {'name': '<?php echo $tracker_name ?>'});
-ga('<?php echo $tracker_name ?>.send', 'pageview', location.pathname + location.search + location.hash);
+ga('<?php echo $tracker_name ?>.send', 'pageview');
 <?php
 		}
 	}

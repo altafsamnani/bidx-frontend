@@ -45,7 +45,7 @@ ga('send', 'pageview', location.pathname + location.search + location.hash);
 		if ( !empty ( $tracker ) ) {
 ?>
 ga('create', '<?php echo $tracker ?>' , 'auto', {'name': '<?php echo $tracker_name ?>'});
-ga('<?php echo $tracker_name ?>.send', 'pageview', location.pathname + location.search + location.hash);
+ga('<?php echo $tracker_name ?>.send', 'pageview');
 <?php
 		}
 	}
