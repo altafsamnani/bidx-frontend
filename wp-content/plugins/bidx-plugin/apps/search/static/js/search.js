@@ -42,13 +42,13 @@
         ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
         ,   ENTITY_TYPES:                       [
                                                     {
+                                                        "type": "bidxBusinessSummary"
+                                                    },
+                                                    {
                                                         "type": "bidxMemberProfile"
                                                     },
                                                     {
                                                         "type": "bidxEntrepreneurProfile"
-                                                    },
-                                                    {
-                                                        "type": "bidxBusinessSummary"
                                                     },
                                                     {
                                                         "type": "bidxMentorProfile"
@@ -81,7 +81,7 @@
 
         if ( $fakecrop )
         {
-            $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+          //  $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
         }
 
         $frmSearch.validate(
@@ -363,6 +363,7 @@
         ,   listFacetsItem
         ,   facetValues
         ,   facetLabel
+        ,   dataKey
         ,   itemName
         ,   industry
         ,   anchorFacet
@@ -396,7 +397,11 @@
 
                         if ( facetItems.name !== 'facet_entityType' )
                         {
-                            item.name    = bidx.data.i( item.name, facetLabel.toLowerCase() );  // ict.services in industry
+                            dataKey      = facetItems.name.replace(/facet_/g, '');
+                            bidx.utils.log('facetItems.name', facetItems.name);
+                            bidx.utils.log('facetLabel', facetLabel);
+                            bidx.utils.log('dataKey', dataKey);
+                            item.name    = bidx.data.i( item.name, dataKey );  // ict.services in industry
                         }
                         else
                         {
@@ -590,6 +595,7 @@
         ,   sortQuery       = []
         ,   criteriaFilters = []
         ,   criteriaSort    = []
+        ,   filters         = []
         ,   urlParam        = params.urlParam
         ;
 
@@ -645,6 +651,8 @@
             criteriaFilters = facetFilters;
         }
 
+       // filters.push('-facet_entityType:bidxEntrepreneurProfile');
+
         search =    {
                         q           :   criteriaQ
                     ,   sort        :   sort
@@ -658,6 +666,7 @@
                                         ,   "entityTypes"   :   CONSTANTS.ENTITY_TYPES
                                         ,   "facetsVisible" :   true
                                         ,   "scope"         :   "local"
+                                        ,   "filters"       :   filters
                                         }
                     };
 
@@ -671,7 +680,7 @@
         var search
         ;
 
-        search = _getSearchCriteria( options.params );
+        search          =   _getSearchCriteria( options.params );
 
         bidx.api.call(
             "search.get"
@@ -759,6 +768,8 @@
     {
         var items           = []
         ,   pagerOptions    = {}
+        ,   loadedEntity    = {}
+        ,   initialLoad
         ,   fullName
         ,   nextPageStart
         ,   criteria        = options.criteria
@@ -826,6 +837,7 @@
             tempLimit = data.docs.length;
 
             bidx.utils.log("pagerOptions", pagerOptions);
+
             if( data.numFound ) {
 
                 $searchPagerContainer.find('.pagerTotal').empty().append('<h5>' + data.numFound + ' results:</h5>');
@@ -837,6 +849,8 @@
             //
             $.each( data.docs, function( idx, response )
             {
+                initialLoad = false;
+
                 switch( response.entityType )
                 {
                     case 'bidxMemberProfile':
@@ -849,7 +863,7 @@
                         } );
 
                     break;
-
+                    /* Initial load exclude investor,entrprneur and mentor profile so profile display is not duplicated , ex Altaf is member , entrprenneur and mentor too so dont need to display mentor/entrepreneur profile */
                     case 'bidxInvestorProfile':
                         //response.entityType = 'bidxMemberProfile';
                         if ( options.criteria.facetFilters.length !== 0 )
@@ -860,6 +874,10 @@
                             //,   criteria : data.criteria
                             ,   cb       : options.cb
                             } );
+                        }
+                        else
+                        {
+                            initialLoad = true;
                         }
 
                     break;
@@ -875,6 +893,11 @@
                             ,   cb       : options.cb
                             } );
                         }
+                        else
+                        {
+                            initialLoad = true;
+                        }
+
 
                     break;
 
@@ -882,7 +905,6 @@
                         //response.entityType = 'bidxMemberProfile';
                         if ( options.criteria.facetFilters.length !== 0 )
                         {
-
                             showMemberProfile(
                             {
                                 response : response
@@ -890,6 +912,11 @@
                             ,   cb       : options.cb
                             } );
                         }
+                        else
+                        {
+                            initialLoad = true;
+                        }
+
 
                     break;
 
@@ -932,6 +959,19 @@
                     default:
 
                     break;
+                }
+
+                if ( initialLoad )
+                {
+                    CONSTANTS.LOAD_COUNTER ++;
+
+                    if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
+                    {
+                        if( $.isFunction( options.cb ) )
+                        {
+                            options.cb();
+                        }
+                    }
                 }
             });
         }
