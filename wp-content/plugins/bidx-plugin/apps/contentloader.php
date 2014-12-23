@@ -112,7 +112,14 @@ class ContentLoader
                             'post_author'   => ($userID) ? $userID : 1
                         ) );
 
-                        $this->logger->trace( 'Post exist, skipping : ' . $post->name );
+                        $this->logger->trace( 'Post exist, skipping: ' . $document->posttype . $post->name );
+
+                        if( $document->posttype == "page" ) // If original Post Exists, then check for translations for posttype = page
+                        {
+                            $this->logger->trace( 'Post exist, skipping: ' . $post->name );
+                            $this->existing_static_page_translations ( $page, $document->posttype ) ;
+                        }
+
                         continue;
                     } else {
                         $post_id = false;
@@ -375,6 +382,7 @@ class ContentLoader
         $post_type          =   $insertPostArr['post_type'];
         $postTranslateArr   =   array();
 
+         $this->logger->trace( 'Wpml Adding Translated Page: ' . $insertPostArr['post_title'] );
         if( $post_type === 'page')
         {
             // Associate original post and translated post
@@ -440,6 +448,34 @@ class ContentLoader
         }
 
         return $modifiedTranslatedPage; // Store it and use it in add_static_translations_on_deactivatin to link exisiting modified translations to the english pages
+    }
+
+    public function existing_static_page_translations( $page, $type )
+    {
+        global $wpdb;
+        $post_id            =   $page->ID;
+        $langArr            =   wpml_get_active_languages( );
+        $insertPostArr      =   (array) $page;
+
+        unset($langArr['en']);
+
+        $pageTranslations   = wpml_get_content_translations( 'post_'.$type, $post_id);
+
+        foreach( $langArr as $lang => $langVal )
+        {
+            if( !array_key_exists( $lang, $pageTranslations ) )
+            {
+                $this->logger->trace( sprintf('post_id %s insertPostArr arr - %s Language - %s' , $post_id, var_export($insertPostArr, true), $lang ) );
+
+                unset($insertPostArr['ID']);
+                $this->mwm_wpml_translate_post ($post_id, $insertPostArr, $lang);
+            }
+            else
+            {
+                $this->logger->trace( sprintf('Language already there %s - %s %s: ' , $lang, $post_translated_id, $page->post_title ) );
+            }
+
+        }
     }
 
     public function add_static_page_translations( $langs  )

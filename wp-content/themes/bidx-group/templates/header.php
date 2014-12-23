@@ -23,7 +23,7 @@
                 <div class="col-xs-6">
 <?php
                     echo do_shortcode( '[bidx app="group" view="navbarshort"]' );
-?>        
+?>
                 </div>
             </div>
         </div>
@@ -92,17 +92,17 @@
                             if( !$authenticated )
                             {
 ?>
-                                <a href="/join" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Start here','roots'); ?></a>
+                                <a href="<?php echo _l('join');?>" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Start here','roots'); ?></a>
 <?php
                             }
 ?>
                                 <div class="lead pull-right tagline">
-<?php 
+<?php
                                     echo get_theme_mod( 'slogan' ) ;
 ?>
                                 </div>
                             </div>
-<?php 
+<?php
                         }
 ?>
                     </div>
@@ -114,13 +114,13 @@
 <?php
     if (has_nav_menu('primary_navigation')) :
 
-        // Check - Invert Main Menu colors 
+        // Check - Invert Main Menu colors
         $invertedMenu = '';
         if ( get_theme_mod( 'main_menu_invert' ) ) :
             $invertedMenu = ' inverted-menu';
         endif;
 
-    get_template_part('templates/header-top-navbar'); 
+    get_template_part('templates/header-top-navbar');
 
         if ( get_theme_mod( 'page_width_selector' ) !== 'full' ) :
 ?>
