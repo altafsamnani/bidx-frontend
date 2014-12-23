@@ -34,7 +34,8 @@
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 ga('create', 'UA-48404092-2', 'auto');
-ga('send', 'pageview');
+ga('require', 'displayfeatures');
+ga('send', 'pageview', location.pathname + location.search + location.hash);
 <?php
 	$analytics = explode( ',' , get_theme_mod( 'analytics_codes' ) );
 	foreach ( $analytics as $key ) {
@@ -42,8 +43,9 @@ ga('send', 'pageview');
 		$tracker = trim($key) ;
 		$tracker_name = str_replace( "-", "", $tracker );
 		if ( !empty ( $tracker ) ) {
-?>ga('create', '<?php echo $tracker ?>' , 'auto', {'name': '<?php echo $tracker_name ?>'});
-ga('<?php echo $tracker_name ?>.send', 'pageview');
+?>
+ga('create', '<?php echo $tracker ?>' , 'auto', {'name': '<?php echo $tracker_name ?>'});
+ga('<?php echo $tracker_name ?>.send', 'pageview', location.pathname + location.search + location.hash);
 <?php
 		}
 	}
