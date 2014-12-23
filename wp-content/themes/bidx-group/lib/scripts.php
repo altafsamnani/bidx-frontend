@@ -95,7 +95,9 @@ function roots_google_analytics() { ?>
   e=o.createElement(i);r=o.getElementsByTagName(i)[0];
   e.src='//www.google-analytics.com/analytics.js';
   r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-  ga('create','<?php echo GOOGLE_ANALYTICS_ID; ?>');ga('send','pageview');
+  ga('create','<?php echo GOOGLE_ANALYTICS_ID; ?>');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview', location.pathname + location.search + location.hash);
 </script>
 
 <?php }
