@@ -167,7 +167,7 @@
     {
         if( list )
         {
-            list.toggleClass( "pager-loading" );
+            // list.toggleClass( "pager-loading" );
         }
     }
 
