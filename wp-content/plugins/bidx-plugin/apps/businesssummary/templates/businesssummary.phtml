@@ -38,7 +38,6 @@ if ( $requestStatus === "granted" || $canEdit )
 {
     $hasAccess = true;
 }
-
 // Financial
 $currentYear = date("Y");
 $yd;
@@ -317,6 +316,20 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <!-- SHOW -->
 <div class="view viewShow">
 <div class="mainBusiness hide-overflow">
+    <div class="row">
+    <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+<?php
+            if ( $businessSummary->logo && $businessSummary->logo->document ):
+?>            
+            <div class="logoImage">
+                <img src="<?php echo $businessSummary->logo->document ?>" class="center-img" alt="Logo Image">
+            </div>
+<?php
+            endif;
+?>
+        
+    </div>
+    </div>
 <div class="row">
 <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
 <?php
@@ -654,6 +667,38 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                     <!-- EDIT -->
                     <div class="view viewEdit">
                         <blockquote class="alert-info"><?php _e('Use this section to describe your business. Think about what information you would like other people (investors and entrepreneurs) to know about your business if you only had a few minutes to explain.','bidxplugin')?></blockquote>
+                            <div class="row">
+                                <!-- Logo -->
+                                <div class="form-group col-sm-12 bsLogo">
+                                    <a href="#addLogo" data-toggle="modal" class="btn btn-primary">
+                                        <?php _e('Select logo'); ?>
+                                    </a>
+
+                                    <div class="addLogoImage modal fade">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h3><?php _e('Check the file you want to use as your Logo', 'bidxplugin' ); ?></h3>
+                                            </div>
+                                            <div class="modal-body">
+                        <?php
+                                                // Media app will only be inserted once, this is by design!
+                                                //
+                                                echo do_shortcode( '[bidx app="media"]' );
+                        ?>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></button>
+                                                <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
+
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="logoContainer"></div>
+                                </div>
+                            </div>
                         <form id="frmBusinessSummary-GeneralOverview">
                             <div class="row">
                                 <!-- Name -->

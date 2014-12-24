@@ -93,6 +93,13 @@
     ,   $coverImageModal                    = $coverImage.find( ".coverModal" )
     ,   $coverImageContainer                = $coverImage.find( ".coverImageContainer" )
 
+        // Logo
+        //
+    ,   $bsLogo                             = $element.find( ".bsLogo" )
+    ,   $bsLogoBtn                          = $bsLogo.find( "[href$='#addLogo']" )
+    ,   $bsLogoModal                        = $bsLogo.find( ".addLogoImage" )
+    ,   $logoContainer                      = $bsLogo.find( ".logoContainer" )
+
         // Managament Team
         //
     ,   $btnAddManagementTeam               = forms.aboutYouAndYourTeam.$el.find( "[href$='#addManagementTeam']" )
@@ -1229,6 +1236,69 @@
 
         }
 
+        // Logo
+        //
+        $bsLogoBtn.click( function( e )
+        {
+            e.preventDefault();
+
+            // Make sure the media app is within our modal container
+            //
+            $( "#media" ).appendTo( $bsLogoModal.find( ".modal-body" ) );
+
+            var $selectBtn = $bsLogoModal.find( ".btnSelectFile" )
+            ,   $cancelBtn = $bsLogoModal.find( ".btnCancelSelectFile" )
+            ;
+
+            // Navigate the media app into list mode for selecting files
+            //
+            bidx.media.navigate(
+            {
+                requestedState:         "list"
+            ,   slaveApp:               true
+            ,   selectFile:             true
+            ,   multiSelect:            false
+            ,   showEditBtn:            false
+            ,   btnSelect:              $selectBtn
+            ,   btnCancel:              $cancelBtn
+            ,   callbacks:
+                {
+                    ready:                  function( state )
+                    {
+                        bidx.utils.log( "[logo] ready in state", state );
+                    }
+
+                ,   cancel:                 function()
+                    {
+                        // Stop selecting files, back to previous stage
+                        //
+                        $bsLogoModal.modal('hide');
+                    }
+
+                ,   success:                function( file )
+                    {
+                        bidx.utils.log( "[logo] uploaded", file );
+
+                        // NOOP.. the parent app is not interested in when the file is uploaded
+                        // only when it is attached / selected
+                    }
+
+                ,   select:               function( file )
+                    {
+                        bidx.utils.log( "[logo] selected profile picture", file );
+
+                        $logoContainer.data( "bidxData", file );
+                        $logoContainer.html( $( "<img />", { "src": file.document, "data-fileUploadId": file.fileUpload } ));
+
+                        $bsLogoModal.modal( "hide" );
+                    }
+                }
+            } );
+
+            $bsLogoModal.modal();
+        } );
+
+
         // Setup the Documents component
         //
         function _documents()
@@ -1832,6 +1902,14 @@
             $industrySectors.industries( "populateInEditScreen",  data );
         }
 
+        var logoImage = bidx.utils.getValue( businessSummary, "logo" );
+
+        if ( logoImage )
+        {
+            $logoContainer.append( "<img src='"+ logoImage.document +"' />");
+        }
+        
+
         var coverImage = bidx.utils.getValue( businessSummary, "cover" );
 
         if ( coverImage )
@@ -2212,6 +2290,16 @@
                 bidx.utils.setValue( businessSummary, "cover.top", 0 );
             }
         }
+
+        // Logo
+        //
+        var logoImageData = $logoContainer.data( "bidxData" );
+
+        if ( logoImageData )
+        {
+            bidx.utils.setValue( businessSummary, "logo.fileUpload", logoImageData.fileUpload );
+        }
+
     }
 
     function showEntity( options )
