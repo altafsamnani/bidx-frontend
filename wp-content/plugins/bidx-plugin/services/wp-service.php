@@ -998,14 +998,15 @@ function get_redirect ($url, $requestData, $domain = NULL)
     switch ($url) {
         case 'sessionactive':
         case 'session':
-            global $sitepress;
+           /* Language redirection is handled now in  login.js */
+           /* global $sitepress;
             if ( isset( $sitepress) ) {
             	$currentLanguage    =   $sitepress->get_current_language();
             } else {
 				$currentLanguage    =   'en';
 			}
             $redirectLang           =   ($currentLanguage != 'en') ? '/'.$currentLanguage : '/';
-            $redirect               =   ($redirect) ? $redirect : $redirectLang;
+            $redirect               =   ($redirect) ? $redirect : $redirectLang;*/
             $requestData->redirect  =   $redirect;
 
             break;

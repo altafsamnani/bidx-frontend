@@ -81,8 +81,10 @@ class ContentLoader
         $rewrite_rules = array();
 
         $this->logger->trace( 'Start loading default data from location : ' . $this->location );
+
         // Include WPML API
-        include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
+        require_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
+        $is_wpml_active     =   ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') ) ? true : false;
 
         foreach ( glob( BIDX_PLUGIN_DIR . '/../' . $this->location . '/*.xml' ) as $filename ) {
             //try /catch / log ignore
@@ -117,7 +119,11 @@ class ContentLoader
                         if( $document->posttype == "page" ) // If original Post Exists, then check for translations for posttype = page
                         {
                             $this->logger->trace( 'Post exist, skipping: ' . $post->name );
-                            $this->existing_static_page_translations ( $page, $document->posttype ) ;
+
+                            if( $is_wpml_active )
+                            {
+                                $this->existing_static_page_translations ( $page, $document->posttype ) ;
+                            }
                         }
 
                         continue;
@@ -165,7 +171,7 @@ class ContentLoader
                     if(!count($isRevision)) // Page was never modified
                     {
                         //If Multilanguage is enabled then delete all translated pages too
-                        if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
+                        if ( $is_wpml_active )
                         {
                             $modifiedTranslatedPage =   $this->delete_static_translations_on_deactivation($post_id, $page->post_type );
                         }
@@ -198,7 +204,7 @@ class ContentLoader
                     }
                     else
                     {   //If Multilanguage is enabled then add or link all translated pages
-                        if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') && $document->posttype === 'page')
+                        if ( $is_wpml_active && $document->posttype === 'page')
                         {
                             $this->add_static_translations_on_activation ( $post_id, $insertPostArr );
                         }
@@ -216,34 +222,23 @@ class ContentLoader
                     $this->logger->trace ('Adding template on post ' . $post_id . ' named : ' . $post->template);
                     update_post_meta ($post_id, '_wp_page_template', (string) $post->template);
                 }
-                // $post_translated_id = $this->mwm_wpml_translate_post($post_id,$insertPostArr,'es' );
 
                 if (isset ($post->mapping) && $post->mapping != '') {
                     $target = 'index.php?' . $document->posttype . '=' . $post->name;
                     $mappingOrig = (string) $post->mapping;
 
                     $this->logger->trace ('Adding the rewrite rule : ' . $mappingOrig . ' to ' . $target);
-                    //check here that all values from SimpleXML are explicitly casted to string
-                    //$enMapping = str_replace('^','^/en/',$mappingOrig);
-                    //$enTarget = $target.'_en';
 
-                    // $msp: do not add rewrites for pages because they will use wordpress default
-                    //
-                    if ( $document->posttype != 'page' ) {
+                    if ( $document->posttype != 'page' )
+                    {
                         $this->logger->trace ("Adding rewrite for " . $document->posttype );
                         add_rewrite_rule ($mappingOrig, $target, 'top');
                         $rewrite_rules[$mappingOrig] = $target;
-                    } else {
+                    }
+                    else
+                    {
                         $this->logger->trace ("Skipping rewrite");
                     }
-
-                    //$enMapping = str_replace('^','^/en/',$mappingOrig);
-                    //$enTarget = $target.'_en';
-                    //add_rewrite_rule( $enMapping, $enTarget, 'top' );
-                    //$esMapping = str_replace('^','^/es/',$mappingOrig);
-                    //$esTarget = $target.'_es';
-                    //add_rewrite_rule( $esMapping, $esTarget, 'top' );
-                    //$this -> logger -> trace( 'Adding the rewrite rule ES: ' . $esMapping . ' to ' . $target );
                 }
             }
             // end for each post
@@ -255,30 +250,6 @@ class ContentLoader
 
         flush_rewrite_rules (false);
 
-            //if manual writeout is needed
-            //$this -> add_rewrite_rules();
-// No Widgets to be added (have to find out if this is useful dynamically)
-//             $widgets = $document->xpath ('//widget');
-//             $this->logger->trace ('Adding the widgets : ' . sizeof ($widgets) . ' found');
-//             foreach ($widgets as $widget) {
-//                 $this->logger->trace ('Adding the widget named : ' . $widget->name);
-//             }
-
-// Manual actions for now : Navigation blocks to be added
-//             $navigations = $document->xpath ('//navigation');
-//             $this->logger->trace ('Adding the Navigation : ' . sizeof ($navigations) . ' found');
-//             foreach ($navigations as $navigation) {
-//                 $this->logger->trace ('Adding the navigation named : ' . $navigation->name);
-//             }
-
-            //Image resource blocks to be added
-            //Navigation blocks to be added
-//             $images = $document->xpath ('//images');
-//             $this->logger->trace ('Adding the Image : ' . sizeof ($images) . ' found');
-//             foreach ($images as $image) {
-
-//                 $this->logger->trace ('Adding the navigation named : ' . $image->name);
-//             }
      }
         // end for each xml file
 
