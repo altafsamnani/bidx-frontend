@@ -388,7 +388,7 @@ function languages_list_header( )
 
             if($l['active'])
             {
-                $htmlActive   =  "<a href='#' class='lang_sel_sel icl-".$l['language_code']."'>
+                $htmlActive   =  "<a href='javascript:void(0);' class='lang_sel_sel icl-".$l['language_code']."'>
                                     <span class='icl_lang_sel_current'>".$nameHtml."</span>
                                   </a>";
             }
