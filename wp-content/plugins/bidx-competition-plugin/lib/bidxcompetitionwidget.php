@@ -187,10 +187,10 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 		}
 		else
 		{
-			if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
-           	{
-				$competition_id = wpml_get_content('post_competition', $competition_id );
-			}
+			// if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
+   //         	{
+			// 	$competition_id = wpml_get_content('post_competition', $competition_id );
+			// }
 
 			$post = get_post($competition_id);
 
