@@ -880,7 +880,7 @@ msgstr ""
 # _e("Please wait while you are redirected", "i18n");
 # Context  TextDomain i18n
 msgid "Please wait while you are redirected"
-msgstr "Vous allez être redirigé, veuillez patientez"
+msgstr "Vous allez être redirigé, veuillez patienter"
 
 # _e("Processing request", "i18n");
 # Context  TextDomain i18n
