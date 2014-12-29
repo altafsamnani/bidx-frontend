@@ -665,7 +665,7 @@ function create_bidx_po ()
                     $po .= other_wordpress_post_action ('pocreate', $items, $body);
                 }
                 break;
-            case 'bidxplugin' :
+            case 'bidxplugin' : // Bidx plugin and group theme
                 global $pluginStrings;
 
                 $pluginPath         = WP_CONTENT_DIR.'/plugins/bidx-plugin';
@@ -681,7 +681,7 @@ function create_bidx_po ()
 
                 break;
 
-            case 'bidxtheme' :
+            case 'bidxtheme' : // bidx main theme
             case 'bidxgrouptheme':
                 $plugin = $_GET['path'];
                 global $pluginStrings;

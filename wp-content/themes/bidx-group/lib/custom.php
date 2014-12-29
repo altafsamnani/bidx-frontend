@@ -281,9 +281,6 @@ function getLangPrefix( $sep = '' )
     if( $currentLanguage !== 'en')
     {
       $siteLanguage = $currentLanguage;
-    } else
-    {
-      $sep = '';
     }
   }
    return $sep.$siteLanguage ;

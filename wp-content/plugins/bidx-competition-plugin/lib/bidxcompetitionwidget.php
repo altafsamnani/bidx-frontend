@@ -187,10 +187,10 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 		}
 		else
 		{
-			if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
-           	{
-				$competition_id = wpml_get_content('post_competition', $competition_id );
-			}
+			// if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
+   //         	{
+			// 	$competition_id = wpml_get_content('post_competition', $competition_id );
+			// }
 
 			$post = get_post($competition_id);
 
@@ -222,7 +222,7 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 		<div class="competition">
 		<h2><?php echo $post -> post_title ?></h2>
 		<p><?php echo $post -> post_excerpt ?></p>
-		<div class="counter hide-overflow text-center <?php echo $style ?>">
+		<div class="counter hide-overflow text-center <?php echo $style ?>" data-time="<?php echo $this->timestamp ?>">
 <?php
 		if ( $this->timestamp < time() ) {
 ?>
@@ -266,31 +266,44 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 
 		echo "<script src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js'></script>";
 		echo "<script>
-				countdown();
-				setInterval(countdown, 1000);
+		$( document ).ready(function() {
 
-				function countdown ()
+				var countTime = $( '.competition .counter' );
+				
+				countTime.each( function()
 				{
-					var now = moment(),
-						then = moment.unix(".$this->timestamp."),
+					var el = $(this)
+					,	datatime = el.attr('data-time')
+					;
 
-					ms = then.diff(now, 'milliseconds', true);
-					days = Math.floor(moment.duration(ms).asDays());
-					then = then.subtract('days', days);
-					ms = then.diff(now, 'milliseconds', true);
-					hours = Math.floor(moment.duration(ms).asHours());
-					then = then.subtract('hours', hours);
-					ms = then.diff(now, 'milliseconds', true);
-					minutes = Math.floor(moment.duration(ms).asMinutes());
-					then = then.subtract('minutes', minutes);
-					ms = then.diff(now, 'milliseconds', true);
-					seconds = Math.floor(moment.duration(ms).asSeconds());
+					countdown( datatime, el );
 
-					$('.counter .days').text(days);
-					$('.counter .hours').text(hours);
-					$('.counter .minutes').text(minutes);
-					$('.counter .seconds').text(seconds);
+					setInterval( function() { countdown( datatime, el ) }, 1000);
+				});				
+
+				function countdown ( datatime, el )
+				{
+					var now = new moment()
+					,	then = moment.unix( datatime )
+                    ,   ms = then.diff(now, 'milliseconds', true)
+                    ,   days = Math.floor(moment.duration(ms).asDays())
+                    ,   then = then.subtract('days', days)
+                    ,   ms = then.diff(now, 'milliseconds', true)
+                    ,   hours = Math.floor(moment.duration(ms).asHours())
+                    ,   then = then.subtract('hours', hours)
+                    ,   ms = then.diff(now, 'milliseconds', true)
+                    ,   minutes = Math.floor(moment.duration(ms).asMinutes())
+                    ,   then = then.subtract('minutes', minutes)
+                    ,   ms = then.diff(now, 'milliseconds', true)
+                    ,   seconds = Math.floor(moment.duration(ms).asSeconds())
+                    ;
+
+					el.find('.days').text(days);
+					el.find('.hours').text(hours);
+					el.find('.minutes').text(minutes);
+					el.find('.seconds').text(seconds);
 				}
+		});
 
 		</script>";
 	}

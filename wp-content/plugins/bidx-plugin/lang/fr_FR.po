@@ -932,7 +932,7 @@ msgstr ""
 # Context  Textdomain bidxplugin
 msgid "Not a member? Click <a href=\"#auth/register\">here</a> to register."
 msgstr ""
-"Non encore membre? Cliquez <a href=\"#auth/register\">ici</a> pour vous "
+"pas encore membre? Cliquez <a href=\"#auth/register\">ici</a> pour vous "
 "inscrire."
 
 # 9) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/resetpassword/templates/resetpassword.phtml -34
@@ -2190,7 +2190,7 @@ msgstr "Poser votre question "
 # _e("Logout","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Logout"
-msgstr "Déconnecter"
+msgstr "Se Déconnecter"
 
 # 292) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/group/templates/navbarshort.phtml -213
 # _e("Login","bidxplugin");
@@ -5821,7 +5821,7 @@ msgstr "Profil de l'investisseur"
 # _e("Profile","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "My Profile"
-msgstr "Mon profile"
+msgstr "Mon profil"
 
 # 1004) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -110
 # _e("Go to %sEntrepreneur dashboard%s","bidxplugin");
