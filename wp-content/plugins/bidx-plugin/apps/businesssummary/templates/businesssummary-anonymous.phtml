@@ -84,6 +84,21 @@ $currentYear = date("Y");
 
 
     </div>
+    <br>
+    <div class="row">
+    <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+<?php
+            if ( $businessSummary->logo && $businessSummary->logo->document ):
+?>            
+            <div class="logoImage">
+                <img src="<?php echo $businessSummary->logo->document ?>" class="center-img" alt="Logo Image">
+            </div>
+<?php
+            endif;
+?>
+        
+    </div>
+    </div>
 
 
 
@@ -149,6 +164,14 @@ $currentYear = date("Y");
 ?>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4 big-padding-vertical">
+            <a href="/join" class="btn btn-lg btn-block btn-secondary"><?php echo _e( 'Access business summary', 'bidxplugin' ); ?></a>
+        </div>
+    </div>
+
+
 <?php
             }
 ?>
