@@ -1216,6 +1216,21 @@ class TemplateLibrary
         return empty ($var) ? $var = $default : $var;
     }
 
+    function checkEmpty( $vars )
+    {
+        $hasValue = false;
+        foreach ($vars as $var)
+        {
+            if ( $var != NULL || $var != "" )
+            {
+                $hasValue = true;
+                break;
+            }
+        }
+
+        return $hasValue;
+    }
+
     function getBidxToken ($token)
     {
         $tokenVal = NULL;

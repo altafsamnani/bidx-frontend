@@ -9,9 +9,7 @@ $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
 
 $canEdit        = $this->exst($businessSummaryBidxMeta->bidxCanEdit, false);
 $canRate        = $this->exst($businessSummaryBidxMeta->bidxCanRate, false);
-$ratingCount    = $this->exst($businessSummaryBidxMeta->bidxRatingCount, 0);
 $ratingAverage  = $this->exst($businessSummaryBidxMeta->bidxRatingAverage, null);
-$entityStatus   = $this->exst($businessSummaryBidxMeta->bidxEntityStatus, '');
 
 // get the enitities of the current user
 //
@@ -38,6 +36,19 @@ if ( $requestStatus === "granted" || $canEdit )
 {
     $hasAccess = true;
 }
+
+if ( !($businessSummary->cover && $businessSummary->cover->document) )
+{
+    if ( $canEdit )
+    {
+        $hasCover = 'hide-it';
+    }
+    else
+    {
+        $hasCover = 'hide';
+    }
+}
+
 // Financial
 $currentYear = date("Y");
 $yd;
@@ -60,8 +71,7 @@ EOT;
 
 // The attachments item template exists of two types of variables, dynamic values and translations
 //
-$attachmentItemTranslations = array(
-);
+$attachmentItemTranslations = array();
 
 // To display Company Tab
 //
@@ -81,7 +91,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
 <div class="businessSummary box-border top-margin-lineheight" id="businessSummary" data-bsid=<?php echo $businessSummaryId; ?>>
     <div class="businessCover">
-        <div class="coverImageContainer">
+        <div class="coverImageContainer <?php echo $hasCover; ?>">
 <?php
             if ( $businessSummary->cover && $businessSummary->cover->document ):
 ?>            
@@ -381,23 +391,25 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
 
     <div class="main-padding-vertical">
-            <h3 class="to-uppercase"><?php _e('General Overview', 'bidxplugin')?></h3>
 <?php
-
             $rowValues = array
             (
                 __('Reason for financing','bidxplugin') => $this->exst($businessSummary->summaryFinancingNeeded),
                 __('Reason for submission','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->reasonForSubmission), ', ', 'reasonForSubmission' ),
                 __('Equity currently retained','bidxplugin') => $this->exst($businessSummary->equityRetained),
                 __('Investment type','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->investmentType), ', ', 'investmentType' )
-
             );
-            echo $this->tableRow ( $rowValues );
+
+            if ( $this->checkEmpty( $rowValues ) ) :
+?>
+                <h3 class="to-uppercase"><?php _e('General Overview', 'bidxplugin')?></h3>
+<?php               
+                echo $this->tableRow ( $rowValues );
+            endif;
 ?>
     </div>
 
     <div class="main-padding-vertical">
-            <h3 class="to-uppercase"><?php _e('The Business', 'bidxplugin')?></h3>
 <?php
 
             $rowValues = array
@@ -409,22 +421,31 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 __('Social impact','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->socialImpact), ', ', 'socialImpact' ),
                 __('Environmental impact','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->envImpact), ', ', 'envImpact' ),
                 __('Customer type','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->consumerType), ', ', 'consumerType' )
-
             );
-            echo $this->tableRow ( $rowValues );
+
+            if ( $this->checkEmpty( $rowValues ) ) :
+?>
+                <h3 class="to-uppercase"><?php _e('The Business', 'bidxplugin')?></h3>
+<?php               
+                echo $this->tableRow ( $rowValues );
+            endif;
 ?>
     </div>
 
     <div class="main-padding-vertical">
-            <h3 class="to-uppercase"><?php _e('The Team', 'bidxplugin')?></h3>
 <?php
             $rowValues = array
             (
                 __('Role of Entrepreneur','bidxplugin') => $this->exst($businessSummary->personalRole),
                 __('Applicable Expertise') => $this->exst($businessSummary->personalExpertise)
-
             );
-            echo $this->tableRow ( $rowValues );
+
+            if ( $this->checkEmpty( $rowValues ) ) :
+?>
+                <h3 class="to-uppercase"><?php _e('The Team', 'bidxplugin')?></h3>
+<?php               
+                echo $this->tableRow ( $rowValues );
+            endif;
 
             if ( $this->exst( $businessSummary->managementTeam ) ) :
 ?>
