@@ -135,7 +135,9 @@
     <Item value="hideFeedback">Hide feedback</Item>
     <Item value="submitFeedback">Submit feedback</Item>
     <Item value="addNewFeedback">Add new feedback</Item>
+    <Item value="deleteFeedbackConfirm">This will delete this feedback. Are you sure?</Item>
     <Item value="successAddingMsgFeedback">Feedback added successfully</Item>
+    <Item value="successUpdatingMsgFeedback">Feedback updated successfully</Item>
     <Item value="successDeletingMsgFeedback">Feedback deleted successfully</Item>
     <Item value="errorMsgFeedback">Error occured, try again</Item>
     <Item value="btnClear">Clear</Item>
@@ -150,5 +152,11 @@
     <Item value="selectMainSector">Select Main Sector</Item>
     <Item value="selectSubSector">Select Sub Sector</Item>
     <Item value="selectEndSector">Select End Sector</Item>
+
+    <Item value="toolTipFirstPage">Go to first page</Item>
+    <Item value="toolTipPreviousPage">Go to previous page</Item>
+    <Item value="toolTipNextPage">Go to next page</Item>
+    <Item value="toolTipLastPage">Go to last page</Item>
+    <Item value="toolTipForPage">Go to page %num%</Item>
 
 </I18N>

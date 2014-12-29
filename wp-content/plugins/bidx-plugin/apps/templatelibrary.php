@@ -44,13 +44,27 @@ class TemplateLibrary
      * @param string $template_file file to display
      *
      */
-    public function render ($template_file)
+    public function render ($template_file, $echo = true)
     {
-        if (file_exists ($this->template_dir . $template_file)) {
+
+        if (file_exists ($this->template_dir . $template_file))
+        {
+            if ( !$echo )
+            {
+                ob_start(); // turn on output buffering
+            }
             include $this->template_dir . $template_file;
-        } else {
+            if ( !$echo )
+            {
+                $result = ob_get_contents(); // get the contents of the output buffer
+                ob_end_clean(); //  clean (erase) the output buffer and turn off output buffering
+                return $result;
+            }
+        }
+        else {
             throw new Exception ('no template file ' . $template_file . ' present in directory ' . $this->template_dir);
         }
+
     }
 
     /**
@@ -621,7 +635,7 @@ class TemplateLibrary
                             {
                                 array_push($arr, $rowOutput->neighborhood);
                             }
-                            
+
                             $html .= implode( ", ", $arr );
                         }
                         else

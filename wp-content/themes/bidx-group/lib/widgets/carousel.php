@@ -1,4 +1,4 @@
-<?php 
+<?php
 // register widget
 add_action( 'widgets_init', function()
 {
@@ -9,7 +9,7 @@ class Carousel_Widget extends WP_Widget {
 
     ///////////////////////////
     // Initialise the widget //
-    /////////////////////////// 
+    ///////////////////////////
     function Carousel_Widget()
     {
         $this->WP_Widget
@@ -74,7 +74,7 @@ class Carousel_Widget extends WP_Widget {
             echo '</select>';
 
 
-    } // END: function form( $instance ) 
+    } // END: function form( $instance )
 
     //////////////////////////////////////////////////////////////////
     // The update function to insert the chosen values in to the db //
@@ -104,7 +104,7 @@ class Carousel_Widget extends WP_Widget {
         {
             $add_container = true;
         }
-        
+
         if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) !== true )
         {
             $add_container = true;
@@ -200,27 +200,27 @@ class Carousel_Widget extends WP_Widget {
                 if ( $add_container ) :
 ?>
                     <div class="container">
-<?php                 
-                endif; 
+<?php
+                endif;
 ?>
                 <div class="alert alert-danger">
                     <blockquote>
-                        <p><?php _e('Please select the images you want to show to this carousel from the widget', 'bidxtheme') ?></p>
+                        <p><?php _e('Please select the images you want to show to this carousel from the widget', 'bidxplugin') ?></p>
                     </blockquote>
                     <p class="hide-overflow">
                         <span class="pull-left">
-                            <?php _e('Sidebar', 'bidxtheme') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
+                            <?php _e('Sidebar', 'bidxplugin') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
                         </span>
                         <span class="pull-right">
-                            <?php _e('Widget', 'bidxtheme') ?>: <strong><?php echo $args['widget_name']; ?></strong>
+                            <?php _e('Widget', 'bidxplugin') ?>: <strong><?php echo $args['widget_name']; ?></strong>
                         </span>
                     </p>
                 </div>
-<?php 
+<?php
                 if ( $add_container ) :
-?>  
+?>
                     </div>
-<?php                    
+<?php
                 endif;
             }
 ?>
@@ -233,24 +233,24 @@ class Carousel_Widget extends WP_Widget {
         {
 ?>
             <div class="carousel-empty">
-<?php             
+<?php
                 if ( $add_container ) :
 ?>
                     <div class="container">
-<?php                 
-                endif; 
+<?php
+                endif;
 ?>
                     <div class="carousel-inner">
                         <div class="item active" style="background: url(<?php echo $img_url['path'] ?>) top center no-repeat; height: 250px; ">
-                            <div class="carousel-caption"><?php _e( "Welcome to Bidx Portals, let's get started ", 'bidxtheme') ?></div>
-                            <div class="carousel-description"><a href="/wp-admin/widgets.php"><?php _e('Configure theme', 'bidxtheme') ?></a></div>
+                            <div class="carousel-caption"><?php _e( "Welcome to Bidx Portals, let's get started ", 'bidxplugin') ?></div>
+                            <div class="carousel-description"><a href="/wp-admin/widgets.php"><?php _e('Configure theme', 'bidxplugin') ?></a></div>
                         </div>
                     </div>
 <?php
                 if ( $add_container ) :
-?>  
+?>
                     </div>
-<?php                    
+<?php
                 endif;
 ?>
             </div>

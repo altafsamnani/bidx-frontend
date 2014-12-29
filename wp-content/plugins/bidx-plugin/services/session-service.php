@@ -10,32 +10,32 @@ require('api-bridge.php');
  */
 class SessionService extends APIBridge {
 
-    public $sessionUrl = 'session';
-    private $data;
+	public $sessionUrl = 'session';
+	private $data;
 
-    /**
-     * Constructs the API bridge.
-     * Needed for operational logging.
-     */
-    public function __construct()
+	/**
+	 * Constructs the API bridge.
+	 * Needed for operational logging.
+	 */
+	public function __construct()
     {
-        parent :: __construct();
-    }
+		parent :: __construct();
+	}
 
-    /**
-     * Checks if the user is logged in on the API
-     * @param boolean $serviceCheck define if a service check is needed or a simple check on the API cookie is sufficient.
-     * In case of no API service check, the data in the Session profile will be very limited.
-     * @return boolean if user is logged in
-     */
-    function isLoggedIn(  )
+	/**
+	 * Checks if the user is logged in on the API
+	 * @param boolean $serviceCheck define if a service check is needed or a simple check on the API cookie is sufficient.
+	 * In case of no API service check, the data in the Session profile will be very limited.
+	 * @return boolean if user is logged in
+	 */
+	function isLoggedIn(  )
     {
 
-        $this->sessionData = $this->callBidxAPI($this->sessionUrl, array(), 'GET');
+		$this->sessionData = $this->callBidxAPI($this->sessionUrl, array(), 'GET');
 
-        return $this->sessionData;
+		return $this->sessionData;
 
-    }
+	}
 
     /**
      * Checks if the user is having Frontend and session set
@@ -57,10 +57,10 @@ class SessionService extends APIBridge {
     }
 
     /**
-     * Checks if the user is having particular profile ex Investor, Entrprepneur,
-     * @param String $type Type of profile (investor,entrepreneur, mentor)
-     * @return boolean if having profile or not
-     */
+	 * Checks if the user is having particular profile ex Investor, Entrprepneur,
+	 * @param String $type Type of profile (investor,entrepreneur, mentor)
+	 * @return boolean if having profile or not
+	 */
     function isHavingProfile( $type ) {
 
         $sessionData = BidxCommon::$staticSession;
@@ -103,20 +103,20 @@ class SessionService extends APIBridge {
      */
     function getGroups( ) {
 
-        $result = array();
+    	$result = array();
         $sessionData = BidxCommon::$staticSession;
         if ( property_exists( $sessionData, 'data' ) ) { //validate if the data is there
-            $groups = $sessionData->data->groups;
-            if (! empty ( $groups ) ) {
-                foreach ( $groups as $key => $value ) {
-                    if ( $value -> bidxMeta -> bidxGroupType === "Open" ) {
-                        $result [ $key ] = array(
-                            "name"  => $value -> name,
-                            "url"   => $value -> bidxMeta -> bidxGroupUrl
-                        );
-                    }
-                }
-            }
+	        $groups = $sessionData->data->groups;
+		    if (! empty ( $groups ) ) {
+		        foreach ( $groups as $key => $value ) {
+		            if ( $value -> bidxMeta -> bidxGroupType === "Open" ) {
+		                $result [ $key ] = array(
+		                    "name"  => $value -> name,
+		                    "url"   => $value -> bidxMeta -> bidxGroupUrl
+		                );
+		            }
+		        }
+		    }
         }
         return $result;
 
@@ -127,16 +127,16 @@ class SessionService extends APIBridge {
      * @return boolean true if admin, false if not
      */
     function isAdmin( ) {
-        $sessionData = BidxCommon::$staticSession;
-        $roles = ( !empty($sessionData->data->roles ) ) ? $sessionData->data->roles:NULL;
-        $currentGroupAdmin = false;
-        if ( !empty($sessionData) && !empty($roles) ) {
-            if ( in_array( 'GroupAdmin', $roles ) ||
-                 in_array( 'GroupOwner', $roles ) ) {
-                $currentGroupAdmin = true;
-            }
-        }
-        return $currentGroupAdmin;
+    	$sessionData = BidxCommon::$staticSession;
+    	$roles = ( !empty($sessionData->data->roles ) ) ? $sessionData->data->roles:NULL;
+    	$currentGroupAdmin = false;
+    	if ( !empty($sessionData) && !empty($roles) ) {
+    		if ( in_array( 'GroupAdmin', $roles ) ||
+    			 in_array( 'GroupOwner', $roles ) ) {
+    			$currentGroupAdmin = true;
+    		}
+    	}
+    	return $currentGroupAdmin;
     }
 
     /**

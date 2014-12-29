@@ -641,9 +641,9 @@ function languages_list_footer()
   global $sitepress;
   if( $sitepress )
   {
-    $currentLanguage = $sitepress->get_current_language();
-    $baseUrl         = str_replace( '/'.$currentLanguage.'/', "/", $_SERVER['REQUEST_URI'] );
-    $languages = icl_get_languages("skip_missing=0&orderby=code&link_empty_to=/{%lang}{$baseUrl}");
+    $currentLanguage  = $sitepress->get_current_language();
+    $baseUrl          = str_replace( '/'.$currentLanguage.'/', "/", $_SERVER['REQUEST_URI'] );
+    $languages        = icl_get_languages("skip_missing=0&orderby=code&link_empty_to=/{%lang}{$baseUrl}");
     if(!empty($languages))
     {
         $html   = '<div id="lang_sel_footer">

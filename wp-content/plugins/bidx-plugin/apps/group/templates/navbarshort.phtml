@@ -57,15 +57,15 @@
     $authenticated  = $session -> authenticated;
 
         // check for the widget
-        // if ( is_plugin_active( ABSPATH . 'wp-content/plugins/sitepress-multilingual-cms/sitepress.php') )
-        // {
+        if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
+        {
 ?>
             <div class="btn-group language-switcher">
                 <?php //the_widget('ICL_Language_Switcher'); ?>
                 <?php echo languages_list_header();?>
             </div>
 <?php
-        // } 
+         }
 
     if ( $authenticated === "true" )
     {
@@ -78,7 +78,7 @@
     $isCompetition  = get_option ('skipso-competition');
     $skipsoJudgeUrl = get_option ('skipso-judge-url');
     $userName       = $this -> sessionData -> data -> username;
-    $displayName    = $this -> sessionData -> data -> bidxMemberProfile -> firstName ? $this -> sessionData -> data -> bidxMemberProfile -> firstName : 'User'; 
+    $displayName    = $this -> sessionData -> data -> bidxMemberProfile -> firstName ? $this -> sessionData -> data -> bidxMemberProfile -> firstName : 'User';
     $judgeEmails    = explode(",", get_option ('skipso-judge-emails'));
     $isJudge        = ($isCompetition && in_array( $userName, $judgeEmails )) ? true : false;
     $showLogout     = true;
@@ -125,12 +125,38 @@
 <?php
         }
  ?>
+
+ <?php
+
+        // only when a has grous, show the group dropdown
+        //As per Sakis instruction, when multilingual switcher is there, switching of group should go away so disabling it.
+        if ( $hasGroups && false )
+        {
+ ?>
+            <div class="btn-group groups">
+                <a href="#" type="button" class="text-white dropdown-toggle" data-toggle="dropdown" title="<?php _e('Groups', 'bidxplugin')?>">
+                    <i class="fa fa-users"></i>
+                    <span class="iconbar-text"><?php _e('Groups','bidxplugin')?></span>
+                </a>
+                <ul class="dropdown-menu bg-primary-darker">
+<?php
+                    foreach ( $groups as $groupKey => $groupValue ) {
+?>
+                        <li><a href="<?php echo $groupValue[ "url" ] ?>"><i class="fa fa-angle-right"></i>&nbsp;<?php echo $groupValue[ "name" ] ?></a></li>
+<?php
+                    }
+?>
+                </ul>
+            </div>
+<?php
+        }
+ ?>
         <div class="btn-group">
 <?php
             if ( $inGroup )
             {
 ?>
-                <a href="/mail/#mail" type="button" class="bidx-mail text-white" title="<?php _e('Mail', 'bidxplugin')?>">
+                <a href="<?php echo _l('mail');?>/#mail" type="button" class="bidx-mail text-white" title="<?php _e('Mail', 'bidxplugin')?>">
                     <!-- If messages are available -->
                     <i class="fa fa-envelope"></i>
                     <span class="iconbar-unread hide-it">?</span>
@@ -149,7 +175,7 @@
 <?php
         $roles = ( !empty( $this -> sessionData -> data -> roles ) ) ? $this -> sessionData -> data -> roles : NULL;
         $currentGroupAdmin = false;
-        
+
         if ( !empty($this->sessionData) && !empty( $roles) )
         {
             if ( in_array( 'GroupAdmin', $roles ) || in_array( 'GroupOwner', $roles ) )
@@ -170,9 +196,9 @@
                 if ( $inGroup )
                 {
 ?>
-                    <li><a href="/member"><i class="fa fa-user"></i>&nbsp;<?php _e('Profile','bidxplugin')?></a></li>
-                    <li><a href="/account/#account"><i class="fa fa-cog"></i>&nbsp;<?php _e('Account settings','bidxplugin')?></a></li>
-                    <li><a href="/media"><i class="fa fa-file"></i>&nbsp;<?php _e('All my documents','bidxplugin')?></a></li>
+                    <li><a href="<?php echo _l('member');?>"><i class="fa fa-user"></i>&nbsp;<?php _e('Profile','bidxplugin')?></a></li>
+                    <li><a href="<?php echo _l('account');?>/#account"><i class="fa fa-cog"></i>&nbsp;<?php _e('Account settings','bidxplugin')?></a></li>
+                    <li><a href="<?php echo _l('media');?>"><i class="fa fa-file"></i>&nbsp;<?php _e('All my documents','bidxplugin')?></a></li>
 <?php
                 }
 
@@ -192,14 +218,14 @@
                 if( !$currentGroupAdmin && $hasGroups )
                 {
 ?>
-                    <li><a href="/mail/#mail/compose"><i class="fa fa-question"></i>&nbsp;<?php _e('Help','bidxplugin')?></a></li>
+                    <li><a href="<?php echo _l('mail');?>/#mail/compose"><i class="fa fa-question"></i>&nbsp;<?php _e('Help','bidxplugin')?></a></li>
 <?php
                 }
 
                 if ( $currentGroupAdmin && is_plugin_active('zendesk/zendesk-support.php') )
                 {
 ?>
-                     <li><a href="/support"><?php _e('Ask your question','bidxplugin')?></a></li>
+                     <li><a href="<?php echo _l('support');?>"><?php _e('Ask your question','bidxplugin')?></a></li>
 <?php           }
 
                 if( $showLogout )
@@ -217,7 +243,7 @@
     {
 ?>
         <div class="btn-group">
-            <a href="/auth/#auth/login" type="button" class="text-white" title="<?php _e('Login', 'bidxplugin')?>">
+            <a href="<?php echo _l('auth');?>/#auth/login" type="button" class="text-white" title="<?php _e('Login', 'bidxplugin')?>">
                 <i class="fa fa-lock"></i>
                 <span><?php _e('Login','bidxplugin')?></span>
             </a>

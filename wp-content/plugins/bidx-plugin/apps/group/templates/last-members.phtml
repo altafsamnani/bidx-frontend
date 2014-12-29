@@ -60,7 +60,7 @@
                     <div class="media-body">
 
                 <div>
-                    <a href="/member/<?php echo $member -> id ?>">
+                    <a href=" <?php echo _l('member').'/'.$member -> id ?>">
                         <strong>
 <?php
                             echo $this -> exst( $member -> firstName ) . ' ' . $this -> exst( $member -> lastName );
@@ -108,7 +108,7 @@
                 if ( $authenticated && $joinedGroup ) {
 ?>
                     <div>
-                        <a href="/mail/#mail/contacts/action=connect&id=<?php echo $member -> bidxMeta -> bidxMemberId ?>"><?php _e('Connect', 'bidxplugin')?></a>
+                        <a href=" <?php echo _l('mail');?>/#mail/contacts/action=connect&id=<?php echo $member -> bidxMeta -> bidxMemberId ?>"><?php _e('Connect', 'bidxplugin')?></a>
                     </div>
 <?php
                 }

@@ -34,7 +34,6 @@
     // Investor Form elements
     ,   $investorType               = $frmBecomeInvestor.find( "[name='investorType']" )
     ,   $institutionAddressCountry  = $frmBecomeInvestor.find( "[name='institutionAddress.country']" )
-    ,   $focusIndustry              = $frmBecomeInvestor.find( "[name='focusIndustry']" )
     ,   $focusSocialImpact          = $frmBecomeInvestor.find( "[name='focusSocialImpact']" )
     ,   $focusEnvImpact             = $frmBecomeInvestor.find( "[name='focusEnvImpact']" )
     ,   $investmentType             = $frmBecomeInvestor.find( "[name='investmentType']" )
@@ -47,9 +46,7 @@
     ,   $prefCommChkBoxes           = $prefComm.find( "[type='checkbox']" )
 
     // Entrepreneur Form elements
-    ,   $industry                   = $frmBecomeEntrepreneur.find( "[name='industry']" )
     ,   $expertiseNeeded            = $frmBecomeEntrepreneur.find( "[name='expertiseNeeded']" )
-    ,   $productService             = $frmBecomeEntrepreneur.find( "[name='productService']" )
     ,   $countryOperation           = $frmBecomeEntrepreneur.find( "[name='countryOperation']" )
     ,   $reasonForSubmission        = $frmBecomeEntrepreneur.find( "[name='reasonForSubmission']" )
     ,   $yearSalesStarted           = $frmBecomeEntrepreneur.find( "[name='yearSalesStarted']" )
@@ -109,7 +106,6 @@
         ,   'investorType'
         ,   'institutionAddress.country'
         ,   'institutionAddress.cityTown'
-        ,   'focusIndustry'
         ,   'focusSocialImpact'
         ,   'focusEnvImpact'
         ,   'investmentType'
@@ -124,11 +120,9 @@
             'name'
         ,   'summary'
         ,   'reasonForSubmission'
-        ,   'industry'
         ,   'mentorAdvisory'
         ,   'expertiseNeeded'
         ,   'expertiseNeededDetail'
-        ,   'productService'
         ,   'countryOperation'
         ,   'yearSalesStarted'
         ,   'personalRole'
@@ -145,11 +139,6 @@
     {
         // Populate the selects
         //
-        $focusIndustry.bidx_chosen(
-        {
-            dataKey:            "industry"
-        });
-
         $focusSocialImpact.bidx_chosen(
         {
             dataKey:            "socialImpact"
@@ -193,19 +182,9 @@
         ,   emptyValue:         bidx.i18n.i( "selectReasonForSubmission", appName )
         });
 
-        $industry.bidx_chosen(
-        {
-            dataKey:            "industry"
-        });
-
         $expertiseNeeded.bidx_chosen(
         {
             dataKey:            "mentorExpertise"
-        });
-
-        $productService.bidx_chosen(
-        {
-            dataKey:            "productService"
         });
 
         $countryOperation.bidx_chosen(
@@ -380,7 +359,6 @@
             // Default values
             //
             bidx.utils.setValue( member, "bidxEntrepreneurProfile.summary", ".." );
-            bidx.utils.setValue( member, "bidxEntrepreneurProfile.focusIndustry", ["services"] );
             bidx.utils.setValue( member, "bidxEntrepreneurProfile.prevRunBusiness", false );
             bidx.utils.setValue( member, "bidxEntrepreneurProfile.cv", {} );
 
@@ -553,10 +531,6 @@
                 {
                     required:               true
                 }
-            ,   "focusIndustry":
-                {
-                    required:               true
-                }
             ,   "focusSocialImpact":
                 {
                     required:               true
@@ -686,10 +660,6 @@
                 {
                     required:               true
                 }
-            ,   "industry":
-                {
-                    required:               true
-                }
             ,   "mentorAdvisory":
                 {
                     required:               true
@@ -702,10 +672,6 @@
                 {
                     required:               { depends: function () { return !$( ".toggle-mentorAdvisory" ).is(':hidden'); } }
                 ,   maxlength:              300
-                }
-            ,   "productService":
-                {
-                    required:               true
                 }
             ,   "countryOperation":
                 {

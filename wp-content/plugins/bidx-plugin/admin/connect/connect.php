@@ -50,12 +50,6 @@ class Bidx_Admin_Connect
 
 		add_action('load-'.$this->page,  array(&$this,'mail_page_actions'));
 
-
-
-
-
-
-
 	}
 	/**
 	* Actions to be taken prior to page loading. This is after headers have been set.

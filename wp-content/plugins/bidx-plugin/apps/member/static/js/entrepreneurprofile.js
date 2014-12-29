@@ -18,7 +18,7 @@
 
     ,   $fakecrop                   = $views.find( ".js-fakecrop img" )
 
-    ,   $focusIndustry              = $element.find( "[name='focusIndustry']" )
+    // ,   $focusIndustry              = $element.find( "[name='focusIndustry']" )
 
     ,   $toggles                    = $element.find( ".toggle" ).hide()
     ,   $togglePrevRunBusiness      = $element.find( "[name='prevRunBusiness']"      )
@@ -36,7 +36,7 @@
     ,   $attachmentsControl         = $editForm.find( ".attachmentsControl" )
     ,   $attachmentsContainer       = $attachmentsControl.find( ".attachmentsContainer" )
     ,   $btnAddAttachments          = $attachmentsControl.find( ".js-btn-add-attachments")
-    ,   $addAttachmentsModal        = $attachmentsControl.find( ".addAttachmentsModal" )
+    ,   $addAttachmentsModal        = $( "#otherDocumentsModal" )
 
         // Industy Sectors
         //
@@ -105,10 +105,10 @@
 
         // Populate the dropdowns with the values
         //
-        $focusIndustry.bidx_chosen(
-        {
-            dataKey:            "industry"
-        });
+        // $focusIndustry.bidx_chosen(
+        // {
+        //     dataKey:            "industry"
+        // });
 
         bidx.data.getContext( "businessOutcome", function( err, businessOutcomes )
         {
@@ -241,8 +241,8 @@
                 //
                 $( "#media" ).appendTo( $( "#otherDocumentsModal .modal-body" ) );
 
-                var $selectBtn = $addAttachmentsModal.find( ".btnSelectFile" );
-                var $cancelBtn = $addAttachmentsModal.find( ".btnCancelSelectFile" );
+                var $selectBtn = $( "#otherDocumentsModal" ).find( ".btnSelectFile" );
+                var $cancelBtn = $( "#otherDocumentsModal" ).find( ".btnCancelSelectFile" );
 
                 // Navigate the media app into list mode for selecting files
                 //
@@ -295,12 +295,10 @@
                                 } );
                             }
 
-                            $addAttachmentsModal.modal('hide');
+                            $( "#otherDocumentsModal" ).modal('hide');
                         }
                     }
                 } );
-
-                $addAttachmentsModal.modal();
             } );
 
             // Instantiate reflowrower on the attachments container
@@ -600,7 +598,7 @@
 
         // Update the chosen components with our set values
         //
-        $focusIndustry.trigger( "chosen:updated" );
+        // $focusIndustry.trigger( "chosen:updated" );
     }
 
     // Convert the form values back into the member object

@@ -12,9 +12,12 @@ class Bidx_Admin_Monitoring
 	,		$view
 	,		$className
 	, 		$deps 	= 	array (	'underscore'
+							  ,	'jquery-fakecrop'
 							  ,	'bidx-admin-api-core'
 							  , 'bidx-admin-common'
 							  , 'google-jsapi'
+							  , 'data-table'
+
 							  );
 	/**
 	 * Constructor class for the Simple Admin Metabox
@@ -68,6 +71,12 @@ class Bidx_Admin_Monitoring
 		/* Enqueue WordPress' script for handling the metaboxes */
 		wp_enqueue_script( 'postbox' );
 
+		/* For Datepicker
+		Commented because currently there is no functinality to fetch stats on date and nsearch
+		wp_enqueue_script('jquery-ui-datepicker');
+		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css'); */
+
+
 		/* Add callbacks for this screen only */
 		add_action('admin_print_footer_scripts', array(&$this,'monitoring_footer_scripts'));
 		add_action('admin_enqueue_scripts', array(&$this, 'register_monitoring_bidx_ui_libs'));
@@ -84,7 +93,7 @@ class Bidx_Admin_Monitoring
 		$view->userId 			= 	$this->userId;
 		$view->body_content_cb 	= 	$this->admin_body_content();
 		$view->className        =   $this->className;
-
+		//$view->topContent	    =   $this->view->render('criteria.phtml', false); //Commented because currently there is no functinality to fetch stats on date and nsearch
         echo $view->render( 'two-column.phtml' );
 	}
 
@@ -94,8 +103,15 @@ class Bidx_Admin_Monitoring
 	 */
 	public function register_monitoring_bidx_ui_libs()
 	{
+		$vendorDir = sprintf ('%s/../static/vendor', BIDX_PLUGIN_URI);
 		//1. Load Js Libraries
-		wp_register_script ($this->className, plugins_url("static/js/{$this->className}.js", __FILE__), $this->deps, '20140620', TRUE);
+		wp_register_script ('data-table', $vendorDir . '/DataTables-1.10.3/media/js/jquery.dataTables.js', array ('jquery'), '1.10.3', TRUE);
+
+		wp_register_script ($this->className, plugins_url("static/js/{$this->className}.js", __FILE__), $this->deps, '20141031', TRUE);
+
+        //2. Load Data Table Css for this page
+		wp_register_style( 'data-table-css', $vendorDir . '/DataTables-1.10.3/media/css/jquery.dataTables.css', array(), '20141031', 'all' );
+        wp_enqueue_style( 'data-table-css' );
 	}
 
 

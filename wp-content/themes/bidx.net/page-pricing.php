@@ -20,17 +20,17 @@
                                             <div class="price">
                                                 <span class="dollar">$</span>
                                                 <h2>6800</h2><br>
-                                                <span class="per">/ year</span>
+                                                <span class="per">/year</span>
                                             </div>
                                         </div>
                                         <ul class="details">
                                             <li>Max Users<br><strong>Unlimited</strong></li>
-                                            <li>Discounts<br><strong>>10 Groups 30% less</strong></li>
+                                            <!-- <li>Discounts<br><strong>>10 Groups 30% less</strong></li> -->
                                             <li>Customization<br><strong>$1000 per day</strong></li>
                                             <li>Delivery time<br><strong>4 weeks, max</strong></li>
                                             <li>Customer support response time<br><strong>2 days, max</strong></li>
                                             <li>Branding<br><strong>Your brand</strong></li>
-                                            <li>Languages<br><strong>English, Spanish, French (June 2014)</strong></li>
+                                            <li>Languages<br><strong>English, Spanish, French</strong></li>
                                         </ul>
                                         <div class="p-footer">
                                             <a href="/get-started" class="btn btn-flat flat-warning">Get Started</a>
@@ -48,17 +48,17 @@
                                             <div class="price">
                                                 <span class="dollar">$</span>
                                                 <h2>6800</h2><br>
-                                                <span class="per">1st time</span>
+                                                <span class="per"></span>
                                             </div>
                                         </div>
                                         <ul class="details">
                                             <li>Max Users<br><strong>Unlimited</strong></li>
-                                            <li>Discounts<br><strong>$2000 after the 1st time</strong></li>
+                                            <!-- <li>Discounts<br><strong>$3000 for each next competiton</strong></li> -->
                                             <li>Customization<br><strong>$1000 per day</strong></li>
                                             <li>Delivery time<br><strong>2 weeks, max</strong></li>
                                             <li>Customer support response time<br><strong>2 days, max</strong></li>
                                             <li>Branding<br><strong>Your brand</strong></li>
-                                            <li>Languages<br><strong>English, Spanish, French (June 2014)</strong></li>
+                                            <li>Languages<br><strong>English, Spanish, French</strong></li>
                                         </ul>
                                         <div class="p-footer">
                                             <a href="/get-started" class="btn btn-flat flat-warning">Get Started</a>
@@ -75,18 +75,18 @@
                                             </div>
                                             <div class="price">
                                                 <span class="dollar">$</span>
-                                                <h2>$6800</h2><br>
+                                                <h2>6800</h2><br>
                                                 <span class="per">/year</span>
                                             </div>
                                         </div>
                                         <ul class="details">
                                             <li>Max Users<br><strong>Unlimited</strong></li>
-                                            <li>Discounts<br><strong>No discounts applicable</strong></li>
+                                            <!-- <li>Discounts<br><strong>No discounts applicable</strong></li> -->
                                             <li>Customization<br><strong>$1000 per day</strong></strong></li>
                                             <li>Delivery time<br><strong>4 weeks, max</strong></li>
                                             <li>Customer support response time<br><strong>2 days, max</strong></li>
                                             <li>Branding<br><strong>Your brand</strong></li>
-                                            <li>Languages<br><strong>English, Spanish, French (June 2014)</strong></li>
+                                            <li>Languages<br><strong>English, Spanish, French</strong></li>
                                         </ul>
                                         <div class="p-footer">
                                             <a href="/get-started" class="btn btn-flat flat-warning">Get Started</a>
@@ -108,12 +108,12 @@
                                         </div>
                                         <ul class="details">
                                             <li>Max Users<br><strong>Unlimited</strong></li>
-                                            <li>Discounts</strong><br><strong>Negotiable for small populations</strong></li>
+                                            <!-- <li>Discounts</strong><br><strong>Negotiable for small populations</strong></li> -->
                                             <li>Customization<br><strong>All in</strong></li>
                                             <li>Delivery time</strong><br><strong>2 year project</strong></li>
                                             <li>Customer support response time<br><strong>2 days, max</strong></li>
                                             <li>Branding<br><strong>Your brand</strong></li>
-                                            <li>Languages<br><strong>English, Spanish, French (June 2014)</strong></li>
+                                            <li>Languages<br><strong>English, Spanish, French</strong></li>
                                         </ul>
                                         <div class="p-footer">
                                             <a href="/get-started" class="btn btn-flat flat-warning">Get Started</a>

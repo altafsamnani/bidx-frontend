@@ -81,11 +81,16 @@
                     {
                         if ( response.status === 'OK' )
                         {
-                            if (response.redirect)
-                            {
+                            //if (response.redirect)
+                            //{
+                                var iclVars         =   window.icl_vars || {}
+                                ,   loginRedirect   =   response.redirect
+                                ;
+
                                 if ( window.noty )
                                 {
                                     var redirectText;
+
                                     bidx.i18n.getItem( "msgWaitForRedirect", function( err, label )
                                     {
                                         redirectText = label;
@@ -99,8 +104,17 @@
                                     } );
                                 }
 
-                                document.location=response.redirect;
-                            }
+                                if(!loginRedirect) // If there is no login redirect then use icl_home homepage variable
+                                {
+                                    bidx.utils.log(' iclVars',  iclVars);
+                                    loginRedirect   =   ( $.isEmptyObject(  iclVars.icl_home ) ) ? '/'  : iclVars.icl_home ; // get the current language from sitepress if set
+
+                                }
+
+                                bidx.utils.log('Redirecting to link ', loginRedirect);
+
+                                document.location   =   loginRedirect;
+                            //}
                         }
                         else if ( response.status === "ERROR")
                         {

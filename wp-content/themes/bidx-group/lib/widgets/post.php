@@ -133,14 +133,25 @@ class Bidx_Post_Widget extends WP_Widget {
 <?php                 
         endif; 
 
+        //if wpml replace post_id by the one matching the language
+        if( function_exists('icl_object_id' ) ) {
+            $post_id = icl_object_id( $post_id, 'post', true );
+        }
+
         $the_query = new WP_Query( array( 'post_id' => $post_id, 'post_status' => 'publish' ) );
         
         if ( $the_query->have_posts() )
         {
-            $selected_post = get_post($instance['post_id']);
+            $selected_post = get_post($post_id);
 ?>
             <h1><?php echo $selected_post->post_title; ?></h1>
-            <p><?php echo $selected_post->post_content; ?></p>
+            <?php 
+            /* Note that 
+                 apply_filters('the_content', $selected_post->post_content) 
+               might reveal Social Sharing buttons and additional whitespace. 
+            */ 
+            ?>
+            <p><?php echo wpautop($selected_post->post_content, true); ?></p>
 <?php 
         }
         else
