@@ -1,6 +1,6 @@
 // Import
 // -------------------------
-@import "../bootstrap-3.2.0/less/bootstrap.less";
+@import "../bootstrap-3.1.1/less/bootstrap.less";
 @import "elements.less";
 @import "basevars.less";
 
@@ -175,6 +175,45 @@ button:hover
     text-decoration: none;
 }
 
+.industryRowItem
+{
+    .form-group
+    {
+        position: relative;
+    }
+    .sectorArrow:after
+    {
+        color: #000;
+        content: "\f054";
+        font-family: FontAwesome;
+        position: absolute;
+        bottom: 9px;
+        right: 7px;
+    }
+    .industryActions
+    {
+        float: left;
+    }
+    .industryDelete:hover,
+    .industryAdd:hover
+    {
+        cursor: pointer;
+    }
+    .fa-block
+    {
+        line-height: 1.3;
+    }
+    
+}
+.bidx-edit
+{
+    .editProfile,
+    .editBS
+    {
+        display: none;
+    }
+}
+
 // Headings
 // -------------------------
 
@@ -186,11 +225,6 @@ h1, h2, h3, h4, h5, h6,
 .spacer
 {
     margin-bottom: 40px;
-}
-
-.bidx-edit .actions
-{
-    display: none;
 }
 
 // Icons manipulation
@@ -282,6 +316,17 @@ h1, h2, h3, h4, h5, h6,
         &.open
         {
             background-color: desaturate(darken(@brand-primary, 25%), 25%);
+            // &:after
+            // {
+            //     .triangle(up, 6px, lighten( @brand-primary, 40%) );
+            //     position: absolute;
+            //     bottom: 0;
+            //     left: 50%;
+            //     @media (max-width: @screen-xs-max)
+            //     {
+            //         left: 20%;
+            //     }
+            // }
             .dropdown-menu
             {
                 min-width: 180px;
@@ -456,6 +501,22 @@ h1, h2, h3, h4, h5, h6,
     }
 }
 
+.row-table
+{
+    display: table;
+    table-layout: fixed;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    >[class*=col-]
+    {
+        display: table-cell;
+        float: none;
+        table-layout: fixed;
+        vertical-align: middle;
+    }
+}
+
 // Cropping
 .profilePictureContainer
 {
@@ -463,8 +524,7 @@ h1, h2, h3, h4, h5, h6,
     margin-bottom: 20px;
     float: left;
     clear: both;
-    img
-    {
+    img {
         .rounded(6px);
         max-width: 100%;
         height: auto;
@@ -880,11 +940,6 @@ header
         margin: 20px 0;
     }
 }
-.editControls
-{
-    margin: 20px 0;
-}
-
 
 .total-error-message
 {
@@ -924,11 +979,11 @@ header
 // Panels
 // -------------------------
 
-.panel-heading
+.tabs-nav
 {
-    &.heading-error
+    .heading-error
     {
-        background-color: lighten(@brand-danger, 35%);;
+        background-color: lighten(@brand-danger, 35%) !important;
     }
     .js-error-count
     {
@@ -983,6 +1038,20 @@ header
         display: none;
     }
 }
+
+// Card Views
+// -------------------------
+.bs-info
+{
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.bs-cell
+{
+    border-right: 1px solid #ddd;
+}
+
 
 // Footer
 // -------------------------
@@ -1436,7 +1505,6 @@ select
 .rating-wrapper
 {
     position: relative;
-    margin-right: 1em;
 }
 .rating-total
 {
@@ -1482,12 +1550,6 @@ select
     text-align: center;
     margin-bottom: ceil(@font-size-base * 1.0);
 }
-.rating-score,
-.rating-no-score
-{
-    line-height: 5;
-}
-
 .cancel-on-png, .cancel-off-png, .star-on-png, .star-off-png, .star-half-png
 {
   font-size: ceil(@font-size-base * 2.5);
@@ -1542,7 +1604,18 @@ select
   content: "\f123";
 }
 
-
+/* Cover Image */
+.coverImage
+{
+    // overflow: hidden;
+    // img
+    // {
+    //     .transform(translateY(-50%) translateX(-50%));
+    //     position: absolute;
+    //     left: 50%;
+    //     top: 50%;
+    // }
+}
 
 /* Counter */
 .counter-block
@@ -1678,26 +1751,20 @@ select
 }
 .feedback-box
 {
-    margin: -15px 0;
     border-left: 1px solid darken(spin(@state-warning-bg, -10), 5%);
+    border-top: 1px solid darken(spin(@state-warning-bg, -10), 5%);
     margin-bottom: -1000em !important;
     padding-bottom: 1000em !important;
+    padding-top: 15px !important;
+}
+.col-pull
+{
+    margin-right: -15px;
+    margin-left: 15px;
 }
 .feedback-posts
 {
-    max-height: 580px;
     overflow-y: auto;
-}
-.btn-feedback
-{
-    position: absolute;
-    right: 15px;
-    top: 9px;
-    display: none;
-    span
-    {
-        margin-left: ceil(@font-size-base * 0.4);
-    }
 }
 .bidx-edit .btn-feedback,
 .bidx-edit .panel-open .btn-feedback
@@ -1738,43 +1805,11 @@ select
 {
     .opacity();
 }
-
-
-.panel-open .btn-feedback
+.feedback-date
 {
-    display: block;
+    text-transform: capitalize;
 }
 
-/* MULTILEVEL INDUSTRY */
-.industryRowItem
-{
-    .form-group
-    {
-        position: relative;
-    }
-    .sectorArrow:after
-    {
-        color: #000;
-        content: "\f054";
-        font-family: FontAwesome;
-        position: absolute;
-        bottom: 9px;
-        right: 7px;
-    }
-    .industryActions
-    {
-        float: left;
-    }
-    .industryDelete:hover,
-    .industryAdd:hover
-    {
-        cursor: pointer;
-    }
-    .fa-block
-    {
-        line-height: 1.3;
-    }
-}
 
 // --------------------------------------------------
 // Bootstrap Overides
@@ -1821,16 +1856,16 @@ select
     padding-bottom: ceil(@font-size-base * 1.2);
     font-weight: 100;
 }
-.fa-block
-{
-    display: block;
-    font-size: ceil(@font-size-base * 2.10);
-}
 .fa-big
 {
     font-size: ceil(@font-size-base * 2.10) !important;
-    margin-top: ceil(@font-size-base * 0.4) !important;
 }
+.fa-above
+{
+    display: block !important;
+    font-size: ceil(@font-size-base * 2.10);
+}
+
 .btn-member
 {
     background-color: @member;
@@ -1980,6 +2015,15 @@ hr
 {
     font-size: @font-size-base;
 }
+.table-label-width td:first-child
+{
+    width: 180px;
+}
+
+.td-15
+{
+    width: 15%;
+}
 
 /*!
  * bootstrap-vertical-tabs - v1.1.0
@@ -2038,15 +2082,21 @@ hr
             {
                 border: none;
                 border-right-color: transparent;
+                border-left: 6px solid lighten(@text-copy, 10%);
+                background-color: lighten(@gray-light, 36%);
                 &:focus
                 {
                     border: none;
                     border-right-color: transparent;
+                    border-left: 6px solid lighten(@text-copy, 10%);
+                    background-color: lighten(@gray-light, 36%);
                 }
                 &:hover
                 {
                     border: none;
                     border-right-color: transparent;
+                    border-left: 6px solid lighten(@text-copy, 10%);
+                    background-color: lighten(@gray-light, 36%);
                 }
             }
         }
@@ -2119,6 +2169,11 @@ hr
     background-color: @white;
     .rounded(3px);
     padding: @padding-base-horizontal;
+    min-height: 400px;
+}
+.bidx-edit .tab-pane
+{
+    background-color: lighten(@gray-light, 36%);
 }
 .tabs-nav
 {
@@ -2167,6 +2222,10 @@ hr
   padding-bottom: 0;
   margin: 0 0 @line-height-computed;
   border-bottom: 0;
+}
+.bg-gray
+{
+    background-color: #f2f2f2;
 }
 
 // utilities.less
@@ -2251,6 +2310,20 @@ hr
 {
     clear: both;
 }
+.to-uppercase
+{
+    text-transform: uppercase;
+}
+
+// Skinning
+// -------------------------
+.box-border
+{
+    border: 1px solid;
+    border-color: lighten(@gray-light, 30%) lighten(@gray-light, 24%) lighten(@gray-light, 21%);
+    background-color: @white;
+}
+
 
 // wells.less
 // -------------------------
