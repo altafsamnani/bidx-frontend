@@ -1,6 +1,7 @@
 <?php
 
 $businessSummary    = $this->data;
+// d($businessSummary);
 $progress           = $this -> completenessScore ? $this -> completenessScore : '0';
 
 $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
@@ -8,10 +9,11 @@ $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
     : null;
 
 $canEdit        = $this->exst($businessSummaryBidxMeta->bidxCanEdit, false);
+$newBusiness    = $businessSummary === NULL ? true : false;
 $canRate        = $this->exst($businessSummaryBidxMeta->bidxCanRate, false);
 $ratingAverage  = $this->exst($businessSummaryBidxMeta->bidxRatingAverage, null);
 
-// get the enitities of the current user
+// get the entities of the current user
 //
 $sessionData    = BidxCommon::$staticSession;
 $entities       = isset( $sessionData->data->wp->entities ) ? $sessionData->data->wp->entities : null;
@@ -39,7 +41,7 @@ if ( $requestStatus === "granted" || $canEdit )
 
 if ( !($businessSummary->cover && $businessSummary->cover->document) )
 {
-    if ( $canEdit )
+    if ( $canEdit || $newBusiness )
     {
         $hasCover = 'hide-it';
     }
@@ -78,6 +80,28 @@ $attachmentItemTranslations = array();
 $company    = $this->exst ($businessSummary->company);
 $attachment = $this->exst ($businessSummary->attachment);
 
+$hasAttachments = false;
+
+if ( !empty( $attachment ) )
+{
+    foreach ($attachment as $key => $att)
+    {
+        if ( $this->exst ( $att->document ) )
+        {
+            $hasAttachments = true;
+        }
+        break;
+    }
+}
+
+$hasMentorAdvisory = false;
+
+if ( $businessSummary->mentorAdvisory === TRUE && ( $this->exst ($businessSummary->expertiseNeeded) || $this->exst ($businessSummary->expertiseNeededDetail) ) )
+{
+    $hasMentorAdvisory = true;
+}
+
+
 // Default set of rowproperties
 //
 $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class_label' => 'bidx-label', 'class_value' => 'bidx-value', 'class_row' => '' );
@@ -87,7 +111,6 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 //
 $dlpage = get_page_by_title( 'Download financial templates' );
 $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
-
 ?>
 <div class="businessSummary box-border top-margin-lineheight" id="businessSummary" data-bsid=<?php echo $businessSummaryId; ?>>
     <div class="businessCover">
@@ -103,7 +126,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
             <div class="view viewEdit">
 <?php
-            if ( $canEdit )
+            if ( $canEdit || $newBusiness )
             {
     ?>
                 <div class="btn-group coverBtns">
@@ -128,7 +151,6 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></button>
                                 <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
-
                             </div>
                         </div>
                     </div>
@@ -141,11 +163,9 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
     </div>
 
 <?php
-    if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
+    if ( $businessSummaryId )
     {
-
         $updatedDate = date( 'd M Y', $businessSummaryBidxMeta->bidxLastUpdateDateTime );
-
 ?>
     <div class="bg-gray control-bar">
 
@@ -223,43 +243,44 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <?php
                 endif;
 ?>
-<?php                    
-?>
-
         </div>
 
 
     </div>
-        <div class="row main-padding">
-            <div class="col-sm-4">
-            </div>
+<?php
+    }
+    // if ( $businessSummaryId )
+    // {
+?>
 
-            <div class="col-sm-5">
+    <div class="row main-padding">
+        <div class="col-sm-4"></div>
+
+        <div class="col-sm-5">
     <?php
                 /*
                  * We want ratings to be indexed by Google, so need to include this on page load. It
                  * might be updated in JavaScript though, so also check the translations in i18n.xml.
                  */
-
     ?>
-                <div class="rating-wrapper">
+            <div class="rating-wrapper">
 <?php
-                    // Owners and active mentors cannot rate their plans
-                    if( $canRate )
-                    {
-                        $ratingUser = $this->rating->userRating;
+                // Owners and active mentors cannot rate their plans
+                if( $canRate )
+                {
+                    $ratingUser = $this->rating->userRating;
 ?>
-                        <div class="rating-vote">
-                            <span class="rating-vote-text"><span class="rating-user-label"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span></span>
-                            <div data-rating="<?php echo $this->rating->userRating->value ? $this->rating->userRating->value : 0 ?>" class="raty"></div>
-                        </div>
-    <?php
-                    }
-    ?>
-                </div>
+                    <div class="rating-vote">
+                        <span class="rating-vote-text"><span class="rating-user-label"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span></span>
+                        <div data-rating="<?php echo $this->rating->userRating->value ? $this->rating->userRating->value : 0 ?>" class="raty"></div>
+                    </div>
+<?php
+                }
+?>
             </div>
-            <div class="col-sm-3 text-right">
-                <div class="btn-group">
+        </div>
+        <div class="col-sm-3 text-right">
+            <div class="btn-group">
 <?php
                 // if a user is allowed to request full access to a business summary and it NOT The owner of the business summary
                 //
@@ -286,42 +307,41 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                     }
 ?>
                     <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><i class="fa fa-eye fa-big fa-above"></i><?php echo _e( 'Request full access', 'bidxplugin' ); ?></a>
-
 <?php
                 }
 ?>
 <?php
                 // does a user have rights to edit ( is the owner )
                 //
-                    if ( $canEdit )
-                    {
+                if ( $canEdit )
+                {
 ?>
-                        <a class="btn btn-primary editBS" href="#editBusinessSummary/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                    <a class="btn btn-primary editBS" href="#editBusinessSummary/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
 <?php
-                    }
+                }
 ?>
-                </div>
-                <div class="editControlsContainer">
-                    <div class="editControls pull-right">
+            </div>
+            <div class="editControlsContainer">
+                <div class="editControls pull-right">
 
-                        <!-- SHOW -->
-                        <div class="view viewShow"></div>
+                    <!-- SHOW -->
+                    <div class="view viewShow"></div>
 
-                        <!-- EDIT, conditionally filled by the app -->
-                        <div class="view viewEdit btn-group"></div>
+                    <!-- EDIT, conditionally filled by the app -->
+                    <div class="view viewEdit btn-group"></div>
 
-                        <!-- sucess msg, used as a placeholder for showing msgs -->
+                    <!-- sucess msg, used as a placeholder for showing msgs -->
 
-                        <div class="view viewMainsuccess alert alert-success">
-                            <p class="successMsg"></p>
-                        </div>
+                    <div class="view viewMainsuccess alert alert-success">
+                        <p class="successMsg"></p>
                     </div>
                 </div>
-
             </div>
+
         </div>
+    </div>
 <?php
-    }
+    // }
 ?>
 <!-- SHOW -->
 <div class="view viewShow">
@@ -415,7 +435,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             $rowValues = array
             (
                 __('Stage of business','bidxplugin') => $this->getStaticVal( 'stageBusiness', $this->exst($businessSummary->stageBusiness)),
-                __('Industry') => $this->getMultiValues( $this->exst($businessSummary->industrySector), ', ','industrySector'),
+                __('Industry') => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry'),
                 __('Product / Service','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->productService), ', ', 'productService' ),
                 __('Country of business','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' ),
                 __('Social impact','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->socialImpact), ', ', 'socialImpact' ),
@@ -612,7 +632,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <?php
     endif;
 
-    if ( $this->exst( $businessSummary->mentorAdvisory )) :
+    if ( $hasMentorAdvisory ) :
 ?>
     <div class="main-padding-vertical ">
             <h3 class="to-uppercase"><?php _e('For Mentors', 'bidxplugin')?></h3>
@@ -629,7 +649,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <?php
     endif;
 
-    if ( $this->exst( $businessSummary->attachment ) || $hasAccess ) :
+    if ( $hasAttachments && $hasAccess ) :
 ?>
             <div class="main-padding-vertical">
                 <h3 class="to-uppercase"><?php _e('Attached Documents', 'bidxplugin')?></h3>
@@ -688,9 +708,9 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                     <!-- EDIT -->
                     <div class="view viewEdit">
                         <blockquote class="alert-info"><?php _e('Use this section to describe your business. Think about what information you would like other people (investors and entrepreneurs) to know about your business if you only had a few minutes to explain.','bidxplugin')?></blockquote>
-                            <div class="row">
+                            <div class="row bsLogo form-group">
                                 <!-- Logo -->
-                                <div class="form-group col-sm-12 bsLogo">
+                                <div class="col-sm-6">
                                     <a href="#addLogo" data-toggle="modal" class="btn btn-primary">
                                         <?php _e('Select logo'); ?>
                                     </a>
@@ -717,6 +737,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-sm-6">
                                     <div class="logoContainer"></div>
                                 </div>
                             </div>
@@ -837,9 +859,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     <label><?php _e('Environmental impact','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
                                     <select name="envImpact" multiple></select>
                                 </div>
-
-                                <!-- Stage Business is read only -->
-
+                            </div>
+                            <div class="row">
                                 <!-- Consumer Type -->
                                 <div class="form-group col-sm-6">
                                     <label><?php _e('Type of customer you sell to','bidxplugin'); ?></label>

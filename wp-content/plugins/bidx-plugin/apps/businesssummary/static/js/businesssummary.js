@@ -1906,6 +1906,7 @@
 
         if ( logoImage )
         {
+            $logoContainer.empty();
             $logoContainer.append( "<img src='"+ logoImage.document +"' />");
         }
         

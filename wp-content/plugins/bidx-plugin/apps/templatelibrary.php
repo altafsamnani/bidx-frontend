@@ -414,7 +414,7 @@ class TemplateLibrary
         $tagLabel = (isset ($properties['tag_label']) && $properties['tag_label']) ? $properties['tag_label'] : 'td';
         $tagValue = (isset ($properties['tag_value']) && $properties['tag_value']) ? $properties['tag_value'] : 'td';
 
-        $rowHtml = '<table class="table table-condensed"><tbody>';
+        $rowHtml = '<table class="table table-condensed table-bottom-border"><tbody>';
         foreach ($rowValues as $label => $value) {
         $rowHtml .= "<tr>";
             if ($value && $value != 'null') {

@@ -274,6 +274,27 @@ h1, h2, h3, h4, h5, h6,
     }
 }
 
+.img-logo
+{
+    white-space: nowrap;
+    text-align: center;
+    background-color: @white;
+    border: 1px solid lighten(@gray-light, 26.5%);
+    .valign
+    {
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+    }
+    img
+    {
+        vertical-align: middle;
+        max-height: 90px;
+        max-width: 90px;
+        position: static !important;
+    }
+}
+
 #join .btn .fa,
 #auth .btn .fa
 {
@@ -515,6 +536,11 @@ h1, h2, h3, h4, h5, h6,
         table-layout: fixed;
         vertical-align: middle;
     }
+}
+
+.table-bottom-border
+{
+    border-bottom: 1px solid @table-border-color;
 }
 
 // Cropping
@@ -1604,19 +1630,6 @@ select
   content: "\f123";
 }
 
-/* Cover Image */
-.coverImage
-{
-    // overflow: hidden;
-    // img
-    // {
-    //     .transform(translateY(-50%) translateX(-50%));
-    //     position: absolute;
-    //     left: 50%;
-    //     top: 50%;
-    // }
-}
-
 /* Counter */
 .counter-block
 {
@@ -2168,7 +2181,7 @@ hr
 {
     background-color: @white;
     .rounded(3px);
-    padding: @padding-base-horizontal;
+    padding: @padding-base-horizontal @padding-base-horizontal floor(@padding-base-horizontal * 8.0);
     min-height: 400px;
 }
 .bidx-edit .tab-pane
