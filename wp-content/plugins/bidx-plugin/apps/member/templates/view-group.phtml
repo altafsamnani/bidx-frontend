@@ -16,15 +16,19 @@ $showGroup      = (count( (array)$groupDetails)) ? true : false;
 <?php
             foreach( $groupDetails as $groupValue)
             {
-                $joinLink = ($this->exst($groupValue->join)) ? "<a class='btn btn-xs btn-warning pull-right' href='#joinGroup/".$groupValue->bidxGroupId."'>" . __('Join','bidxplugin') . "</a>":'';
+                // BIDX-2158 "/#joinGroup/" . $groupValue->bidxMeta->bidxGroupId is not working; as a workaround open a new tab and redirect to /join
+                // (This might not be too nice for groups with a custom domain.)
+                $joinLink = ($this->exst($groupValue->join)) ? "<a class='btn btn-xs btn-warning pull-right' target='_blank' href='" . $groupValue->bidxMeta->bidxGroupUrl . "/join'>" . __('Join','bidxplugin') . "</a>":'';
 ?>
                 <li class="media">
                     <div class="pull-left">
                         <div class="icons-rounded pull-left"><i class="fa fa-group text-primary-light"></i></div>
                     </div>
                     <div class="media-body">
+                    <a target="_blank" href="<?php echo $groupValue->bidxMeta->bidxGroupUrl ?>">
                         <h4><?php echo $groupValue->name?></h4>
                         <p><?php echo $groupValue->slogan?></p>
+                    </a>
 <?php
                         if ( !empty($joinLink) )
                         {
