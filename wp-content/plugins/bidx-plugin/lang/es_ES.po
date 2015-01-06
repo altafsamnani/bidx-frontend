@@ -3,18 +3,16 @@
 # Context  Textdomain bidxplugin
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Project-Id-Version: p3\n"
+"Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Altaf <altaf@bidx.net>\n"
-"Language-Team:  <altaf@bidx.net>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: es\n"
-"X-Generator: Poedit 1.5.7\n"
-"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Generator: Poedit 1.5.4\n"
 
 # Language es
 # 1) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -5
@@ -289,8 +287,7 @@ msgid ""
 "Please enter the number of permanent female employees employed by your "
 "business"
 msgstr ""
-"Introduzca el número de mujeres empleadas de manera permanente por su "
-"empresa"
+"Introduzca el número de mujeres empleadas de manera permanente por su empresa"
 
 # 48) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -170
 # _e("Number of permanent male employees","bidxplugin");
@@ -304,8 +301,7 @@ msgstr "Número de hombres empleados de manera permanente"
 msgid ""
 "Please enter the number of permanent male employees employed by your business"
 msgstr ""
-"Introduzca el número de hombres empleados de manera permanente por su "
-"empresa"
+"Introduzca el número de hombres empleados de manera permanente por su empresa"
 
 # 50) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -178
 # _e("Number of temporary female employees","bidxplugin");
@@ -320,8 +316,7 @@ msgid ""
 "Please enter the number of temporary female employees employed by your "
 "business"
 msgstr ""
-"Introduzca el número de mujeres empleadas de manera temporaria por su "
-"empresa"
+"Introduzca el número de mujeres empleadas de manera temporaria por su empresa"
 
 # 52) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -186
 # _e("Number of temporary male employees","bidxplugin");
@@ -335,8 +330,7 @@ msgstr "Número de hombres empleados de manera temporaria"
 msgid ""
 "Please enter the number of temporary male employees employed by your business"
 msgstr ""
-"Introduzca el número de hombres empleados de manera temporaria por su "
-"empresa"
+"Introduzca el número de hombres empleados de manera temporaria por su empresa"
 
 # 54) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -197
 # _e("If you have offices in other locations, you can add them in the section below","bidxplugin");
@@ -543,8 +537,8 @@ msgid ""
 "If the message does not appear in your spam box within an hour please notify "
 "us <a href=\"%s\">here</a>."
 msgstr ""
-"Si el mensaje no aparece en su bandeja de correo no deseado en el término "
-"de una hora, notifíquenos <a href=\"%s\">aquí</a>."
+"Si el mensaje no aparece en su bandeja de correo no deseado en el término de "
+"una hora, notifíquenos <a href=\"%s\">aquí</a>."
 
 # 96) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/resetpassword/templates/resetpassword.phtml -32
 # _e("Click <a href=\"%s\">here</a> to go to homepage.","bidxplugin");
@@ -596,8 +590,8 @@ msgid ""
 "An email with instructions on how to change your password has been sent to "
 "your email address."
 msgstr ""
-"Se envió un mensaje con las instrucciones sobre cómo cambiar la contrase�"
-"�a a su dirección de correo electrónico."
+"Se envió un mensaje con las instrucciones sobre cómo cambiar la contraseña a "
+"su dirección de correo electrónico."
 
 # 104) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/resetpassword/templates/resetpassword.phtml -27
 # _e("If you do not see the email in your inbox please check your spam box.","bidxplugin");
@@ -624,8 +618,8 @@ msgid ""
 "By clicking this you automatically accept the <a target=\"_blank\" href=\"%s"
 "\">Terms of Service</a>."
 msgstr ""
-"Al hacer clic aquí, acepta automáticamente los <a target=\"_blank\" href="
-"\"%s\">Términos de servicio</a>."
+"Al hacer clic aquí, acepta automáticamente los <a target=\"_blank\" href=\"%s"
+"\">Términos de servicio</a>."
 
 # 107) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -378
 # _e("By clicking this you automatically accept the <a target=\"_blank\" href=\"%s\">Terms of Service</a>.","bidxplugin");
@@ -638,8 +632,8 @@ msgid ""
 "By clicking the button below, you accept the <a target=\"_blank\" href=\"%s"
 "\">Terms of Service</a>."
 msgstr ""
-"Al hacer clic en el botón de abajo, acepta los <a target=\"_blank\" href="
-"\"%s\">Términos de servicio</a>."
+"Al hacer clic en el botón de abajo, acepta los <a target=\"_blank\" href=\"%s"
+"\">Términos de servicio</a>."
 
 # 109) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -461
 # _e("For any questions about the registration process, feel free to contact us at <a href=\"mailto:%s\">info@bidx.net</a>.","bidxplugin");
@@ -648,8 +642,8 @@ msgid ""
 "For any questions about the registration process, feel free to contact us at "
 "<a href=\"mailto:%s\">info@bidx.net</a>."
 msgstr ""
-"Para consultas sobre el proceso de inscripción, puede contactarnos a <a "
-"href=\"mailto:%s\">info@bidx.net</a>."
+"Para consultas sobre el proceso de inscripción, puede contactarnos a <a href="
+"\"mailto:%s\">info@bidx.net</a>."
 
 # 110) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -12
 # _e("Join","bidxplugin");
@@ -717,9 +711,9 @@ msgid ""
 "be able to edit your profile details and create another type of profile if "
 "you want to take on different roles."
 msgstr ""
-"Seleccione su rol principal para crear un perfil. Una vez que inicie "
-"sesión, podrá editar los datos de su perfil y crear otro tipo de perfil si "
-"desea desempeñarse en otros roles."
+"Seleccione su rol principal para crear un perfil. Una vez que inicie sesión, "
+"podrá editar los datos de su perfil y crear otro tipo de perfil si desea "
+"desempeñarse en otros roles."
 
 # 120) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -71
 # _e("Create your mentor profile","bidxplugin");
@@ -734,8 +728,8 @@ msgid ""
 "The details entered here will help to find suitable matches with "
 "entrepreneurs. Be as specific as you can be!"
 msgstr ""
-"Los datos introducidos aquí lo ayudarán a encontrar las conexiones "
-"adecuadas con empresarios: Trate de ser lo más específico posible."
+"Los datos introducidos aquí lo ayudarán a encontrar las conexiones adecuadas "
+"con empresarios: Trate de ser lo más específico posible."
 
 # 122) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -75
 # _e("Describe yourself as a mentor","bidxplugin");
@@ -986,9 +980,8 @@ msgid ""
 "The details entered here will help to find suitable matches with mentors and "
 "investors. Be as specific as you can be!"
 msgstr ""
-"Los datos introducidos aquí lo ayudarán a encontrar las conexiones "
-"adecuadas con mentores e inversionistas: Trate de ser lo más específico "
-"posible."
+"Los datos introducidos aquí lo ayudarán a encontrar las conexiones adecuadas "
+"con mentores e inversionistas: Trate de ser lo más específico posible."
 
 # 167) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -272
 # _e("Business name","bidxplugin");
@@ -1122,8 +1115,8 @@ msgid ""
 "Describe here the problem areas or challenges in your business in the areas "
 "of expertise you selected."
 msgstr ""
-"Describa aquí las áreas que presentan problemas o los desafíos de su "
-"negocio en las áreas de especialidad seleccionadas."
+"Describa aquí las áreas que presentan problemas o los desafíos de su negocio "
+"en las áreas de especialidad seleccionadas."
 
 # 189) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -385
 # _e("Join Portal","bidxplugin");
@@ -1203,10 +1196,9 @@ msgid ""
 "minutes. Please check your inbox and click on the link to activate your "
 "account."
 msgstr ""
-"Hemos enviado un enlace de activación a su dirección de correo "
-"electrónico. Pueden transcurrir algunos minutos hasta que lo reciba. "
-"Verifique su bandeja de entrada y haga clic en el enlace para activar su "
-"cuenta."
+"Hemos enviado un enlace de activación a su dirección de correo electrónico. "
+"Pueden transcurrir algunos minutos hasta que lo reciba. Verifique su bandeja "
+"de entrada y haga clic en el enlace para activar su cuenta."
 
 # 204) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -28
 # _e("Complete your profile","bidxplugin");
@@ -1694,8 +1686,8 @@ msgid ""
 "leave your group. If you would like to close your group, please contact the "
 "bidX Customer Support"
 msgstr ""
-"Su grupo está actualmente publicado y abierto. Los miembros se pueden unir "
-"y salir libremente del mismo. Si desea cerrar el grupo, contacte al  Soporte "
+"Su grupo está actualmente publicado y abierto. Los miembros se pueden unir y "
+"salir libremente del mismo. Si desea cerrar el grupo, contacte al  Soporte "
 "al cliente de bidX."
 
 # 295) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/dashboard/templates/groupowner/monitoring.phtml -26
@@ -2179,9 +2171,9 @@ msgid ""
 msgstr ""
 "Utilice su perfil de emprendedor como su tarjeta empresarial para otros "
 "miembros de este grupo y plataforma. Los inversores y potenciales socios "
-"empresariales querrán saber qué es lo que lo incentiva a hacer lo que hace "
-"y conocer su formación empresarial. Puede completar este perfil y "
-"actualizarlo en cualquier momento."
+"empresariales querrán saber qué es lo que lo incentiva a hacer lo que hace y "
+"conocer su formación empresarial. Puede completar este perfil y actualizarlo "
+"en cualquier momento."
 
 # 389) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/dashboard/templates/entrepreneur/help.phtml -18
 # _e("Go to entrepreneur profile","bidxplugin");
@@ -2628,8 +2620,8 @@ msgid ""
 msgstr ""
 "bidX encuentra los planes más adecuados para usted ni bien se publican. "
 "Conectamos sus datos de perfil de inversor con los de los nuevos negocios. "
-"En la sección Planes recomendados en su panel, encontrará los planes que "
-"le pueden interesar."
+"En la sección Planes recomendados en su panel, encontrará los planes que le "
+"pueden interesar."
 
 # 472) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/dashboard/templates/investor/help.phtml -23
 # _e("Go to recommended plans","bidxplugin");
@@ -2654,13 +2646,13 @@ msgid ""
 "do so during your registration, but you would like to receive them now, you "
 "can change that setting at your Account Settings"
 msgstr ""
-"También le enviaremos las actualizaciones semanales a su bandeja de "
-"entrada. Estos mensajes contienen la lista de negocios que se han publicado "
-"durante los últimos siete días. Si durante el proceso de inscripción usted "
-"aceptó que le enviemos mensajes a su bandeja de entrada personal, también "
-"recibirá estas alertas allí. Si no lo hizo durante el proceso de "
-"inscripción, pero desea recibir las alertas ahora, puede cambiar esta "
-"opción en las Configuraciones de su cuenta."
+"También le enviaremos las actualizaciones semanales a su bandeja de entrada. "
+"Estos mensajes contienen la lista de negocios que se han publicado durante "
+"los últimos siete días. Si durante el proceso de inscripción usted aceptó "
+"que le enviemos mensajes a su bandeja de entrada personal, también recibirá "
+"estas alertas allí. Si no lo hizo durante el proceso de inscripción, pero "
+"desea recibir las alertas ahora, puede cambiar esta opción en las "
+"Configuraciones de su cuenta."
 
 # 475) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/dashboard/templates/investor/help.phtml -33
 # _e("Go to inbox","bidxplugin");
@@ -2713,9 +2705,9 @@ msgstr ""
 "Si usted ve un negocio que le interesa, puede solicitarle al emprendedor que "
 "le otorgue acceso completo a los datos del negocio. Dentro de estos datos se "
 "encuentran el plan de negocio completo, el plan financiero y también el CV "
-"del emprendedor. Debe hacer clic en el enlace Solicitar acceso que encontrar�"
-"� en la página del negocio. El emprendedor recibirá un mensaje con su "
-"solicitud. En la sección Negocios contactados de su panel podrá ver los "
+"del emprendedor. Debe hacer clic en el enlace Solicitar acceso que "
+"encontrará en la página del negocio. El emprendedor recibirá un mensaje con "
+"su solicitud. En la sección Negocios contactados de su panel podrá ver los "
 "planes a los que solicitó acceso."
 
 # 481) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/dashboard/templates/investor/help.phtml -49
@@ -4245,8 +4237,8 @@ msgid ""
 "(if  any)."
 msgstr ""
 "Hay emprendedores interesados en las inversiones realizadas en el pasado. "
-"Proporcione algunos detalles sobre las inversiones realizadas en los "
-"últimos 12 meses o antes (si las hubo)."
+"Proporcione algunos detalles sobre las inversiones realizadas en los últimos "
+"12 meses o antes (si las hubo)."
 
 # 812) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -325
 # _e("Number of investments in the last 12 months","bidxplugin");
@@ -4616,9 +4608,9 @@ msgstr ""
 "Complete este breve formulario con información personal como emprendedor. "
 "Tenga en cuenta que a los inversionistas y otros miembros potencialmente "
 "interesados en su negocio les interesará conocer más acerca de usted, su "
-"motivación y lo que lo impulsa como emprendedor. Considere a este "
-"formulario como su primer contacto y acercamiento a potenciales "
-"inversionistas y socios empresariales."
+"motivación y lo que lo impulsa como emprendedor. Considere a este formulario "
+"como su primer contacto y acercamiento a potenciales inversionistas y socios "
+"empresariales."
 
 # 885) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -37
 # _e("Summary","bidxplugin");
@@ -5289,9 +5281,8 @@ msgid ""
 "Tell visitors and members of the group how you see yourself as a mentor. "
 "Give a brief description of your mentor interests."
 msgstr ""
-"Cuéntele a los visitantes y a los miembros del grupo cómo se considera "
-"usted como mentor. Proporcione una breve descripción de sus intereses como "
-"mentor."
+"Cuéntele a los visitantes y a los miembros del grupo cómo se considera usted "
+"como mentor. Proporcione una breve descripción de sus intereses como mentor."
 
 # 1021) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/member/templates/edit-mentor.phtml -49
 # _e("Describe yourself as a mentor","bidxplugin");
@@ -7133,8 +7124,8 @@ msgid ""
 "would like other people (investors and entrepreneurs) to know about your "
 "business if you only had a few minutes to explain."
 msgstr ""
-"Utilice esta sección para describir su negocio. Tenga en cuenta qué tipo "
-"de información quiere que otras personas (inversionistas y emprendedores) "
+"Utilice esta sección para describir su negocio. Tenga en cuenta qué tipo de "
+"información quiere que otras personas (inversionistas y emprendedores) "
 "conozcan sobre su negocio si solo tuviese unos pocos minutos para explicar."
 
 # 1397) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -323
@@ -7274,10 +7265,10 @@ msgid ""
 "operates. This information will be used to match your initiative with other "
 "businesses and investors."
 msgstr ""
-"Aquí le ofrecemos herramientas para compartir información más precisa "
-"sobre su negocio, es decir en qué industria opera, qué produce y dónde "
-"opera. Esta información será utilizada para conectar su iniciativa con "
-"otros negocios e inversionistas."
+"Aquí le ofrecemos herramientas para compartir información más precisa sobre "
+"su negocio, es decir en qué industria opera, qué produce y dónde opera. Esta "
+"información será utilizada para conectar su iniciativa con otros negocios e "
+"inversionistas."
 
 # 1424) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -482
 # _e("Industry","bidxplugin");
@@ -7387,8 +7378,7 @@ msgstr ""
 # _e("Here you can give information about other members in your team.","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Here you can give information about other members in your team."
-msgstr ""
-"Aquí puede proporcionar información sobre otros miembros de su equipo."
+msgstr "Aquí puede proporcionar información sobre otros miembros de su equipo."
 
 # 1447) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -653
 # _e("Add","bidxplugin");
@@ -7487,8 +7477,8 @@ msgid ""
 "first question. If you already created a company in the past, you can select "
 "it from the list"
 msgstr ""
-"En esta sección puede vincular su negocio a una empresa existente. Si aún "
-"no tiene una empresa, puede omitir este paso respondiendo 'No' a la primera "
+"En esta sección puede vincular su negocio a una empresa existente. Si aún no "
+"tiene una empresa, puede omitir este paso respondiendo 'No' a la primera "
 "pregunta. Si ya ha creado una empresa en el pasado, puede seleccionarla de "
 "la lista."
 
@@ -7568,13 +7558,13 @@ msgstr "Detalles de la mentoría"
 # _e("A mentor can help you ​to ​complete and improve your business proposal. ​Please indicate here if you would like the help of a mentor and, if yes, ​select the areas of expertise where you would like support.","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid ""
-"A mentor can help you ​to ​complete and improve your business proposal. "
-"​Please indicate here if you would like the help of a mentor and, if yes, "
-"​select the areas of expertise where you would like support."
+"A mentor can help you ​to ​complete and improve your business proposal. ​Please "
+"indicate here if you would like the help of a mentor and, if yes, ​select the "
+"areas of expertise where you would like support."
 msgstr ""
 "Un mentor puede ayudarlo a completar y mejorar su propuesta de negocio. "
-"Indique aquí si desea la ayuda de un mentor, de ser así seleccione las �"
-"�reas de especialidad en las que desea recibir ayuda."
+"Indique aquí si desea la ayuda de un mentor, de ser así seleccione las áreas "
+"de especialidad en las que desea recibir ayuda."
 
 # 1481) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -987
 # _e("Do you want a mentor to advise you?​","bidxplugin");
@@ -8024,8 +8014,8 @@ msgstr ""
 # Context  Textdomain bidxplugin
 msgid "Login? Click <a href=\"/auth/#auth/login\">here</a> to go to login."
 msgstr ""
-"¿Iniciar sesión? Haga clic <a href=\"/auth/#auth/login\">aquí</a> para ir "
-"al inicio de sesión."
+"¿Iniciar sesión? Haga clic <a href=\"/auth/#auth/login\">aquí</a> para ir al "
+"inicio de sesión."
 
 # 1569) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/register/templates/register.phtml -70
 # _e("Registration complete","bidxplugin");
@@ -8040,8 +8030,8 @@ msgid ""
 "The registration is complete. An email has been sent to your email address "
 "with follow-up instructions"
 msgstr ""
-"La inscripción se ha completado. Hemos enviado un mensaje a su dirección "
-"de correo electrónico con instrucciones de los pasos a seguir."
+"La inscripción se ha completado. Hemos enviado un mensaje a su dirección de "
+"correo electrónico con instrucciones de los pasos a seguir."
 
 # 1571) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/account/templates/account.phtml -6
 # _e("Loading...","bidxplugin");
@@ -8324,8 +8314,8 @@ msgid ""
 "save your password you can enter your group pages."
 msgstr ""
 "Aquí puede establecer su nueva contraseña para iniciar sesión en la "
-"plataforma. Después de guardar la contraseña podrá introducir las p�"
-"�ginas de su grupo."
+"plataforma. Después de guardar la contraseña podrá introducir las páginas de "
+"su grupo."
 
 # 1625) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/setpassword/templates/setpassword.phtml -21
 # _e("New password","bidxplugin");
@@ -8374,8 +8364,8 @@ msgid ""
 "Your activation token has expired. You cannot use this account until it has "
 "been removed so that you can register again."
 msgstr ""
-"Su token de activación ha expirado. No podrá utilizar esta cuenta hasta "
-"que se haya eliminado. Luego deberá inscribirse nuevamente."
+"Su token de activación ha expirado. No podrá utilizar esta cuenta hasta que "
+"se haya eliminado. Luego deberá inscribirse nuevamente."
 
 # 1635) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/setpassword/templates/setpassword.phtml -64
 # _e("Get a new activation token","bidxplugin");
@@ -8914,9 +8904,9 @@ msgstr "Seleccionar grupo"
 msgid "Select a recipient"
 msgstr "Seleccionar un destinatario"
 
-# 1) File -/var/www/html/wp-content/themes/bidx-group/lib/custom.php -236
-# _e("Your session expired. Please login again, sorry for any inconvenience and appreciate your patience.","bidxplugin");
-# Context  Textdomain bidxplugin
+# 1) File -/var/www/html/wp-content/themes/bidx-group-template/lib/custom.php -236
+# _e("Your session expired. Please login again, sorry for any inconvenience and appreciate your patience.","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
 msgid ""
 "Your session expired. Please login again, sorry for any inconvenience and "
 "appreciate your patience."
@@ -8924,55 +8914,55 @@ msgstr ""
 "Su sesión expiró. Inicie sesión nuevamente. Disculpe las molestias, le "
 "agradecemos su paciencia."
 
-# 2) File -/var/www/html/wp-content/themes/bidx-group/lib/custom.php -240
-# _e("Welcome in the group!","bidxplugin");
-# Context  Textdomain bidxplugin
+# 2) File -/var/www/html/wp-content/themes/bidx-group-template/lib/custom.php -240
+# _e("Welcome in the group!","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
 msgid "Welcome in the group!"
 msgstr "Bienvenido al grupo."
 
-# 3) File -/var/www/html/wp-content/themes/bidx-group/lib/custom.php -244
-# _e("Successfully left the group!","bidxplugin");
-# Context  Textdomain bidxplugin
+# 3) File -/var/www/html/wp-content/themes/bidx-group-template/lib/custom.php -244
+# _e("Successfully left the group!","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
 msgid "Successfully left the group!"
 msgstr "Salió del grupo."
 
-# 4) File -/var/www/html/wp-content/themes/bidx-group/lib/custom.php -248
-# _e("Thank you! You are successful registered as a member of the bidX platform and this group. Feel free to browse around and see what <!--groupname--> can offer you.","bidxplugin");
-# Context  Textdomain bidxplugin
+# 4) File -/var/www/html/wp-content/themes/bidx-group-template/lib/custom.php -248
+# _e("Thank you! You are successful registered as a member of the bidX platform and this group. Feel free to browse around and see what <!--groupname--> can offer you.","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
 msgid ""
 "Thank you! You are successful registered as a member of the bidX platform "
 "and this group. Feel free to browse around and see what <!--groupname--> can "
 "offer you."
 msgstr ""
-"¡Gracias! Se ha registrado como miembro de la plataforma bidX en este "
-"grupo. Busque para conocer lo que <!--groupname--> puede ofrecerle."
+"¡Gracias! Se ha registrado como miembro de la plataforma bidX en este grupo. "
+"Busque para conocer lo que <!--groupname--> puede ofrecerle."
 
-# 5) File -/var/www/html/wp-content/themes/bidx-group/lib/custom.php -252
-# _e("Successfully published!","bidxplugin");
-# Context  Textdomain bidxplugin
+# 5) File -/var/www/html/wp-content/themes/bidx-group-template/lib/custom.php -252
+# _e("Successfully published!","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
 msgid "Successfully published!"
 msgstr "Publicado satisfactoriamente"
 
-# 6) File -/var/www/html/wp-content/themes/bidx-group/lib/custom.php -256
-# _e("Request accepted!","bidxplugin");
-# Context  Textdomain bidxplugin
+# 6) File -/var/www/html/wp-content/themes/bidx-group-template/lib/custom.php -256
+# _e("Request accepted!","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
 msgid "Request accepted!"
 msgstr "Solicitud aceptada"
 
-# 7) File -/var/www/html/wp-content/themes/bidx-group/lib/custom.php -260
-# _e("Request refused!","bidxplugin");
-# Context  Textdomain bidxplugin
+# 7) File -/var/www/html/wp-content/themes/bidx-group-template/lib/custom.php -260
+# _e("Request refused!","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
 msgid "Request refused!"
 msgstr "Solicitud rechazada"
 
-# 8) File -/var/www/html/wp-content/themes/bidx-group/lib/custom.php -264
-# _e("You have successfully %action% the request!","bidxplugin");
-# Context  Textdomain bidxplugin
+# 8) File -/var/www/html/wp-content/themes/bidx-group-template/lib/custom.php -264
+# _e("You have successfully %action% the request!","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
 msgid "You have successfully %action% the request!"
 msgstr "Ha %action% satisfactoriamente la solicitud."
 
-# 9) File -/var/www/html/wp-content/themes/bidx-group/lib/custom.php -268
-# _e("Add your notification message to custom.php with id ","bidxplugin");
-# Context  Textdomain bidxplugin
+# 9) File -/var/www/html/wp-content/themes/bidx-group-template/lib/custom.php -268
+# _e("Add your notification message to custom.php with id ","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
 msgid "Add your notification message to custom.php with id "
 msgstr "Agregue su mensaje de notificación a custom.php con id."

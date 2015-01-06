@@ -1,3 +1,19 @@
+# _e("","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Altaf <altaf@bidx.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"X-Generator: Poedit 1.5.4\n"
+
+# Language es
 # _x("Select what best matches your reason for submission", "businesssummary","i18n");
 # Context businesssummary TextDomain i18n
 msgctxt "businesssummary"
@@ -122,7 +138,9 @@ msgstr "Comentarios del mentor (para el emprendedor y sus mentores)"
 # Context commenting TextDomain i18n
 msgctxt "commenting"
 msgid "Investor feedback (for entrepreneur, their mentors and all investors)"
-msgstr "Comentarios del inversionista (para el emprendedor, sus mentores y todos los inversionistas)"
+msgstr ""
+"Comentarios del inversionista (para el emprendedor, sus mentores y todos los "
+"inversionistas)"
 
 # _x("Public comment (for anyone)", "commenting","i18n");
 # Context commenting TextDomain i18n
@@ -445,8 +463,11 @@ msgstr "Está a punto de descartar este mensaje. ¿Está seguro?"
 # _x("You have not selected any message, please click on checkbox to make selection", "connect","i18n");
 # Context connect TextDomain i18n
 msgctxt "connect"
-msgid "You have not selected any message, please click on checkbox to make selection"
-msgstr "No ha seleccionado ningún mensaje, debe hacer clic en la casilla para realizar la selección."
+msgid ""
+"You have not selected any message, please click on checkbox to make selection"
+msgstr ""
+"No ha seleccionado ningún mensaje, debe hacer clic en la casilla para "
+"realizar la selección."
 
 # _x("Deleted from", "connect","i18n");
 # Context connect TextDomain i18n
@@ -616,8 +637,12 @@ msgstr "No tiene los derechos para editar esto"
 
 # _e("Your changes have not yet been saved. Are you sure you want to navigate away from this page and lose your pending changes?", "i18n");
 # Context  TextDomain i18n
-msgid "Your changes have not yet been saved. Are you sure you want to navigate away from this page and lose your pending changes?"
-msgstr "Sus cambios aún no se guardaron. ¿Está seguro de que desea salir de esta página y perder los cambios pendientes?"
+msgid ""
+"Your changes have not yet been saved. Are you sure you want to navigate away "
+"from this page and lose your pending changes?"
+msgstr ""
+"Sus cambios aún no se guardaron. ¿Está seguro de que desea salir de esta "
+"página y perder los cambios pendientes?"
 
 # _e("Please wait while you are redirected", "i18n");
 # Context  TextDomain i18n

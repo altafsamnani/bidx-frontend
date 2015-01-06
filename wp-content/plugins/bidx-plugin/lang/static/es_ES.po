@@ -1,17 +1,1272 @@
+# _e("","bidxplugin");
+# Context  Textdomain bidxplugin
 msgid ""
 msgstr ""
-"Project-Id-Version: p3\n"
+"Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Altaf <altaf@bidx.net>\n"
-"Language-Team:  <altaf@bidx.net>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language-Team: \n"
 "Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
 
+# Language Original
+# 1 renderType
+#  _x("download", "download", "static");
+# Context download Textdomain static
+msgctxt "download"
+msgid "download"
+msgstr ""
+
+#  _x("Image", "image", "static");
+# Context image Textdomain static
+msgctxt "image"
+msgid "Image"
+msgstr ""
+
+#  _x("Video", "video", "static");
+# Context video Textdomain static
+msgctxt "video"
+msgid "Video"
+msgstr ""
+
+# 2 documentType
+#  _x("CV", "cv", "static");
+# Context cv Textdomain static
+msgctxt "cv"
+msgid "CV"
+msgstr ""
+
+#  _x("Business plan", "businessplan", "static");
+# Context businessplan Textdomain static
+msgctxt "businessplan"
+msgid "Business plan"
+msgstr ""
+
+#  _x("Financial leasing", "K.64.91", "static");
+# Context K.64.91 Textdomain static
+#, fuzzy
+msgctxt "financialplan"
+msgid "Financial plan"
+msgstr "Arrendamiento financiero"
+
+#  _x("Certificate", "certificate", "static");
+# Context certificate Textdomain static
+msgctxt "certificate"
+msgid "Certificate"
+msgstr ""
+
+#  _x("Letter of intent", "letterintent", "static");
+# Context letterintent Textdomain static
+msgctxt "letterintent"
+msgid "Letter of intent"
+msgstr ""
+
+#  _x("Agreement", "agreement", "static");
+# Context agreement Textdomain static
+msgctxt "agreement"
+msgid "Agreement"
+msgstr ""
+
+#  _x("Contract", "contract", "static");
+# Context contract Textdomain static
+msgctxt "contract"
+msgid "Contract"
+msgstr ""
+
+#  _x("Reference", "reference", "static");
+# Context reference Textdomain static
+msgctxt "reference"
+msgid "Reference"
+msgstr ""
+
+#  _x("Other", "other", "static");
+# Context other Textdomain static
+msgctxt "other"
+msgid "Other"
+msgstr ""
+
+# 3 locale
+#  _x("Arabic (United Arab Emirates)", "ar_AE", "static");
+# Context ar_AE Textdomain static
+msgctxt "ar_AE"
+msgid "Arabic (United Arab Emirates)"
+msgstr ""
+
+#  _x("Arabic", "ar", "static");
+# Context ar Textdomain static
+msgctxt "ar"
+msgid "Arabic"
+msgstr ""
+
+#  _x("Arabic (Bahrain)", "ar_BH", "static");
+# Context ar_BH Textdomain static
+msgctxt "ar_BH"
+msgid "Arabic (Bahrain)"
+msgstr ""
+
+#  _x("Arabic (Algeria)", "ar_DZ", "static");
+# Context ar_DZ Textdomain static
+msgctxt "ar_DZ"
+msgid "Arabic (Algeria)"
+msgstr ""
+
+#  _x("Arabic (Egypt)", "ar_EG", "static");
+# Context ar_EG Textdomain static
+msgctxt "ar_EG"
+msgid "Arabic (Egypt)"
+msgstr ""
+
+#  _x("Arabic (Iraq)", "ar_IQ", "static");
+# Context ar_IQ Textdomain static
+msgctxt "ar_IQ"
+msgid "Arabic (Iraq)"
+msgstr ""
+
+#  _x("Arabic (Jordan)", "ar_JO", "static");
+# Context ar_JO Textdomain static
+msgctxt "ar_JO"
+msgid "Arabic (Jordan)"
+msgstr ""
+
+#  _x("Arabic (Kuwait)", "ar_KW", "static");
+# Context ar_KW Textdomain static
+msgctxt "ar_KW"
+msgid "Arabic (Kuwait)"
+msgstr ""
+
+#  _x("Arabic (Lebanon)", "ar_LB", "static");
+# Context ar_LB Textdomain static
+msgctxt "ar_LB"
+msgid "Arabic (Lebanon)"
+msgstr ""
+
+#  _x("Arabic (Libya)", "ar_LY", "static");
+# Context ar_LY Textdomain static
+msgctxt "ar_LY"
+msgid "Arabic (Libya)"
+msgstr ""
+
+#  _x("Arabic (Morocco)", "ar_MA", "static");
+# Context ar_MA Textdomain static
+msgctxt "ar_MA"
+msgid "Arabic (Morocco)"
+msgstr ""
+
+#  _x("Arabic (Oman)", "ar_OM", "static");
+# Context ar_OM Textdomain static
+msgctxt "ar_OM"
+msgid "Arabic (Oman)"
+msgstr ""
+
+#  _x("Arabic (Qatar)", "ar_QA", "static");
+# Context ar_QA Textdomain static
+msgctxt "ar_QA"
+msgid "Arabic (Qatar)"
+msgstr ""
+
+#  _x("Arabic (Saudi Arabia)", "ar_SA", "static");
+# Context ar_SA Textdomain static
+msgctxt "ar_SA"
+msgid "Arabic (Saudi Arabia)"
+msgstr ""
+
+#  _x("Arabic (Sudan)", "ar_SD", "static");
+# Context ar_SD Textdomain static
+msgctxt "ar_SD"
+msgid "Arabic (Sudan)"
+msgstr ""
+
+#  _x("Arabic (Syria)", "ar_SY", "static");
+# Context ar_SY Textdomain static
+msgctxt "ar_SY"
+msgid "Arabic (Syria)"
+msgstr ""
+
+#  _x("Arabic (Tunisia)", "ar_TN", "static");
+# Context ar_TN Textdomain static
+msgctxt "ar_TN"
+msgid "Arabic (Tunisia)"
+msgstr ""
+
+#  _x("Arabic (Yemen)", "ar_YE", "static");
+# Context ar_YE Textdomain static
+msgctxt "ar_YE"
+msgid "Arabic (Yemen)"
+msgstr ""
+
+#  _x("Belarusian", "be", "static");
+# Context be Textdomain static
+msgctxt "be"
+msgid "Belarusian"
+msgstr ""
+
+#  _x("Belarusian (Belarus)", "be_BY", "static");
+# Context be_BY Textdomain static
+msgctxt "be_BY"
+msgid "Belarusian (Belarus)"
+msgstr ""
+
+#  _x("Bulgarian (Bulgaria)", "bg_BG", "static");
+# Context bg_BG Textdomain static
+msgctxt "bg_BG"
+msgid "Bulgarian (Bulgaria)"
+msgstr ""
+
+#  _x("Bulgarian", "bg", "static");
+# Context bg Textdomain static
+msgctxt "bg"
+msgid "Bulgarian"
+msgstr ""
+
+#  _x("Catalan", "ca", "static");
+# Context ca Textdomain static
+msgctxt "ca"
+msgid "Catalan"
+msgstr ""
+
+#  _x("Catalan (Spain)", "ca_ES", "static");
+# Context ca_ES Textdomain static
+msgctxt "ca_ES"
+msgid "Catalan (Spain)"
+msgstr ""
+
+#  _x("Czech (Czech Republic)", "cs_CZ", "static");
+# Context cs_CZ Textdomain static
+msgctxt "cs_CZ"
+msgid "Czech (Czech Republic)"
+msgstr ""
+
+#  _x("Czech", "cs", "static");
+# Context cs Textdomain static
+msgctxt "cs"
+msgid "Czech"
+msgstr ""
+
+#  _x("Danish", "da", "static");
+# Context da Textdomain static
+msgctxt "da"
+msgid "Danish"
+msgstr ""
+
+#  _x("Danish (Denmark)", "da_DK", "static");
+# Context da_DK Textdomain static
+msgctxt "da_DK"
+msgid "Danish (Denmark)"
+msgstr ""
+
+#  _x("German (Austria)", "de_AT", "static");
+# Context de_AT Textdomain static
+msgctxt "de_AT"
+msgid "German (Austria)"
+msgstr ""
+
+#  _x("German (Switzerland)", "de_CH", "static");
+# Context de_CH Textdomain static
+msgctxt "de_CH"
+msgid "German (Switzerland)"
+msgstr ""
+
+#  _x("German (Germany)", "de_DE", "static");
+# Context de_DE Textdomain static
+msgctxt "de_DE"
+msgid "German (Germany)"
+msgstr ""
+
+#  _x("German", "de", "static");
+# Context de Textdomain static
+msgctxt "de"
+msgid "German"
+msgstr ""
+
+#  _x("German (Luxembourg)", "de_LU", "static");
+# Context de_LU Textdomain static
+msgctxt "de_LU"
+msgid "German (Luxembourg)"
+msgstr ""
+
+#  _x("Greek (Cyprus)", "el_CY", "static");
+# Context el_CY Textdomain static
+msgctxt "el_CY"
+msgid "Greek (Cyprus)"
+msgstr ""
+
+#  _x("Greek", "el", "static");
+# Context el Textdomain static
+msgctxt "el"
+msgid "Greek"
+msgstr ""
+
+#  _x("Greek (Greece)", "el_GR", "static");
+# Context el_GR Textdomain static
+msgctxt "el_GR"
+msgid "Greek (Greece)"
+msgstr ""
+
+#  _x("English (Australia)", "en_AU", "static");
+# Context en_AU Textdomain static
+msgctxt "en_AU"
+msgid "English (Australia)"
+msgstr ""
+
+#  _x("English (Canada)", "en_CA", "static");
+# Context en_CA Textdomain static
+msgctxt "en_CA"
+msgid "English (Canada)"
+msgstr ""
+
+#  _x("English", "en", "static");
+# Context en Textdomain static
+msgctxt "en"
+msgid "English"
+msgstr ""
+
+#  _x("English (United Kingdom)", "en_GB", "static");
+# Context en_GB Textdomain static
+msgctxt "en_GB"
+msgid "English (United Kingdom)"
+msgstr ""
+
+#  _x("English (Ireland)", "en_IE", "static");
+# Context en_IE Textdomain static
+msgctxt "en_IE"
+msgid "English (Ireland)"
+msgstr ""
+
+#  _x("English (India)", "en_IN", "static");
+# Context en_IN Textdomain static
+msgctxt "en_IN"
+msgid "English (India)"
+msgstr ""
+
+#  _x("English (Malta)", "en_MT", "static");
+# Context en_MT Textdomain static
+msgctxt "en_MT"
+msgid "English (Malta)"
+msgstr ""
+
+#  _x("English (New Zealand)", "en_NZ", "static");
+# Context en_NZ Textdomain static
+msgctxt "en_NZ"
+msgid "English (New Zealand)"
+msgstr ""
+
+#  _x("English (Philippines)", "en_PH", "static");
+# Context en_PH Textdomain static
+msgctxt "en_PH"
+msgid "English (Philippines)"
+msgstr ""
+
+#  _x("English (Singapore)", "en_SG", "static");
+# Context en_SG Textdomain static
+msgctxt "en_SG"
+msgid "English (Singapore)"
+msgstr ""
+
+#  _x("English (United States)", "en_US", "static");
+# Context en_US Textdomain static
+msgctxt "en_US"
+msgid "English (United States)"
+msgstr ""
+
+#  _x("English (South Africa)", "en_ZA", "static");
+# Context en_ZA Textdomain static
+msgctxt "en_ZA"
+msgid "English (South Africa)"
+msgstr ""
+
+#  _x("Spanish (Argentina)", "es_AR", "static");
+# Context es_AR Textdomain static
+msgctxt "es_AR"
+msgid "Spanish (Argentina)"
+msgstr ""
+
+#  _x("Spanish (Bolivia)", "es_BO", "static");
+# Context es_BO Textdomain static
+msgctxt "es_BO"
+msgid "Spanish (Bolivia)"
+msgstr ""
+
+#  _x("Spanish (Chile)", "es_CL", "static");
+# Context es_CL Textdomain static
+msgctxt "es_CL"
+msgid "Spanish (Chile)"
+msgstr ""
+
+#  _x("Spanish (Colombia)", "es_CO", "static");
+# Context es_CO Textdomain static
+msgctxt "es_CO"
+msgid "Spanish (Colombia)"
+msgstr ""
+
+#  _x("Spanish (Costa Rica)", "es_CR", "static");
+# Context es_CR Textdomain static
+msgctxt "es_CR"
+msgid "Spanish (Costa Rica)"
+msgstr ""
+
+#  _x("Spanish (Dominican Republic)", "es_DO", "static");
+# Context es_DO Textdomain static
+msgctxt "es_DO"
+msgid "Spanish (Dominican Republic)"
+msgstr ""
+
+#  _x("Spanish (Ecuador)", "es_EC", "static");
+# Context es_EC Textdomain static
+msgctxt "es_EC"
+msgid "Spanish (Ecuador)"
+msgstr ""
+
+#  _x("Spanish (Spain)", "es_ES", "static");
+# Context es_ES Textdomain static
+msgctxt "es_ES"
+msgid "Spanish (Spain)"
+msgstr ""
+
+#  _x("Spanish (Guatemala)", "es_GT", "static");
+# Context es_GT Textdomain static
+msgctxt "es_GT"
+msgid "Spanish (Guatemala)"
+msgstr ""
+
+#  _x("Spanish (Honduras)", "es_HN", "static");
+# Context es_HN Textdomain static
+msgctxt "es_HN"
+msgid "Spanish (Honduras)"
+msgstr ""
+
+#  _x("Spanish (Mexico)", "es_MX", "static");
+# Context es_MX Textdomain static
+msgctxt "es_MX"
+msgid "Spanish (Mexico)"
+msgstr ""
+
+#  _x("Spanish (Nicaragua)", "es_NI", "static");
+# Context es_NI Textdomain static
+msgctxt "es_NI"
+msgid "Spanish (Nicaragua)"
+msgstr ""
+
+#  _x("Spanish (Panama)", "es_PA", "static");
+# Context es_PA Textdomain static
+msgctxt "es_PA"
+msgid "Spanish (Panama)"
+msgstr ""
+
+#  _x("Spanish (Peru)", "es_PE", "static");
+# Context es_PE Textdomain static
+msgctxt "es_PE"
+msgid "Spanish (Peru)"
+msgstr ""
+
+#  _x("Spanish (Puerto Rico)", "es_PR", "static");
+# Context es_PR Textdomain static
+msgctxt "es_PR"
+msgid "Spanish (Puerto Rico)"
+msgstr ""
+
+#  _x("Spanish (Paraguay)", "es_PY", "static");
+# Context es_PY Textdomain static
+msgctxt "es_PY"
+msgid "Spanish (Paraguay)"
+msgstr ""
+
+#  _x("Spanish", "es", "static");
+# Context es Textdomain static
+msgctxt "es"
+msgid "Spanish"
+msgstr ""
+
+#  _x("Spanish (El Salvador)", "es_SV", "static");
+# Context es_SV Textdomain static
+msgctxt "es_SV"
+msgid "Spanish (El Salvador)"
+msgstr ""
+
+#  _x("Spanish (United States)", "es_US", "static");
+# Context es_US Textdomain static
+msgctxt "es_US"
+msgid "Spanish (United States)"
+msgstr ""
+
+#  _x("Spanish (Uruguay)", "es_UY", "static");
+# Context es_UY Textdomain static
+msgctxt "es_UY"
+msgid "Spanish (Uruguay)"
+msgstr ""
+
+#  _x("Spanish (Venezuela)", "es_VE", "static");
+# Context es_VE Textdomain static
+msgctxt "es_VE"
+msgid "Spanish (Venezuela)"
+msgstr ""
+
+#  _x("Estonian (Estonia)", "et_EE", "static");
+# Context et_EE Textdomain static
+msgctxt "et_EE"
+msgid "Estonian (Estonia)"
+msgstr ""
+
+#  _x("Estonian", "et", "static");
+# Context et Textdomain static
+msgctxt "et"
+msgid "Estonian"
+msgstr ""
+
+#  _x("Finnish (Finland)", "fi_FI", "static");
+# Context fi_FI Textdomain static
+msgctxt "fi_FI"
+msgid "Finnish (Finland)"
+msgstr ""
+
+#  _x("Finnish", "fi", "static");
+# Context fi Textdomain static
+msgctxt "fi"
+msgid "Finnish"
+msgstr ""
+
+#  _x("French (Belgium)", "fr_BE", "static");
+# Context fr_BE Textdomain static
+msgctxt "fr_BE"
+msgid "French (Belgium)"
+msgstr ""
+
+#  _x("French (Canada)", "fr_CA", "static");
+# Context fr_CA Textdomain static
+msgctxt "fr_CA"
+msgid "French (Canada)"
+msgstr ""
+
+#  _x("French (Switzerland)", "fr_CH", "static");
+# Context fr_CH Textdomain static
+msgctxt "fr_CH"
+msgid "French (Switzerland)"
+msgstr ""
+
+#  _x("French", "fr", "static");
+# Context fr Textdomain static
+msgctxt "fr"
+msgid "French"
+msgstr ""
+
+#  _x("French (France)", "fr_FR", "static");
+# Context fr_FR Textdomain static
+msgctxt "fr_FR"
+msgid "French (France)"
+msgstr ""
+
+#  _x("French (Luxembourg)", "fr_LU", "static");
+# Context fr_LU Textdomain static
+msgctxt "fr_LU"
+msgid "French (Luxembourg)"
+msgstr ""
+
+#  _x("Irish (Ireland)", "ga_IE", "static");
+# Context ga_IE Textdomain static
+msgctxt "ga_IE"
+msgid "Irish (Ireland)"
+msgstr ""
+
+#  _x("Irish", "ga", "static");
+# Context ga Textdomain static
+msgctxt "ga"
+msgid "Irish"
+msgstr ""
+
+#  _x("Hindi (India)", "hi_IN", "static");
+# Context hi_IN Textdomain static
+msgctxt "hi_IN"
+msgid "Hindi (India)"
+msgstr ""
+
+#  _x("Croatian", "hr", "static");
+# Context hr Textdomain static
+msgctxt "hr"
+msgid "Croatian"
+msgstr ""
+
+#  _x("Croatian (Croatia)", "hr_HR", "static");
+# Context hr_HR Textdomain static
+msgctxt "hr_HR"
+msgid "Croatian (Croatia)"
+msgstr ""
+
+#  _x("Hungarian (Hungary)", "hu_HU", "static");
+# Context hu_HU Textdomain static
+msgctxt "hu_HU"
+msgid "Hungarian (Hungary)"
+msgstr ""
+
+#  _x("Hungarian", "hu", "static");
+# Context hu Textdomain static
+msgctxt "hu"
+msgid "Hungarian"
+msgstr ""
+
+#  _x("Indonesian (Indonesia)", "in_ID", "static");
+# Context in_ID Textdomain static
+msgctxt "in_ID"
+msgid "Indonesian (Indonesia)"
+msgstr ""
+
+#  _x("Indonesian", "in", "static");
+# Context in Textdomain static
+msgctxt "in"
+msgid "Indonesian"
+msgstr ""
+
+#  _x("Icelandic", "is", "static");
+# Context is Textdomain static
+msgctxt "is"
+msgid "Icelandic"
+msgstr ""
+
+#  _x("Icelandic (Iceland)", "is_IS", "static");
+# Context is_IS Textdomain static
+msgctxt "is_IS"
+msgid "Icelandic (Iceland)"
+msgstr ""
+
+#  _x("Italian (Switzerland)", "it_CH", "static");
+# Context it_CH Textdomain static
+msgctxt "it_CH"
+msgid "Italian (Switzerland)"
+msgstr ""
+
+#  _x("Italian", "it", "static");
+# Context it Textdomain static
+msgctxt "it"
+msgid "Italian"
+msgstr ""
+
+#  _x("Italian (Italy)", "it_IT", "static");
+# Context it_IT Textdomain static
+msgctxt "it_IT"
+msgid "Italian (Italy)"
+msgstr ""
+
+#  _x("Hebrew", "iw", "static");
+# Context iw Textdomain static
+msgctxt "iw"
+msgid "Hebrew"
+msgstr ""
+
+#  _x("Hebrew (Israel)", "iw_IL", "static");
+# Context iw_IL Textdomain static
+msgctxt "iw_IL"
+msgid "Hebrew (Israel)"
+msgstr ""
+
+#  _x("Japanese", "ja", "static");
+# Context ja Textdomain static
+msgctxt "ja"
+msgid "Japanese"
+msgstr ""
+
+#  _x("Japanese (Japan", "ja_JP", "static");
+# Context ja_JP Textdomain static
+msgctxt "ja_JP"
+msgid "Japanese (Japan"
+msgstr ""
+
+#  _x("Korean", "ko", "static");
+# Context ko Textdomain static
+msgctxt "ko"
+msgid "Korean"
+msgstr ""
+
+#  _x("Korean (South Korea)", "ko_KR", "static");
+# Context ko_KR Textdomain static
+msgctxt "ko_KR"
+msgid "Korean (South Korea)"
+msgstr ""
+
+#  _x("Lithuanian", "lt", "static");
+# Context lt Textdomain static
+msgctxt "lt"
+msgid "Lithuanian"
+msgstr ""
+
+#  _x("Lithuanian (Lithuania)", "lt_LT", "static");
+# Context lt_LT Textdomain static
+msgctxt "lt_LT"
+msgid "Lithuanian (Lithuania)"
+msgstr ""
+
+#  _x("Latvian", "lv", "static");
+# Context lv Textdomain static
+msgctxt "lv"
+msgid "Latvian"
+msgstr ""
+
+#  _x("Latvian (Latvia)", "lv_LV", "static");
+# Context lv_LV Textdomain static
+msgctxt "lv_LV"
+msgid "Latvian (Latvia)"
+msgstr ""
+
+#  _x("Macedonian", "mk", "static");
+# Context mk Textdomain static
+msgctxt "mk"
+msgid "Macedonian"
+msgstr ""
+
+#  _x("Macedonian (Macedonia)", "mk_MK", "static");
+# Context mk_MK Textdomain static
+msgctxt "mk_MK"
+msgid "Macedonian (Macedonia)"
+msgstr ""
+
+#  _x("Malay", "ms", "static");
+# Context ms Textdomain static
+msgctxt "ms"
+msgid "Malay"
+msgstr ""
+
+#  _x("Malay (Malaysia)", "ms_MY", "static");
+# Context ms_MY Textdomain static
+msgctxt "ms_MY"
+msgid "Malay (Malaysia)"
+msgstr ""
+
+#  _x("Maltese", "mt", "static");
+# Context mt Textdomain static
+msgctxt "mt"
+msgid "Maltese"
+msgstr ""
+
+#  _x("Maltese (Malta)", "mt_MT", "static");
+# Context mt_MT Textdomain static
+msgctxt "mt_MT"
+msgid "Maltese (Malta)"
+msgstr ""
+
+#  _x("Dutch (Belgium)", "nl_BE", "static");
+# Context nl_BE Textdomain static
+msgctxt "nl_BE"
+msgid "Dutch (Belgium)"
+msgstr ""
+
+#  _x("Dutch", "nl", "static");
+# Context nl Textdomain static
+msgctxt "nl"
+msgid "Dutch"
+msgstr ""
+
+#  _x("Dutch (Netherlands)", "nl_NL", "static");
+# Context nl_NL Textdomain static
+msgctxt "nl_NL"
+msgid "Dutch (Netherlands)"
+msgstr ""
+
+#  _x("Norwegian (Norway)", "no_NO", "static");
+# Context no_NO Textdomain static
+msgctxt "no_NO"
+msgid "Norwegian (Norway)"
+msgstr ""
+
+#  _x("Norwegian", "no", "static");
+# Context no Textdomain static
+msgctxt "no"
+msgid "Norwegian"
+msgstr ""
+
+#  _x("Polish (Poland)", "pl_PL", "static");
+# Context pl_PL Textdomain static
+msgctxt "pl_PL"
+msgid "Polish (Poland)"
+msgstr ""
+
+#  _x("Polish", "pl", "static");
+# Context pl Textdomain static
+msgctxt "pl"
+msgid "Polish"
+msgstr ""
+
+#  _x("Portuguese (Brazil)", "pt_BR", "static");
+# Context pt_BR Textdomain static
+msgctxt "pt_BR"
+msgid "Portuguese (Brazil)"
+msgstr ""
+
+#  _x("Portuguese", "pt", "static");
+# Context pt Textdomain static
+msgctxt "pt"
+msgid "Portuguese"
+msgstr ""
+
+#  _x("Portuguese (Portugal)", "pt_PT", "static");
+# Context pt_PT Textdomain static
+msgctxt "pt_PT"
+msgid "Portuguese (Portugal)"
+msgstr ""
+
+#  _x("Romanian", "ro", "static");
+# Context ro Textdomain static
+msgctxt "ro"
+msgid "Romanian"
+msgstr ""
+
+#  _x("Romanian (Romania)", "ro_RO", "static");
+# Context ro_RO Textdomain static
+msgctxt "ro_RO"
+msgid "Romanian (Romania)"
+msgstr ""
+
+#  _x("Russian (Russia)", "ru_RU", "static");
+# Context ru_RU Textdomain static
+msgctxt "ru_RU"
+msgid "Russian (Russia)"
+msgstr ""
+
+#  _x("Russian", "ru", "static");
+# Context ru Textdomain static
+msgctxt "ru"
+msgid "Russian"
+msgstr ""
+
+#  _x("Slovak (Slovakia)", "sk_SK", "static");
+# Context sk_SK Textdomain static
+msgctxt "sk_SK"
+msgid "Slovak (Slovakia)"
+msgstr ""
+
+#  _x("Slovak", "sk", "static");
+# Context sk Textdomain static
+msgctxt "sk"
+msgid "Slovak"
+msgstr ""
+
+#  _x("Slovenian (Slovenia)", "sl_SI", "static");
+# Context sl_SI Textdomain static
+msgctxt "sl_SI"
+msgid "Slovenian (Slovenia)"
+msgstr ""
+
+#  _x("Slovenian", "sl", "static");
+# Context sl Textdomain static
+msgctxt "sl"
+msgid "Slovenian"
+msgstr ""
+
+#  _x("Albanian (Albania)", "sq_AL", "static");
+# Context sq_AL Textdomain static
+msgctxt "sq_AL"
+msgid "Albanian (Albania)"
+msgstr ""
+
+#  _x("Albanian", "sq", "static");
+# Context sq Textdomain static
+msgctxt "sq"
+msgid "Albanian"
+msgstr ""
+
+#  _x("Serbian (Bosnia and Herzegovina)", "sr_BA", "static");
+# Context sr_BA Textdomain static
+msgctxt "sr_BA"
+msgid "Serbian (Bosnia and Herzegovina)"
+msgstr ""
+
+#  _x("Serbian (Serbia and Montenegro)", "sr_CS", "static");
+# Context sr_CS Textdomain static
+msgctxt "sr_CS"
+msgid "Serbian (Serbia and Montenegro)"
+msgstr ""
+
+#  _x("Serbian (Montenegro)", "sr_ME", "static");
+# Context sr_ME Textdomain static
+msgctxt "sr_ME"
+msgid "Serbian (Montenegro)"
+msgstr ""
+
+#  _x("Serbian (Serbia)", "sr_RS", "static");
+# Context sr_RS Textdomain static
+msgctxt "sr_RS"
+msgid "Serbian (Serbia)"
+msgstr ""
+
+#  _x("Serbian", "sr", "static");
+# Context sr Textdomain static
+msgctxt "sr"
+msgid "Serbian"
+msgstr ""
+
+#  _x("Swedish (Sweden)", "sv_SE", "static");
+# Context sv_SE Textdomain static
+msgctxt "sv_SE"
+msgid "Swedish (Sweden)"
+msgstr ""
+
+#  _x("Swedish", "sv", "static");
+# Context sv Textdomain static
+msgctxt "sv"
+msgid "Swedish"
+msgstr ""
+
+#  _x("Thai", "th", "static");
+# Context th Textdomain static
+msgctxt "th"
+msgid "Thai"
+msgstr ""
+
+#  _x("Thai (Thailand)", "th_TH", "static");
+# Context th_TH Textdomain static
+msgctxt "th_TH"
+msgid "Thai (Thailand)"
+msgstr ""
+
+#  _x("Turkish (Turkey)", "tr_TR", "static");
+# Context tr_TR Textdomain static
+msgctxt "tr_TR"
+msgid "Turkish (Turkey)"
+msgstr ""
+
+#  _x("Turkish", "tr", "static");
+# Context tr Textdomain static
+msgctxt "tr"
+msgid "Turkish"
+msgstr ""
+
+#  _x("Ukrainian (Ukraine)", "uk_UA", "static");
+# Context uk_UA Textdomain static
+msgctxt "uk_UA"
+msgid "Ukrainian (Ukraine)"
+msgstr ""
+
+#  _x("Ukrainian", "uk", "static");
+# Context uk Textdomain static
+msgctxt "uk"
+msgid "Ukrainian"
+msgstr ""
+
+#  _x("Vietnamese", "vi", "static");
+# Context vi Textdomain static
+msgctxt "vi"
+msgid "Vietnamese"
+msgstr ""
+
+#  _x("Vietnamese (Vietnam)", "vi_VN", "static");
+# Context vi_VN Textdomain static
+msgctxt "vi_VN"
+msgid "Vietnamese (Vietnam)"
+msgstr ""
+
+#  _x("Chinese", "zh", "static");
+# Context zh Textdomain static
+msgctxt "zh"
+msgid "Chinese"
+msgstr ""
+
+#  _x("Chinese (China)", "zh_CN", "static");
+# Context zh_CN Textdomain static
+msgctxt "zh_CN"
+msgid "Chinese (China)"
+msgstr ""
+
+#  _x("Chinese (Hong Kong)", "zh_HK", "static");
+# Context zh_HK Textdomain static
+msgctxt "zh_HK"
+msgid "Chinese (Hong Kong)"
+msgstr ""
+
+#  _x("Chinese (Singapore)", "zh_SG", "static");
+# Context zh_SG Textdomain static
+msgctxt "zh_SG"
+msgid "Chinese (Singapore)"
+msgstr ""
+
+#  _x("Chinese (Taiwan)", "zh_TW", "static");
+# Context zh_TW Textdomain static
+msgctxt "zh_TW"
+msgid "Chinese (Taiwan)"
+msgstr ""
+
+#  _x("Reinsurance", "K.65.02", "static");
+# Context K.65.02 Textdomain static
+#, fuzzy
+msgctxt "finance"
+msgid "Finance"
+msgstr "Reaseguros"
+
+#  _x("Machining", "C.25.62", "static");
+# Context C.25.62 Textdomain static
+#, fuzzy
+msgctxt "coaching"
+msgid "Coaching"
+msgstr "Ingeniería mecánica por cuenta de terceros"
+
+#  _x("Construction", "F", "static");
+# Context F Textdomain static
+#, fuzzy
+msgctxt "competition"
+msgid "Competition"
+msgstr "Construcción"
+
+#  _x("Find buyer for business", "findBuyer", "static");
+# Context findBuyer Textdomain static
+msgctxt "findBuyer"
+msgid "Find buyer for business"
+msgstr ""
+
+#  _x("Find supplier", "findSupplier", "static");
+# Context findSupplier Textdomain static
+msgctxt "findSupplier"
+msgid "Find supplier"
+msgstr ""
+
+# 5 education
+#  _x("Secondary school", "secondarySchool", "static");
+# Context secondarySchool Textdomain static
+msgctxt "secondarySchool"
+msgid "Secondary school"
+msgstr ""
+
+#  _x("Vocational training", "vocationalTraining", "static");
+# Context vocationalTraining Textdomain static
+msgctxt "vocationalTraining"
+msgid "Vocational training"
+msgstr ""
+
+#  _x("Technical school", "technicalSchool", "static");
+# Context technicalSchool Textdomain static
+msgctxt "technicalSchool"
+msgid "Technical school"
+msgstr ""
+
+#  _x("University - Bachelors", "universityBachelors", "static");
+# Context universityBachelors Textdomain static
+msgctxt "universityBachelors"
+msgid "University - Bachelors"
+msgstr ""
+
+#  _x("University - Masters", "universityMasters", "static");
+# Context universityMasters Textdomain static
+msgctxt "universityMasters"
+msgid "University - Masters"
+msgstr ""
+
+#  _x("University - Postgraduate", "universityPostgraduate", "static");
+# Context universityPostgraduate Textdomain static
+msgctxt "universityPostgraduate"
+msgid "University - Postgraduate"
+msgstr ""
+
+# 6 emailTemplateType
+#  _x("Invite non Bidx-user to group", "email-invitedNonRegisteredUserGroup", "static");
+# Context email-invitedNonRegisteredUserGroup Textdomain static
+msgctxt "email-invitedNonRegisteredUserGroup"
+msgid "Invite non Bidx-user to group"
+msgstr ""
+
+#  _x("Invite Bidx member to group", "email-invitedRegisteredUserGroup", "static");
+# Context email-invitedRegisteredUserGroup Textdomain static
+msgctxt "email-invitedRegisteredUserGroup"
+msgid "Invite Bidx member to group"
+msgstr ""
+
+# 7 legalForm
+#  _x("Sole trader", "soletrader", "static");
+# Context soletrader Textdomain static
+msgctxt "soletrader"
+msgid "Sole trader"
+msgstr ""
+
+#  _x("Partnership", "partnership", "static");
+# Context partnership Textdomain static
+msgctxt "partnership"
+msgid "Partnership"
+msgstr ""
+
+#  _x("Company", "company", "static");
+# Context company Textdomain static
+msgctxt "company"
+msgid "Company"
+msgstr ""
+
+#  _x("Tertiary education", "P.85.42", "static");
+# Context P.85.42 Textdomain static
+#, fuzzy
+msgctxt "povertyReduction"
+msgid "Poverty reduction"
+msgstr "Educación terciaria"
+
+#  _x("Artistic creation", "R.90.03", "static");
+# Context R.90.03 Textdomain static
+#, fuzzy
+msgctxt "jobCreation"
+msgid "Job creation"
+msgstr "Creación artística y literaria"
+
+#  _x("Women in business", "womenBusiness", "static");
+# Context womenBusiness Textdomain static
+msgctxt "womenBusiness"
+msgid "Women in business"
+msgstr ""
+
+#  _x("Social inclusion", "socialInclusion", "static");
+# Context socialInclusion Textdomain static
+msgctxt "socialInclusion"
+msgid "Social inclusion"
+msgstr ""
+
+#  _x("Urban regeneration", "urbanRegeneration", "static");
+# Context urbanRegeneration Textdomain static
+msgctxt "urbanRegeneration"
+msgid "Urban regeneration"
+msgstr ""
+
+#  _x("Education", "P", "static");
+# Context P Textdomain static
+#, fuzzy
+msgctxt "education"
+msgid "Education"
+msgstr "Educación"
+
+#  _x("Health", "health", "static");
+# Context health Textdomain static
+msgctxt "health"
+msgid "Health"
+msgstr ""
+
+#  _x("Housing", "housing", "static");
+# Context housing Textdomain static
+msgctxt "housing"
+msgid "Housing"
+msgstr ""
+
+#  _x("Printing of newspapers", "C.18.11", "static");
+# Context C.18.11 Textdomain static
+#, fuzzy
+msgctxt "drinkingWater"
+msgid "Drinking water"
+msgstr "Impresión de periódicos"
+
+#  _x("Access to energy", "energy", "static");
+# Context energy Textdomain static
+msgctxt "energy"
+msgid "Access to energy"
+msgstr ""
+
+#  _x("Maternal Health", "maternalHealth", "static");
+# Context maternalHealth Textdomain static
+msgctxt "maternalHealth"
+msgid "Maternal Health"
+msgstr ""
+
+#  _x("Child care", "childCare", "static");
+# Context childCare Textdomain static
+msgctxt "childCare"
+msgid "Child care"
+msgstr ""
+
+#  _x("Safety", "safety", "static");
+# Context safety Textdomain static
+msgctxt "safety"
+msgid "Safety"
+msgstr ""
+
+#  _x("Food security", "food", "static");
+# Context food Textdomain static
+msgctxt "food"
+msgid "Food security"
+msgstr ""
+
+#  _x("Labour conditions", "labourConditions", "static");
+# Context labourConditions Textdomain static
+msgctxt "labourConditions"
+msgid "Labour conditions"
+msgstr ""
+
+#  _x("Other social benefits", "other", "static");
+# Context other Textdomain static
+msgctxt "other"
+msgid "Other social benefits"
+msgstr ""
+
+#  _x("Womens empowerment", "womensEmpowerment", "static");
+# Context womensEmpowerment Textdomain static
+msgctxt "womensEmpowerment"
+msgid "Womens empowerment"
+msgstr ""
+
+# 9 gender
+#  _x("Male", "m", "static");
+# Context m Textdomain static
+msgctxt "m"
+msgid "Male"
+msgstr ""
+
+#  _x("Female", "f", "static");
+# Context f Textdomain static
+msgctxt "f"
+msgid "Female"
+msgstr ""
+
+# 10 systemMailType
+#  _x("Relationship Accepted", "relationshipAccepted", "static");
+# Context relationshipAccepted Textdomain static
+msgctxt "relationshipAccepted"
+msgid "Relationship Accepted"
+msgstr ""
+
+#  _x("Relationship Rejected", "relationshipRejected", "static");
+# Context relationshipRejected Textdomain static
+msgctxt "relationshipRejected"
+msgid "Relationship Rejected"
+msgstr ""
+
+#  _x("Relationship Request", "relationshipRequest", "static");
+# Context relationshipRequest Textdomain static
+msgctxt "relationshipRequest"
+msgid "Relationship Request"
+msgstr ""
+
+#  _x("Relationship Terminated", "relationshipTerminated", "static");
+# Context relationshipTerminated Textdomain static
+msgctxt "relationshipTerminated"
+msgid "Relationship Terminated"
+msgstr ""
+
+#  _x("Password", "password", "static");
+# Context password Textdomain static
+msgctxt "password"
+msgid "Password"
+msgstr ""
+
+#  _x("Forgotten Password", "forgottenPassword", "static");
+# Context forgottenPassword Textdomain static
+msgctxt "forgottenPassword"
+msgid "Forgotten Password"
+msgstr ""
+
+#  _x("E-mail Validation", "emailValidation", "static");
+# Context emailValidation Textdomain static
+msgctxt "emailValidation"
+msgid "E-mail Validation"
+msgstr ""
+
+#  _x("E-mail Validation reminder", "emailValidationReminder", "static");
+# Context emailValidationReminder Textdomain static
+msgctxt "emailValidationReminder"
+msgid "E-mail Validation reminder"
+msgstr ""
+
+#  _x("Account Reminder", "accountReminder", "static");
+# Context accountReminder Textdomain static
+msgctxt "accountReminder"
+msgid "Account Reminder"
+msgstr ""
+
+#  _x("Group Invitation", "invitedRegisteredUserGroup", "static");
+# Context invitedRegisteredUserGroup Textdomain static
+msgctxt "invitedRegisteredUserGroup"
+msgid "Group Invitation"
+msgstr ""
+
+# Language es
 #  _x("Agriculture, forestry and fishing", "A", "static");
 # Context A Textdomain static
 msgctxt "A"
@@ -350,8 +1605,8 @@ msgid ""
 "Quarrying of ornamental and building stone, limestone, gypsum, chalk and "
 "slate"
 msgstr ""
-"Extracción de piedra ornamental y para la construcción, piedra caliza, "
-"yeso, creta y pizarra"
+"Extracción de piedra ornamental y para la construcción, piedra caliza, yeso, "
+"creta y pizarra"
 
 #  _x("Operation of gravel and sand pits; mining of clays and kaolin", "B.08.12", "static");
 # Context B.08.12 Textdomain static
@@ -549,8 +1804,7 @@ msgstr "Elaboración de platos y comidas preparados"
 msgctxt "C.10.86"
 msgid "Manufacture of homogenised food preparations and dietetic food"
 msgstr ""
-"Elaboración de preparados alimenticios homogeneizados y alimentos "
-"dietéticos"
+"Elaboración de preparados alimenticios homogeneizados y alimentos dietéticos"
 
 #  _x("Manufacture of other food products n.e.c.", "C.10.89", "static");
 # Context C.10.89 Textdomain static
@@ -568,8 +1822,7 @@ msgstr "Fabricación de productos para la alimentación de animales de granja"
 # Context C.10.92 Textdomain static
 msgctxt "C.10.92"
 msgid "Manufacture of prepared pet foods"
-msgstr ""
-"Fabricación de productos para la alimentación de animales de compañía"
+msgstr "Fabricación de productos para la alimentación de animales de compañía"
 
 #  _x("Manufacture of beverages", "C.11", "static");
 # Context C.11 Textdomain static
@@ -621,8 +1874,8 @@ msgid ""
 "Manufacture of soft drinks; production of mineral waters and other bottled "
 "waters"
 msgstr ""
-"Fabricación de bebidas no alcohólicas; producción de aguas minerales y "
-"otras aguas embotelladas"
+"Fabricación de bebidas no alcohólicas; producción de aguas minerales y otras "
+"aguas embotelladas"
 
 #  _x("Manufacture of tobacco products", "C.12", "static");
 # Context C.12 Textdomain static
@@ -864,16 +2117,16 @@ msgid ""
 "Manufacture of corrugated paper and paperboard and of containers of paper "
 "and paperboard"
 msgstr ""
-"Fabricación de papel y cartón ondulados; fabricación de envases y "
-"embalajes de papel y cartón"
+"Fabricación de papel y cartón ondulados; fabricación de envases y embalajes "
+"de papel y cartón"
 
 #  _x("Manufacture of household and sanitary goods and of toilet requisites", "C.17.22", "static");
 # Context C.17.22 Textdomain static
 msgctxt "C.17.22"
 msgid "Manufacture of household and sanitary goods and of toilet requisites"
 msgstr ""
-"Fabricación de artículos de papel y cartón para uso doméstico, sanitario "
-"e higiénico"
+"Fabricación de artículos de papel y cartón para uso doméstico, sanitario e "
+"higiénico"
 
 #  _x("Manufacture of paper stationery", "C.17.23", "static");
 # Context C.17.23 Textdomain static
@@ -1087,8 +2340,8 @@ msgid ""
 "Manufacture of rubber tyres and tubes; retreading and rebuilding of rubber "
 "tyres"
 msgstr ""
-"Fabricación de neumáticos y cámaras de caucho; reconstrucción y "
-"recauchutado de neumáticos"
+"Fabricación de neumáticos y cámaras de caucho; reconstrucción y recauchutado "
+"de neumáticos"
 
 #  _x("Manufacture of other rubber products", "C.22.19", "static");
 # Context C.22.19 Textdomain static
@@ -1535,8 +2788,7 @@ msgid ""
 "Manufacture of instruments and appliances for measuring, testing and "
 "navigation"
 msgstr ""
-"Fabricación de instrumentos y aparatos de medida, verificación y "
-"navegación"
+"Fabricación de instrumentos y aparatos de medida, verificación y navegación"
 
 #  _x("Manufacture of watches and clocks", "C.26.52", "static");
 # Context C.26.52 Textdomain static
@@ -1643,8 +2895,8 @@ msgid ""
 "Manufacture of engines and turbines, except aircraft, vehicle and cycle "
 "engines"
 msgstr ""
-"Fabricación de motores y turbinas, excepto los destinados a aeronaves, vehí"
-"culos automóviles y ciclomotores"
+"Fabricación de motores y turbinas, excepto los destinados a aeronaves, "
+"vehículos automóviles y ciclomotores"
 
 #  _x("Manufacture of fluid power equipment", "C.28.12", "static");
 # Context C.28.12 Textdomain static
@@ -1702,8 +2954,7 @@ msgstr "Fabricación de herramientas eléctricas manuales"
 # Context C.28.25 Textdomain static
 msgctxt "C.28.25"
 msgid "Manufacture of non-domestic cooling and ventilation equipment"
-msgstr ""
-"Fabricación de maquinaria de ventilación y refrigeración no doméstica"
+msgstr "Fabricación de maquinaria de ventilación y refrigeración no doméstica"
 
 #  _x("Manufacture of other general-purpose machinery n.e.c.", "C.28.29", "static");
 # Context C.28.29 Textdomain static
@@ -1756,8 +3007,8 @@ msgstr ""
 msgctxt "C.28.94"
 msgid "Manufacture of machinery for textile, apparel and leather production"
 msgstr ""
-"Fabricación de maquinaria para las industrias textil, de la confección y "
-"del cuero"
+"Fabricación de maquinaria para las industrias textil, de la confección y del "
+"cuero"
 
 #  _x("Manufacture of machinery for paper and paperboard production", "C.28.95", "static");
 # Context C.28.95 Textdomain static
@@ -1797,8 +3048,8 @@ msgid ""
 "Manufacture of bodies (coachwork) for motor vehicles; manufacture of "
 "trailers and semi-trailers"
 msgstr ""
-"Fabricación de carrocerías para vehículos de motor; fabricación de "
-"remolques y semirremolques"
+"Fabricación de carrocerías para vehículos de motor; fabricación de remolques "
+"y semirremolques"
 
 #  _x("Manufacture of electrical and electronic equipment for motor vehicles", "C.29.31", "static");
 # Context C.29.31 Textdomain static
@@ -1812,8 +3063,7 @@ msgstr ""
 msgctxt "C.29.32"
 msgid "Manufacture of other parts and accessories for motor vehicles"
 msgstr ""
-"Fabricación de otros componentes, piezas y accesorios para vehículos de "
-"motor"
+"Fabricación de otros componentes, piezas y accesorios para vehículos de motor"
 
 #  _x("Manufacture of other transport equipment", "C.30", "static");
 # Context C.30 Textdomain static
@@ -2165,16 +3415,16 @@ msgstr "Valorización de materiales ya clasificados"
 msgctxt "E.39"
 msgid "Recycling activities and other waste management services"
 msgstr ""
-"Actividades de reciclaje y de descontaminación y otros servicios de "
-"gestión de residuos"
+"Actividades de reciclaje y de descontaminación y otros servicios de gestión "
+"de residuos"
 
 #  _x("Recycling activities and other waste management services", "E.39.00", "static");
 # Context E.39.00 Textdomain static
 msgctxt "E.39.00"
 msgid "Recycling activities and other waste management services"
 msgstr ""
-"Actividades de reciclaje y de descontaminación y otros servicios de "
-"gestión de residuos"
+"Actividades de reciclaje y de descontaminación y otros servicios de gestión "
+"de residuos"
 
 #  _x("Construction", "F", "static");
 # Context F Textdomain static
@@ -2778,8 +4028,8 @@ msgid ""
 "Retail sale of bread, cakes, flour confectionery and sugar confectionery in "
 "specialised stores"
 msgstr ""
-"Comercio al por menor de pan y productos de panadería, confitería y pastelerí"
-"a en establecimientos especializados"
+"Comercio al por menor de pan y productos de panadería, confitería y "
+"pastelería en establecimientos especializados"
 
 #  _x("Retail sale of beverages in specialised stores", "G.47.25", "static");
 # Context G.47.25 Textdomain static
@@ -2942,8 +4192,8 @@ msgstr ""
 msgctxt "G.47.74"
 msgid "Retail sale of medical and orthopaedic goods in specialised stores"
 msgstr ""
-"Comercio al por menor de artículos médicos y ortopédicos en "
-"establecimientos especializados"
+"Comercio al por menor de artículos médicos y ortopédicos en establecimientos "
+"especializados"
 
 #  _x("Retail sale of cosmetic and toilet articles in specialised stores", "G.47.75", "static");
 # Context G.47.75 Textdomain static
@@ -3420,8 +4670,7 @@ msgstr "Otras actividades de telecomunicaciones"
 msgctxt "J.62"
 msgid "Computer programming, consultancy and related activities"
 msgstr ""
-"Programación, consultoría y otras actividades relacionadas con la inform�"
-"�tica"
+"Programación, consultoría y otras actividades relacionadas con la informática"
 
 #  _x("Computer programming activities", "J.62.01", "static");
 # Context J.62.01 Textdomain static
@@ -3715,8 +4964,7 @@ msgctxt "M.71"
 msgid ""
 "Architectural and engineering activities; technical testing and analysis"
 msgstr ""
-"Servicios técnicos de arquitectura e ingeniería; ensayos y análisis "
-"técnicos"
+"Servicios técnicos de arquitectura e ingeniería; ensayos y análisis técnicos"
 
 #  _x("Architectural activities", "M.71.11", "static");
 # Context M.71.11 Textdomain static
@@ -3757,8 +5005,7 @@ msgid ""
 "Other research and experimental development on natural sciences and "
 "engineering"
 msgstr ""
-"Otra investigación y desarrollo experimental en ciencias naturales y "
-"técnicas"
+"Otra investigación y desarrollo experimental en ciencias naturales y técnicas"
 
 #  _x("Research and experimental development on social sciences and humanities", "M.72.02", "static");
 # Context M.72.02 Textdomain static
@@ -4544,8 +5791,7 @@ msgstr "Reparación de equipos de comunicación"
 # Context S.95.21 Textdomain static
 msgctxt "S.95.21"
 msgid "Repair of consumer electronics"
-msgstr ""
-"Reparación de aparatos electrónicos de audio y vídeo de uso doméstico"
+msgstr "Reparación de aparatos electrónicos de audio y vídeo de uso doméstico"
 
 #  _x("Repair of household appliances and home and garden equipment", "S.95.22", "static");
 # Context S.95.22 Textdomain static
@@ -4681,3 +5927,3695 @@ msgstr "Actividades de organizaciones y organismos extraterritoriales"
 msgctxt "U.99.0"
 msgid "Activities of extraterritorial organisations and bodies"
 msgstr "Actividades de organizaciones y organismos extraterritoriales"
+
+# 12 investorInvolvement
+#  _x("Advisory", "advisory", "static");
+# Context advisory Textdomain static
+msgctxt "advisory"
+msgid "Advisory"
+msgstr ""
+
+#  _x("Hands-on", "handsOn", "static");
+# Context handsOn Textdomain static
+msgctxt "handsOn"
+msgid "Hands-on"
+msgstr ""
+
+# 13 investorType
+#  _x("Business Angel Group", "busAngelGroup", "static");
+# Context busAngelGroup Textdomain static
+msgctxt "busAngelGroup"
+msgid "Business Angel Group"
+msgstr ""
+
+#  _x("Bank", "bank", "static");
+# Context bank Textdomain static
+msgctxt "bank"
+msgid "Bank"
+msgstr ""
+
+#  _x("Development Bank", "develBank", "static");
+# Context develBank Textdomain static
+msgctxt "develBank"
+msgid "Development Bank"
+msgstr ""
+
+#  _x("Investment Fund", "invFund", "static");
+# Context invFund Textdomain static
+msgctxt "invFund"
+msgid "Investment Fund"
+msgstr ""
+
+#  _x("Asset Management Corporation", "assetMgmtCorp", "static");
+# Context assetMgmtCorp Textdomain static
+msgctxt "assetMgmtCorp"
+msgid "Asset Management Corporation"
+msgstr ""
+
+#  _x("Pension funding", "K.65.03", "static");
+# Context K.65.03 Textdomain static
+#, fuzzy
+msgctxt "pensionFund"
+msgid "Pension Fund"
+msgstr "Fondos de pensiones"
+
+#  _x("Micro Finance Institution", "microFinance", "static");
+# Context microFinance Textdomain static
+msgctxt "microFinance"
+msgid "Micro Finance Institution"
+msgstr ""
+
+#  _x("Development Organisation / NGO", "develOrkNGO", "static");
+# Context develOrkNGO Textdomain static
+msgctxt "develOrkNGO"
+msgid "Development Organisation / NGO"
+msgstr ""
+
+#  _x("Primary education", "P.85.02", "static");
+# Context P.85.02 Textdomain static
+#, fuzzy
+msgctxt "privateFoundation"
+msgid "Private Foundation"
+msgstr "Educación primaria"
+
+#  _x("Family Office", "familyOffice", "static");
+# Context familyOffice Textdomain static
+msgctxt "familyOffice"
+msgid "Family Office"
+msgstr ""
+
+#  _x("Government Facility", "govtFacility", "static");
+# Context govtFacility Textdomain static
+msgctxt "govtFacility"
+msgid "Government Facility"
+msgstr ""
+
+#  _x("Private Investor", "privateInvestor", "static");
+# Context privateInvestor Textdomain static
+msgctxt "privateInvestor"
+msgid "Private Investor"
+msgstr ""
+
+# 14 consumerType
+#  _x("Business/Organisations", "businessOrganisations", "static");
+# Context businessOrganisations Textdomain static
+msgctxt "businessOrganisations"
+msgid "Business/Organisations"
+msgstr ""
+
+#  _x("Persons", "persons", "static");
+# Context persons Textdomain static
+msgctxt "persons"
+msgid "Persons"
+msgstr ""
+
+#  _x("Export (hard currency)", "exportHardCurrency", "static");
+# Context exportHardCurrency Textdomain static
+msgctxt "exportHardCurrency"
+msgid "Export (hard currency)"
+msgstr ""
+
+#  _x("Export (local currency)", "exportLocalCurrency", "static");
+# Context exportLocalCurrency Textdomain static
+msgctxt "exportLocalCurrency"
+msgid "Export (local currency)"
+msgstr ""
+
+#  _x("Pension funding", "K.65.03", "static");
+# Context K.65.03 Textdomain static
+#, fuzzy
+msgctxt "pending"
+msgid "Pending"
+msgstr "Fondos de pensiones"
+
+#  _x("Granted", "granted", "static");
+# Context granted Textdomain static
+msgctxt "granted"
+msgid "Granted"
+msgstr ""
+
+#  _x("Rejected", "rejected", "static");
+# Context rejected Textdomain static
+msgctxt "rejected"
+msgid "Rejected"
+msgstr ""
+
+# 16 exportImport
+#  _x("Exports", "export", "static");
+# Context export Textdomain static
+msgctxt "export"
+msgid "Exports"
+msgstr ""
+
+#  _x("Imports", "import", "static");
+# Context import Textdomain static
+msgctxt "import"
+msgid "Imports"
+msgstr ""
+
+#  _x("Export & Imports", "exportImport", "static");
+# Context exportImport Textdomain static
+msgctxt "exportImport"
+msgid "Export & Imports"
+msgstr ""
+
+#  _x("Not Applicable", "na", "static");
+# Context na Textdomain static
+msgctxt "na"
+msgid "Not Applicable"
+msgstr ""
+
+# 17 mentorExpertise
+#  _x("Business plans", "business.plans", "static");
+# Context business.plans Textdomain static
+msgctxt "business.plans"
+msgid "Business plans"
+msgstr ""
+
+#  _x("Certification (iso, hccp, etc.)", "certification", "static");
+# Context certification Textdomain static
+msgctxt "certification"
+msgid "Certification (iso, hccp, etc.)"
+msgstr ""
+
+#  _x("Design (product, graphic, industrial)", "design", "static");
+# Context design Textdomain static
+msgctxt "design"
+msgid "Design (product, graphic, industrial)"
+msgstr ""
+
+#  _x("E-commerce (webshops)", "ecommerce", "static");
+# Context ecommerce Textdomain static
+msgctxt "ecommerce"
+msgid "E-commerce (webshops)"
+msgstr ""
+
+#  _x("Finance, accounting (operations)", "finance.accounting", "static");
+# Context finance.accounting Textdomain static
+msgctxt "finance.accounting"
+msgid "Finance, accounting (operations)"
+msgstr ""
+
+#  _x("Financial leasing", "K.64.91", "static");
+# Context K.64.91 Textdomain static
+#, fuzzy
+msgctxt "financial.valuations"
+msgid "Financial valuations"
+msgstr "Arrendamiento financiero"
+
+#  _x("Financing (loans, equity, contracts)", "financing", "static");
+# Context financing Textdomain static
+msgctxt "financing"
+msgid "Financing (loans, equity, contracts)"
+msgstr ""
+
+#  _x("Intellectual property rights & patents", "ipr.patents", "static");
+# Context ipr.patents Textdomain static
+msgctxt "ipr.patents"
+msgid "Intellectual property rights & patents"
+msgstr ""
+
+#  _x("Investors (pitching, due diligence)", "investors", "static");
+# Context investors Textdomain static
+msgctxt "investors"
+msgid "Investors (pitching, due diligence)"
+msgstr ""
+
+#  _x("Taxi operation", "H.49.32", "static");
+# Context H.49.32 Textdomain static
+#, fuzzy
+msgctxt "IT.business.operations"
+msgid "IT - business operations"
+msgstr "Transporte por taxi"
+
+#  _x("IT - software development", "IT.software.development", "static");
+# Context IT.software.development Textdomain static
+msgctxt "IT.software.development"
+msgid "IT - software development"
+msgstr ""
+
+#  _x("IT - web development", "IT.web.development", "static");
+# Context IT.web.development Textdomain static
+msgctxt "IT.web.development"
+msgid "IT - web development"
+msgstr ""
+
+#  _x("Legal", "legal", "static");
+# Context legal Textdomain static
+msgctxt "legal"
+msgid "Legal"
+msgstr ""
+
+#  _x("Logistics, distribution, storage", "logistics.distribution.storage", "static");
+# Context logistics.distribution.storage Textdomain static
+msgctxt "logistics.distribution.storage"
+msgid "Logistics, distribution, storage"
+msgstr ""
+
+#  _x("Management", "management", "static");
+# Context management Textdomain static
+msgctxt "management"
+msgid "Management"
+msgstr ""
+
+#  _x("Manufacturing", "C", "static");
+# Context C Textdomain static
+#, fuzzy
+msgctxt "manufacturing.production"
+msgid "Manufacturing, production"
+msgstr "Industria manufacturera"
+
+#  _x("Advertising and market research", "M.73", "static");
+# Context M.73 Textdomain static
+#, fuzzy
+msgctxt "market.research"
+msgid "Market research"
+msgstr "Publicidad y estudios de mercado"
+
+#  _x("Marketing online (social media, seo)", "marketing.online", "static");
+# Context marketing.online Textdomain static
+msgctxt "marketing.online"
+msgid "Marketing online (social media, seo)"
+msgstr ""
+
+#  _x("Marketing, branding, advertising", "marketing.branding.advertising", "static");
+# Context marketing.branding.advertising Textdomain static
+msgctxt "marketing.branding.advertising"
+msgid "Marketing, branding, advertising"
+msgstr ""
+
+#  _x("Personnel, HR", "personnel.hr", "static");
+# Context personnel.hr Textdomain static
+msgctxt "personnel.hr"
+msgid "Personnel, HR"
+msgstr ""
+
+#  _x("Pricing", "pricing", "static");
+# Context pricing Textdomain static
+msgctxt "pricing"
+msgid "Pricing"
+msgstr ""
+
+#  _x("Sales", "sales", "static");
+# Context sales Textdomain static
+msgctxt "sales"
+msgid "Sales"
+msgstr ""
+
+#  _x("Social & environmental impact & CSR", "impact.csr", "static");
+# Context impact.csr Textdomain static
+msgctxt "impact.csr"
+msgid "Social & environmental impact & CSR"
+msgstr ""
+
+#  _x("Strategy, leadership", "strategy", "static");
+# Context strategy Textdomain static
+msgctxt "strategy"
+msgid "Strategy, leadership"
+msgstr ""
+
+# 18 investmentType
+#  _x("Loan", "loan", "static");
+# Context loan Textdomain static
+msgctxt "loan"
+msgid "Loan"
+msgstr ""
+
+#  _x("Equity", "equity", "static");
+# Context equity Textdomain static
+msgctxt "equity"
+msgid "Equity"
+msgstr ""
+
+#  _x("Equity and debt", "both", "static");
+# Context both Textdomain static
+msgctxt "both"
+msgid "Equity and debt"
+msgstr ""
+
+#  _x("Not sure", "unsure", "static");
+# Context unsure Textdomain static
+msgctxt "unsure"
+msgid "Not sure"
+msgstr ""
+
+# 19 stageBusiness
+#  _x("Start-up", "startup", "static");
+# Context startup Textdomain static
+msgctxt "startup"
+msgid "Start-up"
+msgstr ""
+
+#  _x("Established", "established", "static");
+# Context established Textdomain static
+msgctxt "established"
+msgid "Established"
+msgstr ""
+
+# 20 permitsLicencesObtained
+#  _x("Permit obtained", "permitobtained", "static");
+# Context permitobtained Textdomain static
+msgctxt "permitobtained"
+msgid "Permit obtained"
+msgstr ""
+
+#  _x("Permit requested", "permitrequested", "static");
+# Context permitrequested Textdomain static
+msgctxt "permitrequested"
+msgid "Permit requested"
+msgstr ""
+
+#  _x("Application needed", "applicationNeeded", "static");
+# Context applicationNeeded Textdomain static
+msgctxt "applicationNeeded"
+msgid "Application needed"
+msgstr ""
+
+#  _x("Permit not required", "permitnotrequired", "static");
+# Context permitnotrequired Textdomain static
+msgctxt "permitnotrequired"
+msgid "Permit not required"
+msgstr ""
+
+# 21 businessOutcome
+#  _x("I sold the company", "soldCompany", "static");
+# Context soldCompany Textdomain static
+msgctxt "soldCompany"
+msgid "I sold the company"
+msgstr ""
+
+#  _x("I left the company", "leftCompany", "static");
+# Context leftCompany Textdomain static
+msgctxt "leftCompany"
+msgid "I left the company"
+msgstr ""
+
+#  _x("The company was dissolved", "dissolvedCompany", "static");
+# Context dissolvedCompany Textdomain static
+msgctxt "dissolvedCompany"
+msgid "The company was dissolved"
+msgstr ""
+
+#  _x("The company went bankrupt", "companyBankrupt", "static");
+# Context companyBankrupt Textdomain static
+msgctxt "companyBankrupt"
+msgid "The company went bankrupt"
+msgstr ""
+
+#  _x("I am still involved with the company", "stillInvolved", "static");
+# Context stillInvolved Textdomain static
+msgctxt "stillInvolved"
+msgid "I am still involved with the company"
+msgstr ""
+
+# 22 focusRole
+#  _x("Investor", "investor", "static");
+# Context investor Textdomain static
+msgctxt "investor"
+msgid "Investor"
+msgstr ""
+
+#  _x("Entrepreneur", "entrepreneur", "static");
+# Context entrepreneur Textdomain static
+msgctxt "entrepreneur"
+msgid "Entrepreneur"
+msgstr ""
+
+# 23 country
+#  _x("Andorra", "AD", "static");
+# Context AD Textdomain static
+msgctxt "AD"
+msgid "Andorra"
+msgstr ""
+
+#  _x("United Arab Emirates", "AE", "static");
+# Context AE Textdomain static
+msgctxt "AE"
+msgid "United Arab Emirates"
+msgstr ""
+
+#  _x("Afghanistan", "AF", "static");
+# Context AF Textdomain static
+msgctxt "AF"
+msgid "Afghanistan"
+msgstr ""
+
+#  _x("Antigua and Barbuda", "AG", "static");
+# Context AG Textdomain static
+msgctxt "AG"
+msgid "Antigua and Barbuda"
+msgstr ""
+
+#  _x("Anguilla", "AI", "static");
+# Context AI Textdomain static
+msgctxt "AI"
+msgid "Anguilla"
+msgstr ""
+
+#  _x("Albania", "AL", "static");
+# Context AL Textdomain static
+msgctxt "AL"
+msgid "Albania"
+msgstr ""
+
+#  _x("Armenia", "AM", "static");
+# Context AM Textdomain static
+msgctxt "AM"
+msgid "Armenia"
+msgstr ""
+
+#  _x("Netherlands Antilles", "AN", "static");
+# Context AN Textdomain static
+msgctxt "AN"
+msgid "Netherlands Antilles"
+msgstr ""
+
+#  _x("Angola", "AO", "static");
+# Context AO Textdomain static
+msgctxt "AO"
+msgid "Angola"
+msgstr ""
+
+#  _x("Antarctica", "AQ", "static");
+# Context AQ Textdomain static
+msgctxt "AQ"
+msgid "Antarctica"
+msgstr ""
+
+#  _x("Argentina", "AR", "static");
+# Context AR Textdomain static
+msgctxt "AR"
+msgid "Argentina"
+msgstr ""
+
+#  _x("American Samoa", "AS", "static");
+# Context AS Textdomain static
+msgctxt "AS"
+msgid "American Samoa"
+msgstr ""
+
+#  _x("Austria", "AT", "static");
+# Context AT Textdomain static
+msgctxt "AT"
+msgid "Austria"
+msgstr ""
+
+#  _x("Australia", "AU", "static");
+# Context AU Textdomain static
+msgctxt "AU"
+msgid "Australia"
+msgstr ""
+
+#  _x("Aruba", "AW", "static");
+# Context AW Textdomain static
+msgctxt "AW"
+msgid "Aruba"
+msgstr ""
+
+#  _x("Åland Islands", "AX", "static");
+# Context AX Textdomain static
+msgctxt "AX"
+msgid "Åland Islands"
+msgstr ""
+
+#  _x("Azerbaijan", "AZ", "static");
+# Context AZ Textdomain static
+msgctxt "AZ"
+msgid "Azerbaijan"
+msgstr ""
+
+#  _x("Bosnia and Herzegovina", "BA", "static");
+# Context BA Textdomain static
+msgctxt "BA"
+msgid "Bosnia and Herzegovina"
+msgstr ""
+
+#  _x("Barbados", "BB", "static");
+# Context BB Textdomain static
+msgctxt "BB"
+msgid "Barbados"
+msgstr ""
+
+#  _x("Bangladesh", "BD", "static");
+# Context BD Textdomain static
+msgctxt "BD"
+msgid "Bangladesh"
+msgstr ""
+
+#  _x("Belgium", "BE", "static");
+# Context BE Textdomain static
+msgctxt "BE"
+msgid "Belgium"
+msgstr ""
+
+#  _x("Burkina Faso", "BF", "static");
+# Context BF Textdomain static
+msgctxt "BF"
+msgid "Burkina Faso"
+msgstr ""
+
+#  _x("Bulgaria", "BG", "static");
+# Context BG Textdomain static
+msgctxt "BG"
+msgid "Bulgaria"
+msgstr ""
+
+#  _x("Bahrain", "BH", "static");
+# Context BH Textdomain static
+msgctxt "BH"
+msgid "Bahrain"
+msgstr ""
+
+#  _x("Burundi", "BI", "static");
+# Context BI Textdomain static
+msgctxt "BI"
+msgid "Burundi"
+msgstr ""
+
+#  _x("Benin", "BJ", "static");
+# Context BJ Textdomain static
+msgctxt "BJ"
+msgid "Benin"
+msgstr ""
+
+#  _x("Saint Barthélemy", "BL", "static");
+# Context BL Textdomain static
+msgctxt "BL"
+msgid "Saint Barthélemy"
+msgstr ""
+
+#  _x("Bermuda", "BM", "static");
+# Context BM Textdomain static
+msgctxt "BM"
+msgid "Bermuda"
+msgstr ""
+
+#  _x("Brunei", "BN", "static");
+# Context BN Textdomain static
+msgctxt "BN"
+msgid "Brunei"
+msgstr ""
+
+#  _x("Bolivia", "BO", "static");
+# Context BO Textdomain static
+msgctxt "BO"
+msgid "Bolivia"
+msgstr ""
+
+#  _x("Bonaire", "BQ", "static");
+# Context BQ Textdomain static
+msgctxt "BQ"
+msgid "Bonaire"
+msgstr ""
+
+#  _x("Brazil", "BR", "static");
+# Context BR Textdomain static
+msgctxt "BR"
+msgid "Brazil"
+msgstr ""
+
+#  _x("Bahamas", "BS", "static");
+# Context BS Textdomain static
+msgctxt "BS"
+msgid "Bahamas"
+msgstr ""
+
+#  _x("Bhutan", "BT", "static");
+# Context BT Textdomain static
+msgctxt "BT"
+msgid "Bhutan"
+msgstr ""
+
+#  _x("Bouvet Island", "BV", "static");
+# Context BV Textdomain static
+msgctxt "BV"
+msgid "Bouvet Island"
+msgstr ""
+
+#  _x("Botswana", "BW", "static");
+# Context BW Textdomain static
+msgctxt "BW"
+msgid "Botswana"
+msgstr ""
+
+#  _x("Belarus", "BY", "static");
+# Context BY Textdomain static
+msgctxt "BY"
+msgid "Belarus"
+msgstr ""
+
+#  _x("Belize", "BZ", "static");
+# Context BZ Textdomain static
+msgctxt "BZ"
+msgid "Belize"
+msgstr ""
+
+#  _x("Canada", "CA", "static");
+# Context CA Textdomain static
+msgctxt "CA"
+msgid "Canada"
+msgstr ""
+
+#  _x("Cocos Islands", "CC", "static");
+# Context CC Textdomain static
+msgctxt "CC"
+msgid "Cocos Islands"
+msgstr ""
+
+#  _x("The Democratic Republic Of Congo", "CD", "static");
+# Context CD Textdomain static
+msgctxt "CD"
+msgid "The Democratic Republic Of Congo"
+msgstr ""
+
+#  _x("Central African Republic", "CF", "static");
+# Context CF Textdomain static
+msgctxt "CF"
+msgid "Central African Republic"
+msgstr ""
+
+#  _x("Congo", "CG", "static");
+# Context CG Textdomain static
+msgctxt "CG"
+msgid "Congo"
+msgstr ""
+
+#  _x("Switzerland", "CH", "static");
+# Context CH Textdomain static
+msgctxt "CH"
+msgid "Switzerland"
+msgstr ""
+
+#  _x("Côte d'Ivoire", "CI", "static");
+# Context CI Textdomain static
+msgctxt "CI"
+msgid "Côte d'Ivoire"
+msgstr ""
+
+#  _x("Cook Islands", "CK", "static");
+# Context CK Textdomain static
+msgctxt "CK"
+msgid "Cook Islands"
+msgstr ""
+
+#  _x("Chile", "CL", "static");
+# Context CL Textdomain static
+msgctxt "CL"
+msgid "Chile"
+msgstr ""
+
+#  _x("Cameroon", "CM", "static");
+# Context CM Textdomain static
+msgctxt "CM"
+msgid "Cameroon"
+msgstr ""
+
+#  _x("China", "CN", "static");
+# Context CN Textdomain static
+msgctxt "CN"
+msgid "China"
+msgstr ""
+
+#  _x("Colombia", "CO", "static");
+# Context CO Textdomain static
+msgctxt "CO"
+msgid "Colombia"
+msgstr ""
+
+#  _x("Costa Rica", "CR", "static");
+# Context CR Textdomain static
+msgctxt "CR"
+msgid "Costa Rica"
+msgstr ""
+
+#  _x("Cuba", "CU", "static");
+# Context CU Textdomain static
+msgctxt "CU"
+msgid "Cuba"
+msgstr ""
+
+#  _x("Cape Verde", "CV", "static");
+# Context CV Textdomain static
+msgctxt "CV"
+msgid "Cape Verde"
+msgstr ""
+
+#  _x("Curaçao", "CW", "static");
+# Context CW Textdomain static
+msgctxt "CW"
+msgid "Curaçao"
+msgstr ""
+
+#  _x("Christmas Island", "CX", "static");
+# Context CX Textdomain static
+msgctxt "CX"
+msgid "Christmas Island"
+msgstr ""
+
+#  _x("Cyprus", "CY", "static");
+# Context CY Textdomain static
+msgctxt "CY"
+msgid "Cyprus"
+msgstr ""
+
+#  _x("Czech Republic", "CZ", "static");
+# Context CZ Textdomain static
+msgctxt "CZ"
+msgid "Czech Republic"
+msgstr ""
+
+#  _x("Germany", "DE", "static");
+# Context DE Textdomain static
+msgctxt "DE"
+msgid "Germany"
+msgstr ""
+
+#  _x("Djibouti", "DJ", "static");
+# Context DJ Textdomain static
+msgctxt "DJ"
+msgid "Djibouti"
+msgstr ""
+
+#  _x("Denmark", "DK", "static");
+# Context DK Textdomain static
+msgctxt "DK"
+msgid "Denmark"
+msgstr ""
+
+#  _x("Dominica", "DM", "static");
+# Context DM Textdomain static
+msgctxt "DM"
+msgid "Dominica"
+msgstr ""
+
+#  _x("Dominican Republic", "DO", "static");
+# Context DO Textdomain static
+msgctxt "DO"
+msgid "Dominican Republic"
+msgstr ""
+
+#  _x("Algeria", "DZ", "static");
+# Context DZ Textdomain static
+msgctxt "DZ"
+msgid "Algeria"
+msgstr ""
+
+#  _x("Ecuador", "EC", "static");
+# Context EC Textdomain static
+msgctxt "EC"
+msgid "Ecuador"
+msgstr ""
+
+#  _x("Estonia", "EE", "static");
+# Context EE Textdomain static
+msgctxt "EE"
+msgid "Estonia"
+msgstr ""
+
+#  _x("Egypt", "EG", "static");
+# Context EG Textdomain static
+msgctxt "EG"
+msgid "Egypt"
+msgstr ""
+
+#  _x("Western Sahara", "EH", "static");
+# Context EH Textdomain static
+msgctxt "EH"
+msgid "Western Sahara"
+msgstr ""
+
+#  _x("Eritrea", "ER", "static");
+# Context ER Textdomain static
+msgctxt "ER"
+msgid "Eritrea"
+msgstr ""
+
+#  _x("Spain", "ES", "static");
+# Context ES Textdomain static
+msgctxt "ES"
+msgid "Spain"
+msgstr ""
+
+#  _x("Ethiopia", "ET", "static");
+# Context ET Textdomain static
+msgctxt "ET"
+msgid "Ethiopia"
+msgstr ""
+
+#  _x("Finland", "FI", "static");
+# Context FI Textdomain static
+msgctxt "FI"
+msgid "Finland"
+msgstr ""
+
+#  _x("Fiji", "FJ", "static");
+# Context FJ Textdomain static
+msgctxt "FJ"
+msgid "Fiji"
+msgstr ""
+
+#  _x("Falkland Islands", "FK", "static");
+# Context FK Textdomain static
+msgctxt "FK"
+msgid "Falkland Islands"
+msgstr ""
+
+#  _x("Micronesia", "FM", "static");
+# Context FM Textdomain static
+msgctxt "FM"
+msgid "Micronesia"
+msgstr ""
+
+#  _x("Faroe Islands", "FO", "static");
+# Context FO Textdomain static
+msgctxt "FO"
+msgid "Faroe Islands"
+msgstr ""
+
+#  _x("France", "FR", "static");
+# Context FR Textdomain static
+msgctxt "FR"
+msgid "France"
+msgstr ""
+
+#  _x("Gabon", "GA", "static");
+# Context GA Textdomain static
+msgctxt "GA"
+msgid "Gabon"
+msgstr ""
+
+#  _x("United Kingdom", "GB", "static");
+# Context GB Textdomain static
+msgctxt "GB"
+msgid "United Kingdom"
+msgstr ""
+
+#  _x("Grenada", "GD", "static");
+# Context GD Textdomain static
+msgctxt "GD"
+msgid "Grenada"
+msgstr ""
+
+#  _x("Georgia", "GE", "static");
+# Context GE Textdomain static
+msgctxt "GE"
+msgid "Georgia"
+msgstr ""
+
+#  _x("French Guiana", "GF", "static");
+# Context GF Textdomain static
+msgctxt "GF"
+msgid "French Guiana"
+msgstr ""
+
+#  _x("Guernsey", "GG", "static");
+# Context GG Textdomain static
+msgctxt "GG"
+msgid "Guernsey"
+msgstr ""
+
+#  _x("Ghana", "GH", "static");
+# Context GH Textdomain static
+msgctxt "GH"
+msgid "Ghana"
+msgstr ""
+
+#  _x("Gibraltar", "GI", "static");
+# Context GI Textdomain static
+msgctxt "GI"
+msgid "Gibraltar"
+msgstr ""
+
+#  _x("Greenland", "GL", "static");
+# Context GL Textdomain static
+msgctxt "GL"
+msgid "Greenland"
+msgstr ""
+
+#  _x("Gambia", "GM", "static");
+# Context GM Textdomain static
+msgctxt "GM"
+msgid "Gambia"
+msgstr ""
+
+#  _x("Guinea", "GN", "static");
+# Context GN Textdomain static
+msgctxt "GN"
+msgid "Guinea"
+msgstr ""
+
+#  _x("Guadeloupe", "GP", "static");
+# Context GP Textdomain static
+msgctxt "GP"
+msgid "Guadeloupe"
+msgstr ""
+
+#  _x("Equatorial Guinea", "GQ", "static");
+# Context GQ Textdomain static
+msgctxt "GQ"
+msgid "Equatorial Guinea"
+msgstr ""
+
+#  _x("Greece", "GR", "static");
+# Context GR Textdomain static
+msgctxt "GR"
+msgid "Greece"
+msgstr ""
+
+#  _x("South Georgia And The South Sandwich Islands", "GS", "static");
+# Context GS Textdomain static
+msgctxt "GS"
+msgid "South Georgia And The South Sandwich Islands"
+msgstr ""
+
+#  _x("Guatemala", "GT", "static");
+# Context GT Textdomain static
+msgctxt "GT"
+msgid "Guatemala"
+msgstr ""
+
+#  _x("Guam", "GU", "static");
+# Context GU Textdomain static
+msgctxt "GU"
+msgid "Guam"
+msgstr ""
+
+#  _x("Guinea-Bissau", "GW", "static");
+# Context GW Textdomain static
+msgctxt "GW"
+msgid "Guinea-Bissau"
+msgstr ""
+
+#  _x("Guyana", "GY", "static");
+# Context GY Textdomain static
+msgctxt "GY"
+msgid "Guyana"
+msgstr ""
+
+#  _x("Hong Kong", "HK", "static");
+# Context HK Textdomain static
+msgctxt "HK"
+msgid "Hong Kong"
+msgstr ""
+
+#  _x("Heard Island And McDonald Islands", "HM", "static");
+# Context HM Textdomain static
+msgctxt "HM"
+msgid "Heard Island And McDonald Islands"
+msgstr ""
+
+#  _x("Honduras", "HN", "static");
+# Context HN Textdomain static
+msgctxt "HN"
+msgid "Honduras"
+msgstr ""
+
+#  _x("Croatia", "HR", "static");
+# Context HR Textdomain static
+msgctxt "HR"
+msgid "Croatia"
+msgstr ""
+
+#  _x("Haiti", "HT", "static");
+# Context HT Textdomain static
+msgctxt "HT"
+msgid "Haiti"
+msgstr ""
+
+#  _x("Hungary", "HU", "static");
+# Context HU Textdomain static
+msgctxt "HU"
+msgid "Hungary"
+msgstr ""
+
+#  _x("Indonesia", "ID", "static");
+# Context ID Textdomain static
+msgctxt "ID"
+msgid "Indonesia"
+msgstr ""
+
+#  _x("Ireland", "IE", "static");
+# Context IE Textdomain static
+msgctxt "IE"
+msgid "Ireland"
+msgstr ""
+
+#  _x("Israel", "IL", "static");
+# Context IL Textdomain static
+msgctxt "IL"
+msgid "Israel"
+msgstr ""
+
+#  _x("Isle Of Man", "IM", "static");
+# Context IM Textdomain static
+msgctxt "IM"
+msgid "Isle Of Man"
+msgstr ""
+
+#  _x("India", "IN", "static");
+# Context IN Textdomain static
+msgctxt "IN"
+msgid "India"
+msgstr ""
+
+#  _x("British Indian Ocean Territory", "IO", "static");
+# Context IO Textdomain static
+msgctxt "IO"
+msgid "British Indian Ocean Territory"
+msgstr ""
+
+#  _x("Iraq", "IQ", "static");
+# Context IQ Textdomain static
+msgctxt "IQ"
+msgid "Iraq"
+msgstr ""
+
+#  _x("Iran", "IR", "static");
+# Context IR Textdomain static
+msgctxt "IR"
+msgid "Iran"
+msgstr ""
+
+#  _x("Iceland", "IS", "static");
+# Context IS Textdomain static
+msgctxt "IS"
+msgid "Iceland"
+msgstr ""
+
+#  _x("Italy", "IT", "static");
+# Context IT Textdomain static
+msgctxt "IT"
+msgid "Italy"
+msgstr ""
+
+#  _x("Jersey", "JE", "static");
+# Context JE Textdomain static
+msgctxt "JE"
+msgid "Jersey"
+msgstr ""
+
+#  _x("Jamaica", "JM", "static");
+# Context JM Textdomain static
+msgctxt "JM"
+msgid "Jamaica"
+msgstr ""
+
+#  _x("Jordan", "JO", "static");
+# Context JO Textdomain static
+msgctxt "JO"
+msgid "Jordan"
+msgstr ""
+
+#  _x("Japan", "JP", "static");
+# Context JP Textdomain static
+msgctxt "JP"
+msgid "Japan"
+msgstr ""
+
+#  _x("Kenya", "KE", "static");
+# Context KE Textdomain static
+msgctxt "KE"
+msgid "Kenya"
+msgstr ""
+
+#  _x("Kyrgyzstan", "KG", "static");
+# Context KG Textdomain static
+msgctxt "KG"
+msgid "Kyrgyzstan"
+msgstr ""
+
+#  _x("Cambodia", "KH", "static");
+# Context KH Textdomain static
+msgctxt "KH"
+msgid "Cambodia"
+msgstr ""
+
+#  _x("Kiribati", "KI", "static");
+# Context KI Textdomain static
+msgctxt "KI"
+msgid "Kiribati"
+msgstr ""
+
+#  _x("Comoros", "KM", "static");
+# Context KM Textdomain static
+msgctxt "KM"
+msgid "Comoros"
+msgstr ""
+
+#  _x("Saint Kitts And Nevis", "KN", "static");
+# Context KN Textdomain static
+msgctxt "KN"
+msgid "Saint Kitts And Nevis"
+msgstr ""
+
+#  _x("Kosovo", "KO", "static");
+# Context KO Textdomain static
+msgctxt "KO"
+msgid "Kosovo"
+msgstr ""
+
+#  _x("North Korea", "KP", "static");
+# Context KP Textdomain static
+msgctxt "KP"
+msgid "North Korea"
+msgstr ""
+
+#  _x("South Korea", "KR", "static");
+# Context KR Textdomain static
+msgctxt "KR"
+msgid "South Korea"
+msgstr ""
+
+#  _x("Kuwait", "KW", "static");
+# Context KW Textdomain static
+msgctxt "KW"
+msgid "Kuwait"
+msgstr ""
+
+#  _x("Cayman Islands", "KY", "static");
+# Context KY Textdomain static
+msgctxt "KY"
+msgid "Cayman Islands"
+msgstr ""
+
+#  _x("Kazakhstan", "KZ", "static");
+# Context KZ Textdomain static
+msgctxt "KZ"
+msgid "Kazakhstan"
+msgstr ""
+
+#  _x("Laos", "LA", "static");
+# Context LA Textdomain static
+msgctxt "LA"
+msgid "Laos"
+msgstr ""
+
+#  _x("Lebanon", "LB", "static");
+# Context LB Textdomain static
+msgctxt "LB"
+msgid "Lebanon"
+msgstr ""
+
+#  _x("Saint Lucia", "LC", "static");
+# Context LC Textdomain static
+msgctxt "LC"
+msgid "Saint Lucia"
+msgstr ""
+
+#  _x("Liechtenstein", "LI", "static");
+# Context LI Textdomain static
+msgctxt "LI"
+msgid "Liechtenstein"
+msgstr ""
+
+#  _x("Sri Lanka", "LK", "static");
+# Context LK Textdomain static
+msgctxt "LK"
+msgid "Sri Lanka"
+msgstr ""
+
+#  _x("Liberia", "LR", "static");
+# Context LR Textdomain static
+msgctxt "LR"
+msgid "Liberia"
+msgstr ""
+
+#  _x("Lesotho", "LS", "static");
+# Context LS Textdomain static
+msgctxt "LS"
+msgid "Lesotho"
+msgstr ""
+
+#  _x("Lithuania", "LT", "static");
+# Context LT Textdomain static
+msgctxt "LT"
+msgid "Lithuania"
+msgstr ""
+
+#  _x("Luxembourg", "LU", "static");
+# Context LU Textdomain static
+msgctxt "LU"
+msgid "Luxembourg"
+msgstr ""
+
+#  _x("Latvia", "LV", "static");
+# Context LV Textdomain static
+msgctxt "LV"
+msgid "Latvia"
+msgstr ""
+
+#  _x("Libya", "LY", "static");
+# Context LY Textdomain static
+msgctxt "LY"
+msgid "Libya"
+msgstr ""
+
+#  _x("Morocco", "MA", "static");
+# Context MA Textdomain static
+msgctxt "MA"
+msgid "Morocco"
+msgstr ""
+
+#  _x("Monaco", "MC", "static");
+# Context MC Textdomain static
+msgctxt "MC"
+msgid "Monaco"
+msgstr ""
+
+#  _x("Moldova", "MD", "static");
+# Context MD Textdomain static
+msgctxt "MD"
+msgid "Moldova"
+msgstr ""
+
+#  _x("Montenegro", "ME", "static");
+# Context ME Textdomain static
+msgctxt "ME"
+msgid "Montenegro"
+msgstr ""
+
+#  _x("Saint Martin", "MF", "static");
+# Context MF Textdomain static
+msgctxt "MF"
+msgid "Saint Martin"
+msgstr ""
+
+#  _x("Madagascar", "MG", "static");
+# Context MG Textdomain static
+msgctxt "MG"
+msgid "Madagascar"
+msgstr ""
+
+#  _x("Marshall Islands", "MH", "static");
+# Context MH Textdomain static
+msgctxt "MH"
+msgid "Marshall Islands"
+msgstr ""
+
+#  _x("Macedonia", "MK", "static");
+# Context MK Textdomain static
+msgctxt "MK"
+msgid "Macedonia"
+msgstr ""
+
+#  _x("Mali", "ML", "static");
+# Context ML Textdomain static
+msgctxt "ML"
+msgid "Mali"
+msgstr ""
+
+#  _x("Myanmar", "MM", "static");
+# Context MM Textdomain static
+msgctxt "MM"
+msgid "Myanmar"
+msgstr ""
+
+#  _x("Mongolia", "MN", "static");
+# Context MN Textdomain static
+msgctxt "MN"
+msgid "Mongolia"
+msgstr ""
+
+#  _x("Macao", "MO", "static");
+# Context MO Textdomain static
+msgctxt "MO"
+msgid "Macao"
+msgstr ""
+
+#  _x("Northern Mariana Islands", "MP", "static");
+# Context MP Textdomain static
+msgctxt "MP"
+msgid "Northern Mariana Islands"
+msgstr ""
+
+#  _x("Martinique", "MQ", "static");
+# Context MQ Textdomain static
+msgctxt "MQ"
+msgid "Martinique"
+msgstr ""
+
+#  _x("Mauritania", "MR", "static");
+# Context MR Textdomain static
+msgctxt "MR"
+msgid "Mauritania"
+msgstr ""
+
+#  _x("Montserrat", "MS", "static");
+# Context MS Textdomain static
+msgctxt "MS"
+msgid "Montserrat"
+msgstr ""
+
+#  _x("Malta", "MT", "static");
+# Context MT Textdomain static
+msgctxt "MT"
+msgid "Malta"
+msgstr ""
+
+#  _x("Mauritius", "MU", "static");
+# Context MU Textdomain static
+msgctxt "MU"
+msgid "Mauritius"
+msgstr ""
+
+#  _x("Maldives", "MV", "static");
+# Context MV Textdomain static
+msgctxt "MV"
+msgid "Maldives"
+msgstr ""
+
+#  _x("Malawi", "MW", "static");
+# Context MW Textdomain static
+msgctxt "MW"
+msgid "Malawi"
+msgstr ""
+
+#  _x("Mexico", "MX", "static");
+# Context MX Textdomain static
+msgctxt "MX"
+msgid "Mexico"
+msgstr ""
+
+#  _x("Malaysia", "MY", "static");
+# Context MY Textdomain static
+msgctxt "MY"
+msgid "Malaysia"
+msgstr ""
+
+#  _x("Mozambique", "MZ", "static");
+# Context MZ Textdomain static
+msgctxt "MZ"
+msgid "Mozambique"
+msgstr ""
+
+#  _x("Namibia", "NA", "static");
+# Context NA Textdomain static
+msgctxt "NA"
+msgid "Namibia"
+msgstr ""
+
+#  _x("New Caledonia", "NC", "static");
+# Context NC Textdomain static
+msgctxt "NC"
+msgid "New Caledonia"
+msgstr ""
+
+#  _x("Niger", "NE", "static");
+# Context NE Textdomain static
+msgctxt "NE"
+msgid "Niger"
+msgstr ""
+
+#  _x("Norfolk Island", "NF", "static");
+# Context NF Textdomain static
+msgctxt "NF"
+msgid "Norfolk Island"
+msgstr ""
+
+#  _x("Nigeria", "NG", "static");
+# Context NG Textdomain static
+msgctxt "NG"
+msgid "Nigeria"
+msgstr ""
+
+#  _x("Nicaragua", "NI", "static");
+# Context NI Textdomain static
+msgctxt "NI"
+msgid "Nicaragua"
+msgstr ""
+
+#  _x("Netherlands", "NL", "static");
+# Context NL Textdomain static
+msgctxt "NL"
+msgid "Netherlands"
+msgstr ""
+
+#  _x("Norway", "NO", "static");
+# Context NO Textdomain static
+msgctxt "NO"
+msgid "Norway"
+msgstr ""
+
+#  _x("Nepal", "NP", "static");
+# Context NP Textdomain static
+msgctxt "NP"
+msgid "Nepal"
+msgstr ""
+
+#  _x("Nauru", "NR", "static");
+# Context NR Textdomain static
+msgctxt "NR"
+msgid "Nauru"
+msgstr ""
+
+#  _x("Niue", "NU", "static");
+# Context NU Textdomain static
+msgctxt "NU"
+msgid "Niue"
+msgstr ""
+
+#  _x("New Zealand", "NZ", "static");
+# Context NZ Textdomain static
+msgctxt "NZ"
+msgid "New Zealand"
+msgstr ""
+
+#  _x("Oman", "OM", "static");
+# Context OM Textdomain static
+msgctxt "OM"
+msgid "Oman"
+msgstr ""
+
+#  _x("Panama", "PA", "static");
+# Context PA Textdomain static
+msgctxt "PA"
+msgid "Panama"
+msgstr ""
+
+#  _x("Peru", "PE", "static");
+# Context PE Textdomain static
+msgctxt "PE"
+msgid "Peru"
+msgstr ""
+
+#  _x("French Polynesia", "PF", "static");
+# Context PF Textdomain static
+msgctxt "PF"
+msgid "French Polynesia"
+msgstr ""
+
+#  _x("Papua New Guinea", "PG", "static");
+# Context PG Textdomain static
+msgctxt "PG"
+msgid "Papua New Guinea"
+msgstr ""
+
+#  _x("Philippines", "PH", "static");
+# Context PH Textdomain static
+msgctxt "PH"
+msgid "Philippines"
+msgstr ""
+
+#  _x("Pakistan", "PK", "static");
+# Context PK Textdomain static
+msgctxt "PK"
+msgid "Pakistan"
+msgstr ""
+
+#  _x("Poland", "PL", "static");
+# Context PL Textdomain static
+msgctxt "PL"
+msgid "Poland"
+msgstr ""
+
+#  _x("Saint Pierre And Miquelon", "PM", "static");
+# Context PM Textdomain static
+msgctxt "PM"
+msgid "Saint Pierre And Miquelon"
+msgstr ""
+
+#  _x("Pitcairn", "PN", "static");
+# Context PN Textdomain static
+msgctxt "PN"
+msgid "Pitcairn"
+msgstr ""
+
+#  _x("Puerto Rico", "PR", "static");
+# Context PR Textdomain static
+msgctxt "PR"
+msgid "Puerto Rico"
+msgstr ""
+
+#  _x("Palestine", "PS", "static");
+# Context PS Textdomain static
+msgctxt "PS"
+msgid "Palestine"
+msgstr ""
+
+#  _x("Portugal", "PT", "static");
+# Context PT Textdomain static
+msgctxt "PT"
+msgid "Portugal"
+msgstr ""
+
+#  _x("Palau", "PW", "static");
+# Context PW Textdomain static
+msgctxt "PW"
+msgid "Palau"
+msgstr ""
+
+#  _x("Paraguay", "PY", "static");
+# Context PY Textdomain static
+msgctxt "PY"
+msgid "Paraguay"
+msgstr ""
+
+#  _x("Qatar", "QA", "static");
+# Context QA Textdomain static
+msgctxt "QA"
+msgid "Qatar"
+msgstr ""
+
+#  _x("Reunion", "RE", "static");
+# Context RE Textdomain static
+msgctxt "RE"
+msgid "Reunion"
+msgstr ""
+
+#  _x("Romania", "RO", "static");
+# Context RO Textdomain static
+msgctxt "RO"
+msgid "Romania"
+msgstr ""
+
+#  _x("Serbia", "RS", "static");
+# Context RS Textdomain static
+msgctxt "RS"
+msgid "Serbia"
+msgstr ""
+
+#  _x("Russia", "RU", "static");
+# Context RU Textdomain static
+msgctxt "RU"
+msgid "Russia"
+msgstr ""
+
+#  _x("Rwanda", "RW", "static");
+# Context RW Textdomain static
+msgctxt "RW"
+msgid "Rwanda"
+msgstr ""
+
+#  _x("Saudi Arabia", "SA", "static");
+# Context SA Textdomain static
+msgctxt "SA"
+msgid "Saudi Arabia"
+msgstr ""
+
+#  _x("Solomon Islands", "SB", "static");
+# Context SB Textdomain static
+msgctxt "SB"
+msgid "Solomon Islands"
+msgstr ""
+
+#  _x("Seychelles", "SC", "static");
+# Context SC Textdomain static
+msgctxt "SC"
+msgid "Seychelles"
+msgstr ""
+
+#  _x("Sudan", "SD", "static");
+# Context SD Textdomain static
+msgctxt "SD"
+msgid "Sudan"
+msgstr ""
+
+#  _x("Sweden", "SE", "static");
+# Context SE Textdomain static
+msgctxt "SE"
+msgid "Sweden"
+msgstr ""
+
+#  _x("Singapore", "SG", "static");
+# Context SG Textdomain static
+msgctxt "SG"
+msgid "Singapore"
+msgstr ""
+
+#  _x("Saint Helena", "SH", "static");
+# Context SH Textdomain static
+msgctxt "SH"
+msgid "Saint Helena"
+msgstr ""
+
+#  _x("Slovenia", "SI", "static");
+# Context SI Textdomain static
+msgctxt "SI"
+msgid "Slovenia"
+msgstr ""
+
+#  _x("Svalbard And Jan Mayen", "SJ", "static");
+# Context SJ Textdomain static
+msgctxt "SJ"
+msgid "Svalbard And Jan Mayen"
+msgstr ""
+
+#  _x("Slovakia", "SK", "static");
+# Context SK Textdomain static
+msgctxt "SK"
+msgid "Slovakia"
+msgstr ""
+
+#  _x("Sierra Leone", "SL", "static");
+# Context SL Textdomain static
+msgctxt "SL"
+msgid "Sierra Leone"
+msgstr ""
+
+#  _x("San Marino", "SM", "static");
+# Context SM Textdomain static
+msgctxt "SM"
+msgid "San Marino"
+msgstr ""
+
+#  _x("Senegal", "SN", "static");
+# Context SN Textdomain static
+msgctxt "SN"
+msgid "Senegal"
+msgstr ""
+
+#  _x("Somalia", "SO", "static");
+# Context SO Textdomain static
+msgctxt "SO"
+msgid "Somalia"
+msgstr ""
+
+#  _x("Suriname", "SR", "static");
+# Context SR Textdomain static
+msgctxt "SR"
+msgid "Suriname"
+msgstr ""
+
+#  _x("Sao Tome And Principe", "ST", "static");
+# Context ST Textdomain static
+msgctxt "ST"
+msgid "Sao Tome And Principe"
+msgstr ""
+
+#  _x("El Salvador", "SV", "static");
+# Context SV Textdomain static
+msgctxt "SV"
+msgid "El Salvador"
+msgstr ""
+
+#  _x("Sint Maarten (Dutch part)", "SX", "static");
+# Context SX Textdomain static
+msgctxt "SX"
+msgid "Sint Maarten (Dutch part)"
+msgstr ""
+
+#  _x("Syria", "SY", "static");
+# Context SY Textdomain static
+msgctxt "SY"
+msgid "Syria"
+msgstr ""
+
+#  _x("Swaziland", "SZ", "static");
+# Context SZ Textdomain static
+msgctxt "SZ"
+msgid "Swaziland"
+msgstr ""
+
+#  _x("Turks And Caicos Islands", "TC", "static");
+# Context TC Textdomain static
+msgctxt "TC"
+msgid "Turks And Caicos Islands"
+msgstr ""
+
+#  _x("Chad", "TD", "static");
+# Context TD Textdomain static
+msgctxt "TD"
+msgid "Chad"
+msgstr ""
+
+#  _x("French Southern Territories", "TF", "static");
+# Context TF Textdomain static
+msgctxt "TF"
+msgid "French Southern Territories"
+msgstr ""
+
+#  _x("Togo", "TG", "static");
+# Context TG Textdomain static
+msgctxt "TG"
+msgid "Togo"
+msgstr ""
+
+#  _x("Thailand", "TH", "static");
+# Context TH Textdomain static
+msgctxt "TH"
+msgid "Thailand"
+msgstr ""
+
+#  _x("Tajikistan", "TJ", "static");
+# Context TJ Textdomain static
+msgctxt "TJ"
+msgid "Tajikistan"
+msgstr ""
+
+#  _x("Tokelau", "TK", "static");
+# Context TK Textdomain static
+msgctxt "TK"
+msgid "Tokelau"
+msgstr ""
+
+#  _x("Timor-Leste", "TL", "static");
+# Context TL Textdomain static
+msgctxt "TL"
+msgid "Timor-Leste"
+msgstr ""
+
+#  _x("Turkmenistan", "TM", "static");
+# Context TM Textdomain static
+msgctxt "TM"
+msgid "Turkmenistan"
+msgstr ""
+
+#  _x("Tunisia", "TN", "static");
+# Context TN Textdomain static
+msgctxt "TN"
+msgid "Tunisia"
+msgstr ""
+
+#  _x("Tonga", "TO", "static");
+# Context TO Textdomain static
+msgctxt "TO"
+msgid "Tonga"
+msgstr ""
+
+#  _x("Turkey", "TR", "static");
+# Context TR Textdomain static
+msgctxt "TR"
+msgid "Turkey"
+msgstr ""
+
+#  _x("Trinidad and Tobago", "TT", "static");
+# Context TT Textdomain static
+msgctxt "TT"
+msgid "Trinidad and Tobago"
+msgstr ""
+
+#  _x("Tuvalu", "TV", "static");
+# Context TV Textdomain static
+msgctxt "TV"
+msgid "Tuvalu"
+msgstr ""
+
+#  _x("Taiwan", "TW", "static");
+# Context TW Textdomain static
+msgctxt "TW"
+msgid "Taiwan"
+msgstr ""
+
+#  _x("Tanzania", "TZ", "static");
+# Context TZ Textdomain static
+msgctxt "TZ"
+msgid "Tanzania"
+msgstr ""
+
+#  _x("Ukraine", "UA", "static");
+# Context UA Textdomain static
+msgctxt "UA"
+msgid "Ukraine"
+msgstr ""
+
+#  _x("Uganda", "UG", "static");
+# Context UG Textdomain static
+msgctxt "UG"
+msgid "Uganda"
+msgstr ""
+
+#  _x("United States Minor Outlying Islands", "UM", "static");
+# Context UM Textdomain static
+msgctxt "UM"
+msgid "United States Minor Outlying Islands"
+msgstr ""
+
+#  _x("United States", "US", "static");
+# Context US Textdomain static
+msgctxt "US"
+msgid "United States"
+msgstr ""
+
+#  _x("Uruguay", "UY", "static");
+# Context UY Textdomain static
+msgctxt "UY"
+msgid "Uruguay"
+msgstr ""
+
+#  _x("Uzbekistan", "UZ", "static");
+# Context UZ Textdomain static
+msgctxt "UZ"
+msgid "Uzbekistan"
+msgstr ""
+
+#  _x("Vatican", "VA", "static");
+# Context VA Textdomain static
+msgctxt "VA"
+msgid "Vatican"
+msgstr ""
+
+#  _x("Saint Vincent And The Grenadines", "VC", "static");
+# Context VC Textdomain static
+msgctxt "VC"
+msgid "Saint Vincent And The Grenadines"
+msgstr ""
+
+#  _x("Venezuela", "VE", "static");
+# Context VE Textdomain static
+msgctxt "VE"
+msgid "Venezuela"
+msgstr ""
+
+#  _x("British Virgin Islands", "VG", "static");
+# Context VG Textdomain static
+msgctxt "VG"
+msgid "British Virgin Islands"
+msgstr ""
+
+#  _x("U.S. Virgin Islands", "VI", "static");
+# Context VI Textdomain static
+msgctxt "VI"
+msgid "U.S. Virgin Islands"
+msgstr ""
+
+#  _x("Vietnam", "VN", "static");
+# Context VN Textdomain static
+msgctxt "VN"
+msgid "Vietnam"
+msgstr ""
+
+#  _x("Vanuatu", "VU", "static");
+# Context VU Textdomain static
+msgctxt "VU"
+msgid "Vanuatu"
+msgstr ""
+
+#  _x("Wallis And Futuna", "WF", "static");
+# Context WF Textdomain static
+msgctxt "WF"
+msgid "Wallis And Futuna"
+msgstr ""
+
+#  _x("Samoa", "WS", "static");
+# Context WS Textdomain static
+msgctxt "WS"
+msgid "Samoa"
+msgstr ""
+
+#  _x("Yemen", "YE", "static");
+# Context YE Textdomain static
+msgctxt "YE"
+msgid "Yemen"
+msgstr ""
+
+#  _x("Mayotte", "YT", "static");
+# Context YT Textdomain static
+msgctxt "YT"
+msgid "Mayotte"
+msgstr ""
+
+#  _x("South Africa", "ZA", "static");
+# Context ZA Textdomain static
+msgctxt "ZA"
+msgid "South Africa"
+msgstr ""
+
+#  _x("Zambia", "ZM", "static");
+# Context ZM Textdomain static
+msgctxt "ZM"
+msgid "Zambia"
+msgstr ""
+
+#  _x("Zimbabwe", "ZW", "static");
+# Context ZW Textdomain static
+msgctxt "ZW"
+msgid "Zimbabwe"
+msgstr ""
+
+#  _x("South Sudan", "SS", "static");
+# Context SS Textdomain static
+msgctxt "SS"
+msgid "South Sudan"
+msgstr ""
+
+# 24 nationality
+#  _x("Afghan", "af", "static");
+# Context af Textdomain static
+msgctxt "af"
+msgid "Afghan"
+msgstr ""
+
+#  _x("Albanian", "al", "static");
+# Context al Textdomain static
+msgctxt "al"
+msgid "Albanian"
+msgstr ""
+
+#  _x("Algerian", "dz", "static");
+# Context dz Textdomain static
+msgctxt "dz"
+msgid "Algerian"
+msgstr ""
+
+#  _x("American Samoan", "as", "static");
+# Context as Textdomain static
+msgctxt "as"
+msgid "American Samoan"
+msgstr ""
+
+#  _x("Andorran", "ad", "static");
+# Context ad Textdomain static
+msgctxt "ad"
+msgid "Andorran"
+msgstr ""
+
+#  _x("Angolan", "ao", "static");
+# Context ao Textdomain static
+msgctxt "ao"
+msgid "Angolan"
+msgstr ""
+
+#  _x("Anguillan", "ai", "static");
+# Context ai Textdomain static
+msgctxt "ai"
+msgid "Anguillan"
+msgstr ""
+
+#  _x("of Antigua and Barbuda", "ag", "static");
+# Context ag Textdomain static
+msgctxt "ag"
+msgid "of Antigua and Barbuda"
+msgstr ""
+
+#  _x("Argentinian", "ar", "static");
+# Context ar Textdomain static
+msgctxt "ar"
+msgid "Argentinian"
+msgstr ""
+
+#  _x("Armenian", "am", "static");
+# Context am Textdomain static
+msgctxt "am"
+msgid "Armenian"
+msgstr ""
+
+#  _x("Aruban", "aw", "static");
+# Context aw Textdomain static
+msgctxt "aw"
+msgid "Aruban"
+msgstr ""
+
+#  _x("Australian", "au", "static");
+# Context au Textdomain static
+msgctxt "au"
+msgid "Australian"
+msgstr ""
+
+#  _x("Austrian", "at", "static");
+# Context at Textdomain static
+msgctxt "at"
+msgid "Austrian"
+msgstr ""
+
+#  _x("Azerbaijani", "az", "static");
+# Context az Textdomain static
+msgctxt "az"
+msgid "Azerbaijani"
+msgstr ""
+
+#  _x("Bahamian", "bs", "static");
+# Context bs Textdomain static
+msgctxt "bs"
+msgid "Bahamian"
+msgstr ""
+
+#  _x("Bahraini", "bh", "static");
+# Context bh Textdomain static
+msgctxt "bh"
+msgid "Bahraini"
+msgstr ""
+
+#  _x("Bangladeshi", "bd", "static");
+# Context bd Textdomain static
+msgctxt "bd"
+msgid "Bangladeshi"
+msgstr ""
+
+#  _x("Barbadian", "bb", "static");
+# Context bb Textdomain static
+msgctxt "bb"
+msgid "Barbadian"
+msgstr ""
+
+#  _x("Belarusian", "by", "static");
+# Context by Textdomain static
+msgctxt "by"
+msgid "Belarusian"
+msgstr ""
+
+#  _x("Belgian", "be", "static");
+# Context be Textdomain static
+msgctxt "be"
+msgid "Belgian"
+msgstr ""
+
+#  _x("Belizean", "bz", "static");
+# Context bz Textdomain static
+msgctxt "bz"
+msgid "Belizean"
+msgstr ""
+
+#  _x("Beninese", "bj", "static");
+# Context bj Textdomain static
+msgctxt "bj"
+msgid "Beninese"
+msgstr ""
+
+#  _x("Bermudian", "bm", "static");
+# Context bm Textdomain static
+msgctxt "bm"
+msgid "Bermudian"
+msgstr ""
+
+#  _x("Bhutanese", "bt", "static");
+# Context bt Textdomain static
+msgctxt "bt"
+msgid "Bhutanese"
+msgstr ""
+
+#  _x("Bolivian", "bo", "static");
+# Context bo Textdomain static
+msgctxt "bo"
+msgid "Bolivian"
+msgstr ""
+
+#  _x("of Bosnia and Herzegovina", "ba", "static");
+# Context ba Textdomain static
+msgctxt "ba"
+msgid "of Bosnia and Herzegovina"
+msgstr ""
+
+#  _x("Botswanan", "bw", "static");
+# Context bw Textdomain static
+msgctxt "bw"
+msgid "Botswanan"
+msgstr ""
+
+#  _x("Brazilian", "br", "static");
+# Context br Textdomain static
+msgctxt "br"
+msgid "Brazilian"
+msgstr ""
+
+#  _x("British Virgin Islander", "vg", "static");
+# Context vg Textdomain static
+msgctxt "vg"
+msgid "British Virgin Islander"
+msgstr ""
+
+#  _x("Bruneian", "bn", "static");
+# Context bn Textdomain static
+msgctxt "bn"
+msgid "Bruneian"
+msgstr ""
+
+#  _x("Bulgarian", "bg", "static");
+# Context bg Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Burkinabe", "bf", "static");
+# Context bf Textdomain static
+msgctxt "bf"
+msgid "Burkinabe"
+msgstr ""
+
+#  _x("Burundian", "bi", "static");
+# Context bi Textdomain static
+msgctxt "bi"
+msgid "Burundian"
+msgstr ""
+
+#  _x("Cambodian", "kh", "static");
+# Context kh Textdomain static
+msgctxt "kh"
+msgid "Cambodian"
+msgstr ""
+
+#  _x("Cameroonian", "cm", "static");
+# Context cm Textdomain static
+msgctxt "cm"
+msgid "Cameroonian"
+msgstr ""
+
+#  _x("Canadian", "ca", "static");
+# Context ca Textdomain static
+msgctxt "ca"
+msgid "Canadian"
+msgstr ""
+
+#  _x("Cape Verdean", "cv", "static");
+# Context cv Textdomain static
+msgctxt "cv"
+msgid "Cape Verdean"
+msgstr ""
+
+#  _x("Caymanian", "ky", "static");
+# Context ky Textdomain static
+msgctxt "ky"
+msgid "Caymanian"
+msgstr ""
+
+#  _x("Central banking", "K.64.11", "static");
+# Context K.64.11 Textdomain static
+#, fuzzy
+msgctxt "cf"
+msgid "Central African"
+msgstr "Banco central"
+
+#  _x("Chadian", "td", "static");
+# Context td Textdomain static
+msgctxt "td"
+msgid "Chadian"
+msgstr ""
+
+#  _x("Chilean", "cl", "static");
+# Context cl Textdomain static
+msgctxt "cl"
+msgid "Chilean"
+msgstr ""
+
+#  _x("Chinese", "cn", "static");
+# Context cn Textdomain static
+msgctxt "cn"
+msgid "Chinese"
+msgstr ""
+
+#  _x("Christmas Islander", "cx", "static");
+# Context cx Textdomain static
+msgctxt "cx"
+msgid "Christmas Islander"
+msgstr ""
+
+#  _x("Cocos Islander", "cc", "static");
+# Context cc Textdomain static
+msgctxt "cc"
+msgid "Cocos Islander"
+msgstr ""
+
+#  _x("Colombian", "co", "static");
+# Context co Textdomain static
+msgctxt "co"
+msgid "Colombian"
+msgstr ""
+
+#  _x("Comorian", "km", "static");
+# Context km Textdomain static
+msgctxt "km"
+msgid "Comorian"
+msgstr ""
+
+#  _x("Congolese", "cg", "static");
+# Context cg Textdomain static
+msgctxt "cg"
+msgid "Congolese"
+msgstr ""
+
+#  _x("Cook Islander", "ck", "static");
+# Context ck Textdomain static
+msgctxt "ck"
+msgid "Cook Islander"
+msgstr ""
+
+#  _x("Costa Rican", "cr", "static");
+# Context cr Textdomain static
+msgctxt "cr"
+msgid "Costa Rican"
+msgstr ""
+
+#  _x("Ivorian", "ci", "static");
+# Context ci Textdomain static
+msgctxt "ci"
+msgid "Ivorian"
+msgstr ""
+
+#  _x("Croat", "hr", "static");
+# Context hr Textdomain static
+msgctxt "hr"
+msgid "Croat"
+msgstr ""
+
+#  _x("Cuban", "cu", "static");
+# Context cu Textdomain static
+msgctxt "cu"
+msgid "Cuban"
+msgstr ""
+
+#  _x("Curaçaoan", "cw", "static");
+# Context cw Textdomain static
+msgctxt "cw"
+msgid "Curaçaoan"
+msgstr ""
+
+#  _x("Cypriot", "cy", "static");
+# Context cy Textdomain static
+msgctxt "cy"
+msgid "Cypriot"
+msgstr ""
+
+#  _x("Czech", "cz", "static");
+# Context cz Textdomain static
+msgctxt "cz"
+msgid "Czech"
+msgstr ""
+
+#  _x("of the Democratic Republic of the Congo", "cd", "static");
+# Context cd Textdomain static
+msgctxt "cd"
+msgid "of the Democratic Republic of the Congo"
+msgstr ""
+
+#  _x("Dane", "dk", "static");
+# Context dk Textdomain static
+msgctxt "dk"
+msgid "Dane"
+msgstr ""
+
+#  _x("Djiboutian", "dj", "static");
+# Context dj Textdomain static
+msgctxt "dj"
+msgid "Djiboutian"
+msgstr ""
+
+#  _x("Dominican", "dm", "static");
+# Context dm Textdomain static
+msgctxt "dm"
+msgid "Dominican"
+msgstr ""
+
+#  _x("Dominican", "do", "static");
+# Context do Textdomain static
+msgctxt "do"
+msgid "Dominican"
+msgstr ""
+
+#  _x("Ecuadorian", "ec", "static");
+# Context ec Textdomain static
+msgctxt "ec"
+msgid "Ecuadorian"
+msgstr ""
+
+#  _x("Egyptian", "eg", "static");
+# Context eg Textdomain static
+msgctxt "eg"
+msgid "Egyptian"
+msgstr ""
+
+#  _x("Salvadorian", "sv", "static");
+# Context sv Textdomain static
+msgctxt "sv"
+msgid "Salvadorian"
+msgstr ""
+
+#  _x("Equatorial Guinean", "gq", "static");
+# Context gq Textdomain static
+msgctxt "gq"
+msgid "Equatorial Guinean"
+msgstr ""
+
+#  _x("Eritrean", "er", "static");
+# Context er Textdomain static
+msgctxt "er"
+msgid "Eritrean"
+msgstr ""
+
+#  _x("Estonian", "ee", "static");
+# Context ee Textdomain static
+msgctxt "ee"
+msgid "Estonian"
+msgstr ""
+
+#  _x("Ethiopian", "et", "static");
+# Context et Textdomain static
+msgctxt "et"
+msgid "Ethiopian"
+msgstr ""
+
+#  _x("Faeroese", "fo", "static");
+# Context fo Textdomain static
+msgctxt "fo"
+msgid "Faeroese"
+msgstr ""
+
+#  _x("Falkland Islander", "fk", "static");
+# Context fk Textdomain static
+msgctxt "fk"
+msgid "Falkland Islander"
+msgstr ""
+
+#  _x("Fijian", "fj", "static");
+# Context fj Textdomain static
+msgctxt "fj"
+msgid "Fijian"
+msgstr ""
+
+#  _x("Finn", "fi", "static");
+# Context fi Textdomain static
+msgctxt "fi"
+msgid "Finn"
+msgstr ""
+
+#  _x("of the former Yugoslav Republic of Macedonia", "mk", "static");
+# Context mk Textdomain static
+msgctxt "mk"
+msgid "of the former Yugoslav Republic of Macedonia"
+msgstr ""
+
+#  _x("French", "fr", "static");
+# Context fr Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Guianese", "gf", "static");
+# Context gf Textdomain static
+msgctxt "gf"
+msgid "Guianese"
+msgstr ""
+
+#  _x("Polynesian", "pf", "static");
+# Context pf Textdomain static
+msgctxt "pf"
+msgid "Polynesian"
+msgstr ""
+
+#  _x("of the French Southern and Antarctic Lands", "tf", "static");
+# Context tf Textdomain static
+msgctxt "tf"
+msgid "of the French Southern and Antarctic Lands"
+msgstr ""
+
+#  _x("Gabonese", "ga", "static");
+# Context ga Textdomain static
+msgctxt "ga"
+msgid "Gabonese"
+msgstr ""
+
+#  _x("Gambian", "gm", "static");
+# Context gm Textdomain static
+msgctxt "gm"
+msgid "Gambian"
+msgstr ""
+
+#  _x("Georgian", "ge", "static");
+# Context ge Textdomain static
+msgctxt "ge"
+msgid "Georgian"
+msgstr ""
+
+#  _x("German", "de", "static");
+# Context de Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Ghanaian", "gh", "static");
+# Context gh Textdomain static
+msgctxt "gh"
+msgid "Ghanaian"
+msgstr ""
+
+#  _x("Gibraltarian", "gi", "static");
+# Context gi Textdomain static
+msgctxt "gi"
+msgid "Gibraltarian"
+msgstr ""
+
+#  _x("Greek", "el", "static");
+# Context el Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Greenlander", "gl", "static");
+# Context gl Textdomain static
+msgctxt "gl"
+msgid "Greenlander"
+msgstr ""
+
+#  _x("Grenadian", "gd", "static");
+# Context gd Textdomain static
+msgctxt "gd"
+msgid "Grenadian"
+msgstr ""
+
+#  _x("Guadeloupean", "gp", "static");
+# Context gp Textdomain static
+msgctxt "gp"
+msgid "Guadeloupean"
+msgstr ""
+
+#  _x("Guamanian", "gu", "static");
+# Context gu Textdomain static
+msgctxt "gu"
+msgid "Guamanian"
+msgstr ""
+
+#  _x("Guatemalan", "gt", "static");
+# Context gt Textdomain static
+msgctxt "gt"
+msgid "Guatemalan"
+msgstr ""
+
+#  _x("of Guernsey", "gg", "static");
+# Context gg Textdomain static
+msgctxt "gg"
+msgid "of Guernsey"
+msgstr ""
+
+#  _x("Guinean", "gn", "static");
+# Context gn Textdomain static
+msgctxt "gn"
+msgid "Guinean"
+msgstr ""
+
+#  _x("Guinea-Bissau national", "gw", "static");
+# Context gw Textdomain static
+msgctxt "gw"
+msgid "Guinea-Bissau national"
+msgstr ""
+
+#  _x("Guyanese", "gy", "static");
+# Context gy Textdomain static
+msgctxt "gy"
+msgid "Guyanese"
+msgstr ""
+
+#  _x("Haitian", "ht", "static");
+# Context ht Textdomain static
+msgctxt "ht"
+msgid "Haitian"
+msgstr ""
+
+#  _x("of the Heard Island and McDonald Islands", "hm", "static");
+# Context hm Textdomain static
+msgctxt "hm"
+msgid "of the Heard Island and McDonald Islands"
+msgstr ""
+
+#  _x("of the Holy See/of the Vatican", "va", "static");
+# Context va Textdomain static
+msgctxt "va"
+msgid "of the Holy See/of the Vatican"
+msgstr ""
+
+#  _x("Honduran", "hn", "static");
+# Context hn Textdomain static
+msgctxt "hn"
+msgid "Honduran"
+msgstr ""
+
+#  _x("Hong Kong Chinese", "hk", "static");
+# Context hk Textdomain static
+msgctxt "hk"
+msgid "Hong Kong Chinese"
+msgstr ""
+
+#  _x("Hungarian", "hu", "static");
+# Context hu Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Icelander", "is", "static");
+# Context is Textdomain static
+msgctxt "is"
+msgid "Icelander"
+msgstr ""
+
+#  _x("Indian", "in", "static");
+# Context in Textdomain static
+msgctxt "in"
+msgid "Indian"
+msgstr ""
+
+#  _x("Indonesian", "id", "static");
+# Context id Textdomain static
+msgctxt "id"
+msgid "Indonesian"
+msgstr ""
+
+#  _x("Iranian", "ir", "static");
+# Context ir Textdomain static
+msgctxt "ir"
+msgid "Iranian"
+msgstr ""
+
+#  _x("Iraqi", "iq", "static");
+# Context iq Textdomain static
+msgctxt "iq"
+msgid "Iraqi"
+msgstr ""
+
+#  _x("Irish", "ie", "static");
+# Context ie Textdomain static
+msgctxt "ie"
+msgid "Irish"
+msgstr ""
+
+#  _x("Manx", "im", "static");
+# Context im Textdomain static
+msgctxt "im"
+msgid "Manx"
+msgstr ""
+
+#  _x("Israeli", "il", "static");
+# Context il Textdomain static
+msgctxt "il"
+msgid "Israeli"
+msgstr ""
+
+#  _x("Italian", "it", "static");
+# Context it Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Jamaican", "jm", "static");
+# Context jm Textdomain static
+msgctxt "jm"
+msgid "Jamaican"
+msgstr ""
+
+#  _x("Japanese", "jp", "static");
+# Context jp Textdomain static
+msgctxt "jp"
+msgid "Japanese"
+msgstr ""
+
+#  _x("of Jersey", "je", "static");
+# Context je Textdomain static
+msgctxt "je"
+msgid "of Jersey"
+msgstr ""
+
+#  _x("Jordanian", "jo", "static");
+# Context jo Textdomain static
+msgctxt "jo"
+msgid "Jordanian"
+msgstr ""
+
+#  _x("Kazakh", "kz", "static");
+# Context kz Textdomain static
+msgctxt "kz"
+msgid "Kazakh"
+msgstr ""
+
+#  _x("Kenyan", "ke", "static");
+# Context ke Textdomain static
+msgctxt "ke"
+msgid "Kenyan"
+msgstr ""
+
+#  _x("Kiribatian", "ki", "static");
+# Context ki Textdomain static
+msgctxt "ki"
+msgid "Kiribatian"
+msgstr ""
+
+#  _x("Kuwaiti", "kw", "static");
+# Context kw Textdomain static
+msgctxt "kw"
+msgid "Kuwaiti"
+msgstr ""
+
+#  _x("Kyrgyz", "kg", "static");
+# Context kg Textdomain static
+msgctxt "kg"
+msgid "Kyrgyz"
+msgstr ""
+
+#  _x("Lao", "la", "static");
+# Context la Textdomain static
+msgctxt "la"
+msgid "Lao"
+msgstr ""
+
+#  _x("Latvian", "lv", "static");
+# Context lv Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Lebanese", "lb", "static");
+# Context lb Textdomain static
+msgctxt "lb"
+msgid "Lebanese"
+msgstr ""
+
+#  _x("Basotho", "ls", "static");
+# Context ls Textdomain static
+msgctxt "ls"
+msgid "Basotho"
+msgstr ""
+
+#  _x("Liberian", "lr", "static");
+# Context lr Textdomain static
+msgctxt "lr"
+msgid "Liberian"
+msgstr ""
+
+#  _x("Libyan", "ly", "static");
+# Context ly Textdomain static
+msgctxt "ly"
+msgid "Libyan"
+msgstr ""
+
+#  _x("Liechtensteiner", "li", "static");
+# Context li Textdomain static
+msgctxt "li"
+msgid "Liechtensteiner"
+msgstr ""
+
+#  _x("Lithuanian", "lt", "static");
+# Context lt Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Luxembourger", "lu", "static");
+# Context lu Textdomain static
+msgctxt "lu"
+msgid "Luxembourger"
+msgstr ""
+
+#  _x("Macanese", "mo", "static");
+# Context mo Textdomain static
+msgctxt "mo"
+msgid "Macanese"
+msgstr ""
+
+#  _x("Malagasy", "mg", "static");
+# Context mg Textdomain static
+msgctxt "mg"
+msgid "Malagasy"
+msgstr ""
+
+#  _x("Malawian", "mw", "static");
+# Context mw Textdomain static
+msgctxt "mw"
+msgid "Malawian"
+msgstr ""
+
+#  _x("Malaysian", "my", "static");
+# Context my Textdomain static
+msgctxt "my"
+msgid "Malaysian"
+msgstr ""
+
+#  _x("Maldivian", "mv", "static");
+# Context mv Textdomain static
+msgctxt "mv"
+msgid "Maldivian"
+msgstr ""
+
+#  _x("Malian", "ml", "static");
+# Context ml Textdomain static
+msgctxt "ml"
+msgid "Malian"
+msgstr ""
+
+#  _x("Maltese", "mt", "static");
+# Context mt Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Marshallese", "mh", "static");
+# Context mh Textdomain static
+msgctxt "mh"
+msgid "Marshallese"
+msgstr ""
+
+#  _x("Martinican", "mq", "static");
+# Context mq Textdomain static
+msgctxt "mq"
+msgid "Martinican"
+msgstr ""
+
+#  _x("Mauritanian", "mr", "static");
+# Context mr Textdomain static
+msgctxt "mr"
+msgid "Mauritanian"
+msgstr ""
+
+#  _x("Mauritian", "mu", "static");
+# Context mu Textdomain static
+msgctxt "mu"
+msgid "Mauritian"
+msgstr ""
+
+#  _x("Mahorais", "yt", "static");
+# Context yt Textdomain static
+msgctxt "yt"
+msgid "Mahorais"
+msgstr ""
+
+#  _x("Mexican", "mx", "static");
+# Context mx Textdomain static
+msgctxt "mx"
+msgid "Mexican"
+msgstr ""
+
+#  _x("Micronesian", "fm", "static");
+# Context fm Textdomain static
+msgctxt "fm"
+msgid "Micronesian"
+msgstr ""
+
+#  _x("Moldovan", "md", "static");
+# Context md Textdomain static
+msgctxt "md"
+msgid "Moldovan"
+msgstr ""
+
+#  _x("Monegasque", "mc", "static");
+# Context mc Textdomain static
+msgctxt "mc"
+msgid "Monegasque"
+msgstr ""
+
+#  _x("Mongolian", "mn", "static");
+# Context mn Textdomain static
+msgctxt "mn"
+msgid "Mongolian"
+msgstr ""
+
+#  _x("Montenegrin", "me", "static");
+# Context me Textdomain static
+msgctxt "me"
+msgid "Montenegrin"
+msgstr ""
+
+#  _x("Montserratian", "ms", "static");
+# Context ms Textdomain static
+msgctxt "ms"
+msgid "Montserratian"
+msgstr ""
+
+#  _x("Moroccan", "ma", "static");
+# Context ma Textdomain static
+msgctxt "ma"
+msgid "Moroccan"
+msgstr ""
+
+#  _x("Mozambican", "mz", "static");
+# Context mz Textdomain static
+msgctxt "mz"
+msgid "Mozambican"
+msgstr ""
+
+#  _x("of Myanmar / Burma", "mm", "static");
+# Context mm Textdomain static
+msgctxt "mm"
+msgid "of Myanmar / Burma"
+msgstr ""
+
+#  _x("Namibian", "na", "static");
+# Context na Textdomain static
+msgctxt "na"
+msgid "Namibian"
+msgstr ""
+
+#  _x("Nauruan", "nr", "static");
+# Context nr Textdomain static
+msgctxt "nr"
+msgid "Nauruan"
+msgstr ""
+
+#  _x("Nepalese", "np", "static");
+# Context np Textdomain static
+msgctxt "np"
+msgid "Nepalese"
+msgstr ""
+
+#  _x("Dutch", "nl", "static");
+# Context nl Textdomain static
+# Already exists, doesnt need translation.
+#  _x("New Caledonian", "nc", "static");
+# Context nc Textdomain static
+msgctxt "nc"
+msgid "New Caledonian"
+msgstr ""
+
+#  _x("New Zealander", "nz", "static");
+# Context nz Textdomain static
+msgctxt "nz"
+msgid "New Zealander"
+msgstr ""
+
+#  _x("Nicaraguan", "ni", "static");
+# Context ni Textdomain static
+msgctxt "ni"
+msgid "Nicaraguan"
+msgstr ""
+
+#  _x("Nigerien", "ne", "static");
+# Context ne Textdomain static
+msgctxt "ne"
+msgid "Nigerien"
+msgstr ""
+
+#  _x("Nigerian", "ng", "static");
+# Context ng Textdomain static
+msgctxt "ng"
+msgid "Nigerian"
+msgstr ""
+
+#  _x("Niuean", "nu", "static");
+# Context nu Textdomain static
+msgctxt "nu"
+msgid "Niuean"
+msgstr ""
+
+#  _x("Norfolk Islander", "nf", "static");
+# Context nf Textdomain static
+msgctxt "nf"
+msgid "Norfolk Islander"
+msgstr ""
+
+#  _x("North Korean", "kp", "static");
+# Context kp Textdomain static
+msgctxt "kp"
+msgid "North Korean"
+msgstr ""
+
+#  _x("Northern Mariana Islander", "mp", "static");
+# Context mp Textdomain static
+msgctxt "mp"
+msgid "Northern Mariana Islander"
+msgstr ""
+
+#  _x("Norwegian", "no", "static");
+# Context no Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Omani", "om", "static");
+# Context om Textdomain static
+msgctxt "om"
+msgid "Omani"
+msgstr ""
+
+#  _x("Pakistani", "pk", "static");
+# Context pk Textdomain static
+msgctxt "pk"
+msgid "Pakistani"
+msgstr ""
+
+#  _x("Palauan", "pw", "static");
+# Context pw Textdomain static
+msgctxt "pw"
+msgid "Palauan"
+msgstr ""
+
+#  _x("Panamanian", "pa", "static");
+# Context pa Textdomain static
+msgctxt "pa"
+msgid "Panamanian"
+msgstr ""
+
+#  _x("Papua New Guinean", "pg", "static");
+# Context pg Textdomain static
+msgctxt "pg"
+msgid "Papua New Guinean"
+msgstr ""
+
+#  _x("Paraguayan", "py", "static");
+# Context py Textdomain static
+msgctxt "py"
+msgid "Paraguayan"
+msgstr ""
+
+#  _x("Peruvian", "pe", "static");
+# Context pe Textdomain static
+msgctxt "pe"
+msgid "Peruvian"
+msgstr ""
+
+#  _x("Filipino", "ph", "static");
+# Context ph Textdomain static
+msgctxt "ph"
+msgid "Filipino"
+msgstr ""
+
+#  _x("Pitcairner", "pn", "static");
+# Context pn Textdomain static
+msgctxt "pn"
+msgid "Pitcairner"
+msgstr ""
+
+#  _x("Pole", "pl", "static");
+# Context pl Textdomain static
+msgctxt "pl"
+msgid "Pole"
+msgstr ""
+
+#  _x("Portuguese", "pt", "static");
+# Context pt Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Puerto Rican", "pr", "static");
+# Context pr Textdomain static
+msgctxt "pr"
+msgid "Puerto Rican"
+msgstr ""
+
+#  _x("Qatari", "qa", "static");
+# Context qa Textdomain static
+msgctxt "qa"
+msgid "Qatari"
+msgstr ""
+
+#  _x("Reunionese", "re", "static");
+# Context re Textdomain static
+msgctxt "re"
+msgid "Reunionese"
+msgstr ""
+
+#  _x("Romanian", "ro", "static");
+# Context ro Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Russian", "ru", "static");
+# Context ru Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Rwandan", "rw", "static");
+# Context rw Textdomain static
+msgctxt "rw"
+msgid "Rwandan"
+msgstr ""
+
+#  _x("of Saint Barthélemy", "bl", "static");
+# Context bl Textdomain static
+msgctxt "bl"
+msgid "of Saint Barthélemy"
+msgstr ""
+
+#  _x("of Ascension and Tristan da Cunha", "sh", "static");
+# Context sh Textdomain static
+msgctxt "sh"
+msgid "of Ascension and Tristan da Cunha"
+msgstr ""
+
+#  _x("Kittsian / Nevisian", "kn", "static");
+# Context kn Textdomain static
+msgctxt "kn"
+msgid "Kittsian / Nevisian"
+msgstr ""
+
+#  _x("Saint Lucian", "lc", "static");
+# Context lc Textdomain static
+msgctxt "lc"
+msgid "Saint Lucian"
+msgstr ""
+
+#  _x("of Saint Martin", "mf", "static");
+# Context mf Textdomain static
+msgctxt "mf"
+msgid "of Saint Martin"
+msgstr ""
+
+#  _x("St.Pierrais / Miquelonnais", "pm", "static");
+# Context pm Textdomain static
+msgctxt "pm"
+msgid "St.Pierrais / Miquelonnais"
+msgstr ""
+
+#  _x("Vincentian", "vc", "static");
+# Context vc Textdomain static
+msgctxt "vc"
+msgid "Vincentian"
+msgstr ""
+
+#  _x("Samoan", "ws", "static");
+# Context ws Textdomain static
+msgctxt "ws"
+msgid "Samoan"
+msgstr ""
+
+#  _x("San Marinese", "sm", "static");
+# Context sm Textdomain static
+msgctxt "sm"
+msgid "San Marinese"
+msgstr ""
+
+#  _x("São Toméan", "st", "static");
+# Context st Textdomain static
+msgctxt "st"
+msgid "São Toméan"
+msgstr ""
+
+#  _x("Saudi Arabian", "sa", "static");
+# Context sa Textdomain static
+msgctxt "sa"
+msgid "Saudi Arabian"
+msgstr ""
+
+#  _x("Senegalese", "sn", "static");
+# Context sn Textdomain static
+msgctxt "sn"
+msgid "Senegalese"
+msgstr ""
+
+#  _x("Serb", "rs", "static");
+# Context rs Textdomain static
+msgctxt "rs"
+msgid "Serb"
+msgstr ""
+
+#  _x("Seychellois", "sc", "static");
+# Context sc Textdomain static
+msgctxt "sc"
+msgid "Seychellois"
+msgstr ""
+
+#  _x("Sierra Leonean", "sl", "static");
+# Context sl Textdomain static
+msgctxt "sl"
+msgid "Sierra Leonean"
+msgstr ""
+
+#  _x("Singaporean", "sg", "static");
+# Context sg Textdomain static
+msgctxt "sg"
+msgid "Singaporean"
+msgstr ""
+
+#  _x("Sint Maartener", "sx", "static");
+# Context sx Textdomain static
+msgctxt "sx"
+msgid "Sint Maartener"
+msgstr ""
+
+#  _x("Slovak", "sk", "static");
+# Context sk Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Slovene", "si", "static");
+# Context si Textdomain static
+msgctxt "si"
+msgid "Slovene"
+msgstr ""
+
+#  _x("Solomon Islander", "sb", "static");
+# Context sb Textdomain static
+msgctxt "sb"
+msgid "Solomon Islander"
+msgstr ""
+
+#  _x("Somali", "so", "static");
+# Context so Textdomain static
+msgctxt "so"
+msgid "Somali"
+msgstr ""
+
+#  _x("South African", "za", "static");
+# Context za Textdomain static
+msgctxt "za"
+msgid "South African"
+msgstr ""
+
+#  _x("South Korean", "kr", "static");
+# Context kr Textdomain static
+msgctxt "kr"
+msgid "South Korean"
+msgstr ""
+
+#  _x("South Sudanese", "ss", "static");
+# Context ss Textdomain static
+msgctxt "ss"
+msgid "South Sudanese"
+msgstr ""
+
+#  _x("Spaniard", "es", "static");
+# Context es Textdomain static
+msgctxt "es"
+msgid "Spaniard"
+msgstr ""
+
+#  _x("Sri Lankan", "lk", "static");
+# Context lk Textdomain static
+msgctxt "lk"
+msgid "Sri Lankan"
+msgstr ""
+
+#  _x("Sudanese", "sd", "static");
+# Context sd Textdomain static
+msgctxt "sd"
+msgid "Sudanese"
+msgstr ""
+
+#  _x("Surinamer", "sr", "static");
+# Context sr Textdomain static
+msgctxt "sr"
+msgid "Surinamer"
+msgstr ""
+
+#  _x("of Svalbard / of Jan Mayen", "sj", "static");
+# Context sj Textdomain static
+msgctxt "sj"
+msgid "of Svalbard / of Jan Mayen"
+msgstr ""
+
+#  _x("Swazi", "sz", "static");
+# Context sz Textdomain static
+msgctxt "sz"
+msgid "Swazi"
+msgstr ""
+
+#  _x("Swede", "se", "static");
+# Context se Textdomain static
+msgctxt "se"
+msgid "Swede"
+msgstr ""
+
+#  _x("Swiss", "ch", "static");
+# Context ch Textdomain static
+msgctxt "ch"
+msgid "Swiss"
+msgstr ""
+
+#  _x("Syrian", "sy", "static");
+# Context sy Textdomain static
+msgctxt "sy"
+msgid "Syrian"
+msgstr ""
+
+#  _x("Taiwanese", "tw", "static");
+# Context tw Textdomain static
+msgctxt "tw"
+msgid "Taiwanese"
+msgstr ""
+
+#  _x("Tajik", "tj", "static");
+# Context tj Textdomain static
+msgctxt "tj"
+msgid "Tajik"
+msgstr ""
+
+#  _x("Tanzanian", "tz", "static");
+# Context tz Textdomain static
+msgctxt "tz"
+msgid "Tanzanian"
+msgstr ""
+
+#  _x("Thai", "th", "static");
+# Context th Textdomain static
+# Already exists, doesnt need translation.
+#  _x("East Timorese", "tl", "static");
+# Context tl Textdomain static
+msgctxt "tl"
+msgid "East Timorese"
+msgstr ""
+
+#  _x("Togolese", "tg", "static");
+# Context tg Textdomain static
+msgctxt "tg"
+msgid "Togolese"
+msgstr ""
+
+#  _x("Tokelauan", "tk", "static");
+# Context tk Textdomain static
+msgctxt "tk"
+msgid "Tokelauan"
+msgstr ""
+
+#  _x("Tongan", "to", "static");
+# Context to Textdomain static
+msgctxt "to"
+msgid "Tongan"
+msgstr ""
+
+#  _x("Trinidadian / Tobagonian", "tt", "static");
+# Context tt Textdomain static
+msgctxt "tt"
+msgid "Trinidadian / Tobagonian"
+msgstr ""
+
+#  _x("Tunisian", "tn", "static");
+# Context tn Textdomain static
+msgctxt "tn"
+msgid "Tunisian"
+msgstr ""
+
+#  _x("Turk", "tr", "static");
+# Context tr Textdomain static
+msgctxt "tr"
+msgid "Turk"
+msgstr ""
+
+#  _x("Turkmen", "tm", "static");
+# Context tm Textdomain static
+msgctxt "tm"
+msgid "Turkmen"
+msgstr ""
+
+#  _x("Turks and Caicos Islander", "tc", "static");
+# Context tc Textdomain static
+msgctxt "tc"
+msgid "Turks and Caicos Islander"
+msgstr ""
+
+#  _x("Tuvaluan", "tv", "static");
+# Context tv Textdomain static
+msgctxt "tv"
+msgid "Tuvaluan"
+msgstr ""
+
+#  _x("Ugandan", "ug", "static");
+# Context ug Textdomain static
+msgctxt "ug"
+msgid "Ugandan"
+msgstr ""
+
+#  _x("Ukrainian", "ua", "static");
+# Context ua Textdomain static
+msgctxt "ua"
+msgid "Ukrainian"
+msgstr ""
+
+#  _x("Emirian", "ae", "static");
+# Context ae Textdomain static
+msgctxt "ae"
+msgid "Emirian"
+msgstr ""
+
+#  _x("Briton", "uk", "static");
+# Context uk Textdomain static
+msgctxt "uk"
+msgid "Briton"
+msgstr ""
+
+#  _x("American / US citizen", "us", "static");
+# Context us Textdomain static
+msgctxt "us"
+msgid "American / US citizen"
+msgstr ""
+
+#  _x("Uruguayan", "uy", "static");
+# Context uy Textdomain static
+msgctxt "uy"
+msgid "Uruguayan"
+msgstr ""
+
+#  _x("US Virgin Islander", "vi", "static");
+# Context vi Textdomain static
+msgctxt "vi"
+msgid "US Virgin Islander"
+msgstr ""
+
+#  _x("Uzbek", "uz", "static");
+# Context uz Textdomain static
+msgctxt "uz"
+msgid "Uzbek"
+msgstr ""
+
+#  _x("Vanuatuan", "vu", "static");
+# Context vu Textdomain static
+msgctxt "vu"
+msgid "Vanuatuan"
+msgstr ""
+
+#  _x("Venezuelan", "ve", "static");
+# Context ve Textdomain static
+msgctxt "ve"
+msgid "Venezuelan"
+msgstr ""
+
+#  _x("Vietnamese", "vn", "static");
+# Context vn Textdomain static
+msgctxt "vn"
+msgid "Vietnamese"
+msgstr ""
+
+#  _x("Wallisian / Futunan", "wf", "static");
+# Context wf Textdomain static
+msgctxt "wf"
+msgid "Wallisian / Futunan"
+msgstr ""
+
+#  _x("Sahrawi", "eh", "static");
+# Context eh Textdomain static
+msgctxt "eh"
+msgid "Sahrawi"
+msgstr ""
+
+#  _x("Yemenite", "ye", "static");
+# Context ye Textdomain static
+msgctxt "ye"
+msgid "Yemenite"
+msgstr ""
+
+#  _x("Zambian", "zm", "static");
+# Context zm Textdomain static
+msgctxt "zm"
+msgid "Zambian"
+msgstr ""
+
+#  _x("Zimbabwean", "zw", "static");
+# Context zw Textdomain static
+msgctxt "zw"
+msgid "Zimbabwean"
+msgstr ""
+
+#  _x("Aluminium production", "C.24.42", "static");
+# Context C.24.42 Textdomain static
+#, fuzzy
+msgctxt "pollutionReduction"
+msgid "Pollution reduction"
+msgstr "Producción de aluminio"
+
+#  _x("Carbon mitigation", "carbonMitigation", "static");
+# Context carbonMitigation Textdomain static
+msgctxt "carbonMitigation"
+msgid "Carbon mitigation"
+msgstr ""
+
+#  _x("Biodiversity", "biodiversity", "static");
+# Context biodiversity Textdomain static
+msgctxt "biodiversity"
+msgid "Biodiversity"
+msgstr ""
+
+#  _x("Media representation", "M.73.12", "static");
+# Context M.73.12 Textdomain static
+#, fuzzy
+msgctxt "reforestation"
+msgid "Reforestation"
+msgstr "Servicios de representación de medios de comunicación"
+
+#  _x("Soil enrichment", "soilEnrichment", "static");
+# Context soilEnrichment Textdomain static
+msgctxt "soilEnrichment"
+msgid "Soil enrichment"
+msgstr ""
+
+#  _x("Taxi operation", "H.49.32", "static");
+# Context H.49.32 Textdomain static
+#, fuzzy
+msgctxt "natureConservation"
+msgid "Nature conservation"
+msgstr "Transporte por taxi"
+
+#  _x("Water transport", "H.50", "static");
+# Context H.50 Textdomain static
+#, fuzzy
+msgctxt "waterResources"
+msgid "Water resources"
+msgstr "Transporte marítimo y por vías navegables interiores"
+
+#  _x("Cultural education", "P.85.52", "static");
+# Context P.85.52 Textdomain static
+#, fuzzy
+msgctxt "climateChangeReduction"
+msgid "Climate change reduction"
+msgstr "Educación cultural"
+
+#  _x("Construction of water projects", "F.42.91", "static");
+# Context F.42.91 Textdomain static
+#, fuzzy
+msgctxt "conservationOfEcosystems"
+msgid "Conservation of ecosystems"
+msgstr "Obras hidráulicas"
+
+#  _x("Construction of buildings", "F.41", "static");
+# Context F.41 Textdomain static
+#, fuzzy
+msgctxt "conservationOfFish"
+msgid "Conservation of fish"
+msgstr "Construcción de edificios"
+
+#  _x("Operation of dairies and cheese making", "C.10.51", "static");
+# Context C.10.51 Textdomain static
+#, fuzzy
+msgctxt "conservationOfForestsAndReforestation"
+msgid "Conservation of forests and reforestation"
+msgstr "Preparación de leche y fabricación de sus derivados"
+
+#  _x("Construction of water projects", "F.42.91", "static");
+# Context F.42.91 Textdomain static
+#, fuzzy
+msgctxt "conservationOfNaturalResources"
+msgid "Conservation of natural resources"
+msgstr "Obras hidráulicas"
+
+#  _x("Operation of sports facilities", "R.93.11", "static");
+# Context R.93.11 Textdomain static
+#, fuzzy
+msgctxt "conservationOfSpecies"
+msgid "Conservation of species"
+msgstr "Gestión de instalaciones deportivas"
+
+#  _x("Construction of buildings", "F.41", "static");
+# Context F.41 Textdomain static
+#, fuzzy
+msgctxt "conservationOfSoil"
+msgid "Conservation of soil"
+msgstr "Construcción de edificios"
+
+#  _x("Energy efficiency", "energyEfficiency", "static");
+# Context energyEfficiency Textdomain static
+msgctxt "energyEfficiency"
+msgid "Energy efficiency"
+msgstr ""
+
+#  _x("General secondary education", "P.85.31", "static");
+# Context P.85.31 Textdomain static
+#, fuzzy
+msgctxt "energyRenewables"
+msgid "Renewable energy generation"
+msgstr "Educación secundaria general"
+
+#  _x("Environemental health", "environementalHealth", "static");
+# Context environementalHealth Textdomain static
+msgctxt "environementalHealth"
+msgid "Environemental health"
+msgstr ""
+
+#  _x("Environmental law", "environmentalLaw", "static");
+# Context environmentalLaw Textdomain static
+msgctxt "environmentalLaw"
+msgid "Environmental law"
+msgstr ""
+
+#  _x("Mixed farming", "A.01.05", "static");
+# Context A.01.05 Textdomain static
+#, fuzzy
+msgctxt "sustainableFarming"
+msgid "Sustainable farming"
+msgstr "Producción agrícola combinada con la producción ganadera"
+
+#  _x("Marine fishing", "A.03.11", "static");
+# Context A.03.11 Textdomain static
+#, fuzzy
+msgctxt "sustainableFishing"
+msgid "Sustainable fishing"
+msgstr "Pesca marina"
+
+#  _x("Ozone regeneration", "ozoneRegeneration", "static");
+# Context ozoneRegeneration Textdomain static
+msgctxt "ozoneRegeneration"
+msgid "Ozone regeneration"
+msgstr ""
+
+#  _x("Aluminium production", "C.24.42", "static");
+# Context C.24.42 Textdomain static
+#, fuzzy
+msgctxt "pollutionAir"
+msgid "Air pollution reduction"
+msgstr "Producción de aluminio"
+
+#  _x("Tertiary education", "P.85.42", "static");
+# Context P.85.42 Textdomain static
+#, fuzzy
+msgctxt "pollutionWater"
+msgid "Water pollution reduction"
+msgstr "Educación terciaria"
+
+#  _x("Construction", "F", "static");
+# Context F Textdomain static
+#, fuzzy
+msgctxt "wasteReduction"
+msgid "Waste reduction"
+msgstr "Construcción"
+
+#  _x("Recycling", "recycling", "static");
+# Context recycling Textdomain static
+msgctxt "recycling"
+msgid "Recycling"
+msgstr ""
+
+#  _x("Toxic and nuclear waste reduction", "toxicAndNuclearwasteReduction", "static");
+# Context toxicAndNuclearwasteReduction Textdomain static
+msgctxt "toxicAndNuclearwasteReduction"
+msgid "Toxic and nuclear waste reduction"
+msgstr ""
+
+#  _x("Other human resources provision", "N.78.03", "static");
+# Context N.78.03 Textdomain static
+#, fuzzy
+msgctxt "waterResourceImprovement"
+msgid "Water resource improvement"
+msgstr "Otra provisión de recursos humanos"
+
+# 26 prefNotMethod
+#  _x("Email and message", "emailMessage", "static");
+# Context emailMessage Textdomain static
+msgctxt "emailMessage"
+msgid "Email and message"
+msgstr ""
+
+#  _x("telephone", "message", "static");
+# Context message Textdomain static
+msgctxt "message"
+msgid "telephone"
+msgstr ""
+
+# 27 languageRating
+#  _x("fluent", "fluent", "static");
+# Context fluent Textdomain static
+msgctxt "fluent"
+msgid "fluent"
+msgstr ""
+
+#  _x("good", "good", "static");
+# Context good Textdomain static
+msgctxt "good"
+msgid "good"
+msgstr ""
+
+#  _x("basic", "basic", "static");
+# Context basic Textdomain static
+msgctxt "basic"
+msgid "basic"
+msgstr ""
+
+# 28 language
+#  _x("Malay", "ms", "static");
+# Context ms Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Arabic", "ar", "static");
+# Context ar Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Icelandic", "is", "static");
+# Context is Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Finnish", "fi", "static");
+# Context fi Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Polish", "pl", "static");
+# Context pl Textdomain static
+# Already exists, doesnt need translation.
+#  _x("English", "en", "static");
+# Context en Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Italian", "it", "static");
+# Context it Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Dutch", "nl", "static");
+# Context nl Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Spanish", "es", "static");
+# Context es Textdomain static
+# Already exists, doesnt need translation.
+#  _x("German", "de", "static");
+# Context de Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Danish", "da", "static");
+# Context da Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Serbian", "sr", "static");
+# Context sr Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Macedonian", "mk", "static");
+# Context mk Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Vietnamese", "vi", "static");
+# Context vi Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Chinese", "zh", "static");
+# Context zh Textdomain static
+# Already exists, doesnt need translation.
+#  _x("French", "fr", "static");
+# Context fr Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Thai", "th", "static");
+# Context th Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Latvian", "lv", "static");
+# Context lv Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Indonesian", "in", "static");
+# Context in Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Croatian", "hr", "static");
+# Context hr Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Korean", "ko", "static");
+# Context ko Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Japanese", "ja", "static");
+# Context ja Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Belarusian", "be", "static");
+# Context be Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Portuguese", "pt", "static");
+# Context pt Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Slovenian", "sl", "static");
+# Context sl Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Lithuanian", "lt", "static");
+# Context lt Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Russian", "ru", "static");
+# Context ru Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Bulgarian", "bg", "static");
+# Context bg Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Hebrew", "iw", "static");
+# Context iw Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Swedish", "sv", "static");
+# Context sv Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Catalan", "ca", "static");
+# Context ca Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Ukrainian", "uk", "static");
+# Context uk Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Hungarian", "hu", "static");
+# Context hu Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Irish", "ga", "static");
+# Context ga Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Romanian", "ro", "static");
+# Context ro Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Norwegian", "no", "static");
+# Context no Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Slovak", "sk", "static");
+# Context sk Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Maltese", "mt", "static");
+# Context mt Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Hindi", "hi", "static");
+# Context hi Textdomain static
+msgctxt "hi"
+msgid "Hindi"
+msgstr ""
+
+#  _x("Estonian", "et", "static");
+# Context et Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Greek", "el", "static");
+# Context el Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Albanian", "sq", "static");
+# Context sq Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Czech", "cs", "static");
+# Context cs Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Turkish", "tr", "static");
+# Context tr Textdomain static
+# Already exists, doesnt need translation.
+#  _x("Swahili", "sw", "static");
+# Context sw Textdomain static
+msgctxt "sw"
+msgid "Swahili"
+msgstr ""
+
+#  _x("Kinyarwanda", "kin", "static");
+# Context kin Textdomain static
+msgctxt "kin"
+msgid "Kinyarwanda"
+msgstr ""
+
+#  _x("Lingala", "ln", "static");
+# Context ln Textdomain static
+msgctxt "ln"
+msgid "Lingala"
+msgstr ""
+
+#  _x("Kirundi", "run", "static");
+# Context run Textdomain static
+msgctxt "run"
+msgid "Kirundi"
+msgstr ""
