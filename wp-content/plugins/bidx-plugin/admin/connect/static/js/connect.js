@@ -422,7 +422,7 @@
                     if( folderName )
                     {
                         // Inbox, Sent or Trash
-                        $button.i18nText( folderName, appName );
+                        $button.i18nText( folderName );
                     }
                     else
                     {
@@ -1356,7 +1356,7 @@
                 $viewList.find( ".titleCustom" ).text( mailboxes[ state ].name );
                 state = 'custom';
             }
-            
+
 
             if( state )
             {
@@ -1457,7 +1457,7 @@
                         $contactsDropdown.val( recipients );
                         $contactsDropdown.bidx_chosen();
 
-                        subject = bidx.i18n.i( "Re", appName );
+                        subject = bidx.i18n.i( "Re" );
                         $frmCompose.find( "[name=subject]" ).val( subject + ": " + message.subject );
 
                         //  add reply header with timestamp to content
@@ -1477,7 +1477,7 @@
                     // forward form requires the subject and content field to be preloaded with data from forwarded message
                     //
                     case "forward":
-                        subject = bidx.i18n.i( "Fwd", appName );
+                        subject = bidx.i18n.i( "Fwd" );
                         $frmCompose.find( "[name=subject]" ).val( subject + ": " + message.subject );
 
                         //  add reply header with timestamp to content
@@ -2005,8 +2005,8 @@
                             ,   recipients
                             ,   $elements           = []
                             ,   senderReceiverName
-                            ,   prefixFrom = bidx.i18n.i( "From", appName ) + ": "
-                            ,   prefixTo = bidx.i18n.i( "To", appName ) + ": "
+                            ,   prefixFrom = bidx.i18n.i( "From" ) + ": "
+                            ,   prefixTo = bidx.i18n.i( "To" ) + ": "
                             ;
 
                             // clear listing
@@ -2057,7 +2057,7 @@
                                             .replace( /%readEmailHref%/g, document.location.hash +  "/id=" + item.id )
                                             // mailbox sent does not show unread state
                                             //
-                                            .replace( /%emailNew%/g, ( !item.read && state !== "mbx-sent" ) ? "new" : "" )
+                                            .replace( /%emailNew%/g, ( !item.read && state !== "mbx-sent" ) ? bidx.i18n.i( "emailNew" ) : "" )
                                             .replace( /%emailRead%/g, ( !item.read && state !== "mbx-sent" ) ? "email-new" : "email-read" )
                                             .replace( /%senderReceiverName%/g, senderReceiverName )
                                             .replace( /%dateSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "date" ) )

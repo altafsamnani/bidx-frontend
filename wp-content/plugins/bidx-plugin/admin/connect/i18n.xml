@@ -4,15 +4,8 @@
     <Item value="forwardContentHeader">Forwarded message</Item>
     <Item value="sendingMessage">Sending message</Item>
     <Item value="messageSent">Message sent</Item>
-    <Item value="Inbox">Inbox</Item>
-    <Item value="Sent">Sent</Item>
-    <Item value="Deleted">Deleted</Item>
-    <Item value="Trash">Trash</Item>
-    <Item value="Fwd">Fwd</Item>
-    <Item value="Re">Re</Item>
-    <Item value="From">From</Item>
-    <Item value="To">To</Item>
-    <Item value="emailNew">new</Item>
+
+
     <Item value="groupAdmin">Group admin</Item>
     <Item value="groupEntrepreneurs">All Entrepreneurs</Item>
     <Item value="groupInvestors">All Investors</Item>

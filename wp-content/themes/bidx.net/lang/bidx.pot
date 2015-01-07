@@ -1,3 +1,16 @@
+# _e("","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Altaf <altaf@bidx.net>\n"
+"Language-Team: Bidx\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
 # Language Original
 
 #1) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/video.php -105
@@ -40,20 +53,20 @@ msgstr ""
 # Already exists, doesnt need translation.
 
 
-#7) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -151
+#7) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -162
 # _e("No posts available, please create a post from Posts section ","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "No posts available, please create a post from Posts section "
 msgstr ""
 
 
-#8) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -155
+#8) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -166
 # _e("Sidebar","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#9) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -158
+#9) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -169
 # _e("Widget","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
@@ -161,19 +174,19 @@ msgid "Terms and Conditions"
 msgstr ""
 
 
-#25) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -219
+#25) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -234
 # _e("Contact us to get started","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#26) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -221
+#26) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -236
 # _e("Contact Us","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#27) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -222
+#27) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -237
 # _e("Pricing","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.

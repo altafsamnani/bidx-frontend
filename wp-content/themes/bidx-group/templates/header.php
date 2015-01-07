@@ -92,7 +92,7 @@
                             if( !$authenticated )
                             {
 ?>
-                                <a href="<?php echo _l('join');?>" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Start here','roots'); ?></a>
+                                <a href="<?php echo _l('join');?>" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Start Here','bidxplugin'); ?></a>
 <?php
                             }
 ?>

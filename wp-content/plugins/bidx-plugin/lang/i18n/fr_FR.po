@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,227,-1\n"
 
 # Language Original
@@ -227,54 +227,6 @@ msgctxt "mail"
 msgid "Message sent"
 msgstr "Message envoyé"
 
-# _x("Inbox", "mail","i18n");
-# Context mail TextDomain i18n
-msgctxt "mail"
-msgid "Inbox"
-msgstr "Reçus"
-
-# _x("Sent", "mail","i18n");
-# Context mail TextDomain i18n
-msgctxt "mail"
-msgid "Sent"
-msgstr "Envoyés"
-
-# _x("Trash", "mail","i18n");
-# Context mail TextDomain i18n
-msgctxt "mail"
-msgid "Deleted"
-msgstr "Corbeille"
-
-# _x("Trash", "mail","i18n");
-# Context mail TextDomain i18n
-msgctxt "mail"
-msgid "Trash"
-msgstr "Corbeille"
-
-# _x("Fwd", "mail","i18n");
-# Context mail TextDomain i18n
-msgctxt "mail"
-msgid "Fwd"
-msgstr "Fwd"
-
-# _x("Re", "mail","i18n");
-# Context mail TextDomain i18n
-msgctxt "mail"
-msgid "Re"
-msgstr "Re"
-
-# _x("From", "mail","i18n");
-# Context mail TextDomain i18n
-msgctxt "mail"
-msgid "From"
-msgstr "De"
-
-# _x("To", "mail","i18n");
-# Context mail TextDomain i18n
-msgctxt "mail"
-msgid "To"
-msgstr "À"
-
 # _x("Incoming contact requests", "mail","i18n");
 # Context mail TextDomain i18n
 msgctxt "mail"
@@ -310,12 +262,6 @@ msgstr "Contacts ignorés"
 msgctxt "mail"
 msgid "New contact request"
 msgstr "Nouvelle demande de contact"
-
-# _x("new", "mail","i18n");
-# Context mail TextDomain i18n
-msgctxt "mail"
-msgid "new"
-msgstr "Nouveau"
 
 # _x("Group admin", "mail","i18n");
 # Context mail TextDomain i18n
@@ -1343,6 +1289,51 @@ msgstr "Allez à la dernière page"
 # Context  TextDomain i18n
 msgid "Go to page %num%"
 msgstr "Allez à la page %num%"
+
+# _e("Inbox", "i18n");
+# Context  TextDomain i18n
+msgid "Inbox"
+msgstr "Reçus"
+
+# _e("Sent", "i18n");
+# Context  TextDomain i18n
+msgid "Sent"
+msgstr "Envoyés"
+
+# _e("Deleted", "i18n");
+# Context  TextDomain i18n
+msgid "Deleted"
+msgstr "Corbeille"
+
+# _e("Trash","i18n");
+# Context  TextDomain i18n
+msgid "Trash"
+msgstr "Corbeille"
+
+# _e("Fwd", "i18n");
+# Context  TextDomain i18n
+msgid "Fwd"
+msgstr "Fwd"
+
+# _e("Re", "i18n");
+# Context  TextDomain i18n
+msgid "Re"
+msgstr "Re"
+
+# _e("From", "i18n");
+# Context  TextDomain i18n
+msgid "From"
+msgstr "De"
+
+# _e("To", "i18n");
+# Context  TextDomain i18n
+msgid "To"
+msgstr "À"
+
+# _e("new", "i18n");
+# Context  TextDomain i18n
+msgid "new"
+msgstr "Nouveau"
 
 # _x("new", "mentor","i18n");
 # Context mentor TextDomain i18n

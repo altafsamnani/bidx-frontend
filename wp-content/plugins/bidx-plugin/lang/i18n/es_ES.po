@@ -352,60 +352,6 @@ msgctxt "connect"
 msgid "Message sent"
 msgstr "Mensaje enviado"
 
-# _x("Inbox", "connect","i18n");
-# Context connect TextDomain i18n
-msgctxt "connect"
-msgid "Inbox"
-msgstr "Bandeja de entrada"
-
-# _x("Sent", "connect","i18n");
-# Context connect TextDomain i18n
-msgctxt "connect"
-msgid "Sent"
-msgstr "Enviados"
-
-# _x("Deleted", "connect","i18n");
-# Context connect TextDomain i18n
-msgctxt "connect"
-msgid "Deleted"
-msgstr "Eliminados"
-
-# _x("Trash", "connect","i18n");
-# Context connect TextDomain i18n
-msgctxt "connect"
-msgid "Trash"
-msgstr "Papelera"
-
-# _x("Fwd", "connect","i18n");
-# Context connect TextDomain i18n
-msgctxt "connect"
-msgid "Fwd"
-msgstr "Reenviar"
-
-# _x("Re", "connect","i18n");
-# Context connect TextDomain i18n
-msgctxt "connect"
-msgid "Re"
-msgstr "Re"
-
-# _x("From", "connect","i18n");
-# Context connect TextDomain i18n
-msgctxt "connect"
-msgid "From"
-msgstr "De"
-
-# _x("To", "connect","i18n");
-# Context connect TextDomain i18n
-msgctxt "connect"
-msgid "To"
-msgstr "Para"
-
-# _x("new", "connect","i18n");
-# Context connect TextDomain i18n
-msgctxt "connect"
-msgid "new"
-msgstr "nueva"
-
 # _x("All Entrepreneurs", "connect","i18n");
 # Context connect TextDomain i18n
 msgctxt "connect"
@@ -1073,3 +1019,48 @@ msgstr "Seleccionar subsector"
 # Context  TextDomain i18n
 msgid "Select End Sector"
 msgstr "Seleccionar sector final"
+
+# _e("Inbox", "i18n");
+# Context TextDomain i18n
+msgid "Inbox"
+msgstr "Bandeja de entrada"
+
+# _e("Sent", "i18n");
+# Context TextDomain i18n
+msgid "Sent"
+msgstr "Enviados"
+
+# _e("Deleted", "i18n");
+# Context TextDomain i18n
+msgid "Deleted"
+msgstr "Eliminados"
+
+# _e("Trash", "i18n");
+# Context  TextDomain i18n
+msgid "Trash"
+msgstr "Papelera"
+
+# _e("Fwd", "i18n");
+# Context  TextDomain i18n
+msgid "Fwd"
+msgstr "Reenviar"
+
+# _e("Re", "i18n");
+# Context  TextDomain i18n
+msgid "Re"
+msgstr "Re"
+
+# _e("From", "i18n");
+# Context  TextDomain i18n
+msgid "From"
+msgstr "De"
+
+# _e("To", "i18n");
+# Context  TextDomain i18n
+msgid "To"
+msgstr "Para"
+
+# _e("new", "i18n");
+# Context  TextDomain i18n
+msgid "new"
+msgstr "nuevo"
