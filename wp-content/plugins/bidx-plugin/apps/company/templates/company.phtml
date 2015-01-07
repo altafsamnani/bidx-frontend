@@ -2,10 +2,22 @@
 $companyBidxMeta = isset( $this->company->bidxMeta )
     ? $this->company->bidxMeta
     : $this->company;
-
 ?>
-<div class="company box-border top-margin-lineheight">
 
+<?php
+    if ( $this->noheader != 'true' )
+    {
+?> 
+    <div class="company box-border top-margin-lineheight">
+<?php
+    }
+    else
+    {
+?>
+    <div class="company top-margin-lineheight">
+<?php
+    }
+?>
     <div class="mainState mainStateShow clearfix">
         <?php $this->render('view-company.phtml'); ?>
     </div>

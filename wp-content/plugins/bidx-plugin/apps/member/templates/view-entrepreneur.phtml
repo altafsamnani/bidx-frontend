@@ -36,12 +36,22 @@ if ($entrepreneurDetails &&
 ?>
                 </div>
 
-                    <?php
-                    $rowValues = array(
-                        __('Summary','bidxplugin')          =>  $this->exst ($entrepreneurDetails->summary),
-                        __('Focus Industry','bidxplugin')   =>  $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustry), '<br> ','industry'),
-                        );
-                    echo $this->pairRows( $rowValues );
+<?php
+                    if ( $this->exst ($entrepreneurDetails->summary) )
+                    {
+?>
+                        <h4><?php _e( 'Summary', 'bidxplugin' ); ?></h4>
+                        <div><?php echo $this->exst ($entrepreneurDetails->summary); ?></div>
+<?php                         
+                    }
+
+                    if ( $this->exst ($entrepreneurDetails->focusIndustry) )
+                    {
+?>
+                        <h4><?php _e( 'Focus Industry', 'bidxplugin' ); ?></h4>
+                        <div><?php echo $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustry), '<br> ','industry'); ?></div>
+<?php                         
+                    }
 
                     $previousBusiness = $this->exst ($entrepreneurDetails->previousBusiness);
                     $header = array (

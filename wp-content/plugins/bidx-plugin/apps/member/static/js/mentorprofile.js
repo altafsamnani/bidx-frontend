@@ -403,7 +403,7 @@
 
         // Industry Sectors
         //
-        var data = bidx.utils.getValue( member, "bidxMentorProfile.focusIndustrySector", true );
+        var data = bidx.utils.getValue( member, "bidxMentorProfile.focusIndustry", true );
 
         if ( data )
         {

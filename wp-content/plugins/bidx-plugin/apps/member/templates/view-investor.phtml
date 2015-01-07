@@ -5,7 +5,6 @@ $investorDetailsBidxMeta = isset( $investorDetails->bidxMeta )
     ? $investorDetails->bidxMeta
     : $investorDetails;
 
-
 if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED' || $investorDetailsBidxMeta->bidxCanEdit  ) ) {
 
     //$investorType = $this->exst ($investorDetails->investorType);
@@ -50,20 +49,42 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
             $rowValues = array(
                 __('Investor profile summary','bidxplugin')   =>  $this->exst ($investorDetails->summary),
                 __('Investor type','bidxplugin')              =>  $this->getStaticVal('investorType', $this->exst ($investorDetails->investorType)),
-                __('Investment types','bidxplugin')           =>  $this->getMultiValues($this->exst( $investorDetails->investmentType ), ', ','investmentType'),
                 __('Institution details','bidxplugin')        =>  $this->exst($investorDetails->investsForInst) ? $this->exst($investorDetails->institutionName) : NULL,
                 __('Institution website','bidxplugin')        =>  $this->exst($investorDetails->investsForInst) ? $this->exst($investorDetails->institutionWebsite) : NULL,
-                __('Address','bidxplugin')                    =>  $address,
+                __('Address','bidxplugin')                    =>  $address
+            );
+
+            if ( $this->checkEmpty( $rowValues ) ) :
+?>
+                <h4><?php _e('General Information', 'bidxplugin')?></h4>
+<?php               
+                echo $this->tableRow ( $rowValues );
+            endif;
+
+
+            $rowValues = array(                
                 __('Industry','bidxplugin')                   =>  $this->getMultiValues($this->exst ($investorDetails->focusIndustry), '<br> ','industry'),
+                __('Language(s) of operation','bidxplugin')   =>  $this->getMultiValues($this->exst ($investorDetails->focusLanguage), ', ','language'),
                 __('Social impact','bidxplugin')              =>  $this->getMultiValues($this->exst ($investorDetails->focusSocialImpact), ', ','socialImpact'),
                 __('Environmental impact','bidxplugin')       =>  $this->getMultiValues($this->exst ($investorDetails->focusEnvImpact), ', ','envImpact'),
                 __('Consumer type','bidxplugin')              =>  $this->getMultiValues($this->exst ($investorDetails->focusConsumerType), ', ','consumerType'),
-                __('Language(s) of operation','bidxplugin')   =>  $this->getMultiValues($this->exst ($investorDetails->focusLanguage), ', ','language'),
+                __('Investment types','bidxplugin')           =>  $this->getMultiValues($this->exst( $investorDetails->investmentType ), ', ','investmentType'),
                 __('Stage of business','bidxplugin')          =>  $this->getMultiValues($this->exst ($investorDetails->focusStageBusiness), ', ','stageBusiness'),
                 __('Gender','bidxplugin')                     =>  $this->getMultiValues($this->exst ($investorDetails->focusGender), ', ','gender'),
-                __('Investment size','bidxplugin')            =>  implode( $investmentSize, ' - ' )
+                __('Focus countries','bidxplugin')            => $this->getMultiValues ($this->exst ($investorDetails->focusCountry), ', ','country'),
+                __('Focus cities','bidxplugin')               => $this->getMultiValues($this->exst ($investorDetails->focusCity), ',', null, 'cityTown'),
+                __('Investment size','bidxplugin')            =>  implode( $investmentSize, ' - ' ),
+                __('Other preferences','bidxplugin')          => $this->exst ($investorDetails->additionalPreferences)
             );
-            echo $this->pairRows( $rowValues );
+
+            if ( $this->checkEmpty( $rowValues ) ) :
+?>
+                <h4><?php _e('Investment Preferences', 'bidxplugin')?></h4>
+<?php               
+                echo $this->tableRow ( $rowValues );
+            endif;
+
+
     ?>
             <!-- <h4>Reach</h4> -->
     <?php
@@ -93,13 +114,17 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
             }
 
             $rowValues = array (
-                __('Focus countries','bidxplugin') => $this->getMultiValues ($this->exst ($investorDetails->focusCountry), ', ','country'),
-                __('Focus cities','bidxplugin') => $this->getMultiValues($this->exst ($investorDetails->focusCity), ',', null, 'cityTown'),
-                __('Other preferences','bidxplugin') => $this->exst ($investorDetails->additionalPreferences),
                 __('Number of investments in the last 12 months','bidxplugin') => $this->exst( $investorDetails->numberInvestments ),
-                __('Total investments made in the last 12 months','bidxplugin') => $this->exst( $investorDetails->totalInvestment )
+                __('Total investments made in the last 12 months','bidxplugin') => $this->exst( $investorDetails->totalInvestment ),
+                __('Typical involvement','bidxplugin') => $this->getStaticVal('typicalInvolvement', $this->exst ($investorDetails->typicalInvolvement))
             );
-            echo $this->pairRows( $rowValues );
+
+            if ( $this->checkEmpty( $rowValues ) ) :
+?>
+                <h4><?php _e('Investment History', 'bidxplugin')?></h4>
+<?php               
+                echo $this->tableRow ( $rowValues );
+            endif;
 
             // Previous investments
             //
@@ -114,10 +139,6 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
 
             echo $this->addTableRows($header, $this->exst( $investorDetails->previousInvestments ), 'table table-bordered', '', array('investmentType' => 'hidden-xs', 'companyWebsite' => 'hidden-xs') );
 
-            if ( $this->exst ($investorDetails->attachment) )
-            {
-                echo $this->displayDocuments ( $investorDetails->attachment, __('Documents','bidxplugin') );
-            }
 
     ?>
 
@@ -168,6 +189,10 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
                 echo $this->addTableRows($header, $this->exst( $investorDetails->references ), 'table table-bordered', $merge, array('linkedIn' => 'hidden-xs', 'emailAddress' => 'hidden-xs') );
             }
 
+            if ( $this->exst ($investorDetails->attachment) )
+            {
+                echo $this->displayDocuments ( $investorDetails->attachment, __('Documents','bidxplugin') );
+            }
     ?>
         </div><!-- // details-block of investor -->
 <?php } ?>

@@ -2,6 +2,7 @@
 $member         = isset($this->data->member->displayName) ?  $this->data->member->displayName: NULL ;
 $entities       = $this->sessionData->data->wp->entities;
 $isSuperAdmin   = is_super_admin();
+$canEdit        = $this->data->bidxMemberProfile->bidxMeta->bidxCanEdit;
 ?>
 <div class="member">
     <div class="clearfix">
@@ -36,12 +37,18 @@ $isSuperAdmin   = is_super_admin();
                 Add Company
             </a>
         </div>
+<?php
+        if ( $canEdit ) :
+?>
         <div class="btn-group pull-right">
             <button class="btn btn-sm btn-primary editProfile">
                 <div class="fa fa-pencil fa-above fa-big"></div>
                 <?php _e('Edit Profile', 'bidxplugin')?>
             </button>
         </div>
+<?php
+        endif;
+?>
         <div class="editControls btn-group pull-right"></div>
     </div>
 
@@ -71,7 +78,7 @@ $isSuperAdmin   = is_super_admin();
             endif;
 ?>          
 <?php
-            if ( $this->isLoggedInInvestor || $this->isLoggedInGroupOwner ) :
+            if ( !empty($this->data->bidxInvestorProfile ) ) :
 ?>          
                 <li><a href="#tab-investor" data-toggle="tab"><i class="pull-left fa fa-bank"></i> Investor</a></li>
 <?php
@@ -106,7 +113,7 @@ $isSuperAdmin   = is_super_admin();
             endif;
 ?>          
 <?php
-            if ( $this->isLoggedInInvestor || $this->isLoggedInGroupOwner ) :
+            if ( !empty($this->data->bidxInvestorProfile ) ) :
 ?>          
             <div class="tab-pane" id="tab-investor">
                 <?php $this->render('view-investor.phtml'); ?>
