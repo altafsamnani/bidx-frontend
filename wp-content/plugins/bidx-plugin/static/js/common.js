@@ -1265,14 +1265,13 @@
 
     $( "a[data-toggle='tab']" ).click( function( e )
     {
-        var pane = $(this).parents( ".tabs-vertical" ).find( ".tabs-content .tab-pane.active" )
-        ;
-
-        if ( pane.hasClass( 'addressItem' ) )
+        if ( $(this).attr("href") === "#tab-address" )
         {
+            // For some reason this needs to be triggered twice in order to show the correct position
+            //
+            bidx.member._updateCurrentAddressMap();
             bidx.member._updateCurrentAddressMap();
         }
-        
     });
 
     // Administer the toggle state of an accordion by putting a .accordion-open class on the group when the accordion group is open

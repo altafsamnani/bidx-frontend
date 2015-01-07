@@ -474,7 +474,7 @@
                                 {
                                     // if active contact id is matched with visiting member id then hide the button
 
-                                    if ( showConnectBtn  && (item.id === parseInt(visitingMemberPageId)))
+                                    if ( showConnectBtn && ( item.id === parseInt( visitingMemberPageId, 10 ) ) )
                                     {
                                         showConnectBtn =  false;
 

@@ -4,9 +4,9 @@ $entities       = $this->sessionData->data->wp->entities;
 $isSuperAdmin   = is_super_admin();
 $canEdit        = $this->data->bidxMemberProfile->bidxMeta->bidxCanEdit;
 ?>
-<div class="member">
-    <div class="clearfix">
-        <h1 class="pull-left bidx-page-heading">
+<div class="member box-border top-margin-lineheight">
+    <div class="clearfix bg-primary-light main-padding">
+        <h1 class="text-center bidx-page-heading">
             <span class="default"><?php echo (isset($this->data->isMyProfile) && $this->data->isMyProfile) ? __('My Profile','bidxplugin') : $member; ?></span>
 
             <span class="editMember hide"><?php _e('Edit my member profile', 'bidxplugin')?></span>
@@ -22,7 +22,7 @@ $canEdit        = $this->data->bidxMemberProfile->bidxMeta->bidxCanEdit;
         </h1>
     </div>
 
-    <div class="actions well hide-overflow">
+    <div class="actions well hide-overflow main-margin">
         <div class="btn-group pull-left">
             <a href="#" class="btn btn-sm btn-primary">
                 <div class="fa fa-dashboard fa-above fa-big"></div>
@@ -52,7 +52,7 @@ $canEdit        = $this->data->bidxMemberProfile->bidxMeta->bidxCanEdit;
         <div class="editControls btn-group pull-right"></div>
     </div>
 
-    <div class="row mainState mainStateShow">
+    <div class="row mainState mainStateShow main-padding">
         <div class="col-sm-12">
 
             <div class="view viewMainsuccess alert alert-success">
