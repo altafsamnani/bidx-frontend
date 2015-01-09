@@ -1,8 +1,24 @@
 <?php
-$member         = isset($this->data->member->displayName) ?  $this->data->member->displayName: NULL ;
-$entities       = $this->sessionData->data->wp->entities;
-$isSuperAdmin   = is_super_admin();
-$canEdit        = $this->data->bidxMemberProfile->bidxMeta->bidxCanEdit;
+
+$data                           = $this->data;
+$member                         = isset($this->data->member->displayName) ?  $this->data->member->displayName: NULL ;
+$ownProfile                     = $this->data->isMyProfile;
+$entities                       = $this->sessionData->data->wp->entities;
+$isSuperAdmin                   = is_super_admin();
+$canEdit                        = $this->data->bidxMemberProfile->bidxMeta->bidxCanEdit;
+$memberId                       = isset( $this->data->member->bidxMeta->bidxMemberId ) ? $this->data->member->bidxMeta->bidxMemberId : null ;
+$loggedInMemberId               = isset( $this -> sessionData -> data -> id ) ? $this -> sessionData -> data -> id : null;
+$authenticated                  = isset( $this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
+$isLoggedinMemberIsMentor       = isset( $this -> sessionData -> data -> wp -> entities -> bidxMentorProfile ) ? $this -> sessionData -> data -> wp -> entities -> bidxMentorProfile : null;
+$isLoggedinMemberIsInvestor     = isset( $this -> sessionData -> data -> wp -> entities -> bidxInvestorProfile ) ? $this -> sessionData -> data -> wp -> entities -> bidxInvestorProfile : null;
+$isLoggedinMemberIsEntrepreneur = isset( $this -> sessionData -> data -> wp -> entities -> bidxEntrepreneurProfile ) ? true : false;
+$groupIds                       = array_keys ( (array)$this -> sessionData -> data -> groups );
+$inGroup                        = in_array( $this -> sessionData -> data -> currentGroup, $groupIds);
+$personalDetails                = isset( $data->bidxMemberProfile->personalDetails ) ? $data->bidxMemberProfile->personalDetails : NULL;
+$isEntrepreneur                 = isset( $data->bidxEntrepreneurProfile ) ? $data->bidxEntrepreneurProfile : NULL ;
+$isInvestor                     = isset( $data->bidxInvestorProfile ) ? $data->bidxInvestorProfile : NULL;
+$isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bidxMentorProfile : NULL;
+
 ?>
 <div class="member box-border top-margin-lineheight">
     <div class="clearfix bg-primary-light main-padding">
@@ -22,33 +38,62 @@ $canEdit        = $this->data->bidxMemberProfile->bidxMeta->bidxCanEdit;
         </h1>
     </div>
 
-    <div class="actions well hide-overflow main-margin">
-        <div class="btn-group pull-left">
-            <a href="#" class="btn btn-sm btn-primary">
-                <div class="fa fa-dashboard fa-above fa-big"></div>
-                Dashboard
-            </a>
-            <a href="#" class="btn btn-sm btn-primary">
-                <div class="fa fa-suitcase fa-above fa-big"></div>
-                Create Business
-            </a>
-            <a href="#" class="btn btn-sm btn-primary">
-                <div class="fa fa-tasks fa-above fa-big"></div>
-                Add Company
-            </a>
+    <div class="actions hide-overflow main-margin">
+        <div class="pull-left">
+<?php
+            if ( $isLoggedinMemberIsEntrepreneur ) :
+?>            
+                <a href="#" class="btn btn-sm btn-primary">
+                    <div class="fa fa-dashboard fa-above fa-big"></div>
+                    <?php _e('Dashboard', 'bidxplugin')?>
+                </a>
+                <a href="/businesssummary/#createBusinessSummary" class="btn btn-sm btn-primary">
+                    <div class="fa fa-suitcase fa-above fa-big"></div>
+                    <?php _e('Create Business', 'bidxplugin')?>
+                </a>
+                <a href="/company/#createCompany" class="btn btn-sm btn-primary">
+                    <div class="fa fa-tasks fa-above fa-big"></div>
+                    <?php _e('Add Company', 'bidxplugin')?>
+                </a>
+<?php
+            endif;
+?>
         </div>
 <?php
         if ( $canEdit ) :
 ?>
-        <div class="btn-group pull-right">
-            <button class="btn btn-sm btn-primary editProfile">
-                <div class="fa fa-pencil fa-above fa-big"></div>
-                <?php _e('Edit Profile', 'bidxplugin')?>
-            </button>
-        </div>
+            <div class="btn-group pull-right">
+                <button class="btn btn-sm btn-primary editProfile">
+                    <div class="fa fa-pencil fa-above fa-big"></div>
+                    <?php _e('Edit Profile', 'bidxplugin')?>
+                </button>
+           </div>
 <?php
         endif;
 ?>
+<?php
+        if ( $memberId != $loggedInMemberId && $authenticated && $inGroup ) :
+?>
+            <a href="/mail/#mail/contacts/action=connect&id=<?php echo $memberId ?>" class="btn btn-sm btn-warning btn-contact hide pull-right">
+                <div class="fa fa-user fa-above fa-big"></div>
+                <?php _e('Connect', 'bidxplugin')?>
+            </a>
+<?php
+        endif;
+
+        // If current profile is not loggedin user, is  mentor, loggedin is not mentor, in a group
+        if ( $memberId != $loggedInMemberId && $authenticated && $inGroup && $isMentor && !$isLoggedinMemberIsMentor) :
+?>
+            <a href="#mentoringRequest/confirmMentoringRequest/mentorId=<?php echo $memberId ?>" class="btn btn-sm btn-mentor btn-mentoring mentor-cl hide pull-right">
+                <div class="fa fa-compass fa-above fa-big"></div>
+                <?php _e('Request mentoring', 'bidxplugin')?>
+            </a>
+<?php
+        endif;
+?>
+
+
+
         <div class="editControls btn-group pull-right"></div>
     </div>
 

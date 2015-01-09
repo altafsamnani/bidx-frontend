@@ -710,7 +710,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         <blockquote class="alert-info"><?php _e('Use this section to describe your business. Think about what information you would like other people (investors and entrepreneurs) to know about your business if you only had a few minutes to explain.','bidxplugin')?></blockquote>
                             <div class="row bsLogo form-group">
                                 <!-- Logo -->
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
+                                    <div class="logoContainer">
+                                        <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
+                                    </div>
+                                    <br>
                                     <a href="#addLogo" data-toggle="modal" class="btn btn-primary">
                                         <?php _e('Select logo'); ?>
                                     </a>
@@ -737,9 +741,6 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="logoContainer"></div>
                                 </div>
                             </div>
                         <form id="frmBusinessSummary-GeneralOverview">
@@ -1092,13 +1093,15 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 </div>
                             </div>
                             <div class="row toggle toggle-mentorAdvisory">
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <div class="form-group">
                                         <label><?php _e('In which areas of expertise do you seek support?','bidxplugin'); ?></label>
                                         <select name="expertiseNeeded" multiple></select>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                            </div>
+                            <div class="row toggle toggle-mentorAdvisory">
+                                <div class="col-sm-12">
                                     <div class="form-group">
                                         <label><?php _e('Please specify for your business (max. 300 characters)'); ?></label>
                                         <textarea type="text" class="form-control" name="expertiseNeededDetail" placeholder="<?php _e('Describe here the problem areas or challenges in your business in the areas of expertise you selected.','bidxplugin'); ?>"></textarea>

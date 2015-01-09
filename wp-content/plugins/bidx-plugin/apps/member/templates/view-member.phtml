@@ -111,22 +111,6 @@
                                 <a class="btn btn-sm btn-primary hide" href="#editMember/<?php echo $personalDetailsBidxMeta->bidxOwnerId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
 <?php
                             }
-
-                            if ( $memberId != $loggedInMemberId && $authenticated && $inGroup )
-                            {
-?>
-                                <a class="btn btn-xs btn-warning btn-contact hide" href="/mail/#mail/contacts/action=connect&id=<?php echo $memberId ?>"><?php _e('Connect', 'bidxplugin')?></a>
-<?php
-                            }
-
-                            // If current profile is not loggedin user, is  mentor, loggedin is not mentor, in a group
-                            if ( $memberId != $loggedInMemberId && $authenticated && $inGroup && $isMentor && !$isLoggedinMemberIsMentor)
-                            {
-?>
-                                <a class="btn btn-xs btn-mentoring btn-mentor mentor-cl hide" href="#mentoringRequest/confirmMentoringRequest/mentorId=<?php echo $memberId ?>"><?php _e('Request mentoring', 'bidxplugin')?></a>
-<?php
-                            }
-
 ?>
                         </div>
                     </div>
