@@ -159,4 +159,15 @@
     <Item value="toolTipLastPage">Go to last page</Item>
     <Item value="toolTipForPage">Go to page %num%</Item>
 
+    <!-- Connect / mail Strings -->
+    <Item value="Inbox">Inbox</Item>
+    <Item value="Sent">Sent</Item>
+    <Item value="Deleted">Deleted</Item>
+    <Item value="Trash">Trash</Item>
+    <Item value="Fwd">Fwd</Item>
+    <Item value="Re">Re</Item>
+    <Item value="From">From</Item>
+    <Item value="To">To</Item>
+    <Item value="emailNew">new</Item>
+
 </I18N>

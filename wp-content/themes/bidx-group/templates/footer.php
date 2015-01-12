@@ -1,6 +1,6 @@
 <?php
     $session = BidxCommon::$staticSession;
-    
+
     $has_social = false;
     if ( get_theme_mod( 'facebook_url' ) || get_theme_mod( 'linkedin_url' ) || get_theme_mod( 'twitter_handle' ) )
     {
@@ -14,51 +14,51 @@
             <div class="footer-bar row">
 <?php
             if ( $has_social ) :
-?>                
+?>
                 <div class="pull-left col-sm-4">
-                    <div class="follow-us pull-left"><?php _e( 'Follow us', 'roots' ) ?></div>
+                    <div class="follow-us pull-left"><?php _e( 'Follow us', 'bidxplugin' ) ?></div>
                     <div class="btn-group">
 <?php
                         if ( get_theme_mod( 'facebook_url' ) )
                         {
 ?>
                             <a target="_blank" href="<?php echo get_theme_mod( 'facebook_url' ); ?>"><i class="fa fa-facebook-square"></i></a>
-<?php                            
+<?php
                         }
 
                         if ( get_theme_mod( 'linkedin_url' ) )
                         {
 ?>
                             <a target="_blank" href="<?php echo get_theme_mod( 'linkedin_url' ); ?>"><i class="fa fa-linkedin-square"></i></a>
-<?php                            
+<?php
                         }
 
                         if ( get_theme_mod( 'twitter_handle' ) )
                         {
 ?>
                             <a target="_blank" href="//twitter.com/<?php echo get_theme_mod( 'twitter_handle' ); ?>"><i class="fa fa-twitter-square"></i></a>
-<?php                            
+<?php
                         }
-?>                        
+?>
 
                     </div>
                 </div>
 <?php
             endif;
-?>                
+?>
 
                 <div class="pull-right col-sm-8 text-right">
-                    <div class="copyright">&copy; <?php echo date("Y") ?> bidx.net  <?php _e( 'All rights reserved','roots' ) ?></div>
+                    <div class="copyright">&copy; <?php echo date("Y") ?> bidx.net  <?php _e( 'All rights reserved','bidxplugin' ) ?></div>
                     <div class="inline-list footer-menu">
-                        <div><a href="<?php echo _l('terms-of-service');?>" target="_blank"><?php _e('Terms of service','roots')?></a></div>
-                        <div><a href="<?php echo _l('privacy');?>"><?php _e('Privacy','roots')?></a></div>
+                        <div><a href="<?php echo _l('terms-of-service');?>" target="_blank"><?php _e('Terms of service','bidxplugin')?></a></div>
+                        <div><a href="<?php echo _l('privacy');?>"><?php _e('Privacy','bidxplugin')?></a></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </footer>
- 
+
 <div class="loginModal modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -77,14 +77,14 @@
                         <input type="password" class="form-control" name="password" placeholder="<?php _e('Enter your password','bidxplugin');?>" />
                     </div>
                     <input type="email" class="hide" name="username" value="<?php echo $session->data->username ?>" />
-                    
+
                     <div class="error-separate alert alert-danger"></div>
                     <button type="submit" class="btn btn-primary js-relogin"><?php _e('Login','bidxplugin');?></button>
                 </div>
             </div>
         </div>
     </div>
-</div>        
+</div>
 
 
 

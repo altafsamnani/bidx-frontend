@@ -51,7 +51,7 @@
                             $img = parse_url( get_theme_mod( 'main_logo_selector' ) );
                             $img_url = $img['path']; //make relative
 ?>
-                            <a class='<?php if( $mobile_logo ) { echo 'hidden-xs'; } ?>' href='/' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'>
+                            <a class='<?php if( $mobile_logo ) { echo 'hidden-xs'; } ?>' href="<?php echo getLangPrefix('/');?>" title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'>
                                 <img src='<?php echo $img_url; ?>' alt='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>'>
                             </a>
 
@@ -92,7 +92,7 @@
                             if( !$authenticated )
                             {
 ?>
-                                <a href="<?php echo _l('join');?>" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Start here','roots'); ?></a>
+                                <a href="<?php echo _l('join');?>" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Start Here','bidxplugin'); ?></a>
 <?php
                             }
 ?>

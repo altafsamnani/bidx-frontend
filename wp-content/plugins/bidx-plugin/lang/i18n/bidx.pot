@@ -1,3 +1,16 @@
+# _e("","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Altaf <altaf@bidx.net>\n"
+"Language-Team: Bidx\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
 # Language Original
 # _x("Select what best matches your reason for submission", "auth","i18n");
 # Context auth TextDomain i18n
@@ -185,6 +198,60 @@ msgctxt "company"
 msgid "Save company"
 msgstr ""
 
+# _x("Select what best matches your reason for submission", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Select what best matches your reason for submission"
+msgstr ""
+
+# _x("Current year", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Current year"
+msgstr ""
+
+# _x("Actuals", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Actuals"
+msgstr ""
+
+# _x("Forecast", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Forecast"
+msgstr ""
+
+# _x("%count% matches found", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "%count% matches found"
+msgstr ""
+
+# _x("Rating (%d vote)", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Rating (%d vote)"
+msgstr ""
+
+# _x("Rating (%d votes)", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Rating (%d votes)"
+msgstr ""
+
+# _x("Your rating", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Your rating"
+msgstr ""
+
+# _x("Rate this plan", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Rate this plan"
+msgstr ""
+
 # _x("On %date% at %time%, %sender% wrote:", "mail","i18n");
 # Context mail TextDomain i18n
 msgctxt "mail"
@@ -207,30 +274,6 @@ msgstr ""
 # Context mail TextDomain i18n
 msgctxt "mail"
 msgid "Message sent"
-msgstr ""
-
-# _x("Inbox", "mail","i18n");
-# Context mail TextDomain i18n
-msgctxt "mail"
-msgid "Inbox"
-msgstr ""
-
-# _x("Sent", "mail","i18n");
-# Context mail TextDomain i18n
-msgctxt "mail"
-msgid "Sent"
-msgstr ""
-
-# _x("Deleted", "mail","i18n");
-# Context mail TextDomain i18n
-msgctxt "mail"
-msgid "Deleted"
-msgstr ""
-
-# _x("Trash", "mail","i18n");
-# Context mail TextDomain i18n
-msgctxt "mail"
-msgid "Trash"
 msgstr ""
 
 # _x("Fwd", "mail","i18n");
@@ -531,30 +574,6 @@ msgstr ""
 # Context connect TextDomain i18n
 msgctxt "connect"
 msgid "Message sent"
-msgstr ""
-
-# _x("Inbox", "connect","i18n");
-# Context connect TextDomain i18n
-msgctxt "connect"
-msgid "Inbox"
-msgstr ""
-
-# _x("Sent", "connect","i18n");
-# Context connect TextDomain i18n
-msgctxt "connect"
-msgid "Sent"
-msgstr ""
-
-# _x("Deleted", "connect","i18n");
-# Context connect TextDomain i18n
-msgctxt "connect"
-msgid "Deleted"
-msgstr ""
-
-# _x("Trash", "connect","i18n");
-# Context connect TextDomain i18n
-msgctxt "connect"
-msgid "Trash"
 msgstr ""
 
 # _x("Fwd", "connect","i18n");
@@ -1295,5 +1314,25 @@ msgstr ""
 # _e("Go to page %num%", "i18n");
 # Context  TextDomain i18n
 msgid "Go to page %num%"
+msgstr ""
+
+# _e("Inbox", "i18n");
+# Context  TextDomain i18n
+msgid "Inbox"
+msgstr ""
+
+# _e("Sent", "i18n");
+# Context  TextDomain i18n
+msgid "Sent"
+msgstr ""
+
+# _e("Deleted", "i18n");
+# Context  TextDomain i18n
+msgid "Deleted"
+msgstr ""
+
+# _e("Trash", "i18n");
+# Context  TextDomain i18n
+msgid "Trash"
 msgstr ""
 

@@ -12,7 +12,12 @@
 wp-config.php
 wp-content/plugins/bidx-plugin/node_modules
 wp-content/uploads
- 
+wp-content/plugins/wordpress-importer
+nbproject
+nbproject/* 
+assets/
+assets/*
+
 # Packages #
 ############
 # it's better to unpack these files and commit the raw source
@@ -41,3 +46,4 @@ wp-content/uploads
 .Trashes
 ehthumbs.db
 Thumbs.db
+.project
