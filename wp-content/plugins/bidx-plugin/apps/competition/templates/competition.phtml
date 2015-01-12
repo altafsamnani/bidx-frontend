@@ -1,0 +1,645 @@
+<?php
+
+$competition    = $this->data;
+// d($competition);
+$progress           = $this -> completenessScore ? $this -> completenessScore : '0';
+
+$competitionBidxMeta = isset($competition->bidxMeta)
+    ? $competition->bidxMeta
+    : null;
+
+$canEdit        = $this->exst($competitionBidxMeta->bidxCanEdit, false);
+
+$createdtDateTime                = ( isset( $competitionBidxMeta->bidxCreationDateTime ) ) ? date( 'd M Y', $competitionBidxMeta->bidxCreationDateTime  ) : NULL;
+
+$updatedDate                = ( isset( $competitionBidxMeta->bidxLastUpdateDateTime ) ) ? date( 'd M Y', $competitionBidxMeta->bidxLastUpdateDateTime  ) : NULL;
+
+$startDateTime                = ( isset( $competition->startDateTime ) ) ? date( 'd M Y H:i ', strtotime ( $this->exst( $competition->startDateTime ) ) ) : NULL;
+
+$endDateTime                = ( isset( $competition->endDateTime ) ) ? date( 'd M Y H:i', strtotime ( $this->exst( $competition->endDateTime ) ) ) : NULL;
+
+$gender                     = $this->addExtraValuesToRows( 'gender', $this->exst( $competition->gender ) );
+
+
+// get the entities of the current user
+//
+$sessionData    = BidxCommon::$staticSession;
+$entities       = isset( $sessionData->data->wp->entities ) ? $sessionData->data->wp->entities : null;
+
+$ownerId        = $competition->bidxMeta->bidxOwnerId;
+$loggedInUserId = $sessionData->data->id;
+
+// if a user has an investorProfile, he is allowed to request access to a business summary
+//
+$canRequestAccess = isset( $entities->bidxInvestorProfile );
+
+$competitionId = $competitionBidxMeta->bidxCompetitionId;
+
+// get accessrequest status for this user and competition
+//
+$requestStatus = isset( $competition->accessAuthorization ) ? $competition->accessAuthorization : null;
+
+// check, is access granted?
+$hasAccess = false;
+
+if ( $requestStatus === "granted" || $canEdit )
+{
+    $hasAccess = true;
+}
+
+if ( !($competition->cover && $competition->cover->document) )
+{
+    if ( $canEdit || $newBusiness )
+    {
+        $hasCover = 'hide-it';
+    }
+    else
+    {
+        $hasCover = 'hide';
+    }
+}
+
+// Financial
+$currentYear = date("Y");
+$yd;
+
+$attachmentItem = <<<EOT
+    <div class="attachmentItem col-md-6">
+        <div class="media well">
+            <div class="pull-left img-cropper">
+                {{documentImage}}
+            </div>
+            <div class="media-body">
+                <strong class="media-heading documentName">{{documentName}}</strong>
+                <div class="purpose">{{purpose}}</div>
+                <div class="documentType">{{documentType}}</div>
+                {{documentLink}}
+            </div>
+        </div>
+    </div>
+EOT;
+
+// The attachments item template exists of two types of variables, dynamic values and translations
+//
+$attachmentItemTranslations = array();
+
+
+$attachment = $this->exst ($competition->attachment);
+
+$hasAttachments = false;
+
+if ( !empty( $attachment ) )
+{
+    foreach ($attachment as $key => $att)
+    {
+        if ( $this->exst ( $att->document ) )
+        {
+            $hasAttachments = true;
+        }
+        break;
+    }
+}
+
+// Default set of rowproperties
+//
+$viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class_label' => 'bidx-label', 'class_value' => 'bidx-value', 'class_row' => '' );
+
+
+?>
+<div class="competitionSummary box-border top-margin-lineheight" id="competitionSummary" data-bsid=<?php echo $competitionId; ?>>
+    <div class="businessCover">
+        <div class="coverImageContainer <?php echo $hasCover; ?>">
+<?php
+            if ( $competition->cover && $competition->cover->document ):
+?>
+            <div class="coverImage">
+                <img src="<?php echo $competition->cover->document ?>" alt="Cover Image" data-initop="<?php echo $competition->cover->top?>" style="position: relative; top: <?php echo $competition->cover->top?>px">
+            </div>
+<?php
+            endif;
+?>
+            <div class="view viewEdit">
+<?php
+            if ( $canEdit || $newBusiness )
+            {
+    ?>
+                <div class="btn-group coverBtns">
+                    <a class="btn btn-primary btn-large btnCover" data-toggle="modal" href="#coverImage"><?php echo _e( 'Add or Change', 'bidxplugin' ); ?></a>
+                    <!-- <a class="btn btn-primary btn-large btnRemove" data-toggle="modal" href="#coverRemove"><?php echo _e( 'Remove', 'bidxplugin' ); ?></a> -->
+                </div>
+
+                <div class="coverModal modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h3><?php _e('Check the file you want to use as your cover', 'bidxplugin' ); ?></h3>
+                            </div>
+                            <div class="modal-body">
+<?php
+                                // Media app will only be inserted once, this is by design!
+                                //
+                                echo do_shortcode( '[bidx app="media"]' );
+?>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></button>
+                                <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<?php
+            }
+?>
+            </div>
+        </div>
+    </div>
+
+<?php
+    if ( $competitionId )
+    {
+
+?>
+    <div class="bg-gray control-bar">
+
+        <div class="bs-info hide-overflow">
+            <div class="bs-cell main-padding pull-left"><i class="fa fa-line-chart"></i> <span class="hidden-xs"><?php echo _e('Completed', 'bidxplugin')?>:</span> <?php echo $progress; ?><span>%</span></div>
+            <div class="bs-cell main-padding pull-left hidden-xs">
+                <div class="rating-wrapper">
+                    <div class="rating-no-score <?php echo !$ratingAverage ? '' : 'hide' ?>">
+                        <span class="rating-score-text"><?php echo _e('No Score', 'bidxplugin'); ?></span>
+                    </div>
+                    <div class="rating-score <?php echo $ratingAverage ? '' : 'hide' ?>">
+                        <i class="fa fa-star"></i>
+                        <span class="hidden-xs"><?php echo _e('Score', 'bidxplugin')?>:</span> <span class="rating-average"><?php echo $ratingAverage ? $ratingAverage : "?"; ?></span>
+                    </div>
+                </div>
+            </div>
+            <div class="bs-cell main-padding pull-left"><i class="fa fa-refresh"></i> <span class="hidden-xs"><?php echo _e('Last Update', 'bidxplugin')?>:</span> <?php echo $updatedDate; ?></div>
+
+<?php
+
+                if ( $this->exst ( $competition->attachmentCount ) ) :
+
+                    $attCount = $competition->attachmentCount;
+                    $attText;
+                    if ( $attCount === "1" )
+                    {
+                        $attText = __('Attachment', 'bidxplugin');
+                    }
+                    else
+                    {
+                        $attText = __('Attachments', 'bidxplugin');
+                    }
+?>
+                <div class="bs-cell main-padding pull-left hidden-xs"><i class="fa fa-paperclip"></i> <?php echo $attCount; ?> <?php echo $attText; ?></div>
+<?php
+                endif;
+?>
+        </div>
+
+
+    </div>
+<?php
+    }
+    // if ( $competitionId )
+    // {
+?>
+
+    <div class="row main-padding">
+        <div class="col-sm-4"></div>
+
+        <div class="col-sm-5">
+    <?php
+                /*
+                 * We want ratings to be indexed by Google, so need to include this on page load. It
+                 * might be updated in JavaScript though, so also check the translations in i18n.xml.
+                 */
+    ?>
+            <div class="rating-wrapper">
+<?php
+                // Owners and active mentors cannot rate their plans
+                if( $canRate )
+                {
+                    $ratingUser = $this->rating->userRating;
+?>
+                    <div class="rating-vote">
+                        <span class="rating-vote-text"><span class="rating-user-label"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span></span>
+                        <div data-rating="<?php echo $this->rating->userRating->value ? $this->rating->userRating->value : 0 ?>" class="raty"></div>
+                    </div>
+<?php
+                }
+?>
+            </div>
+        </div>
+        <div class="col-sm-3 text-right">
+            <div class="btn-group">
+<?php
+                // if a user is allowed to request full access to a business summary and it NOT The owner of the business summary
+                //
+                if ( $canRequestAccess && !$canEdit )
+                {
+                    $accessRequestControl = "";
+
+                    switch ( $requestStatus )
+                    {
+                        case 'pending':
+                            $accessRequestSend = 'hide';
+                            break;
+                        case 'refused':
+                            $accessRequestSend = 'hide';
+                            break;
+                        case 'granted':
+                            $accessRequestSend = 'hide';
+                            break;
+                        case 'none':
+                            $accessRequestSend = '';
+                            break;
+                        default:
+                            $accessRequestSend = 'hide';
+                    }
+?>
+                    <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><i class="fa fa-eye fa-big fa-above"></i><?php echo _e( 'Request full access', 'bidxplugin' ); ?></a>
+<?php
+                }
+?>
+<?php
+                // does a user have rights to edit ( is the owner )
+                //
+                if ( $canEdit )
+                {
+?>
+                    <a class="btn btn-primary editBS" href="#editCompetition/<?php echo $competitionId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+<?php
+                }
+?>
+            </div>
+            <div class="editControlsContainer">
+                <div class="editControls pull-right">
+
+                    <!-- SHOW -->
+                    <div class="view viewShow"></div>
+
+                    <!-- EDIT, conditionally filled by the app -->
+                    <div class="view viewEdit btn-group"></div>
+
+                    <!-- sucess msg, used as a placeholder for showing msgs -->
+
+                    <div class="view viewMainsuccess alert alert-success">
+                        <p class="successMsg"></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<?php
+    // }
+?>
+<!-- SHOW -->
+<div class="view viewShow">
+<div class="mainBusiness hide-overflow">
+    <div class="row">
+    <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+<?php
+            if ( $competition->logo && $competition->logo->document ):
+?>
+            <div class="logoImage">
+                <img src="<?php echo $competition->logo->document ?>" class="center-img" alt="Logo Image">
+            </div>
+<?php
+            endif;
+?>
+
+    </div>
+    </div>
+<div class="row">
+<div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+<?php
+            if ( $this->exst($competitionBidxMeta->bidxEntityId) )
+            {
+?>
+                <h1>
+                    <?php echo $this->exst( $competition->name ); ?>
+                    <small>&nbsp;<?php echo _e( 'Apply before', 'bidxplugin' ); ?>&nbsp;
+                        <?php echo $endDateTime;?>
+                    </small>
+                </h1>
+<?php
+            }
+            else
+            {
+?>
+                <h1><?php echo _e( 'Create competition', 'bidxplugin' ); ?></h1>
+<?php
+
+            }
+?>
+
+            <h4><?php echo $this->exst( $competition->slogan ); ?></h4>
+<?php
+            $videoUrl = $this->exst($competition->externalVideoPitch);
+            $parsedVideo = $this->parseVideos( $videoUrl );
+
+            if ( $parsedVideo )
+            {
+                $theVideo .= '<div class="video-wrapper embed-responsive embed-responsive-16by9 bottom-margin-lineheight">'.$parsedVideo[0]['videoplayer'].'</div>';
+            }
+
+            echo $theVideo;
+?>
+<?php
+    if ( $this->exst($competition->description) )
+    {
+?>
+            <h3 class="to-uppercase"><?php _e('In a few words', 'bidxplugin')?></h3>
+            <div>
+<?php
+                echo $this->exst($competition->description);
+?>
+            </div>
+
+<?php
+    }
+?>
+
+    <div class="main-padding-vertical">
+<?php
+            $rowValues = array
+            (
+                __('Start date','bidxplugin') => $this->exst($startDateTime),
+                __('End date','bidxplugin') => $this->exst( $endDateTime),
+                __('Ownership type','bidxplugin') => ucfirst($this->exst( $competitionBidxMeta->bidxOwnershipType))
+            );
+
+            if ( $this->checkEmpty( $rowValues ) ) :
+?>
+                <h3 class="to-uppercase"><?php _e('General Overview', 'bidxplugin')?></h3>
+<?php
+                echo $this->tableRow ( $rowValues );
+            endif;
+?>
+    </div>
+
+    <div class="main-padding-vertical">
+<?php
+
+            $rowValues = array
+            (
+                __('Gender') => $gender,
+                __('Industry') => $this->getMultiValues( $this->exst($competition->competitionIndustry), '<br> ','industry'),
+                __('Country of business','bidxplugin') => $this->getMultiValues( $this->exst($competition->competitionCountry), ', ', 'country' ),
+                __('Social impact','bidxplugin') => $this->getMultiValues( $this->exst($competition->competitionSocialImpact), ', ', 'socialImpact' ),
+                __('Environmental impact','bidxplugin') => $this->getMultiValues( $this->exst($competition->envImpact), ', ', 'envImpact' )
+            );
+
+            if ( $this->checkEmpty( $rowValues ) ) :
+?>
+                <h3 class="to-uppercase"><?php _e('Participant criteria', 'bidxplugin')?></h3>
+<?php
+                echo $this->tableRow ( $rowValues );
+            endif;
+?>
+    </div>
+
+</div>
+<div class="col-sm-4 panel-feedback hide"></div>
+</div>
+</div>
+</div>
+<!-- LOAD -->
+<div class="view viewLoad main-padding">
+    <div class="alert alert-info text-center">
+        <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Retrieving competition information...','bidxplugin'); ?>
+    </div>
+</div>
+
+
+<!-- ERROR -->
+<div class="view viewError main-padding">
+    <div class="alert alert-warning">
+        <p class="errorMsg"></p>
+    </div>
+</div>
+
+<div class="view viewEdit main-padding">
+    <!-- Accordion -->
+    <div class="row tabs-vertical">
+        <div class="col-sm-3 tabs-nav">
+            <ul class="nav nav-tabs tabs-left">
+                <li class="active">
+                    <a href="#tab-bs-overview" data-toggle="tab"><?php _e('General Overview','bidxplugin'); ?></a>
+                </li>
+                <li>
+                    <a href="#tab-bs-management" data-toggle="tab"><?php _e('Management rules','bidxplugin'); ?></a>
+                </li>
+                <li>
+                    <a href="#tab-bs-about-participants" data-toggle="tab"><?php _e('About participants','bidxplugin'); ?></a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-9 tabs-content">
+            <div class="tab-content">
+                <div class="tab-pane hide-overflow active" id="tab-bs-overview">
+                    <!-- General Overview -->
+                    <div  id="competitionCollapse-GeneralOverview">
+                        <!-- EDIT -->
+                        <div class="view viewEdit">
+                            <blockquote class="alert-info"><?php _e('Use this section to describe your competition. Think about what information you would like participants to know about competition if you only had a few minutes to explain.','bidxplugin')?></blockquote>
+                                <div class="row bsLogo form-group">
+                                    <!-- Logo -->
+                                    <div class="col-sm-6">
+                                        <a href="#addLogo" data-toggle="modal" class="btn btn-primary">
+                                            <?php _e('Select logo'); ?>
+                                        </a>
+
+                                        <div class="addLogoImage modal fade">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h3><?php _e('Check the file you want to use as your Logo', 'bidxplugin' ); ?></h3>
+                                                </div>
+                                                <div class="modal-body">
+                            <?php
+                                                    // Media app will only be inserted once, this is by design!
+                                                    //
+                                                    echo do_shortcode( '[bidx app="media"]' );
+                            ?>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></button>
+                                                    <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
+
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="logoContainer"></div>
+                                    </div>
+                                </div>
+                            <form id="frmCompetition-GeneralOverview">
+                                <div class="row">
+                                    <!-- Name -->
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Competition name','bidxplugin'); ?></label>
+                                        <input type="text" class="form-control" name="name" placeholder="<?php _e('Competition name','bidxplugin'); ?>">
+                                    </div>
+
+                                    <!-- Slogan -->
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Give a short description of competition in a maximum of 30 words','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <textarea type="text" class="form-control" name="summary" placeholder="<?php _e('Description of the goals of the competition','bidxplugin'); ?>"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Summary -->
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Start date','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            <input type="text" class="form-control" name="startdate" data-type="date" placeholder="<?php _e('Please select start date','bidxplugin'); ?>">
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Reason For Submission -->
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('End date','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            <input type="text" class="form-control" name="enddate" data-type="date" placeholder="<?php _e('Please select end date','bidxplugin'); ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div><!-- /EDIT -->
+                    </div><!-- /General Overview -->
+                </div>
+
+                <div class="tab-pane hide-overflow" id="tab-bs-management">
+                    <!-- About the business -->
+                        <div  id="competitionCollapse-Management">
+                                <!-- EDIT -->
+                                <div class="view viewEdit">
+                                    <blockquote class="alert-info"><?php _e('Here we provide you with tools to set the criteria about competition.','bidxplugin')?></blockquote>
+                                    <form id="frmCompetition-Management">
+                                        <div class="row">
+                                            <!-- Country operation -->
+                                            <div class="form-group col-sm-6">
+                                                <label><?php _e('Competition visibility','bidxplugin'); ?></label>
+                                                <select name="visibility" multiple></select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div><!-- /EDIT -->
+
+                    </div><!-- /Management -->
+                </div>
+
+                <div class="tab-pane hide-overflow" id="tab-bs-about-participants">
+                    <!-- About you & your team -->
+                        <div  id="competitionCollapse-AboutParticipants">
+
+                                <!-- EDIT -->
+                                <div class="view viewEdit">
+                                    <blockquote class="alert-info"><?php _e('Here you can set a criteria for participants to participate in the competition.','bidxplugin');?></blockquote>
+                                    <form id="frmCompetition-AboutParticipants">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+
+                                                    <div class="form-group">
+                                                        <label><?php _e('Gender','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                                        <div class="radio">
+                                                            <input type="radio" value="m" id="radio-personalDetailsB" name="gender" data-toggle="radio" />
+                                                            <label for="radio-personalDetailsM"><span></span><?php _e('Both','bidxplugin'); ?></label>
+                                                        </div>
+
+                                                        <div class="radio">
+                                                            <input type="radio" value="m" id="radio-personalDetailsM" name="gender" data-toggle="radio" />
+                                                            <label for="radio-personalDetailsM"><span></span><?php _e('Male','bidxplugin'); ?></label>
+                                                        </div>
+
+                                                        <div class="radio">
+                                                            <input type="radio" value="f" id="radio-personalDetailsF" name="gender" data-toggle="radio" />
+                                                            <label for="radio-personalDetailsF"><span></span><?php _e('Female','bidxplugin'); ?></label>
+                                                        </div>
+
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="industrySectors">
+                                            <label><?php _e('Industry','bidxplugin'); ?></label>
+                                        </div>
+                                        <div class="row">
+                                            <!-- Country operation -->
+                                            <div class="form-group col-sm-6">
+                                                <label><?php _e('Regional focus','bidxplugin'); ?></label>
+                                                <select name="regional" multiple></select>
+                                            </div>
+
+                                            <!-- Social impact -->
+                                            <div class="form-group col-sm-6">
+                                                <label><?php _e('Social impact','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                                <select name="socialImpact" multiple></select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <!-- Env impact -->
+                                            <div class="form-group col-sm-6">
+                                                <label><?php _e('Environmental impact','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                                <select name="envImpact" multiple></select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div><!-- /EDIT -->
+
+                    </div><!-- /About you & your team -->
+                </div>
+            </div>
+        </div> <!-- tabs-content mycompetition -->
+    </div>
+
+    <!-- EDIT DOCUMENT MODAL -->
+    <div class="js-edit-document modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body clearfix">
+<?php
+                    echo do_shortcode( '[bidx app="media"]' );
+?>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SNIPPETS -->
+    <div class="snippets hide">
+        <!-- Attachment -->
+        <div class="attachmentItem col-md-6">
+            <div class="media well">
+                <div class="pull-left icons-rounded attachmentMissing"><i class="fa fa-question-circle text-primary-light"></i></div>
+                <a class="pull-left documentLink img-cropper" href="#">
+                    <div class="icons-rounded attachmentDefault"><i class="fa fa-file-text-o text-primary-light"></i></div>
+                    <img class="media-object img-rounded documentImage">
+                </a>
+                <div class="media-body">
+                    <strong class="media-heading documentName"></strong>
+                    <div class="createdDateTime"></div>
+                    <div class="purpose"></div>
+                    <div class="documentType"></div>
+                </div>
+                <a href="#removeItem" class="btn btn-danger btn-sm btn-block clearboth top-margin-lineheight"><?php _e('Remove','bidxplugin'); ?></a>
+                <!-- <a href="#editDocument" class="btn btn-block editDocumentProp"><?php _e( 'Edit document properties', 'bidxplugin' ); ?></a> -->
+            </div>
+        </div>
+    </div>
+</div><!-- /competition -->

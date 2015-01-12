@@ -389,6 +389,16 @@ class BidxCommon
                     }
 
                     break;
+
+                case 'competition':
+                    $competitionId = ( $id ) ? $id : NULL;
+
+                    if ($competitionId) {
+                        $data->competitionId = $competitionId;
+                        $this::$bidxSession[$subDomain]->competitionId = $competitionId;
+                    }
+
+                break;
             }
 
             if ($jsSessionData) {

@@ -1,0 +1,434 @@
+// REMOVE FROM HERE AND BELOW WHEN SWITCHED TO NEW THEME
+
+@brand-success: #1abc9c;
+@brand-warning: #f0ad4e;
+@brand-danger:  #d9534f;
+@gray-lighter: lighten(#000, 93.5%);
+@padding-base-horizontal: 12px;
+@font-size-base: 14px;
+
+//== Media queries breakpoints
+//
+//## Define the breakpoints at which your layout will change, adapting to different screen sizes.
+
+// Extra small screen / phone
+//** Deprecated `@screen-xs` as of v3.0.1
+@screen-xs:                  480px;
+//** Deprecated `@screen-xs-min` as of v3.2.0
+@screen-xs-min:              @screen-xs;
+//** Deprecated `@screen-phone` as of v3.0.1
+@screen-phone:               @screen-xs-min;
+
+// Small screen / tablet
+//** Deprecated `@screen-sm` as of v3.0.1
+@screen-sm:                  768px;
+@screen-sm-min:              @screen-sm;
+//** Deprecated `@screen-tablet` as of v3.0.1
+@screen-tablet:              @screen-sm-min;
+
+// Medium screen / desktop
+//** Deprecated `@screen-md` as of v3.0.1
+@screen-md:                  992px;
+@screen-md-min:              @screen-md;
+//** Deprecated `@screen-desktop` as of v3.0.1
+@screen-desktop:             @screen-md-min;
+
+// Large screen / wide desktop
+//** Deprecated `@screen-lg` as of v3.0.1
+@screen-lg:                  1200px;
+@screen-lg-min:              @screen-lg;
+//** Deprecated `@screen-lg-desktop` as of v3.0.1
+@screen-lg-desktop:          @screen-lg-min;
+
+// So media queries don't overlap when required, provide a maximum
+@screen-xs-max:              (@screen-sm-min - 1);
+@screen-sm-max:              (@screen-md-min - 1);
+@screen-md-max:              (@screen-lg-min - 1);
+
+// REMOVE FROM HERE AND UP WHEN SWITCHED TO NEW THEME
+
+.bidx-competition
+{
+    &.bidx-edit
+    {
+        .businessCover .hide-it
+        {
+            display: block;
+        }
+    }
+    .viewMainsuccess
+    {
+        float:right;
+    }
+    .viewShow
+    {
+        display: block;
+    }
+    .financialSummary
+    {
+        a.disabled
+        {
+            color: #ccc;
+        }
+        .btnPrev,
+        .btnAddPrev,
+        .btnNext,
+        .btnAddNext
+        {
+            font-size: ceil(@font-size-base * 2.2);
+        }
+        .fs-controls
+        {
+            @media (max-width: @screen-xs-max)
+            {
+                display: none;
+            }
+        }
+    }
+    .fs-col-labels
+    {
+        width: 40%;
+        float: left;
+        @media (max-width: @screen-sm-max)
+        {
+            width: 30%;
+        }
+        @media (max-width: @screen-xs-max)
+        {
+            width: 40%;
+        }
+        @media (max-width: @screen-xs)
+        {
+            display: none;
+        }
+    }
+    .fs-cell
+    {
+        margin: 0 1px 1px 0;
+        position: relative;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        .fs-content
+        {
+            padding: 10px 12px;
+        }
+        .fs-cell-label
+        {
+            display: none;
+            @media (max-width: @screen-xs)
+            {
+                text-align: center;
+                display: block;
+                cursor: normal;
+                padding-top: 6px;
+            }
+        }
+        div.controls
+        {
+            padding: 10px 12px;
+        }
+    }
+    .fs-header
+    {
+        height: 74px;
+        position: relative;
+    }
+    .fs-section-header
+    {
+        height:                     80px;
+        background-color:           #f8f7f6;
+        div.fs-content
+        {
+            position:                   absolute;
+            bottom:                     0;
+            padding-bottom:             6px;
+        }
+        strong
+        {
+            font-weight:                bold;
+            font-size:                  18px;
+        }
+    }
+    .fs-row
+    {
+        background-color: #e6e3de;
+    }
+    .fs-col-years
+    {
+        width: 56%;
+        float: left;
+        overflow: hidden;
+        @media (max-width: @screen-sm-max)
+        {
+            width: 66%;
+        }
+        @media (max-width: @screen-xs-max)
+        {
+            width: 56%;
+        }
+        @media (max-width: @screen-xs)
+        {
+            width: 100%;
+        }
+        .fs-header
+        {
+            background-color: #BE2025;
+            color: white;
+            a
+            {
+                background-color: #BE2025;
+                color: white;
+            }
+            p
+            {
+                margin: 0;
+            }
+            .fs-content
+            {
+                text-align: center;
+                position: static;
+                padding: 12px;
+            }
+            .year
+            {
+                font-size: 22px;
+                font-weight: bold;
+                line-height: 18px;
+            }
+        }
+        .selected
+        {
+            .fs-header
+            {
+                color: #34495e;
+                background-color: #d2b58d;
+                a
+                {
+                    background-color: #d2b58d;
+                    color: #BE2025;
+                    &.btnDelete
+                    {
+                        color: #BE2025;
+                    }
+                }
+            }
+            .fs-row
+            {
+                background-color:           #f6f0e8;
+            }
+        }
+        .addItem
+        {
+            @media (max-width: @screen-xs)
+            {
+                display: none;
+            }
+        }
+    }
+    .fs-col-right
+    {
+        width: 4%;
+        float: left;
+        @media (max-width: @screen-xs)
+        {
+            display: none;
+        }
+    }
+    .fs-header-controls-left,
+    .fs-header-controls-right
+    {
+        display: none;
+        padding: 16px 0;
+        position: absolute;
+        top: 0;
+    }
+    .fs-header-controls-left
+    {
+        left: 0;
+        @media (max-width: @screen-xs-max)
+        {
+            display: block;
+        }
+    }
+    .fs-header-controls-right
+    {
+        right: 0;
+        @media (max-width: @screen-xs-max)
+        {
+            display: block;
+        }
+    }
+    .financialSummariesItem
+    {
+        width: 33.333%;
+        float: left;
+        @media (max-width: @screen-xs-max)
+        {
+            display: none;
+            width: 0;
+            overflow: hidden;
+        }
+        &.addItem
+        {
+            text-align: center;
+            .noMoreYears
+            {
+                font-style: italic;
+                padding-top: 20px;
+            }
+            .addYear
+            {
+                padding-top: 20px;
+                a
+                {
+                    font-size: 18px;
+                }
+            }
+        }
+        .fs-header
+        {
+            .btnAddPrev,
+            .btnAddNext,
+            .btnDelete
+            {
+                display: none;
+            }
+        }
+        &.first .fs-header .btnPrev,
+        &.last .fs-header .btnNext
+        {
+            display: none;
+        }
+        &.selected
+        {
+            @media (max-width: @screen-xs-max)
+            {
+                display: block;
+                width: 100%;
+                float: none;
+            }
+        }
+    }
+    .companyItem label.radio
+    {
+        margin: 0;
+    }
+    .businessSummary.edit .financialSummariesItem.first .fs-header .btnAddPrev,
+    .businessSummary.edit .financialSummariesItem.last .fs-header .btnAddNext
+    {
+        display: inline;
+    }
+    .completeness-score
+    {
+        background-color: @brand-success;
+        color: @gray-lighter;
+        margin: 0;
+        padding: ceil(@padding-base-horizontal * 0.5);
+        font-weight: 100;
+        .percentage
+        {
+            font-size: ceil(@font-size-base * 2.2);
+            line-height: 1;
+            span
+            {
+                font-size: ceil(@font-size-base * 1.5);
+            }
+        }
+
+        &.medium
+        {
+                background-color: @brand-warning;
+        }
+        &.incomplete
+        {
+                background-color: @brand-danger;
+        }
+    }
+}
+
+.businessSummary
+{
+    background-color: #fff;
+}
+
+.coverImageContainer
+{
+    height: 250px;
+    width: 100%;
+    @topright: lighten(@table-border-color, 15%);
+    @bottomleft: darken(@table-border-color, 15%);
+    background:@bottomleft;
+    background:-webkit-gradient(linear,right top,left bottom,color-stop(1.82%,@topright),color-stop(100%,@bottomleft));
+    background:-webkit-linear-gradient(top right,@topright 1.82%,@bottomleft 100%);
+    background:-moz-linear-gradient(top right,@topright 1.82%,@bottomleft 100%);
+    background:-o-linear-gradient(top right,@topright 1.82%,@bottomleft 100%);
+    background:-ms-linear-gradient(top right,@topright 1.82%,@bottomleft 100%);
+    background:linear-gradient(to bottom left,@topright 1.82%,@bottomleft 100%);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#b2f0cc', endColorstr='#0e5d30',GradientType=1);
+    position: relative;
+    overflow: hidden;
+    @media (max-width: @screen-sm-min)
+    {
+        height: 170px;
+    }
+    @media (max-width: @screen-xs-min)
+    {
+        height: 170px;
+    }
+    .coverBtns
+    {
+        .transform(translateY(-50%) translateX(-50%));
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 1;
+    }
+    .coverImage
+    {
+        img
+        {
+            width: 1140px;
+            height: auto;
+            .transform(translateY(0) translateX(-50%));
+            position: absolute;
+            // top: 50%;
+            left: 50%;
+            @media (max-width: @screen-md-min)
+            {
+                position: absolute !important;
+                top: 50% !important;
+                .transform(translateY(-50%) translateX(-50%));
+                width: 940px;
+            }
+            @media (max-width: @screen-sm-min)
+            {
+                position: absolute !important;
+                top: 50% !important;
+                .transform(translateY(-50%) translateX(-50%));
+                width: 786px;
+            }
+            @media (max-width: @screen-xs-min)
+            {
+                position: absolute !important;
+                top: 50% !important;
+                .transform(translateY(-50%) translateX(-50%));
+                width: 480px;
+            }
+        }
+    }
+}
+.logoContainer
+{
+    img
+    {
+        width: 100%;
+        height: auto;
+    }
+}
+.logoImage
+{
+    img
+    {
+        max-width: 100%;
+    }
+}

@@ -1,0 +1,14 @@
+<I18N>
+    <Item value="selectReasonForSubmission">Select what best matches your reason for submission</Item>
+    <Item value="currentYear">Current year</Item>
+    <Item value="actuals">Actuals</Item>
+    <Item value="forecast">Forecast</Item>
+    <Item value="matchCount">%count% matches found</Item>
+    <Item value="ratingAverageLabel">Rating (%d vote)</Item>
+    <Item value="ratingAverageLabelPlural">Rating (%d votes)</Item>
+    <Item value="ratingUserLabel">Your rating</Item>
+    <Item value="ratingUserLabelNone">Rate this plan</Item>
+    <Item value="public">Public</Item>
+    <Item value="closed">Closed</Item>
+    <Item value="invited">Invited persons</Item>
+</I18N>
