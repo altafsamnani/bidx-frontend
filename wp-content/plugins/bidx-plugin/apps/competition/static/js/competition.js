@@ -10,16 +10,13 @@
 
     ,   $editControls               = $element.find( ".editControls" )
 
-    ,   $industry                   = $element.find( "[name='industry']" )
-    ,   $expertiseNeeded            = $element.find( "[name='expertiseNeeded']" )
-    ,   $productService             = $element.find( "[name='productService']" )
-    ,   $regional                   = $element.find( "[name='regional']" )
+    ,   $industry                   = $element.find( "[name='competitionIndustry']" )
+
+    ,   $regional                   = $element.find( "[name='competitionCountry']" )
     ,   $visibilityDropdown         = $element.find( "[name='visibility']" )
 
-    ,   $reasonForSubmission        = $element.find( "[name='reasonForSubmission']" )
-    ,   $envImpact                  = $element.find( "[name='envImpact']" )
-    ,   $socialImpact               = $element.find( "[name='socialImpact']" )
-    ,   $yearSalesStarted           = $element.find( "[name='yearSalesStarted']" )
+    ,   $envImpact                  = $element.find( "[name='competitionEnvImpact']" )
+    ,   $socialImpact               = $element.find( "[name='competitionSocialImpact']" )
 
     ,   $btnSave
     ,   $btnCancel
@@ -159,7 +156,7 @@
             "_root":
             [
                 "name"
-            ,   "summary"
+            ,   "description"
 
                 // This is actually an array in the data model, but presented as a dropdown in the UI designs.
                 // Conflict!
@@ -167,8 +164,8 @@
                 // After disucssion with Jeroen created BIDX-1435 to request any non-array value to be interpreted as an array by the API,
                 // but until that is available, send in reasonforSubmsision as an array
                 //
-            ,   "startdate"
-            ,   "enddate"
+            ,   "startDateTime"
+            ,   "endDateTime"
             ]
         }
     ,   "management":
@@ -183,14 +180,11 @@
         {
             "_root":
             [
-                "industry"
-            // ,   "suggestedIndustry"
-            // ,   "productService"
-            // ,   "suggestedProductService"
-            ,   "regional"
-            ,   "socialImpact"
-            ,   "envImpact"
-            ,   "consumerType"
+                "competitionIndustry"
+            ,   "competitionGender"
+            ,   "competitionCountry"
+            ,   "competitionSocialImpact"
+            ,   "competitionEnvImpact"
             ]
         }
     };
@@ -218,20 +212,6 @@
             }
         } );
 
-        // Populate the dropdowns with the values
-        //
-        forms.generalOverview.$el.find( "[name='reasonForSubmission']" ).bidx_chosen(
-        {
-            dataKey:            "reasonForSubmission"
-        ,   emptyValue:         bidx.i18n.i( "selectReasonForSubmission", appName )
-        });
-
-
-        // $productService.bidx_chosen(
-        // {
-        //     dataKey:            "productService"
-        // });
-
         $regional.bidx_chosen(
         {
             dataKey:            "country"
@@ -252,11 +232,6 @@
         $industrySectors.industries();
         // Collect snippets from the DOM
         // sort the array, if not empty
-
-
-
-
-
 
         $.each( visibilityArr, function( idx, listVisibility )
         {
@@ -280,11 +255,8 @@
         {
             // Grab the snippets from the DOM
             //
-            /* altaf
-            snippets.$managementTeam        = $snippets.children( ".managementTeamItem" ).remove();
-            snippets.$financialSummaries    = $financialSummary.find( ".snippets" ).find( ".financialSummariesItem" ).remove();
-            snippets.$company               = $snippets.find( "table tr.companyItem"    ).remove();
-            snippets.$attachment            = $snippets.children( ".attachmentItem"    ).remove(); */
+
+            snippets.$attachment            = $snippets.children( ".attachmentItem"    ).remove();
 
             // Did we find all of the snippets?
             // Not really app logic, but just a protection / early warning system
@@ -358,7 +330,7 @@
             ,   ignore:         ""
             ,   rules:
                 {
-                    industry:
+                    competitionIndustry:
                     {
                         // required:      true
                     }
@@ -933,7 +905,7 @@
 
         // Industry Sectors
         //
-        var data = bidx.utils.getValue( competitionSummary, "industry", true );
+        var data = bidx.utils.getValue( competitionSummary, "competitionIndustry", true );
 
         if ( data )
         {
@@ -996,10 +968,7 @@
         // Update the chosen components with our set values
         //
         $industry.trigger( "chosen:updated" );
-        $expertiseNeeded.trigger( "chosen:updated" );
-        $productService.trigger( "chosen:updated" );
         $regional.trigger( "chosen:updated" );
-        $reasonForSubmission.trigger( "chosen:updated" );
         $envImpact.trigger( "chosen:updated" );
         $socialImpact.trigger( "chosen:updated" );
     }
@@ -1054,7 +1023,7 @@
                     return n;
                 });
 
-                bidx.utils.setValue( competitionSummary, "industry", arr );
+                bidx.utils.setValue( competitionSummary, "competitionIndustry", arr );
             }
 
 
@@ -1282,817 +1251,6 @@
         );
     }
 
-    /*
-        {
-            "searchTerm"    :   "text:*"
-        ,   "maxResult"     :   10
-        ,   "offset"        :   0
-        ,   "entityTypes"   :   [
-                                    {
-                                        "type": "bidxMentorProfile"
-                                    }
-                                ]
-        ,   "scope"         :   "local"
-        ,   "filters": [
-                        "-ownerId:4321"
-                        ]
-        }
-    */
-    function _getSearchCriteria ( params ) {
-
-        var q
-        ,   sort
-        ,   criteria
-        ,   criteriaQ
-        ,   paramFilter
-        ,   search
-        ,   valueExpertiseNeeded
-        ,   filterExpertiseNeeded   = ''
-        ,   sep                     = ''
-        ,   facetFilters            = []
-        ,   filters                 = []
-        ,   sortQuery               = []
-        ,   criteriaSort            = []
-        ,   entityFilters           = CONSTANTS.ENTITY_TYPES
-        ;
-
-        // 1. Search paramete
-        // ex searchTerm:text:altaf
-        //
-        // See if its coming from the search page itself(if) or from the top(else)
-        //
-
-        // 2. Sort criteria
-        // ex sort:["field":"entity", "order": asc ]
-        //
-        sort = bidx.utils.getValue( params, 'sort' );
-
-        if( sort )
-        {
-
-            $.each( sort, function( sortField, sortOrder )
-            {
-                criteriaSort.push( {
-                                            "field" : sortField
-                                        ,   "order":  sortOrder
-                                    });
-
-
-            } );
-
-        }
-
-        // 3. Filter
-        // ex facetFilters:["0": "facet_language:fi" ]
-        //
-
-
-        valueExpertiseNeeded        =   bidx.utils.getElementValue( $expertiseNeeded );
-
-        entityFilters[0].filters    =   [];
-
-        if(valueExpertiseNeeded)
-        {
-            filterExpertiseNeeded   =   'focusExpertise:(';
-
-            $.each( valueExpertiseNeeded, function( idx, item )
-            {
-                filterExpertiseNeeded   +=   sep + item;
-                sep                     =   ' OR ';
-            });
-
-            filterExpertiseNeeded   +=   ')';
-
-            entityFilters[0].filters = [filterExpertiseNeeded]; //Uncomment when bas fixes the expetise filter
-        }
-
-         //Exclude current user and active mentors from the criteria
-        //1 Exclude current user
-        if ( loggedInMemberId )
-        {
-            filters.push('-ownerId:' + loggedInMemberId);
-        }
-        //Exclude active users
-        if ( active )
-        {
-            $.each( active , function ( id, item)
-            {
-                filters.push('-ownerId:' + item.mentorId);
-            });
-        }
-
-        search =    {
-                        criteria    :   {
-                                            "searchTerm"    :   "text:*"
-                                        ,   "facetFilters"  :   facetFilters
-                                        ,   "sort"          :   criteriaSort
-                                        ,   "maxResult"     :   tempLimit
-                                        ,   "offset"        :   paging.search.offset
-                                        ,   "entityTypes"   :   entityFilters
-                                        ,   "filters"       :   filters
-                                        ,   "scope"         :   "local"
-                                        }
-                    };
-
-
-        return search;
-
-    }
-
-    // This function is a collection of callbacks for the contact categories. It is meant to execute contact-category specific code
-    //
-    function _getContactsCallback( $listItem, params )
-    {
-        //      $listItem    = jQuery object of the contact category listItem
-        // active, wait, respond
-        var $matchBtn
-        ,   $acceptBtn
-        ,   hrefMatch
-        ,   filteredRequest
-        ,   initiatorId
-        ,   mentorId                =   params.mentorId
-        ,   isActiveRequest         =   params.isActiveRequest
-        ,   requestId
-        ,   waitArr                 =   []
-        ,   respondArr              =   []
-        ,   rejectMentorArr         =   []
-        ,   rejectEntrepreneurArr   =   []
-        ,   isWaitingRequest
-        ,   isRespondRequest
-        ,   isRejectByEntrepreneur
-        ,   isRejectByMentor
-        ,   contextBpId             =   bidxConfig.context.competitionSummaryId
-        ,   actionData
-        ;
-
-        if(!isActiveRequest)
-        {
-            waitArr                 =   _.pluck (   wait,   'mentorId' );
-
-            respondArr              =   _.pluck (   respond,  'mentorId' );
-
-            rejectMentorArr         =   _.pluck (   rejectByMentor,  'mentorId' );
-
-            rejectEntrepreneurArr   =   _.pluck (   rejectByEntrepreneur,  'mentorId' );
-
-            isWaitingRequest        =   _.contains( waitArr,    mentorId );
-
-            isRespondRequest        =   _.contains( respondArr,    mentorId );
-
-            isRejectByEntrepreneur  =   _.contains( rejectEntrepreneurArr,    mentorId );
-
-            isRejectByMentor        =   _.contains( rejectMentorArr,    mentorId );
-        }
-
-        switch(true)
-        {
-
-            case isWaitingRequest:
-                actionData  = $("#send-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
-                $listItem.find( '.action' ).empty( ).append( actionData );
-
-                /***************Request sent**************************/
-                $matchBtn   =   $listItem.find( ".btn-bidx-send");
-                $matchBtn.removeClass('btn-success').addClass('disabled btn-info').i18nText("btnRequestSent");
-            break;
-
-            case isRejectByEntrepreneur:
-                actionData  = $("#send-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
-                $listItem.find( '.action' ).empty( ).append( actionData );
-
-                /***************Request sent**************************/
-                $matchBtn   =   $listItem.find( ".btn-bidx-send");
-                $matchBtn.removeClass('btn-success').addClass('disabled btn-info').i18nText("btnRequestRejectedByEntrepreneur");
-            break;
-
-            case isRejectByMentor:
-                actionData  = $("#send-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
-                $listItem.find( '.action' ).empty( ).append( actionData );
-
-                /***************Request sent**************************/
-                $matchBtn   =   $listItem.find( ".btn-bidx-send");
-                $matchBtn.removeClass('btn-success').addClass('disabled btn-info').i18nText("btnRequestRejectedByMentor");
-            break;
-
-            case isRespondRequest:
-                filteredRequest =   _.findWhere(    respond
-                                                ,   {
-                                                        mentorId:   mentorId
-                                                    ,   entityId:   parseInt(contextBpId)
-                                                    }
-                                                );
-                initiatorId     =   filteredRequest.initiatorId;
-                requestId       =   filteredRequest.requestId;
-                actionData  = $("#respond-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
-                $listItem.find( '.action' ).empty( ).append( actionData );
-
-                /***************Accept request**************************/
-                $acceptBtn   =   $listItem.find( ".btn-bidx-accept");
-                hrefMatch   =   $acceptBtn.attr( "data-href" );
-
-                /* 1 Accept Link */
-                hrefMatch   =   hrefMatch
-                        .replace( /%entityId%/g,    contextBpId )
-                        .replace( /%mentorId%/g,    mentorId )
-                        .replace( /%requestId%/g,    requestId)
-                        ;
-
-                $acceptBtn.attr( "href", hrefMatch );
-
-                /***************Accept request**************************/
-                $matchBtn   =   $listItem.find( ".btn-bidx-ignore");
-                hrefMatch   =   $matchBtn.attr( "data-href" );
-
-                /* 2 Ignore Link */
-                hrefMatch   =   hrefMatch
-                        .replace( /%entityId%/g,    contextBpId )
-                        .replace( /%mentorId%/g,    mentorId )
-                        .replace( /%requestId%/g,    requestId)
-                        ;
-
-                $matchBtn.attr( "href", hrefMatch );
-            break;
-
-            case isActiveRequest:
-                filteredRequest =   _.findWhere(    active
-                                                ,   {
-                                                        mentorId:   mentorId
-                                                    ,   entityId:   parseInt(contextBpId)
-                                                    }
-                                                );
-                initiatorId     =   filteredRequest.initiatorId;
-                requestId       =   filteredRequest.requestId;
-                actionData  = $("#active-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
-                $listItem.find( '.action' ).empty( ).append( actionData );
-
-                $matchBtn   =   $listItem.find( ".btn-bidx-reject");
-                hrefMatch   =   $matchBtn.attr( "data-href" );
-
-                /*************Cancel request*******************/
-                hrefMatch   =   hrefMatch
-                        .replace( /%requestId%/g,    requestId)
-                        .replace( /%entityId%/g,    contextBpId )
-                      //  .replace( /%mentorId%/g,    mentorId )
-                      //  .replace( /%initiatorId%/g, initiatorId )
-                        ;
-
-                $matchBtn.attr( "href", hrefMatch );
-            break;
-
-            default:
-                actionData  = $("#send-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
-                $listItem.find( '.action' ).empty( ).append( actionData );
-
-                $matchBtn   =   $listItem.find( ".btn-bidx-send");
-                hrefMatch   =   $matchBtn.attr( "data-href" );
-
-                /*************Send request*******************/
-                hrefMatch   =   hrefMatch
-                        .replace( /%entityId%/g,    contextBpId )
-                        .replace( /%mentorId%/g,    mentorId )
-                        .replace( /%initiatorId%/g, loggedInMemberId )
-                        ;
-
-                $matchBtn.attr( "href", hrefMatch );
-            break;
-        }
-
-        return ;
-    }
-
-     function _doSearchListing( options )
-    {
-        var snippet          = $("#mentor-snippet").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listEmpty       = $("#empty-mentors").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listError       = $("#error-mentor").html().replace(/(<!--)*(-->)*/g, "")
-        ,   loaderSnippet    = $("#load-mentor").html().replace(/(<!--)*(-->)*/g, "")
-        ,   response         = options.response
-        ,   $list            = $element.find("." + options.list)
-        ,   $listMatchList
-        ,   emptyVal         = ''
-        ,   counter          = 1
-        ,   pagerOptions    = {}
-        ,   $listItem
-        ,   listItem
-        ,   mentorId
-        ,   memberId
-        ,   entityId
-        ,   profilePic
-        ,   memberProfile
-        ,   personalDetails
-        ,   contactPicture
-        ,   memberCountry
-        ,   imageWidth
-        ,   imageLeft
-        ,   imageTop
-        ,   country
-        ,   isEntrepreneur
-        ,   isMentor
-        ,   isInvestor
-        ,   countHtml
-        ,   isCurrentUserInList
-        ,   cbParams        =  {}
-        ,   $requestMentoringBtn
-        ,   $d              =  $.Deferred()
-        ,   responseLength
-        ;
-
-        if ( response.docs && response.docs.length )
-        {
-            // if ( response.totalMembers > currentPage size  --> show paging)
-            //
-            $list.empty();
-
-            responseLength      = response.docs.length;
-
-            pagerOptions  =
-            {
-                currentPage:            ( paging.search.offset / tempLimit  + 1 ) // correct for api value which starts with 0
-            ,   totalPages:             Math.ceil( response.numFound / tempLimit )
-            ,   numberOfPages:          CONSTANTS.NUMBER_OF_PAGES_IN_PAGINATOR
-            ,   useBootstrapTooltip:    true
-
-            ,   itemContainerClass:     function ( type, page, current )
-                {
-                    return ( page === current ) ? "active" : "pointer-cursor";
-                }
-
-            ,   onPageClicked:          function( e, originalEvent, type, page )
-                {
-                    bidx.utils.log("Page Clicked", page);
-
-                    // Force it to scroll to top of the page before the removal and addition of the results
-                    //
-                    $(document).scrollTop(0);
-
-                    // update internal page counter for businessSummaries
-                    //
-                    paging.search.offset = ( page - 1 ) * tempLimit;
-
-                    //_showAllView( "loadmatch" );
-
-                     _getMentorMatches(
-                    {
-                        params  :   {
-                                        q           :   options.q
-                                    ,   sort        :   options.sort
-                                    }
-                    ,   cb      :   function()
-                                    {
-                                        //_hideView( "loadmatch" );
-                                        _showAllView( "pager" );
-                                        tempLimit = CONSTANTS.SEARCH_LIMIT;
-                                    }
-                    });
-                }
-            };
-
-            tempLimit = response.docs.length;
-
-            if( response.numFound )
-            {
-                /*isCurrentUserInList =   _.findWhere (   response.docs
-                                                    ,   {
-                                                            ownerId:   loggedInMemberId.toString()
-                                                        }
-                                                    );
-                response.numFound   =   ( !$.isEmptyObject(isCurrentUserInList) ) ? response.numFound - 1 : response.numFound ;*/
-
-                countHtml = bidx.i18n.i( "matchCount", appName ).replace( /%count%/g,  response.numFound);
-
-                $searchPagerContainer.find('.pagerTotal').empty( ).append('<h5>' + countHtml + '</h5>');
-
-                $searchPagerContainer.find('.pagerTotal').empty().append('<h5>' + response.numFound + ' results found</h5>');
-            }
-
-            $searchPager.bootstrapPaginator( pagerOptions );
-
-            // create member listitems
-            //
-            $.each( response.docs, function( idx, item )
-            {
-                mentorId    = bidx.utils.getValue( item, "ownerId" );
-
-                if( mentorId !== loggedInMemberId.toString() )
-                {
-                    listItem = loaderSnippet
-                                .replace( /%contactId%/g, mentorId );
-
-                    $list.append( listItem );
-
-                    showMemberProfile(
-                    {
-                        ownerId     :   mentorId
-                    ,   callback    :   function ( itemMember, itemMemberId )
-                                        {
-                                            $listMatchList      =   $list.find('.member' + itemMemberId );
-
-                                            if(itemMember)
-                                            {
-                                                memberId        =   bidx.utils.getValue( itemMember,        "member.bidxMeta.bidxMemberId" );
-                                                memberProfile   =   bidx.utils.getValue( itemMember,        "bidxMemberProfile" );
-                                                personalDetails =   bidx.utils.getValue( itemMember,        "bidxMemberProfile.personalDetails" );
-                                                profilePic      =   bidx.utils.getValue( personalDetails,   "profilePicture" );
-                                                memberCountry   =   bidx.utils.getValue( personalDetails,   "address.0.country");
-                                                isEntrepreneur  =   bidx.utils.getValue( itemMember,        "bidxEntrepreneurProfile" );
-                                                isInvestor      =   bidx.utils.getValue( itemMember,        "bidxInvestorProfile" );
-                                                isMentor        =   bidx.utils.getValue( itemMember,        "bidxMentorProfile" );
-
-                                                /* Profile Picture */
-                                                if ( profilePic )
-                                                {
-                                                    imageWidth  = bidx.utils.getValue( profilePic, "width" );
-                                                    imageLeft   = bidx.utils.getValue( profilePic, "left" );
-                                                    imageTop    = bidx.utils.getValue( profilePic, "top" );
-                                                    contactPicture = '<div class="img-cropper"><img class="media-object" style="width:'+ imageWidth +'px; left:-'+ imageLeft +'px; top:-'+ imageTop +'px;" src="' + profilePic.document + '"></div>';
-                                                }
-                                                else
-                                                {
-                                                    contactPicture = "<div class='icons-rounded pull-left'><i class='fa fa-user text-primary-light'></i></div>";
-                                                }
-
-                                                /* Member Country */
-                                                if(memberCountry)
-                                                {
-
-                                                    bidx.data.getItem(memberCountry, 'country', function(err, labelCountry)
-                                                    {
-                                                        country    =  labelCountry;
-                                                    });
-                                                }
-                                                // duplicate snippet source and replace all placeholders (not every snippet will have all of these placeholders )
-                                                //
-                                                listItem = snippet
-                                                    .replace( /%pictureUrl%/g,          contactPicture )
-                                                    .replace( /%contactId%/g,           memberId                 ? memberId : emptyVal )
-                                                    .replace( /%contactName%/g,         itemMember.member.displayName               ? itemMember.member.displayName : emptyVal)
-                                                    .replace( /%professionalTitle%/g,   personalDetails.professionalTitle   ? personalDetails.professionalTitle     : emptyVal )
-                                                    .replace( /%country%/g,             country            ? country   : "" )
-                                                    .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
-                                                    .replace( /%role_investor%/g,       ( isInvestor )      ? bidx.i18n.i( 'investor' )   : '' )
-                                                    .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
-                                                    ;
-
-
-
-                                                $listItem                = $( listItem );
-                                                //$requestMentoringBtn     = $listItem.find( '.btn-mentoring' );
-
-                                                //$requestMentoringBtn.addClass('disabled').i18nText("btnRequestSent");
-
-                                                if( options && options.cb )
-                                                {
-                                                    // call Callback with current contact item as this scope and pass the current $listitem
-                                                    //
-                                                    cbParams = {
-                                                                    mentorId    : memberId
-                                                                };
-
-                                                    options.cb( $listItem,  cbParams );
-
-                                                    $listItem.find( '.viewRequestmentor').show( );
-                                                }
-                                                //  add mail element to list
-
-                                            } else
-                                            {
-                                                $listItem = $listError;
-                                            }
-
-                                            $listMatchList.empty().append( $listItem );
-
-
-                                            if( counter === responseLength )
-                                            {
-
-                                                $d.resolve( );
-                                            }
-
-                                             counter = counter + 1;
-                                        }
-                    } );
-                } else
-                {
-                    counter = counter + 1;
-                }
-
-            });
-        }
-        else
-        {
-            $list.empty();
-
-            $list.append($listEmpty);
-
-            _hideView( "pager" );
-
-            $d.resolve( );
-        }
-
-        return $d.promise( );
-
-
-        // execute cb function
-        //
-
-    }
-
-    function _getMentorMatches( options )
-    {
-        var search
-        ;
-
-        search = _getSearchCriteria( options.params );
-
-        bidx.api.call(
-            "search.get"
-        ,   {
-                    groupDomain:          bidx.common.groupDomain
-                ,   data:                 search.criteria
-                ,   success: function( response )
-                    {
-                        bidx.utils.log("[searchList] retrieved results ", response );
-                         _doSearchListing(
-                        {
-                            response    :   response
-                        ,   q           :   search.q
-                        ,   sort        :   search.sort
-                        ,   criteria    :   search.criteria
-                        ,   list        :   'mentor-match-list'
-                        ,   cb          :   function( $listItem, params )
-                                            {
-                                                _getContactsCallback( $listItem, params );
-                                            }
-                        } )
-                        .done(  function(  )
-                        {
-                            //  execute callback if provided
-                            if (response.numFound && options && options.cb)
-                            {
-                                options.cb(  );
-                            }
-                        } );
-
-                    }
-                    ,
-                    error: function( jqXhr, textStatus )
-                    {
-
-                        var response = $.parseJSON( jqXhr.responseText)
-                        ,   responseText = response && response.text ? response.text : "Status code " + jqXhr.status
-                        ;
-
-                        // 400 errors are Client errors
-                        //
-                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                        {
-                            bidx.utils.error( "Client  error occured", response );
-                            _showError( "Something went wrong while retrieving the members relationships: " + responseText );
-                        }
-                        // 500 erors are Server errors
-                        //
-                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                        {
-                            bidx.utils.error( "Internal Server error occured", response );
-                            _showError( "Something went wrong while retrieving the members relationships: " + responseText );
-                        }
-
-                    }
-            }
-        );
-    }
-
-    function _getActiveMentors( options )
-    {
-            var snippet          = $("#mentor-snippet").html().replace(/(<!--)*(-->)*/g, "")
-            ,   $listEmpty       = $("#empty-active-mentors").html().replace(/(<!--)*(-->)*/g, "")
-            ,   loaderSnippet    = $("#load-mentor").html().replace(/(<!--)*(-->)*/g, "")
-            ,   actionData       = $("#active-mentor-action").html().replace(/(<!--)*(-->)*/g, "")
-            ,   $list            = $element.find("." + options.list)
-            ,   emptyVal         = ''
-            ,   counter          = 1
-            ,   $listItem
-            ,   listItem
-            ,   mentorId
-            ,   memberId
-            ,   entityId
-            ,   profilePic
-            ,   memberProfile
-            ,   personalDetails
-            ,   contactPicture
-            ,   memberCountry
-            ,   imageWidth
-            ,   imageLeft
-            ,   imageTop
-            ,   country
-            ,   isEntrepreneur
-            ,   isMentor
-            ,   isInvestor
-            ,   cbParams        =  {}
-            ,   $d              =  $.Deferred()
-            ,   responseLength
-            ;
-
-            bidx.api.call(
-                "mentorRelationships.get"
-            ,   {
-                    id:              loggedInMemberId
-                ,   groupDomain:     bidx.common.groupDomain
-                ,   success: function( response )
-                    {
-                        $list.empty();
-
-                        if ( response && response.length )
-
-                        {
-                            active  =   [];
-                            wait    =   [];
-                            respond =   [];
-
-                            $.each( response , function ( idx, itemResponse)
-                            {
-                                //Cast to string for comparison
-                                entityId = itemResponse.entityId.toString();
-
-                                if( entityId === bidxConfig.context.competitionSummaryId )
-                                {
-                                    if ( ( itemResponse.status  === 'accepted' ) &&
-                                         ( itemResponse.mentorId    !== loggedInMemberId )
-                                         )
-                                    {
-
-                                        active.push( itemResponse );
-                                    }
-                                    else if ( ( itemResponse.status      === 'requested' ) &&
-                                         ( itemResponse.mentorId    !== loggedInMemberId ) &&
-                                         ( itemResponse.initiatorId === loggedInMemberId ) )
-                                    {
-
-                                        wait.push( itemResponse );
-                                    }
-                                    else if( ( itemResponse.status      === 'requested' ) &&
-                                             ( itemResponse.mentorId    !== loggedInMemberId ) &&
-                                             ( itemResponse.initiatorId !== loggedInMemberId ) )
-                                    {
-
-                                        respond.push( itemResponse );
-                                    }
-                                    else if( ( itemResponse.status      === 'rejected' ) &&
-                                             ( itemResponse.mentorId    !== loggedInMemberId ) &&
-                                             ( itemResponse.initiatorId !== loggedInMemberId ) )
-                                    {
-
-                                        rejectByEntrepreneur.push( itemResponse );
-                                    }
-                                    else if( ( itemResponse.status      === 'rejected' ) &&
-                                             ( itemResponse.mentorId    !== loggedInMemberId ) &&
-                                             ( itemResponse.initiatorId === loggedInMemberId ) )
-                                    {
-
-                                        rejectByMentor.push( itemResponse );
-                                    }
-                                }
-                            });
-
-                            responseLength = active.length;
-
-                            if( responseLength )
-                            {
-
-                                $.each( active , function ( idx, item)
-                                {
-                                    mentorId    = bidx.utils.getValue( item, "mentorId" );
-
-                                     listItem = loaderSnippet
-                                                .replace( /%contactId%/g, mentorId );
-
-                                     $list.append( listItem );
-
-                                     showMemberProfile(
-                                    {
-                                        ownerId     :   mentorId
-                                     ,  callback    :   function ( itemMember, itemMemberId )
-                                                        {
-                                                            if(itemMember)
-                                                            {
-                                                                memberId        =   bidx.utils.getValue( itemMember, "member.bidxMeta.bidxMemberId" );
-                                                                memberProfile   =   bidx.utils.getValue( itemMember, "bidxMemberProfile" );
-                                                                personalDetails =   bidx.utils.getValue( itemMember, "bidxMemberProfile.personalDetails" );
-                                                                profilePic      =   bidx.utils.getValue( personalDetails, "profilePicture" );
-                                                                memberCountry   =   bidx.utils.getValue( personalDetails, "address.0.country");
-                                                                isEntrepreneur   = bidx.utils.getValue( itemMember, "bidxEntrepreneurProfile" );
-                                                                isInvestor       = bidx.utils.getValue( itemMember, "bidxInvestorProfile" );
-                                                                isMentor         = bidx.utils.getValue( itemMember, "bidxMentorProfile" );
-
-                                                                /* Profile Picture */
-                                                                if ( profilePic )
-                                                                {
-                                                                    imageWidth  = bidx.utils.getValue( profilePic, "width" );
-                                                                    imageLeft   = bidx.utils.getValue( profilePic, "left" );
-                                                                    imageTop    = bidx.utils.getValue( profilePic, "top" );
-                                                                    contactPicture = '<div class="img-cropper"><img class="media-object" style="width:'+ imageWidth +'px; left:-'+ imageLeft +'px; top:-'+ imageTop +'px;" src="' + profilePic.document + '"></div>';
-                                                                }
-                                                                else
-                                                                {
-                                                                    contactPicture = "<div class='icons-rounded pull-left'><i class='fa fa-user text-primary-light'></i></div>";
-                                                                }
-
-                                                                /* Member Country */
-                                                                if(memberCountry)
-                                                                {
-
-                                                                    bidx.data.getItem(memberCountry, 'country', function(err, labelCountry)
-                                                                    {
-                                                                        country    =  labelCountry;
-                                                                    });
-                                                                }
-                                                                // duplicate snippet source and replace all placeholders (not every snippet will have all of these placeholders )
-                                                                //
-                                                                listItem = snippet
-                                                                    .replace( /%pictureUrl%/g,          contactPicture )
-                                                                    .replace( /%contactId%/g,           memberId                 ? memberId : emptyVal )
-                                                                    .replace( /%contactName%/g,         itemMember.member.displayName               ? itemMember.member.displayName : emptyVal)
-                                                                    .replace( /%professionalTitle%/g,   personalDetails.professionalTitle   ? personalDetails.professionalTitle     : emptyVal )
-                                                                    .replace( /%country%/g,             country            ? country   : "" )
-                                                                    .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
-                                                                    .replace( /%role_investor%/g,       ( isInvestor )      ? bidx.i18n.i( 'investor' )   : '' )
-                                                                    .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
-                                                                    .replace( /%action%/g,   actionData)
-                                                                ;
-
-                                                                $listItem = $( listItem );
-
-                                                                if( options && options.cb )
-                                                                {
-                                                                    cbParams = {
-                                                                                    mentorId:           memberId
-                                                                                ,   isActiveRequest:    true
-                                                                                ,   requestId:          item.requestId
-                                                                                };
-
-                                                                    options.cb( $listItem,  cbParams );
-
-                                                                    $listItem.find( '.viewRequestmentor').show( );
-                                                                }
-                                                                //  add mail element to list
-
-                                                            }
-
-                                                            $list.find('.member' + memberId ).empty().append( $listItem );
-
-                                                            if( counter === responseLength )
-                                                            {
-
-                                                                $d.resolve( );
-                                                            }
-
-                                                             counter = counter + 1;
-                                                        }
-                                    } );
-                                });
-                            }
-                            else
-                            {
-                                $list.append($listEmpty);
-
-                                $d.resolve( );
-                            }
-                        }
-                        else
-                        {
-                            $list.append($listEmpty);
-
-                            $d.resolve( );
-                        }
-
-                        //  execute callback if provided
-                        if (options && options.callback)
-                        {
-                            options.callback();
-                        }
-
-                    }
-                    , error: function(jqXhr, textStatus)
-                    {
-
-                        var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
-
-                         _showError("Something went wrong while retrieving contactlist of the member: " + status);
-
-                         //  execute callback if provided
-                        if (options && options.callback)
-                        {
-                            options.callback();
-                        }
-                    }
-                }
-            );
-        return $d;
-
-    }
-
-
-
     // This is the startpoint for the edit state
     //
     function _init( state )
@@ -2178,7 +1336,7 @@
                     bidx.common.removeValidationErrors();
 
                     _showView( "edit" );
-                    _getMentorRequests( );
+
                     _showAllView( "mentor" );
                     _showAllView( "matchingmentors" );
 
@@ -2200,47 +1358,6 @@
 
     }
 
-    // Retrieve the list of companies of the currently logged in user
-    //
-    // @returns promise
-    //
-    function _getCompanies()
-    {
-        var $d = $.Deferred();
-
-        // Fetch the business summary
-        //
-        bidx.api.call(
-
-            "memberCompanies.fetch"
-        ,   {
-                memberId:           bidx.common.getCurrentUserId()
-            ,   groupDomain:        bidx.common.groupDomain
-
-            ,   success: function( response )
-                {
-                    bidx.utils.log( "[Member Companies] fetch", competitionSummaryId, response );
-
-                    companies = response;
-
-                    $d.resolve();
-                }
-            ,   error:          function( jqXhr, textStatus )
-                {
-                    var status  = bidx.utils.getValue( jqXhr, "status" ) || textStatus
-                    ,   msg     = "Something went wrong while retrieving the companies: " + status
-                    ,   error   = new Error( msg )
-                    ;
-
-                    _showError( msg );
-
-                    $d.reject( error );
-                }
-            }
-        );
-
-        return $d;
-    }
 
     // Retrieve the business summary by ID
     //
@@ -2525,32 +1642,7 @@
                 $( ".bidx-modal").modal('hide');
 
 
-                if( !cancel )
-                {
-                    _showAllView( "mentor" );
 
-                    _getActiveMentors(
-                    {
-                        list:   'mentor-active-list'
-                    ,   cb:     function( $listItem, params )
-                                {
-                                    _getContactsCallback( $listItem, params );
-                                }
-                    });
-
-                    if( competitionSummaryId )
-                    {
-                        _showAllView( "matchingmentors" );
-                         _getMentorMatches(
-                        {
-                            list:   'mentor-match-list'
-                        ,   cb  :   function ( )
-                                    {
-                                        _showAllView( "pager" );
-                                    }
-                        });
-                    }
-                }
 
             break;
             case "edit":
