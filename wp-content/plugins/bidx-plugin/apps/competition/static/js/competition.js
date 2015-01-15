@@ -1133,7 +1133,7 @@
         if ( coverImageData )
         {
             bidx.utils.setValue( competitionSummary, "cover.fileUpload", coverImageData.fileUpload );
-        }
+    }
 
         if ( coverImgTopPos )
         {
@@ -1503,28 +1503,19 @@
         //
         _getFormValues();
 
-        if ( competitionSummary.stageBusiness )
-        {
-            competitionSummary.stageBusiness = competitionSummary.stageBusiness.toLowerCase();
-        }
-
         // PM-187: Create call should set the periodStartDate to the first januari of the year the businessummary is created
         //
-        if ( state === "create" )
-        {
-            competitionSummary.periodStartDate = bidx.common.getNow().getFullYear() + "-01-01";
-        }
+        competitionSummary.startDateTime = bidx.common.getNow().getFullYear() + "-01-01";
+        competitionSummary.endDateTime = bidx.common.getNow().getFullYear() + "-01-01";
 
-        // Make sure the entitytype is set correctly, probably only needed for 'create'
-        //
-        bidx.utils.setValue( competitionSummary, "bidxMeta.bidxEntityType", "bidxcompetitionSummary" );
+
 
         bidx.common.notifySave();
 
         // Save the data to the API
         //
         bidx.api.call(
-            "competitionSummary.save"
+            "competition.save"
         ,   {
                 // Undefined when creating the business summary
                 //

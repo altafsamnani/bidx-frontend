@@ -1247,6 +1247,22 @@
         } );
     }
 
+    if ( typeof $.prototype.datetimepicker === "function" )
+    {
+        $( "input[data-type=datetime]" ).datetimepicker(
+        {
+            format:                 "d M yyyy - hh:ii"
+        ,   pickerPosition:         "bottom-left"
+        ,   showMeridian:           true
+        ,   autoclose:              true
+        ,   yearRange:              "-100:+3"
+        ,   todayHighlight:         true
+        ,   todayBtn:               true
+        ,   weekStart:              1
+        ,   language:               currentLanguage
+        } );
+    }
+
     // Disable disabled links
     //
     $body.delegate( "a.disabled", "click", function( e )
@@ -1303,7 +1319,7 @@
             ,   offSet = 165
             ,   targetOffset = $accordionBody.offset().top - offSet
             ;
-            
+
             if ( $(".bidx-edit .panel-collapse .viewEdit").is( ":visible" ) )
             {
                 $accordionBody.closest( ".panel" )

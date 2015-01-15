@@ -6,8 +6,8 @@
 */
 class competition
 {
-    static $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2',
-        'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-industries','bidx-cover', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
+    static $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2'
+        , 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-industries','bidx-cover', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
         'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
         'bidx-location', 'bidx-chosen', 'jquery-fitvids', 'jquery-raty'
     );
@@ -25,11 +25,11 @@ class competition
     */
     function register_competition_bidx_ui_libs()
     {
-        /* Common mentoring functions & mentoring activities functions */
+        /* Common mentoring functions & mentoring activities functions
         wp_register_script ('commenting', plugins_url ('../commenting/static/js/commenting.js', __FILE__), $deps, '20140307', TRUE);;
         wp_register_script ('bp-mentor', plugins_url ('../mentor/static/js/common-mentordashboard.js', __FILE__), $deps, '20140307', TRUE);
         $deps = array_merge( self :: $deps, array(  'bp-mentor', 'commenting' ) );
-        //$deps = self::$deps;
+        */
 
         wp_register_script('competition', plugins_url('static/js/competition.js', __FILE__), self::$deps, '20130501', TRUE);
     }

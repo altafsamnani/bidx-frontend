@@ -502,7 +502,8 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                                         <label><?php _e('Start date','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                            <input type="text" class="form-control" name="startDateTime" data-type="date" placeholder="<?php _e('Please select start date','bidxplugin'); ?>">
+                                             <input size="16" type="text" class="form-control" value="" readonly data-type="datetime" name="startDateTime" placeholder="<?php _e('Please select start date','bidxplugin'); ?>">
+
                                         </div>
 
                                     </div>
@@ -512,7 +513,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                                         <label><?php _e('End date','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                            <input type="text" class="form-control" name="endDateTime" data-type="date" placeholder="<?php _e('Please select end date','bidxplugin'); ?>">
+                                            <input readonly type="text" class="form-control" name="endDateTime" data-type="datetime" placeholder="<?php _e('Please select end date','bidxplugin'); ?>">
                                         </div>
                                     </div>
                                 </div>

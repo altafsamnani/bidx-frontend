@@ -45,13 +45,14 @@
     //
     competition.save = function( params )
     {
-        var method          = params.competitionSummaryId ? "PUT" : "POST"
+        var method          = "PUT"
         ,   url             = baseUrl
         ,   requestParams   =
             {
                 method:         method
             ,   groupDomain:    params.groupDomain
             ,   baseUrl:        url
+            ,   id:             params.id
             ,   data:           params.data
             ,   success:        function( data, textStatus, jqXhr )
                 {
