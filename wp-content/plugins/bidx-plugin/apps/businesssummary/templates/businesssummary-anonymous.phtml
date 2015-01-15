@@ -153,6 +153,10 @@ $currentYear = date("Y");
                     => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry')
 
             );
+?>
+
+            <h3 class="to-uppercase"><?php _e('Basic information', 'bidxplugin')?></h3>
+<?php
             echo $this->tableRow( $rowValues );
 
             if ( $attachment )

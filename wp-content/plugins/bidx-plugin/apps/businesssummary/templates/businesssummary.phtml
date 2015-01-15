@@ -414,6 +414,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <?php
             $rowValues = array
             (
+                __('Stage of business','bidxplugin') => $this->getStaticVal( 'stageBusiness', $this->exst($businessSummary->stageBusiness)),
                 __('Reason for financing','bidxplugin') => $this->exst($businessSummary->summaryFinancingNeeded),
                 __('Reason for submission','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->reasonForSubmission), ', ', 'reasonForSubmission' ),
                 __('Equity currently retained','bidxplugin') => $this->exst($businessSummary->equityRetained),
@@ -434,7 +435,6 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
             $rowValues = array
             (
-                __('Stage of business','bidxplugin') => $this->getStaticVal( 'stageBusiness', $this->exst($businessSummary->stageBusiness)),
                 __('Industry') => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry'),
                 __('Product / Service','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->productService), ', ', 'productService' ),
                 __('Country of business','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' ),

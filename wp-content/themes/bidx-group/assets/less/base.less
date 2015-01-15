@@ -1757,6 +1757,41 @@ select
     }
 }
 
+/* Card View */
+.cardView
+{
+    border: 1px solid lighten(@gray-light, 22.5%);
+}
+
+.cardHeader
+{
+    background-color: lighten(@gray-light, 30.5%);
+    border-bottom: 1px solid lighten(@gray-light, 22.5%);
+    .info-cell
+    {
+        padding: ceil(@font-size-base * 0.65) ceil(@font-size-base * 1.05);
+        border-right: 1px solid lighten(@gray-light, 22.5%);
+    }
+}
+.info-action
+{
+    margin: ceil(@font-size-base * 0.60) ceil(@font-size-base * 1.05);
+}
+
+
+.cardContent
+{
+    
+}
+.bsOwner
+{
+    font-size: ceil(@font-size-base * 1.05);
+}
+.cardFooter
+{
+    
+}
+
 /* FEEDBACK */
 .businessSummary .panel-heading
 {
@@ -2332,7 +2367,10 @@ hr
 {
     text-transform: uppercase;
 }
-
+.light-text
+{
+    font-weight: 100;
+}
 // Skinning
 // -------------------------
 .box-border
