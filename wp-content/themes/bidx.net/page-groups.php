@@ -13,22 +13,22 @@ get_header();
 </section>
 
 <div class="container">
-	<div id="content">
-		<?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
-			<div id="post-<?php the_ID(); ?>" <?php post_class('page'); ?>>
-				<article>
-					<?php if ( has_post_thumbnail() ) { /* loades the post's featured thumbnail, requires Wordpress 3.0+ */ echo '<div class="featured-thumbnail">'; the_post_thumbnail(); echo '</div>'; } ?>
+    <div id="content">
+        <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
+            <div id="post-<?php the_ID(); ?>" <?php post_class('page'); ?>>
+                <article>
+                    <?php if ( has_post_thumbnail() ) { /* loades the post's featured thumbnail, requires Wordpress 3.0+ */ echo '<div class="featured-thumbnail">'; the_post_thumbnail(); echo '</div>'; } ?>
 
-					<div class="post-content page-content pad-25">
-						<?php the_content(); ?>
-						<?php wp_link_pages('before=<div class="pagination">&after=</div>'); ?>
-					</div><!--.post-content .page-content -->
-				</article>
+                    <div class="post-content page-content pad-25">
+                        <?php the_content(); ?>
+                        <?php wp_link_pages('before=<div class="pagination">&after=</div>'); ?>
+                    </div><!--.post-content .page-content -->
+                </article>
 
-			</div><!--#post-# .post-->
+            </div><!--#post-# .post-->
 
-		<?php endwhile; ?>
-	</div><!--#content-->
+        <?php endwhile; ?>
+    </div><!--#content-->
 </div>
             <div id="portfolio" class="main-wrapper">
                 <section id="portfolio-3" class="pad-25 pattern-7">
@@ -215,6 +215,81 @@ get_header();
                                         <div class="portfolio-details">
                                             <p>Demo Group</p>
                                             <p><small>Demonstration</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.portfolio-item-wrapper -->
+
+                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
+                                    <div class="portfolio-item">
+                                        <div class="portfolio-thumb">
+                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo19.png" class="img-responsive" alt="4th Portfolio Thumb">
+                                            <div class="image-overlay"></div>
+                                            <a href="https://tza-portal.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
+                                        </div>
+                                        <div class="portfolio-details">
+                                            <p>Seed</p>
+                                            <p><small>Tanzania</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.portfolio-item-wrapper -->
+
+                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
+                                    <div class="portfolio-item">
+                                        <div class="portfolio-thumb">
+                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo20.png" class="img-responsive" alt="4th Portfolio Thumb">
+                                            <div class="image-overlay"></div>
+                                            <a href="https://portal.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
+                                        </div>
+                                        <div class="portfolio-details">
+                                            <p>Bidx Gateway Portal</p>
+                                            <p><small>International</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.portfolio-item-wrapper -->
+
+                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
+                                    <div class="portfolio-item">
+                                        <div class="portfolio-thumb">
+                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo21.png" class="img-responsive" alt="4th Portfolio Thumb">
+                                            <div class="image-overlay"></div>
+                                            <a href="https://kenya-portal.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
+                                        </div>
+                                        <div class="portfolio-details">
+                                            <p>Kenya Business Development</p>
+                                            <p><small>Kenya</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.portfolio-item-wrapper -->
+
+                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
+                                    <div class="portfolio-item">
+                                        <div class="portfolio-thumb">
+                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo22.png" class="img-responsive" alt="4th Portfolio Thumb">
+                                            <div class="image-overlay"></div>
+                                            <a href="https://women.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
+                                        </div>
+                                        <div class="portfolio-details">
+                                            <p>Female Entrepreneurship</p>
+                                            <p><small>International</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.portfolio-item-wrapper -->
+
+                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
+                                    <div class="portfolio-item">
+                                        <div class="portfolio-thumb">
+                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo23.png" class="img-responsive" alt="4th Portfolio Thumb">
+                                            <div class="image-overlay"></div>
+                                            <a href="https://ind-portal.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
+                                        </div>
+                                        <div class="portfolio-details">
+                                            <p>India Business</p>
+                                            <p><small>India</small></p>
                                         </div>
                                     </div>
                                 </div>
