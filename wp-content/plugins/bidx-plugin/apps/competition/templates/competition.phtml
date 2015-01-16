@@ -308,7 +308,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
     }
 ?>
 
-    <h4 class="light-text"><?php echo $this->exst( $competition->description ); ?></h4>
+    <div class="competition-description"><?php echo $this->exst( $competition->description ); ?></div>
 
 
 
@@ -327,6 +327,22 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                     <div class="col-sm-6">
                         <span class="bsOwner"><span class="fa fa-user"></span> Diana Sombre</span>
                         <span class="label bidx-label bidx-entrepreneur">Entrepreneur</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="inline"><?php _e('Recommend as','bidxplugin'); ?>:</label>
+                            <div class="radio inline-radio">
+                                <input type="radio" value="finalist" id="radio-finalist" name="assessorRecommendation" data-toggle="radio" />
+                                <label for="radio-finalist"><span></span><?php _e('FINALIST','bidxplugin'); ?></label>
+                            </div>
+
+                            <div class="radio inline-radio">
+                                <input type="radio" value="notFinalist" id="radio-notFinalist" name="assessorRecommendation" data-toggle="radio" />
+                                <label for="radio-notFinalist"><span></span><?php _e('NOT FINALIST','bidxplugin'); ?></label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
