@@ -8,17 +8,19 @@ $competitionBidxMeta = isset($competition->bidxMeta)
     ? $competition->bidxMeta
     : null;
 
-$canEdit        = $this->exst($competitionBidxMeta->bidxCanEdit, false);
+$canEdit                    = $this->exst($competitionBidxMeta->bidxCanEdit, false);
 
-$createdtDateTime                = ( isset( $competitionBidxMeta->bidxCreationDateTime ) ) ? date( 'd M Y', $competitionBidxMeta->bidxCreationDateTime  ) : NULL;
+$createdtDateTime           = ( isset( $competitionBidxMeta->bidxCreationDateTime ) ) ? date( 'd M Y', $competitionBidxMeta->bidxCreationDateTime  ) : NULL;
 
 $updatedDate                = ( isset( $competitionBidxMeta->bidxLastUpdateDateTime ) ) ? date( 'd M Y', $competitionBidxMeta->bidxLastUpdateDateTime  ) : NULL;
 
-$startDateTime                = ( isset( $competition->startDateTime ) ) ? date( 'd M Y H:i ', strtotime ( $this->exst( $competition->startDateTime ) ) ) : NULL;
+$startDateTime              = ( isset( $competition->startDateTime ) ) ? date( 'd M Y H:i ', strtotime ( $this->exst( $competition->startDateTime ) ) ) : NULL;
 
 $endDateTime                = ( isset( $competition->endDateTime ) ) ? date( 'd M Y H:i', strtotime ( $this->exst( $competition->endDateTime ) ) ) : NULL;
 
-$gender                     = $this->addExtraValuesToRows( 'gender', $this->exst( $competition->gender ) );
+$endTimeStamp               = ( isset( $competition->endDateTime ) ) ? strtotime ( $this->exst( $competition->endDateTime ) )  : NULL;
+
+$gender                     = $this->getMultiValues( $this->exst($competition->competitionGender), ', ', 'gender' );
 
 
 // get the entities of the current user
@@ -274,10 +276,10 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
     <div class="row">
     <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
 <?php
-            if ( $competition->logo && $competition->logo->document ):
+            if ( $competition->competitionLogo && $competition->competitionLogo->document ):
 ?>
-            <div class="logoImage">
-                <img src="<?php echo $competition->logo->document ?>" class="center-img" alt="Logo Image">
+            <div class="competitionLogoImage">
+                <img src="<?php echo $competition->competitionLogo->document ?>" class="center-img" alt="competitionLogo Image">
             </div>
 <?php
             endif;
@@ -288,31 +290,51 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 <div class="row">
 <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
 <?php
-    if ( $this->exst($competitionBidxMeta->bidxEntityId) )
-    {
+            if ( $this->exst($competitionBidxMeta->bidxEntityId) )
+            {
 ?>
-        <h1>
-            <?php echo $this->exst( $competition->name ); ?>
-            <small>&nbsp;<?php echo _e( 'Apply before', 'bidxplugin' ); ?>&nbsp;
-                <?php echo $endDateTime;?>
-            </small>
-        </h1>
+                <h1>
+                    <?php echo $this->exst( $competition->name ); ?>
+                    <small>&nbsp;<?php echo _e( 'Apply before', 'bidxplugin' ); ?>&nbsp;
+                        <div class="counter hide-overflow text-center" data-time="<?php echo $endTimeStamp; ?>">
+                            <?php
+                                if ( $endTimeStamp < time() ) {
+                        ?>
+                                    <div class="alert alert-warning">
+                                        <strong><i class="fa fa-exclamation-triangle"></i> <?php _e( 'This competition has expired','bidxplugin' ); ?></strong>
+                                    </div>
+                                    <a class="btn btn-secondary btn-block" href="/competition"><?php _e( 'Visit our competition overview','bidxplugin' ); ?> </a><?php
+                                } else {  ?>
+                                    <div class="counter-block">
+                                        <div class="days counter-number"></div>
+                                        <div class="counter-text"><?php _e( 'DAYS','bidxplugin' ); ?></div>
+                                    </div>
+                                    <div class="counter-block">
+                                        <div class="hours counter-number"></div>
+                                        <div class="counter-text"><?php _e( 'HOURS','bidxplugin' ); ?></div>
+                                    </div>
+                                    <div class="counter-block">
+                                        <div class="minutes counter-number"></div>
+                                        <div class="counter-text"><?php _e( 'MINUTES','bidxplugin' ); ?></div>
+                                    </div>
+                                    <div class="counter-block">
+                                        <div class="seconds counter-number"></div>
+                                        <div class="counter-text"><?php _e( 'SECONDS','bidxplugin' ); ?></div>
+                                    </div>
+                                <?php } ?>
+                        </div>
+                    </small>
+                </h1>
 <?php
-    }
-    else
-    {
+            }
 ?>
-        <h1><?php echo _e( 'Create competition', 'bidxplugin' ); ?></h1>
-<?php
 
-    }
-?>
 
     <div class="competition-description"><?php echo $this->exst( $competition->description ); ?></div>
 
 
 
-    <div class="cardView">
+    <div class="cardView hide">
         <div class="cardHeader hide-overflow">
             <div class="info-cell pull-left"><?php echo _e( 'Completed', 'bidxplugin' ); ?>: 58%</div>
             <div class="info-cell pull-left"><?php echo _e( 'Score', 'bidxplugin' ); ?>: 3.2</div>
@@ -348,18 +370,9 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             </div>
         </div>
         <div class="cardFooter">
-            
+
         </div>
     </div>
-
-
-
-
-
-
-
-
-
 
 
     <div class="main-padding-vertical">
@@ -429,9 +442,9 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                 <li class="active">
                     <a href="#tab-bs-overview" data-toggle="tab"><?php _e('General Overview','bidxplugin'); ?></a>
                 </li>
-                <li>
-                    <a href="#tab-bs-management" data-toggle="tab"><?php _e('Management rules','bidxplugin'); ?></a>
-                </li>
+                <!-- <li>
+                    <a href="#tab-bs-management" data-toggle="tab"><?php //_e('Management rules','bidxplugin'); ?></a>
+                </li> -->
                 <li>
                     <a href="#tab-bs-about-participants" data-toggle="tab"><?php _e('About participants','bidxplugin'); ?></a>
                 </li>
@@ -445,19 +458,19 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                         <!-- EDIT -->
                         <div class="view viewEdit">
                             <blockquote class="alert-info"><?php _e('Use this section to describe your competition. Think about what information you would like participants to know about competition if you only had a few minutes to explain.','bidxplugin')?></blockquote>
-                                <div class="row bsLogo form-group">
-                                    <!-- Logo -->
+                                <div class="row bscompetitionLogo form-group">
+                                    <!-- competitionLogo -->
                                     <div class="col-sm-6">
-                                        <a href="#addLogo" data-toggle="modal" class="btn btn-primary">
-                                            <?php _e('Select logo'); ?>
+                                        <a href="#addcompetitionLogo" data-toggle="modal" class="btn btn-primary">
+                                            <?php _e('Select competitionLogo'); ?>
                                         </a>
 
-                                        <div class="addLogoImage modal fade">
+                                        <div class="addcompetitionLogoImage modal fade">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h3><?php _e('Check the file you want to use as your Logo', 'bidxplugin' ); ?></h3>
+                                                <h3><?php _e('Check the file you want to use as your competitionLogo', 'bidxplugin' ); ?></h3>
                                                 </div>
                                                 <div class="modal-body">
                             <?php
@@ -476,25 +489,11 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <div class="logoContainer"></div>
+                                        <div class="competitionLogoContainer"></div>
                                     </div>
                                 </div>
                             <form id="frmCompetition-GeneralOverview">
-                                <div class="row">
-                                    <!-- Name -->
-                                    <div class="form-group col-sm-6">
-                                        <label><?php _e('Competition name','bidxplugin'); ?></label>
-                                        <input type="text" class="form-control" name="name" placeholder="<?php _e('Competition name','bidxplugin'); ?>">
-                                    </div>
-
-                                    <!-- Slogan -->
-                                    <div class="form-group col-sm-6">
-                                        <label><?php _e('Give a short description of competition in a maximum of 30 words','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                        <textarea type="text" class="form-control" name="description" placeholder="<?php _e('Description of the goals of the competition','bidxplugin'); ?>"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="row">
+                                 <div class="row">
                                     <!-- Summary -->
                                     <div class="form-group col-sm-6">
                                         <label><?php _e('Start date','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
@@ -515,30 +514,43 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <!-- Name -->
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Competition name','bidxplugin'); ?></label>
+                                        <input type="text" class="form-control" name="name" placeholder="<?php _e('Competition name','bidxplugin'); ?>">
+                                    </div>
+
+                                    <!-- Slogan -->
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Give a short description of competition in a maximum of 30 words','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <textarea type="text" class="form-control" name="description" placeholder="<?php _e('Description of the goals of the competition','bidxplugin'); ?>"></textarea>
+                                    </div>
+                                </div>
                             </form>
                         </div><!-- /EDIT -->
                     </div><!-- /General Overview -->
                 </div>
-
+                <!-- Management
                 <div class="tab-pane hide-overflow" id="tab-bs-management">
-                    <!-- About the business -->
+
                         <div  id="competitionCollapse-Management">
-                                <!-- EDIT -->
+
                                 <div class="view viewEdit">
-                                    <blockquote class="alert-info"><?php _e('Here we provide you with tools to set the criteria about competition.','bidxplugin')?></blockquote>
+                                    <blockquote class="alert-info"><?php //_e('Here we provide you with tools to set the criteria about competition.','bidxplugin')?></blockquote>
                                     <form id="frmCompetition-Management">
                                         <div class="row">
-                                            <!-- Country operation -->
+
                                             <div class="form-group col-sm-6">
-                                                <label><?php _e('Competition visibility','bidxplugin'); ?></label>
+                                                <label><?php //_e('Competition visibility','bidxplugin'); ?></label>
                                                 <select name="visibility" multiple></select>
                                             </div>
                                         </div>
                                     </form>
-                                </div><!-- /EDIT -->
+                                </div>
 
-                    </div><!-- /Management -->
-                </div>
+                    </div><
+                </div> -->
 
                 <div class="tab-pane hide-overflow" id="tab-bs-about-participants">
                     <!-- About you & your team -->
@@ -554,7 +566,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                                                     <div class="form-group">
                                                         <label><?php _e('Gender','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
                                                         <div class="radio">
-                                                            <input type="radio" value='["f","m"]' id="radio-personalDetailsB" name="competitionGender" data-toggle="radio" />
+                                                            <input type="radio" value='both' id="radio-personalDetailsB" name="competitionGender" data-toggle="radio" />
                                                             <label for="radio-personalDetailsM"><span></span><?php _e('Both','bidxplugin'); ?></label>
                                                         </div>
 
@@ -642,3 +654,4 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
         </div>
     </div>
 </div><!-- /competition -->
+</div>

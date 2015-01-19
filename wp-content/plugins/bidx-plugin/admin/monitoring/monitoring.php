@@ -140,7 +140,7 @@ class Bidx_Admin_Monitoring
 
 		add_meta_box( 'Roles', __('User Roles','bidx-plugin'), array($this,'analytics_roles'), null, 'side' ,  'default' );
 
-		add_meta_box( 'Registraions', __('New User + Login / Day','bidx-plugin'), array($this,'analytics_registrations'), null, 'side', 'default' );
+		add_meta_box( 'Registraions', __('Logins / Day','bidx-plugin'), array($this,'analytics_registrations'), null, 'side', 'default' );
 
 		add_meta_box( 'Summaries', __('Business Summaries / Day','bidx-plugin'), array($this,'analytics_summaries'), null, 'side', 'default' );
 

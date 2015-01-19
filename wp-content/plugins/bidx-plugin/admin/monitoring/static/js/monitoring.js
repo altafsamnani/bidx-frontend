@@ -275,13 +275,16 @@
         ,   keysLogin       =   _.keys( eventLogin )     // Keys of Login ex 2014-02-02
         ,   alldateKeys     =   _.union( keysRegister, keysLogin).reverse() // Common keys for iteration
         ,   options         =   {
-                                    title: 'Weekly users & logins'
+                                    title: 'Weekly user logins'
                                 }
         ;
 
         if ( alldateKeys.length )
         {
-            graphData.push( ['Day', 'New Users', 'Logins'] );
+            // Old Logged in users vs Registered users
+            //graphData.push( ['Day', 'New Users', 'Logins'] );
+
+            graphData.push( ['Day', 'Logins'] );
 
             $.each( alldateKeys, function( idx, date )
             {
@@ -295,7 +298,9 @@
                  dateSplit      = date.split("-");
                  formattedDate  = dateSplit.reverse().join('-');
 
-                 graphData.push( [formattedDate, newUser, login] );
+                 // Old Logged in users vs Registered users
+                 //graphData.push( [formattedDate, newUser, login] );
+                 graphData.push( [formattedDate, login] );
             } );
 
             data = google.visualization.arrayToDataTable(graphData);

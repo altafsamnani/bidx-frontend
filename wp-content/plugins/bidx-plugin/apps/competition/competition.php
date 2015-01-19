@@ -30,8 +30,11 @@ class competition
         wp_register_script ('bp-mentor', plugins_url ('../mentor/static/js/common-mentordashboard.js', __FILE__), $deps, '20140307', TRUE);
         $deps = array_merge( self :: $deps, array(  'bp-mentor', 'commenting' ) );
         */
+        wp_register_script('timer',       '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js', array(), '20130501', TRUE);
 
-        wp_register_script('competition', plugins_url('static/js/competition.js', __FILE__), self::$deps, '20130501', TRUE);
+        $deps = array_merge( self :: $deps, array(  'timer' ) );
+
+        wp_register_script('competition', plugins_url('static/js/competition.js', __FILE__), $deps, '20130501', TRUE);
     }
 
     /**
