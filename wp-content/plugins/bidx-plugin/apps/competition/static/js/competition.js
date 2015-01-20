@@ -2084,7 +2084,7 @@ $(document).ready(function() {
         //Gender
         var genderValue = bidx.utils.getValue( competitionSummary, "competitionGender" );
 
-        if( genderValue.length === 2 )
+        if ( genderValue && genderValue.length === 2 )
         {
             genderValue = 'both';
         }
