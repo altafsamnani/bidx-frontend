@@ -15,6 +15,7 @@
     ,   $regional                   = $element.find( "[name='competitionCountry']" )
     ,   $visibilityDropdown         = $element.find( "[name='visibility']" )
 
+    ,   $gender                     = $element.find( "[name='competitionGender']" )
     ,   $envImpact                  = $element.find( "[name='competitionEnvImpact']" )
     ,   $socialImpact               = $element.find( "[name='competitionSocialImpact']" )
 
@@ -54,10 +55,10 @@
             {
                 $el:                    $element.find( "#frmCompetition-GeneralOverview" )
             }
-        ,   management:
+        /*,   management:
             {
                 $el:                    $element.find( "#frmCompetition-Management" )
-            }
+            }*/
         ,   aboutParticipants:
             {
                 $el:                    $element.find( "#frmCompetition-AboutParticipants" )
@@ -73,12 +74,12 @@
     ,   $coverImageModal                    = $coverImage.find( ".coverModal" )
     ,   $coverImageContainer                = $coverImage.find( ".coverImageContainer" )
 
-        // Logo
+        // competitionLogo
         //
-    ,   $bsLogo                             = $element.find( ".bsLogo" )
-    ,   $bsLogoBtn                          = $bsLogo.find( "[href$='#addLogo']" )
-    ,   $bsLogoModal                        = $bsLogo.find( ".addLogoImage" )
-    ,   $logoContainer                      = $bsLogo.find( ".logoContainer" )
+    ,   $bscompetitionLogo                             = $element.find( ".bscompetitionLogo" )
+    ,   $bscompetitionLogoBtn                          = $bscompetitionLogo.find( "[href$='#addcompetitionLogo']" )
+    ,   $bscompetitionLogoModal                        = $bscompetitionLogo.find( ".addcompetitionLogoImage" )
+    ,   $competitionLogoContainer                      = $bscompetitionLogo.find( ".competitionLogoContainer" )
 
 
 
@@ -168,20 +169,19 @@
             ,   "endDateTime"
             ]
         }
-    ,   "management":
+    /*,   "management":
         {
             "_root":
             [
                 "visibility"
             ]
         }
-
+    */
     ,   "aboutParticipants":
         {
             "_root":
             [
                 "competitionIndustry"
-            ,   "competitionGender"
             ,   "competitionCountry"
             ,   "competitionSocialImpact"
             ,   "competitionEnvImpact"
@@ -196,6 +196,7 @@
          var option
          ,   visibilityArrItems  =   [ ]
          ;
+        _competitionTimer();
         _snippets();
         _setupValidation();
         _coverImage();
@@ -310,6 +311,7 @@
                     _doSave();
                 }
             } );
+            /*
             forms.management.$el.validate(
             {
                 debug:          false
@@ -321,7 +323,7 @@
                         required:      true
                     }
                 }
-            } );
+            } ); */
             // About your business
             //
             forms.aboutParticipants.$el.validate(
@@ -434,18 +436,18 @@
         }
 
 
-        // Logo
+        // competitionLogo
         //
-        $bsLogoBtn.click( function( e )
+        $bscompetitionLogoBtn.click( function( e )
         {
             e.preventDefault();
 
             // Make sure the media app is within our modal container
             //
-            $( "#media" ).appendTo( $bsLogoModal.find( ".modal-body" ) );
+            $( "#media" ).appendTo( $bscompetitionLogoModal.find( ".modal-body" ) );
 
-            var $selectBtn = $bsLogoModal.find( ".btnSelectFile" )
-            ,   $cancelBtn = $bsLogoModal.find( ".btnCancelSelectFile" )
+            var $selectBtn = $bscompetitionLogoModal.find( ".btnSelectFile" )
+            ,   $cancelBtn = $bscompetitionLogoModal.find( ".btnCancelSelectFile" )
             ;
 
             // Navigate the media app into list mode for selecting files
@@ -463,19 +465,19 @@
                 {
                     ready:                  function( state )
                     {
-                        bidx.utils.log( "[logo] ready in state", state );
+                        bidx.utils.log( "[competitionLogo] ready in state", state );
                     }
 
                 ,   cancel:                 function()
                     {
                         // Stop selecting files, back to previous stage
                         //
-                        $bsLogoModal.modal('hide');
+                        $bscompetitionLogoModal.modal('hide');
                     }
 
                 ,   success:                function( file )
                     {
-                        bidx.utils.log( "[logo] uploaded", file );
+                        bidx.utils.log( "[competitionLogo] uploaded", file );
 
                         // NOOP.. the parent app is not interested in when the file is uploaded
                         // only when it is attached / selected
@@ -483,17 +485,17 @@
 
                 ,   select:               function( file )
                     {
-                        bidx.utils.log( "[logo] selected profile picture", file );
+                        bidx.utils.log( "[competitionLogo] selected profile picture", file );
 
-                        $logoContainer.data( "bidxData", file );
-                        $logoContainer.html( $( "<img />", { "src": file.document, "data-fileUploadId": file.fileUpload } ));
+                        $competitionLogoContainer.data( "bidxData", file );
+                        $competitionLogoContainer.html( $( "<img />", { "src": file.document, "data-fileUploadId": file.fileUpload } ));
 
-                        $bsLogoModal.modal( "hide" );
+                        $bscompetitionLogoModal.modal( "hide" );
                     }
                 }
             } );
 
-            $bsLogoModal.modal();
+            $bscompetitionLogoModal.modal();
         } );
 
 
@@ -2008,7 +2010,49 @@ $(document).ready(function() {
     }
 
 
+    function _competitionTimer (  )
+    {
+        var countTime = $element.find('.counter' );
 
+        countTime.each( function()
+        {
+            var el = $(this)
+            ,   datatime = el.attr('data-time')
+            ;
+
+            countdown( datatime, el );
+
+            setInterval( function()
+                        {
+                            countdown( datatime, el );
+                        }, 1000)
+            ;
+        });
+
+        function countdown ( datatime, el )
+        {
+
+            var now = new moment()
+            ,   then = moment.unix( datatime )
+            ,   ms = then.diff(now, 'milliseconds', true)
+            ,   days = Math.floor(moment.duration(ms).asDays())
+            ,   then = then.subtract('days', days)
+            ,   ms = then.diff(now, 'milliseconds', true)
+            ,   hours = Math.floor(moment.duration(ms).asHours())
+            ,   then = then.subtract('hours', hours)
+            ,   ms = then.diff(now, 'milliseconds', true)
+            ,   minutes = Math.floor(moment.duration(ms).asMinutes())
+            ,   then = then.subtract('minutes', minutes)
+            ,   ms = then.diff(now, 'milliseconds', true)
+            ,   seconds = Math.floor(moment.duration(ms).asSeconds())
+            ;
+
+            el.find('.days').text(days);
+            el.find('.hours').text(hours);
+            el.find('.minutes').text(minutes);
+            el.find('.seconds').text(seconds);
+        }
+    }
 
 
     // Use the retrieved competitionSummary entity to populate the form and other screen elements
@@ -2017,6 +2061,8 @@ $(document).ready(function() {
     {
         // Go iteratively over all the forms and there fields
         //
+        var dateTimeValue
+        ;
         $.each( fields, function( form, formFields )
         {
             var $form       = forms[ form ].$el;
@@ -2034,8 +2080,22 @@ $(document).ready(function() {
             }
         } );
 
+
+        //Gender
+        var genderValue = bidx.utils.getValue( competitionSummary, "competitionGender" );
+
+        if( genderValue.length === 2 )
+        {
+            genderValue = 'both';
+        }
+        else
+        {
+            genderValue = _.first(genderValue);
+        }
+
+        bidx.utils.setElementValue( $gender, genderValue );
+
         // Industry Sectors
-        //
         var data = bidx.utils.getValue( competitionSummary, "competitionIndustry", true );
 
         if ( data )
@@ -2043,12 +2103,12 @@ $(document).ready(function() {
             $industrySectors.industries( "populateInEditScreen",  data );
         }
 
-        var logoImage = bidx.utils.getValue( competitionSummary, "logo" );
+        var competitionLogoImage = bidx.utils.getValue( competitionSummary, "competitionLogo" );
 
-        if ( logoImage )
+        if ( competitionLogoImage )
         {
-            $logoContainer.empty();
-            $logoContainer.append( "<img src='"+ logoImage.document +"' />");
+            $competitionLogoContainer.empty();
+            $competitionLogoContainer.append( "<img src='"+ competitionLogoImage.document +"' />");
         }
 
 
@@ -2132,6 +2192,16 @@ $(document).ready(function() {
                 } );
             }
 
+            //Gender
+            var genderValue = bidx.utils.getElementValue( $gender );
+
+            if( genderValue === 'both' )
+            {
+                genderValue = ['m','f'];
+            }
+
+
+            bidx.utils.setValue( competitionSummary, 'competitionGender', genderValue );
 
             // Industry Sectors
             var endSectors = $industrySectors.find( "[name*='endSector']" );
@@ -2278,15 +2348,14 @@ $(document).ready(function() {
             }
         }
 
-        // Logo
+        // competitionLogo
         //
-        var logoImageData = $logoContainer.data( "bidxData" );
+        var competitionLogoImageData = $competitionLogoContainer.data( "bidxData" );
 
-        if ( logoImageData )
+        if ( competitionLogoImageData )
         {
-            bidx.utils.setValue( competitionSummary, "logo.fileUpload", logoImageData.fileUpload );
+            bidx.utils.setValue( competitionSummary, "competitionLogo.fileUpload", competitionLogoImageData.fileUpload );
         }
-
     }
 
     function showEntity( options )
@@ -2387,9 +2456,6 @@ $(document).ready(function() {
     function _init( state )
     {
         // Reset any state
-        //
-
-
         $addFiles.hide();
 
         var curYear         = bidx.common.getNow().getFullYear();
@@ -2636,9 +2702,6 @@ $(document).ready(function() {
 
         // PM-187: Create call should set the periodStartDate to the first januari of the year the businessummary is created
         //
-        competitionSummary.startDateTime = bidx.common.getNow().getFullYear() + "-01-01";
-        competitionSummary.endDateTime = bidx.common.getNow().getFullYear() + "-01-01";
-
 
 
         bidx.common.notifySave();
@@ -2672,7 +2735,7 @@ $(document).ready(function() {
                     icl_vars                    = window.icl_vars || {};
                     currentLanguage             = bidx.utils.getValue( icl_vars, "current_language" );
                     currentLanguage             = (currentLanguage && currentLanguage !== 'en') ? '/' + currentLanguage : '';
-                    var url = currentLanguage + "/competitionSummary/" + competitionSummaryId + "?rs=true";
+                    var url = currentLanguage + "/competition/" + competitionSummaryId + "?rs=true";
 
                     document.location.href = url;
 

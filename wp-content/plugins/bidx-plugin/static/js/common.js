@@ -1252,12 +1252,9 @@
         $( "input[data-type=datetime]" ).datetimepicker(
         {
             format:                 "d M yyyy - hh:ii"
-        ,   pickerPosition:         "bottom-left"
         ,   showMeridian:           true
         ,   autoclose:              true
-        ,   yearRange:              "-100:+3"
         ,   todayHighlight:         true
-        ,   todayBtn:               true
         ,   weekStart:              1
         ,   language:               currentLanguage
         } );

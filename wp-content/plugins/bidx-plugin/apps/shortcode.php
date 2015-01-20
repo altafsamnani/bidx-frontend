@@ -207,9 +207,18 @@ class BidxShortcode
             {
                 wp_register_script ('bootstrap-datepicker-main', $vendorDir . "/bootstrap-datepicker-1.3.0-rc.2/js/bootstrap-datepicker.js", array ('bootstrap', 'jquery'), '1.3.0-rc.2', TRUE);
                 wp_register_script ('bootstrap-datepicker', $vendorDir . "/bootstrap-datepicker-1.3.0-rc.2/js/locales/bootstrap-datepicker.{$langLocale}.js", array ('bootstrap-datepicker-main'), '1.3.0-rc.2', TRUE);
+
+                wp_register_script ('bootstrap-datetimepicker-main', $vendorDir . "/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js", array ('bootstrap', 'jquery'), '1', TRUE);
+                wp_register_script ('bootstrap-datetimepicker', $vendorDir . "/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.{$langLocale}.js", array ('bootstrap-datepicker-main'), '1.3.0-rc.2', TRUE);
+
+
+
             } else
             {
                 wp_register_script ('bootstrap-datepicker', $vendorDir . "/bootstrap-datepicker-1.3.0-rc.2/js/bootstrap-datepicker.js", array ('bootstrap', 'jquery'), '1.3.0-rc.2', TRUE);
+
+                wp_register_script ('bootstrap-datetimepicker', $vendorDir . "/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js", array ('bootstrap', 'jquery'), '1', TRUE);
+
             }
 
             wp_register_script ('jquery-fitvids', $bidxJsDir . '/vendor/jquery.fitvids.js', array ('jquery'), '20140321', TRUE);
@@ -224,7 +233,7 @@ class BidxShortcode
             //bidX scripts
             wp_register_script ('bidx-api-core', $bidxJsDir . '/bidxAPI/api-core.js', array ('jquery'), '20130501', TRUE);
 
-            $sitepressArr = array_merge( array ('jquery','bootstrap-datepicker'), $sitepressDepArr  );
+            $sitepressArr = array_merge( array ('jquery', 'bootstrap-datepicker', 'bootstrap-datetimepicker'), $sitepressDepArr  );
             wp_register_script ('bidx-utils', $bidxJsDir . '/utils.js', $sitepressArr, '20130501', TRUE);
 
             wp_register_script ('bidx-tagsinput', $bidxJsDir . '/bidx-tagsinput.js', array ('bidx-bootstrap-tagmanager', 'bidx-utils', 'bidx-data'), '20130703', TRUE);
