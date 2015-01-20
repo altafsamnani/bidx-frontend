@@ -1761,6 +1761,21 @@ select
 .cardView
 {
     border: 1px solid lighten(@gray-light, 22.5%);
+
+    .cancel-on-png, .cancel-off-png, .star-on-png, .star-off-png, .star-half-png
+    {
+      font-size: ceil(@font-size-base * 1.7);
+    }
+    .raty-cancel
+    {
+        font-size: ceil(@font-size-base * 1.2);
+    }
+    .rating-vote
+    {
+        text-align: left;
+        margin: 0 0 0 ceil(@font-size-base * 3.9);
+        float: left;
+    }
 }
 
 .cardHeader
@@ -2002,7 +2017,7 @@ label
     font-weight: bold;
     &.inline
     {
-        margin: 10px 0;
+        margin: 10px 10px 10px 0;
         float: left;
     }
 }
@@ -2090,6 +2105,92 @@ hr
 .td-15
 {
     width: 15%;
+}
+
+tbody tr.shown td
+{
+    background-color: lighten(@brand-primary, 18.5%);
+    border-color: lighten(@brand-primary, 11.5%);
+}
+
+tbody tr.extrapanel td
+{
+    border-color: lighten(@brand-primary, 11.5%);
+}
+
+.dataTable
+{
+    th
+    {
+        cursor: pointer;
+        position: relative;
+        background-color: lighten(@gray-light, 28.5%);
+        padding: floor(@padding-base-vertical * 1.4) floor(@padding-base-horizontal * 1.7) floor(@padding-base-vertical * 1.4) floor(@padding-base-vertical * 1.4) !important;
+        &:after
+        {
+            font-family: FontAwesome;
+            position: absolute;
+            right: 5px;
+        }
+        &:focus
+        {
+            outline: none;
+        }
+    }
+
+    tr:hover
+    {
+        td.details-control
+        {
+            cursor: pointer;
+            i
+            {
+                .opacity(0.25);
+            }
+        }
+    }
+
+    th.sorting
+    {
+        &:after
+        {
+            content: "\f0dc";
+        }
+    }
+    th.sorting_asc
+    {
+        &:after
+        {
+            content: "\f0de";
+        }
+    }
+    th.sorting_desc
+    {
+        &:after
+        {
+            content: "\f0dd";
+        }
+    }
+    td.details-control
+    {
+        i
+        {
+            position: absolute;
+            font-size: ceil(@font-size-base * 1.5);
+            .opacity(0.1);
+        }
+    }
+    tr.shown
+    {
+        td.details-control
+        {
+            i
+            {
+                .opacity(0.8);
+            }
+        }
+    }
+
 }
 
 /*!
@@ -2389,6 +2490,11 @@ hr
     border: 1px solid;
     border-color: lighten(@gray-light, 30%) lighten(@gray-light, 24%) lighten(@gray-light, 21%);
     background-color: @white;
+}
+.bottom-border
+{
+    border-bottom: 1px solid lighten(@gray-light, 30%);
+    padding-bottom: ceil(@padding-base-vertical);
 }
 
 

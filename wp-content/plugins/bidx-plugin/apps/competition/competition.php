@@ -9,7 +9,7 @@ class competition
     static $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2'
         , 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-industries','bidx-cover', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
         'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
-        'bidx-location', 'bidx-chosen', 'jquery-fitvids', 'jquery-raty'
+        'bidx-location', 'bidx-chosen', 'jquery-fitvids', 'jquery-raty', 'data-table'
     );
 
     /**
@@ -30,8 +30,12 @@ class competition
         wp_register_script ('bp-mentor', plugins_url ('../mentor/static/js/common-mentordashboard.js', __FILE__), $deps, '20140307', TRUE);
         $deps = array_merge( self :: $deps, array(  'bp-mentor', 'commenting' ) );
         */
-
         wp_register_script('competition', plugins_url('static/js/competition.js', __FILE__), self::$deps, '20130501', TRUE);
+
+        $vendorDir = sprintf ('%s/../static/vendor', BIDX_PLUGIN_URI);
+
+        //1. Load Js Libraries
+        wp_register_script ('data-table', $vendorDir . '/DataTables-1.10.3/media/js/jquery.dataTables.js', array ('jquery'), '1.10.3', TRUE);
     }
 
     /**

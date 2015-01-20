@@ -331,6 +331,16 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
+                        <div class="rating-wrapper">
+                            <label class="inline"><?php _e('Rate with','bidxplugin'); ?>:</label>
+                            <div class="rating-vote">
+                                <div data-rating="<?php echo $this->rating->userRating->value ? $this->rating->userRating->value : 0 ?>" class="raty"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
                         <div class="form-group">
                             <label class="inline"><?php _e('Recommend as','bidxplugin'); ?>:</label>
                             <div class="radio inline-radio">
@@ -343,23 +353,29 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                                 <label for="radio-notFinalist"><span></span><?php _e('NOT FINALIST','bidxplugin'); ?></label>
                             </div>
                         </div>
+                        <textarea type="text" class="form-control" name="summary" placeholder="<?php _e('Explain your recommendation','bidxplugin'); ?>"></textarea>
+
                     </div>
                 </div>
             </div>
         </div>
-        <div class="cardFooter">
-            
+        <div class="cardFooter text-right">
+            <a href="#" class="btn btn-primary btn-md info-action"><?php echo _e( 'Assess', 'bidxplugin' ); ?> </a>
         </div>
     </div>
 
 
-
-
-
-
-
-
-
+    <table id="example" class="display table table-bordered">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Business</th>
+                <th>Entrepreneur</th>
+                <th>Score</th>
+                <th>State</th>
+            </tr>
+        </thead>
+    </table>
 
 
     <div class="main-padding-vertical">

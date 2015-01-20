@@ -689,7 +689,1138 @@
         {
             $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
         }
-    }
+
+
+        $('#table_id').DataTable(
+            {
+                "aoColumns": [
+                    { "bSortable": false },
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                "bPaginate": false,
+                tableTools: {
+                    "sRowSelect": "multi",
+                    "aButtons": [ "select_all", "select_none" ]
+                }
+
+            });
+        }
+
+/* Formatting function for row details - modify as you need */
+function format ( d ) {
+    // `d` is the original data object for the row
+    return '<h4>Assessors Recommendations</h4>'+
+    '<div>'+
+        '<div class="row">'+
+            '<div class="col-sm-4">'+d.assessor_1.name+'</div>'+
+            '<div class="col-sm-2">Score: '+d.assessor_1.score+'</div>'+
+            '<div class="col-sm-6">Recommendation: '+d.assessor_1.recommendation+'</div>'+
+        '</div>'+
+        '<p class="bottom-border"><i class="fa fa-pencil-square-o"></i> '+d.assessor_1.explanation+'</p>'+
+    '</div>'+
+    '<div>'+
+        '<div class="row">'+
+            '<div class="col-sm-4">'+d.assessor_2.name+'</div>'+
+            '<div class="col-sm-2">Score: '+d.assessor_2.score+'</div>'+
+            '<div class="col-sm-6">Recommendation: '+d.assessor_2.recommendation+'</div>'+
+        '</div>'+
+        '<p class="bottom-border"><i class="fa fa-pencil-square-o"></i> '+d.assessor_2.explanation+'</p>'+
+    '</div>'+
+    '<div>'+
+
+        '<div class="">'+
+            '<label class="inline">Mark as:</label>'+
+            '<div class="radio inline-radio">'+
+                '<input type="radio" value="finalist" id="radio-finalist" name="assessorRecommendation" data-toggle="radio" />'+
+                '<label for="radio-finalist"><span></span>FINALIST</label>'+
+            '</div>'+
+
+            '<div class="radio inline-radio">'+
+                '<input type="radio" value="notFinalist" id="radio-notFinalist" name="assessorRecommendation" data-toggle="radio" />'+
+                '<label for="radio-notFinalist"><span></span>NOT FINALIST</label>'+
+            '</div>'+
+
+            '<div class="text-right">'+
+                '<a href="#" class="btn btn-primary btn-md info-action">Set</a>'+
+            '</div>'+
+
+
+        '</div>'+
+
+    '</div>';
+}
+ 
+$(document).ready(function() {
+    var table = $('#example').DataTable( {
+        "bPaginate": false,
+        "data":     [
+        {
+            business: "System Architect",
+            entrepreneur: "Tiger Nixon",
+            score: "320",
+            state: "Withdrawn",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Accountant",
+            entrepreneur: "Garrett Winters",
+            score: "170",
+            state: "Applied",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Junior Technical Author",
+            entrepreneur: "Ashton Cox",
+            score: "86",
+            state: "Submitted",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Senior Javascript Developer",
+            entrepreneur: "Cedric Kelly",
+            score: "433",
+            state: "Winner",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Accountant",
+            entrepreneur: "Airi Satou",
+            score: "162",
+            state: "Finalist",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Integration Specialist",
+            entrepreneur: "Brielle Williamson",
+            score: "372",
+            state: "Winner",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Sales Assistant",
+            entrepreneur: "Herrod Chandler",
+            score: "137",
+            state: "Withdrawn",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Integration Specialist",
+            entrepreneur: "Rhona Davidson",
+            score: "327",
+            state: "Not Winner",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Javascript Developer",
+            entrepreneur: "Colleen Hurst",
+            score: "205",
+            state: "Submitted",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Software Engineer",
+            entrepreneur: "Sonya Frost",
+            score: "103",
+            state: "Withdrawn",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Office Manager",
+            entrepreneur: "Jena Gaines",
+            score: "90",
+            state: "Finalist",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Support Lead",
+            entrepreneur: "Quinn Flynn",
+            score: "342",
+            state: "Not Finalist",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Regional Director",
+            entrepreneur: "Charde Marshall",
+            score: "470",
+            state: "Finalist",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Senior Marketing Designer",
+            entrepreneur: "Haley Kennedy",
+            score: "313",
+            state: "Winner",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Regional Director",
+            entrepreneur: "Tatyana Fitzpatrick",
+            score: "385",
+            state: "Not Winner",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Marketing Designer",
+            entrepreneur: "Michael Silva",
+            score: "198",
+            state: "Withdrawn",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Chief Financial Officer (CFO)",
+            entrepreneur: "Paul Byrd",
+            score: "725",
+            state: "Not Winner",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Systems Administrator",
+            entrepreneur: "Gloria Little",
+            score: "237",
+            state: "Withdrawn",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Software Engineer",
+            entrepreneur: "Bradley Greer",
+            score: "132",
+            state: "Winner",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Personnel Lead",
+            entrepreneur: "Dai Rios",
+            score: "217",
+            state: "Winner",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Development Lead",
+            entrepreneur: "Jenette Caldwell",
+            score: "345",
+            state: "Applied",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Chief Marketing Officer (CMO)",
+            entrepreneur: "Yuri Berry",
+            score: "675",
+            state: "Submitted",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Pre-Sales Support",
+            entrepreneur: "Caesar Vance",
+            score: "106",
+            state: "Applied",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Sales Assistant",
+            entrepreneur: "Doris Wilder",
+            score: "85",
+            state: "Withdrawn",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Chief Executive Officer (CEO)",
+            entrepreneur: "Angelica Ramos",
+            score: "10",
+            state: "Submitted",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Developer",
+            entrepreneur: "Gavin Joyce",
+            score: "92",
+            state: "Not Winner",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Regional Director",
+            entrepreneur: "Jennifer Chang",
+            score: "357",
+            state: "Not Winner",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Software Engineer",
+            entrepreneur: "Brenden Wagner",
+            score: "206",
+            state: "Withdrawn",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Chief Operating Officer (COO)",
+            entrepreneur: "Fiona Green",
+            score: "850",
+            state: "Not Winner",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Regional Marketing",
+            entrepreneur: "Shou Itou",
+            score: "163",
+            state: "Applied",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Integration Specialist",
+            entrepreneur: "Michelle House",
+            score: "95",
+            state: "Applied",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Developer",
+            entrepreneur: "Suki Burks",
+            score: "114",
+            state: "Submitted",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Technical Author",
+            entrepreneur: "Prescott Bartlett",
+            score: "145",
+            state: "Applied",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Team Leader",
+            entrepreneur: "Gavin Cortez",
+            score: "235",
+            state: "Finalist",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Post-Sales support",
+            entrepreneur: "Martena Mccray",
+            score: "324",
+            state: "Withdrawn",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Marketing Designer",
+            entrepreneur: "Unity Butler",
+            score: "85",
+            state: "Submitted",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Office Manager",
+            entrepreneur: "Howard Hatfield",
+            score: "164",
+            state: "Finalist",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Secretary",
+            entrepreneur: "Hope Fuentes",
+            score: "109",
+            state: "Not Winner",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Financial Controller",
+            entrepreneur: "Vivian Harrell",
+            score: "452",
+            state: "Submitted",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Office Manager",
+            entrepreneur: "Timothy Mooney",
+            score: "136",
+            state: "Finalist",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Director",
+            entrepreneur: "Jackson Bradshaw",
+            score: "645",
+            state: "Finalist",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Support Engineer",
+            entrepreneur: "Olivia Liang",
+            score: "234",
+            state: "Applied",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Software Engineer",
+            entrepreneur: "Bruno Nash",
+            score: "163",
+            state: "Applied",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Support Engineer",
+            entrepreneur: "Sakura Yamamoto",
+            score: "139",
+            state: "Submitted",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Developer",
+            entrepreneur: "Thor Walton",
+            score: "98",
+            state: "Not Finalist",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Support Engineer",
+            entrepreneur: "Finn Camacho",
+            score: "87",
+            state: "Submitted",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Data Coordinator",
+            entrepreneur: "Serge Baldwin",
+            score: "138",
+            state: "Winner",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Software Engineer",
+            entrepreneur: "Zenaida Frank",
+            score: "125",
+            state: "Not Winner",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Software Engineer",
+            entrepreneur: "Zorita Serrano",
+            score: "115",
+            state: "Withdrawn",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Junior Javascript Developer",
+            entrepreneur: "Jennifer Acosta",
+            score: "75",
+            state: "Not Finalist",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Sales Assistant",
+            entrepreneur: "Cara Stevens",
+            score: "145",
+            state: "Applied",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Regional Director",
+            entrepreneur: "Hermione Butler",
+            score: "356",
+            state: "Applied",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Systems Administrator",
+            entrepreneur: "Lael Greer",
+            score: "103",
+            state: "Submitted",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Developer",
+            entrepreneur: "Jonas Alexander",
+            score: "86",
+            state: "Not Winner",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Regional Director",
+            entrepreneur: "Shad Decker",
+            score: "183",
+            state: "Finalist",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Javascript Developer",
+            entrepreneur: "Michael Bruce",
+            score: "183",
+            state: "Withdrawn",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        },
+        {
+            business: "Customer Support",
+            entrepreneur: "Donna Snider",
+            score: "112",
+            state: "Applied",
+            assessor_1: {
+                name: "Assessor 1 Full Name",
+                score: "3",
+                recommendation: "notFinalist",
+                explanation: "This is dummy text for explanation"
+            },
+            assessor_2: {
+                name: "Assessor 2 Full Name",
+                score: "4",
+                recommendation: "finalist",
+                explanation: "This is dummy text for explanation of the second Assessor"
+            },
+        }
+    ]
+,
+        "columns": [
+            {
+                "className":      'details-control',
+                "orderable":      false,
+                "data":           null,
+                "defaultContent": '<i class="fa fa-plus-square-o"></i>'
+            },
+            { "data": "business" },
+            { "data": "entrepreneur" },
+            { "data": "score" },
+            { "data": "state" }
+        ],
+        "order": [[1, 'asc']]
+    } );
+     
+    // Add event listener for opening and closing details
+    $('#example tbody').on('click', 'td.details-control', function () {
+        var tr = $(this).closest('tr');
+        var row = table.row( tr );
+ 
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+            tr.next().removeClass('extrapanel');
+            $(this).find('.fa').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
+        }
+        else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
+            tr.next().addClass('extrapanel');
+            $(this).find('.fa').removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
+        }
+    } );
+} );
 
     var _handleToggleChange = function( show, group )
     {
