@@ -196,98 +196,98 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
         </div>
     </div>
 
-    <div class="row main-padding">
-        <div class="col-sm-4"></div>
-
-        <div class="col-sm-5">
-    <?php
-                /*
-                 * We want ratings to be indexed by Google, so need to include this on page load. It
-                 * might be updated in JavaScript though, so also check the translations in i18n.xml.
-                 */
-    ?>
-            <div class="rating-wrapper">
 <?php
-                // Owners and active mentors cannot rate their plans
-                if( $canRate )
-                {
-                    $ratingUser = $this->rating->userRating;
+    if ( $this->exst($competitionBidxMeta->bidxEntityId) )
+    {
 ?>
-                    <div class="rating-vote">
-                        <span class="rating-vote-text"><span class="rating-user-label"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span></span>
-                        <div data-rating="<?php echo $this->rating->userRating->value ? $this->rating->userRating->value : 0 ?>" class="raty"></div>
-                    </div>
-<?php
-                }
-?>
-            </div>
-        </div>
-        <div class="col-sm-3 text-right">
-            <div class="btn-group">
-<?php
-                // if a user is allowed to request full access to a business summary and it NOT The owner of the business summary
-                //
-                if ( $canRequestAccess && !$canEdit )
-                {
-                    $accessRequestControl = "";
-
-                    switch ( $requestStatus )
-                    {
-                        case 'pending':
-                            $accessRequestSend = 'hide';
-                            break;
-                        case 'refused':
-                            $accessRequestSend = 'hide';
-                            break;
-                        case 'granted':
-                            $accessRequestSend = 'hide';
-                            break;
-                        case 'none':
-                            $accessRequestSend = '';
-                            break;
-                        default:
-                            $accessRequestSend = 'hide';
-                    }
-?>
-                    <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><i class="fa fa-eye fa-big fa-above"></i><?php echo _e( 'Request full access', 'bidxplugin' ); ?></a>
-<?php
-                }
-?>
-<?php
-                // does a user have rights to edit ( is the owner )
-                //
-                if ( $canEdit )
-                {
-?>
-                    <a class="btn btn-primary editBS" href="#editCompetition/<?php echo $competitionId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
-<?php
-                }
-?>
-            </div>
-            <div class="editControlsContainer">
-                <div class="editControls pull-right">
-
-                    <!-- SHOW -->
-                    <div class="view viewShow"></div>
-
-                    <!-- EDIT, conditionally filled by the app -->
-                    <div class="view viewEdit btn-group"></div>
-
-                    <!-- sucess msg, used as a placeholder for showing msgs -->
-
-                    <div class="view viewMainsuccess alert alert-success">
-                        <p class="successMsg"></p>
-                    </div>
+        <div class="main-padding bg-info">
+            <div class="row">
+                <div class="col-sm-4 col-sm-offset-2">
+                    <h4><?php echo _e( 'Apply before', 'bidxplugin' ); ?>:
+                        <strong><?php echo $endDateTime;?></strong>
+                    </h4>
+                </div>
+                <div class="col-sm-4 text-right">
+                    <button class="btn btn-lg btn-primary"><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
                 </div>
             </div>
-
         </div>
-    </div>
 <?php
-    // }
+    }
 ?>
 <!-- SHOW -->
 <div class="view viewShow">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+        <h3>Select one of your business summaries</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Business name</th>
+                    <th>Registered</th>
+                    <th>Employees</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="">
+                    <td>
+                        <div class="controls">
+                            <div class="radio">
+                                <input type="radio" value="8871" id="radio-Company" name="companyList" data-toggle="radio">
+                                <label for="radio-Company"><span></span></label>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="companyName">asfd</td>
+                    <td class="registered">No</td>
+                    <td class="employees">No</td>
+                </tr>
+                <tr class="">
+                    <td>
+                        <div class="controls">
+                            <div class="radio">
+                                <input type="radio" value="10314" id="radio-Company" name="companyList" data-toggle="radio">
+                                <label for="radio-Company"><span></span></label>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="companyName">test2</td>
+                    <td class="registered">No</td>
+                    <td class="employees">No</td>
+                </tr>
+                <tr class="">
+                    <td>
+                        <div class="controls">
+                            <div class="radio">
+                                <input type="radio" value="10351" id="radio-Company" name="companyList" data-toggle="radio">
+                                <label for="radio-Company"><span></span></label>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="companyName">test</td>
+                    <td class="registered">No</td>
+                    <td class="employees">No</td>
+                </tr>
+                <tr class="">
+                    <td>
+                        <div class="controls">
+                            <div class="radio">
+                                <input type="radio" value="10353" id="radio-Company" name="companyList" data-toggle="radio">
+                                <label for="radio-Company"><span></span></label>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="companyName">Hamish UK Enterprise</td>
+                    <td class="registered">No</td>
+                    <td class="employees">No</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
 <div class="mainBusiness hide-overflow">
     <div class="row">
     <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
@@ -309,37 +309,35 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             if ( $this->exst($competitionBidxMeta->bidxEntityId) )
             {
 ?>
+                <div class="counter hide-overflow text-center" data-time="<?php echo $endTimeStamp; ?>">
+                    <?php
+                        if ( $endTimeStamp < time() ) {
+                ?>
+                            <div class="alert alert-warning">
+                                <strong><i class="fa fa-exclamation-triangle"></i> <?php _e( 'This competition has expired','bidxplugin' ); ?></strong>
+                            </div>
+                            <a class="btn btn-secondary btn-block" href="/competition"><?php _e( 'Visit our competition overview','bidxplugin' ); ?> </a><?php
+                        } else {  ?>
+                            <div class="counter-block">
+                                <div class="days counter-number"></div>
+                                <div class="counter-text"><?php _e( 'DAYS','bidxplugin' ); ?></div>
+                            </div>
+                            <div class="counter-block">
+                                <div class="hours counter-number"></div>
+                                <div class="counter-text"><?php _e( 'HOURS','bidxplugin' ); ?></div>
+                            </div>
+                            <div class="counter-block">
+                                <div class="minutes counter-number"></div>
+                                <div class="counter-text"><?php _e( 'MINUTES','bidxplugin' ); ?></div>
+                            </div>
+                            <div class="counter-block">
+                                <div class="seconds counter-number"></div>
+                                <div class="counter-text"><?php _e( 'SECONDS','bidxplugin' ); ?></div>
+                            </div>
+                        <?php } ?>
+                </div>
                 <h1>
                     <?php echo $this->exst( $competition->name ); ?>
-                    <small>&nbsp;<?php echo _e( 'Apply before', 'bidxplugin' ); ?>&nbsp;
-                        <div class="counter hide-overflow text-center" data-time="<?php echo $endTimeStamp; ?>">
-                            <?php
-                                if ( $endTimeStamp < time() ) {
-                        ?>
-                                    <div class="alert alert-warning">
-                                        <strong><i class="fa fa-exclamation-triangle"></i> <?php _e( 'This competition has expired','bidxplugin' ); ?></strong>
-                                    </div>
-                                    <a class="btn btn-secondary btn-block" href="/competition"><?php _e( 'Visit our competition overview','bidxplugin' ); ?> </a><?php
-                                } else {  ?>
-                                    <div class="counter-block">
-                                        <div class="days counter-number"></div>
-                                        <div class="counter-text"><?php _e( 'DAYS','bidxplugin' ); ?></div>
-                                    </div>
-                                    <div class="counter-block">
-                                        <div class="hours counter-number"></div>
-                                        <div class="counter-text"><?php _e( 'HOURS','bidxplugin' ); ?></div>
-                                    </div>
-                                    <div class="counter-block">
-                                        <div class="minutes counter-number"></div>
-                                        <div class="counter-text"><?php _e( 'MINUTES','bidxplugin' ); ?></div>
-                                    </div>
-                                    <div class="counter-block">
-                                        <div class="seconds counter-number"></div>
-                                        <div class="counter-text"><?php _e( 'SECONDS','bidxplugin' ); ?></div>
-                                    </div>
-                                <?php } ?>
-                        </div>
-                    </small>
                 </h1>
 <?php
             }

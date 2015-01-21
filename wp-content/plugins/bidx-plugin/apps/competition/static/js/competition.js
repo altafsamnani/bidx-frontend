@@ -733,7 +733,7 @@ function format ( d ) {
     '</div>'+
     '<div>'+
 
-        '<div class="">'+
+        '<div class="set-actions">'+
             '<label class="inline">Mark as:</label>'+
             '<div class="radio inline-radio">'+
                 '<input type="radio" value="finalist" id="radio-finalist" name="assessorRecommendation" data-toggle="radio" />'+
@@ -748,8 +748,6 @@ function format ( d ) {
             '<div class="text-right">'+
                 '<a href="#" class="btn btn-primary btn-md info-action">Set</a>'+
             '</div>'+
-
-
         '</div>'+
 
     '</div>';
@@ -763,7 +761,7 @@ $(document).ready(function() {
             business: "System Architect",
             entrepreneur: "Tiger Nixon",
             score: "320",
-            state: "Withdrawn",
+            state: "withdrawn",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -781,7 +779,7 @@ $(document).ready(function() {
             business: "Accountant",
             entrepreneur: "Garrett Winters",
             score: "170",
-            state: "Applied",
+            state: "applied",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -799,7 +797,7 @@ $(document).ready(function() {
             business: "Junior Technical Author",
             entrepreneur: "Ashton Cox",
             score: "86",
-            state: "Submitted",
+            state: "submitted",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -817,7 +815,7 @@ $(document).ready(function() {
             business: "Senior Javascript Developer",
             entrepreneur: "Cedric Kelly",
             score: "433",
-            state: "Winner",
+            state: "winner",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -835,7 +833,7 @@ $(document).ready(function() {
             business: "Accountant",
             entrepreneur: "Airi Satou",
             score: "162",
-            state: "Finalist",
+            state: "finalist",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -853,7 +851,7 @@ $(document).ready(function() {
             business: "Integration Specialist",
             entrepreneur: "Brielle Williamson",
             score: "372",
-            state: "Winner",
+            state: "winner",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -871,7 +869,7 @@ $(document).ready(function() {
             business: "Sales Assistant",
             entrepreneur: "Herrod Chandler",
             score: "137",
-            state: "Withdrawn",
+            state: "withdrawn",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -889,7 +887,7 @@ $(document).ready(function() {
             business: "Integration Specialist",
             entrepreneur: "Rhona Davidson",
             score: "327",
-            state: "Not Winner",
+            state: "notWinner",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -907,7 +905,7 @@ $(document).ready(function() {
             business: "Javascript Developer",
             entrepreneur: "Colleen Hurst",
             score: "205",
-            state: "Submitted",
+            state: "submitted",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -925,7 +923,7 @@ $(document).ready(function() {
             business: "Software Engineer",
             entrepreneur: "Sonya Frost",
             score: "103",
-            state: "Withdrawn",
+            state: "withdrawn",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -943,7 +941,7 @@ $(document).ready(function() {
             business: "Office Manager",
             entrepreneur: "Jena Gaines",
             score: "90",
-            state: "Finalist",
+            state: "finalist",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -961,7 +959,7 @@ $(document).ready(function() {
             business: "Support Lead",
             entrepreneur: "Quinn Flynn",
             score: "342",
-            state: "Not Finalist",
+            state: "notFinalist",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -979,7 +977,7 @@ $(document).ready(function() {
             business: "Regional Director",
             entrepreneur: "Charde Marshall",
             score: "470",
-            state: "Finalist",
+            state: "finalist",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -997,7 +995,7 @@ $(document).ready(function() {
             business: "Senior Marketing Designer",
             entrepreneur: "Haley Kennedy",
             score: "313",
-            state: "Winner",
+            state: "winner",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1015,7 +1013,7 @@ $(document).ready(function() {
             business: "Regional Director",
             entrepreneur: "Tatyana Fitzpatrick",
             score: "385",
-            state: "Not Winner",
+            state: "notWinner",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1033,7 +1031,7 @@ $(document).ready(function() {
             business: "Marketing Designer",
             entrepreneur: "Michael Silva",
             score: "198",
-            state: "Withdrawn",
+            state: "withdrawn",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1051,7 +1049,7 @@ $(document).ready(function() {
             business: "Chief Financial Officer (CFO)",
             entrepreneur: "Paul Byrd",
             score: "725",
-            state: "Not Winner",
+            state: "notWinner",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1069,7 +1067,7 @@ $(document).ready(function() {
             business: "Systems Administrator",
             entrepreneur: "Gloria Little",
             score: "237",
-            state: "Withdrawn",
+            state: "withdrawn",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1087,7 +1085,7 @@ $(document).ready(function() {
             business: "Software Engineer",
             entrepreneur: "Bradley Greer",
             score: "132",
-            state: "Winner",
+            state: "winner",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1105,7 +1103,7 @@ $(document).ready(function() {
             business: "Personnel Lead",
             entrepreneur: "Dai Rios",
             score: "217",
-            state: "Winner",
+            state: "winner",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1123,7 +1121,7 @@ $(document).ready(function() {
             business: "Development Lead",
             entrepreneur: "Jenette Caldwell",
             score: "345",
-            state: "Applied",
+            state: "applied",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1141,7 +1139,7 @@ $(document).ready(function() {
             business: "Chief Marketing Officer (CMO)",
             entrepreneur: "Yuri Berry",
             score: "675",
-            state: "Submitted",
+            state: "submitted",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1159,7 +1157,7 @@ $(document).ready(function() {
             business: "Pre-Sales Support",
             entrepreneur: "Caesar Vance",
             score: "106",
-            state: "Applied",
+            state: "applied",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1177,7 +1175,7 @@ $(document).ready(function() {
             business: "Sales Assistant",
             entrepreneur: "Doris Wilder",
             score: "85",
-            state: "Withdrawn",
+            state: "withdrawn",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1195,7 +1193,7 @@ $(document).ready(function() {
             business: "Chief Executive Officer (CEO)",
             entrepreneur: "Angelica Ramos",
             score: "10",
-            state: "Submitted",
+            state: "submitted",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1213,7 +1211,7 @@ $(document).ready(function() {
             business: "Developer",
             entrepreneur: "Gavin Joyce",
             score: "92",
-            state: "Not Winner",
+            state: "notWinner",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1231,7 +1229,7 @@ $(document).ready(function() {
             business: "Regional Director",
             entrepreneur: "Jennifer Chang",
             score: "357",
-            state: "Not Winner",
+            state: "notWinner",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1249,7 +1247,7 @@ $(document).ready(function() {
             business: "Software Engineer",
             entrepreneur: "Brenden Wagner",
             score: "206",
-            state: "Withdrawn",
+            state: "withdrawn",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1267,7 +1265,7 @@ $(document).ready(function() {
             business: "Chief Operating Officer (COO)",
             entrepreneur: "Fiona Green",
             score: "850",
-            state: "Not Winner",
+            state: "notWinner",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1285,7 +1283,7 @@ $(document).ready(function() {
             business: "Regional Marketing",
             entrepreneur: "Shou Itou",
             score: "163",
-            state: "Applied",
+            state: "applied",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1303,7 +1301,7 @@ $(document).ready(function() {
             business: "Integration Specialist",
             entrepreneur: "Michelle House",
             score: "95",
-            state: "Applied",
+            state: "applied",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1321,7 +1319,7 @@ $(document).ready(function() {
             business: "Developer",
             entrepreneur: "Suki Burks",
             score: "114",
-            state: "Submitted",
+            state: "submitted",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1339,7 +1337,7 @@ $(document).ready(function() {
             business: "Technical Author",
             entrepreneur: "Prescott Bartlett",
             score: "145",
-            state: "Applied",
+            state: "applied",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1357,7 +1355,7 @@ $(document).ready(function() {
             business: "Team Leader",
             entrepreneur: "Gavin Cortez",
             score: "235",
-            state: "Finalist",
+            state: "finalist",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1375,7 +1373,7 @@ $(document).ready(function() {
             business: "Post-Sales support",
             entrepreneur: "Martena Mccray",
             score: "324",
-            state: "Withdrawn",
+            state: "withdrawn",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1393,7 +1391,7 @@ $(document).ready(function() {
             business: "Marketing Designer",
             entrepreneur: "Unity Butler",
             score: "85",
-            state: "Submitted",
+            state: "submitted",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1411,7 +1409,7 @@ $(document).ready(function() {
             business: "Office Manager",
             entrepreneur: "Howard Hatfield",
             score: "164",
-            state: "Finalist",
+            state: "finalist",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1429,7 +1427,7 @@ $(document).ready(function() {
             business: "Secretary",
             entrepreneur: "Hope Fuentes",
             score: "109",
-            state: "Not Winner",
+            state: "notWinner",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1447,7 +1445,7 @@ $(document).ready(function() {
             business: "Financial Controller",
             entrepreneur: "Vivian Harrell",
             score: "452",
-            state: "Submitted",
+            state: "submitted",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1465,7 +1463,7 @@ $(document).ready(function() {
             business: "Office Manager",
             entrepreneur: "Timothy Mooney",
             score: "136",
-            state: "Finalist",
+            state: "finalist",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1483,7 +1481,7 @@ $(document).ready(function() {
             business: "Director",
             entrepreneur: "Jackson Bradshaw",
             score: "645",
-            state: "Finalist",
+            state: "finalist",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1501,7 +1499,7 @@ $(document).ready(function() {
             business: "Support Engineer",
             entrepreneur: "Olivia Liang",
             score: "234",
-            state: "Applied",
+            state: "applied",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1519,7 +1517,7 @@ $(document).ready(function() {
             business: "Software Engineer",
             entrepreneur: "Bruno Nash",
             score: "163",
-            state: "Applied",
+            state: "applied",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1537,7 +1535,7 @@ $(document).ready(function() {
             business: "Support Engineer",
             entrepreneur: "Sakura Yamamoto",
             score: "139",
-            state: "Submitted",
+            state: "submitted",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1555,7 +1553,7 @@ $(document).ready(function() {
             business: "Developer",
             entrepreneur: "Thor Walton",
             score: "98",
-            state: "Not Finalist",
+            state: "notFinalist",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1573,7 +1571,7 @@ $(document).ready(function() {
             business: "Support Engineer",
             entrepreneur: "Finn Camacho",
             score: "87",
-            state: "Submitted",
+            state: "submitted",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1591,7 +1589,7 @@ $(document).ready(function() {
             business: "Data Coordinator",
             entrepreneur: "Serge Baldwin",
             score: "138",
-            state: "Winner",
+            state: "winner",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1609,7 +1607,7 @@ $(document).ready(function() {
             business: "Software Engineer",
             entrepreneur: "Zenaida Frank",
             score: "125",
-            state: "Not Winner",
+            state: "notWinner",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1627,7 +1625,7 @@ $(document).ready(function() {
             business: "Software Engineer",
             entrepreneur: "Zorita Serrano",
             score: "115",
-            state: "Withdrawn",
+            state: "withdrawn",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1645,7 +1643,7 @@ $(document).ready(function() {
             business: "Junior Javascript Developer",
             entrepreneur: "Jennifer Acosta",
             score: "75",
-            state: "Not Finalist",
+            state: "notFinalist",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1663,7 +1661,7 @@ $(document).ready(function() {
             business: "Sales Assistant",
             entrepreneur: "Cara Stevens",
             score: "145",
-            state: "Applied",
+            state: "applied",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1681,7 +1679,7 @@ $(document).ready(function() {
             business: "Regional Director",
             entrepreneur: "Hermione Butler",
             score: "356",
-            state: "Applied",
+            state: "applied",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1699,7 +1697,7 @@ $(document).ready(function() {
             business: "Systems Administrator",
             entrepreneur: "Lael Greer",
             score: "103",
-            state: "Submitted",
+            state: "submitted",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1717,7 +1715,7 @@ $(document).ready(function() {
             business: "Developer",
             entrepreneur: "Jonas Alexander",
             score: "86",
-            state: "Not Winner",
+            state: "notWinner",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1735,7 +1733,7 @@ $(document).ready(function() {
             business: "Regional Director",
             entrepreneur: "Shad Decker",
             score: "183",
-            state: "Finalist",
+            state: "finalist",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1753,7 +1751,7 @@ $(document).ready(function() {
             business: "Javascript Developer",
             entrepreneur: "Michael Bruce",
             score: "183",
-            state: "Withdrawn",
+            state: "withdrawn",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1771,7 +1769,7 @@ $(document).ready(function() {
             business: "Customer Support",
             entrepreneur: "Donna Snider",
             score: "112",
-            state: "Applied",
+            state: "applied",
             assessor_1: {
                 name: "Assessor 1 Full Name",
                 score: "3",
@@ -1799,7 +1797,12 @@ $(document).ready(function() {
             { "data": "score" },
             { "data": "state" }
         ],
-        "order": [[1, 'asc']]
+        "order": [[1, 'asc']],
+        "fnRowCallback": function( nRow, aData, iDisplayIndex )
+        {
+            nRow.className = aData.state;
+            return nRow;
+        }
     } );
 
     // Add event listener for opening and closing details
@@ -1818,7 +1821,14 @@ $(document).ready(function() {
             // Open this row
             row.child( format(row.data()) ).show();
             tr.addClass('shown');
-            tr.next().addClass('extrapanel');
+            if ( tr.hasClass( "withdrawn" ) )
+            {
+                tr.next().addClass('extrapanel withdrawn');
+            }
+            else
+            {
+                tr.next().addClass('extrapanel');
+            }
             $(this).find('.fa').removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
         }
     } );
