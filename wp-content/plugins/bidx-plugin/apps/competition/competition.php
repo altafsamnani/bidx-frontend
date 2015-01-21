@@ -9,7 +9,7 @@ class competition
     static $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2'
         , 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-industries','bidx-cover', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
         'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
-        'bidx-location', 'bidx-chosen', 'jquery-fitvids', 'jquery-raty', 'data-table'
+        'bidx-location', 'bidx-chosen', 'jquery-fitvids', 'jquery-raty', 'data-table', 'timer'
     );
 
     /**
@@ -38,7 +38,7 @@ class competition
         wp_register_script ('data-table', $vendorDir . '/DataTables-1.10.3/media/js/jquery.dataTables.js', array ('jquery'), '1.10.3', TRUE);
         wp_register_script('timer',       '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js', array(), '20130501', TRUE);
 
-        $deps = array_merge( self :: $deps, array(  'timer' ) );
+        $deps = array_merge( self :: $deps, array(  'timer','data-table' ) );
 
         wp_register_script('competition', plugins_url('static/js/competition.js', __FILE__), $deps, '20130501', TRUE);
     }

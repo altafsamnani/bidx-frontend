@@ -754,7 +754,7 @@ function format ( d ) {
 
     '</div>';
 }
- 
+
 $(document).ready(function() {
     var table = $('#example').DataTable( {
         "bPaginate": false,
@@ -1801,12 +1801,12 @@ $(document).ready(function() {
         ],
         "order": [[1, 'asc']]
     } );
-     
+
     // Add event listener for opening and closing details
     $('#example tbody').on('click', 'td.details-control', function () {
         var tr = $(this).closest('tr');
         var row = table.row( tr );
- 
+
         if ( row.child.isShown() ) {
             // This row is already open - close it
             row.child.hide();
@@ -2125,7 +2125,7 @@ $(document).ready(function() {
 
         // Documents are not using a form, just a reflowrower
         //
-        var attachment = bidx.utils.getValue( competitionSummary, "attachment", true );
+        var attachment = bidx.utils.getValue( competitionSummary, "competitionDocument", true );
 
         if ( attachment )
         {
@@ -2323,7 +2323,7 @@ $(document).ready(function() {
             attachments.push( bidxData );
         } );
 
-        bidx.utils.setValue( competitionSummary, "attachment", attachments );
+        bidx.utils.setValue( competitionSummary, "competitionDocument", attachments );
 
         // Cover Image
         //

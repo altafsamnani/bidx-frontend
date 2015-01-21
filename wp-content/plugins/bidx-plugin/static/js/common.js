@@ -1255,7 +1255,7 @@
         ,   showMeridian:           true
         ,   autoclose:              true
         ,   todayHighlight:         true
-        ,   weekStart:              1
+        ,   pickerPosition:         "top-left"
         ,   language:               currentLanguage
         } );
     }
