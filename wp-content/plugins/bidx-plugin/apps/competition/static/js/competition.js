@@ -755,7 +755,7 @@ function format ( d ) {
 
 $(document).ready(function() {
     var table = $('#example').DataTable( {
-        "bPaginate": false,
+        "bPaginate": true,
         "data":     [
         {
             business: "System Architect",
