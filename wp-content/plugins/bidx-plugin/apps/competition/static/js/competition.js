@@ -68,7 +68,7 @@
 
         // Cover Image
         //
-    ,   $coverImage                         = $element.find( ".businessCover" )
+    ,   $coverImage                         = $element.find( ".competitionCover" )
     ,   $coverImageBtn                      = $coverImage.find( "[href$='#coverImage']" )
     ,   $coverRemoveBtn                     = $coverImage.find( "[href$='#coverRemove']" )
     ,   $coverImageModal                    = $coverImage.find( ".coverModal" )
@@ -430,7 +430,7 @@
 
                 $coverImageContainer.find( "img" ).remove();
 
-                competitionSummary.cover = null;
+                competitionSummary.competitionLogo = null;
             } );
 
         }
@@ -2122,7 +2122,7 @@ $(document).ready(function() {
         }
 
 
-        var coverImage = bidx.utils.getValue( competitionSummary, "cover" );
+        var coverImage = bidx.utils.getValue( competitionSummary, "competitionLogo" );
 
         if ( coverImage )
         {
@@ -2343,18 +2343,18 @@ $(document).ready(function() {
 
         if ( coverImageData )
         {
-            bidx.utils.setValue( competitionSummary, "cover.fileUpload", coverImageData.fileUpload );
+            bidx.utils.setValue( competitionSummary, "competitionLogo.fileUpload", coverImageData.fileUpload );
     }
 
         if ( coverImgTopPos )
         {
             if ( coverImgTopPos <= 0 )
             {
-                bidx.utils.setValue( competitionSummary, "cover.top", coverImgTopPos );
+                bidx.utils.setValue( competitionSummary, "competitionLogo.top", coverImgTopPos );
             }
             else
             {
-                bidx.utils.setValue( competitionSummary, "cover.top", 0 );
+                bidx.utils.setValue( competitionSummary, "competitionLogo.top", 0 );
             }
         }
 

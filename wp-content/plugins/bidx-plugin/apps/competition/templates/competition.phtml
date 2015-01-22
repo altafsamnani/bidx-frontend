@@ -49,7 +49,7 @@ if ( $requestStatus === "granted" || $canEdit )
     $hasAccess = true;
 }
 
-if ( !($competition->cover && $competition->cover->document) )
+if ( !($competition->competitionLogo && $competition->competitionLogo->document) )
 {
     if ( $canEdit || $newBusiness )
     {
@@ -109,13 +109,13 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 
 ?>
 <div class="competitionSummary box-border top-margin-lineheight" id="competitionSummary" data-bsid=<?php echo $competitionId; ?>>
-    <div class="businessCover">
+    <div class="competitionCover">
         <div class="coverImageContainer <?php echo $hasCover; ?>">
 <?php
-            if ( $competition->cover && $competition->cover->document ):
+            if ( $competition->competitionLogo && $competition->competitionLogo->document ) :
 ?>
             <div class="coverImage">
-                <img src="<?php echo $competition->cover->document ?>" alt="Cover Image" data-initop="<?php echo $competition->cover->top?>" style="position: relative; top: <?php echo $competition->cover->top?>px">
+                <img src="<?php echo $competition->competitionLogo->document ?>" alt="Cover Image" data-initop="<?php echo $competition->competitionLogo->top?>" style="position: relative; top: <?php echo $competition->competitionLogo->top?>px">
             </div>
 <?php
             endif;
@@ -215,9 +215,44 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 <?php
     }
 ?>
+
+  <div class="row main-padding">
+    <div class="col-sm-9"></div>
+    <div class="col-sm-3 text-right">
+        <div class="btn-group">
+            <?php
+            // does a user have rights to edit ( is the owner )
+            //
+            if ( $canEdit )
+            {
+?>
+                <a class="btn btn-primary editBS" href="#editCompetition/<?php echo $competitionId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+<?php
+            }
+?>
+        </div>
+        <div class="editControlsContainer">
+            <div class="editControls pull-right">
+
+                <!-- SHOW -->
+                <div class="view viewShow"></div>
+
+                <!-- EDIT, conditionally filled by the app -->
+                <div class="view viewEdit btn-group"></div>
+
+                <!-- sucess msg, used as a placeholder for showing msgs -->
+
+                <div class="view viewMainsuccess alert alert-success">
+                    <p class="successMsg"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- SHOW -->
 <div class="view viewShow">
-    <div class="row">
+    <div class="row hide">
         <div class="col-sm-8 col-sm-offset-2">
         <h3>Select one of your business summaries</h3>
         <table class="table table-striped">
@@ -289,20 +324,21 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 
 
 <div class="mainBusiness hide-overflow">
-    <div class="row">
+    <!-- Consider for deleting
+    <div class="row hide">
     <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
 <?php
-            if ( $competition->competitionLogo && $competition->competitionLogo->document ):
+           // if ( $competition->competitionLogo && $competition->competitionLogo->document ):
 ?>
-            <div class="competitionLogoImage">
-                <img src="<?php echo $competition->competitionLogo->document ?>" class="center-img" alt="competitionLogo Image">
+            <div class="competitionLogoImage hide">
+                <img src="<?php //echo $competition->competitionLogo->document ?>" class="center-img" alt="competitionLogo Image">
             </div>
 <?php
-            endif;
+            //endif;
 ?>
 
     </div>
-    </div>
+    </div> -->
 <div class="row">
 <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
 <?php
@@ -506,11 +542,12 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                         <!-- EDIT -->
                         <div class="view viewEdit">
                             <blockquote class="alert-info"><?php _e('Use this section to describe your competition. Think about what information you would like participants to know about competition if you only had a few minutes to explain.','bidxplugin')?></blockquote>
+                            <!--  Consider it for deleting competitionLogo
                                 <div class="row bscompetitionLogo form-group">
-                                    <!-- competitionLogo -->
+
                                     <div class="col-sm-6">
                                         <a href="#addcompetitionLogo" data-toggle="modal" class="btn btn-primary">
-                                            <?php _e('Select Logo'); ?>
+                                            <?php //_e('Select Logo'); ?>
                                         </a>
 
                                         <div class="addcompetitionLogoImage modal fade">
@@ -518,18 +555,18 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                                                 <div class="modal-content">
                                                 <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h3><?php _e('Check the file you want to use as your competitionLogo', 'bidxplugin' ); ?></h3>
+                                                <h3><?php //_e('Check the file you want to use as your competitionLogo', 'bidxplugin' ); ?></h3>
                                                 </div>
                                                 <div class="modal-body">
                             <?php
                                                     // Media app will only be inserted once, this is by design!
                                                     //
-                                                    echo do_shortcode( '[bidx app="media"]' );
+                                                    //echo do_shortcode( '[bidx app="media"]' );
                             ?>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></button>
-                                                    <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
+                                                    <button type="button" class="btn btn-primary btnSelectFile"><?php// _e( 'Select file(s)', 'bidxplugin' ); ?></button>
+                                                    <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php //_e( 'Cancel', 'bidxplugin' ); ?></button>
 
                                                 </div>
                                                 </div>
@@ -539,7 +576,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                                     <div class="col-sm-6">
                                         <div class="competitionLogoContainer"></div>
                                     </div>
-                                </div>
+                                </div> -->
                             <form id="frmCompetition-GeneralOverview">
                                 <div class="row">
                                     <!-- Name -->
