@@ -2217,6 +2217,10 @@ tbody tr.extrapanel td
         }
     }
 }
+.dataTables_wrapper
+{
+    margin-top: ceil(@padding-base-vertical * 4);
+}
 .dataTables_filter
 {
     float: right;
@@ -2284,7 +2288,11 @@ tbody tr.extrapanel td
             width: 50%;
         }
 
-    }   
+    }
+    .chosen-container
+    {
+        width: 50% !important;
+    }
 }
 .dataTables_paginate
 {

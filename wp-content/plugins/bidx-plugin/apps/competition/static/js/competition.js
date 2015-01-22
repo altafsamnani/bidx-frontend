@@ -1832,6 +1832,9 @@ $(document).ready(function() {
             $(this).find('.fa').removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
         }
     } );
+
+        $( ".dataTables_length select" ).bidx_chosen();
+    
 } );
 
     var _handleToggleChange = function( show, group )
