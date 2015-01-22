@@ -311,7 +311,7 @@
 
         ,   'editCompetition(/:id)(*splat)':                    'editCompetition'
         ,   'createCompetition':                                'createCompetition'
-        ,   'viewCompetition':                                  'viewCompetition'
+        ,   'viewCompetition(/:id)(*splat)':                    'viewCompetition'
 
 
         ,   'loadMentors(/:id)(*splat)':                        'loadMentors'
@@ -648,7 +648,7 @@
                 }
             );
         }
-    ,   viewCompetition:          function()
+    ,   viewCompetition:          function( id, splat )
         {
             bidx.utils.log( "AppRouter::viewCompetition" );
 
@@ -659,6 +659,8 @@
                 "competition"
             ,   {
                     requestedState: "view"
+                ,   id:             id
+                ,   params:   _deparamSplat( splat )
                 }
             );
         }

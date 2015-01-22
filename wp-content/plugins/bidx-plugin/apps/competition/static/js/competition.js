@@ -23,6 +23,9 @@
     ,   $btnCancel
     ,   $btnFullAccessRequest       = $element.find( ".bidxRequestFullAccess")
     ,   $bidxAccessRequestPending   = $element.find( ".bidxAccessRequestPending")
+    ,   $btnParticipate             = $element.find( ".btn-participate")
+    ,   $btnApply                   = $element.find( ".btn-apply")
+
 
     ,   $videoWrapper               = $element.find( ".video-wrapper" )
 
@@ -41,6 +44,9 @@
     ,   $fakecrop                   = $views.find( ".bidx-profilepicture img" )
 
     ,   loggedInMemberId            = bidx.common.getCurrentUserId()
+
+    ,   $businessSummary            = $element.find( "[name='businessSummary']" )
+    ,   listDropdownBp              = bidx.utils.getValue( bidxConfig, "session.wp.entities.bidxBusinessSummary" )
 
     ,   active                      = []
     ,   wait                        = []
@@ -194,6 +200,7 @@
     function _oneTimeSetup()
     {
          var option
+         ,   bpLength
          ,   visibilityArrItems  =   [ ]
          ;
         _competitionTimer();
@@ -201,6 +208,39 @@
         _setupValidation();
         _coverImage();
         _documents();
+
+        if( $businessSummary )
+        {
+            _showAllView( "participate" ); // Display participate Bar
+
+            $businessSummary.chosen({
+                                        placeholder_text_single : bidx.i18n.i( "msgWaitForSave" )
+                                    ,   width                   : "75%"
+                                    ,   disable_search_threshold : 10
+                                    });
+            bpLength    = _.size(listDropdownBp); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
+
+            if( bpLength )
+            {
+                _getBusinessPlans( )
+                .done( function( listBpItems )
+                {
+
+                    bidx.utils.log('listBpItems',listBpItems);
+                    $businessSummary.append( listBpItems );
+                    $businessSummary.trigger( "chosen:updated" );
+
+                } );
+            }
+
+            $btnParticipate.click( function( e )
+            {
+                e.preventDefault();
+                _showAllView('apply');
+                _hideView( 'participate');
+
+            });
+        }
 
         // On any changes, how little doesn't matter, notify that we have a pending change
         // But no need to track the changes when doing a member data load
@@ -488,7 +528,7 @@
                         bidx.utils.log( "[competitionLogo] selected profile picture", file );
 
                         $competitionLogoContainer.data( "bidxData", file );
-                        $competitionLogoContainer.html( $( "<img />", { "src": file.document, "data-fileUploadId": file.fileUpload } ));
+                        $competitionLogoContainer.html( $( "<img />", { "src": file.document, "data-filebusinessPlanEntityId": file.fileUpload } ));
 
                         $bscompetitionLogoModal.modal( "hide" );
                     }
@@ -505,15 +545,15 @@
         {
             $( window.bidx ).bind( "updated.media", function( e, data )
             {
-                var uploadId = bidx.utils.getValue( data, "bidxMeta.bidxUploadId" );
+                var businessPlanEntityId = bidx.utils.getValue( data, "bidxMeta.bidxbusinessPlanEntityId" );
 
-                if ( !uploadId )
+                if ( !businessPlanEntityId )
                 {
-                    bidx.utils.error( "No uploadId found on updated media event!", data );
+                    bidx.utils.error( "No businessPlanEntityId found on updated media event!", data );
                     return;
                 }
 
-                $attachmentContainer.find( "[data-uploadId='" + uploadId + "']" ).each( function()
+                $attachmentContainer.find( "[data-businessPlanEntityId='" + businessPlanEntityId + "']" ).each( function()
                 {
                     var $attachment     = $( this )
                     ,   attachment      = $attachment.data( "bidxData" )
@@ -1834,7 +1874,7 @@ $(document).ready(function() {
     } );
 
         $( ".dataTables_length select" ).bidx_chosen();
-    
+
 } );
 
     var _handleToggleChange = function( show, group )
@@ -1915,7 +1955,7 @@ $(document).ready(function() {
         ,   showDeleteBtn:          false
         ,   showDownloadBtn:        false
 
-        ,   id:                     doc.bidxMeta.bidxUploadId
+        ,   id:                     doc.bidxMeta.bidxbusinessPlanEntityId
 
         ,   callbacks:
             {
@@ -1972,7 +2012,7 @@ $(document).ready(function() {
         ,   deletedDoc          = false
         ;
 
-        if ( !attachment.bidxMeta.bidxUploadId )
+        if ( !attachment.bidxMeta.bidxbusinessPlanEntityId )
         {
             bidx.utils.warn( "competitionSummary::_updateAttachment: attachment has been deleted!" );
             deletedDoc = true;
@@ -1984,7 +2024,7 @@ $(document).ready(function() {
 
         // Set the upload ID on the DOM so we can find this later when we get an update from the media library
         //
-        $attachment.attr( "data-uploadId", bidx.utils.getValue( attachment, "fileUpload" ));
+        $attachment.attr( "data-businessPlanEntityId", bidx.utils.getValue( attachment, "fileUpload" ));
 
         $attachment.find( ".documentName"       ).text( attachment.documentName );
         $attachment.find( ".createdDateTime"    ).text( createdDateTime );
@@ -2067,6 +2107,71 @@ $(document).ready(function() {
         }
     }
 
+    function _getBusinessPlans(  )
+    {
+        var option
+        ,   bpLength    = _.size(listDropdownBp)
+        ,   counter     = 0
+        ,   promises    = []
+        ,   listBpItems = []
+        ,   $d          = $.Deferred()
+        ;
+
+
+
+            $.each( listDropdownBp, function( idx, entityId )
+            {
+                bidx.api.call(
+                    "entity.fetch"
+                ,   {
+                        entityId    :   entityId
+                    ,   groupDomain :   bidx.common.groupDomain
+                    ,   success:        function( item )
+                        {
+                            // now format it into array of objects with value and label
+
+                            if ( !$.isEmptyObject(item) )
+                            {
+                                option  =   $( "<option/>",
+                                            {
+                                                value: entityId
+                                            } );
+
+                                option.text( item.name );
+
+                                listBpItems.push( option );
+
+                                counter = counter + 1;
+
+                                if(counter === bpLength )
+                                {
+                                    $d.resolve( listBpItems );
+                                }
+
+                            }
+                        }
+
+                    ,   error: function(jqXhr, textStatus)
+                        {
+                            var response = $.parseJSON( jqXhr.responseText);
+
+                            bidx.utils.log("Error retrieving the data for entityid", entityId);
+
+                            counter = counter + 1;
+
+                            if(counter === bpLength )
+                            {
+
+                                $d.resolve( listBpItems );
+                            }
+                        }
+                    });
+            } );
+
+            return $d.promise();
+    }
+
+
 
     // Use the retrieved competitionSummary entity to populate the form and other screen elements
     //
@@ -2146,16 +2251,16 @@ $(document).ready(function() {
             ,   attachmentExists    = []
             ;
 
-            // Prevent documents to be added again by checking the previously added data attribute "data-uploadid"
+            // Prevent documents to be added again by checking the previously added data attribute "data-businessPlanEntityId"
             //
             if ( attached.length ) {
                 $.each( attached, function( idx, a )
                 {
-                    var bidxUploadId = $(this).context.dataset.uploadid;
+                    var bidxbusinessPlanEntityId = $(this).context.dataset.businessPlanEntityId;
 
-                    if ( $.inArray( bidxUploadId, attachmentExists ) === -1 )
+                    if ( $.inArray( bidxbusinessPlanEntityId, attachmentExists ) === -1 )
                     {
-                        attachmentExists.push( bidxUploadId );
+                        attachmentExists.push( bidxbusinessPlanEntityId );
                     }
                 } );
             }
@@ -2696,6 +2801,54 @@ $(document).ready(function() {
         } );
     }
 
+    $btnApply.click( function( e )
+    {
+        e.preventDefault();
+
+        var businessPlanEntityId    =   $businessSummary.val()
+    ;
+
+        if ( !businessPlanEntityId )
+        {
+            bidx.utils.error( "[media] No upload id, unable to delete!", businessPlanEntityId );
+            return;
+        }
+
+        var orgText
+        ,   confirmTimer
+        ;
+
+        function startConfirmTimer( $btn, orgText )
+        {
+            confirmTimer = setTimeout( function( )
+            {
+                $btn.text( orgText );
+                $btn.data( "confirm", false );
+
+                $btn.removeClass( "btn-danger" );
+
+            }, 5000 );
+        }
+
+        if ( $btnApply.data( "confirm" ) )
+        {
+            clearTimeout( confirmTimer );
+
+            alert('businessPlanEntityId --' + businessPlanEntityId);
+        }
+        else
+        {
+            orgText = $btnApply.text();
+
+            $btnApply.data( "confirm", true );
+
+            $btnApply.addClass( "btn-danger" );
+            $btnApply.i18nText( "btnConfirm" );
+
+            startConfirmTimer( $btnApply, orgText );
+        }
+    });
+
     // Beware! validation should have been tested, this is just a function for callin the API for saving
     //
     function _save( params )
@@ -2817,7 +2970,7 @@ $(document).ready(function() {
         var params  = options.params
         ,   cancel  = bidx.utils.getValue( params, 'cancel')
         ;
-
+        bidx.utils.log('Params', params);
         if ( options.requestedState !== "edit" )
         {
             $element.removeClass( "edit" );
@@ -2827,11 +2980,20 @@ $(document).ready(function() {
         {
             case 'view':
 
-               bidx.utils.log( "competitionSummary::AppRouter::view" );
+                bidx.utils.log( "competitionSummary::AppRouter::view" );
+                if(cancel)
+                {
+                     _hideView( 'apply');
+                    _showAllView('participate');
+                     bidx.controller.updateHash( "#viewCompetition", false );
+                }
+                break;
+
+            case 'apply':
 
 
-            break;
 
+                break;
             case 'load':
                 bidx.utils.log( "competitionSummary::AppRouter::load", params );
 
