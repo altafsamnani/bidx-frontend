@@ -750,6 +750,57 @@ function format ( d ) {
             '</div>'+
         '</div>'+
 
+    '</div>'+
+    '<hr>'+
+    '<div>'+
+        '<div class="hide-overflow">'+
+            '<label class="inline">Qualification:</label>'+
+            '<div class="radio inline-radio">'+
+                '<input type="radio" value="acceptApplication" id="radio-accept" name="applicationQualification" data-toggle="radio" />'+
+                '<label for="radio-finalist"><span></span>ACCEPT</label>'+
+            '</div>'+
+
+            '<div class="radio inline-radio">'+
+                '<input type="radio" value="rejectApplication" id="radio-reject" name="applicationQualification" data-toggle="radio" />'+
+                '<label for="radio-notFinalist"><span></span>REJECT</label>'+
+            '</div>'+
+        '</div>'+
+        '<div class="clearboth">'+
+            '<select class="selectAssessors" multiple>'+
+                '<option value="">Assessor 1</option>'+
+                '<option value="">Assessor 2</option>'+
+                '<option value="">Assessor 3</option>'+
+                '<option value="">Assessor 4</option>'+
+                '<option value="">Assessor 5</option>'+
+                '<option value="">Assessor 5</option>'+
+                '<option value="">Assessor 5</option>'+
+                '<option value="">Assessor 5</option>'+
+                '<option value="">Assessor 5</option>'+
+                '<option value="">Assessor 5</option>'+
+                '<option value="">Assessor 5</option>'+
+                '<option value="">Assessor 5</option>'+
+                '<option value="">Assessor 5</option>'+
+                '<option value="">Assessor 5</option>'+
+                '<option value="">Assessor 5</option>'+
+                '<option value="">Assessor 5</option>'+
+                '<option value="">Assessor 5</option>'+
+                '<option value="">Assessor 5</option>'+
+                '<option value="">Assessor 5</option>'+
+                '<option value="">Assessor 5</option>'+
+                '<option value="">Assessor 5</option>'+
+            '</select>'+
+        '</div>'+
+
+        '<textarea type="text" class="form-control" name="rejection" placeholder="Explain your rejection"></textarea>'+
+
+        '<div class="text-right">'+
+            '<a href="#" class="btn btn-primary btn-md info-action">Set</a>'+
+            '<a href="#" class="btn btn-primary btn-md info-action">Assign</a>'+
+        '</div>'+
+
+    '</div>'+
+    '</div>'+
+
     '</div>';
 }
 
@@ -1829,12 +1880,15 @@ $(document).ready(function() {
             {
                 tr.next().addClass('extrapanel');
             }
+
             $(this).find('.fa').removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
+
+            tr.next().find( ".selectAssessors" ).bidx_chosen();
         }
     } );
 
         $( ".dataTables_length select" ).bidx_chosen();
-    
+
 } );
 
     var _handleToggleChange = function( show, group )

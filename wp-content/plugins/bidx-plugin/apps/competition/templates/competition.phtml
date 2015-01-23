@@ -208,7 +208,17 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                     </h4>
                 </div>
                 <div class="col-sm-4 text-right">
-                    <button class="btn btn-lg btn-primary"><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
+                    <button class="btn btn-primary"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
+<?php
+                    // does a user have rights to edit ( is the owner )
+                    //
+                    if ( $canEdit )
+                    {
+?>
+                        <a class="btn btn-primary editBS" href="#editCompetition/<?php echo $competitionId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+<?php
+                    }
+?>
                 </div>
             </div>
         </div>
@@ -220,16 +230,6 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
     <div class="col-sm-9"></div>
     <div class="col-sm-3 text-right">
         <div class="btn-group">
-            <?php
-            // does a user have rights to edit ( is the owner )
-            //
-            if ( $canEdit )
-            {
-?>
-                <a class="btn btn-primary editBS" href="#editCompetition/<?php echo $competitionId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
-<?php
-            }
-?>
         </div>
         <div class="editControlsContainer">
             <div class="editControls pull-right">
