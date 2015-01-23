@@ -1607,7 +1607,7 @@
                     //
                     var params =
                     {
-                        requesterId:     item.contactId
+                        requesterId:     item.id
                     ,   requesteeId:     bidx.common.getCurrentUserId( "id" )
                     ,   type:            "contact"
                     ,   action:          "accept"
