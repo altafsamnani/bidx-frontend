@@ -201,14 +201,14 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
     {
 ?>
         <div class="main-padding bg-info">
-            <div class="row">
+            <div class="row view viewParticipate">
                 <div class="col-sm-4 col-sm-offset-2">
                     <h4><?php echo _e( 'Apply before', 'bidxplugin' ); ?>:
                         <strong><?php echo $endDateTime;?></strong>
                     </h4>
                 </div>
                 <div class="col-sm-4 text-right">
-                    <button class="btn btn-primary"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
+                    <button class="btn btn-primary btn-participate"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
 <?php
                     // does a user have rights to edit ( is the owner )
                     //
@@ -219,6 +219,18 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 <?php
                     }
 ?>
+                </div>
+            </div>
+
+            <div class="row main-padding view viewApply">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <div class="form-group">
+                        <label><?php _e('Select one of your business summaries','bidxplugin'); ?></label>
+                         <select class="chosen-summary" name="businessSummary"></select>
+
+                        <a  class="btn btn-lg btn-primary btn-apply"><?php echo _e( 'Apply', 'bidxplugin' ); ?></a>
+                        <a href="#viewCompetition/<?php echo $competitionId;?>/cancel=true" class="btn btn-lg btn-primary btn-cancel"><?php echo _e( 'Cancel', 'bidxplugin' ); ?></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -252,75 +264,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 
 <!-- SHOW -->
 <div class="view viewShow">
-    <div class="row hide">
-        <div class="col-sm-8 col-sm-offset-2">
-        <h3>Select one of your business summaries</h3>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Business name</th>
-                    <th>Registered</th>
-                    <th>Employees</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="">
-                    <td>
-                        <div class="controls">
-                            <div class="radio">
-                                <input type="radio" value="8871" id="radio-Company" name="companyList" data-toggle="radio">
-                                <label for="radio-Company"><span></span></label>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="companyName">asfd</td>
-                    <td class="registered">No</td>
-                    <td class="employees">No</td>
-                </tr>
-                <tr class="">
-                    <td>
-                        <div class="controls">
-                            <div class="radio">
-                                <input type="radio" value="10314" id="radio-Company" name="companyList" data-toggle="radio">
-                                <label for="radio-Company"><span></span></label>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="companyName">test2</td>
-                    <td class="registered">No</td>
-                    <td class="employees">No</td>
-                </tr>
-                <tr class="">
-                    <td>
-                        <div class="controls">
-                            <div class="radio">
-                                <input type="radio" value="10351" id="radio-Company" name="companyList" data-toggle="radio">
-                                <label for="radio-Company"><span></span></label>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="companyName">test</td>
-                    <td class="registered">No</td>
-                    <td class="employees">No</td>
-                </tr>
-                <tr class="">
-                    <td>
-                        <div class="controls">
-                            <div class="radio">
-                                <input type="radio" value="10353" id="radio-Company" name="companyList" data-toggle="radio">
-                                <label for="radio-Company"><span></span></label>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="companyName">Hamish UK Enterprise</td>
-                    <td class="registered">No</td>
-                    <td class="employees">No</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+
 
 
 <div class="mainBusiness hide-overflow">
