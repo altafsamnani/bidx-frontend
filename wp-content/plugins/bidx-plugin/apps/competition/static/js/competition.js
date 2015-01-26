@@ -112,6 +112,7 @@
 
     ,   visibilityArr                       = ['public','closed','invited']
 
+    ,   currentUserBusinessSummaryList      = []
     ,   competitionSummary
     ,   competitionSummaryId
 
@@ -226,7 +227,6 @@
                 .done( function( listBpItems )
                 {
 
-                    bidx.utils.log('listBpItems',listBpItems);
                     $businessSummary.append( listBpItems );
                     $businessSummary.trigger( "chosen:updated" );
 
@@ -663,63 +663,6 @@
             ,   itemClass:          "attachmentItem"
             } );
 
-        }
-
-        // bind Full Accesss Request button
-        // only for users not owning the current summary ( summary owners do not get this button rendered )
-        //
-        if ( $btnFullAccessRequest )
-        {
-                $btnFullAccessRequest.click( function( e )
-                {
-                    e.preventDefault();
-                    _doAccessRequest();
-                } );
-        }
-
-
-        // bind Rating stars
-        // only for users not owning the current summary ( summary owners do not get this button rendered )
-        //
-        if ( $ratingVote )
-        {
-            $raty.raty({
-                cancel   : true,
-                starType : 'i',
-                // TODO Arjan remove or translate?
-                hints       : ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent'],
-                click: function( value )
-                {
-                    var scope = null
-                    ,   comment = null;
-
-                    bidx.common.rate( bidxConfig.context.competitionSummaryId, scope, value, comment, function( data )
-                    {
-                        var count = data.totals.count;
-                        bidx.utils.log('data.userRating', data);
-                        $ratingUserLabel.text( bidx.i18n.i( data.userRating ? "ratingUserLabel" : "ratingUserLabelNone", appName ) );
-
-                        $ratingAverage.text(data.totals.average ? data.totals.average : "?" );
-                        $ratingTotalVoters.text(data.totals.count);
-
-                        if ( data.totals.average )
-                        {
-                            $ratingScore.removeClass( "hide" );
-                            $ratingNoScore.addClass( "hide" );
-                        }
-                        else
-                        {
-                            $ratingNoScore.removeClass( "hide" );
-                            $ratingScore.addClass( "hide" );
-                        }
-                    } );
-                },
-                score: function()
-                {
-                    return $(this).attr('data-rating');
-                }
-
-            });
         }
 
         if ( $videoWrapper )
@@ -1939,51 +1882,7 @@ $(document).ready(function() {
     };
 
 
-    // Do a full access request for this competitionSummary
-    //
-    function _doAccessRequest()
-    {
-        bidx.api.call(
-             "competitionSummaryRequestAccess.send"
-        ,   {
-                groupDomain:            bidx.common.groupDomain
-            ,   id:                     bidxConfig.context.competitionSummaryId
-            ,   success: function( response )
-                {
-                    if ( response.status === "OK" )
-                    {
-                        // show Pending button and hide Send button
-                        //
-                        $bidxAccessRequestPending.toggleClass( "hide" );
-                        $btnFullAccessRequest.toggleClass( "hide" );
-                    }
 
-                }
-
-            ,   error: function( jqXhr, textStatus )
-                {
-
-                    var response = $.parseJSON( jqXhr.responseText);
-
-                    // 400 errors are Client errors
-                    //
-                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                    {
-                        bidx.utils.error( "Client  error occured", response );
-                        _showError( "Something went wrong sending the access request: " + response.text );
-                    }
-                    // 500 erors are Server errors
-                    //
-                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                    {
-                        bidx.utils.error( "Internal Server error occured", response );
-                        _showError( "Something went wrong sending the access request: " + response.text );
-                    }
-
-                }
-            }
-        );
-    }
 
     // Open the media library in edit mode for a specific file
     //
@@ -2196,6 +2095,11 @@ $(document).ready(function() {
                                 listBpItems.push( option );
 
                                 counter = counter + 1;
+
+                                currentUserBusinessSummaryList.push (   {
+                                                                            'entityId' : item.bidxMeta.bidxEntityId
+                                                                        ,   'data'     : item
+                                                                     } );
 
                                 if(counter === bpLength )
                                 {
@@ -2855,22 +2759,157 @@ $(document).ready(function() {
         } );
     }
 
+    function _appendCardValues( options )
+    {
+        var listItem
+        ,   $listItem
+        ,   countryOperation
+        ,   entrpreneurIndustry
+        ,   entrpreneurReason
+        ,   country
+        ,   industry
+        ,   reason
+        ,   item
+        ,   businessData
+        ,   bidxMeta
+        ,   isEntrepreneur
+        ,   isInvestor
+        ,   isMentor
+        ,   emptyVal        = ''
+        ,   entityId        = options.entityId
+        ,   $list           = $element.find("." + options.list)
+        ,   snippet         = $("#entrpreneur-card-snippet").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $listError      = $("#error-card").html().replace(/(<!--)*(-->)*/g, "")
+        ;
+
+        bidx.utils.log('enttYid', entityId);
+
+        businessData       =  _.findWhere( currentUserBusinessSummaryList, { 'entityId' : parseInt(entityId) } );
+        bidx.utils.log('currentUserBusinessSummaryList',currentUserBusinessSummaryList);
+        bidx.utils.log('item', item);
+
+        bidxMeta           = businessData.data.bidxMeta;
+
+        item               = businessData.data;
+
+        isEntrepreneur   = bidx.utils.getValue( item, "bidxEntrepreneurProfile" );
+        isInvestor       = bidx.utils.getValue( item, "bidxInvestorProfile" );
+        isMentor         = bidx.utils.getValue( item, "bidxMentorProfile" );
+
+        if ( !$.isEmptyObject(item) )
+        {
+             countryOperation  = bidx.utils.getValue( item, "countryOperation");
+
+            if(countryOperation)
+            {
+
+                bidx.data.getItem(countryOperation, 'country', function(err, labelCountry)
+                {
+                    country    =   labelCountry;
+                });
+            }
+
+            entrpreneurIndustry = bidx.utils.getValue( item, "industry");
+
+            if(entrpreneurIndustry)
+            {
+                bidx.data.getItem(entrpreneurIndustry, 'industry', function(err, labelIndustry)
+                {
+                   industry = labelIndustry;
+                });
+            }
+
+            entrpreneurReason = bidx.utils.getValue( item, "reasonForSubmission");
+
+            if(entrpreneurReason)
+            {
+                bidx.data.getItem(entrpreneurReason, 'reasonForSubmission', function(err, labelReason)
+                {
+                   reason = labelReason;
+                });
+            }
+
+            listItem    =   snippet
+                            .replace( /%entityId%/g,                    entityId   ? entityId     : emptyVal )
+                            .replace( /%bidxOwnerDisplayName%/g,        bidxMeta.bidxOwnerDisplayName   ? bidxMeta.bidxOwnerDisplayName     : emptyVal )
+                            .replace( /%bidxRatingAverage%/g,           bidxMeta.bidxRatingAverage   ? bidxMeta.bidxRatingAverage     : emptyVal )
+                            .replace( /%completeness%/g,                item.completeness   ? item.completeness     : emptyVal )
+                            .replace( /%name%/g,                        item.name   ? item.name     : emptyVal )
+                            .replace( /%summary%/g,                     item.summary   ? item.summary     : emptyVal )
+                            .replace( /%bidxLastUpdateDateTime%/g,      bidxMeta.bidxLastUpdateDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxLastUpdateDateTime) : emptyVal )
+                            .replace( /%role_entrepreneur%/g,           bidx.i18n.i( 'entrepreneur' ) )
+                            .replace( /%countryOperation%/g,            country )
+                            .replace( /%industry%/g,                    industry )
+                            .replace( /%reasonForSubmission%/g,         reason )
+                            .replace( /%financingNeeded%/g,             item.financingNeeded   ? item.financingNeeded     : emptyVal )
+                            ;
+
+            $listItem   =   $(listItem);
+        }
+        else
+        {
+            $listItem = $listError;
+        }
+
+        $list.empty().append( $listItem );
+
+        _showAllView('ownCard');
+
+
+    }
+
+    function _updatePlanStatusToCompetition( params )
+    {
+        bidx.api.call(
+            "competition.assignPlanToCompetition"
+        ,   {
+                competitionId:  params.competitionId
+            ,   groupDomain:    bidx.common.groupDomain
+            ,   data:           params.data
+            ,   method:         "POST"
+            ,   success:        function( response )
+                {
+                    // Do we have edit perms?
+                    //
+                    bidx.utils.log('response',response);
+                    _hideView('apply');
+                    _showAllView('success');
+
+                    _appendCardValues( {
+                                            list:       'viewOwnCard'
+                                        ,   entityId:   params.data.entityId
+                                        });
+
+
+                }
+
+                , error: function(jqXhr, textStatus)
+                {
+                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                    _showError("Something went wrong while applying for the competition for entityId: " + params.data.entityId);
+                }
+            }
+        );
+    }
+
     $btnApply.click( function( e )
     {
         e.preventDefault();
 
-        var businessPlanEntityId    =   $businessSummary.val()
-    ;
+        var orgText
+        ,   confirmTimer
+        ,   params
+        ,   businessPlanEntityId    =   $businessSummary.val()
+        ;
 
         if ( !businessPlanEntityId )
         {
-            bidx.utils.error( "[media] No upload id, unable to delete!", businessPlanEntityId );
+            bidx.utils.error( "[businesssummary] No businesssummary id, unable to apply!", businessPlanEntityId );
             return;
         }
 
-        var orgText
-        ,   confirmTimer
-        ;
+
 
         function startConfirmTimer( $btn, orgText )
         {
@@ -2888,7 +2927,16 @@ $(document).ready(function() {
         {
             clearTimeout( confirmTimer );
 
-            alert('businessPlanEntityId --' + businessPlanEntityId);
+            params  =   {
+                            competitionId   :   competitionSummaryId
+                        ,   data            :   {
+                                                    entityId    :   businessPlanEntityId
+                                                ,   status      :   'APPLIED'
+                                                }
+                        }
+                    ;
+            _updatePlanStatusToCompetition( params );
+
         }
         else
         {
@@ -3024,7 +3072,7 @@ $(document).ready(function() {
         var params  = options.params
         ,   cancel  = bidx.utils.getValue( params, 'cancel')
         ;
-        bidx.utils.log('Params', params);
+
         if ( options.requestedState !== "edit" )
         {
             $element.removeClass( "edit" );
@@ -3035,12 +3083,16 @@ $(document).ready(function() {
             case 'view':
 
                 bidx.utils.log( "competitionSummary::AppRouter::view" );
+
+                competitionSummaryId    =   bidx.utils.getValue( bidxConfig, "competitionId" );
+
                 if(cancel)
                 {
-                     _hideView( 'apply');
-                    _showAllView('participate');
-                     bidx.controller.updateHash( "#viewCompetition", false );
+                    _hideView ( 'apply' ) ;
+                    _showAllView ( 'participate' ) ;
+                    bidx.controller.updateHash ( "#viewCompetition", false );
                 }
+
                 break;
 
             case 'apply':
@@ -3076,14 +3128,6 @@ $(document).ready(function() {
                     updateHash = true;
                 }
 
-                // No competitionSummaryId set yet and not one explicitly provided? Use the one from the bidxConfig.context
-                //
-                if ( !competitionSummaryId && !isId )
-                {
-                    options.id = bidx.utils.getValue( bidxConfig, "bidxcompetitionSummary" );
-
-                    updateHash = true;
-                }
 
                 if ( !( state === "edit" && options.id === competitionSummaryId ) )
                 {

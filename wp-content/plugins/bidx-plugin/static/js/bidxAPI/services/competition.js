@@ -73,13 +73,11 @@
     competition.assignPlanToCompetition      = function( params )
     {
         var method          = params.method
-        ,   url             = baseUrl
         ,   requestParams   =
             {
                 method:         method
             ,   groupDomain:    params.groupDomain
-            ,   baseUrl:        url
-            ,   competitionId:  params.competitionId
+            ,   baseUrl:        baseUrl
             ,   data:           params.data
             ,   success:        function( data, textStatus, jqXhr )
                 {
@@ -92,9 +90,10 @@
             }
         ;
 
-        if ( params.method === "PUT" )
+        if ( params.competitionId )
         {
-            requestParams.entityId = params.entityId;
+            requestParams.baseUrl  +=   '/%id%/application';
+            requestParams.baseUrl   =   requestParams.baseUrl.replace( "%id%", params.competitionId );
         }
 
         api._call( requestParams );

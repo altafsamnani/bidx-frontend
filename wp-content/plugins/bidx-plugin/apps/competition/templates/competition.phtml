@@ -233,6 +233,11 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                     </div>
                 </div>
             </div>
+            <div class="row main-padding view viewSuccess">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <?php _e('You have succesfully applied for this competition, Thank you!', 'bidxplugin'); ?>
+                </div>
+            </div>
         </div>
 <?php
     }
@@ -326,59 +331,9 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 
     <div class="competition-description"><?php echo $this->exst( $competition->description ); ?></div>
 
+    <div class="view viewOwnCard"></div>
 
 
-    <div class="cardView hide">
-        <div class="cardHeader hide-overflow">
-            <div class="info-cell pull-left"><?php echo _e( 'Completed', 'bidxplugin' ); ?>: 58%</div>
-            <div class="info-cell pull-left"><?php echo _e( 'Score', 'bidxplugin' ); ?>: 3.2</div>
-            <a href="#" class="btn btn-primary btn-xs pull-right info-action"><?php echo _e( 'View Business', 'bidxplugin' ); ?> </a>
-        </div>
-        <div class="cardContent main-padding">
-            <div class="cardTop">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h4>Business Name</h4>
-                    </div>
-                    <div class="col-sm-6">
-                        <span class="bsOwner"><span class="fa fa-user"></span> Diana Sombre</span>
-                        <span class="label bidx-label bidx-entrepreneur">Entrepreneur</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="rating-wrapper">
-                            <label class="inline"><?php _e('Rate with','bidxplugin'); ?>:</label>
-                            <div class="rating-vote">
-                                <div data-rating="<?php echo $this->rating->userRating->value ? $this->rating->userRating->value : 0 ?>" class="raty"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label class="inline"><?php _e('Recommend as','bidxplugin'); ?>:</label>
-                            <div class="radio inline-radio">
-                                <input type="radio" value="finalist" id="radio-finalist" name="assessorRecommendation" data-toggle="radio" />
-                                <label for="radio-finalist"><span></span><?php _e('FINALIST','bidxplugin'); ?></label>
-                            </div>
-
-                            <div class="radio inline-radio">
-                                <input type="radio" value="notFinalist" id="radio-notFinalist" name="assessorRecommendation" data-toggle="radio" />
-                                <label for="radio-notFinalist"><span></span><?php _e('NOT FINALIST','bidxplugin'); ?></label>
-                            </div>
-                        </div>
-                        <textarea type="text" class="form-control" name="summary" placeholder="<?php _e('Explain your recommendation','bidxplugin'); ?>"></textarea>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="cardFooter text-right">
-            <a href="#" class="btn btn-primary btn-md info-action"><?php echo _e( 'Assess', 'bidxplugin' ); ?> </a>
-        </div>
-    </div>
 
 
     <table id="example" class="display table table-bordered">
@@ -715,3 +670,65 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 </div><!-- /competition -->
 </div>
 </div>
+<script type="text/html" id="entrpreneur-card-snippet">
+<!--
+         <div class="cardView">
+            <h3> <?php _e('My applications','bidxplugin'); ?> </h3>
+            <div class="cardHeader hide-overflow">
+                <div class="info-cell pull-left"><?php echo _e( 'Completed', 'bidxplugin' ); ?>: %completeness%</div>
+                <div class="info-cell pull-left"><?php echo _e( 'Score', 'bidxplugin' ); ?>: %bidxRatingAverage%</div>
+                <div class="info-cell pull-left"><?php echo _e( 'Last updated', 'bidxplugin' ); ?>: %bidxLastUpdateDateTime%</div>
+                <a href="#" class="btn btn-primary btn-xs pull-right info-action"><?php echo _e( 'View Business', 'bidxplugin' ); ?> </a>
+            </div>
+            <div class="cardContent main-padding">
+                <div class="cardTop">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h4>%name%</h4>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="bsOwner"><span class="fa fa-user"></span>%bidxOwnerDisplayName%</span>
+                            <span class="label bidx-label bidx-entrepreneur">%role_entrepreneur%</span>
+                            <span class="label bidx-label bidx-mentor">%role_mentor%</span>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4>%summary%</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="inline"><?php _e('Recommend as','bidxplugin'); ?>:</label>
+                                <div class="radio inline-radio">
+                                    <input type="radio" value="finalist" id="radio-finalist" name="assessorRecommendation" data-toggle="radio" />
+                                    <label for="radio-finalist"><span></span><?php _e('FINALIST','bidxplugin'); ?></label>
+                                </div>
+
+                                <div class="radio inline-radio">
+                                    <input type="radio" value="notFinalist" id="radio-notFinalist" name="assessorRecommendation" data-toggle="radio" />
+                                    <label for="radio-notFinalist"><span></span><?php _e('NOT FINALIST','bidxplugin'); ?></label>
+                                </div>
+                            </div>
+                            <textarea type="text" class="form-control" name="summary" placeholder="<?php _e('Explain your recommendation','bidxplugin'); ?>"></textarea>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cardFooter text-right">
+                <a href="#" class="btn btn-primary btn-md info-action"><?php echo _e( 'Assess', 'bidxplugin' ); ?> </a>
+            </div>
+    </div>
+-->
+</script>
+<script type="text/html" id="error-card">
+<!--
+    <div>
+        <div class="viewLoadrequest alert alert-danger text-center">
+            <?php _e ('Error loading card', 'bidxplugin') ?>
+        </div>
+    </div>
+-->
+</script>
