@@ -3084,7 +3084,7 @@ $(document).ready(function() {
 
                 bidx.utils.log( "competitionSummary::AppRouter::view" );
 
-                competitionSummaryId    =   bidx.utils.getValue( bidxConfig, "competitionId" );
+                competitionSummaryId    =   bidx.utils.getValue( bidxConfig, "context.competitionId" );
 
                 if(cancel)
                 {
