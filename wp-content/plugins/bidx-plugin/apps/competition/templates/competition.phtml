@@ -427,17 +427,18 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
     <div class="row tabs-vertical">
         <div class="col-sm-3 tabs-nav">
             <ul class="nav nav-tabs tabs-left">
-                <li class="active"><a href="#tab-bs-overview" data-toggle="tab"><?php _e('General Overview','bidxplugin'); ?></a></li>
-                <li><a href="#tab-bs-about-participants" data-toggle="tab"><?php _e('About participants','bidxplugin'); ?></a></li>
-                <li><a href="#tab-bs-documents" data-toggle="tab"><?php _e('Documents','bidxplugin'); ?></a></li>
+                <li class="active"><a href="#tab-comp-overview" data-toggle="tab"><?php _e('General Overview','bidxplugin'); ?></a></li>
+                <li><a href="#tab-comp-invite" data-toggle="tab"><?php _e('Invite Assessors and Judges','bidxplugin'); ?></a></li>
+                <li><a href="#tab-comp-about-participants" data-toggle="tab"><?php _e('About participants','bidxplugin'); ?></a></li>
+                <li><a href="#tab-comp-documents" data-toggle="tab"><?php _e('Documents','bidxplugin'); ?></a></li>
                 <!-- <li>
-                    <a href="#tab-bs-management" data-toggle="tab"><?php //_e('Management rules','bidxplugin'); ?></a>
+                    <a href="#tab-comp-management" data-toggle="tab"><?php //_e('Management rules','bidxplugin'); ?></a>
                 </li> -->
             </ul>
         </div>
         <div class="col-sm-9 tabs-content">
             <div class="tab-content">
-                <div class="tab-pane hide-overflow active" id="tab-bs-overview">
+                <div class="tab-pane hide-overflow active" id="tab-comp-overview">
                     <!-- General Overview -->
                     <div  id="competitionCollapse-GeneralOverview">
                         <!-- EDIT -->
@@ -515,8 +516,104 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                         </div><!-- /EDIT -->
                     </div><!-- /General Overview -->
                 </div>
+                <div class="tab-pane hide-overflow" id="tab-comp-invite">
+                    <div class="view viewEdit">
+                        <blockquote class="alert-info"><?php _e('Select the members that will participate as Assessors, Judges and Competition managers','bidxplugin')?></blockquote>
+                        <label><?php _e('Search','bidxplugin'); ?></label>
+                        <div class="input-group ">
+                            <input type="text" name="roles" class="form-control typeahead" autocomplete="off" disabled placeholder="<?php _e('Search a member name','bidxplugin'); ?>" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default js-btn-add-role" disabled><?php _e('Add to list','bidxplugin'); ?></button>
+                            </span>
+                        </div>
+
+                        <div class="asjucoman">
+                            <table class="table table-compressed">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Roles</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Sakis Katsikas</td>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-xs btn-primary active">Assessor</button>
+                                                <button type="button" class="btn btn-xs btn-default">Judge</button>
+                                                <button type="button" class="btn btn-xs btn-default">Manager</button>
+                                            </div>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="btn-group dropup">
+                                                <button type="button" class="btn btn-xs btn-default">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Altaf Samnani</td>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-xs btn-default">Assessor</button>
+                                                <button type="button" class="btn btn-xs btn-secondary active">Judge</button>
+                                                <button type="button" class="btn btn-xs btn-default">Manager</button>
+                                            </div>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="btn-group dropup">
+                                                <button type="button" class="btn btn-xs btn-default">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Iratxe Florez</td>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-xs btn-primary active">Assessor</button>
+                                                <button type="button" class="btn btn-xs btn-secondary active">Judge</button>
+                                                <button type="button" class="btn btn-xs btn-default">Manager</button>
+                                            </div>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="btn-group dropup">
+                                                <button type="button" class="btn btn-xs btn-default">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Marianne Bakker</td>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-xs btn-default">Assessor</button>
+                                                <button type="button" class="btn btn-xs btn-default">Judge</button>
+                                                <button type="button" class="btn btn-xs btn-warning active">Manager</button>
+                                            </div>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="btn-group dropup">
+                                                <button type="button" class="btn btn-xs btn-default">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
                 <!-- Management
-                <div class="tab-pane hide-overflow" id="tab-bs-management">
+                <div class="tab-pane hide-overflow" id="tab-comp-management">
 
                         <div  id="competitionCollapse-Management">
 
@@ -536,7 +633,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                     </div><
                 </div> -->
 
-                <div class="tab-pane hide-overflow" id="tab-bs-about-participants">
+                <div class="tab-pane hide-overflow" id="tab-comp-about-participants">
                     <!-- About you & your team -->
                         <div  id="competitionCollapse-AboutParticipants">
 
@@ -595,7 +692,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 
                     </div><!-- /About you & your team -->
                 </div>
-                <div class="tab-pane hide-overflow" id="tab-bs-documents">
+                <div class="tab-pane hide-overflow" id="tab-comp-documents">
                 <!-- Documents -->
                     <div  id="competitionSummaryCollapse-Documents">
                         <!-- EDIT -->
