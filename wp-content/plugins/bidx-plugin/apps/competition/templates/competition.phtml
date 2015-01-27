@@ -323,7 +323,9 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 
     <div class="competition-description"><?php echo $this->exst( $competition->description ); ?></div>
 
-    <div class="view viewOwnCard"></div>
+    <div class="view viewOwnCard">
+        <h3> <?php _e('My applications','bidxplugin'); ?> </h3>
+    </div>
 
 
 
@@ -761,54 +763,31 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 </div>
 <script type="text/html" id="entrpreneur-card-snippet">
 <!--
-         <div class="cardView">
-            <h3> <?php _e('My applications','bidxplugin'); ?> </h3>
-            <div class="cardHeader hide-overflow">
-                <div class="info-cell pull-left"><?php echo _e( 'Completed', 'bidxplugin' ); ?>: %completeness%</div>
-                <div class="info-cell pull-left"><?php echo _e( 'Score', 'bidxplugin' ); ?>: %bidxRatingAverage%</div>
-                <div class="info-cell pull-left"><?php echo _e( 'Last updated', 'bidxplugin' ); ?>: %bidxLastUpdateDateTime%</div>
-                <a href="#" class="btn btn-primary btn-xs pull-right info-action"><?php echo _e( 'View Business', 'bidxplugin' ); ?> </a>
-            </div>
-            <div class="cardContent main-padding">
-                <div class="cardTop">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h4>%name%</h4>
-                        </div>
-                        <div class="col-sm-6">
-                            <span class="bsOwner"><span class="fa fa-user"></span>%bidxOwnerDisplayName%</span>
-                            <span class="label bidx-label bidx-entrepreneur">%role_entrepreneur%</span>
-                            <span class="label bidx-label bidx-mentor">%role_mentor%</span>
+    <div class="cardView">
+        <div class="cardHeader hide-overflow">
+            <div class="info-cell pull-left"><?php echo _e( 'Score', 'bidxplugin' ); ?>: %bidxRatingCount%</div>
+            <div class="info-cell pull-left"><?php echo _e( 'Applied on', 'bidxplugin' ); ?>: %created%</div>
+            <span class="label bidx-label bidx-competition pull-right">%status%</span>
+        </div>
+        <div class="cardContent main-padding">
+            <div class="cardTop">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h4><a href="/businesssummary/%entityId%" target="_blank">%bidxEntityDisplayName%</a>
+                        &nbsp;&nbsp;<small><?php _e('by','bidxplugin'); ?></small><a href="/member/%bidxOwnerId%">&nbsp;&nbsp;%bidxOwnerDisplayName%</a></h4>
 
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h4>%summary%</h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label class="inline"><?php _e('Recommend as','bidxplugin'); ?>:</label>
-                                <div class="radio inline-radio">
-                                    <input type="radio" value="finalist" id="radio-finalist" name="assessorRecommendation" data-toggle="radio" />
-                                    <label for="radio-finalist"><span></span><?php _e('FINALIST','bidxplugin'); ?></label>
-                                </div>
-
-                                <div class="radio inline-radio">
-                                    <input type="radio" value="notFinalist" id="radio-notFinalist" name="assessorRecommendation" data-toggle="radio" />
-                                    <label for="radio-notFinalist"><span></span><?php _e('NOT FINALIST','bidxplugin'); ?></label>
-                                </div>
-                            </div>
-                            <textarea type="text" class="form-control" name="summary" placeholder="<?php _e('Explain your recommendation','bidxplugin'); ?>"></textarea>
-
+                    <div class="col-sm-3 pull-right">
+                        <div class="rating-wrapper">
+                            <div data-rating="%bidxRatingAverage%" class="raty"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="cardFooter text-right">
-                <a href="#" class="btn btn-primary btn-md info-action"><?php echo _e( 'Assess', 'bidxplugin' ); ?> </a>
-            </div>
+        </div>
+        <div class="cardFooter text-right">
+            <a href="#" class="btn btn-primary btn-md info-action">%buttonAction%</a>
+        </div>
     </div>
 -->
 </script>
