@@ -712,7 +712,7 @@ $('.typeahead').typeahead({
             //
             $attachmentContainer.reflowrower(
             {
-                itemsPerRow:        3
+                itemsPerRow:        2
             ,   itemClass:          "attachmentItem"
             } );
 
@@ -2267,8 +2267,7 @@ $(document).ready(function() {
             if ( attached.length ) {
                 $.each( attached, function( idx, a )
                 {
-                    var bidxbusinessPlanEntityId = $(this).context.dataset.businessPlanEntityId;
-
+                    var bidxbusinessPlanEntityId = $(this).context.dataset.businessplanentityid;
                     if ( $.inArray( bidxbusinessPlanEntityId, attachmentExists ) === -1 )
                     {
                         attachmentExists.push( bidxbusinessPlanEntityId );

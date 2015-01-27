@@ -201,7 +201,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
     {
 ?>
         <div class="main-padding bg-info">
-            <div class="row view viewParticipate">
+            <div class="row view viewShow viewParticipate">
                 <div class="col-sm-4 col-sm-offset-2">
                     <h4><?php echo _e( 'Apply before', 'bidxplugin' ); ?>:
                         <strong><?php echo $endDateTime;?></strong>
@@ -221,7 +221,22 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 ?>
                 </div>
             </div>
+            
+            <div class="row view viewEdit">
+                <div class="col-sm-8 col-sm-offset-2 editControlsContainer hide-overflow">
+                    <div class="editControls pull-right">
 
+                        <!-- EDIT, conditionally filled by the app -->
+                        <div class="view viewEdit btn-group"></div>
+
+                        <!-- sucess msg, used as a placeholder for showing msgs -->
+
+                        <div class="view viewMainsuccess alert alert-success">
+                            <p class="successMsg"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row main-padding view viewApply">
                 <div class="col-sm-10 col-sm-offset-2">
                     <div class="form-group">
@@ -243,29 +258,6 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
     }
 ?>
 
-  <div class="row main-padding">
-    <div class="col-sm-9"></div>
-    <div class="col-sm-3 text-right">
-        <div class="btn-group">
-        </div>
-        <div class="editControlsContainer">
-            <div class="editControls pull-right">
-
-                <!-- SHOW -->
-                <div class="view viewShow"></div>
-
-                <!-- EDIT, conditionally filled by the app -->
-                <div class="view viewEdit btn-group"></div>
-
-                <!-- sucess msg, used as a placeholder for showing msgs -->
-
-                <div class="view viewMainsuccess alert alert-success">
-                    <p class="successMsg"></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- SHOW -->
 <div class="view viewShow">
