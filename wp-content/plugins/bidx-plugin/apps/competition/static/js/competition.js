@@ -2938,7 +2938,6 @@ $(document).ready(function() {
         ,   $listError      = $("#error-card").html().replace(/(<!--)*(-->)*/g, "")
         ,   $ratingWrapper
         ,   $raty
-        ,   $infoAction
         ;
 
         businessData       =  _.findWhere( applicationObj, { 'entityId' : parseInt(entityId) } );
@@ -2963,7 +2962,7 @@ $(document).ready(function() {
             $listItem   =   $(listItem);
 
             /* Assign Next Action According to Role */
-            $infoAction  = $listItem.find( ".info-action");
+            _assignEntrpreneurAction( $listItem,  businessData);
 
 
             /* Displaying Rating Star Logic */
@@ -2989,6 +2988,32 @@ $(document).ready(function() {
         _showAllView('ownCard');
 
 
+    }
+
+    function _assignEntrpreneurAction( $listItem, businessData )
+    {
+        var status       = businessData.status
+        ,   $infoAction  = $listItem.find( ".info-action")
+        ,   $infoWithdraw    = $listItem.find( ".info-withdraw")
+        ;
+
+        switch (status)
+        {
+            case 'APPLIED' :
+                $infoAction.i18nText("btnCompetitionSubmit", appName);
+                $infoWithdraw.i18nText("btnCompetitionWithdraw", appName);
+                $infoAction.removeClass('hide');
+                $infoWithdraw.removeClass('hide');
+
+            break;
+
+            case 'APPLIED' :
+            case  'SUBMITTED' :
+                $infoWithdraw.i18nText("btnCompetitionWithdraw", appName);
+                $infoWithdraw.removeClass('hide');
+
+            break;
+        }
     }
 
     function _updatePlanStatusToCompetition( params )
