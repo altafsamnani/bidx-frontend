@@ -76,6 +76,10 @@ class competition
 
             $view->data = $competitionData->data;
 
+            $jsData     = json_decode(json_encode($competitionData->data), true);
+
+            wp_localize_script ('bidx-data', '__bidxCompetition', $jsData);
+
         }
 
         /*************** Is investor or groupadmin *****************/

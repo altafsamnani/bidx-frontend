@@ -3,7 +3,9 @@
 {
     "use strict";
 
-    var $element                    = $( "#competitionSummary" )
+    var competitionVars             = window.__bidxCompetition || {}
+    ,   applicationObj
+    ,   $element                    = $( "#competitionSummary" )
     ,   $snippets                   = $element.find( ".snippets" )
 
     ,   $views                      = $element.find( ".view" )
@@ -137,6 +139,12 @@
             }
         }
     ;
+
+    if ( !$.isEmptyObject(competitionVars) )
+    {
+        applicationObj              = bidx.utils.getValue( competitionVars, 'applications');
+    }
+
     // Constants
     //
     var CONSTANTS =
@@ -209,6 +217,7 @@
         _setupValidation();
         _coverImage();
         _documents();
+        _loadMyApplications( ); // Load My applications now
 
         if( $businessSummary )
         {
@@ -226,7 +235,6 @@
                 _getBusinessPlans( )
                 .done( function( listBpItems )
                 {
-
                     $businessSummary.append( listBpItems );
                     $businessSummary.trigger( "chosen:updated" );
 
@@ -2759,7 +2767,7 @@ $(document).ready(function() {
         } );
     }
 
-    function _appendCardValues( options )
+    function _appendCardValuesOld( options )
     {
         var listItem
         ,   $listItem
@@ -2782,11 +2790,7 @@ $(document).ready(function() {
         ,   $listError      = $("#error-card").html().replace(/(<!--)*(-->)*/g, "")
         ;
 
-        bidx.utils.log('enttYid', entityId);
-
         businessData       =  _.findWhere( currentUserBusinessSummaryList, { 'entityId' : parseInt(entityId) } );
-        bidx.utils.log('currentUserBusinessSummaryList',currentUserBusinessSummaryList);
-        bidx.utils.log('item', item);
 
         bidxMeta           = businessData.data.bidxMeta;
 
@@ -2852,6 +2856,82 @@ $(document).ready(function() {
         }
 
         $list.empty().append( $listItem );
+
+        _showAllView('ownCard');
+
+
+    }
+
+    function _appendCardValues( options )
+    {
+        var listItem
+        ,   $listItem
+        ,   countryOperation
+        ,   entrpreneurIndustry
+        ,   entrpreneurReason
+        ,   country
+        ,   industry
+        ,   reason
+        ,   item
+        ,   businessData
+        ,   bidxMeta
+        ,   isEntrepreneur
+        ,   isInvestor
+        ,   isMentor
+        ,   emptyVal        = ''
+        ,   entityId        = options.entityId
+        ,   $list           = $element.find("." + options.list)
+        ,   snippet         = $("#entrpreneur-card-snippet").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $listError      = $("#error-card").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $ratingWrapper
+        ,   $raty
+        ,   $infoAction
+        ;
+
+        businessData       =  _.findWhere( applicationObj, { 'entityId' : parseInt(entityId) } );
+
+        bidxMeta           = businessData.bidxMeta;
+
+
+        if ( !$.isEmptyObject(bidxMeta) )
+        {
+
+            listItem    =   snippet
+                            .replace( /%entityId%/g,                    entityId                        ? entityId     : emptyVal )
+                            .replace( /%bidxOwnerId/g,                  bidxMeta.bidxOwnerDisplayName )
+                            .replace( /%bidxOwnerDisplayName%/g,        bidxMeta.bidxOwnerDisplayName   ? bidxMeta.bidxOwnerDisplayName     : emptyVal )
+                            .replace( /%bidxRatingAverage%/g,           bidxMeta.bidxRatingAverage      ? bidxMeta.bidxRatingAverage     : emptyVal )
+                            .replace( /%bidxRatingCount%/g,             bidxMeta.bidxRatingCount        ? bidxMeta.bidxRatingCount     : emptyVal )
+                            .replace( /%bidxEntityDisplayName%/g,       bidxMeta.bidxEntityDisplayName  ? bidxMeta.bidxEntityDisplayName     : emptyVal )
+                            .replace( /%created%/g,                     businessData.created            ? bidx.utils.parseTimestampToDateStr(businessData.created) : emptyVal )
+                            .replace( /%status%/g,                      bidx.i18n.i(businessData.status ,appName))
+                            ;
+
+            $listItem   =   $(listItem);
+
+            /* Assign Next Action According to Role */
+            $infoAction  = $listItem.find( ".info-action");
+
+
+            /* Displaying Rating Star Logic */
+            $ratingWrapper              = $listItem.find( ".rating-wrapper" );
+            $raty                       = $ratingWrapper.find( ".raty" );
+
+            $raty.raty({
+                starType: 'i',
+                readOnly: true,
+                // TODO Arjan remove or translate?
+                hints:  ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent'],
+                score:  bidxMeta.bidxRatingAverage
+
+            });
+        }
+        else
+        {
+            $listItem = $listError;
+        }
+
+        $list.append( $listItem );
 
         _showAllView('ownCard');
 
@@ -3035,6 +3115,27 @@ $(document).ready(function() {
                 }
             }
         );
+    }
+
+    function _loadMyApplications()
+    {
+        var myApplicationsAny
+        ;
+
+        $.each( listDropdownBp, function( idx, entityId )
+        {
+            myApplicationsAny = _.findWhere( applicationObj, { 'entityId' : parseInt(entityId) } );
+
+            if ( !$.isEmptyObject(myApplicationsAny) )
+            {
+                _appendCardValues( {
+                                    list:       'viewOwnCard'
+                                ,   entityId:   entityId
+                                });
+
+                bidx.utils.log('myApplicationsAny', myApplicationsAny);
+            }
+        });
     }
 
     // Private functions

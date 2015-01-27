@@ -11,4 +11,11 @@
     <Item value="public">Public</Item>
     <Item value="closed">Closed</Item>
     <Item value="invited">Invited persons</Item>
+    <Item value="APPLIED">Applied</Item>
+    <Item value="SUBMITTED">Submitted</Item>
+    <Item value="REJECTED">Rejected</Item>
+    <Item value="NOT_FINALIST">Not finalist</Item>
+    <Item value="FINALIST">Finalist</Item>
+    <Item value="NOT_WINNER">Not Winner</Item>
+    <Item value="WINNER">Winner</Item>
 </I18N>
