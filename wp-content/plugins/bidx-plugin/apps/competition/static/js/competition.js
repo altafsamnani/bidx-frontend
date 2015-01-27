@@ -538,19 +538,10 @@
             $bscompetitionLogoModal.modal();
         } );
 
-            // var languages;
-            // bidx.data.getContext( "language", function( err, data )
-            // {
-            //     languages = data;
-
-            //     $('.typeahead').typeahead(
-            //     {
-            //         name:       "languages"
-            //     ,   local:      _.map( languages, function( language ) { return language.label; } )
-            //     } ).removeClass( "disabled" ).removeAttr( "disabled" );
-            // });
 
 
+// TEMP - REPLACE THIS WITH THE REAL DATA
+//
 var substringMatcher = function(strs) {
   return function findMatches(q, cb) {
     var matches, substrRegex;
@@ -596,6 +587,9 @@ $('.typeahead').typeahead({
   displayKey: 'value',
   source: substringMatcher(states)
 }).removeClass( "disabled" ).removeAttr( "disabled" );
+//
+// TEMP - REPLACE THIS WITH THE REAL DATA
+
 
 
         // Setup the Documents component
