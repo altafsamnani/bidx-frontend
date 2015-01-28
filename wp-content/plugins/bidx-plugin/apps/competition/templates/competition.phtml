@@ -267,13 +267,14 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                 </div>
             </div>
             <div class="row main-padding view viewApply">
-                <div class="col-sm-10 col-sm-offset-2">
+                <div class="col-sm-8 col-sm-offset-2">
                     <div class="form-group">
                         <label><?php _e('Select one of your business summaries','bidxplugin'); ?></label>
                          <select class="chosen-summary" name="businessSummary"></select>
-
-                        <a  class="btn btn-lg btn-primary btn-apply"><?php echo _e( 'Apply', 'bidxplugin' ); ?></a>
-                        <a href="#viewCompetition/<?php echo $competitionId;?>/cancel=true" class="btn btn-lg btn-primary btn-cancel"><?php echo _e( 'Cancel', 'bidxplugin' ); ?></a>
+                        <div class="main-padding-vertical hide-overflow">
+                            <a  class="btn btn-lg btn-primary btn-apply pull-right"><?php echo _e( 'Apply', 'bidxplugin' ); ?></a>
+                            <a href="#viewCompetition/<?php echo $competitionId;?>/cancel=true" class="btn btn-lg btn-link btn-cancel"><?php echo _e( 'Cancel', 'bidxplugin' ); ?></a>
+                        </div>
                     </div>
                 </div>
             </div>

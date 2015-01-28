@@ -225,7 +225,7 @@
 
             $businessSummary.chosen({
                                         placeholder_text_single : bidx.i18n.i( "msgWaitForSave" )
-                                    ,   width                   : "75%"
+                                    ,   width                   : "100%"
                                     ,   disable_search_threshold : 10
                                     });
             bpLength    = _.size(listDropdownBp); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
