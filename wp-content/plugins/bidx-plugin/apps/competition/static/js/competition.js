@@ -26,7 +26,7 @@
     ,   $btnFullAccessRequest       = $element.find( ".bidxRequestFullAccess")
     ,   $bidxAccessRequestPending   = $element.find( ".bidxAccessRequestPending")
     ,   $btnParticipate             = $element.find( ".btn-participate")
-    ,   $btnApply                   = $element.find( ".btn-apply")
+    ,   $btnAction                   = $element.find( ".btn-action")
 
 
     ,   $videoWrapper               = $element.find( ".video-wrapper" )
@@ -2991,24 +2991,35 @@ $(document).ready(function() {
 
     function _assignEntrpreneurAction( $listItem, businessData )
     {
-        var status       = businessData.status
-        ,   $infoAction  = $listItem.find( ".info-action")
-        ,   $infoWithdraw    = $listItem.find( ".info-withdraw")
+        var status          = businessData.status
+        ,   $infoAction     = $listItem.find( ".info-action")
+        ,   $infoWithdraw   = $listItem.find( ".info-withdraw")
         ;
-
+        bidx.utils.log('statusss',status);
         switch (status)
         {
             case 'APPLIED' :
+                /* Change the button Label */
                 $infoAction.i18nText("btnCompetitionSubmit", appName);
                 $infoWithdraw.i18nText("btnCompetitionWithdraw", appName);
+
+                /* Change the data-status field of button */
+                $infoAction.data('status', 'SUBMITTED');
+                $infoWithdraw.data('status', 'WITHDRAWN');
+
+                /*Show buttons*/
                 $infoAction.removeClass('hide');
                 $infoWithdraw.removeClass('hide');
-
             break;
 
-            case 'APPLIED' :
             case  'SUBMITTED' :
+                /* Change the button Label */
                 $infoWithdraw.i18nText("btnCompetitionWithdraw", appName);
+
+                /* Change the data-status field of button */
+                $infoWithdraw.data('status', 'WITHDRAWN');
+
+                /*Show buttons*/
                 $infoWithdraw.removeClass('hide');
 
             break;
@@ -3050,19 +3061,21 @@ $(document).ready(function() {
         );
     }
 
-    $btnApply.click( function( e )
+    $btnAction.click( function( e )
     {
         e.preventDefault();
 
         var orgText
         ,   confirmTimer
         ,   params
-        ,   businessPlanEntityId    =   $businessSummary.val()
+        ,   status
+        ,   btnEntityId             =   $btnAction.data( "entityId" ) // For Submit/Withdraw buttons
+        ,   businessPlanEntityId    =   ( btnEntityId ) ? btnEntityId : $businessSummary.val()  // for First time Particpate/Applied Button
         ;
 
         if ( !businessPlanEntityId )
         {
-            bidx.utils.error( "[businesssummary] No businesssummary id, unable to apply!", businessPlanEntityId );
+            bidx.utils.error( "[competition] No entity id, unable to apply!", businessPlanEntityId );
             return;
         }
 
@@ -3080,15 +3093,17 @@ $(document).ready(function() {
             }, 5000 );
         }
 
-        if ( $btnApply.data( "confirm" ) )
+        if ( $btnAction.data( "confirm" ) )
         {
+            status  =   $btnAction.data( "status" )
+            ;
             clearTimeout( confirmTimer );
 
             params  =   {
                             competitionId   :   competitionSummaryId
                         ,   data            :   {
                                                     entityId    :   businessPlanEntityId
-                                                ,   status      :   'APPLIED'
+                                                ,   status      :   (status) ? status : 'APPLIED'
                                                 }
                         }
                     ;
@@ -3097,14 +3112,14 @@ $(document).ready(function() {
         }
         else
         {
-            orgText = $btnApply.text();
+            orgText = $btnAction.text();
 
-            $btnApply.data( "confirm", true );
+            $btnAction.data( "confirm", true );
 
-            $btnApply.addClass( "btn-danger" );
-            $btnApply.i18nText( "btnConfirm" );
+            $btnAction.addClass( "btn-danger" );
+            $btnAction.i18nText( "btnConfirm" );
 
-            startConfirmTimer( $btnApply, orgText );
+            startConfirmTimer( $btnAction, orgText );
         }
     });
 
