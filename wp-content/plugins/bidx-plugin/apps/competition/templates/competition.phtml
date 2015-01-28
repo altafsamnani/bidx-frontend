@@ -8,6 +8,9 @@ $competitionBidxMeta = isset($competition->bidxMeta)
     : null;
 
 $canEdit                    = $this->exst($competitionBidxMeta->bidxCanEdit, false);
+$isManager                  = $canEdit;
+$isAssessor                 = $this->exst($competitionBidxMeta->bidxCompetitionCanAssess, false);
+$isJudge                    = $this->exst($competitionBidxMeta->bidxCompetitionCanJudge, false);
 
 $createdtDateTime           = ( isset( $competitionBidxMeta->bidxCreationDateTime ) ) ? date( 'd M Y', $competitionBidxMeta->bidxCreationDateTime  ) : NULL;
 
@@ -20,7 +23,6 @@ $endDateTime                = ( isset( $competition->endDateTime ) ) ? date( 'd 
 $endTimeStamp               = ( isset( $competition->endDateTime ) ) ? strtotime ( $this->exst( $competition->endDateTime ) )  : NULL;
 
 $gender                     = $this->getMultiValues( $this->exst($competition->competitionGender), ', ', 'gender' );
-
 
 // get the entities of the current user
 //
@@ -60,6 +62,12 @@ if ( !($competition->competitionLogo && $competition->competitionLogo->document)
     }
 }
 
+$isParticipant = true;
+if ( $canEdit || $isAssessor || $isJudge )
+{
+    $isParticipant = false;
+}
+
 $attachmentItem = <<<EOT
     <div class="attachmentItem col-md-6">
         <div class="media well">
@@ -97,10 +105,6 @@ if ( !empty( $attachment ) )
     }
 }
 
-// Default set of rowproperties
-//
-$viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class_label' => 'bidx-label', 'class_value' => 'bidx-value', 'class_row' => '' );
-
 
 ?>
 <div class="competitionSummary box-border top-margin-lineheight" id="competitionSummary" data-bsid="<?php echo $competitionId; ?>">
@@ -129,7 +133,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
                                 <h3><?php _e('Check the file you want to use as your cover', 'bidxplugin' ); ?></h3>
                             </div>
                             <div class="modal-body">
@@ -237,7 +241,13 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 ?>
                 </div>
                 <div class="col-sm-4 text-right">
-                    <button class="btn btn-primary btn-participate"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
+<?php
+                    if ( $isParticipant ) :
+?>
+                        <button class="btn btn-primary btn-participate"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
+<?php
+                    endif;
+?>
 <?php
                     // does a user have rights to edit ( is the owner )
                     //
@@ -245,6 +255,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                     {
 ?>
                         <a class="btn btn-primary editBS" href="#editCompetition/<?php echo $competitionId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                        <button class="btn btn-success endPhase"><i class="fa fa-flag-checkered fa-big fa-above"></i> <?php _e( 'End Phase', 'bidxplugin' ); ?></button>
 <?php
                     }
 ?>
@@ -330,39 +341,23 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
         <h3> <?php _e('My applications','bidxplugin'); ?> </h3>
     </div>
 
-
-
-
-    <table id="example" class="display table table-bordered">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Business</th>
-                <th>Entrepreneur</th>
-                <th>Score</th>
-                <th>State</th>
-            </tr>
-        </thead>
-    </table>
-
-
-    <div class="main-padding-vertical">
 <?php
-            $rowValues = array
-            (
-                __('Start date','bidxplugin') => $this->exst($startDateTime),
-                __('End date','bidxplugin') => $this->exst( $endDateTime),
-                __('Ownership type','bidxplugin') => ucfirst($this->exst( $competitionBidxMeta->bidxOwnershipType))
-            );
-
-            if ( $this->checkEmpty( $rowValues ) ) :
+    if ( $canEdit ) :
 ?>
-                <h3 class="to-uppercase"><?php _e('General Overview', 'bidxplugin')?></h3>
+        <table id="example" class="display table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Business</th>
+                    <th>Entrepreneur</th>
+                    <th>Score</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+        </table>
 <?php
-                echo $this->tableRow ( $rowValues );
-            endif;
+    endif;
 ?>
-    </div>
 
     <div class="main-padding-vertical">
 <?php
@@ -451,7 +446,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
                                                 <h3><?php //_e('Check the file you want to use as your competitionLogo', 'bidxplugin' ); ?></h3>
                                                 </div>
                                                 <div class="modal-body">
@@ -702,7 +697,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
                                             <h3><?php _e('Check the files you want to attach to your business plan', 'bidxplugin' ); ?></h3>
                                         </div>
                                         <div class="modal-body">
@@ -728,7 +723,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
                 </div>
                 <div class="modal-body clearfix">
 <?php
