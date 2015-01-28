@@ -203,9 +203,43 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
         <div class="main-padding bg-info">
             <div class="row view viewShow viewParticipate">
                 <div class="col-sm-4 col-sm-offset-2">
-                    <h4><?php echo _e( 'Apply before', 'bidxplugin' ); ?>:
+                    <h4 class="text-center"><?php echo _e( 'Apply before', 'bidxplugin' ); ?>:
                         <strong><?php echo $endDateTime;?></strong>
                     </h4>
+<?php
+                    if ( $this->exst($competitionBidxMeta->bidxEntityId) )
+                    {
+?>
+                        <div class="counter hide-overflow text-center flat" data-time="<?php echo $endTimeStamp; ?>">
+                            <?php
+                                if ( $endTimeStamp < time() ) {
+                        ?>
+                                    <div class="alert alert-warning">
+                                        <strong><i class="fa fa-exclamation-triangle"></i> <?php _e( 'This competition has expired','bidxplugin' ); ?></strong>
+                                    </div>
+                                    <a class="btn btn-secondary btn-block" href="/competition"><?php _e( 'Visit our competition overview','bidxplugin' ); ?> </a><?php
+                                } else {  ?>
+                                    <div class="counter-block">
+                                        <div class="days counter-number"></div>
+                                        <div class="counter-text"><?php _e( 'DAYS','bidxplugin' ); ?></div>
+                                    </div>
+                                    <div class="counter-block">
+                                        <div class="hours counter-number"></div>
+                                        <div class="counter-text"><?php _e( 'HOURS','bidxplugin' ); ?></div>
+                                    </div>
+                                    <div class="counter-block">
+                                        <div class="minutes counter-number"></div>
+                                        <div class="counter-text"><?php _e( 'MINUTES','bidxplugin' ); ?></div>
+                                    </div>
+                                    <div class="counter-block">
+                                        <div class="seconds counter-number"></div>
+                                        <div class="counter-text"><?php _e( 'SECONDS','bidxplugin' ); ?></div>
+                                    </div>
+                                <?php } ?>
+                        </div>
+<?php
+                    }
+?>
                 </div>
                 <div class="col-sm-4 text-right">
                     <button class="btn btn-primary btn-participate"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
@@ -286,33 +320,6 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             if ( $this->exst($competitionBidxMeta->bidxEntityId) )
             {
 ?>
-                <div class="counter hide-overflow text-center" data-time="<?php echo $endTimeStamp; ?>">
-                    <?php
-                        if ( $endTimeStamp < time() ) {
-                ?>
-                            <div class="alert alert-warning">
-                                <strong><i class="fa fa-exclamation-triangle"></i> <?php _e( 'This competition has expired','bidxplugin' ); ?></strong>
-                            </div>
-                            <a class="btn btn-secondary btn-block" href="/competition"><?php _e( 'Visit our competition overview','bidxplugin' ); ?> </a><?php
-                        } else {  ?>
-                            <div class="counter-block">
-                                <div class="days counter-number"></div>
-                                <div class="counter-text"><?php _e( 'DAYS','bidxplugin' ); ?></div>
-                            </div>
-                            <div class="counter-block">
-                                <div class="hours counter-number"></div>
-                                <div class="counter-text"><?php _e( 'HOURS','bidxplugin' ); ?></div>
-                            </div>
-                            <div class="counter-block">
-                                <div class="minutes counter-number"></div>
-                                <div class="counter-text"><?php _e( 'MINUTES','bidxplugin' ); ?></div>
-                            </div>
-                            <div class="counter-block">
-                                <div class="seconds counter-number"></div>
-                                <div class="counter-text"><?php _e( 'SECONDS','bidxplugin' ); ?></div>
-                            </div>
-                        <?php } ?>
-                </div>
                 <h1>
                     <?php echo $this->exst( $competition->name ); ?>
                 </h1>
