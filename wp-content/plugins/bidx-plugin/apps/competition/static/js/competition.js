@@ -26,10 +26,9 @@
     ,   $btnFullAccessRequest       = $element.find( ".bidxRequestFullAccess")
     ,   $bidxAccessRequestPending   = $element.find( ".bidxAccessRequestPending")
     ,   $btnParticipate             = $element.find( ".btn-participate")
-    ,   $btnAction                   = $element.find( ".btn-action")
+    ,   $btnAction                  = $element.find( ".btn-action")
 
-
-    ,   $videoWrapper               = $element.find( ".video-wrapper" )
+    ,   $btnEndPhase                = $element.find( ".endPhase" )
 
     ,   $controlsForEdit            = $editControls.find( ".viewEdit" )
     ,   $controlsForError           = $editControls.find( ".viewError" )
@@ -259,6 +258,69 @@
             {
                 bidx.common.addAppWithPendingChanges( appName );
             }
+        } );
+
+        // Confinmation for ending the competition phase
+        //
+        $btnEndPhase.click( function( e )
+        {
+            var $this = $(this);
+            e.preventDefault();
+            // accessParams = {   'id'           :  $this.data('summaryid')
+            //                 ,  'investorId'   :  $this.data('investorid')
+            //                 ,  'action'       :  $this.data('btn')
+            //                 };
+
+            bidx.common._notify(
+            {
+                text:       bidx.i18n.i( "btnConfirm" )
+            ,   modal:      true
+            ,   type:       "confirm"
+            ,   layout:     "center"
+            ,   buttons:
+                [
+                    {
+                        addClass:       "btn btn-primary"
+                    ,   text:           "Ok"
+                    ,   onClick: function( $noty )
+                        {
+
+                           // bidx.utils.log(accessParams);
+                           //  _doGrantRequest( accessParams, function( err )
+                           //  {
+                           //      if ( err )
+                           //      {
+                           //          alert( err );
+                           //      }
+                           //      else
+                           //      {
+                           //          bidx.common.notifyRedirect();
+                           //          var statusMsg = (accessParams.action ==='accept') ? 6 : 7;
+                           //          var url = document.location.protocol
+                           //              + "//"
+                           //              + document.location.hostname
+                           //              + ( document.location.port ? ":" + document.location.port : "" )
+                           //              + '/entrepreneur-dashboard/'
+                           //              + "?smsg=" + statusMsg
+                           //          ;
+
+                           //          document.location.href = url;
+                           //      }
+                           //  });
+
+                            $noty.close();
+                        }
+                    }
+                ,   {
+                        addClass:       "btn btn-danger"
+                    ,   text:           "Cancel"
+                    ,   onClick: function( $noty )
+                        {
+                            $noty.close();
+                        }
+                    }
+                ]
+            } );
         } );
 
         $regional.bidx_chosen(
@@ -726,11 +788,6 @@ $('.typeahead').typeahead({
 
         }
 
-        if ( $videoWrapper )
-        {
-            $videoWrapper.fitVids();
-        }
-
         if ( $fakecrop )
         {
             $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
@@ -851,6 +908,10 @@ function format ( d ) {
 $(document).ready(function() {
     var table = $('#example').DataTable( {
         "bPaginate": true,
+        aLengthMenu: [
+            [10, 25, 50, 100, -1],
+            [10, 25, 50, 100, "All"]
+        ],
         "data":     [
         {
             business: "System Architect",

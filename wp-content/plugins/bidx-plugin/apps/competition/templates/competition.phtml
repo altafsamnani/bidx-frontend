@@ -341,39 +341,23 @@ if ( !empty( $attachment ) )
         <h3> <?php _e('My applications','bidxplugin'); ?> </h3>
     </div>
 
-
-
-
-    <table id="example" class="display table table-bordered">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Business</th>
-                <th>Entrepreneur</th>
-                <th>Score</th>
-                <th>State</th>
-            </tr>
-        </thead>
-    </table>
-
-
-    <div class="main-padding-vertical">
 <?php
-            $rowValues = array
-            (
-                __('Start date','bidxplugin') => $this->exst($startDateTime),
-                __('End date','bidxplugin') => $this->exst( $endDateTime),
-                __('Ownership type','bidxplugin') => ucfirst($this->exst( $competitionBidxMeta->bidxOwnershipType))
-            );
-
-            if ( $this->checkEmpty( $rowValues ) ) :
-?>
-                <h3 class="to-uppercase"><?php _e('General Overview', 'bidxplugin')?></h3>
+    if ( $canEdit ) :
+?>                    
+        <table id="example" class="display table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Business</th>
+                    <th>Entrepreneur</th>
+                    <th>Score</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+        </table>
 <?php
-                echo $this->tableRow ( $rowValues );
-            endif;
-?>
-    </div>
+    endif;
+?>                    
 
     <div class="main-padding-vertical">
 <?php
