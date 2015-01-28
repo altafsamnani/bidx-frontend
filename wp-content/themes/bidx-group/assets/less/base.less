@@ -1761,6 +1761,7 @@ select
 .cardView
 {
     border: 1px solid lighten(@gray-light, 22.5%);
+    margin-bottom: @font-size-base;
 
     .cancel-on-png, .cancel-off-png, .star-on-png, .star-off-png, .star-half-png
     {
@@ -1911,6 +1912,12 @@ select
         .opacity(.65);
         .box-shadow(none);
     }
+}
+.btn-lg, .btn-group-lg > .btn
+{
+    padding: floor(@padding-base-vertical * 1.35) floor(@padding-base-vertical * 2.75);
+    font-size: ceil(@font-size-base * 1.35);
+    line-height: 1.2;
 }
 .btn-xl
 {

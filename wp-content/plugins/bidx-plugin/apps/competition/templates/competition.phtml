@@ -2,7 +2,6 @@
 
 $competition    = $this->data;
 // d($competition);
-$progress           = $this -> completenessScore ? $this -> completenessScore : '0';
 
 $competitionBidxMeta = isset($competition->bidxMeta)
     ? $competition->bidxMeta
@@ -61,10 +60,6 @@ if ( !($competition->competitionLogo && $competition->competitionLogo->document)
     }
 }
 
-// Financial
-$currentYear = date("Y");
-$yd;
-
 $attachmentItem = <<<EOT
     <div class="attachmentItem col-md-6">
         <div class="media well">
@@ -108,7 +103,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 
 
 ?>
-<div class="competitionSummary box-border top-margin-lineheight" id="competitionSummary" data-bsid=<?php echo $competitionId; ?>>
+<div class="competitionSummary box-border top-margin-lineheight" id="competitionSummary" data-bsid="<?php echo $competitionId; ?>">
     <div class="competitionCover">
         <div class="coverImageContainer <?php echo $hasCover; ?>">
 <?php
@@ -201,11 +196,45 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
     {
 ?>
         <div class="main-padding bg-info">
-            <div class="row view viewParticipate">
+            <div class="row view viewShow viewParticipate">
                 <div class="col-sm-4 col-sm-offset-2">
-                    <h4><?php echo _e( 'Apply before', 'bidxplugin' ); ?>:
+                    <h4 class="text-center"><?php echo _e( 'Apply before', 'bidxplugin' ); ?>:
                         <strong><?php echo $endDateTime;?></strong>
                     </h4>
+<?php
+                    if ( $this->exst($competitionBidxMeta->bidxEntityId) )
+                    {
+?>
+                        <div class="counter hide-overflow text-center flat" data-time="<?php echo $endTimeStamp; ?>">
+                            <?php
+                                if ( $endTimeStamp < time() ) {
+                        ?>
+                                    <div class="alert alert-warning">
+                                        <strong><i class="fa fa-exclamation-triangle"></i> <?php _e( 'This competition has expired','bidxplugin' ); ?></strong>
+                                    </div>
+                                    <a class="btn btn-secondary btn-block" href="/competition"><?php _e( 'Visit our competition overview','bidxplugin' ); ?> </a><?php
+                                } else {  ?>
+                                    <div class="counter-block">
+                                        <div class="days counter-number"></div>
+                                        <div class="counter-text"><?php _e( 'DAYS','bidxplugin' ); ?></div>
+                                    </div>
+                                    <div class="counter-block">
+                                        <div class="hours counter-number"></div>
+                                        <div class="counter-text"><?php _e( 'HOURS','bidxplugin' ); ?></div>
+                                    </div>
+                                    <div class="counter-block">
+                                        <div class="minutes counter-number"></div>
+                                        <div class="counter-text"><?php _e( 'MINUTES','bidxplugin' ); ?></div>
+                                    </div>
+                                    <div class="counter-block">
+                                        <div class="seconds counter-number"></div>
+                                        <div class="counter-text"><?php _e( 'SECONDS','bidxplugin' ); ?></div>
+                                    </div>
+                                <?php } ?>
+                        </div>
+<?php
+                    }
+?>
                 </div>
                 <div class="col-sm-4 text-right">
                     <button class="btn btn-primary btn-participate"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
@@ -221,15 +250,31 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 ?>
                 </div>
             </div>
+            
+            <div class="row view viewEdit">
+                <div class="col-sm-8 col-sm-offset-2 editControlsContainer hide-overflow">
+                    <div class="editControls pull-right">
 
+                        <!-- EDIT, conditionally filled by the app -->
+                        <div class="view viewEdit btn-group"></div>
+
+                        <!-- sucess msg, used as a placeholder for showing msgs -->
+
+                        <div class="view viewMainsuccess alert alert-success">
+                            <p class="successMsg"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row main-padding view viewApply">
-                <div class="col-sm-10 col-sm-offset-2">
+                <div class="col-sm-8 col-sm-offset-2">
                     <div class="form-group">
                         <label><?php _e('Select one of your business summaries','bidxplugin'); ?></label>
                          <select class="chosen-summary" name="businessSummary"></select>
-
-                        <a  class="btn btn-lg btn-primary btn-apply"><?php echo _e( 'Apply', 'bidxplugin' ); ?></a>
-                        <a href="#viewCompetition/<?php echo $competitionId;?>/cancel=true" class="btn btn-lg btn-primary btn-cancel"><?php echo _e( 'Cancel', 'bidxplugin' ); ?></a>
+                        <div class="main-padding-vertical hide-overflow">
+                            <a  class="btn btn-lg btn-primary btn-apply pull-right"><?php echo _e( 'Apply', 'bidxplugin' ); ?></a>
+                            <a href="#viewCompetition/<?php echo $competitionId;?>/cancel=true" class="btn btn-lg btn-link btn-cancel"><?php echo _e( 'Cancel', 'bidxplugin' ); ?></a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -243,29 +288,6 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
     }
 ?>
 
-  <div class="row main-padding">
-    <div class="col-sm-9"></div>
-    <div class="col-sm-3 text-right">
-        <div class="btn-group">
-        </div>
-        <div class="editControlsContainer">
-            <div class="editControls pull-right">
-
-                <!-- SHOW -->
-                <div class="view viewShow"></div>
-
-                <!-- EDIT, conditionally filled by the app -->
-                <div class="view viewEdit btn-group"></div>
-
-                <!-- sucess msg, used as a placeholder for showing msgs -->
-
-                <div class="view viewMainsuccess alert alert-success">
-                    <p class="successMsg"></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- SHOW -->
 <div class="view viewShow">
@@ -294,33 +316,6 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             if ( $this->exst($competitionBidxMeta->bidxEntityId) )
             {
 ?>
-                <div class="counter hide-overflow text-center" data-time="<?php echo $endTimeStamp; ?>">
-                    <?php
-                        if ( $endTimeStamp < time() ) {
-                ?>
-                            <div class="alert alert-warning">
-                                <strong><i class="fa fa-exclamation-triangle"></i> <?php _e( 'This competition has expired','bidxplugin' ); ?></strong>
-                            </div>
-                            <a class="btn btn-secondary btn-block" href="/competition"><?php _e( 'Visit our competition overview','bidxplugin' ); ?> </a><?php
-                        } else {  ?>
-                            <div class="counter-block">
-                                <div class="days counter-number"></div>
-                                <div class="counter-text"><?php _e( 'DAYS','bidxplugin' ); ?></div>
-                            </div>
-                            <div class="counter-block">
-                                <div class="hours counter-number"></div>
-                                <div class="counter-text"><?php _e( 'HOURS','bidxplugin' ); ?></div>
-                            </div>
-                            <div class="counter-block">
-                                <div class="minutes counter-number"></div>
-                                <div class="counter-text"><?php _e( 'MINUTES','bidxplugin' ); ?></div>
-                            </div>
-                            <div class="counter-block">
-                                <div class="seconds counter-number"></div>
-                                <div class="counter-text"><?php _e( 'SECONDS','bidxplugin' ); ?></div>
-                            </div>
-                        <?php } ?>
-                </div>
                 <h1>
                     <?php echo $this->exst( $competition->name ); ?>
                 </h1>
@@ -527,7 +522,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                             </span>
                         </div>
 
-                        <div class="asjucoman">
+                        <div class="competition-actors">
                             <table class="table table-compressed">
                                 <thead>
                                     <tr>
@@ -775,17 +770,17 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
         <div class="cardHeader hide-overflow">
             <div class="info-cell pull-left"><?php echo _e( 'Score', 'bidxplugin' ); ?>: %bidxRatingCount%</div>
             <div class="info-cell pull-left"><?php echo _e( 'Applied on', 'bidxplugin' ); ?>: %created%</div>
-            <span class="label bidx-label bidx-competition pull-right">%status%</span>
+            <div class="info-cell pull-right"><?php echo _e( 'Status', 'bidxplugin' ); ?>: %status%</div>
         </div>
         <div class="cardContent main-padding">
             <div class="cardTop">
                 <div class="row">
-                    <div class="col-sm-9">
+                    <div class="col-sm-8">
                         <h4><a href="/businesssummary/%entityId%" target="_blank">%bidxEntityDisplayName%</a>
                         &nbsp;&nbsp;<small><?php _e('by','bidxplugin'); ?></small><a href="/member/%bidxOwnerId%">&nbsp;&nbsp;%bidxOwnerDisplayName%</a></h4>
 
                     </div>
-                    <div class="col-sm-3 pull-right">
+                    <div class="col-sm-4 text-right">
                         <div class="rating-wrapper">
                             <div data-rating="%bidxRatingAverage%" class="raty"></div>
                         </div>

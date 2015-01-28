@@ -225,7 +225,7 @@
 
             $businessSummary.chosen({
                                         placeholder_text_single : bidx.i18n.i( "msgWaitForSave" )
-                                    ,   width                   : "75%"
+                                    ,   width                   : "100%"
                                     ,   disable_search_threshold : 10
                                     });
             bpLength    = _.size(listDropdownBp); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
@@ -720,7 +720,7 @@ $('.typeahead').typeahead({
             //
             $attachmentContainer.reflowrower(
             {
-                itemsPerRow:        3
+                itemsPerRow:        2
             ,   itemClass:          "attachmentItem"
             } );
 
@@ -2275,8 +2275,7 @@ $(document).ready(function() {
             if ( attached.length ) {
                 $.each( attached, function( idx, a )
                 {
-                    var bidxbusinessPlanEntityId = $(this).context.dataset.businessPlanEntityId;
-
+                    var bidxbusinessPlanEntityId = $(this).context.dataset.businessplanentityid;
                     if ( $.inArray( bidxbusinessPlanEntityId, attachmentExists ) === -1 )
                     {
                         attachmentExists.push( bidxbusinessPlanEntityId );
@@ -2843,7 +2842,7 @@ $(document).ready(function() {
         ,   $listError      = $("#error-card").html().replace(/(<!--)*(-->)*/g, "")
         ;
 
-        businessData       =  _.findWhere( currentUserBusinessSummaryList, { 'entityId' : parseInt(entityId) } );
+        businessData       =  _.findWhere( currentUserBusinessSummaryList, { 'entityId' : parseInt(entityId, 10) } );
 
         bidxMeta           = businessData.data.bidxMeta;
 
@@ -2940,7 +2939,7 @@ $(document).ready(function() {
         ,   $raty
         ;
 
-        businessData       =  _.findWhere( applicationObj, { 'entityId' : parseInt(entityId) } );
+        businessData       =  _.findWhere( applicationObj, { 'entityId' : parseInt(entityId, 10) } );
 
         bidxMeta           = businessData.bidxMeta;
 
@@ -3202,7 +3201,7 @@ $(document).ready(function() {
 
         $.each( listDropdownBp, function( idx, entityId )
         {
-            myApplicationsAny = _.findWhere( applicationObj, { 'entityId' : parseInt(entityId) } );
+            myApplicationsAny = _.findWhere( applicationObj, { 'entityId' : parseInt(entityId, 10) } );
 
             if ( !$.isEmptyObject(myApplicationsAny) )
             {
