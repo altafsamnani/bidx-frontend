@@ -283,7 +283,7 @@ if ( !empty( $attachment ) )
                         <label><?php _e('Select one of your business summaries','bidxplugin'); ?></label>
                          <select class="chosen-summary" name="businessSummary"></select>
                         <div class="main-padding-vertical hide-overflow">
-                            <a  class="btn btn-lg btn-primary btn-apply pull-right"><?php echo _e( 'Apply', 'bidxplugin' ); ?></a>
+                            <a  data-status="APPLIED" class="btn btn-lg btn-primary btn-action pull-right"><?php echo _e( 'Apply', 'bidxplugin' ); ?></a>
                             <a href="#viewCompetition/<?php echo $competitionId;?>/cancel=true" class="btn btn-lg btn-link btn-cancel"><?php echo _e( 'Cancel', 'bidxplugin' ); ?></a>
                         </div>
                     </div>
@@ -800,7 +800,8 @@ if ( !empty( $attachment ) )
             </div>
         </div>
         <div class="cardFooter text-right">
-            <a href="#" class="btn btn-primary btn-md info-action">%buttonAction%</a>
+            <a  data-entityId = "%entityId%" data-status = "" class="btn btn-primary btn-md btn-action info-action hide">%buttonAction%</a>
+            <a  data-entityId = "%entityId%" data-status = "" class="btn btn-primary btn-md btn-action info-withdraw hide">%buttonWithdraw%</a>
         </div>
     </div>
 -->
