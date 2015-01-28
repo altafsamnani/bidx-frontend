@@ -13,11 +13,13 @@
     <Item value="invited">Invited persons</Item>
     <Item value="APPLIED">Applied</Item>
     <Item value="SUBMITTED">Submitted</Item>
+    <Item value="WITHDRAWN">Withdrawn</Item>
     <Item value="REJECTED">Rejected</Item>
     <Item value="NOT_FINALIST">Not finalist</Item>
     <Item value="FINALIST">Finalist</Item>
     <Item value="NOT_WINNER">Not Winner</Item>
     <Item value="WINNER">Winner</Item>
+
 
     <Item value="btnCompetitionSubmit">Submit</Item>
     <Item value="btnCompetitionWithdraw">Withdraw</Item>
@@ -29,5 +31,11 @@
     <Item value="lblCompetitionNotWinner">Not winner</Item>
     <Item value="lblCompetitionFinalist">Finalist</Item>
     <Item value="lblCompetitionNotFinalist">Not Finalist</Item>
+
+    <!-- Success Messages -->
+    <Item value="successApplied">You have succesfully applied for this competition, Once you are ready you need to submit this plan for reviewing, Thank you!</Item>
+    <Item value="successSubmitted">You have succesfully submitted for this competition, We will inform you once we assess your plan, Good luck!</Item>
+    <Item value="successWithdrawn">You have withdrawn from this competition, We hope that you will participate again!</Item>
+    <Item value="successRejected">You have rejected %plan% plan.</Item>
 
 </I18N>

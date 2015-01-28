@@ -26,7 +26,9 @@
     ,   $btnFullAccessRequest       = $element.find( ".bidxRequestFullAccess")
     ,   $bidxAccessRequestPending   = $element.find( ".bidxAccessRequestPending")
     ,   $btnParticipate             = $element.find( ".btn-participate")
-    ,   $btnAction                   = $element.find( ".btn-action")
+    ,   $btnApply                   = $element.find( ".btn-apply")
+
+    ,   $successLabel               = $element.find('.successLabel')
 
 
     ,   $videoWrapper               = $element.find( ".video-wrapper" )
@@ -204,6 +206,27 @@
         }
     };
 
+    function _setupApplyButton( )
+    {
+
+       /* Partcipate button Button Click */
+        _assignBtnAction(
+        {
+            $btnAction: $btnApply
+        ,   callback:   function( entityId, status )
+                        {
+
+                            _appendCardValues({
+                                                list:       'viewOwnCard'
+                                            ,   entityId:   entityId
+                            });
+
+                            _hideView('apply');
+                            $successLabel.empty().i18nText('successApply', appName);
+                            _showAllView('success');
+                        }
+        });
+    }
     // Setup function for doing work that should only be done once
     //
     function _oneTimeSetup()
@@ -212,6 +235,9 @@
          ,   bpLength
          ,   visibilityArrItems  =   [ ]
          ;
+
+
+        _setupApplyButton();
         _competitionTimer();
         _snippets();
         _setupValidation();
@@ -2819,101 +2845,6 @@ $(document).ready(function() {
         } );
     }
 
-    function _appendCardValuesOld( options )
-    {
-        var listItem
-        ,   $listItem
-        ,   countryOperation
-        ,   entrpreneurIndustry
-        ,   entrpreneurReason
-        ,   country
-        ,   industry
-        ,   reason
-        ,   item
-        ,   businessData
-        ,   bidxMeta
-        ,   isEntrepreneur
-        ,   isInvestor
-        ,   isMentor
-        ,   emptyVal        = ''
-        ,   entityId        = options.entityId
-        ,   $list           = $element.find("." + options.list)
-        ,   snippet         = $("#entrpreneur-card-snippet").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listError      = $("#error-card").html().replace(/(<!--)*(-->)*/g, "")
-        ;
-
-        businessData       =  _.findWhere( currentUserBusinessSummaryList, { 'entityId' : parseInt(entityId, 10) } );
-
-        bidxMeta           = businessData.data.bidxMeta;
-
-        item               = businessData.data;
-
-        isEntrepreneur   = bidx.utils.getValue( item, "bidxEntrepreneurProfile" );
-        isInvestor       = bidx.utils.getValue( item, "bidxInvestorProfile" );
-        isMentor         = bidx.utils.getValue( item, "bidxMentorProfile" );
-
-        if ( !$.isEmptyObject(item) )
-        {
-             countryOperation  = bidx.utils.getValue( item, "countryOperation");
-
-            if(countryOperation)
-            {
-
-                bidx.data.getItem(countryOperation, 'country', function(err, labelCountry)
-                {
-                    country    =   labelCountry;
-                });
-            }
-
-            entrpreneurIndustry = bidx.utils.getValue( item, "industry");
-
-            if(entrpreneurIndustry)
-            {
-                bidx.data.getItem(entrpreneurIndustry, 'industry', function(err, labelIndustry)
-                {
-                   industry = labelIndustry;
-                });
-            }
-
-            entrpreneurReason = bidx.utils.getValue( item, "reasonForSubmission");
-
-            if(entrpreneurReason)
-            {
-                bidx.data.getItem(entrpreneurReason, 'reasonForSubmission', function(err, labelReason)
-                {
-                   reason = labelReason;
-                });
-            }
-
-            listItem    =   snippet
-                            .replace( /%entityId%/g,                    entityId   ? entityId     : emptyVal )
-                            .replace( /%bidxOwnerDisplayName%/g,        bidxMeta.bidxOwnerDisplayName   ? bidxMeta.bidxOwnerDisplayName     : emptyVal )
-                            .replace( /%bidxRatingAverage%/g,           bidxMeta.bidxRatingAverage   ? bidxMeta.bidxRatingAverage     : emptyVal )
-                            .replace( /%completeness%/g,                item.completeness   ? item.completeness     : emptyVal )
-                            .replace( /%name%/g,                        item.name   ? item.name     : emptyVal )
-                            .replace( /%summary%/g,                     item.summary   ? item.summary     : emptyVal )
-                            .replace( /%bidxLastUpdateDateTime%/g,      bidxMeta.bidxLastUpdateDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxLastUpdateDateTime) : emptyVal )
-                            .replace( /%role_entrepreneur%/g,           bidx.i18n.i( 'entrepreneur' ) )
-                            .replace( /%countryOperation%/g,            country )
-                            .replace( /%industry%/g,                    industry )
-                            .replace( /%reasonForSubmission%/g,         reason )
-                            .replace( /%financingNeeded%/g,             item.financingNeeded   ? item.financingNeeded     : emptyVal )
-                            ;
-
-            $listItem   =   $(listItem);
-        }
-        else
-        {
-            $listItem = $listError;
-        }
-
-        $list.empty().append( $listItem );
-
-        _showAllView('ownCard');
-
-
-    }
-
     function _appendCardValues( options )
     {
         var listItem
@@ -2941,7 +2872,8 @@ $(document).ready(function() {
 
         businessData       =  _.findWhere( applicationObj, { 'entityId' : parseInt(entityId, 10) } );
 
-        bidxMeta           = businessData.bidxMeta;
+
+        bidxMeta           = bidx.utils.getValue(businessData, "bidxMeta");
 
 
         if ( !$.isEmptyObject(bidxMeta) )
@@ -2992,10 +2924,17 @@ $(document).ready(function() {
     function _assignEntrpreneurAction( $listItem, businessData )
     {
         var status          = businessData.status
+        ,   sucessMsg
+        ,   statusMsg
+        ,   $cardEntity
         ,   $infoAction     = $listItem.find( ".info-action")
         ,   $infoWithdraw   = $listItem.find( ".info-withdraw")
+        ,   $cardFooter     = $listItem.find( ".cardFooter")
+        ,   snippetSuccess  = $("#success-card").html().replace(/(<!--)*(-->)*/g, "")
         ;
-        bidx.utils.log('statusss',status);
+
+        bidx.utils.log('status',status);
+
         switch (status)
         {
             case 'APPLIED' :
@@ -3006,6 +2945,40 @@ $(document).ready(function() {
                 /* Change the data-status field of button */
                 $infoAction.data('status', 'SUBMITTED');
                 $infoWithdraw.data('status', 'WITHDRAWN');
+
+                _assignBtnAction(
+                {
+                    $btnAction: $infoAction
+                ,   callback:   function( entityId, status )
+                                {
+                                    $infoAction.addClass("hide");
+
+                                    sucessMsg = bidx.i18n.i('successSubmitted' ,appName);
+
+                                    statusMsg = snippetSuccess.replace( /%successMsg%/g, sucessMsg);
+
+                                    $cardFooter.prepend($(statusMsg));
+
+                                    //$successLabel.empty().i18nText('successSubmitted', appName);
+
+                                    _showAllView('success');
+                                }
+                });
+
+                _assignBtnAction(
+                {
+                    $btnAction: $infoWithdraw
+                ,   callback:   function( entityId, status )
+                                {
+                                    $cardEntity = $element.find('.cardEntity' + entityId);
+
+                                    /*Slowly Removes the content */
+                                    $cardEntity.i18nText("successWithdrawn", appName);
+                                    $cardEntity.addClass('alert alert-info text-center');
+
+                                }
+                });
+
 
                 /*Show buttons*/
                 $infoAction.removeClass('hide');
@@ -3019,6 +2992,19 @@ $(document).ready(function() {
                 /* Change the data-status field of button */
                 $infoWithdraw.data('status', 'WITHDRAWN');
 
+                _assignBtnAction(
+                {
+                    $btnAction: $infoWithdraw
+                ,   callback:   function( entityId, status )
+                                {
+                                    $cardEntity = $element.find('.cardEntity' + entityId);
+
+                                    /*Slowly Removes the content */
+                                    $cardEntity.i18nText("successWithdrawn", appName);
+                                    $cardEntity.addClass('alert alert-info text-center');
+                                }
+                });
+
                 /*Show buttons*/
                 $infoWithdraw.removeClass('hide');
 
@@ -3026,8 +3012,11 @@ $(document).ready(function() {
         }
     }
 
-    function _updatePlanStatusToCompetition( params )
+    function _updatePlanStatusToCompetition( options )
     {
+        var params          =   options.params
+        ;
+
         bidx.api.call(
             "competition.assignPlanToCompetition"
         ,   {
@@ -3040,15 +3029,11 @@ $(document).ready(function() {
                     // Do we have edit perms?
                     //
                     bidx.utils.log('response',response);
-                    _hideView('apply');
-                    _showAllView('success');
-
-                    _appendCardValues( {
-                                            list:       'viewOwnCard'
-                                        ,   entityId:   params.data.entityId
-                                        });
-
-
+                    //  execute callback if provided
+                    if (options && options.callback)
+                    {
+                        options.callback( params.data.entityId, response.data.status );
+                    }
                 }
 
                 , error: function(jqXhr, textStatus)
@@ -3061,67 +3046,79 @@ $(document).ready(function() {
         );
     }
 
-    $btnAction.click( function( e )
+    function _assignBtnAction( options  )
     {
-        e.preventDefault();
-
-        var orgText
-        ,   confirmTimer
-        ,   params
-        ,   status
-        ,   btnEntityId             =   $btnAction.data( "entityId" ) // For Submit/Withdraw buttons
-        ,   businessPlanEntityId    =   ( btnEntityId ) ? btnEntityId : $businessSummary.val()  // for First time Particpate/Applied Button
+        var     $btnAction  =   options.$btnAction
         ;
 
-        if ( !businessPlanEntityId )
+        $btnAction.click( function( e )
         {
-            bidx.utils.error( "[competition] No entity id, unable to apply!", businessPlanEntityId );
-            return;
-        }
+            e.preventDefault();
 
-
-
-        function startConfirmTimer( $btn, orgText )
-        {
-            confirmTimer = setTimeout( function( )
-            {
-                $btn.text( orgText );
-                $btn.data( "confirm", false );
-
-                $btn.removeClass( "btn-danger" );
-
-            }, 5000 );
-        }
-
-        if ( $btnAction.data( "confirm" ) )
-        {
-            status  =   $btnAction.data( "status" )
+            var orgText
+            ,   confirmTimer
+            ,   params
+            ,   status
+            ,   btnEntityId             =   $btnAction.data( "entityid" ) // For Submit/Withdraw buttons
+            ,   businessPlanEntityId    =   ( btnEntityId ) ? btnEntityId : $businessSummary.val()  // for First time Particpate/Applied Button
             ;
-            clearTimeout( confirmTimer );
 
-            params  =   {
-                            competitionId   :   competitionSummaryId
-                        ,   data            :   {
-                                                    entityId    :   businessPlanEntityId
-                                                ,   status      :   (status) ? status : 'APPLIED'
-                                                }
-                        }
-                    ;
-            _updatePlanStatusToCompetition( params );
+            if ( !businessPlanEntityId )
+            {
+                bidx.utils.error( "[competition] No entity id, unable to apply!", businessPlanEntityId );
+                return;
+            }
 
-        }
-        else
-        {
-            orgText = $btnAction.text();
+            bidx.utils.log('[competition] Competition Action Button Clicked', $btnAction.data( "status" ));
+            bidx.utils.log('[competition] Competition Action EntityId', businessPlanEntityId);
 
-            $btnAction.data( "confirm", true );
+            function startConfirmTimer( $btn, orgText )
+            {
+                confirmTimer = setTimeout( function( )
+                {
+                    $btn.text( orgText );
+                    $btn.data( "confirm", false );
 
-            $btnAction.addClass( "btn-danger" );
-            $btnAction.i18nText( "btnConfirm" );
+                    $btn.removeClass( "btn-danger" );
 
-            startConfirmTimer( $btnAction, orgText );
-        }
-    });
+                }, 5000 );
+            }
+
+            if ( $btnAction.data( "confirm" ) )
+            {
+                status  =   $btnAction.data( "status" );
+
+                clearTimeout( confirmTimer );
+
+                params  =
+                {
+                    competitionId   :   competitionSummaryId
+                ,   data            :   {
+                                            entityId    :   businessPlanEntityId
+                                        ,   status      :   (status) ? status : 'APPLIED'
+                                        }
+                };
+
+                _updatePlanStatusToCompetition(
+                {
+                    params:     params
+                ,   callback:   options.callback
+                } );
+
+            }
+            else
+            {
+                orgText = $btnAction.text();
+
+                $btnAction.data( "confirm", true );
+
+                $btnAction.addClass( "btn-danger" );
+                $btnAction.i18nText( "btnConfirm" );
+
+                startConfirmTimer( $btnAction, orgText );
+            }
+        });
+    }
 
     // Beware! validation should have been tested, this is just a function for callin the API for saving
     //

@@ -250,7 +250,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 ?>
                 </div>
             </div>
-            
+
             <div class="row view viewEdit">
                 <div class="col-sm-8 col-sm-offset-2 editControlsContainer hide-overflow">
                     <div class="editControls pull-right">
@@ -272,15 +272,15 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                         <label><?php _e('Select one of your business summaries','bidxplugin'); ?></label>
                          <select class="chosen-summary" name="businessSummary"></select>
                         <div class="main-padding-vertical hide-overflow">
-                            <a  data-status="APPLIED" class="btn btn-lg btn-primary btn-action pull-right"><?php echo _e( 'Apply', 'bidxplugin' ); ?></a>
+                            <a  data-status="APPLIED" class="btn btn-lg btn-primary btn-apply pull-right"><?php echo _e( 'Apply', 'bidxplugin' ); ?></a>
                             <a href="#viewCompetition/<?php echo $competitionId;?>/cancel=true" class="btn btn-lg btn-link btn-cancel"><?php echo _e( 'Cancel', 'bidxplugin' ); ?></a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row main-padding view viewSuccess">
-                <div class="col-sm-10 col-sm-offset-2">
-                    <?php _e('You have succesfully applied for this competition, Thank you!', 'bidxplugin'); ?>
+                <div class="col-sm-10 col-sm-offset-2 successLabel">
+
                 </div>
             </div>
         </div>
@@ -766,7 +766,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 </div>
 <script type="text/html" id="entrpreneur-card-snippet">
 <!--
-    <div class="cardView">
+    <div class="cardView cardEntity%entityId%">
         <div class="cardHeader hide-overflow">
             <div class="info-cell pull-left"><?php echo _e( 'Score', 'bidxplugin' ); ?>: %bidxRatingCount%</div>
             <div class="info-cell pull-left"><?php echo _e( 'Applied on', 'bidxplugin' ); ?>: %created%</div>
@@ -789,8 +789,17 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             </div>
         </div>
         <div class="cardFooter text-right">
-            <a  data-entityId = "%entityId%" data-status = "" class="btn btn-primary btn-md btn-action info-action hide">%buttonAction%</a>
-            <a  data-entityId = "%entityId%" data-status = "" class="btn btn-primary btn-md btn-action info-withdraw hide">%buttonWithdraw%</a>
+            <a  data-entityid = "%entityId%" data-status = "" class="btn btn-primary btn-md btn-action info-action hide">%buttonAction%</a>
+            <a  data-entityid = "%entityId%" data-status = "" class="btn btn-primary btn-md btn-action info-withdraw hide">%buttonWithdraw%</a>
+        </div>
+    </div>
+-->
+</script>
+<script type="text/html" id="success-card">
+<!--
+    <div class="">
+        <div class="viewSuccesscard alert alert-success text-center">
+            %successMsg%
         </div>
     </div>
 -->

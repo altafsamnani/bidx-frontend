@@ -75,6 +75,11 @@ class competition
             /* 3. Render Services for Initial View Display */
             $competitionData = $competitionObj->getCompetitionDetails( $competitionId );
 
+
+      /*      echo "<pre>";
+            print_r($competitionData);
+            echo "</pre>";exit;*/
+
             $view->data = $competitionData->data;
 
             $jsData     = json_decode(json_encode($competitionData->data), true);
