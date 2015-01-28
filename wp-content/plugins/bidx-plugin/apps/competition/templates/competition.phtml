@@ -1,13 +1,16 @@
 <?php
 
 $competition    = $this->data;
-// d($competition);
+d($competition);
 
 $competitionBidxMeta = isset($competition->bidxMeta)
     ? $competition->bidxMeta
     : null;
 
 $canEdit                    = $this->exst($competitionBidxMeta->bidxCanEdit, false);
+$isManager                  = $canEdit;
+$isAssessor                 = $this->exst($competitionBidxMeta->bidxCompetitionCanAssess, false);
+$isJudge                    = $this->exst($competitionBidxMeta->bidxCompetitionCanJudge, false);
 
 $createdtDateTime           = ( isset( $competitionBidxMeta->bidxCreationDateTime ) ) ? date( 'd M Y', $competitionBidxMeta->bidxCreationDateTime  ) : NULL;
 
@@ -20,7 +23,6 @@ $endDateTime                = ( isset( $competition->endDateTime ) ) ? date( 'd 
 $endTimeStamp               = ( isset( $competition->endDateTime ) ) ? strtotime ( $this->exst( $competition->endDateTime ) )  : NULL;
 
 $gender                     = $this->getMultiValues( $this->exst($competition->competitionGender), ', ', 'gender' );
-
 
 // get the entities of the current user
 //
@@ -60,6 +62,12 @@ if ( !($competition->competitionLogo && $competition->competitionLogo->document)
     }
 }
 
+$isParticipant = true;
+if ( $canEdit || $isAssessor || $isJudge )
+{
+    $isParticipant = false;
+}
+
 $attachmentItem = <<<EOT
     <div class="attachmentItem col-md-6">
         <div class="media well">
@@ -96,10 +104,6 @@ if ( !empty( $attachment ) )
         break;
     }
 }
-
-// Default set of rowproperties
-//
-$viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class_label' => 'bidx-label', 'class_value' => 'bidx-value', 'class_row' => '' );
 
 
 ?>
@@ -237,7 +241,13 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 ?>
                 </div>
                 <div class="col-sm-4 text-right">
-                    <button class="btn btn-primary btn-participate"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
+<?php
+                    if ( $isParticipant ) :
+?>                    
+                        <button class="btn btn-primary btn-participate"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
+<?php
+                    endif;
+?>                    
 <?php
                     // does a user have rights to edit ( is the owner )
                     //
@@ -245,6 +255,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                     {
 ?>
                         <a class="btn btn-primary editBS" href="#editCompetition/<?php echo $competitionId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                        <button class="btn btn-success endPhase"><i class="fa fa-flag-checkered fa-big fa-above"></i> <?php _e( 'End Phase', 'bidxplugin' ); ?></button>
 <?php
                     }
 ?>
