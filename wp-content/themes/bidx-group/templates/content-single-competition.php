@@ -69,8 +69,6 @@
         } 
 ?>
         <h1><?php the_title(); ?></h1>
-        <div><?php the_excerpt(); ?></div>
-        <div><?php wp_link_pages(array('before' => '<nav class="page-nav"><p>' . __('Pages:', 'roots'), 'after' => '</p></nav>')); ?></div>
         <div><?php the_content(); ?></div>
         
 <?php endwhile; ?>

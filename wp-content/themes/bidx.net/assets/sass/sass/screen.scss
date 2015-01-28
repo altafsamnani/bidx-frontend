@@ -1648,14 +1648,16 @@ h1.service {
         background-color: $color_15;
         text-align: center;
         padding: 5px;
-        h4 {
+        color: $white;
+        h2 {
             color: $white;
+            margin: 20px;
         }
     }
     .price {
         background-color: $lightgreen;
         color: $white;
-        padding: 20px;
+        padding: 10px;
         font-family: $exo;
         h2 {
             font-family: $exo;
@@ -1688,6 +1690,14 @@ h1.service {
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             &:last-child {
                 border-bottom: 0;
+            }
+            ul {
+                padding: 0;
+            }
+            li {
+                text-align: left;
+                border: none;
+                list-style-type: none;
             }
         }
     }
