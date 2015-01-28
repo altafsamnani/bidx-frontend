@@ -2842,7 +2842,7 @@ $(document).ready(function() {
         ,   $listError      = $("#error-card").html().replace(/(<!--)*(-->)*/g, "")
         ;
 
-        businessData       =  _.findWhere( currentUserBusinessSummaryList, { 'entityId' : parseInt(entityId) } );
+        businessData       =  _.findWhere( currentUserBusinessSummaryList, { 'entityId' : parseInt(entityId, 10) } );
 
         bidxMeta           = businessData.data.bidxMeta;
 
@@ -2940,7 +2940,7 @@ $(document).ready(function() {
         ,   $infoAction
         ;
 
-        businessData       =  _.findWhere( applicationObj, { 'entityId' : parseInt(entityId) } );
+        businessData       =  _.findWhere( applicationObj, { 'entityId' : parseInt(entityId, 10) } );
 
         bidxMeta           = businessData.bidxMeta;
 
@@ -3176,7 +3176,7 @@ $(document).ready(function() {
 
         $.each( listDropdownBp, function( idx, entityId )
         {
-            myApplicationsAny = _.findWhere( applicationObj, { 'entityId' : parseInt(entityId) } );
+            myApplicationsAny = _.findWhere( applicationObj, { 'entityId' : parseInt(entityId, 10) } );
 
             if ( !$.isEmptyObject(myApplicationsAny) )
             {

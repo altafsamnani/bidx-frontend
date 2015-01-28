@@ -770,17 +770,17 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
         <div class="cardHeader hide-overflow">
             <div class="info-cell pull-left"><?php echo _e( 'Score', 'bidxplugin' ); ?>: %bidxRatingCount%</div>
             <div class="info-cell pull-left"><?php echo _e( 'Applied on', 'bidxplugin' ); ?>: %created%</div>
-            <span class="label bidx-label bidx-competition pull-right">%status%</span>
+            <div class="info-cell pull-right"><?php echo _e( 'Status', 'bidxplugin' ); ?>: %status%</div>
         </div>
         <div class="cardContent main-padding">
             <div class="cardTop">
                 <div class="row">
-                    <div class="col-sm-9">
+                    <div class="col-sm-8">
                         <h4><a href="/businesssummary/%entityId%" target="_blank">%bidxEntityDisplayName%</a>
                         &nbsp;&nbsp;<small><?php _e('by','bidxplugin'); ?></small><a href="/member/%bidxOwnerId%">&nbsp;&nbsp;%bidxOwnerDisplayName%</a></h4>
 
                     </div>
-                    <div class="col-sm-3 pull-right">
+                    <div class="col-sm-4 text-right">
                         <div class="rating-wrapper">
                             <div data-rating="%bidxRatingAverage%" class="raty"></div>
                         </div>
