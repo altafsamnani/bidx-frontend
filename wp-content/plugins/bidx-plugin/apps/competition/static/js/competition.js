@@ -2941,7 +2941,7 @@ $(document).ready(function() {
 
             listItem    =   snippet
                             .replace( /%entityId%/g,                    entityId                        ? entityId     : emptyVal )
-                            .replace( /%bidxOwnerId/g,                  bidxMeta.bidxOwnerDisplayName )
+                            .replace( /%bidxOwnerId%/g,                 bidxMeta.bidxOwnerId )
                             .replace( /%bidxOwnerDisplayName%/g,        bidxMeta.bidxOwnerDisplayName   ? bidxMeta.bidxOwnerDisplayName     : emptyVal )
                             .replace( /%bidxRatingAverage%/g,           bidxMeta.bidxRatingAverage      ? bidxMeta.bidxRatingAverage     : emptyVal )
                             .replace( /%bidxRatingCount%/g,             bidxMeta.bidxRatingCount        ? bidxMeta.bidxRatingCount     : emptyVal )
