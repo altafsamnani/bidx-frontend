@@ -46,6 +46,14 @@ class auth {
 	 */
 	function load($atts) {
 
+        // BIDX-2837 Very quick and dirty workaround for MEK/GESR
+        // BEWARE: see the very same hack in auth.js
+        $subdomain = BidxCommon::get_bidx_subdomain ( false, get_site_url() );
+        if ($subdomain === 'gesr') {
+            header( "Location: http://demogroup.demo.bidx.net/bidx-soca/bidxauth?id=http://gesr.net/beta" );
+            return;
+        }
+
 		// 1. Template Rendering
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/auth/templates/' );

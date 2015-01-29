@@ -9,6 +9,15 @@
     //
     var _showView = function( view )
     {
+        debugger;
+        // BIDX-2837 Very quick and dirty workaround for MEK/GESR
+        // BEWARE: see the very same hack in auth.php
+        if ( bidx.common.groupDomain === 'gesr' ) 
+        {
+            document.location.href = "http://demogroup.demo.bidx.net/bidx-soca/bidxauth?id=http://gesr.net/beta";
+            return;
+        }
+
         var $view = $views.hide().filter( bidx.utils.getViewName( view ) ).show();
 
     };
