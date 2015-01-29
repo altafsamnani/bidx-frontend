@@ -1777,6 +1777,12 @@ select
         margin: 0 0 0 ceil(@font-size-base * 3.9);
         float: left;
     }
+    .alert
+    {
+        .border-radius(0);
+        padding: floor(@padding-base-vertical * 1.5);
+        margin: floor(@padding-base-vertical * 1.5);
+    }
 }
 
 .cardHeader
@@ -1788,10 +1794,17 @@ select
         padding: ceil(@font-size-base * 0.65) ceil(@font-size-base * 1.05);
         border-right: 1px solid lighten(@gray-light, 22.5%);
     }
+    .cardStatus
+    {
+        border-right: none;
+        border-left: 1px solid lighten(@gray-light, 22.5%);
+    }
 }
-.info-action
+.cardInfoText
 {
-    margin: ceil(@font-size-base * 0.60) ceil(@font-size-base * 1.05);
+    margin-right: ceil(@font-size-base * 0.60);
+    line-height: 1.5;
+    float: left;
 }
 
 
