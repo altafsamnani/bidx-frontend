@@ -9,12 +9,14 @@
     //
     var _showView = function( view )
     {
-        debugger;
         // BIDX-2837 Very quick and dirty workaround for MEK/GESR
         // BEWARE: see the very same hack in auth.php
-        if ( bidx.common.groupDomain === 'gesr' ) 
+        if ( bidx.common.groupDomain === "gesr" ) 
         {
-            document.location.href = "http://demogroup.demo.bidx.net/bidx-soca/bidxauth?id=http://gesr.net/beta";
+            // If the domain has 2 subdomains such as gesr.demo.bidx.net, then assume beta testing.
+            var isGesrBeta = window.location.host.split(".").length > 2;
+            document.location.href = window.location.protocol + "//" + window.location.host + 
+                "/bidx-soca/bidxauth?id=http://gesr.net/" + (isGesrBeta ? "beta" : "");
             return;
         }
 
