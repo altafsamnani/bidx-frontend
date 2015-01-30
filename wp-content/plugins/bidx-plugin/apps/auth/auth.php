@@ -50,7 +50,9 @@ class auth {
         // BEWARE: see the very same hack in auth.js
         $siteUrl = get_site_url();
         $subdomain = BidxCommon::get_bidx_subdomain ( false, $siteUrl );
-        if ( $subdomain === "gesr" ) {
+        // This "auth" app also handles views like for /join and /activate
+        // For now, only redirect for the actual login.
+        if ( $subdomain === "gesr" && $atts["view"] === "composite-view" ) {
             // If the domain has 2 subdomains such as gesr.demo.bidx.net, then assume beta testing.
             $isGesrBeta = substr_count( $siteUrl, "." ) > 2;
             header( "Location: " . $siteUrl. "/bidx-soca/bidxauth?id=http://gesr.net/" . ($isGesrBeta ? "beta" : "") );
