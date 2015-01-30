@@ -48,9 +48,12 @@ class auth {
 
         // BIDX-2837 Very quick and dirty workaround for MEK/GESR
         // BEWARE: see the very same hack in auth.js
-        $subdomain = BidxCommon::get_bidx_subdomain ( false, get_site_url() );
-        if ($subdomain === 'gesr') {
-            header( "Location: http://demogroup.demo.bidx.net/bidx-soca/bidxauth?id=http://gesr.net/beta" );
+        $siteUrl = get_site_url();
+        $subdomain = BidxCommon::get_bidx_subdomain ( false, $siteUrl );
+        if ( $subdomain === "gesr" ) {
+            // If the domain has 2 subdomains such as gesr.demo.bidx.net, then assume beta testing.
+            $isGesrBeta = substr_count( $siteUrl, "." ) > 2;
+            header( "Location: " . $siteUrl. "/bidx-soca/bidxauth?id=http://gesr.net/" . ($isGesrBeta ? "beta" : "") );
             return;
         }
 
