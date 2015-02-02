@@ -39,18 +39,6 @@ if ( $requestStatus === "granted" || $canEdit )
     $hasAccess = true;
 }
 
-if ( !($businessSummary->cover && $businessSummary->cover->document) )
-{
-    if ( $canEdit || $newBusiness )
-    {
-        $hasCover = 'hide-it';
-    }
-    else
-    {
-        $hasCover = 'hide';
-    }
-}
-
 // Financial
 $currentYear = date("Y");
 $yd;
@@ -114,7 +102,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
 <div class="businessSummary box-border top-margin-lineheight" id="businessSummary" data-bsid=<?php echo $businessSummaryId; ?>>
     <div class="businessCover">
-        <div class="coverImageContainer <?php echo $hasCover; ?>">
+        <div class="coverImageContainer">
 <?php
             if ( $businessSummary->cover && $businessSummary->cover->document ):
 ?>            
@@ -160,6 +148,15 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>        
             </div>
         </div>
+<?php
+        if ( $businessSummary->logo && $businessSummary->logo->document ):
+?>            
+        <div class="logoImage">
+            <img src="<?php echo $businessSummary->logo->document ?>" class="center-img" alt="Logo Image">
+        </div>
+<?php
+        endif;
+?>
     </div>
 
 <?php
@@ -348,15 +345,6 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <div class="mainBusiness hide-overflow">
     <div class="row">
     <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-<?php
-            if ( $businessSummary->logo && $businessSummary->logo->document ):
-?>            
-            <div class="logoImage">
-                <img src="<?php echo $businessSummary->logo->document ?>" class="center-img" alt="Logo Image">
-            </div>
-<?php
-            endif;
-?>
         
     </div>
     </div>
@@ -394,17 +382,26 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             }
 
             echo $theVideo;
+
+            if ( $this->exst($businessSummary->externalAudioPitch) )
+            {
+?>
+                <a target="_blank" href="<?php echo $this->exst($businessSummary->externalAudioPitch); ?>" class="audioPitch btn btn-lg btn-primary btn-block"><?php _e('Listen the audio pitch', 'bidxplugin')?></a>
+<?php                
+            }
 ?>
 <?php
     if ( $this->exst($businessSummary->summary) )
     {
 ?>
+        <div class="main-padding-vertical">
             <h3 class="to-uppercase"><?php _e('In a few words', 'bidxplugin')?></h3>
             <div>
 <?php
                 echo $this->exst($businessSummary->summary);
 ?>
             </div>
+        </div>
 
 <?php
     }
@@ -689,7 +686,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         <ul class="nav nav-tabs tabs-left">
             <li class="active"><a href="#tab-bs-overview" data-toggle="tab"><?php _e('General Overview','bidxplugin'); ?></a></li>
             <li><a href="#tab-bs-about-business" data-toggle="tab"><?php _e('About the business','bidxplugin'); ?></a></li>
-            <li><a href="#tab-bs-about-you" data-toggle="tab"><?php _e('About you and your team','bidxplugin'); ?></a></li>
+            <li><a href="#tab-bs-about-you" data-toggle="tab"><?php _e('About the team','bidxplugin'); ?></a></li>
             <li><a href="#tab-bs-financial" data-toggle="tab"><?php _e('Financial Details','bidxplugin'); ?></a></li>
             <li><a href="#tab-bs-company" data-toggle="tab"><?php _e('Company Details','bidxplugin'); ?></a></li>
             <li><a href="#tab-bs-mentoring" data-toggle="tab"><?php _e('Mentoring Details','bidxplugin'); ?></a></li>
@@ -747,26 +744,26 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             <div class="row">
                                 <!-- Name -->
                                 <div class="form-group col-sm-6">
-                                    <label><?php _e('Business name','bidxplugin'); ?></label>
-                                    <input type="text" class="form-control" name="name" placeholder="<?php _e('Business name','bidxplugin'); ?>">
+                                    <label><?php _e('Name of your business','bidxplugin'); ?></label>
+                                    <input type="text" class="form-control" name="name">
                                 </div>
 
                                 <!-- Slogan -->
                                 <div class="form-group col-sm-6">
-                                    <label><?php _e('Give a short description of your business in a maximum of 140 characters','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                    <label><?php _e('Promote your business in one sentence','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 140 characters)','bidxplugin'); ?></small></label>
                                     <textarea type="text" class="form-control" name="slogan" placeholder="<?php _e('Here you can add a few words to promote your business. It should be a short sentence to help your audience understand and remember what it is that you sell and why','bidxplugin'); ?>"></textarea>
                                 </div>
                             </div>
                             <div class="row">
                                 <!-- Summary -->
                                 <div class="form-group col-sm-6">
-                                    <label><?php _e('Provide a summary of your business in a maximum of 900 characters','bidxplugin'); ?></label>
+                                    <label><?php _e('Describe your business ','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 900 characters)','bidxplugin'); ?></small></label>
                                     <textarea type="text" class="form-control" name="summary" placeholder="<?php _e('Fill in a description of your business here: what you sell, who your potential customers are, and what your business vision and mission is','bidxplugin'); ?>"></textarea>
                                 </div>
 
                                 <!-- Reason For Submission -->
                                 <div class="form-group col-sm-6">
-                                    <label><?php _e('Reason for submission of business summary','bidxplugin'); ?></label>
+                                    <label><?php _e('Why do you submit your business proposal?','bidxplugin'); ?></label>
                                     <select name="reasonForSubmission" data-forcearray="true"></select>
 
                                 </div>
@@ -774,7 +771,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             <div class="row">
                             <!-- Equity Retained -->
                                 <div class="form-group col-sm-6">
-                                    <label><?php _e('Percentage equity you currently retain','bidxplugin'); ?></label>
+                                    <label><?php _e('What percentage of the shares of this business do you own?','bidxplugin'); ?></label>
                                     <div class="input-group">
                                         <span class="input-group-addon">%</span>
                                         <input type="text" class="form-control" name="equityRetained" placeholder="<?php _e('Percentage','bidxplugin'); ?> (e.g. 11.11)">
@@ -784,7 +781,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             <div class="row">
                                 <!-- Investment type -->
                                 <div class="form-group col-sm-6">
-                                    <label><?php _e('Investment type','bidxplugin'); ?></label>
+                                    <label><?php _e('What type of finance do you prefer?','bidxplugin'); ?></label>
 <?php
                                         // Render the checkboxes based upon the items from the static data api for the 'investmentType' typeCode / groupCode / context
                                         //
@@ -801,8 +798,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                                 <!-- Summary Financing Needed -->
                                 <div class="form-group col-sm-6">
-                                    <label><?php _e('Why does your business need financing? (max. 300 characters)','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                    <textarea name="summaryFinancingNeeded" class="form-control" placeholder="<?php _e('Please give the reason your business needs financing','bidxplugin'); ?>"></textarea>
+                                    <label><?php _e('Why does your business need financing?','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 300 characters)','bidxplugin'); ?></small></label>
+                                    <textarea name="summaryFinancingNeeded" class="form-control" placeholder="<?php _e('Give the reason your business needs financing','bidxplugin'); ?>"></textarea>
                                 </div>
                             </div>
                             <div class="row">
@@ -810,14 +807,14 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     <label><?php _e('Video pitch','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-video-camera"></i></span>
-                                        <input type="text" class="form-control" name="externalVideoPitch" placeholder="<?php _e('Please enter a YouTube or Vimeo url link','bidxplugin'); ?>">
+                                        <input type="text" class="form-control" name="externalVideoPitch" placeholder="<?php _e('Enter a YouTube or Vimeo url link','bidxplugin'); ?>">
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label><?php _e('Audio pitch','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-music"></i></span>
-                                        <input type="text" class="form-control" name="externalAudioPitch" placeholder="<?php _e('Please enter a url link','bidxplugin'); ?>">
+                                        <input type="text" class="form-control" name="externalAudioPitch" placeholder="<?php _e('Enter a url link','bidxplugin'); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -838,33 +835,33 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         <form id="frmBusinessSummary-AboutYourBusiness">
 
                             <div class="industrySectors">
-                                <label><?php _e('Industry','bidxplugin'); ?></label>
+                                <label><?php _e('Select the industries that apply to your business','bidxplugin'); ?></label>
                             </div>
 
                             <div class="row">
                                 <!-- Country operation -->
                                 <div class="form-group col-sm-6">
-                                    <label><?php _e('Country of business','bidxplugin'); ?></label>
+                                    <label><?php _e('Select your countries of business','bidxplugin'); ?></label>
                                     <select name="countryOperation" multiple></select>
                                 </div>
 
                                 <!-- Social impact -->
                                 <div class="form-group col-sm-6">
-                                    <label><?php _e('Social impact','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                    <label><?php _e('If your business has a social impact, choose which ones apply','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
                                     <select name="socialImpact" multiple></select>
                                 </div>
                             </div>
                             <div class="row">
                                 <!-- Env impact -->
                                 <div class="form-group col-sm-6">
-                                    <label><?php _e('Environmental impact','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                    <label><?php _e('If your business has an environmental impact, choose which ones apply','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
                                     <select name="envImpact" multiple></select>
                                 </div>
                             </div>
                             <div class="row">
                                 <!-- Consumer Type -->
                                 <div class="form-group col-sm-6">
-                                    <label><?php _e('Type of customer you sell to','bidxplugin'); ?></label>
+                                    <label><?php _e('Select the type of customer you sell to','bidxplugin'); ?></label>
 <?php
                                         // Render the checkboxes based upon the items from the static data api for the 'consumerType' typeCode / groupCode / context
                                         //
@@ -897,22 +894,22 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             <div class="row">
                                 <!-- Personal Role -->
                                 <div class="form-group formfield col-sm-6">
-                                    <label><?php _e('Role of entrepreneur in this business (max. 30 characters)','bidxplugin'); ?></label>
+                                    <label><?php _e('Role of the entrepreneur','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 30 characters)','bidxplugin'); ?></small></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-tag"></i></span>
-                                        <input type="text" name="personalRole" class="form-control" placeholder="<?php _e('Please give role of entrepreneur in this business','bidxplugin'); ?>">
+                                        <input type="text" name="personalRole" class="form-control">
                                     </div>
                                 </div>
 
                                 <!-- Personal Expertise -->
                                 <div class="form-group col-sm-6">
-                                    <label><?php _e('Please describe your expertise in relation to this business (180 characters)','bidxplugin'); ?></label>
+                                    <label><?php _e('Expertise of the entrepreneur','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 180 characters)','bidxplugin'); ?></small></label>
                                     <textarea name="personalExpertise" class="form-control" placeholder="<?php _e('The details of your expertise for this business','bidxplugin'); ?>"></textarea>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-sm-12">
-                                    <label><?php _e('Here you can give information about other members in your team.','bidxplugin'); ?></label>
+                                    <label><?php _e('Add members to your team','bidxplugin'); ?></label>
                                     <a href="#addManagementTeam" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e('Add','bidxplugin'); ?></a>
                                 </div>
                             </div>
@@ -974,7 +971,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             <hr>
                             <div class="row">
                                 <div class="form-group formfield col-sm-6">
-                                    <label><?php _e('When did your business\'s sales start?','bidxplugin'); ?></label>
+                                    <label><?php _e('Sales started in','bidxplugin'); ?></label>
                                     <div class="controls">
                                         <select name="yearSalesStarted">
 <?php
@@ -1078,7 +1075,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 <div class="col-sm-6">
                                     <!-- Mentor Advisory? -->
                                     <div class="form-group">
-                                        <label><?php _e('Do you want a mentor to advise you?​','bidxplugin'); ?></label>
+                                        <label><?php _e('Do you need a mentor to advise you?​','bidxplugin'); ?></label>
                                         <div class="controls">
                                             <div class="radio">
                                                 <input type="radio" value="true" id="radio-AdvisoryYes" name="mentorAdvisory" data-toggle="radio" />
@@ -1095,7 +1092,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             <div class="row toggle toggle-mentorAdvisory">
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label><?php _e('In which areas of expertise do you seek support?','bidxplugin'); ?></label>
+                                        <label><?php _e('In which areas of expertise do you need support?','bidxplugin'); ?></label>
                                         <select name="expertiseNeeded" multiple></select>
                                     </div>
                                 </div>
@@ -1103,8 +1100,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             <div class="row toggle toggle-mentorAdvisory">
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label><?php _e('Please specify for your business (max. 300 characters)'); ?></label>
-                                        <textarea type="text" class="form-control" name="expertiseNeededDetail" placeholder="<?php _e('Describe here the problem areas or challenges in your business in the areas of expertise you selected.','bidxplugin'); ?>"></textarea>
+                                        <label><?php _e('Describe the challenges facing your business, with which you would like the support of a mentor'); ?> <small class="text-muted"><?php _e('(max. 300 characters)','bidxplugin'); ?></small></label>
+                                        <textarea type="text" class="form-control" name="expertiseNeededDetail"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1271,19 +1268,19 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 <div class="row">
                     <!-- First Name -->
                     <div class="form-group col-sm-12">
-                        <label><?php _e('First name','bidxplugin'); ?></label>
+                        <label><?php _e('First','bidxplugin'); ?></label>
                         <input type="text" class="form-control" name="firstName" placeholder="<?php _e('Please enter the first name','bidxplugin'); ?>">
                     </div>
 
                     <!-- Last Name -->
                     <div class="form-group col-sm-12">
-                        <label><?php _e('Last name','bidxplugin'); ?></label>
+                        <label><?php _e('Last','bidxplugin'); ?></label>
                         <input type="text" class="form-control" name="lastName" placeholder="<?php _e('Please enter the last name','bidxplugin'); ?>">
                     </div>
 
                     <!-- Role -->
                     <div class="form-group col-sm-12">
-                        <label><?php _e('Role of the team member in this business','bidxplugin'); ?></label>
+                        <label><?php _e('Role','bidxplugin'); ?></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-tag"></i></span>
                             <input type="text" class="form-control" name="role" placeholder="<?php _e('Please type the role of the team member','bidxplugin'); ?>">
@@ -1292,13 +1289,13 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                     <!-- Expertise -->
                     <div class="form-group col-sm-12">
-                        <label><?php _e('Describe relevant expertise of the team member','bidxplugin'); ?></label>
+                        <label><?php _e('Expertise','bidxplugin'); ?></label>
                         <textarea type="text" class="form-control" name="expertise" placeholder="<?php _e('Please describe relevant expertise of the team member','bidxplugin'); ?>"></textarea>
                     </div>
 
                     <!-- LinkedIn -->
                     <div class="form-group col-sm-12">
-                        <label><?php _e('LinkedIn profile','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                        <label><?php _e('LinkedIn profile','bidxplugin'); ?> <small class="text-muted"><?php _e('(Enter the URL of the LinkedIn Profile)','bidxplugin'); ?></small></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-linkedin-square"></i></span>
                             <input type="text" class="form-control" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />

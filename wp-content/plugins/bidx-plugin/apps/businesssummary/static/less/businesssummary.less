@@ -50,16 +50,9 @@
 
 .bidx-businesssummary
 {
-    &.bidx-edit
-    {
-        .businessCover .hide-it
-        {
-            display: block;
-        }
-    }
     .viewMainsuccess
     {
-        float:right;
+        float: right;
     }
     .viewShow
     {
@@ -352,12 +345,16 @@
     background-color: #fff;
 }
 
+.businessCover
+{
+    position: relative;
+}
 .coverImageContainer
 {
     height: 250px;
     width: 100%;
-    @topright: lighten(@table-border-color, 15%);
-    @bottomleft: darken(@table-border-color, 15%);
+    @topright: lighten(@brand-primary, 35%);
+    @bottomleft: darken(@brand-primary, 25%);
     background:@bottomleft;
     background:-webkit-gradient(linear,right top,left bottom,color-stop(1.82%,@topright),color-stop(100%,@bottomleft));
     background:-webkit-linear-gradient(top right,@topright 1.82%,@bottomleft 100%);
@@ -428,8 +425,28 @@
 }
 .logoImage
 {
+    position: absolute;
+    bottom: 0;
+    left: 50px;
+    width: 160px;
+    height: 160px;
+    background-color: @white;
+    padding: 10px;
+    @media (max-width: @screen-md-min)
+    {
+        left: 40px;
+    }
+    @media (max-width: @screen-sm-min)
+    {
+        left: 20px;
+    }
+    @media (max-width: @screen-xs-min)
+    {
+        left: 10px;
+    }
     img
     {
+        .center-img();
         max-width: 100%;
     }
 }
