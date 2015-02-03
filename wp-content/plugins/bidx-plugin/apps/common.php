@@ -1,5 +1,6 @@
 <?php
 
+require_once( BIDX_PLUGIN_DIR . '/../services/wp-service.php' );
 require_once( BIDX_PLUGIN_DIR . '/../services/session-service.php' );
 require_once( BIDX_PLUGIN_DIR . '/../services/static-data-service.php' );
 require_once( ABSPATH . WPINC . '/pluggable.php' );
@@ -475,6 +476,25 @@ class BidxCommon
                     $this::$staticSession = NULL;
                     unset ($this::$bidxSession[$subDomain]);
                 }
+
+                break;
+
+            case 'forcelogin' :
+
+                // Forces a login, even when already authenticated. This is used when the backend API
+                // handles a shortlink from a notification email, and then discovers that the user
+                // following that link is actually not the user for whom the link was intended.
+
+                // 2015-02-03: Somehow the logic from 'mail' below does not really log out the user.
+                // Using bidx_signout() shows a "Please wait", and does not pick up the "redirect_to" URL. 
+
+                $redirect_url = $http . $_SERVER['HTTP_HOST'] .'/'.$langUrl. '/auth?redirect_to=' . base64_encode ( $_GET['url'] ) . '/#auth/login';
+
+                clear_bidx_cookies ();
+                $params['domain'] = get_bidx_subdomain ();
+                call_bidx_service ('session', $params, 'DELETE');
+                wp_clear_auth_cookie ();
+                clear_wp_bidx_session ();
 
                 break;
 
