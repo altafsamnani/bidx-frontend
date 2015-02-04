@@ -257,7 +257,7 @@
                                 }
                                 else
                                 {
-                                    $this.prop( "checked", false );
+                                    $this.prop( "checked", true ); // Plz set it to false if error occurs somewhere, fixed for competition listing checkboxes
                                 }
                             }
                         } );

@@ -328,7 +328,7 @@ if ( !empty( $attachment ) )
 <?php
     if ( $canEdit ) :
 ?>
-        <table id="example" class="display table table-bordered">
+        <table id="listApplications" class="view viewApplications table table-bordered">
             <thead>
                 <tr>
                     <th></th>
@@ -768,11 +768,101 @@ if ( !empty( $attachment ) )
             </div>
         </div>
         <div class="cardFooter">
-            <div class="alert alert-info text-right">
-                <span class="cardInfoText">Add an explanatory text <strong>here</strong></span>
-                <a data-entityid = "%entityId%" data-status = "" class="btn btn-success btn-xs btn-action info-action hide">%buttonAction%</a>
-                <a data-entityid = "%entityId%" data-status = "" class="btn btn-warning btn-xs btn-action info-withdraw hide">%buttonWithdraw%</a>
+			<div class="alert alert-info text-right">
+			<span class="cardInfoText">Add an explanatory text <strong>here</strong></span>
+            	<a  data-entityid = "%entityId%" data-status = "" class="btn btn-success btn-xs btn-action set-submit hide"><?php _e('Submit', 'bidxplugin');?></a>
+            	<a  data-entityid = "%entityId%" data-status = "" class="btn btn-warning btn-xs btn-action set-withdraw hide"><?php _e('Withdraw', 'bidxplugin');?></a>
+        	</div>
+		</div>
+    </div>
+-->
+</script>
+<script type="text/html" id="list-card-snippet">
+<!--
+    <div>
+        <div class="cardHeader%entityId% text-right">
+        </div>
+        <div class="col-sm-12 set-finalist">
+            <label class="inline">Mark as:</label>
+            <div class="radio inline-radio">
+                <input data-entityid = "%entityId%" checked="checked" type="radio" value="FINALIST" id="radio-finalist-%entityId%" name="isfinalist%entityId%" data-toggle="radio" />
+                <label for="radio-finalist"><span></span><?php _e('FINALIST', 'bidxplugin');?></label>
             </div>
+            <div class="radio inline-radio">
+                <input data-entityid = "%entityId%" type="radio" value="NOT_FINALIST" id="radio-notFinalist-%entityId%" name="isfinalist%entityId%" data-toggle="radio" />
+                <label for="radio-notFinalist"><span></span><?php _e('NOT FINALIST', 'bidxplugin');?></label>
+            </div>
+            <div class="text-right">
+                <a data-entityid = "%entityId%" class="btn btn-primary btn-md set-finalist-%entityId%"><?php _e('Set','bidxplugin');?></a>
+            </div>
+        </div>
+        <div class="col-sm-12 set-winner">
+            <label class="inline">Mark as:</label>
+            <div class="radio inline-radio">
+                <input data-entityid = "%entityId%" checked="checked" type="radio" value="WINNER" id="radio-winner-%entityId%" name="iswinner%entityId%" data-toggle="radio" />
+                <label for="radio-winner-%entityId%"><span></span><?php _e('WINNER', 'bidxplugin');?></label>
+            </div>
+            <div class="radio inline-radio">
+                <input data-entityid = "%entityId%" type="radio" value="NOT_WINNER" id="radio-notWinner-%entityId%" name="iswinner%entityId%" data-toggle="radio" />
+                <label for="radio-notWinner-%entityId%"><span></span><?php _e('NOT WINNER', 'bidxplugin');?></label>
+            </div>
+            <div class="text-right">
+                <a data-entityid = "%entityId%" class="btn btn-primary btn-md set-winner-%entityId%"><?php _e('Set','bidxplugin');?></a>
+            </div>
+        </div>
+        <div class="col-sm-12 set-qualification">
+            <div class="hide-overflow">
+                <label class="inline">Qualification:</label>
+                <div class="radio inline-radio">
+                    <input type="radio" id="radio-accept-%entityId%" value="SUBMITTED" name="isqualification%entityId%" data-toggle="radio" />
+                    <label for="radio-accept-%entityId%"><span></span>ACCEPT</label>
+                </div>
+                <div class="radio inline-radio">
+                    <input type="radio" id="radio-reject-%entityId%" value="REJECTED" name="isqualification%entityId%" data-toggle="radio" />
+                    <label for="radio--reject-%entityId%"><span></span>REJECT</label>
+                </div>
+                <div class="text-right">
+                    <a data-entityid = "%entityId%" class="btn btn-primary btn-md set-qualification-%entityId%"><?php _e('Set','bidxplugin');?></a>
+                </div>
+                 <textarea type="text" class="form-control hide" name="reject-comment-%entityId%" placeholder="<?php _e('Explain your rejection','bidxplugin');?>"></textarea>
+            </div>
+        </div>
+        <div class="col-sm-12 assign-role hide">
+            <label class="inline">Assign Assessor:</label>
+            <select class="selectAssessors" multiple>
+                <option value="">Assessor 1</option>
+                <option value="">Assessor 2</option>
+                <option value="">Assessor 3</option>
+                <option value="">Assessor 4</option>
+                <option value="">Assessor 5</option>
+                <option value="">Assessor 5</option>
+                <option value="">Assessor 5</option>
+                <option value="">Assessor 5</option>
+                <option value="">Assessor 5</option>
+                <option value="">Assessor 5</option>
+                <option value="">Assessor 5</option>
+                <option value="">Assessor 5</option>
+                <option value="">Assessor 5</option>
+                <option value="">Assessor 5</option>
+                <option value="">Assessor 5</option>
+                <option value="">Assessor 5</option>
+                <option value="">Assessor 5</option>
+                <option value="">Assessor 5</option>
+                <option value="">Assessor 5</option>
+                <option value="">Assessor 5</option>
+                <option value="">Assessor 5</option>
+            </select>
+            <div class="text-right">
+                <a data-entityid = "%entityId%" class="btn btn-primary btn-md assign-assesor-%entityId%"><?php _e('Assign','bidxplugin');?></a>
+            </div>
+        </div>
+        <div class="col-sm-12 cardFooter%entityId% text-right">
+            <a  data-entityid = "%entityId%" data-status = "" class="btn btn-primary btn-md btn-action set-submit-%entityId% hide">
+                <?php _e('Submit', 'bidxplugin');?>
+            </a>
+            <a  data-entityid = "%entityId%" data-status = "" class="btn btn-primary btn-md btn-action set-reject-%entityId% hide">
+                <?php _e('Reject', 'bidxplugin');?>
+            </a>
         </div>
     </div>
 -->
@@ -780,7 +870,7 @@ if ( !empty( $attachment ) )
 <script type="text/html" id="success-card">
 <!--
     <div class="">
-        <div class="viewSuccesscard alert alert-success">
+        <div class="viewSuccessCard%entityId% alert alert-success">
             %successMsg%
         </div>
     </div>

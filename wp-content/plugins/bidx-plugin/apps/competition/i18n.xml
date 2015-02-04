@@ -21,21 +21,19 @@
     <Item value="WINNER">Winner</Item>
 
 
-    <Item value="btnCompetitionSubmit">Submit</Item>
-    <Item value="btnCompetitionWithdraw">Withdraw</Item>
-    <Item value="btnCompetitionReject">Reject</Item>
-    <Item value="btnCompetitionAssess">Assess</Item>
-    <Item value="btnCompetitionJudge">Judge</Item>
-
-     <Item value="lblCompetitionWinner">Winner</Item>
+    <Item value="lblCompetitionWinner">Winner</Item>
     <Item value="lblCompetitionNotWinner">Not winner</Item>
     <Item value="lblCompetitionFinalist">Finalist</Item>
     <Item value="lblCompetitionNotFinalist">Not Finalist</Item>
 
     <!-- Success Messages -->
-    <Item value="successApplied">You have succesfully applied for this competition, Once you are ready you need to submit this plan for reviewing, Thank you!</Item>
-    <Item value="successSubmitted">You have succesfully submitted for this competition, We will inform you once we assess your plan, Good luck!</Item>
-    <Item value="successWithdrawn">You have withdrawn from this competition, We hope that you will participate again!</Item>
-    <Item value="successRejected">You have rejected %plan% plan.</Item>
+    <Item value="SUCCESS_APPLIED">You have succesfully applied for this competition, Once you are ready you need to submit this plan for reviewing, Thank you!</Item>
+    <Item value="SUCCESS_SUBMITTED">You have succesfully submitted for this competition, We will inform you once we assess your plan, Good luck!</Item>
+    <Item value="SUCCESS_WITHDRAWN">You have withdrawn from this competition, We hope that you will participate again!</Item>
+    <Item value="SUCCESS_REJECTED">You have rejected this plan.</Item>
+    <Item value="SUCCESS_FINALIST">This buisness plan is qualified as a Finalist!</Item>
+    <Item value="SUCCESS_NOT_FINALIST">This buisness plan is not qualified as a Finalist!</Item>
+    <Item value="SUCCESS_WINNER">The status of this buisnessplan is set as a Winner! Get ready with his price money!</Item>
+    <Item value="SUCCESS_NOT_WINNER">The status of this buisnessplan is set as Not a Winner! </Item>
 
 </I18N>

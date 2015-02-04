@@ -253,7 +253,7 @@
             });
 
             $languageSelect.on('change', function(event) {
-                
+
                 var language        = $(this).find( "option:selected" ).text()
                 ,   value
                 ;
@@ -767,9 +767,18 @@
             var $input  = $editForm.find( "[name='personalDetails." + f + "']" )
             ,   value   = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails." + f )
             ;
+            if( f === 'gender')
+            {
+                bidx.utils.log('$input', $input);
+                bidx.utils.log('valueee',value);
 
+            }
             $input.each( function()
             {
+                if(f === 'gender')
+                {
+                    bidx.utils.log(' $( this )', $( this ));
+                }
                 bidx.utils.setElementValue( $( this ), value );
             } );
         } );

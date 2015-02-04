@@ -46,9 +46,12 @@
 
     ,   $fakecrop                   = $views.find( ".bidx-profilepicture img" )
 
+    ,   loggedInMemberRoles         = bidx.utils.getValue( bidxConfig, "session.roles" )
+
     ,   loggedInMemberId            = bidx.common.getCurrentUserId()
 
     ,   $businessSummary            = $element.find( "[name='businessSummary']" )
+
     ,   listDropdownBp              = bidx.utils.getValue( bidxConfig, "session.wp.entities.bidxBusinessSummary" )
 
     ,   active                      = []
@@ -212,6 +215,7 @@
         _assignBtnAction(
         {
             $btnAction: $btnApply
+        ,   action:     'apply'
         ,   callback:   function( entityId, status )
                         {
 
@@ -242,6 +246,7 @@
         _coverImage();
         _documents();
         _loadMyApplications( ); // Load My applications now
+        _initApplicationsView( );
 
         if( $businessSummary )
         {
@@ -838,7 +843,7 @@ $('.typeahead').typeahead({
         }
 
 /* Formatting function for row details - modify as you need */
-function format ( d ) {
+function formatold ( d ) {
     // `d` is the original data object for the row
     return '<h4>Assessors Recommendations</h4>'+
     '<div>'+
@@ -872,7 +877,7 @@ function format ( d ) {
             '</div>'+
 
             '<div class="text-right">'+
-                '<a href="#" class="btn btn-primary btn-md info-action">Set</a>'+
+                '<a href="#" class="btn btn-primary btn-md set-submit">Set</a>'+
             '</div>'+
         '</div>'+
 
@@ -920,8 +925,8 @@ function format ( d ) {
         '<textarea type="text" class="form-control" name="rejection" placeholder="Explain your rejection"></textarea>'+
 
         '<div class="text-right">'+
-            '<a href="#" class="btn btn-primary btn-md info-action">Set</a>'+
-            '<a href="#" class="btn btn-primary btn-md info-action">Assign</a>'+
+            '<a href="#" class="btn btn-primary btn-md set-submit">Set</a>'+
+            '<a href="#" class="btn btn-primary btn-md set-submit">Assign</a>'+
         '</div>'+
 
     '</div>'+
@@ -930,1282 +935,351 @@ function format ( d ) {
     '</div>';
 }
 
-$(document).ready(function() {
-    var table = $('#example').DataTable( {
-        "bPaginate": true,
-        aLengthMenu: [
-            [10, 25, 50, 100, -1],
-            [10, 25, 50, 100, "All"]
-        ],
-        "data":     [
+/* Formatting function for row details - modify as you need */
+function format ( data )
+{
+    var     snippet                 = $("#list-card-snippet").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $listError              = $("#error-card").html().replace(/(<!--)*(-->)*/g, "")
+        ,   isGroupAdmin            = _.contains( loggedInMemberRoles, 'GroupAdmin')
+        ,   status                  = data.status
+        ,   $listItem
+        ,   competitionManagers
+        ,   isCompetitionManager
+        ,   bidxMeta
+        ,   listItem
+        ;
+
+        isCompetitionManager        = _.findWhere(  competitionManagers
+                                                ,   {
+                                                        role:   "COMPETITION_ADMIN"
+                                                    ,   userId: loggedInMemberId
+                                                    }  );
+
+        switch(true)
         {
-            business: "System Architect",
-            entrepreneur: "Tiger Nixon",
-            score: "320",
-            state: "withdrawn",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Accountant",
-            entrepreneur: "Garrett Winters",
-            score: "170",
-            state: "applied",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Junior Technical Author",
-            entrepreneur: "Ashton Cox",
-            score: "86",
-            state: "submitted",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Senior Javascript Developer",
-            entrepreneur: "Cedric Kelly",
-            score: "433",
-            state: "winner",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Accountant",
-            entrepreneur: "Airi Satou",
-            score: "162",
-            state: "finalist",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Integration Specialist",
-            entrepreneur: "Brielle Williamson",
-            score: "372",
-            state: "winner",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Sales Assistant",
-            entrepreneur: "Herrod Chandler",
-            score: "137",
-            state: "withdrawn",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Integration Specialist",
-            entrepreneur: "Rhona Davidson",
-            score: "327",
-            state: "notWinner",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Javascript Developer",
-            entrepreneur: "Colleen Hurst",
-            score: "205",
-            state: "submitted",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Software Engineer",
-            entrepreneur: "Sonya Frost",
-            score: "103",
-            state: "withdrawn",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Office Manager",
-            entrepreneur: "Jena Gaines",
-            score: "90",
-            state: "finalist",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Support Lead",
-            entrepreneur: "Quinn Flynn",
-            score: "342",
-            state: "notFinalist",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Regional Director",
-            entrepreneur: "Charde Marshall",
-            score: "470",
-            state: "finalist",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Senior Marketing Designer",
-            entrepreneur: "Haley Kennedy",
-            score: "313",
-            state: "winner",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Regional Director",
-            entrepreneur: "Tatyana Fitzpatrick",
-            score: "385",
-            state: "notWinner",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Marketing Designer",
-            entrepreneur: "Michael Silva",
-            score: "198",
-            state: "withdrawn",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Chief Financial Officer (CFO)",
-            entrepreneur: "Paul Byrd",
-            score: "725",
-            state: "notWinner",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Systems Administrator",
-            entrepreneur: "Gloria Little",
-            score: "237",
-            state: "withdrawn",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Software Engineer",
-            entrepreneur: "Bradley Greer",
-            score: "132",
-            state: "winner",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Personnel Lead",
-            entrepreneur: "Dai Rios",
-            score: "217",
-            state: "winner",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Development Lead",
-            entrepreneur: "Jenette Caldwell",
-            score: "345",
-            state: "applied",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Chief Marketing Officer (CMO)",
-            entrepreneur: "Yuri Berry",
-            score: "675",
-            state: "submitted",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Pre-Sales Support",
-            entrepreneur: "Caesar Vance",
-            score: "106",
-            state: "applied",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Sales Assistant",
-            entrepreneur: "Doris Wilder",
-            score: "85",
-            state: "withdrawn",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Chief Executive Officer (CEO)",
-            entrepreneur: "Angelica Ramos",
-            score: "10",
-            state: "submitted",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Developer",
-            entrepreneur: "Gavin Joyce",
-            score: "92",
-            state: "notWinner",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Regional Director",
-            entrepreneur: "Jennifer Chang",
-            score: "357",
-            state: "notWinner",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Software Engineer",
-            entrepreneur: "Brenden Wagner",
-            score: "206",
-            state: "withdrawn",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Chief Operating Officer (COO)",
-            entrepreneur: "Fiona Green",
-            score: "850",
-            state: "notWinner",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Regional Marketing",
-            entrepreneur: "Shou Itou",
-            score: "163",
-            state: "applied",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Integration Specialist",
-            entrepreneur: "Michelle House",
-            score: "95",
-            state: "applied",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Developer",
-            entrepreneur: "Suki Burks",
-            score: "114",
-            state: "submitted",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Technical Author",
-            entrepreneur: "Prescott Bartlett",
-            score: "145",
-            state: "applied",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Team Leader",
-            entrepreneur: "Gavin Cortez",
-            score: "235",
-            state: "finalist",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Post-Sales support",
-            entrepreneur: "Martena Mccray",
-            score: "324",
-            state: "withdrawn",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Marketing Designer",
-            entrepreneur: "Unity Butler",
-            score: "85",
-            state: "submitted",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Office Manager",
-            entrepreneur: "Howard Hatfield",
-            score: "164",
-            state: "finalist",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Secretary",
-            entrepreneur: "Hope Fuentes",
-            score: "109",
-            state: "notWinner",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Financial Controller",
-            entrepreneur: "Vivian Harrell",
-            score: "452",
-            state: "submitted",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Office Manager",
-            entrepreneur: "Timothy Mooney",
-            score: "136",
-            state: "finalist",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Director",
-            entrepreneur: "Jackson Bradshaw",
-            score: "645",
-            state: "finalist",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Support Engineer",
-            entrepreneur: "Olivia Liang",
-            score: "234",
-            state: "applied",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Software Engineer",
-            entrepreneur: "Bruno Nash",
-            score: "163",
-            state: "applied",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Support Engineer",
-            entrepreneur: "Sakura Yamamoto",
-            score: "139",
-            state: "submitted",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Developer",
-            entrepreneur: "Thor Walton",
-            score: "98",
-            state: "notFinalist",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Support Engineer",
-            entrepreneur: "Finn Camacho",
-            score: "87",
-            state: "submitted",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Data Coordinator",
-            entrepreneur: "Serge Baldwin",
-            score: "138",
-            state: "winner",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Software Engineer",
-            entrepreneur: "Zenaida Frank",
-            score: "125",
-            state: "notWinner",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Software Engineer",
-            entrepreneur: "Zorita Serrano",
-            score: "115",
-            state: "withdrawn",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Junior Javascript Developer",
-            entrepreneur: "Jennifer Acosta",
-            score: "75",
-            state: "notFinalist",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Sales Assistant",
-            entrepreneur: "Cara Stevens",
-            score: "145",
-            state: "applied",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Regional Director",
-            entrepreneur: "Hermione Butler",
-            score: "356",
-            state: "applied",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Systems Administrator",
-            entrepreneur: "Lael Greer",
-            score: "103",
-            state: "submitted",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Developer",
-            entrepreneur: "Jonas Alexander",
-            score: "86",
-            state: "notWinner",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Regional Director",
-            entrepreneur: "Shad Decker",
-            score: "183",
-            state: "finalist",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Javascript Developer",
-            entrepreneur: "Michael Bruce",
-            score: "183",
-            state: "withdrawn",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
-        },
-        {
-            business: "Customer Support",
-            entrepreneur: "Donna Snider",
-            score: "112",
-            state: "applied",
-            assessor_1: {
-                name: "Assessor 1 Full Name",
-                score: "3",
-                recommendation: "notFinalist",
-                explanation: "This is dummy text for explanation"
-            },
-            assessor_2: {
-                name: "Assessor 2 Full Name",
-                score: "4",
-                recommendation: "finalist",
-                explanation: "This is dummy text for explanation of the second Assessor"
-            },
+            case isGroupAdmin || isCompetitionManager:
+
+            listItem    =   snippet
+                        .replace( /%entityId%/g,    data.entityId )
+                        ;
+
+            $listItem   =   $(listItem);
+
+            /* Assign Next Action According to Role */
+            _assignManagerActions( $listItem,  data);
+
+            break;
+
+            case 'assesor':
+
+            break;
+
+            case 'judge':
+
+            break;
         }
-    ]
-,
-        "columns": [
-            {
-                "className":      'details-control',
-                "orderable":      false,
-                "data":           null,
-                "defaultContent": '<i class="fa fa-plus-square-o"></i>'
-            },
-            { "data": "business" },
-            { "data": "entrepreneur" },
-            { "data": "score" },
-            { "data": "state" }
-        ],
-        "order": [[1, 'asc']],
-        "fnRowCallback": function( nRow, aData, iDisplayIndex )
-        {
-            nRow.className = aData.state;
-            return nRow;
-        }
-    } );
 
-    // Add event listener for opening and closing details
-    $('#example tbody').on('click', 'td.details-control', function () {
-        var tr = $(this).closest('tr');
-        var row = table.row( tr );
+        return $listItem;
 
-        if ( row.child.isShown() ) {
-            // This row is already open - close it
-            row.child.hide();
-            tr.removeClass('shown');
-            tr.next().removeClass('extrapanel');
-            $(this).find('.fa').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
-        }
-        else {
-            // Open this row
-            row.child( format(row.data()) ).show();
-            tr.addClass('shown');
-            if ( tr.hasClass( "withdrawn" ) )
-            {
-                tr.next().addClass('extrapanel withdrawn');
-            }
-            else
-            {
-                tr.next().addClass('extrapanel');
-            }
+}
 
-            $(this).find('.fa').removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
+function _initApplicationsView()
+{
+    var data    =   []
+    ,   displayRows
+    ,   bidxMeta
+    ,   business
+    ,   entrepreneur
+    ,   score
+    ;
+    bidx.utils.log(applicationObj, 'applicationObj');
 
-            tr.next().find( ".selectAssessors" ).bidx_chosen();
-        }
-    } );
-
-        $( ".dataTables_length select" ).bidx_chosen();
-
-} );
-
-    var _handleToggleChange = function( show, group )
+    $.each( applicationObj, function( idx, response )
     {
-        var fn = show ? "fadeIn" : "hide";
+        bidxMeta        =   bidx.utils.getValue( response, 'bidxMeta');
+        business        =   bidx.utils.getValue( bidxMeta, 'bidxEntityDisplayName');
+        entrepreneur    =   bidx.utils.getValue( bidxMeta, 'bidxOwnerDisplayName');
+        score           =   bidx.utils.getValue( bidxMeta, 'bidxRatingAverage');
+        displayRows     =   {
+                                business:       business
+                            ,   entrepreneur:   entrepreneur
+                            ,   score:          score
+                            ,   status:         response.status
+                            ,   entityId:       response.entityId
+                            ,   assessor_1: {
+                                    name: "Assessor 1 Full Name",
+                                    score: "3",
+                                    recommendation: "notFinalist",
+                                    explanation: "This is dummy text for explanation"
+                                }
+                            ,   assessor_2: {
+                                    name: "Assessor 2 Full Name",
+                                    score: "4",
+                                    recommendation: "finalist",
+                                    explanation: "This is dummy text for explanation of the second Assessor"
+                                },
+                            };
+        data.push( displayRows );
 
-        $toggles.filter( ".toggle-" + group )[ fn ]();
-    };
 
+    });
 
-
-
-    // Open the media library in edit mode for a specific file
-    //
-    function _editDocument( doc )
+    if( data.length )
     {
-        var $modal = $editDocument;
-
-        // Make sure the media app is within our modal
-        //
-        $( "#media" ).appendTo( $modal.find( ".modal-body" ) );
-
-        // Navigate the media app into list mode for selecting files
-        //
-        bidx.media.reset();
-        bidx.media.navigate(
+        var table = $('.viewApplications').DataTable(
         {
-            requestedState:         "edit"
-        ,   onlyEdit:               true
-        ,   slaveApp:               true
-        ,   selectFile:             true
-        ,   multiSelect:            true
-        ,   showEditBtn:            false
-        ,   showDeleteBtn:          false
-        ,   showDownloadBtn:        false
-
-        ,   id:                     doc.bidxMeta.bidxbusinessPlanEntityId
-
-        ,   callbacks:
+            "bPaginate": true
+        ,    aLengthMenu: [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ]
+        ,   "data":     data
+        ,   "columns": [
+                {
+                    "className":      'details-control',
+                    "orderable":      false,
+                    "data":           null,
+                    "defaultContent": '<i class="fa fa-plus-square-o"></i>'
+                },
+                { "data": "business" },
+                { "data": "entrepreneur" },
+                { "data": "score" },
+                { "data": "status" }
+            ]
+        ,   "order": [[1, 'asc']]
+        ,   "fnRowCallback": function( nRow, aData, iDisplayIndex )
             {
-                ready:                  function( state )
-                {
-                    bidx.utils.log( "[documents] ready in state", state );
-                }
-
-            ,   cancel:                 function()
-                {
-                    // Stop selecting files, back to previous stage
-                    //
-                    $modal.modal('hide');
-                }
-
-            ,   success:                function( file )
-                {
-                    bidx.utils.log( "[documents] updated", file );
-
-
-
-                    $modal.modal('hide');
-                }
+                nRow.className = aData.state;
+                return nRow;
             }
         } );
 
-        $modal.modal();
-    }
+        // Add event listener for opening and closing details
+        $('.viewApplications tbody').on('click', 'td.details-control', function ()
+        {
+            var tr = $(this).closest('tr');
+            var row = table.row( tr );
 
-    // Add an attachment to the screen
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+                tr.next().removeClass('extrapanel');
+                $(this).find('.fa').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
+            }
+            else {
+                // Open this row
+                row.child( format(row.data()) ).show();
+                tr.addClass('shown');
+                if ( tr.hasClass( "withdrawn" ) )
+                {
+                    tr.next().addClass('extrapanel withdrawn');
+                }
+                else
+                {
+                    tr.next().addClass('extrapanel');
+                }
+
+                $(this).find('.fa').removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
+
+                tr.next().find( ".selectAssessors" ).bidx_chosen();
+            }
+        } );
+
+        $( ".dataTables_length select" ).bidx_chosen();
+
+        _showAllView( 'applications' );
+
+    }
+}
+
+
+
+var _handleToggleChange = function( show, group )
+{
+    var fn = show ? "fadeIn" : "hide";
+
+    $toggles.filter( ".toggle-" + group )[ fn ]();
+};
+
+
+
+
+// Open the media library in edit mode for a specific file
+//
+function _editDocument( doc )
+{
+    var $modal = $editDocument;
+
+    // Make sure the media app is within our modal
     //
-    function _addAttachment( attachment )
+    $( "#media" ).appendTo( $modal.find( ".modal-body" ) );
+
+    // Navigate the media app into list mode for selecting files
+    //
+    bidx.media.reset();
+    bidx.media.navigate(
     {
-        if ( attachment === null )
+        requestedState:         "edit"
+    ,   onlyEdit:               true
+    ,   slaveApp:               true
+    ,   selectFile:             true
+    ,   multiSelect:            true
+    ,   showEditBtn:            false
+    ,   showDeleteBtn:          false
+    ,   showDownloadBtn:        false
+
+    ,   id:                     doc.bidxMeta.bidxbusinessPlanEntityId
+
+    ,   callbacks:
         {
-            bidx.util.warn( "competitionSummary::_addAttachmentToScreen: attachment is null!" );
-            return;
+            ready:                  function( state )
+            {
+                bidx.utils.log( "[documents] ready in state", state );
+            }
+
+        ,   cancel:                 function()
+            {
+                // Stop selecting files, back to previous stage
+                //
+                $modal.modal('hide');
+            }
+
+        ,   success:                function( file )
+            {
+                bidx.utils.log( "[documents] updated", file );
+
+
+
+                $modal.modal('hide');
+            }
         }
+    } );
 
-        var $attachment         = snippets.$attachment.clone();
+    $modal.modal();
+}
 
-        _updateAttachment( $attachment, attachment );
-
-        $attachmentContainer.reflowrower( "addItem", $attachment );
+// Add an attachment to the screen
+//
+function _addAttachment( attachment )
+{
+    if ( attachment === null )
+    {
+        bidx.util.warn( "competitionSummary::_addAttachmentToScreen: attachment is null!" );
+        return;
     }
 
-    function _updateAttachment( $attachment, attachment )
+    var $attachment         = snippets.$attachment.clone();
+
+    _updateAttachment( $attachment, attachment );
+
+    $attachmentContainer.reflowrower( "addItem", $attachment );
+}
+
+function _updateAttachment( $attachment, attachment )
+{
+    var createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
+    ,   $documentLink       = $attachment.find( ".documentLink" )
+    ,   $documentImage      = $attachment.find( ".documentImage" )
+    ,   $documentDefault    = $attachment.find( ".attachmentDefault" )
+    ,   $documentMissing    = $attachment.find( ".attachmentMissing" )
+    ,   deletedDoc          = false
+    ;
+
+    if ( !attachment.bidxMeta.bidxbusinessPlanEntityId )
     {
-        var createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
-        ,   $documentLink       = $attachment.find( ".documentLink" )
-        ,   $documentImage      = $attachment.find( ".documentImage" )
-        ,   $documentDefault    = $attachment.find( ".attachmentDefault" )
-        ,   $documentMissing    = $attachment.find( ".attachmentMissing" )
-        ,   deletedDoc          = false
+        bidx.utils.warn( "competitionSummary::_updateAttachment: attachment has been deleted!" );
+        deletedDoc = true;
+    }
+
+    // Store the data so we can later use it to merge the updated data in
+    //
+    $attachment.data( "bidxData", attachment );
+
+    // Set the upload ID on the DOM so we can find this later when we get an update from the media library
+    //
+    $attachment.attr( "data-businessPlanEntityId", bidx.utils.getValue( attachment, "fileUpload" ));
+
+    $attachment.find( ".documentName"       ).text( attachment.documentName );
+    $attachment.find( ".createdDateTime"    ).text( createdDateTime );
+    $attachment.find( ".purpose"            ).text( attachment.purpose );
+    $attachment.find( ".documentType"       ).text( bidx.data.i( attachment.documentType, "documentType" ) );
+
+    if ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
+    {
+        $documentDefault.remove();
+        $documentMissing.remove();
+
+        $documentImage
+            .attr( "src", attachment.document )
+            .fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} )
         ;
+    }
+    else
+    {
+        $documentImage.remove();
 
-        if ( !attachment.bidxMeta.bidxbusinessPlanEntityId )
-        {
-            bidx.utils.warn( "competitionSummary::_updateAttachment: attachment has been deleted!" );
-            deletedDoc = true;
-        }
-
-        // Store the data so we can later use it to merge the updated data in
+        // Check if the file has been removed
         //
-        $attachment.data( "bidxData", attachment );
-
-        // Set the upload ID on the DOM so we can find this later when we get an update from the media library
-        //
-        $attachment.attr( "data-businessPlanEntityId", bidx.utils.getValue( attachment, "fileUpload" ));
-
-        $attachment.find( ".documentName"       ).text( attachment.documentName );
-        $attachment.find( ".createdDateTime"    ).text( createdDateTime );
-        $attachment.find( ".purpose"            ).text( attachment.purpose );
-        $attachment.find( ".documentType"       ).text( bidx.data.i( attachment.documentType, "documentType" ) );
-
-        if ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
+        if ( deletedDoc )
         {
-            $documentDefault.remove();
-            $documentMissing.remove();
-
-            $documentImage
-                .attr( "src", attachment.document )
-                .fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} )
-            ;
+            $attachment.find( ".documentName" ).text( bidx.i18n.i( "docDeleted" ) ).addClass( "text-danger" );
+            $documentLink.remove();
         }
         else
         {
-            $documentImage.remove();
-
-            // Check if the file has been removed
-            //
-            if ( deletedDoc )
-            {
-                $attachment.find( ".documentName" ).text( bidx.i18n.i( "docDeleted" ) ).addClass( "text-danger" );
-                $documentLink.remove();
-            }
-            else
-            {
-                $documentMissing.remove();
-            }
+            $documentMissing.remove();
         }
-
-        $documentLink.attr( "href", attachment.document );
-
     }
 
+    $documentLink.attr( "href", attachment.document );
 
-    function _competitionTimer (  )
+}
+
+
+function _competitionTimer (  )
+{
+    var countTime = $element.find('.counter' );
+
+    countTime.each( function()
     {
-        var countTime = $element.find('.counter' );
+        var el = $(this)
+        ,   datatime = el.attr('data-time')
+        ;
 
-        countTime.each( function()
-        {
-            var el = $(this)
-            ,   datatime = el.attr('data-time')
-            ;
+        countdown( datatime, el );
 
-            countdown( datatime, el );
+        setInterval( function()
+                    {
+                        countdown( datatime, el );
+                    }, 1000)
+        ;
+    });
 
-            setInterval( function()
-                        {
-                            countdown( datatime, el );
-                        }, 1000)
-            ;
-        });
+    function countdown ( datatime, el )
+    {
 
-        function countdown ( datatime, el )
-        {
+        var now = new moment()
+        ,   then = moment.unix( datatime )
+        ,   ms = then.diff(now, 'milliseconds', true)
+        ,   days = Math.floor(moment.duration(ms).asDays())
+        ,   then = then.subtract('days', days)
+        ,   ms = then.diff(now, 'milliseconds', true)
+        ,   hours = Math.floor(moment.duration(ms).asHours())
+        ,   then = then.subtract('hours', hours)
+        ,   ms = then.diff(now, 'milliseconds', true)
+        ,   minutes = Math.floor(moment.duration(ms).asMinutes())
+        ,   then = then.subtract('minutes', minutes)
+        ,   ms = then.diff(now, 'milliseconds', true)
+        ,   seconds = Math.floor(moment.duration(ms).asSeconds())
+        ;
 
-            var now = new moment()
-            ,   then = moment.unix( datatime )
-            ,   ms = then.diff(now, 'milliseconds', true)
-            ,   days = Math.floor(moment.duration(ms).asDays())
-            ,   then = then.subtract('days', days)
-            ,   ms = then.diff(now, 'milliseconds', true)
-            ,   hours = Math.floor(moment.duration(ms).asHours())
-            ,   then = then.subtract('hours', hours)
-            ,   ms = then.diff(now, 'milliseconds', true)
-            ,   minutes = Math.floor(moment.duration(ms).asMinutes())
-            ,   then = then.subtract('minutes', minutes)
-            ,   ms = then.diff(now, 'milliseconds', true)
-            ,   seconds = Math.floor(moment.duration(ms).asSeconds())
-            ;
-
-            el.find('.days').text(days);
-            el.find('.hours').text(hours);
-            el.find('.minutes').text(minutes);
-            el.find('.seconds').text(seconds);
-        }
+        el.find('.days').text(days);
+        el.find('.hours').text(hours);
+        el.find('.minutes').text(minutes);
+        el.find('.seconds').text(seconds);
     }
+}
 
     function _getBusinessPlans(  )
     {
@@ -2981,14 +2055,174 @@ $(document).ready(function() {
 
     }
 
+    function _assignRadioActions( $listItem, data )
+    {
+        var status              = data.status
+        ,   entityId            = data.entityId
+        ,   $radioQualification = $listItem.find( "[name='isqualification" + entityId + "']" )
+        ;
+
+        $radioQualification.change( function( e )
+        {
+            e.preventDefault();
+
+            var $this           = $(this)
+            ,   qualVal         = bidx.utils.getElementValue( $this )
+            ,   $rejectComment  = $listItem.find( "[name='reject-comment-" + entityId + "']" )
+            ;
+
+            if( qualVal === 'REJECTED' )
+            {
+                $rejectComment.removeClass('hide');
+            }
+            else if( qualVal === 'SUBMITTED')
+            {
+                $rejectComment.addClass('hide');
+            }
+
+        });
+    }
+
+     function _setRadioValues( $radio, value)
+    {
+        bidx.utils.log('$radio', $radio);
+        bidx.utils.log('valueee',value);
+        $radio.each( function()
+        {
+            bidx.utils.log('$radio', $( this ));
+            bidx.utils.setElementValue( $( this ), value );
+        } );
+    }
+
+    function _assignManagerActions( $listItem, data )
+    {
+        var successMsg
+        ,   statusMsg
+        ,   $cardEntity
+        ,   status              = data.status
+        ,   entityId            = data.entityId
+        ,   $radioFinalist      = $listItem.find( "[name='isfinalist" + entityId + "']" )
+        ,   $radioWinner        = $listItem.find( "[name='iswinner" + entityId+ "']" )
+        ,   $radioQualification = $listItem.find( "[name='isqualification" + entityId + "']" )
+        ,   $setSubmit          = $listItem.find( ".set-submit-" + entityId )
+        ,   $setQual            = $listItem.find( ".set-qualification-" + entityId )
+        ,   $setFinalist        = $listItem.find( ".set-finalist-" + entityId )
+        ,   $setWinner          = $listItem.find( ".set-winner-" + entityId )
+        ,   $cardFooter         = $listItem.find( ".cardHeader" + entityId )
+        ,   snippetSuccess      = $("#success-card").html().replace(/(<!--)*(-->)*/g, "")
+        ;
+
+        bidx.utils.log('status',status);
+
+
+        switch (status)
+        {
+            case 'FINALIST':
+            case 'NOT_FINALIST':
+            /* Set the Gender Value */
+            bidx.utils.setElementValue( $radioFinalist , status );
+
+            case 'WINNER':
+            case 'NOT_WINNER':
+            /* Set the Finalist Value */
+            bidx.utils.setElementValue( $radioWinner, status );
+
+            case 'REJECTED':
+            case 'SUBMITTED':
+            /* Set the Finalist Value */
+            _assignRadioActions( $listItem, data );
+            bidx.utils.setElementValue( $radioQualification, status );
+
+            case 'APPLIED' :
+            $setSubmit.removeClass('hide');
+
+
+            case 'FINALIST':
+            case 'NOT_FINALIST':
+            case 'WINNER':
+            case 'NOT_WINNER':
+            case 'REJECTED':
+
+                _assignBtnAction(
+                {
+                    $btnAction: $setFinalist
+                ,   action:     'finalist'
+                ,   callback:   function( entityId, status )
+                                {
+                                    $setFinalist.addClass("hide");
+
+                                    successMsg = bidx.i18n.i('SUCCESS_' + status ,appName);
+
+                                    statusMsg = snippetSuccess
+                                                .replace( /%successMsg%/g, successMsg)
+                                                .replace( /%entityId%/g, entityId)
+                                                ;
+
+                                    $cardFooter.prepend($(statusMsg));
+
+                                    _showAllView('successCard' + entityId );
+                                }
+                });
+
+                _assignBtnAction(
+                {
+                    $btnAction: $setWinner
+                ,   action:     'winner'
+                ,   callback:   function( entityId, status )
+                                {
+                                    $setWinner.addClass("hide");
+
+                                    successMsg = bidx.i18n.i('SUCCESS_' + status ,appName);
+
+                                    statusMsg = snippetSuccess
+                                                .replace( /%successMsg%/g, successMsg)
+                                                .replace( /%entityId%/g, entityId)
+                                                ;
+
+                                    $cardFooter.prepend($(statusMsg));
+
+                                    _showAllView('successCard' + entityId );
+
+                                }
+                });
+
+                _assignBtnAction(
+                {
+                    $btnAction: $setQual
+                ,   action:     'qualification'
+                ,   callback:   function( entityId, status )
+                                {
+
+                                    successMsg = bidx.i18n.i('SUCCESS_' + status ,appName);
+
+                                    statusMsg = snippetSuccess
+                                                .replace( /%successMsg%/g, successMsg)
+                                                .replace( /%entityId%/g, entityId)
+                                                ;
+
+                                    $cardFooter.prepend($(statusMsg));
+
+                                    _showAllView('successCard' + entityId );
+
+                                }
+                });
+
+                /*Show buttons*/
+                $setFinalist.removeClass('hide');
+                $setWinner.removeClass('hide');
+
+            break;
+        }
+    }
+
     function _assignEntrpreneurAction( $listItem, businessData )
     {
         var status          = businessData.status
-        ,   sucessMsg
+        ,   successMsg
         ,   statusMsg
         ,   $cardEntity
-        ,   $infoAction     = $listItem.find( ".info-action")
-        ,   $infoWithdraw   = $listItem.find( ".info-withdraw")
+        ,   $setSubmit     = $listItem.find( ".set-submit")
+        ,   $setWithdraw   = $listItem.find( ".set-withdraw")
         ,   $cardFooter     = $listItem.find( ".cardFooter")
         ,   snippetSuccess  = $("#success-card").html().replace(/(<!--)*(-->)*/g, "")
         ;
@@ -2999,41 +2233,45 @@ $(document).ready(function() {
         {
             case 'APPLIED' :
                 /* Change the button Label */
-                $infoAction.i18nText("btnCompetitionSubmit", appName);
-                $infoWithdraw.i18nText("btnCompetitionWithdraw", appName);
+/*                $setSubmit.i18nText("btnCompetitionSubmit", appName);
+                $setWithdraw.i18nText("btnCompetitionWithdraw", appName);*/
 
                 /* Change the data-status field of button */
-                $infoAction.data('status', 'SUBMITTED');
-                $infoWithdraw.data('status', 'WITHDRAWN');
+                $setSubmit.data('status', 'SUBMITTED');
+                $setWithdraw.data('status', 'WITHDRAWN');
 
                 _assignBtnAction(
                 {
-                    $btnAction: $infoAction
+                    $btnAction: $setSubmit
+                ,   action:     'submit'
                 ,   callback:   function( entityId, status )
                                 {
-                                    $infoAction.addClass("hide");
+                                    $setSubmit.addClass("hide");
 
-                                    sucessMsg = bidx.i18n.i('successSubmitted' ,appName);
+                                    successMsg = bidx.i18n.i('SUCCESS_SUBMITTED' ,appName);
 
-                                    statusMsg = snippetSuccess.replace( /%successMsg%/g, sucessMsg);
+                                    statusMsg = snippetSuccess
+                                                .replace( /%successMsg%/g, successMsg)
+                                                .replace( /%entityId%/g, entityId);
 
                                     $cardFooter.prepend($(statusMsg));
 
                                     //$successLabel.empty().i18nText('successSubmitted', appName);
 
-                                    _showAllView('success');
+                                    _showAllView('successCard' + entityId );
                                 }
                 });
 
                 _assignBtnAction(
                 {
-                    $btnAction: $infoWithdraw
+                    $btnAction: $setWithdraw
+                ,   action:     'withdraw'
                 ,   callback:   function( entityId, status )
                                 {
                                     $cardEntity = $element.find('.cardEntity' + entityId);
 
                                     /*Slowly Removes the content */
-                                    $cardEntity.i18nText("successWithdrawn", appName);
+                                    $cardEntity.i18nText("SUCCESS_WITHDRAWN", appName);
                                     $cardEntity.addClass('alert alert-info text-center');
 
                                 }
@@ -3041,32 +2279,33 @@ $(document).ready(function() {
 
 
                 /*Show buttons*/
-                $infoAction.removeClass('hide');
-                $infoWithdraw.removeClass('hide');
+                $setSubmit.removeClass('hide');
+                $setWithdraw.removeClass('hide');
             break;
 
             case  'SUBMITTED' :
                 /* Change the button Label */
-                $infoWithdraw.i18nText("btnCompetitionWithdraw", appName);
+        /*        $setWithdraw.i18nText("btnCompetitionWithdraw", appName);*/
 
                 /* Change the data-status field of button */
-                $infoWithdraw.data('status', 'WITHDRAWN');
+                $setWithdraw.data('status', 'WITHDRAWN');
 
                 _assignBtnAction(
                 {
-                    $btnAction: $infoWithdraw
+                    $btnAction: $setWithdraw
+                ,   action:     'withdraw'
                 ,   callback:   function( entityId, status )
                                 {
                                     $cardEntity = $element.find('.cardEntity' + entityId);
 
                                     /*Slowly Removes the content */
-                                    $cardEntity.i18nText("successWithdrawn", appName);
+                                    $cardEntity.i18nText("SUCCESS_WITHDRAWN", appName);
                                     $cardEntity.addClass('alert alert-info text-center');
                                 }
                 });
 
                 /*Show buttons*/
-                $infoWithdraw.removeClass('hide');
+                $setWithdraw.removeClass('hide');
 
             break;
         }
@@ -3109,6 +2348,8 @@ $(document).ready(function() {
     function _assignBtnAction( options  )
     {
         var     $btnAction  =   options.$btnAction
+        ,       role        =   options.role
+        ,       action      =   options.action
         ;
 
         $btnAction.click( function( e )
@@ -3119,9 +2360,35 @@ $(document).ready(function() {
             ,   confirmTimer
             ,   params
             ,   status
-            ,   btnEntityId             =   $btnAction.data( "entityid" ) // For Submit/Withdraw buttons
-            ,   businessPlanEntityId    =   ( btnEntityId ) ? btnEntityId : $businessSummary.val()  // for First time Particpate/Applied Button
+            ,   btnEntityId
+            ,   businessPlanEntityId
+            ,   radioName
+            ,   $radio
             ;
+
+            switch( action )
+            {
+                case 'apply' :
+                businessPlanEntityId    =   $businessSummary.val(); // for First time Particpate/Applied Button
+                status                  =   $btnAction.data( "status" );
+                break;
+
+                case'submit':
+                case 'withdraw':
+                btnEntityId             =   $btnAction.data( "entityid" ); // For Submit/Withdraw buttons
+                businessPlanEntityId    =   btnEntityId;
+                status                  =   $btnAction.data( "status" );
+                break;
+
+                case 'finalist':
+                case 'winner':
+                case 'qualification':
+                businessPlanEntityId    =   $btnAction.data( "entityid" );
+                radioName               =   'is' + action + businessPlanEntityId;
+                $radio                  =   $element.find( "[name=" + radioName + "]" );
+                status                  =   bidx.utils.getElementValue( $radio ); // for First time Particpate/Applied Button
+                break;
+            }
 
             if ( !businessPlanEntityId )
             {
@@ -3129,7 +2396,7 @@ $(document).ready(function() {
                 return;
             }
 
-            bidx.utils.log('[competition] Competition Action Button Clicked', $btnAction.data( "status" ));
+            bidx.utils.log('[competition] Competition Action Button Clicked', status);
             bidx.utils.log('[competition] Competition Action EntityId', businessPlanEntityId);
 
             function startConfirmTimer( $btn, orgText )
@@ -3146,16 +2413,15 @@ $(document).ready(function() {
 
             if ( $btnAction.data( "confirm" ) )
             {
-                status  =   $btnAction.data( "status" );
+
 
                 clearTimeout( confirmTimer );
-
                 params  =
                 {
                     competitionId   :   competitionSummaryId
                 ,   data            :   {
                                             entityId    :   businessPlanEntityId
-                                        ,   status      :   (status) ? status : 'APPLIED'
+                                        ,   status      :   status
                                         }
                 };
 
