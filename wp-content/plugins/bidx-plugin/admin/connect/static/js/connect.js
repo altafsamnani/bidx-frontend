@@ -45,7 +45,7 @@
     // Constants
     //
     var CONTACTSPAGESIZE            = 6
-    ,   ACTIVECONTACTSLIMIT         = 1000
+    ,   ACTIVECONTACTSLIMIT         = 5000
     ,   MAILPAGESIZE                = 5
     ;
 
