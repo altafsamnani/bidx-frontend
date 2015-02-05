@@ -2223,7 +2223,7 @@ function _competitionTimer (  )
                     bidx.utils.setElementValue( $radioWinner, status );
                 }
 
-                //$wrapperQualification.addClass('hide');
+                $wrapperQualification.addClass('hide');
                 //$setFinalist.removeClass('hide');
                 //$setWinner.removeClass('hide');
 
