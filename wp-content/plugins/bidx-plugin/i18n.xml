@@ -170,4 +170,6 @@
     <Item value="To">To</Item>
     <Item value="emailNew">new</Item>
 
+    <Item value="loadingLbl">Loading</Item>
+
 </I18N>

@@ -5,6 +5,7 @@
 
     var competitionVars             = window.__bidxCompetition || {}
     ,   applicationObj
+    ,   actorsObj
     ,   $element                    = $( "#competitionSummary" )
     ,   $snippets                   = $element.find( ".snippets" )
 
@@ -30,6 +31,9 @@
 
     ,   $btnEndPhase                = $element.find( ".endPhase" )
     ,   $successLabel               = $element.find('.successLabel')
+
+    ,   $roles                      = $element.find( "[name='roles']" )
+    ,   $roleButton                 = $element.find(".js-btn-add-role" )
 
 
     ,   $controlsForEdit            = $editControls.find( ".viewEdit" )
@@ -60,6 +64,7 @@
     ,   rejectByEntrepreneur        = []
     ,   rejectByMentor              = []
     ,   timeouts                    = []
+    ,   actorArr                    = {}
 
 
     ,   forms                       =
@@ -148,24 +153,17 @@
     if ( !$.isEmptyObject(competitionVars) )
     {
         applicationObj              = bidx.utils.getValue( competitionVars, 'applications');
+
+        actorsObj                   = bidx.utils.getValue( competitionVars, 'actors');
     }
 
     // Constants
     //
     var CONSTANTS =
         {
-            SEARCH_LIMIT:                       4
-        ,   NUMBER_OF_PAGES_IN_PAGINATOR:       10
-        ,   LOAD_COUNTER:                       0
-        ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
-        ,   ENTITY_TYPES:                       [
-                                                    {
-                                                        "type": "bidxMentorProfile"
-                                                    }
-                                                ]
+            SEARCH_LIMIT:   4
+        ,   OFFSET:         0
         }
-
-    ,   tempLimit = CONSTANTS.SEARCH_LIMIT
 
     ;
     // Form fields
@@ -252,6 +250,7 @@
         _coverImage();
         _documents();
         _loadMyApplications( ); // Load My applications now
+        _loadActors();
         _initApplicationsView( );
 
         if( $businessSummary )
@@ -644,57 +643,296 @@
             $bscompetitionLogoModal.modal();
         } );
 
+        function _getSearchCriteria ( params )
+        {
+
+            var q
+            ,   sort
+            ,   facetFilters
+            ,   criteria
+            ,   criteriaQ
+            ,   paramFilter
+            ,   search
+            ,   sortQuery       = []
+            ,   criteriaFilters = []
+            ,   criteriaSort    = []
+            ,   filters         = []
+            ,   urlParam        = params.urlParam
+            ;
+
+            // 1. Search paramete
+            // ex searchTerm:text:altaf
+            //
+            // See if its coming from the search page itself(if) or from the top(else)
+            //
+            q = bidx.utils.getValue( params, 'q' );
+
+            criteriaQ = (q) ? q : '*';
+
+            search  =
+            [
+                {
+                    label: "search"
+                ,   value: criteriaQ
+                }
+            ,   {
+                    label: "limit"
+                ,   value: CONSTANTS.SEARCH_LIMIT
+
+                }
+            ,   {
+                    label: "offset"
+                ,   value: CONSTANTS.OFFSET
+
+                }
+            ,   {
+                    label: "scope"
+                ,   value: "local"
+                }
+            ];
 
 
-// TEMP - REPLACE THIS WITH THE REAL DATA
-//
-var substringMatcher = function(strs) {
-  return function findMatches(q, cb) {
-    var matches, substrRegex;
+            return search;
 
-    // an array that will be populated with substring matches
-    matches = [];
+        }
 
-    // regex used to determine if a string contains the substring `q`
-    substrRegex = new RegExp(q, 'i');
+        function _getMemberforActorRole( params)
+        {
+            var criteria
+            ,   $d      = $.Deferred()
+            ,   matches = []
+            ;
 
-    // iterate through the pool of strings and for any string that
-    // contains the substring `q`, add it to the `matches` array
-    $.each(strs, function(i, str) {
-      if (substrRegex.test(str)) {
-        // the typeahead jQuery plugin expects suggestions to a
-        // JavaScript object, refer to typeahead docs for more info
-        matches.push({ value: str });
-      }
-    });
+            criteria          =   _getSearchCriteria( params );
 
-    cb(matches);
-  };
-};
+            bidx.api.call(
+                "search.members"
+            ,   {
+                    groupDomain:          bidx.common.groupDomain
+                ,   extraUrlParameters:   criteria
 
-var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-  'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-  'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-  'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-  'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-];
+                ,   success: function( response )
+                    {
+                        bidx.utils.log( "[Member List for Criteria] ", params.q,  response );
 
-$('.typeahead').typeahead({
-  hint: true,
-  highlight: true,
-  minLength: 1
-},
-{
-  name: 'states',
-  displayKey: 'value',
-  source: substringMatcher(states)
-}).removeClass( "disabled" ).removeAttr( "disabled" );
-//
-// TEMP - REPLACE THIS WITH THE REAL DATA
+                        $.each( response, function( idx, data )
+                        {
+                            matches.push(
+                            {
+                                value: data.name
+                            ,   id:    data.id
+                            });
+
+                            actorArr[data.id] = data; // Store at global array for later use
+                        });
+
+
+
+                        $d.resolve( matches  );
+                    }
+
+                ,   error: function( jqXhr, textStatus )
+                    {
+
+                       var status  = bidx.utils.getValue( jqXhr, "status" ) || textStatus
+                        ,   msg     = "Something went wrong while retrieving the companies: " + status
+                        ,   error   = new Error( msg )
+                        ;
+
+                        //_showError( msg );
+
+                        $d.reject( error );
+
+                    }
+                }
+            );
+
+            return $d;
+        }
+
+        // TEMP - REPLACE THIS WITH THE REAL DATA
+        //
+        var substringMatcher = function(strs)
+        {
+            return function findMatches(q, cb)
+            {
+                var params  =   {
+                                    q:  q
+                                }
+                                ;
+               _getMemberforActorRole( params )
+               .done( function( matches )
+                {
+                    bidx.utils.log('matches', matches);
+                    cb ( matches );
+                } )
+                ;
+            };
+        };
+
+        $('.typeahead').typeahead(
+        {
+            hint: true
+        ,   highlight: true
+        ,   minLength: 3
+        }
+    ,
+        {
+          name: 'states',
+          displayKey: 'value',
+          source: substringMatcher( )
+
+        }
+
+        ).removeClass( "disabled" ).removeAttr( "disabled" );
+
+        $('.typeahead').on('typeahead:selected', onSelected);
+
+
+        function onSelected($e, data)
+        {
+          $roles.data('id', data.id);
+          $roles.addClass('disabled').attr('disabled','disabled');
+          $roleButton.removeClass('disabled');
+        }
+
+        function _loadActors( )
+        {
+            var data
+            ;
+
+            $.each( actorsObj, function( actorType, actorList )
+            {
+                $.each( actorList, function( idx, actorData )
+                {
+                    if ( !$.isEmptyObject ( actorData ) )
+                    {
+                        data                            =   {
+                                                                id:   actorData.userId
+                                                            ,   name: actorData.userDisplayName
+                                                            };
+
+                        actorArr [ actorData.userId ]  =  data;
+                    }
+                });
+            });
+            bidx.utils.log('actorsss', actorArr);
+            $.each( actorArr, function( actorId, actorData )
+            {
+                _appendActorCard( actorId ); // continue
+            });
+
+            _showAllView('actors');
+        }
+
+        function _appendActorCard ( actorId )
+        {
+            var listItem
+            ,   $listItem
+            ,   item
+            ,   data
+            ,   emptyVal            = ''
+            ,   $list               = $element.find( ".showActors" )
+            ,   snippet             = $("#actors-snippet").html().replace(/(<!--)*(-->)*/g, "")
+            ,   $listError          = $("#error-card").html().replace(/(<!--)*(-->)*/g, "")
+            ,   $ratingWrapper
+            ,   $raty
+            ;
+
+            data           = bidx.utils.getValue(actorArr, actorId.toString());
+
+            if ( !$.isEmptyObject(data) )
+            {
+
+                listItem    =   snippet
+                                .replace( /%userId%/g,    data.id  )
+                                .replace( /%memberName%/g,  data.name )
+                                ;
+
+                $listItem   =   $(listItem);
+
+                /* Assign Next Action According to Role */
+                _addActorAction(
+                {
+                    $listItem: $listItem
+                ,   callback:   function( response )
+                                {
+
+
+                                }
+                });
+
+            }
+            else
+            {
+                $listItem = $listError;
+            }
+
+            $list.append( $listItem );
+
+        }
+
+        $roleButton.click ( function ( e )
+        {
+            var     actorId             = $roles.data('id')
+            ;
+            _appendActorCard( actorId );
+
+        } );
+
+        function _addActorAction( options  )
+        {
+            var $listItem       =   options.$listItem
+            ,   $btnActorAction =   $listItem.find('.btn-actor-action')
+            ;
+
+            $btnActorAction.click( function( e )
+            {
+                var params      =   options.params
+                ,   $this       =   $( this )
+                ,   role        =   $(this).data('role')
+                ,   userId      =   $(this).data('userid')
+                ,   data        =   {}
+                ,   orgText     =   $this.text()
+                ;
+
+                data [ role ]   =   [   {
+                                            "userId": userId
+                                        }
+                                    ];
+
+                $this.i18nText('loadingLbl');
+
+                bidx.api.call(
+                    "competition.assignActorToCompetition"
+                ,   {
+                        competitionId:  competitionSummaryId
+                    ,   groupDomain:    bidx.common.groupDomain
+                    ,   data:           data
+                    ,   success:        function( response )
+                        {
+                            // Do we have edit perms?
+                            //
+                            bidx.utils.log('response',response);
+                            //  execute callback if provided
+                            $this.text(orgText);
+                            $this.addClass('active');
+                        }
+
+                        , error: function(jqXhr, textStatus)
+                        {
+                            var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                            _showError("Something went wrong while applying for the competition for entityId: " + params.data.entityId);
+                        }
+                    }
+                );
+            });
+        }
+
+
+        //
+        // TEMP - REPLACE THIS WITH THE REAL DATA
 
 
 
@@ -1451,7 +1689,7 @@ function _competitionTimer (  )
 
             $.each( attachment, function( idx, a )
             {
-                if ( $.inArray( a.fileUpload.toString(), attachmentExists ) === -1 )
+                if ( a.fileUpload && $.inArray( a.fileUpload.toString(), attachmentExists ) === -1 )
                 {
                     _addAttachment( a );
                 }
@@ -2642,23 +2880,27 @@ function _competitionTimer (  )
     function _loadMyApplications()
     {
         var myApplicationsAny
+        ,   bpLength    = _.size(listDropdownBp)
         ;
 
-        $.each( listDropdownBp, function( idx, entityId )
+        if( bpLength )
         {
-            myApplicationsAny = _.findWhere( applicationObj, { 'entityId' : parseInt(entityId, 10) } );
-
-            if ( !$.isEmptyObject(myApplicationsAny) )
+            $.each( listDropdownBp, function( idx, entityId )
             {
-                _appendCardValues( {
-                                    list:               'viewOwnCard'
-                                ,   entityId:           entityId
-                                ,   applicationObj:     applicationObj
-                                });
+                myApplicationsAny = _.findWhere( applicationObj, { 'entityId' : parseInt(entityId, 10) } );
 
-                bidx.utils.log('myApplicationsAny', myApplicationsAny);
-            }
-        });
+                if ( !$.isEmptyObject(myApplicationsAny) )
+                {
+                    _appendCardValues( {
+                                        list:               'viewOwnCard'
+                                    ,   entityId:           entityId
+                                    ,   applicationObj:     applicationObj
+                                    });
+
+                    bidx.utils.log('myApplicationsAny', myApplicationsAny);
+                }
+            });
+        }
     }
 
     // Private functions
@@ -2696,7 +2938,7 @@ function _competitionTimer (  )
         var params  = options.params
         ,   cancel  = bidx.utils.getValue( params, 'cancel')
         ;
-
+        bidx.utils.log('options', options);
         if ( options.requestedState !== "edit" )
         {
             $element.removeClass( "edit" );

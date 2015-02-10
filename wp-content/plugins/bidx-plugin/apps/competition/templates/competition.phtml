@@ -256,7 +256,7 @@ if ( !empty( $attachment ) )
                         <!-- sucess msg, used as a placeholder for showing msgs -->
 
                         <div class=" alert alert-success">
-                            <p class="successMsg">abb</p>
+                            <p class="successMsg"></p>
                         </div>
                     </div>
                 </div>
@@ -494,14 +494,14 @@ if ( !empty( $attachment ) )
                     <div class="view viewEdit">
                         <blockquote class="alert-info"><?php _e('Select the members that will participate as Assessors, Judges and Competition managers','bidxplugin')?></blockquote>
                         <label><?php _e('Search','bidxplugin'); ?></label>
-                        <div class="input-group ">
+                         <div class="input-group ">
                             <input type="text" name="roles" class="form-control typeahead" autocomplete="off" disabled placeholder="<?php _e('Search a member name','bidxplugin'); ?>" />
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default js-btn-add-role" disabled><?php _e('Add to list','bidxplugin'); ?></button>
+                                <button type="button" class="btn btn-default js-btn-add-role disabled" ><?php _e('Add to list','bidxplugin'); ?></button>
                             </span>
                         </div>
 
-                        <div class="competition-actors">
+                        <div class="">
                             <table class="table table-compressed">
                                 <thead>
                                     <tr>
@@ -510,75 +510,8 @@ if ( !empty( $attachment ) )
                                         <th class="text-right">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Sakis Katsikas</td>
-                                        <td>
-                                            <div class="btn-group" role="group" aria-label="...">
-                                                <button type="button" class="btn btn-xs btn-primary active">Assessor</button>
-                                                <button type="button" class="btn btn-xs btn-default">Judge</button>
-                                                <button type="button" class="btn btn-xs btn-default">Manager</button>
-                                            </div>
-                                        </td>
-                                        <td class="text-right">
-                                            <div class="btn-group dropup">
-                                                <button type="button" class="btn btn-xs btn-default">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Altaf Samnani</td>
-                                        <td>
-                                            <div class="btn-group" role="group" aria-label="...">
-                                                <button type="button" class="btn btn-xs btn-default">Assessor</button>
-                                                <button type="button" class="btn btn-xs btn-secondary active">Judge</button>
-                                                <button type="button" class="btn btn-xs btn-default">Manager</button>
-                                            </div>
-                                        </td>
-                                        <td class="text-right">
-                                            <div class="btn-group dropup">
-                                                <button type="button" class="btn btn-xs btn-default">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Iratxe Florez</td>
-                                        <td>
-                                            <div class="btn-group" role="group" aria-label="...">
-                                                <button type="button" class="btn btn-xs btn-primary active">Assessor</button>
-                                                <button type="button" class="btn btn-xs btn-secondary active">Judge</button>
-                                                <button type="button" class="btn btn-xs btn-default">Manager</button>
-                                            </div>
-                                        </td>
-                                        <td class="text-right">
-                                            <div class="btn-group dropup">
-                                                <button type="button" class="btn btn-xs btn-default">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Marianne Bakker</td>
-                                        <td>
-                                            <div class="btn-group" role="group" aria-label="...">
-                                                <button type="button" class="btn btn-xs btn-default">Assessor</button>
-                                                <button type="button" class="btn btn-xs btn-default">Judge</button>
-                                                <button type="button" class="btn btn-xs btn-warning active">Manager</button>
-                                            </div>
-                                        </td>
-                                        <td class="text-right">
-                                            <div class="btn-group dropup">
-                                                <button type="button" class="btn btn-xs btn-default">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                <tbody class="showActors">
+
                                 </tbody>
                             </table>
                         </div>
@@ -743,6 +676,98 @@ if ( !empty( $attachment ) )
 </div><!-- /competition -->
 </div>
 </div>
+<script type="text/html" id="actors-snippet-orig">
+    <tr>
+        <td>Sakis Katsikas</td>
+        <td>
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-xs btn-primary active">Assessor</button>
+                <button type="button" class="btn btn-xs btn-default">Judge</button>
+                <button type="button" class="btn btn-xs btn-default">Manager</button>
+            </div>
+        </td>
+        <td class="text-right">
+            <div class="btn-group dropup">
+                <button type="button" class="btn btn-xs btn-default">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>Altaf Samnani</td>
+        <td>
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-xs btn-default">Assessor</button>
+                <button type="button" class="btn btn-xs btn-secondary active">Judge</button>
+                <button type="button" class="btn btn-xs btn-default">Manager</button>
+            </div>
+        </td>
+        <td class="text-right">
+            <div class="btn-group dropup">
+                <button type="button" class="btn btn-xs btn-default">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>Iratxe Florez</td>
+        <td>
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-xs btn-primary active">Assessor</button>
+                <button type="button" class="btn btn-xs btn-secondary active">Judge</button>
+                <button type="button" class="btn btn-xs btn-default">Manager</button>
+            </div>
+        </td>
+        <td class="text-right">
+            <div class="btn-group dropup">
+                <button type="button" class="btn btn-xs btn-default">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>Marianne Bakker</td>
+        <td>
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-xs btn-default">Assessor</button>
+                <button type="button" class="btn btn-xs btn-default">Judge</button>
+                <button type="button" class="btn btn-xs btn-warning active">Manager</button>
+            </div>
+        </td>
+        <td class="text-right">
+            <div class="btn-group dropup">
+                <button type="button" class="btn btn-xs btn-default">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+
+</script>
+
+<script type="text/html" id="actors-snippet">
+    <tr>
+        <td>%memberName%</td>
+        <td>
+            <div class="btn-group" role="group" aria-label="...">
+                <button data-userid = "%userId%" data-role = 'assessors' type="button" class="btn btn-xs btn-assesor btn-actor-action"><?php _e('Assessor','bidxplugin');?></button>
+                <button data-userid = "%userId%" data-role = 'judges' type="button" class="btn btn-xs btn-judge btn-actor-action"><?php _e('Judge','bidxplugin');?></button>
+                <button data-userid = "%userId%" data-role = 'administrators' type="button" class="btn btn-xs btn-manager btn-actor-action"><?php _e('Manager','bidxplugin');?></button>
+            </div>
+        </td>
+        <td class="text-right">
+            <div class="btn-group dropup">
+                <button data-userid = "%userId%" type="button" class="btn btn-xs btn-default">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+</script>
+
 <script type="text/html" id="entrpreneur-card-snippet">
 <!--
     <div class="cardView cardEntity%entityId%">
@@ -768,12 +793,12 @@ if ( !empty( $attachment ) )
             </div>
         </div>
         <div class="cardFooter">
-			<div class="alert alert-info text-right">
-			<span class="cardInfoText">Add an explanatory text <strong>here</strong></span>
-            	<a  data-entityid = "%entityId%" data-status = "" class="btn btn-success btn-xs btn-action set-submit hide"><?php _e('Submit', 'bidxplugin');?></a>
-            	<a  data-entityid = "%entityId%" data-status = "" class="btn btn-warning btn-xs btn-action set-withdraw hide"><?php _e('Withdraw', 'bidxplugin');?></a>
-        	</div>
-		</div>
+            <div class="alert alert-info text-right">
+            <span class="cardInfoText">Add an explanatory text <strong>here</strong></span>
+                <a  data-entityid = "%entityId%" data-status = "" class="btn btn-success btn-xs btn-action set-submit hide"><?php _e('Submit', 'bidxplugin');?></a>
+                <a  data-entityid = "%entityId%" data-status = "" class="btn btn-warning btn-xs btn-action set-withdraw hide"><?php _e('Withdraw', 'bidxplugin');?></a>
+            </div>
+        </div>
     </div>
 -->
 </script>
