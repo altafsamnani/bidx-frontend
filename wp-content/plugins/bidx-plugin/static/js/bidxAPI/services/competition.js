@@ -36,7 +36,7 @@
 
         if ( params.competitionId )
         {
-            requestParams.baseUrl  +=   '/%id%/actors';
+            requestParams.baseUrl  +=   '/%id%/actor';
             requestParams.baseUrl   =   requestParams.baseUrl.replace( "%id%", params.competitionId );
         }
 

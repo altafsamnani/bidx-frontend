@@ -65,7 +65,12 @@
     ,   rejectByMentor              = []
     ,   timeouts                    = []
     ,   actorArr                    = {}
-
+    ,   updateActorsList            = {
+                                            'judges':       []
+                                        ,   'assessors':    []
+                                        ,   'administrators':     []
+                                      }
+    ,   roleType                    = ['assessors', 'judges', 'administrators']
 
     ,   forms                       =
         {
@@ -234,25 +239,11 @@
                         }
         });
     }
-    // Setup function for doing work that should only be done once
-    //
-    function _oneTimeSetup()
+
+    function _loadBpSummaries()
     {
-         var option
-         ,   bpLength
-         ,   visibilityArrItems  =   [ ]
-         ;
-
-        _setupApplyButton();
-        _competitionTimer();
-        _snippets();
-        _setupValidation();
-        _coverImage();
-        _documents();
-        _loadMyApplications( ); // Load My applications now
-        _loadActors();
-        _initApplicationsView( );
-
+        var bpLength
+        ;
         if( $businessSummary )
         {
             _showAllView( "participate" ); // Display participate Bar
@@ -283,6 +274,27 @@
 
             });
         }
+    }
+    // Setup function for doing work that should only be done once
+    //
+    function _oneTimeSetup()
+    {
+         var option
+         ,   visibilityArrItems  =   [ ]
+         ;
+
+        _setupApplyButton();
+        _competitionTimer();
+        _snippets();
+        _setupValidation();
+        _coverImage();
+        _documents();
+        _loadMyApplications( ); // Load My applications now
+        _loadActors();
+        _initApplicationsView( );
+        _loadBpSummaries();
+
+
 
         // On any changes, how little doesn't matter, notify that we have a pending change
         // But no need to track the changes when doing a member data load
@@ -726,8 +738,6 @@
                             actorArr[data.id] = data; // Store at global array for later use
                         });
 
-
-
                         $d.resolve( matches  );
                     }
 
@@ -799,28 +809,46 @@
         function _loadActors( )
         {
             var data
+            ,   actorData
+            ,   actorExist
             ;
-
-            $.each( actorsObj, function( actorType, actorList )
+            if( !$.isEmptyObject ( actorsObj ) )
             {
-                $.each( actorList, function( idx, actorData )
+
+                $.each( actorsObj, function( actorType, actorList )
                 {
-                    if ( !$.isEmptyObject ( actorData ) )
-                    {
-                        data                            =   {
-                                                                id:   actorData.userId
-                                                            ,   name: actorData.userDisplayName
-                                                            };
 
-                        actorArr [ actorData.userId ]  =  data;
-                    }
+                    $.each( actorList, function( idx, actorData )
+                    {
+                        if ( !$.isEmptyObject ( actorData ) )
+                        {
+                            actorExist  =   ( !$.isEmptyObject ( actorArr[ actorData.userId ] ) ) ? actorArr[ actorData.userId ]: false;
+
+                            if( !actorExist )
+                            {
+                                data    =   {
+                                                id:         actorData.userId
+                                            ,   name:       actorData.userDisplayName
+                                            };
+
+                                actorArr [ actorData.userId ]  =  data;
+
+                            }
+
+                            actorArr [ actorData.userId ][actorType]  =  actorType; // To enable buttons infront of each row , used in appendActorCard
+
+                            updateActorsList[actorType].push({
+                                                                "userId": actorData.userId
+                                                             } );
+                        }
+                    });
                 });
-            });
-            bidx.utils.log('actorsss', actorArr);
-            $.each( actorArr, function( actorId, actorData )
-            {
-                _appendActorCard( actorId ); // continue
-            });
+
+                $.each( actorArr, function( actorId, actorData )
+                {
+                    _appendActorCard( actorId ); // continue
+                });
+            }
 
             _showAllView('actors');
         }
@@ -829,6 +857,7 @@
         {
             var listItem
             ,   $listItem
+            ,   $btnActor
             ,   item
             ,   data
             ,   emptyVal            = ''
@@ -836,10 +865,11 @@
             ,   snippet             = $("#actors-snippet").html().replace(/(<!--)*(-->)*/g, "")
             ,   $listError          = $("#error-card").html().replace(/(<!--)*(-->)*/g, "")
             ,   $ratingWrapper
+
             ,   $raty
             ;
 
-            data           = bidx.utils.getValue(actorArr, actorId.toString());
+            data                    = bidx.utils.getValue(actorArr, actorId.toString());
 
             if ( !$.isEmptyObject(data) )
             {
@@ -850,6 +880,16 @@
                                 ;
 
                 $listItem   =   $(listItem);
+
+                $.each( roleType, function( idx, role )
+                {
+                    if ( !$.isEmptyObject ( data[ role ] ) )
+                    {
+                        $btnActor   =   $listItem.find( '.btn-' + role);
+
+                        $btnActor.addClass ('active');
+                    }
+                } );
 
                 /* Assign Next Action According to Role */
                 _addActorAction(
@@ -888,37 +928,70 @@
 
             $btnActorAction.click( function( e )
             {
-                var params      =   options.params
+                var updateActorsArr
+                ,   params      =   options.params
                 ,   $this       =   $( this )
                 ,   role        =   $(this).data('role')
                 ,   userId      =   $(this).data('userid')
                 ,   data        =   {}
                 ,   orgText     =   $this.text()
+                ,   userObj     =   {
+                                        "userId": userId
+                                    }
                 ;
+                if( role === 'all') // If  close button
+                {
+                    $.each( roleType, function( idx, roleLbl )
+                    {
+                        updateActorsArr                 = updateActorsList [ roleLbl ] ;
+                        updateActorsList [ roleLbl ]    =  _.without(updateActorsArr, _.findWhere(updateActorsArr, userObj));
+                    });
+                }
+                else
+                {
+                    if($this.hasClass('active'))
+                    {
+                        updateActorsArr             = updateActorsList [ role ] ;
+                        updateActorsList [ role ]   =  _.without(updateActorsArr, _.findWhere(updateActorsArr, userObj));
+                    }
+                    else
+                    {
+                        updateActorsList [ role ].push( userObj );
+                    }
+                    $this.i18nText('loadingLbl');
 
-                data [ role ]   =   [   {
-                                            "userId": userId
-                                        }
-                                    ];
-
-                $this.i18nText('loadingLbl');
+                }
 
                 bidx.api.call(
                     "competition.assignActorToCompetition"
                 ,   {
                         competitionId:  competitionSummaryId
                     ,   groupDomain:    bidx.common.groupDomain
-                    ,   data:           data
+                    ,   data:           updateActorsList
                     ,   success:        function( response )
                         {
                             // Do we have edit perms?
                             //
                             bidx.utils.log('response',response);
-                            //  execute callback if provided
-                            $this.text(orgText);
-                            $this.addClass('active');
-                        }
 
+                            $this.text(orgText);
+
+                            if( role === 'all') // If  close button
+                            {
+                                $element.find('.row-' + userId).hide("slow", function(){ $(this).remove(); });
+                            }
+                            else
+                            {
+                                if($this.hasClass ( 'active' ) )
+                                {
+                                    $this.removeClass('active');
+                                }
+                                else
+                                {
+                                    $this.addClass('active');
+                                }
+                            }
+                        }
                         , error: function(jqXhr, textStatus)
                         {
                             var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
@@ -1067,23 +1140,6 @@
             $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
         }
 
-
-        $('#table_id').DataTable(
-            {
-                "aoColumns": [
-                    { "bSortable": false },
-                    null,
-                    null,
-                    null,
-                    null
-                ],
-                "bPaginate": false,
-                tableTools: {
-                    "sRowSelect": "multi",
-                    "aButtons": [ "select_all", "select_none" ]
-                }
-
-            });
         }
 
 /* Formatting function for row details - modify as you need */
@@ -2415,6 +2471,93 @@ function _competitionTimer (  )
         return;
     }
 
+    function _loadActorDropdownAccordingToStatus( $listItem, data)
+    {
+        var option
+        ,   userId
+        ,   userName
+        ,   assessorList    =   []
+        ,   judgeList       =   []
+        ,   status          =   data.status
+        ,   entityId        =   data.entityId
+        ,   assesorLength   =   _.size(updateActorsList['assessors'])
+        ,   judgeLength     =   _.size(updateActorsList['judges'])
+        ,   $assessors      =   $listItem.find( "[name='assesors-" + entityId + "']" )
+        ,   $judges         =   $listItem.find( "[name='judges-" + entityId + "']" )
+        ,   $btnAssign      =   $listItem.find( ".assign-assesor-" + entityId )
+        ;
+
+        /* Assessor Dropdown */
+        $assessors.chosen(
+        {
+            placeholder_text_single : bidx.i18n.i( "Loading" )
+        ,   width                   : "40%"
+        });
+
+        if( assesorLength )
+        {
+            $.each( updateActorsList['assessors'], function( idx, userObject )
+            {
+                userId      =   userObject.userId;
+                userName    =   actorArr [ userId ].name;
+
+                option      =   $( "<option/>",
+                                {
+                                    value: userId
+                                } );
+
+                option.text( userName );
+
+                assessorList.push( option );
+
+            });
+
+            $assessors.append( assessorList );
+            $assessors.trigger( "chosen:updated" );
+
+             _assignActorAction(
+            {
+                $btnAssign: $btnAssign
+            ,   action:     'qualification'
+            ,   callback:   function( response )
+                            {
+
+
+                            }
+            });
+        }
+
+        /* Judge Dropdown */
+        $judges.chosen(
+        {
+            placeholder_text_single : bidx.i18n.i( "Loading" )
+        ,   width                   : "40%"
+        });
+
+        if( judgeLength )
+        {
+            $.each( updateActorsList['judges'], function( idx, userObject )
+            {
+                userId      =   userObject.userId;
+                userName    =   actorArr [ userId ].name;
+
+                option      =   $( "<option/>",
+                                {
+                                    value: userId
+                                } );
+
+                option.text( userName );
+
+                judgeList.push( option );
+
+            });
+
+            $judges.append( judgeList );
+            $judges.trigger( "chosen:updated" );
+        }
+
+    }
+
     function _assignManagerActions( $listItem, data, row )
     {
         var successMsg
@@ -2438,6 +2581,7 @@ function _competitionTimer (  )
         bidx.utils.log('status',status);
 
         _displayButtonsAccordingToStatus( $listItem, data );
+        _loadActorDropdownAccordingToStatus( $listItem, data)
 
          _assignBtnAction(
         {
@@ -2624,6 +2768,14 @@ function _competitionTimer (  )
         }
     }
 
+    function _updateActorsToApplications( options )
+    {
+        if(options && options.cbBtnStatus)
+        {
+            options.cbBtnStatus(  );
+        }
+    }
+
     function _updatePlanStatusToCompetition( options )
     {
         var params          =   options.params
@@ -2675,6 +2827,100 @@ function _competitionTimer (  )
         $btn.removeClass( "btn-danger" );
     }
 
+    function _assignActorAction( options  )
+    {
+        var     $btnAssign  =   options.$btnAssign
+        ,       role        =   options.role
+        ,       action      =   options.action
+        ,       confirmTimer
+        ,       orgText
+        ;
+
+        $btnAssign.click( function( e )
+        {
+            e.preventDefault();
+
+            var params
+            ,   status
+            ,   btnEntityId
+            ,   businessPlanEntityId
+            ,   radioName
+            ,   $radio
+            ;
+
+            switch( action )
+            {
+                case 'assesors' :
+                //businessPlanEntityId    =   $businessSummary.val(); // for First time Particpate/Applied Button
+                //status                  =   $btnAssign.data( "status" );
+                businessPlanEntityId =  true;
+
+                break;
+
+
+            }
+
+
+
+            function startConfirmTimer( $btn, orgText )
+            {
+                confirmTimer = setTimeout( function( )
+                {
+                    $btn.text( orgText );
+                    $btn.data( "confirm", false );
+
+                    $btn.removeClass( "btn-danger" );
+                    $btn.addClass( "btn-md" );
+
+                }, 5000 );
+
+            }
+
+            if ( $btnAssign.data( "confirm" ) )
+            {
+                clearTimeout( confirmTimer );
+
+                //quick reset of the timer array you just cleared
+
+                _recoverOrigForm( $btnAssign
+                                ,   {
+                                        message:    bidx.i18n.i( "Loading" )
+                                    ,   disabled:   'disabled'
+                                    }
+                                );
+                params  =
+                {
+                    competitionId   :   competitionSummaryId
+                ,   data            :   {
+                                            entityId    :   businessPlanEntityId
+                                        ,   status      :   status
+                                        }
+                };
+
+                _updateActorsToApplications(
+                {
+
+                    cbBtnStatus:    function()
+                                    {
+                                        $btnAssign.text( orgText );
+                                        //_recoverOrigForm( $btnAction, $btnAction.data( "confirm" ));
+                                    }
+                } );
+
+            }
+            else
+            {
+                orgText = $btnAssign.text();
+
+                $btnAssign.data( "confirm", true );
+
+                $btnAssign.addClass( "btn-danger" );
+                $btnAssign.i18nText( "btnConfirm" );
+
+                startConfirmTimer( $btnAssign, orgText );
+            }
+        });
+    }
 
     function _assignBtnAction( options  )
     {
@@ -2958,6 +3204,8 @@ function _competitionTimer (  )
                     _showAllView ( 'participate' ) ;
                     bidx.controller.updateHash ( "#viewCompetition", false );
                 }
+
+                _showAllView ( 'applications' ) ;
 
                 break;
 

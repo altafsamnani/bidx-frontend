@@ -328,7 +328,7 @@ if ( !empty( $attachment ) )
 <?php
     if ( $canEdit ) :
 ?>
-        <table id="listApplications" class="view viewApplications table table-bordered">
+        <table id="listApplications" class="viewApplications table table-bordered">
             <thead>
                 <tr>
                     <th></th>
@@ -676,91 +676,21 @@ if ( !empty( $attachment ) )
 </div><!-- /competition -->
 </div>
 </div>
-<script type="text/html" id="actors-snippet-orig">
-    <tr>
-        <td>Sakis Katsikas</td>
-        <td>
-            <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-xs btn-primary active">Assessor</button>
-                <button type="button" class="btn btn-xs btn-default">Judge</button>
-                <button type="button" class="btn btn-xs btn-default">Manager</button>
-            </div>
-        </td>
-        <td class="text-right">
-            <div class="btn-group dropup">
-                <button type="button" class="btn btn-xs btn-default">
-                    <i class="fa fa-times"></i>
-                </button>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td>Altaf Samnani</td>
-        <td>
-            <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-xs btn-default">Assessor</button>
-                <button type="button" class="btn btn-xs btn-secondary active">Judge</button>
-                <button type="button" class="btn btn-xs btn-default">Manager</button>
-            </div>
-        </td>
-        <td class="text-right">
-            <div class="btn-group dropup">
-                <button type="button" class="btn btn-xs btn-default">
-                    <i class="fa fa-times"></i>
-                </button>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td>Iratxe Florez</td>
-        <td>
-            <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-xs btn-primary active">Assessor</button>
-                <button type="button" class="btn btn-xs btn-secondary active">Judge</button>
-                <button type="button" class="btn btn-xs btn-default">Manager</button>
-            </div>
-        </td>
-        <td class="text-right">
-            <div class="btn-group dropup">
-                <button type="button" class="btn btn-xs btn-default">
-                    <i class="fa fa-times"></i>
-                </button>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td>Marianne Bakker</td>
-        <td>
-            <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-xs btn-default">Assessor</button>
-                <button type="button" class="btn btn-xs btn-default">Judge</button>
-                <button type="button" class="btn btn-xs btn-warning active">Manager</button>
-            </div>
-        </td>
-        <td class="text-right">
-            <div class="btn-group dropup">
-                <button type="button" class="btn btn-xs btn-default">
-                    <i class="fa fa-times"></i>
-                </button>
-            </div>
-        </td>
-    </tr>
-
 </script>
 
 <script type="text/html" id="actors-snippet">
-    <tr>
+    <tr class="row-%userId%">
         <td>%memberName%</td>
         <td>
             <div class="btn-group" role="group" aria-label="...">
-                <button data-userid = "%userId%" data-role = 'assessors' type="button" class="btn btn-xs btn-assesor btn-actor-action"><?php _e('Assessor','bidxplugin');?></button>
-                <button data-userid = "%userId%" data-role = 'judges' type="button" class="btn btn-xs btn-judge btn-actor-action"><?php _e('Judge','bidxplugin');?></button>
-                <button data-userid = "%userId%" data-role = 'administrators' type="button" class="btn btn-xs btn-manager btn-actor-action"><?php _e('Manager','bidxplugin');?></button>
+                <button data-userid = "%userId%" data-role = 'assessors' type="button" class="btn btn-xs btn-assessors btn-actor-action"><?php _e('Assessor','bidxplugin');?></button>
+                <button data-userid = "%userId%" data-role = 'judges' type="button" class="btn btn-xs btn-judges btn-actor-action"><?php _e('Judge','bidxplugin');?></button>
+                <button data-userid = "%userId%" data-role = 'administrators' type="button" class="btn btn-xs btn-administrators btn-actor-action"><?php _e('Administrators','bidxplugin');?></button>
             </div>
         </td>
         <td class="text-right">
             <div class="btn-group dropup">
-                <button data-userid = "%userId%" type="button" class="btn btn-xs btn-default">
+                <button data-userid = "%userId%" data-role = 'all' type="button" class="btn btn-xs btn-default btn-actor-action">
                     <i class="fa fa-times"></i>
                 </button>
             </div>
@@ -794,7 +724,7 @@ if ( !empty( $attachment ) )
         </div>
         <div class="cardFooter">
             <div class="alert alert-info text-right">
-            <span class="cardInfoText">Add an explanatory text <strong>here</strong></span>
+            <span class="cardInfoText hide">Add an explanatory text <strong>here</strong></span>
                 <a  data-entityid = "%entityId%" data-status = "" class="btn btn-success btn-xs btn-action set-submit hide"><?php _e('Submit', 'bidxplugin');?></a>
                 <a  data-entityid = "%entityId%" data-status = "" class="btn btn-warning btn-xs btn-action set-withdraw hide"><?php _e('Withdraw', 'bidxplugin');?></a>
             </div>
@@ -855,33 +785,26 @@ if ( !empty( $attachment ) )
                             <a data-entityid = "%entityId%" class="btn btn-primary btn-md set-winner-%entityId%"><?php _e('Set','bidxplugin');?></a>
                         </div>
                     </div>
-                    <div class="col-sm-12 assign-role hide">
-                        <label class="inline">Assign Assessor:</label>
-                        <select class="selectAssessors" multiple>
-                            <option value="">Assessor 1</option>
-                            <option value="">Assessor 2</option>
-                            <option value="">Assessor 3</option>
-                            <option value="">Assessor 4</option>
-                            <option value="">Assessor 5</option>
-                            <option value="">Assessor 5</option>
-                            <option value="">Assessor 5</option>
-                            <option value="">Assessor 5</option>
-                            <option value="">Assessor 5</option>
-                            <option value="">Assessor 5</option>
-                            <option value="">Assessor 5</option>
-                            <option value="">Assessor 5</option>
-                            <option value="">Assessor 5</option>
-                            <option value="">Assessor 5</option>
-                            <option value="">Assessor 5</option>
-                            <option value="">Assessor 5</option>
-                            <option value="">Assessor 5</option>
-                            <option value="">Assessor 5</option>
-                            <option value="">Assessor 5</option>
-                            <option value="">Assessor 5</option>
-                            <option value="">Assessor 5</option>
-                        </select>
-                        <div class="text-right">
-                            <a data-entityid = "%entityId%" class="btn btn-primary btn-md assign-assesor-%entityId%"><?php _e('Assign','bidxplugin');?></a>
+                    <div class="assign-asessor">
+                        <div class="col-sm-12">
+                            <label class="inline">Assign Assessor:</label>
+                        </div>
+                        <div class="col-sm-12">
+                            <select multiple class="chosen-assessors-%entityId%" name="assesors-%entityId%"></select>
+                            <div class="pull-right">
+                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md assign-assesor-%entityId%"><?php _e('Assign','bidxplugin');?></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="assign-judge">
+                        <div class="col-sm-12">
+                            <label class="inline">Assign Judge:</label>
+                        </div>
+                        <div class="col-sm-12">
+                            <select multiple class="chosen-judges-%entityId%" name="judges-%entityId%"></select>
+                            <div class="pull-right">
+                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md assign-judge-%entityId%"><?php _e('Assign','bidxplugin');?></a>
+                            </div>
                         </div>
                     </div>
                 </div>
