@@ -38,6 +38,20 @@ class login {
      * @param $atts
      */
     function load($atts) {
+
+        // BIDX-2837 Very quick and dirty workaround for MEK/GESR
+        // BEWARE: see the very same hack in auth.php and auth.js; also see comments about 
+        // the #join/role URL fragment in that first file.
+        $authenticated = ( BidxCommon::$staticSession->authenticated === 'true' );
+        $siteUrl = get_site_url();
+        $subdomain = BidxCommon::get_bidx_subdomain( false, $siteUrl );
+        if ( $subdomain === "gesr" && !$authenticated ) {
+            // If the domain has 2 subdomains such as gesr.demo.bidx.net, then assume beta testing.
+            $isGesrBeta = substr_count( $siteUrl, "." ) > 2;
+            header( "Location: " . $siteUrl. "/bidx-soca/bidxauth?id=http://gesr.net/" . ($isGesrBeta ? "beta" : "") . '#join/role' );
+            return;
+        }
+
         // 1. Template Rendering
         require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
         $view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/login/templates/' );
