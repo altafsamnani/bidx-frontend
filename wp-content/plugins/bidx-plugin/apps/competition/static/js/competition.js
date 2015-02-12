@@ -5,6 +5,7 @@
 
     var competitionVars             = window.__bidxCompetition || {}
     ,   applicationObj
+    ,   actorsObj
     ,   $element                    = $( "#competitionSummary" )
     ,   $snippets                   = $element.find( ".snippets" )
 
@@ -30,6 +31,9 @@
 
     ,   $btnEndPhase                = $element.find( ".endPhase" )
     ,   $successLabel               = $element.find('.successLabel')
+
+    ,   $roles                      = $element.find( "[name='roles']" )
+    ,   $roleButton                 = $element.find(".js-btn-add-role" )
 
 
     ,   $controlsForEdit            = $editControls.find( ".viewEdit" )
@@ -60,7 +64,13 @@
     ,   rejectByEntrepreneur        = []
     ,   rejectByMentor              = []
     ,   timeouts                    = []
-
+    ,   actorArr                    = {}
+    ,   updateActorsList            = {
+                                            'judges':       []
+                                        ,   'assessors':    []
+                                        ,   'administrators':     []
+                                      }
+    ,   roleType                    = ['assessors', 'judges', 'administrators']
 
     ,   forms                       =
         {
@@ -148,24 +158,17 @@
     if ( !$.isEmptyObject(competitionVars) )
     {
         applicationObj              = bidx.utils.getValue( competitionVars, 'applications');
+
+        actorsObj                   = bidx.utils.getValue( competitionVars, 'actors');
     }
 
     // Constants
     //
     var CONSTANTS =
         {
-            SEARCH_LIMIT:                       4
-        ,   NUMBER_OF_PAGES_IN_PAGINATOR:       10
-        ,   LOAD_COUNTER:                       0
-        ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
-        ,   ENTITY_TYPES:                       [
-                                                    {
-                                                        "type": "bidxMentorProfile"
-                                                    }
-                                                ]
+            SEARCH_LIMIT:   4
+        ,   OFFSET:         0
         }
-
-    ,   tempLimit = CONSTANTS.SEARCH_LIMIT
 
     ;
     // Form fields
@@ -236,24 +239,11 @@
                         }
         });
     }
-    // Setup function for doing work that should only be done once
-    //
-    function _oneTimeSetup()
+
+    function _loadBpSummaries()
     {
-         var option
-         ,   bpLength
-         ,   visibilityArrItems  =   [ ]
-         ;
-
-        _setupApplyButton();
-        _competitionTimer();
-        _snippets();
-        _setupValidation();
-        _coverImage();
-        _documents();
-        _loadMyApplications( ); // Load My applications now
-        _initApplicationsView( );
-
+        var bpLength
+        ;
         if( $businessSummary )
         {
             _showAllView( "participate" ); // Display participate Bar
@@ -284,6 +274,27 @@
 
             });
         }
+    }
+    // Setup function for doing work that should only be done once
+    //
+    function _oneTimeSetup()
+    {
+         var option
+         ,   visibilityArrItems  =   [ ]
+         ;
+
+        _setupApplyButton();
+        _competitionTimer();
+        _snippets();
+        _setupValidation();
+        _coverImage();
+        _documents();
+        _loadMyApplications( ); // Load My applications now
+        _loadActors();
+        _initApplicationsView( );
+        _loadBpSummaries();
+
+
 
         // On any changes, how little doesn't matter, notify that we have a pending change
         // But no need to track the changes when doing a member data load
@@ -644,57 +655,357 @@
             $bscompetitionLogoModal.modal();
         } );
 
+        function _getSearchCriteria ( params )
+        {
+
+            var q
+            ,   sort
+            ,   facetFilters
+            ,   criteria
+            ,   criteriaQ
+            ,   paramFilter
+            ,   search
+            ,   sortQuery       = []
+            ,   criteriaFilters = []
+            ,   criteriaSort    = []
+            ,   filters         = []
+            ,   urlParam        = params.urlParam
+            ;
+
+            // 1. Search paramete
+            // ex searchTerm:text:altaf
+            //
+            // See if its coming from the search page itself(if) or from the top(else)
+            //
+            q = bidx.utils.getValue( params, 'q' );
+
+            criteriaQ = (q) ? q : '*';
+
+            search  =
+            [
+                {
+                    label: "search"
+                ,   value: criteriaQ
+                }
+            ,   {
+                    label: "limit"
+                ,   value: CONSTANTS.SEARCH_LIMIT
+
+                }
+            ,   {
+                    label: "offset"
+                ,   value: CONSTANTS.OFFSET
+
+                }
+            ,   {
+                    label: "scope"
+                ,   value: "local"
+                }
+            ];
 
 
-// TEMP - REPLACE THIS WITH THE REAL DATA
-//
-var substringMatcher = function(strs) {
-  return function findMatches(q, cb) {
-    var matches, substrRegex;
+            return search;
 
-    // an array that will be populated with substring matches
-    matches = [];
+        }
 
-    // regex used to determine if a string contains the substring `q`
-    substrRegex = new RegExp(q, 'i');
+        function _getMemberforActorRole( params)
+        {
+            var criteria
+            ,   $d      = $.Deferred()
+            ,   matches = []
+            ;
 
-    // iterate through the pool of strings and for any string that
-    // contains the substring `q`, add it to the `matches` array
-    $.each(strs, function(i, str) {
-      if (substrRegex.test(str)) {
-        // the typeahead jQuery plugin expects suggestions to a
-        // JavaScript object, refer to typeahead docs for more info
-        matches.push({ value: str });
-      }
-    });
+            criteria          =   _getSearchCriteria( params );
 
-    cb(matches);
-  };
-};
+            bidx.api.call(
+                "search.members"
+            ,   {
+                    groupDomain:          bidx.common.groupDomain
+                ,   extraUrlParameters:   criteria
 
-var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-  'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-  'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-  'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-  'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-];
+                ,   success: function( response )
+                    {
+                        bidx.utils.log( "[Member List for Criteria] ", params.q,  response );
 
-$('.typeahead').typeahead({
-  hint: true,
-  highlight: true,
-  minLength: 1
-},
-{
-  name: 'states',
-  displayKey: 'value',
-  source: substringMatcher(states)
-}).removeClass( "disabled" ).removeAttr( "disabled" );
-//
-// TEMP - REPLACE THIS WITH THE REAL DATA
+                        $.each( response, function( idx, data )
+                        {
+                            matches.push(
+                            {
+                                value: data.name
+                            ,   id:    data.id
+                            });
+
+                            actorArr[data.id] = data; // Store at global array for later use
+                        });
+
+                        $d.resolve( matches  );
+                    }
+
+                ,   error: function( jqXhr, textStatus )
+                    {
+
+                       var status  = bidx.utils.getValue( jqXhr, "status" ) || textStatus
+                        ,   msg     = "Something went wrong while retrieving the companies: " + status
+                        ,   error   = new Error( msg )
+                        ;
+
+                        //_showError( msg );
+
+                        $d.reject( error );
+
+                    }
+                }
+            );
+
+            return $d;
+        }
+
+        // TEMP - REPLACE THIS WITH THE REAL DATA
+        //
+        var substringMatcher = function(strs)
+        {
+            return function findMatches(q, cb)
+            {
+                var params  =   {
+                                    q:  q
+                                }
+                                ;
+               _getMemberforActorRole( params )
+               .done( function( matches )
+                {
+                    bidx.utils.log('matches', matches);
+                    cb ( matches );
+                } )
+                ;
+            };
+        };
+
+        $('.typeahead').typeahead(
+        {
+            hint: true
+        ,   highlight: true
+        ,   minLength: 3
+        }
+    ,
+        {
+          name: 'states',
+          displayKey: 'value',
+          source: substringMatcher( )
+
+        }
+
+        ).removeClass( "disabled" ).removeAttr( "disabled" );
+
+        $('.typeahead').on('typeahead:selected', onSelected);
+
+
+        function onSelected($e, data)
+        {
+          $roles.data('id', data.id);
+          $roles.addClass('disabled').attr('disabled','disabled');
+          $roleButton.removeClass('disabled');
+        }
+
+        function _loadActors( )
+        {
+            var data
+            ,   actorData
+            ,   actorExist
+            ;
+            if( !$.isEmptyObject ( actorsObj ) )
+            {
+
+                $.each( actorsObj, function( actorType, actorList )
+                {
+
+                    $.each( actorList, function( idx, actorData )
+                    {
+                        if ( !$.isEmptyObject ( actorData ) )
+                        {
+                            actorExist  =   ( !$.isEmptyObject ( actorArr[ actorData.userId ] ) ) ? actorArr[ actorData.userId ]: false;
+
+                            if( !actorExist )
+                            {
+                                data    =   {
+                                                id:         actorData.userId
+                                            ,   name:       actorData.userDisplayName
+                                            };
+
+                                actorArr [ actorData.userId ]  =  data;
+
+                            }
+
+                            actorArr [ actorData.userId ][actorType]  =  actorType; // To enable buttons infront of each row , used in appendActorCard
+
+                            updateActorsList[actorType].push({
+                                                                "userId": actorData.userId
+                                                             } );
+                        }
+                    });
+                });
+
+                $.each( actorArr, function( actorId, actorData )
+                {
+                    _appendActorCard( actorId ); // continue
+                });
+            }
+
+            _showAllView('actors');
+        }
+
+        function _appendActorCard ( actorId )
+        {
+            var listItem
+            ,   $listItem
+            ,   $btnActor
+            ,   item
+            ,   data
+            ,   emptyVal            = ''
+            ,   $list               = $element.find( ".showActors" )
+            ,   snippet             = $("#actors-snippet").html().replace(/(<!--)*(-->)*/g, "")
+            ,   $listError          = $("#error-card").html().replace(/(<!--)*(-->)*/g, "")
+            ,   $ratingWrapper
+
+            ,   $raty
+            ;
+
+            data                    = bidx.utils.getValue(actorArr, actorId.toString());
+
+            if ( !$.isEmptyObject(data) )
+            {
+
+                listItem    =   snippet
+                                .replace( /%userId%/g,    data.id  )
+                                .replace( /%memberName%/g,  data.name )
+                                ;
+
+                $listItem   =   $(listItem);
+
+                $.each( roleType, function( idx, role )
+                {
+                    if ( !$.isEmptyObject ( data[ role ] ) )
+                    {
+                        $btnActor   =   $listItem.find( '.btn-' + role);
+
+                        $btnActor.addClass ('active');
+                    }
+                } );
+
+                /* Assign Next Action According to Role */
+                _addActorAction(
+                {
+                    $listItem: $listItem
+                ,   callback:   function( response )
+                                {
+
+
+                                }
+                });
+
+            }
+            else
+            {
+                $listItem = $listError;
+            }
+
+            $list.append( $listItem );
+
+        }
+
+        $roleButton.click ( function ( e )
+        {
+            var     actorId             = $roles.data('id')
+            ;
+            _appendActorCard( actorId );
+
+        } );
+
+        function _addActorAction( options  )
+        {
+            var $listItem       =   options.$listItem
+            ,   $btnActorAction =   $listItem.find('.btn-actor-action')
+            ;
+
+            $btnActorAction.click( function( e )
+            {
+                var updateActorsArr
+                ,   params      =   options.params
+                ,   $this       =   $( this )
+                ,   role        =   $(this).data('role')
+                ,   userId      =   $(this).data('userid')
+                ,   data        =   {}
+                ,   orgText     =   $this.text()
+                ,   userObj     =   {
+                                        "userId": userId
+                                    }
+                ;
+                if( role === 'all') // If  close button
+                {
+                    $.each( roleType, function( idx, roleLbl )
+                    {
+                        updateActorsArr                 = updateActorsList [ roleLbl ] ;
+                        updateActorsList [ roleLbl ]    =  _.without(updateActorsArr, _.findWhere(updateActorsArr, userObj));
+                    });
+                }
+                else
+                {
+                    if($this.hasClass('active'))
+                    {
+                        updateActorsArr             = updateActorsList [ role ] ;
+                        updateActorsList [ role ]   =  _.without(updateActorsArr, _.findWhere(updateActorsArr, userObj));
+                    }
+                    else
+                    {
+                        updateActorsList [ role ].push( userObj );
+                    }
+                    $this.i18nText('loadingLbl');
+
+                }
+
+                bidx.api.call(
+                    "competition.assignActorToCompetition"
+                ,   {
+                        competitionId:  competitionSummaryId
+                    ,   groupDomain:    bidx.common.groupDomain
+                    ,   data:           updateActorsList
+                    ,   success:        function( response )
+                        {
+                            // Do we have edit perms?
+                            //
+                            bidx.utils.log('response',response);
+
+                            $this.text(orgText);
+
+                            if( role === 'all') // If  close button
+                            {
+                                $element.find('.row-' + userId).hide("slow", function(){ $(this).remove(); });
+                            }
+                            else
+                            {
+                                if($this.hasClass ( 'active' ) )
+                                {
+                                    $this.removeClass('active');
+                                }
+                                else
+                                {
+                                    $this.addClass('active');
+                                }
+                            }
+                        }
+                        , error: function(jqXhr, textStatus)
+                        {
+                            var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                            _showError("Something went wrong while applying for the competition for entityId: " + params.data.entityId);
+                        }
+                    }
+                );
+            });
+        }
+
+
+        //
+        // TEMP - REPLACE THIS WITH THE REAL DATA
 
 
 
@@ -829,23 +1140,6 @@ $('.typeahead').typeahead({
             $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
         }
 
-
-        $('#table_id').DataTable(
-            {
-                "aoColumns": [
-                    { "bSortable": false },
-                    null,
-                    null,
-                    null,
-                    null
-                ],
-                "bPaginate": false,
-                tableTools: {
-                    "sRowSelect": "multi",
-                    "aButtons": [ "select_all", "select_none" ]
-                }
-
-            });
         }
 
 /* Formatting function for row details - modify as you need */
@@ -1451,7 +1745,7 @@ function _competitionTimer (  )
 
             $.each( attachment, function( idx, a )
             {
-                if ( $.inArray( a.fileUpload.toString(), attachmentExists ) === -1 )
+                if ( a.fileUpload && $.inArray( a.fileUpload.toString(), attachmentExists ) === -1 )
                 {
                     _addAttachment( a );
                 }
@@ -2177,6 +2471,93 @@ function _competitionTimer (  )
         return;
     }
 
+    function _loadActorDropdownAccordingToStatus( $listItem, data)
+    {
+        var option
+        ,   userId
+        ,   userName
+        ,   assessorList    =   []
+        ,   judgeList       =   []
+        ,   status          =   data.status
+        ,   entityId        =   data.entityId
+        ,   assesorLength   =   _.size(updateActorsList['assessors'])
+        ,   judgeLength     =   _.size(updateActorsList['judges'])
+        ,   $assessors      =   $listItem.find( "[name='assesors-" + entityId + "']" )
+        ,   $judges         =   $listItem.find( "[name='judges-" + entityId + "']" )
+        ,   $btnAssign      =   $listItem.find( ".assign-assesor-" + entityId )
+        ;
+
+        /* Assessor Dropdown */
+        $assessors.chosen(
+        {
+            placeholder_text_single : bidx.i18n.i( "Loading" )
+        ,   width                   : "40%"
+        });
+
+        if( assesorLength )
+        {
+            $.each( updateActorsList['assessors'], function( idx, userObject )
+            {
+                userId      =   userObject.userId;
+                userName    =   actorArr [ userId ].name;
+
+                option      =   $( "<option/>",
+                                {
+                                    value: userId
+                                } );
+
+                option.text( userName );
+
+                assessorList.push( option );
+
+            });
+
+            $assessors.append( assessorList );
+            $assessors.trigger( "chosen:updated" );
+
+             _assignActorAction(
+            {
+                $btnAssign: $btnAssign
+            ,   action:     'qualification'
+            ,   callback:   function( response )
+                            {
+
+
+                            }
+            });
+        }
+
+        /* Judge Dropdown */
+        $judges.chosen(
+        {
+            placeholder_text_single : bidx.i18n.i( "Loading" )
+        ,   width                   : "40%"
+        });
+
+        if( judgeLength )
+        {
+            $.each( updateActorsList['judges'], function( idx, userObject )
+            {
+                userId      =   userObject.userId;
+                userName    =   actorArr [ userId ].name;
+
+                option      =   $( "<option/>",
+                                {
+                                    value: userId
+                                } );
+
+                option.text( userName );
+
+                judgeList.push( option );
+
+            });
+
+            $judges.append( judgeList );
+            $judges.trigger( "chosen:updated" );
+        }
+
+    }
+
     function _assignManagerActions( $listItem, data, row )
     {
         var successMsg
@@ -2200,6 +2581,7 @@ function _competitionTimer (  )
         bidx.utils.log('status',status);
 
         _displayButtonsAccordingToStatus( $listItem, data );
+        _loadActorDropdownAccordingToStatus( $listItem, data)
 
          _assignBtnAction(
         {
@@ -2386,6 +2768,14 @@ function _competitionTimer (  )
         }
     }
 
+    function _updateActorsToApplications( options )
+    {
+        if(options && options.cbBtnStatus)
+        {
+            options.cbBtnStatus(  );
+        }
+    }
+
     function _updatePlanStatusToCompetition( options )
     {
         var params          =   options.params
@@ -2437,6 +2827,100 @@ function _competitionTimer (  )
         $btn.removeClass( "btn-danger" );
     }
 
+    function _assignActorAction( options  )
+    {
+        var     $btnAssign  =   options.$btnAssign
+        ,       role        =   options.role
+        ,       action      =   options.action
+        ,       confirmTimer
+        ,       orgText
+        ;
+
+        $btnAssign.click( function( e )
+        {
+            e.preventDefault();
+
+            var params
+            ,   status
+            ,   btnEntityId
+            ,   businessPlanEntityId
+            ,   radioName
+            ,   $radio
+            ;
+
+            switch( action )
+            {
+                case 'assesors' :
+                //businessPlanEntityId    =   $businessSummary.val(); // for First time Particpate/Applied Button
+                //status                  =   $btnAssign.data( "status" );
+                businessPlanEntityId =  true;
+
+                break;
+
+
+            }
+
+
+
+            function startConfirmTimer( $btn, orgText )
+            {
+                confirmTimer = setTimeout( function( )
+                {
+                    $btn.text( orgText );
+                    $btn.data( "confirm", false );
+
+                    $btn.removeClass( "btn-danger" );
+                    $btn.addClass( "btn-md" );
+
+                }, 5000 );
+
+            }
+
+            if ( $btnAssign.data( "confirm" ) )
+            {
+                clearTimeout( confirmTimer );
+
+                //quick reset of the timer array you just cleared
+
+                _recoverOrigForm( $btnAssign
+                                ,   {
+                                        message:    bidx.i18n.i( "Loading" )
+                                    ,   disabled:   'disabled'
+                                    }
+                                );
+                params  =
+                {
+                    competitionId   :   competitionSummaryId
+                ,   data            :   {
+                                            entityId    :   businessPlanEntityId
+                                        ,   status      :   status
+                                        }
+                };
+
+                _updateActorsToApplications(
+                {
+
+                    cbBtnStatus:    function()
+                                    {
+                                        $btnAssign.text( orgText );
+                                        //_recoverOrigForm( $btnAction, $btnAction.data( "confirm" ));
+                                    }
+                } );
+
+            }
+            else
+            {
+                orgText = $btnAssign.text();
+
+                $btnAssign.data( "confirm", true );
+
+                $btnAssign.addClass( "btn-danger" );
+                $btnAssign.i18nText( "btnConfirm" );
+
+                startConfirmTimer( $btnAssign, orgText );
+            }
+        });
+    }
 
     function _assignBtnAction( options  )
     {
@@ -2642,23 +3126,27 @@ function _competitionTimer (  )
     function _loadMyApplications()
     {
         var myApplicationsAny
+        ,   bpLength    = _.size(listDropdownBp)
         ;
 
-        $.each( listDropdownBp, function( idx, entityId )
+        if( bpLength )
         {
-            myApplicationsAny = _.findWhere( applicationObj, { 'entityId' : parseInt(entityId, 10) } );
-
-            if ( !$.isEmptyObject(myApplicationsAny) )
+            $.each( listDropdownBp, function( idx, entityId )
             {
-                _appendCardValues( {
-                                    list:               'viewOwnCard'
-                                ,   entityId:           entityId
-                                ,   applicationObj:     applicationObj
-                                });
+                myApplicationsAny = _.findWhere( applicationObj, { 'entityId' : parseInt(entityId, 10) } );
 
-                bidx.utils.log('myApplicationsAny', myApplicationsAny);
-            }
-        });
+                if ( !$.isEmptyObject(myApplicationsAny) )
+                {
+                    _appendCardValues( {
+                                        list:               'viewOwnCard'
+                                    ,   entityId:           entityId
+                                    ,   applicationObj:     applicationObj
+                                    });
+
+                    bidx.utils.log('myApplicationsAny', myApplicationsAny);
+                }
+            });
+        }
     }
 
     // Private functions
@@ -2696,7 +3184,7 @@ function _competitionTimer (  )
         var params  = options.params
         ,   cancel  = bidx.utils.getValue( params, 'cancel')
         ;
-
+        bidx.utils.log('options', options);
         if ( options.requestedState !== "edit" )
         {
             $element.removeClass( "edit" );
@@ -2716,6 +3204,8 @@ function _competitionTimer (  )
                     _showAllView ( 'participate' ) ;
                     bidx.controller.updateHash ( "#viewCompetition", false );
                 }
+
+                _showAllView ( 'applications' ) ;
 
                 break;
 

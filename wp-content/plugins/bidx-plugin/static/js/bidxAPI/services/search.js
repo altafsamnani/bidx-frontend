@@ -4,12 +4,13 @@
  */
 ;(function( $ )
 {
-    var bidx        = window.bidx
-    ,   api         = bidx.api
-    ,   search      = {}
-    ,   baseUrl     = "/api/v1/nsearch"
-    ,   baseOldUrl  = "/api/v1/search"
-    ,   params      = []
+    var bidx            = window.bidx
+    ,   api             = bidx.api
+    ,   search          = {}
+    ,   baseUrl         = "/api/v1/nsearch"
+    ,   baseOldUrl      = "/api/v1/search"
+    ,   baseMemberUrl   = "/api/v1/nsearch/members"
+    ,   params          = []
     ;
 
     search.fetch = function( params )
@@ -50,6 +51,33 @@
         ,   groupDomain:    params.groupDomain
         ,   baseUrl:        baseUrl
         ,   data:           params.data
+        ,   success:        function( response, textStatus, jqXhr )
+            {
+                if ( response && response.data )
+                {
+                    response = response.data;
+                }
+
+                params.success( response, textStatus, jqXhr );
+            }
+        ,   error:          function( jqXhr, textStatus, errorThrown )
+            {
+                params.error( jqXhr, textStatus, errorThrown );
+            }
+        } );
+    };
+
+    search.members = function( params )
+    {
+        var method  = "GET"
+        ;
+
+        api._call(
+        {
+            method:             method
+        ,   groupDomain:        params.groupDomain
+        ,   baseUrl:            baseMemberUrl
+        ,   extraUrlParameters: params.extraUrlParameters
         ,   success:        function( response, textStatus, jqXhr )
             {
                 if ( response && response.data )

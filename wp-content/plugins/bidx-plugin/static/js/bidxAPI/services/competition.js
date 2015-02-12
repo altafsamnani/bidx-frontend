@@ -22,7 +22,6 @@
                 method:         method
             ,   groupDomain:    params.groupDomain
             ,   baseUrl:        url
-            ,   competitionId:  params.competitionId
             ,   data:           params.data
             ,   success:        function( data, textStatus, jqXhr )
                 {
@@ -34,6 +33,12 @@
                 }
             }
         ;
+
+        if ( params.competitionId )
+        {
+            requestParams.baseUrl  +=   '/%id%/actor';
+            requestParams.baseUrl   =   requestParams.baseUrl.replace( "%id%", params.competitionId );
+        }
 
         api._call( requestParams );
     };
