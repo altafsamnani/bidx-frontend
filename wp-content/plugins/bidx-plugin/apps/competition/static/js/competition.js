@@ -70,6 +70,12 @@
                                         ,   'assessors':    []
                                         ,   'administrators':     []
                                       }
+    ,   actorIdList                 = {
+                                            'judges':       []
+                                        ,   'assessors':    []
+                                        ,   'administrators':     []
+                                      }
+
     ,   roleType                    = ['assessors', 'judges', 'administrators']
 
     ,   forms                       =
@@ -223,7 +229,7 @@
         {
             $btnAction: $btnApply
         ,   action:     'apply'
-        ,   callback:   function( response )
+        ,   success:   function( response )
                         {
                             entityId    = response.data.id;
                             status      = response.data.status;
@@ -843,6 +849,10 @@
                             updateActorsList[actorType].push({
                                                                 "userId": actorData.userId
                                                              } );
+                            actorIdList[actorType].push({
+                                                                "actorId": actorData.actorId
+                                                            ,   "userDisplayName": actorData.userDisplayName
+                                                             } );
                         }
                     });
                 });
@@ -933,6 +943,7 @@
             {
                 var updateActorsArr
                 ,   params      =   options.params
+                ,   data
                 ,   $this       =   $( this )
                 ,   role        =   $(this).data('role')
                 ,   userId      =   $(this).data('userid')
@@ -994,6 +1005,15 @@
                                     $this.addClass('active');
                                 }
                             }
+
+                            $.each( roleType, function( idx, role )
+                            {
+                                if ( !$.isEmptyObject ( data[ role ] ) )
+                                {
+                                    actorIdList[role]   =  _.pick(data[role], 'actorId', 'userDisplayName' ) ;
+                                }
+                            } );
+                            bidx.utils.log( actorIdList);
                         }
                         , error: function(jqXhr, textStatus)
                         {
@@ -2477,19 +2497,24 @@ function _competitionTimer (  )
     function _loadActorDropdownAccordingToStatus( $listItem, data)
     {
         var option
-        ,   userId
-        ,   userName
+        ,   actorId
+        ,   displayName
+        ,   statusMsg
+        ,   successMsg
         ,   assessorList        =   []
         ,   judgeList           =   []
         ,   status              =   data.status
         ,   entityId            =   data.entityId
+        ,   snippetSuccess      =   $("#success-card").html().replace(/(<!--)*(-->)*/g, "")
         ,   assessorLength      =   _.size(updateActorsList['assessors'])
         ,   judgeLength         =   _.size(updateActorsList['judges'])
         ,   $assessors          =   $listItem.find( "[name='assessors-" + entityId + "']" )
         ,   $judges             =   $listItem.find( "[name='judges-" + entityId + "']" )
-        ,   $btnAssign          =   $listItem.find( ".assign-assessor-" + entityId )
+        ,   $btnAssessor        =   $listItem.find( ".assign-assessor-" + entityId )
+        ,   $btnJudge           =   $listItem.find( ".assign-judge-" + entityId )
         ,   $wrapperAssessor    =   $listItem.find( ".assign-assessor" )
         ,   $wrapperJudge       =   $listItem.find( ".assign-judge" )
+        ,   $cardHeader         = $listItem.find( ".cardHeader" + entityId )
         ;
 
         /* Assessor Dropdown */
@@ -2501,17 +2526,17 @@ function _competitionTimer (  )
 
         if( assessorLength )
         {
-            $.each( updateActorsList['assessors'], function( idx, userObject )
+            $.each( actorIdList['assessors'], function( idx, actorObject )
             {
-                userId      =   userObject.userId;
-                userName    =   actorArr [ userId ].name;
+                actorId      =   actorObject.actorId;
+                displayName  =   actorObject.userDisplayName;
 
                 option      =   $( "<option/>",
                                 {
-                                    value: userId
+                                    value: actorId
                                 } );
 
-                option.text( userName );
+                option.text( displayName );
 
                 assessorList.push( option );
 
@@ -2523,16 +2548,23 @@ function _competitionTimer (  )
 
              _assignActorAction(
             {
-                $btnAssign: $btnAssign
-            ,   role:     'assessors'
-            ,   callback:   function( response )
+                $btnAssign: $btnAssessor
+            ,   role:       'assessors'
+            ,   success:    function( response )
                             {
+                                successMsg = bidx.i18n.i('SUCCESS_ASSESSOR' , appName);
 
+                                statusMsg = snippetSuccess
+                                            .replace( /%successMsg%/g, successMsg)
+                                            .replace( /%entityId%/g, entityId)
+                                            ;
+
+                                $cardHeader.empty().prepend($(statusMsg));
+
+                                _showAllView('successCard' + entityId );
 
                             }
             });
-
-
         }
 
         /* Judge Dropdown */
@@ -2544,17 +2576,17 @@ function _competitionTimer (  )
 
         if( judgeLength )
         {
-            $.each( updateActorsList['judges'], function( idx, userObject )
+            $.each( actorIdList['judges'], function( idx, actorObject )
             {
-                userId      =   userObject.userId;
-                userName    =   actorArr [ userId ].name;
+                actorId      =   actorObject.actorId;
+                displayName  =   actorObject.userDisplayName;
 
                 option      =   $( "<option/>",
                                 {
-                                    value: userId
+                                    value: actorId
                                 } );
 
-                option.text( userName );
+                option.text( displayName );
 
                 judgeList.push( option );
 
@@ -2563,8 +2595,26 @@ function _competitionTimer (  )
             $judges.append( judgeList );
             $judges.trigger( "chosen:updated" );
             $wrapperJudge.removeClass ( 'hide');
-        }
 
+             _assignActorAction(
+            {
+                $btnAssign: $btnJudge
+            ,   role:       'judges'
+            ,   success:    function( response )
+                            {
+                                successMsg = bidx.i18n.i('SUCCESS_JUDGE' , appName);
+
+                                statusMsg = snippetSuccess
+                                            .replace( /%successMsg%/g, successMsg)
+                                            .replace( /%entityId%/g, entityId)
+                                            ;
+
+                                $cardHeader.empty().prepend($(statusMsg));
+
+                                _showAllView('successCard' + entityId );
+                            }
+            });
+        }
     }
 
     function _assignManagerActions( $listItem, data, row )
@@ -2582,7 +2632,7 @@ function _competitionTimer (  )
         ,   $setWinner              = $listItem.find( ".set-winner-" + entityId )
 
 
-        ,   $cardFooter             = $listItem.find( ".cardHeader" + entityId )
+        ,   $cardHeader             = $listItem.find( ".cardHeader" + entityId )
 
         ,   snippetSuccess          = $("#success-card").html().replace(/(<!--)*(-->)*/g, "")
         ;
@@ -2596,7 +2646,7 @@ function _competitionTimer (  )
         {
             $btnAction: $setQual
         ,   action:     'qualification'
-        ,   callback:   function( response )
+        ,   success:   function( response )
                         {
                             entityId    = response.data.id;
                             status      = response.data.status;
@@ -2608,7 +2658,7 @@ function _competitionTimer (  )
                                         .replace( /%entityId%/g, entityId)
                                         ;
 
-                            $cardFooter.prepend($(statusMsg));
+                            $cardHeader.prepend($(statusMsg));
 
                             _showAllView('successCard' + entityId );
 
@@ -2621,7 +2671,7 @@ function _competitionTimer (  )
         {
             $btnAction: $setFinalist
         ,   action:     'finalist'
-        ,   callback:   function( response )
+        ,   success:   function( response )
                         {
                             entityId    = response.data.id;
                             status      = response.data.status;
@@ -2636,7 +2686,7 @@ function _competitionTimer (  )
                                         .replace( /%entityId%/g, entityId)
                                         ;
 
-                            $cardFooter.prepend($(statusMsg));
+                            $cardHeader.prepend($(statusMsg));
 
                             _showAllView('successCard' + entityId );
 
@@ -2648,7 +2698,7 @@ function _competitionTimer (  )
         {
             $btnAction: $setWinner
         ,   action:     'winner'
-        ,   callback:   function( response )
+        ,   success:   function( response )
                         {
                             entityId    = response.data.id;
                             status      = response.data.status;
@@ -2663,7 +2713,7 @@ function _competitionTimer (  )
                                         .replace( /%entityId%/g, entityId)
                                         ;
 
-                            $cardFooter.prepend($(statusMsg));
+                            $cardHeader.prepend($(statusMsg));
 
                             _showAllView('successCard' + entityId );
 
@@ -2682,7 +2732,7 @@ function _competitionTimer (  )
         ,   $cardEntity
         ,   $setSubmit     = $listItem.find( ".set-submit")
         ,   $setWithdraw   = $listItem.find( ".set-withdraw")
-        ,   $cardFooter     = $listItem.find( ".cardFooter")
+        ,   $cardHeader     = $listItem.find( ".cardHeader")
         ,   snippetSuccess  = $("#success-card").html().replace(/(<!--)*(-->)*/g, "")
         ,   entityId
         ;
@@ -2704,7 +2754,7 @@ function _competitionTimer (  )
                 {
                     $btnAction: $setSubmit
                 ,   action:     'submit'
-                ,   callback:   function( response )
+                ,   success:   function( response )
                                 {
                                     entityId    = response.data.id;
                                     status      = response.data.status;
@@ -2716,7 +2766,7 @@ function _competitionTimer (  )
                                                 .replace( /%successMsg%/g, successMsg)
                                                 .replace( /%entityId%/g, entityId);
 
-                                    $cardFooter.prepend($(statusMsg));
+                                    $cardHeader.prepend($(statusMsg));
 
                                     //$successLabel.empty().i18nText('successSubmitted', appName);
 
@@ -2728,7 +2778,7 @@ function _competitionTimer (  )
                 {
                     $btnAction: $setWithdraw
                 ,   action:     'withdraw'
-                ,   callback:   function( response )
+                ,   success:   function( response )
                                 {
                                     entityId    = response.data.id;
                                     status      = response.data.status;
@@ -2758,7 +2808,7 @@ function _competitionTimer (  )
                 {
                     $btnAction: $setWithdraw
                 ,   action:     'withdraw'
-                ,   callback:   function( response )
+                ,   success:   function( response )
                                 {
                                     entityId    = response.data.id;
                                     status      = response.data.status;
@@ -2779,23 +2829,68 @@ function _competitionTimer (  )
 
     function _updateActorsToApplications( options )
     {
-        if(options && options.cbBtnStatus)
-        {
-            options.cbBtnStatus(  );
-        }
+        var entityId    =   options.entityId
+        ;
+
+        bidx.api.call(
+            "competition.assignActorToApplication"
+        ,   {
+                competitionId:  options.competitionId
+            ,   entityId:       options.entityId
+            ,   groupDomain:    bidx.common.groupDomain
+            ,   data:           options.data
+            ,   success:        function( response )
+                {
+                    // Do we have edit perms?
+                    //
+                    bidx.utils.log('response',response);
+                    //  execute callback if provided
+                    if (options && options.callback)
+                    {
+                        options.callback( response );
+                    }
+                }
+
+                , error: function(jqXhr, textStatus)
+                {
+                    var errorMsg
+                    ,   statusMsg
+                    ,   $cardHeader     = $element.find( ".cardHeader" + entityId )
+                    ,   snippetError    = $("#errorapp-card").html().replace(/(<!--)*(-->)*/g, "")
+                    ,   status          = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                    errorMsg = status + ' ' + bidx.i18n.i( "ERROR_ASSIGNACTOR", appName) + entityId  ;
+
+                    statusMsg = snippetError
+                                .replace( /%errorMsg%/g, errorMsg)
+                                .replace( /%entityId%/g, entityId);
+                    bidx.utils.log('statusMsg', statusMsg);
+                    $cardHeader.empty().prepend($(statusMsg));
+
+                    //$successLabel.empty().i18nText('successSubmitted', appName);
+
+                    _showAllView('errorCard' + entityId );
+
+                    if (options && options.error)
+                    {
+                        options.error( );
+                    }
+                }
+            }
+        );
     }
 
     function _updatePlanStatusToCompetition( options )
     {
-        var params          =   options.params
+        var entityId    =   options.data.entityId
         ;
 
         bidx.api.call(
             "competition.assignPlanToCompetition"
         ,   {
-                competitionId:  params.competitionId
+                competitionId:  options.competitionId
             ,   groupDomain:    bidx.common.groupDomain
-            ,   data:           params.data
+            ,   data:           options.data
             ,   method:         "POST"
             ,   success:        function( response )
                 {
@@ -2807,18 +2902,32 @@ function _competitionTimer (  )
                     {
                         options.callback( response );
                     }
-
-                    if(options && options.cbBtnStatus)
-                    {
-                        options.cbBtnStatus( params.data.entityId, response.data.status );
-                    }
                 }
 
                 , error: function(jqXhr, textStatus)
                 {
-                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+                    var errorMsg
+                    ,   statusMsg
+                    ,   $cardHeader     = $element.find( ".cardHeader" + entityId )
+                    ,   snippetError    = $("#errorapp-card").html().replace(/(<!--)*(-->)*/g, "")
+                    ,   status          = bidx.utils.getValue(jqXhr, "status") || textStatus;
 
-                    _showError("Something went wrong while applying for the competition for entityId: " + params.data.entityId);
+                    errorMsg = status + ' ' + bidx.i18n.i( "ERROR_ASSIGNACTOR", appName) + entityId  ;
+
+                    statusMsg = snippetError
+                                .replace( /%errorMsg%/g, errorMsg)
+                                .replace( /%entityId%/g, entityId);
+
+                    $cardHeader.empty().prepend($(statusMsg));
+
+                    //$successLabel.empty().i18nText('successSubmitted', appName);
+
+                    _showAllView('errorCard' + entityId );
+
+                    if (options && options.error)
+                    {
+                        options.error( );
+                    }
                 }
             }
         );
@@ -2854,34 +2963,79 @@ function _competitionTimer (  )
             ,   businessPlanEntityId
             ,   radioName
             ,   $radio
-            ,   $inputAssessor
-            ,   $inputJudge
-            ,   assessorList
+            ,   $inputRole
+            ,   actorsArr      = []
+            ,   inputName
+            ,   dropDownRoleValues
+            ,   updateAppsActors =  {}
             ;
 
-            switch( role )
+            businessPlanEntityId        =   $btnAssign.data( "entityid" );
+
+            inputName                   =   role + '-' + businessPlanEntityId;    // Example assessors-1212 , judge-23434
+
+            $inputRole                  =   $element.find( "[name=" + inputName + "]" );
+
+            dropDownRoleValues          =   bidx.utils.getElementValue( $inputRole );
+
+            if(dropDownRoleValues)
             {
-                case 'assessors' :
 
-                businessPlanEntityId    =   $btnAssign.data( "entityid" );
-                $inputAssessor          =   $element.find( "[name='assessors-" + businessPlanEntityId + "']" );
-                assessorList            =   bidx.utils.getElementValue( $inputAssessor );
+                $.each( dropDownRoleValues, function( idx, actorId )
+                {
+                    actorsArr.push ( {
+                                        'actorId':   actorId
+                                    });
+                });
 
-                break;
+                 updateAppsActors [ role ]   =   actorsArr;
 
-                case 'judges' :
+                if ( $btnAssign.data( "confirm" ) )
+                {
+                    clearTimeout( confirmTimer );
 
-                businessPlanEntityId        =   $btnAssign.data( "entityid" );
-                $inputJudge                 =   $element.find( "[name='judges-" + businessPlanEntityId + "']" );
-                assessorList                =   bidx.utils.getElementValue( $inputJudge );
-                //updateAppsActors [ role ]   =   startfrom here
+                    //quick reset of the timer array you just cleared
 
-                break;
+                    _recoverOrigForm( $btnAssign
+                                    ,   {
+                                            message:    bidx.i18n.i( "Loading" )
+                                        ,   disabled:   'disabled'
+                                        }
+                                    );
 
+                    _updateActorsToApplications(
+                    {
+                        competitionId:      competitionSummaryId
+                    ,   entityId:           businessPlanEntityId
+                    ,   data:               updateAppsActors
+                    ,   callback:           function( response )
+                                            {
+                                                if (options && options.success)
+                                                {
+                                                    options.success( response );
+                                                }
 
+                                                $btnAssign.text( orgText ).removeClass('disabled');
+                                            }
+                    ,   error:              function ()
+                                            {
+                                                $btnAssign.text( orgText ).removeClass('disabled');
+                                            }
+                    } );
+
+                }
+                else
+                {
+                    orgText = $btnAssign.text();
+
+                    $btnAssign.data( "confirm", true );
+
+                    $btnAssign.addClass( "btn-danger" );
+                    $btnAssign.i18nText( "btnConfirm" );
+
+                    startConfirmTimer( $btnAssign, orgText );
+                }
             }
-
-
 
             function startConfirmTimer( $btn, orgText )
             {
@@ -2895,50 +3049,6 @@ function _competitionTimer (  )
 
                 }, 5000 );
 
-            }
-
-            if ( $btnAssign.data( "confirm" ) )
-            {
-                clearTimeout( confirmTimer );
-
-                //quick reset of the timer array you just cleared
-
-                _recoverOrigForm( $btnAssign
-                                ,   {
-                                        message:    bidx.i18n.i( "Loading" )
-                                    ,   disabled:   'disabled'
-                                    }
-                                );
-                params  =
-                {
-                    competitionId   :   competitionSummaryId
-                ,   data            :   {
-                                            entityId    :   businessPlanEntityId
-                                        ,   status      :   status
-                                        }
-                };
-
-                _updateActorsToApplications(
-                {
-
-                    cbBtnStatus:    function()
-                                    {
-                                        $btnAssign.text( orgText );
-                                        //_recoverOrigForm( $btnAction, $btnAction.data( "confirm" ));
-                                    }
-                } );
-
-            }
-            else
-            {
-                orgText = $btnAssign.text();
-
-                $btnAssign.data( "confirm", true );
-
-                $btnAssign.addClass( "btn-danger" );
-                $btnAssign.i18nText( "btnConfirm" );
-
-                startConfirmTimer( $btnAssign, orgText );
             }
         });
     }
@@ -2961,6 +3071,7 @@ function _competitionTimer (  )
             ,   btnEntityId
             ,   businessPlanEntityId
             ,   radioName
+            ,   data
             ,   $radio
             ;
 
@@ -3023,23 +3134,30 @@ function _competitionTimer (  )
                                     ,   disabled:   'disabled'
                                     }
                                 );
-                params  =
-                {
-                    competitionId   :   competitionSummaryId
-                ,   data            :   {
-                                            entityId    :   businessPlanEntityId
-                                        ,   status      :   status
-                                        }
-                };
+
+                data    =   {
+                                entityId    :   businessPlanEntityId
+                            ,   status      :   status
+                            };
+
 
                 _updatePlanStatusToCompetition(
                 {
-                    params:         params
-                ,   callback:       options.callback
-                ,   cbBtnStatus:    function()
+                    competitionId:  competitionSummaryId
+                ,   data:           data
+                ,   callback:       function( response )
                                     {
+                                        if (options && options.success)
+                                        {
+                                            options.success( response );
+                                        }
+
                                         $btnAction.text( orgText );
                                         //_recoverOrigForm( $btnAction, $btnAction.data( "confirm" ));
+                                    }
+                ,  error:           function ( )
+                                    {
+                                        $btnAction.text( orgText );
                                     }
                 } );
 

@@ -48,15 +48,13 @@
     // Add/Update Actor to Application
     competition.assignActorToApplication       = function( params )
     {
-        var method          = params.method
+        var method          = "PUT"
         ,   url             = baseUrl
         ,   requestParams   =
             {
                 method:         method
             ,   groupDomain:    params.groupDomain
             ,   baseUrl:        url
-            ,   competitionId:  params.competitionId
-            ,   entityId:       params.entityId
             ,   data:           params.data
             ,   success:        function( data, textStatus, jqXhr )
                 {
@@ -68,6 +66,13 @@
                 }
             }
         ;
+
+        if ( params.competitionId && params.entityId )
+        {
+            requestParams.baseUrl  +=   '/%competitionId%/application/%entityId%/actor';
+            requestParams.baseUrl   =   requestParams.baseUrl.replace( "%competitionId%", params.competitionId )
+                                                             .replace( "%entityId%", params.entityId );
+        }
 
         api._call( requestParams );
     };

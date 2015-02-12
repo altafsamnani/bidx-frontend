@@ -36,4 +36,12 @@
     <Item value="SUCCESS_WINNER">The status of this buisnessplan is set as a Winner! Get ready with his price money!</Item>
     <Item value="SUCCESS_NOT_WINNER">The status of this buisnessplan is set as Not a Winner! </Item>
 
+    <Item value="SUCCESS_ASSESSOR">You have succesfully assigned Assessors for this application!</Item>
+    <Item value="SUCCESS_JUDGE">You have succesfully assigned Judges for this application!</Item>
+
+
+    <Item value="ERROR_ASSIGNACTOR">Something went wrong while applying while assigning for entityId </Item>
+
+
+
 </I18N>
