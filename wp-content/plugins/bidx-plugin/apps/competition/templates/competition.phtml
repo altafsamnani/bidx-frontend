@@ -8,6 +8,7 @@ $competitionBidxMeta = isset($competition->bidxMeta)
     : null;
 
 $canEdit                    = $this->exst($competitionBidxMeta->bidxCanEdit, false);
+$isNewCompetition           = ($competitionBidxMeta->bidxEntityStatus == 'DRAFT') ? true : false;
 $isManager                  = $canEdit;
 $isAssessor                 = $this->exst($competitionBidxMeta->bidxCompetitionCanAssess, false);
 $isJudge                    = $this->exst($competitionBidxMeta->bidxCompetitionCanJudge, false);
@@ -42,23 +43,12 @@ $competitionId = $competitionBidxMeta->bidxCompetitionId;
 //
 $requestStatus = isset( $competition->accessAuthorization ) ? $competition->accessAuthorization : null;
 
-// check, is access granted?
-$hasAccess = false;
-
-if ( $requestStatus === "granted" || $canEdit )
-{
-    $hasAccess = true;
-}
 
 if ( !($competition->competitionLogo && $competition->competitionLogo->document) )
 {
-    if ( $canEdit || $newBusiness )
+    if ( $isNewCompetition )
     {
-        $hasCover = 'hide-it';
-    }
-    else
-    {
-        $hasCover = 'hide';
+        //$hasCover = 'hide-it';
     }
 }
 
@@ -121,7 +111,7 @@ if ( !empty( $attachment ) )
 ?>
             <div class="view viewEdit">
 <?php
-            if ( $canEdit || $newBusiness )
+            if ( $canEdit )
             {
     ?>
                 <div class="btn-group coverBtns">
@@ -228,7 +218,7 @@ if ( !empty( $attachment ) )
 <?php
                     if ( $isParticipant ) :
 ?>
-                        <button class="btn btn-primary btn-participate"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
+                        <button class="btn btn-primary btn-participate hide"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
 <?php
                     endif;
 ?>
@@ -328,7 +318,7 @@ if ( !empty( $attachment ) )
 <?php
     if ( $canEdit ) :
 ?>
-        <table id="listApplications" class="viewApplications table table-bordered">
+        <table id="listApplications" class="viewApplications table table-bordered hide">
             <thead>
                 <tr>
                     <th></th>
@@ -352,7 +342,8 @@ if ( !empty( $attachment ) )
                 __('Industry') => $this->getMultiValues( $this->exst($competition->competitionIndustry), '<br> ','industry'),
                 __('Country of business','bidxplugin') => $this->getMultiValues( $this->exst($competition->competitionCountry), ', ', 'country' ),
                 __('Social impact','bidxplugin') => $this->getMultiValues( $this->exst($competition->competitionSocialImpact), ', ', 'socialImpact' ),
-                __('Environmental impact','bidxplugin') => $this->getMultiValues( $this->exst($competition->envImpact), ', ', 'envImpact' )
+                __('Environmental impact','bidxplugin') => $this->getMultiValues( $this->exst($competition->competitionEnvImpact), ', ', 'envImpact' ),
+                __('Complimentary criteria','bidxplugin') => $this->exst( $competition->competitionComplementaryCriteria )
             );
 
             if ( $this->checkEmpty( $rowValues ) ) :
@@ -364,7 +355,7 @@ if ( !empty( $attachment ) )
 ?>
     </div>
 
-<?php if ( $hasAttachments && $hasAccess ) :
+<?php if ( $hasAttachments ) :
 ?>
             <div class="main-padding-vertical">
                 <h3 class="to-uppercase"><?php _e('Attached Documents', 'bidxplugin')?></h3>
@@ -570,30 +561,35 @@ if ( !empty( $attachment ) )
                                                 <label><?php _e('Environmental impact','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
                                                 <select name="competitionEnvImpact" multiple></select>
                                             </div>
+
+                                            <div class="form-group col-sm-6">
+                                                <label><?php _e('Complementary criteria','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 140 characters)','bidxplugin'); ?></small></label>
+                                                <textarea type="text" class="form-control" name="competitionComplementaryCriteria" placeholder="<?php _e('Here you can add complimentary criteria.','bidxplugin'); ?>"></textarea>
+                                            </div>
+
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-6">
-
-                                                    <div class="form-group">
-                                                        <label><?php _e('Gender','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                                        <div class="radio">
-                                                            <input type="radio" value='both' id="radio-personalDetailsB" name="competitionGender" data-toggle="radio" />
-                                                            <label for="radio-personalDetailsM"><span></span><?php _e('Both','bidxplugin'); ?></label>
-                                                        </div>
-
-                                                        <div class="radio">
-                                                            <input type="radio" value="m" id="radio-personalDetailsM" name="competitionGender" data-toggle="radio" />
-                                                            <label for="radio-personalDetailsM"><span></span><?php _e('Male','bidxplugin'); ?></label>
-                                                        </div>
-
-                                                        <div class="radio">
-                                                            <input type="radio" value="f" id="radio-personalDetailsF" name="competitionGender" data-toggle="radio" />
-                                                            <label for="radio-personalDetailsF"><span></span><?php _e('Female','bidxplugin'); ?></label>
-                                                        </div>
-
+                                                <div class="form-group">
+                                                    <label><?php _e('Gender','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                                    <div class="radio">
+                                                        <input selected type="radio" value='both' id="radio-personalDetailsB" name="competitionGender" data-toggle="radio" />
+                                                        <label for="radio-personalDetailsM"><span></span><?php _e('Both','bidxplugin'); ?></label>
                                                     </div>
+
+                                                    <div class="radio">
+                                                        <input type="radio" value="m" id="radio-personalDetailsM" name="competitionGender" data-toggle="radio" />
+                                                        <label for="radio-personalDetailsM"><span></span><?php _e('Male','bidxplugin'); ?></label>
+                                                    </div>
+
+                                                    <div class="radio">
+                                                        <input type="radio" value="f" id="radio-personalDetailsF" name="competitionGender" data-toggle="radio" />
+                                                        <label for="radio-personalDetailsF"><span></span><?php _e('Female','bidxplugin'); ?></label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+
                                     </form>
                                 </div><!-- /EDIT -->
 
@@ -724,7 +720,7 @@ if ( !empty( $attachment ) )
         </div>
         <div class="cardFooter">
             <div class="alert alert-info text-right">
-            <span class="cardInfoText hide">Add an explanatory text <strong>here</strong></span>
+            <span class="cardInfoText">Add an explanatory text <strong>here</strong></span>
                 <a  data-entityid = "%entityId%" data-status = "" class="btn btn-success btn-xs btn-action set-submit hide"><?php _e('Submit', 'bidxplugin');?></a>
                 <a  data-entityid = "%entityId%" data-status = "" class="btn btn-warning btn-xs btn-action set-withdraw hide"><?php _e('Withdraw', 'bidxplugin');?></a>
             </div>
@@ -785,18 +781,18 @@ if ( !empty( $attachment ) )
                             <a data-entityid = "%entityId%" class="btn btn-primary btn-md set-winner-%entityId%"><?php _e('Set','bidxplugin');?></a>
                         </div>
                     </div>
-                    <div class="assign-asessor">
+                    <div class="assign-assessor hide">
                         <div class="col-sm-12">
                             <label class="inline">Assign Assessor:</label>
                         </div>
                         <div class="col-sm-12">
-                            <select multiple class="chosen-assessors-%entityId%" name="assesors-%entityId%"></select>
+                            <select multiple class="chosen-assessors-%entityId%" name="assessors-%entityId%"></select>
                             <div class="pull-right">
-                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md assign-assesor-%entityId%"><?php _e('Assign','bidxplugin');?></a>
+                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md assign-assessor-%entityId%"><?php _e('Assign','bidxplugin');?></a>
                             </div>
                         </div>
                     </div>
-                    <div class="assign-judge">
+                    <div class="assign-judge hide">
                         <div class="col-sm-12">
                             <label class="inline">Assign Judge:</label>
                         </div>
