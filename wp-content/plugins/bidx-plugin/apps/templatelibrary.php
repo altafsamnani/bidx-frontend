@@ -1236,6 +1236,17 @@ class TemplateLibrary
         return empty ($var) ? $var = $default : $var;
     }
 
+    function addPrefixSuffix ( $data, $prefix = '', $suffix = '' )
+    {
+        $return = NULL;
+        if ( $data )
+        {
+            $return = $prefix . $data . $suffix;
+        }
+
+        return $return;
+    }
+
     function checkEmpty( $vars )
     {
         $hasValue = false;

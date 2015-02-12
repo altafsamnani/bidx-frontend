@@ -44,14 +44,14 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label><?php _e('Describe yourself as a mentor','bidxplugin'); ?></label>
-                                        <textarea name="summary" class="form-control" placeholder="<?php _e('Please type in the description of you as a mentor','bidxplugin'); ?>" ></textarea>
+                                        <textarea name="summary" class="form-control" ></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label><?php _e('Do you mentor on behalf of an institution?','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Do you mentor on behalf of an institution?','bidxplugin'); ?></label>
                                         <div class="radio">
                                             <input type="radio" value="false" id="radio-mentorsForInstNo" name="mentorsForInst" data-toggle="radio" />
                                             <label for="radio-mentorsForInstNo"><span></span><?php _e('No, I am an independent mentor','bidxplugin'); ?></label>
@@ -69,7 +69,7 @@
                                         <label><?php _e('Institution name','bidxplugin'); ?></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-building-o"></i></span>
-                                            <input type="text" class="form-control" name="institutionName" placeholder="<?php _e('Please enter the name of your institution','bidxplugin'); ?>">
+                                            <input type="text" class="form-control" name="institutionName">
                                         </div>
                                     </div>
                                 </div>
@@ -78,7 +78,7 @@
                                         <label><?php _e('Institution website','bidxplugin'); ?></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-                                            <input type="text" class="form-control" name="institutionWebsite" placeholder="<?php _e('Please enter the website of your institution','bidxplugin'); ?>">
+                                            <input type="text" class="form-control" name="institutionWebsite">
                                         </div>
                                     </div>
                                 </div>
@@ -103,7 +103,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label><?php _e('Location','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Location','bidxplugin'); ?></label>
 
                                         <div class="radio">
                                             <input type="radio" value="country" id="radio-mentorFocusLocationTypeCountry" name="focusLocationType" data-toggle="radio" />
@@ -124,7 +124,7 @@
                                     <div class="form-group toggle toggle-focusLocationType toggle-focusLocationType-city">
                                         <label><?php _e('City','bidxplugin'); ?> <small><?php _e('Press tab, enter or comma to add more','bidxplugin'); ?></small></label>
                                         <div class="bidx-tagsinput-container">
-                                            <input type="text" class="bidx-tagsinput enclosed" autocomplete="off" name="focusCity" class="bidx-tagsinput enclosed" placeholder="<?php _e('City','bidxplugin'); ?>">
+                                            <input type="text" class="bidx-tagsinput enclosed" autocomplete="off" name="focusCity" class="bidx-tagsinput enclosed">
                                         </div>
                                     </div>
 
@@ -138,7 +138,7 @@
                             <hr>
 
                             <div class="industrySectors">
-                                <label><?php _e('Focus industry','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                <label><?php _e('Focus industry','bidxplugin'); ?></label>
                             </div>
                             
                             <div class="row">
@@ -151,7 +151,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label><?php _e('Gender of entrepreneur','bidxplugin');?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Gender of entrepreneur','bidxplugin');?></label>
                                         <div class="checkbox">
                                             <input type="checkbox" value="m" id="checkbox-focusGenderMale" name="focusGender" data-toggle="checkbox" />
                                             <label for="checkbox-focusGenderMale"><span></span><?php _e('Male','bidxplugin'); ?></label>
@@ -164,7 +164,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label><?php _e('Stage of business','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Stage of business','bidxplugin'); ?></label>
                                         <div class="checkbox">
                                             <input type="checkbox" value="startup" id="checkbox-focusStageBusinessStartup" name="focusStageBusiness" />
                                             <label for="checkbox-focusStageBusinessStartup"><span></span><?php _e('Startup (has no sales revenues yet)','bidxplugin'); ?></label>
@@ -179,13 +179,13 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label><?php _e('Social impact','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Social impact','bidxplugin'); ?></label>
                                         <select name="focusSocialImpact" multiple></select>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label><?php _e('Environmental impact','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Environmental impact','bidxplugin'); ?></label>
                                         <select name="focusEnvImpact" multiple></select>
                                     </div>
                                 </div>
@@ -193,8 +193,8 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label><?php _e('Keywords in a Business Proposal (max. 400 characters)','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                        <textarea name="focusPreferences" class="form-control" placeholder="<?php _e('Please enter any additional preferences','bidxplugin'); ?>"></textarea>
+                                        <label><?php _e('Keywords in a Business Proposal','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 400 characters)','bidxplugin'); ?></small></label>
+                                        <textarea name="focusPreferences" class="form-control"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -203,21 +203,7 @@
 
                         <!-- mentorProfileReferences -->
                         <div class="tab-pane" id="tab-mentor-references">
-<!--                             <blockquote class="alert-info">
-                                <?php _e('Please provide your LinkedIn profile or / and upload your CV.', 'bidxplugin')?>
-                            </blockquote>
- --><!--                             <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group" >
-                                        <label><?php _e('LinkedIn profile','bidxplugin'); ?></label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-linkedin-square"></i></span>
-                                            <input type="text" class="form-control" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
- -->                            <div class="row">
+                            <div class="row">
                                 <div class="col-sm-12">
                                     <div class="panel-body attachmentsControl">
                                         <div class="attachmentsContainer"></div>
