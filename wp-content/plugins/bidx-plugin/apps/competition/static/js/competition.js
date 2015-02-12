@@ -208,6 +208,7 @@
             ,   "competitionCountry"
             ,   "competitionSocialImpact"
             ,   "competitionEnvImpact"
+            ,   "competitionComplementaryCriteria"
             ]
         }
     };
@@ -253,6 +254,7 @@
                                     ,   width                   : "100%"
                                     ,   disable_search_threshold : 10
                                     });
+            bidx.utils.log('listDropdownBp', listDropdownBp);
             bpLength    = _.size(listDropdownBp); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
 
             if( bpLength )
@@ -260,9 +262,10 @@
                 _getBusinessPlans( )
                 .done( function( listBpItems )
                 {
+                    bidx.utils.log('listbpitemss', listBpItems);
                     $businessSummary.append( listBpItems );
                     $businessSummary.trigger( "chosen:updated" );
-
+                    $btnParticipate.removeClass( 'hide');
                 } );
             }
 
@@ -1270,7 +1273,7 @@ function format ( data, row )
 
             break;
 
-            case 'assesor':
+            case 'assessor':
 
             break;
 
@@ -1303,7 +1306,7 @@ function _initApplicationsView()
         displayRows     =   {
                                 business:       business
                             ,   entrepreneur:   entrepreneur
-                            ,   score:          score
+                            ,   score:          (score) ? score : 0
                             ,   status:         response.status
                             ,   entityId:       response.entityId
                             ,   assessor_1: {
@@ -1388,7 +1391,7 @@ function _initApplicationsView()
 
         $( ".dataTables_length select" ).bidx_chosen();
 
-        _showAllView( 'applications' );
+        $('.viewApplications').removeClass( 'hide' );
 
     }
 }
@@ -2476,15 +2479,17 @@ function _competitionTimer (  )
         var option
         ,   userId
         ,   userName
-        ,   assessorList    =   []
-        ,   judgeList       =   []
-        ,   status          =   data.status
-        ,   entityId        =   data.entityId
-        ,   assesorLength   =   _.size(updateActorsList['assessors'])
-        ,   judgeLength     =   _.size(updateActorsList['judges'])
-        ,   $assessors      =   $listItem.find( "[name='assesors-" + entityId + "']" )
-        ,   $judges         =   $listItem.find( "[name='judges-" + entityId + "']" )
-        ,   $btnAssign      =   $listItem.find( ".assign-assesor-" + entityId )
+        ,   assessorList        =   []
+        ,   judgeList           =   []
+        ,   status              =   data.status
+        ,   entityId            =   data.entityId
+        ,   assessorLength      =   _.size(updateActorsList['assessors'])
+        ,   judgeLength         =   _.size(updateActorsList['judges'])
+        ,   $assessors          =   $listItem.find( "[name='assessors-" + entityId + "']" )
+        ,   $judges             =   $listItem.find( "[name='judges-" + entityId + "']" )
+        ,   $btnAssign          =   $listItem.find( ".assign-assessor-" + entityId )
+        ,   $wrapperAssessor    =   $listItem.find( ".assign-assessor" )
+        ,   $wrapperJudge       =   $listItem.find( ".assign-judge" )
         ;
 
         /* Assessor Dropdown */
@@ -2494,7 +2499,7 @@ function _competitionTimer (  )
         ,   width                   : "40%"
         });
 
-        if( assesorLength )
+        if( assessorLength )
         {
             $.each( updateActorsList['assessors'], function( idx, userObject )
             {
@@ -2514,17 +2519,20 @@ function _competitionTimer (  )
 
             $assessors.append( assessorList );
             $assessors.trigger( "chosen:updated" );
+            $wrapperAssessor.removeClass ( 'hide');
 
              _assignActorAction(
             {
                 $btnAssign: $btnAssign
-            ,   action:     'qualification'
+            ,   role:     'assessors'
             ,   callback:   function( response )
                             {
 
 
                             }
             });
+
+
         }
 
         /* Judge Dropdown */
@@ -2554,6 +2562,7 @@ function _competitionTimer (  )
 
             $judges.append( judgeList );
             $judges.trigger( "chosen:updated" );
+            $wrapperJudge.removeClass ( 'hide');
         }
 
     }
@@ -2581,7 +2590,7 @@ function _competitionTimer (  )
         bidx.utils.log('status',status);
 
         _displayButtonsAccordingToStatus( $listItem, data );
-        _loadActorDropdownAccordingToStatus( $listItem, data)
+        _loadActorDropdownAccordingToStatus( $listItem, data);
 
          _assignBtnAction(
         {
@@ -2831,7 +2840,6 @@ function _competitionTimer (  )
     {
         var     $btnAssign  =   options.$btnAssign
         ,       role        =   options.role
-        ,       action      =   options.action
         ,       confirmTimer
         ,       orgText
         ;
@@ -2846,14 +2854,27 @@ function _competitionTimer (  )
             ,   businessPlanEntityId
             ,   radioName
             ,   $radio
+            ,   $inputAssessor
+            ,   $inputJudge
+            ,   assessorList
             ;
 
-            switch( action )
+            switch( role )
             {
-                case 'assesors' :
-                //businessPlanEntityId    =   $businessSummary.val(); // for First time Particpate/Applied Button
-                //status                  =   $btnAssign.data( "status" );
-                businessPlanEntityId =  true;
+                case 'assessors' :
+
+                businessPlanEntityId    =   $btnAssign.data( "entityid" );
+                $inputAssessor          =   $element.find( "[name='assessors-" + businessPlanEntityId + "']" );
+                assessorList            =   bidx.utils.getElementValue( $inputAssessor );
+
+                break;
+
+                case 'judges' :
+
+                businessPlanEntityId        =   $btnAssign.data( "entityid" );
+                $inputJudge                 =   $element.find( "[name='judges-" + businessPlanEntityId + "']" );
+                assessorList                =   bidx.utils.getElementValue( $inputJudge );
+                //updateAppsActors [ role ]   =   startfrom here
 
                 break;
 
@@ -3204,8 +3225,6 @@ function _competitionTimer (  )
                     _showAllView ( 'participate' ) ;
                     bidx.controller.updateHash ( "#viewCompetition", false );
                 }
-
-                _showAllView ( 'applications' ) ;
 
                 break;
 
