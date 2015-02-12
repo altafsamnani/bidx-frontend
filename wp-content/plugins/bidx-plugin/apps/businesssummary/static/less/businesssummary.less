@@ -50,6 +50,39 @@
 
 .bidx-businesssummary
 {
+    &.bidx-edit
+    {
+        .businessCover .logoImage
+        {
+            display: none;
+        }
+    }
+    .table-financial,
+    .table-company
+    {
+        th
+        {
+            background-color: #efefef;
+        }
+    }
+    .main-padding-vertical
+    {
+        td
+        {
+            width: 35%;
+        }
+        td + td
+        {
+            width: auto;
+        }
+    }
+    .table-company
+    {
+        td
+        {
+            width: auto !important;
+        }
+    }
     .viewMainsuccess
     {
         float: right;
@@ -417,8 +450,14 @@
 }
 .logoContainer
 {
+    width: 160px;
+    height: 160px;
+    border: 10px solid @white;
+    background-color: @white;
+    position: relative;
     img
     {
+        .center-img();
         max-width: 100%;
         height: auto;
     }
@@ -431,7 +470,7 @@
     width: 160px;
     height: 160px;
     background-color: @white;
-    padding: 10px;
+    border: 10px solid @white;
     @media (max-width: @screen-md-min)
     {
         left: 40px;

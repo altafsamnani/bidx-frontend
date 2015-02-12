@@ -36,7 +36,7 @@
         }
         else
         {
-            echo '<img class="img-responsive center-img" src="'.$comLogo.'"/>';
+            echo '<img class="img-responsive center-image" src="'.$comLogo.'"/>';
         }
 ?>
     </div>
@@ -53,25 +53,27 @@
         if ( $this->exst( $statutoryAddress->streetNumber ) ) { $arStatutoryAddress[] = $statutoryAddress->streetNumber; }
         if ( $this->exst( $statutoryAddress->street ) )       { $arStatutoryAddress[] = $statutoryAddress->street . ', '; }
         if ( $this->exst( $statutoryAddress->postalCode ) )   { $arStatutoryAddress[] = $statutoryAddress->postalCode; }
+        if ( $this->exst( $statutoryAddress->neighborhood ) ) { $arStatutoryAddress[] = $statutoryAddress->neighborhood; }
 
         $arStatutoryCityCountry = array();
-        if ( $this->exst( $statutoryAddress->cityTown ) )     { $arStatutoryCityCountry[] = $statutoryAddress->cityTown; }
         if ( $this->exst( $statutoryAddress->country ) )      { $arStatutoryCityCountry[] = $this->getStaticVal( 'country', $statutoryAddress->country ); }
+        if ( $this->exst( $statutoryAddress->cityTown ) )     { $arStatutoryCityCountry[] = $statutoryAddress->cityTown; }
 
     }
     $rowValues = array(
-        __('Company name','bidxplugin') => $this->exst( $this->company->name ),
-        __('Company website','bidxplugin') => $companySite,
-        __('Date of registration','bidxplugin') =>  date( 'j F Y', strtotime( $this->company->dateCompanyEstab )),
-        __('Legal form of business','bidxplugin') => $this->addExtraValuesToRows( 'legalForm', $this->exst($this->company->legalFormBusiness )),
-        __('Statutory address','bidxplugin') => $arStatutoryAddress ? implode( ' ', $arStatutoryAddress ) : NULL,
-        __('Statutory city, country','bidxplugin') => $arStatutoryCityCountry ? implode( ', ', $arStatutoryCityCountry ) : NULL,
-        __('Fiscal number','bidxplugin') => $this->exst($this->company->fiscalNumber),
-        __('Company registration number','bidxplugin') => $this->exst($this->company->registrationNumber),
-        __('Number of permanent male employees','bidxplugin') => $this->exst($this->company->numPermMaleEmpl),
-        __('Number of permanent female employees','bidxplugin') => $this->exst($this->company->numPermFemaleEmpl),
-        __('Number of temporary male employees','bidxplugin') => $this->exst($this->company->numTempMaleEmpl),
-        __('Number of temporary female employees','bidxplugin') => $this->exst($this->company->numTempFemaleEmpl)
+        __('Company name','bidxplugin') => $this->exst($this->company->name),
+        __('Company website') => $this->companyWebsite,
+        __('Registered') => $this->exst($this->company->registered) == true ? __('Yes','bidxplugin') : __('No','bidxplugin'),
+        __('Legal form of business') => $this->getStaticVal( 'legalForm', $this->exst($this->company->legalFormBusiness) ),
+        __('Registration number') => $this->exst($this->company->registrationNumber),
+        __('Fiscal number') => $this->exst($this->company->fiscalNumber),
+        __('Date of registration') => $this->exst($this->company->dateCompanyEstab),
+        __('Permanent female employees') => $this->exst($this->company->numPermFemaleEmpl ),
+        __('Permanent male employees') => $this->exst($this->company->numPermMaleEmpl ),
+        __('Temporary female employees') => $this->exst($this->company->numTempFemaleEmpl ),
+        __('Temporary male employees') => $this->exst($this->company->numTempMaleEmpl ),
+        __('Statutory country, city') => $arStatutoryCityCountry ? implode( ', ', $arStatutoryCityCountry ) : NULL,
+        __('Statutory address') => $arStatutoryAddress ? implode( ' ', $arStatutoryAddress ) : NULL
     );
     echo $this->tableRow( $rowValues );
 
@@ -80,7 +82,7 @@
         $header = array (
             __('Country','bidxplugin') => 'country',
             __('Company trade name','bidxplugin') => 'companyTradeName',
-            __('Permits and/or licenses','bidxplugin') => 'permitsLicencesObtained',
+            __('Permit or licences','bidxplugin') => 'permitsLicencesObtained',
             __('Company Address','bidxplugin') => 'companyAddress'
         );
 

@@ -46,6 +46,16 @@ $currentYear = date("Y");
             endif;
 ?>
         </div>
+<?php
+            if ( $businessSummary->logo && $businessSummary->logo->document ):
+?>            
+            <div class="logoImage">
+                <img src="<?php echo $businessSummary->logo->document ?>" class="center-img" alt="Logo Image">
+            </div>
+<?php
+            endif;
+?>
+
     </div>
 
 <?php
@@ -85,22 +95,6 @@ $currentYear = date("Y");
 
     </div>
     <br>
-    <div class="row">
-    <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-<?php
-            if ( $businessSummary->logo && $businessSummary->logo->document ):
-?>            
-            <div class="logoImage">
-                <img src="<?php echo $businessSummary->logo->document ?>" class="center-img" alt="Logo Image">
-            </div>
-<?php
-            endif;
-?>
-        
-    </div>
-    </div>
-
-
 
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
@@ -146,7 +140,7 @@ $currentYear = date("Y");
                 __('Stage of business','bidxplugin')
                     => $this->getStaticVal( 'stageBusiness', $this->exst($businessSummary->stageBusiness)),
 
-                __('Countries','bidxplugin')
+                __('Countries of business','bidxplugin')
                     => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' ),
 
                 __('Industry','bidxplugin')

@@ -50,19 +50,6 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
 
 
 
-                $rowValues = array(
-                    __('Skype','bidxplugin')                    =>  $this->exst($mentorDetails->preferredCommunication->skype),
-                    __('Google hangout','bidxplugin')           =>  $this->exst($mentorDetails->preferredCommunication->hangout),
-                    __('AIM','bidxplugin')                      =>  $this->exst($mentorDetails->preferredCommunication->aim),
-                    __('ICQ','bidxplugin')                      =>  $this->exst($mentorDetails->preferredCommunication->icq)
-                );
-
-                if ( $this->checkEmpty( $rowValues ) ) :
-?>
-                    <h4><?php _e('Preferred Communication', 'bidxplugin')?></h4>
-<?php               
-                    echo $this->tableRow ( $rowValues );
-                endif;
 
                 $rowValues = array(
                     __('Languages','bidxplugin')                => $this->getMultiValues( $this->exst( $mentorDetails->focusLanguage ), ', ','language' ),

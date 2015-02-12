@@ -246,95 +246,95 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
     </div>
 <?php
     }
-    // if ( $businessSummaryId )
-    // {
 ?>
 
-    <div class="row main-padding">
-        <div class="col-sm-4"></div>
+    <div class="main-padding bg-info">
+        <div class="row">
+            <div class="col-sm-4"></div>
 
-        <div class="col-sm-5">
+            <div class="col-sm-5">
     <?php
                 /*
                  * We want ratings to be indexed by Google, so need to include this on page load. It
                  * might be updated in JavaScript though, so also check the translations in i18n.xml.
                  */
     ?>
-            <div class="rating-wrapper">
+                <div class="rating-wrapper">
 <?php
-                // Owners and active mentors cannot rate their plans
-                if( $canRate )
-                {
-                    $ratingUser = $this->rating->userRating;
-?>
-                    <div class="rating-vote">
-                        <span class="rating-vote-text"><span class="rating-user-label"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span></span>
-                        <div data-rating="<?php echo $this->rating->userRating->value ? $this->rating->userRating->value : 0 ?>" class="raty"></div>
-                    </div>
-<?php
-                }
-?>
-            </div>
-        </div>
-        <div class="col-sm-3 text-right">
-            <div class="btn-group">
-<?php
-                // if a user is allowed to request full access to a business summary and it NOT The owner of the business summary
-                //
-                if ( $canRequestAccess && !$canEdit )
-                {
-                    $accessRequestControl = "";
-
-                    switch ( $requestStatus )
+                    // Owners and active mentors cannot rate their plans
+                    if( $canRate )
                     {
-                        case 'pending':
-                            $accessRequestSend = 'hide';
-                            break;
-                        case 'refused':
-                            $accessRequestSend = 'hide';
-                            break;
-                        case 'granted':
-                            $accessRequestSend = 'hide';
-                            break;
-                        case 'none':
-                            $accessRequestSend = '';
-                            break;
-                        default:
-                            $accessRequestSend = 'hide';
+                        $ratingUser = $this->rating->userRating;
+?>
+                        <div class="rating-vote">
+                            <span class="rating-vote-text"><span class="rating-user-label"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span></span>
+                            <div data-rating="<?php echo $this->rating->userRating->value ? $this->rating->userRating->value : 0 ?>" class="raty"></div>
+                        </div>
+<?php
                     }
 ?>
-                    <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><i class="fa fa-eye fa-big fa-above"></i><?php echo _e( 'Request full access', 'bidxplugin' ); ?></a>
-<?php
-                }
-?>
-<?php
-                // does a user have rights to edit ( is the owner )
-                //
-                if ( $canEdit )
-                {
-?>
-                    <a class="btn btn-primary editBS" href="#editBusinessSummary/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
-<?php
-                }
-?>
-            </div>
-            <div class="editControlsContainer">
-                <div class="editControls pull-right">
-
-                    <!-- SHOW -->
-                    <div class="view viewShow"></div>
-
-                    <!-- EDIT, conditionally filled by the app -->
-                    <div class="view viewEdit btn-group"></div>
-
-                    <!-- sucess msg, used as a placeholder for showing msgs -->
-
-                    <div class="view viewMainsuccess alert alert-success">
-                        <p class="successMsg"></p>
-                    </div>
                 </div>
             </div>
+            <div class="col-sm-3 text-right">
+                <div class="btn-group">
+<?php
+                    // if a user is allowed to request full access to a business summary and it NOT The owner of the business summary
+                    //
+                    if ( $canRequestAccess && !$canEdit )
+                    {
+                        $accessRequestControl = "";
 
+                        switch ( $requestStatus )
+                        {
+                            case 'pending':
+                                $accessRequestSend = 'hide';
+                                break;
+                            case 'refused':
+                                $accessRequestSend = 'hide';
+                                break;
+                            case 'granted':
+                                $accessRequestSend = 'hide';
+                                break;
+                            case 'none':
+                                $accessRequestSend = '';
+                                break;
+                            default:
+                                $accessRequestSend = 'hide';
+                    }
+?>
+                        <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><i class="fa fa-eye fa-big fa-above"></i><?php echo _e( 'Request full access', 'bidxplugin' ); ?></a>
+<?php
+                    }
+?>
+<?php
+                    // does a user have rights to edit ( is the owner )
+                    //
+                    if ( $canEdit )
+                    {
+?>
+                        <a class="btn btn-primary editBS" href="#editBusinessSummary/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+<?php
+                    }
+?>
+                </div>
+                <div class="editControlsContainer">
+                    <div class="editControls pull-right">
+
+                        <!-- SHOW -->
+                        <div class="view viewShow"></div>
+
+                        <!-- EDIT, conditionally filled by the app -->
+                        <div class="view viewEdit btn-group"></div>
+
+                        <!-- sucess msg, used as a placeholder for showing msgs -->
+
+                        <div class="view viewMainsuccess alert alert-success">
+                            <p class="successMsg"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 <?php
@@ -409,14 +409,33 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
     <div class="main-padding-vertical">
 <?php
-            $rowValues = array
-            (
-                __('Stage of business','bidxplugin') => $this->getStaticVal( 'stageBusiness', $this->exst($businessSummary->stageBusiness)),
-                __('Reason for financing','bidxplugin') => $this->exst($businessSummary->summaryFinancingNeeded),
-                __('Reason for submission','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->reasonForSubmission), ', ', 'reasonForSubmission' ),
-                __('Equity currently retained','bidxplugin') => $this->exst($businessSummary->equityRetained),
-                __('Investment type','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->investmentType), ', ', 'investmentType' )
-            );
+            if ( $hasAccess )
+            {
+                $rowValues = array
+                (
+                    __('Stage of business','bidxplugin') => $this->getStaticVal( 'stageBusiness', $this->exst($businessSummary->stageBusiness)),
+                    __('Reason for submission','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->reasonForSubmission), ', ', 'reasonForSubmission' )
+                );            
+            }
+            else
+            {
+                if ( $this->exst($businessSummary->company) )
+                {
+                    $rowValues = array
+                    (
+                        __('Stage of business','bidxplugin') => $this->getStaticVal( 'stageBusiness', $this->exst($businessSummary->stageBusiness)),
+                        __('Company registration') => $this->exst($company->registered) == true ? __('Yes','bidxplugin') : __('No','bidxplugin')
+                    );            
+                }
+                else
+                {
+                    $rowValues = array
+                    (
+                        __('Stage of business','bidxplugin') => $this->getStaticVal( 'stageBusiness', $this->exst($businessSummary->stageBusiness)),
+                    );            
+
+                }
+            }
 
             if ( $this->checkEmpty( $rowValues ) ) :
 ?>
@@ -429,16 +448,25 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
     <div class="main-padding-vertical">
 <?php
-
-            $rowValues = array
-            (
-                __('Industry') => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry'),
-                __('Product / Service','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->productService), ', ', 'productService' ),
-                __('Country of business','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' ),
-                __('Social impact','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->socialImpact), ', ', 'socialImpact' ),
-                __('Environmental impact','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->envImpact), ', ', 'envImpact' ),
-                __('Customer type','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->consumerType), ', ', 'consumerType' )
-            );
+            if ( $hasAccess )
+            {
+                $rowValues = array
+                (
+                    __('Industry') => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry'),
+                    __('Country of business','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' ),
+                    __('Social impact','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->socialImpact), ', ', 'socialImpact' ),
+                    __('Environmental impact','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->envImpact), ', ', 'envImpact' ),
+                    __('Main customer type','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->consumerType), ', ', 'consumerType' )
+                );
+            }
+            else
+            {
+                $rowValues = array
+                (
+                    __('Industry') => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry'),
+                    __('Country of business','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' )
+                );
+            }
 
             if ( $this->checkEmpty( $rowValues ) ) :
 ?>
@@ -448,13 +476,16 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             endif;
 ?>
     </div>
-
+<?php
+    if ( $hasAccess )
+    {
+?>
     <div class="main-padding-vertical">
 <?php
             $rowValues = array
             (
-                __('Role of Entrepreneur','bidxplugin') => $this->exst($businessSummary->personalRole),
-                __('Applicable Expertise') => $this->exst($businessSummary->personalExpertise)
+                __('Role of the entrepreneur','bidxplugin') => $this->exst($businessSummary->personalRole),
+                __('Expertise of the entrepreneur') => $this->exst($businessSummary->personalExpertise)
             );
 
             if ( $this->checkEmpty( $rowValues ) ) :
@@ -466,8 +497,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
             if ( $this->exst( $businessSummary->managementTeam ) ) :
 ?>
-            <h4><?php echo _e('Supporting members of management team', 'bidxplugin')?></h4>
-            <table class="table">
+            <h4 class="text-uppercase"><?php echo _e('Supporting members of management team', 'bidxplugin')?></h4>
+            <table class="table table-bottom-border">
 <?php            
             foreach ( $businessSummary->managementTeam as $key => $member)
             {
@@ -529,70 +560,116 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
 
     </div>
+<?php
+    }
+?>
+
 
             <h3 class="to-uppercase"><?php _e('Financial Details', 'bidxplugin')?></h3>
 <?php
-            $rowValues = array
-            (
-                __('Business sales started in','bidxplugin')=> $this->exst($businessSummary->yearSalesStarted)
-            );
-
-            echo $this->inlineRow ( $rowValues );
-?>
-        <table class="table table-bordered">
-            <tr>
-                <th class="text-center td-15" rowspan="2"><?php _e('Year', 'bidxplugin')?></th>
-                <th class="text-center hidden-sm hidden-xs" colspan="3"><?php _e('Income statement', 'bidxplugin')?></th>
-                <th class="text-center visible-sm visible-xs"><?php _e('Income statement', 'bidxplugin')?></th>
-                <th class="text-center" rowspan="2"><?php _e('Finance needed', 'bidxplugin')?> * </th>
-                <th class="text-center hidden-sm hidden-xs" rowspan="2"><?php _e('Employees', 'bidxplugin')?> ** </th>
-            </tr>
-            <tr>
-                <th class="text-center td-15 hidden-sm hidden-xs"><small><?php _e('Sales revenues', 'bidxplugin')?></small></th>
-                <th class="text-center td-15 hidden-sm hidden-xs"><small><?php _e('Operational costs', 'bidxplugin')?></small></th>
-                <th class="text-center td-15"><small><?php _e('Total income', 'bidxplugin')?></small></th>
-            </tr>
-<?php
-            $financialDetails = $this->exst( $businessSummary->financialSummaries );
-
-            foreach ( $financialDetails as $year => $yearDetails )
+            if ( $hasAccess )
             {
-                if ( $year < $currentYear )
-                {
-                    $yd = __('Actuals', 'bidxplugin');
-                }
-                elseif ( $year > $currentYear )
-                {
-                    $yd = __('Forecast', 'bidxplugin');
-                }
-                else
-                {
-                    $yd = __('Current year', 'bidxplugin');
-                }
+                $rowValues = array
+                (
+                    __('Business sales started in','bidxplugin')=> $this->exst($businessSummary->yearSalesStarted),
+                    __('Reason for financing','bidxplugin') => $this->exst($businessSummary->summaryFinancingNeeded),
+                    __('Equity currently retained','bidxplugin') => $this->exst($businessSummary->equityRetained),
+                    __('Investment type','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->investmentType), ', ', 'investmentType' )
+                );
 
-                echo '<tr>';
-                echo '<td class="text-center">' . $year . '</td>';
-                echo '<td class="text-right hidden-sm hidden-xs">' . '<small>$</small> ' . $yearDetails->salesRevenue . '</td>';
-                echo '<td class="text-right hidden-sm hidden-xs">' . '<small>$</small> ' . $yearDetails->operationalCosts . '</td>';
-                echo '<td class="text-right">' . '<small>$</small> ' . $yearDetails->totalIncome . '</td>';
-                echo '<td class="text-right">' . '<small>$</small> ' . $yearDetails->financeNeeded . '</td>';
-                echo '<td class="text-center hidden-sm hidden-xs">' . $yearDetails->numberOfEmployees . '</td>';
-                echo '</tr>';
-
-            }
-?>            
-        </table>
-        <p>
-            * <small><?php _e('from external financiers in US Dollars', 'bidxplugin')?></small><br>
-            ** <small><?php _e('being directly paid in this business', 'bidxplugin')?></small>
-        </p>
-
-
-
-<?php
-    if ( $this->exst( $company )) :
+                if ( $this->checkEmpty( $rowValues ) ) :
+                    echo $this->tableRow ( $rowValues );
+                endif;
 ?>
-    <div class="main-padding-vertical">
+                <table class="table table-bordered table-financial">
+                    <tr>
+                        <th class="text-center td-15" rowspan="2"><?php _e('Year', 'bidxplugin')?></th>
+                        <th class="text-center hidden-sm hidden-xs" colspan="3"><?php _e('Income statement', 'bidxplugin')?></th>
+                        <th class="text-center visible-sm visible-xs"><?php _e('Income statement', 'bidxplugin')?></th>
+                        <th class="text-center" rowspan="2"><?php _e('Finance needed', 'bidxplugin')?> * </th>
+                        <th class="text-center hidden-sm hidden-xs" rowspan="2"><?php _e('Employees', 'bidxplugin')?> ** </th>
+                    </tr>
+                    <tr>
+                        <th class="text-center td-15 hidden-sm hidden-xs"><small><?php _e('Sales revenues', 'bidxplugin')?></small></th>
+                        <th class="text-center td-15 hidden-sm hidden-xs"><small><?php _e('Operational costs', 'bidxplugin')?></small></th>
+                        <th class="text-center td-15"><small><?php _e('Total income', 'bidxplugin')?></small></th>
+                    </tr>
+<?php
+                    $financialDetails = $this->exst( $businessSummary->financialSummaries );
+
+                    foreach ( $financialDetails as $year => $yearDetails )
+                    {
+                        if ( $year < $currentYear )
+                        {
+                            $yd = __('Actuals', 'bidxplugin');
+                        }
+                        elseif ( $year > $currentYear )
+                        {
+                            $yd = __('Forecast', 'bidxplugin');
+                        }
+                        else
+                        {
+                            $yd = __('Current year', 'bidxplugin');
+                        }
+
+                        echo '<tr>';
+                        echo '<td class="text-center">' . $year . '</td>';
+                        echo '<td class="text-right hidden-sm hidden-xs">' . '<small>$</small> ' . $yearDetails->salesRevenue . '</td>';
+                        echo '<td class="text-right hidden-sm hidden-xs">' . '<small>$</small> ' . $yearDetails->operationalCosts . '</td>';
+                        echo '<td class="text-right">' . '<small>$</small> ' . $yearDetails->totalIncome . '</td>';
+                        echo '<td class="text-right">' . '<small>$</small> ' . $yearDetails->financeNeeded . '</td>';
+                        echo '<td class="text-center hidden-sm hidden-xs">' . $yearDetails->numberOfEmployees . '</td>';
+                        echo '</tr>';
+
+                    }
+?>
+                </table>
+                <p>
+                    * <small><?php _e('from external financiers in US Dollars', 'bidxplugin')?></small><br>
+                    ** <small><?php _e('being directly paid in this business', 'bidxplugin')?></small>
+                </p>
+<?php
+            }
+            else
+            {
+                $salesRevenue;
+                $numberOfEmployees;
+
+                foreach ($businessSummary->financialSummaries as $key => $year)
+                {
+                    if ( $key === $currentYear ) :
+                        $salesRevenue = $year->salesRevenue;
+                        $numberOfEmployees = $year->numberOfEmployees;
+                    endif;
+                }
+
+                $rowValues = array
+                (
+                    __('Business sales started in','bidxplugin')=> $this->exst($businessSummary->yearSalesStarted),
+                    __('Sales revenues','bidxplugin')=> $salesRevenue,
+                    __('Number of employees','bidxplugin')=> $numberOfEmployees
+                );
+
+                if ( $this->checkEmpty( $rowValues ) ) :
+?>
+                    <div class="main-padding-vertical">
+<?php                    
+                        echo $this->tableRow ( $rowValues );
+?>
+                    </div>
+<?php                        
+                endif;
+            }
+
+
+
+    if ( $hasAccess )
+    {
+        if ( $this->exst( $company )) :
+
+        $countryOperationSpecifics = isset ($company->countryOperationSpecifics) ? $company->countryOperationSpecifics : NULL;
+?>
+        <div class="main-padding-vertical">
             <h3 class="to-uppercase"><?php _e('Company Details', 'bidxplugin')?></h3>
 <?php
                 $companyWebsite = null;
@@ -601,33 +678,62 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                     $companyWebsite = sprintf( '<a href="%1$s" target="_blank">%1$s</a>', $this->exst($company->website) );
                 }
 
+                if ( !empty( $company->registered ) )
+                {
+                    $statutoryAddress = $this->exst( $company->statutoryAddress );
+
+                    $arStatutoryAddress = array();
+                    if ( $this->exst( $statutoryAddress->streetNumber ) ) { $arStatutoryAddress[] = $statutoryAddress->streetNumber; }
+                    if ( $this->exst( $statutoryAddress->street ) )       { $arStatutoryAddress[] = $statutoryAddress->street . ', '; }
+                    if ( $this->exst( $statutoryAddress->postalCode ) )   { $arStatutoryAddress[] = $statutoryAddress->postalCode; }
+                    if ( $this->exst( $statutoryAddress->neighborhood ) ) { $arStatutoryAddress[] = $statutoryAddress->neighborhood; }
+
+                    $arStatutoryCityCountry = array();
+                    if ( $this->exst( $statutoryAddress->country ) )      { $arStatutoryCityCountry[] = $this->getStaticVal( 'country', $statutoryAddress->country ); }
+                    if ( $this->exst( $statutoryAddress->cityTown ) )     { $arStatutoryCityCountry[] = $statutoryAddress->cityTown; }
+
+                }
+
             $rowValues = array
             (
                 __('Company name','bidxplugin') => $this->exst($company->name),
                 __('Company website') => $companyWebsite,
                 __('Registered') => $this->exst($company->registered) == true ? __('Yes','bidxplugin') : __('No','bidxplugin'),
-                __('Legal form') => $this->getStaticVal( 'legalForm', $this->exst($company->legalFormBusiness) ),
+                __('Legal form of business') => $this->getStaticVal( 'legalForm', $this->exst($company->legalFormBusiness) ),
                 __('Registration number') => $this->exst($company->registrationNumber),
                 __('Fiscal number') => $this->exst($company->fiscalNumber),
-                __('Date company established') => $this->exst($company->dateCompanyEstab),
-                __('Number permanent male employees') => $this->exst($company->numPermMaleEmp ),
-                __('Number permanent female employees') => $this->exst($company->numPermFemaleEmp ),
-                __('Number temporary male employees') => $this->exst($company->numTempMaleEmp ),
-                __('Number temporary female employees') => $this->exst($company->numTempFemaleEmp ),
-                __('Street') => $this->exst($company->statutoryAddress->street),
-                __('Street number') => $this->exst($company->statutoryAddress->streetNumber),
-                __('Neighborhood') => $this->exst($company->statutoryAddress->neighborhood),
-                __('Postalcode') => $this->exst($company->statutoryAddress->postalCode),
-                __('Postbox') => $this->exst($company->statutoryAddress->postBox),
-                __('City') => $this->exst($company->statutoryAddress->cityTown),
-                __('Country') => $this->getStaticVal( 'country', $this->exst($company->statutoryAddress->country) )
-
+                __('Date of registration') => $this->exst($company->dateCompanyEstab),
+                __('Permanent female employees') => $this->exst($company->numPermFemaleEmpl ),
+                __('Permanent male employees') => $this->exst($company->numPermMaleEmpl ),
+                __('Temporary female employees') => $this->exst($company->numTempFemaleEmpl ),
+                __('Temporary male employees') => $this->exst($company->numTempMaleEmpl ),
+                __('Statutory country, city') => $arStatutoryCityCountry ? implode( ', ', $arStatutoryCityCountry ) : NULL,
+                __('Statutory address') => $arStatutoryAddress ? implode( ' ', $arStatutoryAddress ) : NULL
             );
             echo $this->tableRow ( $rowValues );
+
+            if ( $countryOperationSpecifics )
+            {
+                $header = array (
+                    __('Country','bidxplugin') => 'country',
+                    __('Company trade name','bidxplugin') => 'companyTradeName',
+                    __('Permit or licences','bidxplugin') => 'permitsLicencesObtained',
+                    __('Company Address','bidxplugin') => 'companyAddress'
+                );
+
+                $countryOperationSpecificsHtml = $this->addTableRows( $header, $countryOperationSpecifics, 'table table-bordered table-company', '', array('permitsLicencesObtained' => 'hidden-xs'), array( 'permitsLicencesObtained', 'country', 'companyAddress' ) );
+                
+                $rowValues = array ( __('Country Operation Specifics','bidxplugin') => $countryOperationSpecificsHtml );
+                
+                echo $this->addRowsWithLabelBelow ( 'col-sm-12', 'col-sm-12', $rowValues, array ( 'tag_label' => 'h4', 'class_label' => 'text-uppercase' ) );
+            }
+
+
 ?>
     </div>
 <?php
     endif;
+    }
 
     if ( $hasMentorAdvisory ) :
 ?>
@@ -705,9 +811,16 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                     <!-- EDIT -->
                     <div class="view viewEdit">
                         <blockquote class="alert-info"><?php _e('Use this section to describe your business. Think about what information you would like other people (investors and entrepreneurs) to know about your business if you only had a few minutes to explain.','bidxplugin')?></blockquote>
-                            <div class="row bsLogo form-group">
+                        <form id="frmBusinessSummary-GeneralOverview">
+                            <div class="row form-group">
+                                <!-- Name -->
+                                <div class="form-group col-sm-6">
+                                    <label><?php _e('Name of your business','bidxplugin'); ?></label>
+                                    <input type="text" class="form-control" name="name">
+                                </div>
                                 <!-- Logo -->
-                                <div class="col-sm-12">
+                                <div class="col-sm-6 bsLogo">
+                                    <label><?php _e('Logo','bidxplugin'); ?></label>
                                     <div class="logoContainer">
                                         <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
                                     </div>
@@ -740,78 +853,36 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     </div>
                                 </div>
                             </div>
-                        <form id="frmBusinessSummary-GeneralOverview">
                             <div class="row">
-                                <!-- Name -->
-                                <div class="form-group col-sm-6">
-                                    <label><?php _e('Name of your business','bidxplugin'); ?></label>
-                                    <input type="text" class="form-control" name="name">
-                                </div>
-
                                 <!-- Slogan -->
                                 <div class="form-group col-sm-6">
                                     <label><?php _e('Promote your business in one sentence','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 140 characters)','bidxplugin'); ?></small></label>
-                                    <textarea type="text" class="form-control" name="slogan" placeholder="<?php _e('Here you can add a few words to promote your business. It should be a short sentence to help your audience understand and remember what it is that you sell and why','bidxplugin'); ?>"></textarea>
+                                    <textarea type="text" class="form-control" name="slogan"></textarea>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <!-- Summary -->
                                 <div class="form-group col-sm-6">
                                     <label><?php _e('Describe your business ','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 900 characters)','bidxplugin'); ?></small></label>
-                                    <textarea type="text" class="form-control" name="summary" placeholder="<?php _e('Fill in a description of your business here: what you sell, who your potential customers are, and what your business vision and mission is','bidxplugin'); ?>"></textarea>
+                                    <textarea type="text" class="form-control" name="summary"></textarea>
                                 </div>
-
+                            </div>
+                            <div class="row">
                                 <!-- Reason For Submission -->
                                 <div class="form-group col-sm-6">
                                     <label><?php _e('Why do you submit your business proposal?','bidxplugin'); ?></label>
                                     <select name="reasonForSubmission" data-forcearray="true"></select>
-
-                                </div>
-                            </div>
-                            <div class="row">
-                            <!-- Equity Retained -->
-                                <div class="form-group col-sm-6">
-                                    <label><?php _e('What percentage of the shares of this business do you own?','bidxplugin'); ?></label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">%</span>
-                                        <input type="text" class="form-control" name="equityRetained" placeholder="<?php _e('Percentage','bidxplugin'); ?> (e.g. 11.11)">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <!-- Investment type -->
-                                <div class="form-group col-sm-6">
-                                    <label><?php _e('What type of finance do you prefer?','bidxplugin'); ?></label>
-<?php
-                                        // Render the checkboxes based upon the items from the static data api for the 'investmentType' typeCode / groupCode / context
-                                        //
-                                        if ( isset(BidxCommon::$i18nData['static']['investmentType']) ) {
-                                            foreach ( BidxCommon::$i18nData['static']['investmentType'] as $investmentType ) {
-                                                printf( '<div class="checkbox">
-                                                            <input type="checkbox" value="%s" id="checkbox-%s" name="investmentType[]" />
-                                                            <label for="checkbox-%s"><span></span>%s</label>
-                                                        </div>', $investmentType->value, $investmentType->value, $investmentType->value, $investmentType->label );
-                                            }
-                                        }
-?>
                                 </div>
 
-                                <!-- Summary Financing Needed -->
-                                <div class="form-group col-sm-6">
-                                    <label><?php _e('Why does your business need financing?','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 300 characters)','bidxplugin'); ?></small></label>
-                                    <textarea name="summaryFinancingNeeded" class="form-control" placeholder="<?php _e('Give the reason your business needs financing','bidxplugin'); ?>"></textarea>
-                                </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-sm-6">
-                                    <label><?php _e('Video pitch','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                    <label><?php _e('Video pitch','bidxplugin'); ?></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-video-camera"></i></span>
                                         <input type="text" class="form-control" name="externalVideoPitch" placeholder="<?php _e('Enter a YouTube or Vimeo url link','bidxplugin'); ?>">
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label><?php _e('Audio pitch','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                    <label><?php _e('Audio pitch','bidxplugin'); ?></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-music"></i></span>
                                         <input type="text" class="form-control" name="externalAudioPitch" placeholder="<?php _e('Enter a url link','bidxplugin'); ?>">
@@ -839,23 +910,22 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             </div>
 
                             <div class="row">
-                                <!-- Country operation -->
-                                <div class="form-group col-sm-6">
-                                    <label><?php _e('Select your countries of business','bidxplugin'); ?></label>
-                                    <select name="countryOperation" multiple></select>
-                                </div>
-
                                 <!-- Social impact -->
                                 <div class="form-group col-sm-6">
-                                    <label><?php _e('If your business has a social impact, choose which ones apply','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                    <label><?php _e('Choose the social impact of your business','bidxplugin'); ?></label>
                                     <select name="socialImpact" multiple></select>
+                                </div>
+                                <!-- Env impact -->
+                                <div class="form-group col-sm-6">
+                                    <label><?php _e('Choose the environmental impact of your business','bidxplugin'); ?></label>
+                                    <select name="envImpact" multiple></select>
                                 </div>
                             </div>
                             <div class="row">
-                                <!-- Env impact -->
-                                <div class="form-group col-sm-6">
-                                    <label><?php _e('If your business has an environmental impact, choose which ones apply','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                    <select name="envImpact" multiple></select>
+                                <!-- Country operation -->
+                                <div class="form-group col-sm-12">
+                                    <label><?php _e('Select your countries of business','bidxplugin'); ?></label>
+                                    <select name="countryOperation" multiple></select>
                                 </div>
                             </div>
                             <div class="row">
@@ -894,7 +964,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             <div class="row">
                                 <!-- Personal Role -->
                                 <div class="form-group formfield col-sm-6">
-                                    <label><?php _e('Role of the entrepreneur','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 30 characters)','bidxplugin'); ?></small></label>
+                                    <label><?php _e('Your role','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 30 characters)','bidxplugin'); ?></small></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-tag"></i></span>
                                         <input type="text" name="personalRole" class="form-control">
@@ -903,7 +973,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                                 <!-- Personal Expertise -->
                                 <div class="form-group col-sm-6">
-                                    <label><?php _e('Expertise of the entrepreneur','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 180 characters)','bidxplugin'); ?></small></label>
+                                    <label><?php _e('Your expertise','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 180 characters)','bidxplugin'); ?></small></label>
                                     <textarea name="personalExpertise" class="form-control" placeholder="<?php _e('The details of your expertise for this business','bidxplugin'); ?>"></textarea>
                                 </div>
                             </div>
@@ -984,6 +1054,38 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
                                         </select>
                                     </div>
+                                </div>
+                                <!-- Equity Retained -->
+                                <div class="form-group col-sm-6">
+                                    <label><?php _e('What percentage of the shares of this business do you own?','bidxplugin'); ?></label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">%</span>
+                                        <input type="text" class="form-control" name="equityRetained" placeholder="<?php _e('Percentage','bidxplugin'); ?> (e.g. 11.11)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Investment type -->
+                                <div class="form-group col-sm-6">
+                                    <label><?php _e('What type of finance do you prefer?','bidxplugin'); ?></label>
+<?php
+                                        // Render the checkboxes based upon the items from the static data api for the 'investmentType' typeCode / groupCode / context
+                                        //
+                                        if ( isset(BidxCommon::$i18nData['static']['investmentType']) ) {
+                                            foreach ( BidxCommon::$i18nData['static']['investmentType'] as $investmentType ) {
+                                                printf( '<div class="checkbox">
+                                                            <input type="checkbox" value="%s" id="checkbox-%s" name="investmentType[]" />
+                                                            <label for="checkbox-%s"><span></span>%s</label>
+                                                        </div>', $investmentType->value, $investmentType->value, $investmentType->value, $investmentType->label );
+                                            }
+                                        }
+?>
+                                </div>
+
+                                <!-- Summary Financing Needed -->
+                                <div class="form-group col-sm-6">
+                                    <label><?php _e('Why does your business need financing?','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 300 characters)','bidxplugin'); ?></small></label>
+                                    <textarea name="summaryFinancingNeeded" class="form-control"></textarea>
                                 </div>
                             </div>
 
@@ -1268,14 +1370,14 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 <div class="row">
                     <!-- First Name -->
                     <div class="form-group col-sm-12">
-                        <label><?php _e('First','bidxplugin'); ?></label>
-                        <input type="text" class="form-control" name="firstName" placeholder="<?php _e('Please enter the first name','bidxplugin'); ?>">
+                        <label><?php _e('First name','bidxplugin'); ?></label>
+                        <input type="text" class="form-control" name="firstName">
                     </div>
 
                     <!-- Last Name -->
                     <div class="form-group col-sm-12">
-                        <label><?php _e('Last','bidxplugin'); ?></label>
-                        <input type="text" class="form-control" name="lastName" placeholder="<?php _e('Please enter the last name','bidxplugin'); ?>">
+                        <label><?php _e('Last name','bidxplugin'); ?></label>
+                        <input type="text" class="form-control" name="lastName">
                     </div>
 
                     <!-- Role -->
@@ -1283,28 +1385,28 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         <label><?php _e('Role','bidxplugin'); ?></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-tag"></i></span>
-                            <input type="text" class="form-control" name="role" placeholder="<?php _e('Please type the role of the team member','bidxplugin'); ?>">
+                            <input type="text" class="form-control" name="role">
                         </div>
                     </div>
 
                     <!-- Expertise -->
                     <div class="form-group col-sm-12">
                         <label><?php _e('Expertise','bidxplugin'); ?></label>
-                        <textarea type="text" class="form-control" name="expertise" placeholder="<?php _e('Please describe relevant expertise of the team member','bidxplugin'); ?>"></textarea>
+                        <textarea type="text" class="form-control" name="expertise"></textarea>
                     </div>
 
                     <!-- LinkedIn -->
                     <div class="form-group col-sm-12">
-                        <label><?php _e('LinkedIn profile','bidxplugin'); ?> <small class="text-muted"><?php _e('(Enter the URL of the LinkedIn Profile)','bidxplugin'); ?></small></label>
+                        <label><?php _e('LinkedIn profile','bidxplugin'); ?></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-linkedin-square"></i></span>
-                            <input type="text" class="form-control" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
+                            <input type="text" class="form-control" name="linkedIn" placeholder="<?php _e('LinkedIn Profile URL','bidxplugin'); ?>" />
                         </div>
                     </div>
 
                     <!-- Profile picture -->
                     <div class="profilePictureControl form-group col-sm-12">
-                        <label><?php _e('Picture','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                        <label><?php _e('Picture','bidxplugin'); ?></label>
                         <div class="profilePictureWrapper hide-overflow">
                             <div class="profilePictureContainer"></div>
                         </div>

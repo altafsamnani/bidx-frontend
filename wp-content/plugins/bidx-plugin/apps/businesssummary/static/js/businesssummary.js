@@ -206,10 +206,6 @@
                 // but until that is available, send in reasonforSubmsision as an array
                 //
             ,   "reasonForSubmission"
-            ,   "equityRetained"
-            // ,   "financingNeeded"
-            ,   "investmentType"
-            ,   "summaryFinancingNeeded"
             ,   "externalVideoPitch"
             ,   "externalAudioPitch"
             ]
@@ -268,6 +264,9 @@
         ,   "_root":
             [
                 "yearSalesStarted"
+            ,   "equityRetained"
+            ,   "investmentType"
+            ,   "summaryFinancingNeeded"
             ]
 
         ,   "financialSummaries":
@@ -1907,7 +1906,7 @@
         if ( logoImage )
         {
             $logoContainer.empty();
-            $logoContainer.append( "<img src='"+ logoImage.document +"' />");
+            $logoContainer.append( "<img src='"+ logoImage.document +"' />" );
         }
         
 
