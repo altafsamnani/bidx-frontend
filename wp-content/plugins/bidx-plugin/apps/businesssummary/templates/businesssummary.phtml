@@ -573,7 +573,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 (
                     __('Business sales started in','bidxplugin')=> $this->exst($businessSummary->yearSalesStarted),
                     __('Reason for financing','bidxplugin') => $this->exst($businessSummary->summaryFinancingNeeded),
-                    __('Equity currently retained','bidxplugin') => $this->exst($businessSummary->equityRetained),
+                    __('Equity currently retained','bidxplugin') => $this->addPrefixSuffix ( $this->exst($businessSummary->equityRetained ), '', ' %' ),
                     __('Investment type','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->investmentType), ', ', 'investmentType' )
                 );
 
