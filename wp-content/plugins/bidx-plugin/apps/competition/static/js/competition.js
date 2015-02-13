@@ -1329,6 +1329,7 @@ function _initApplicationsView()
                             ,   score:          (score) ? score : 0
                             ,   status:         response.status
                             ,   entityId:       response.entityId
+                            ,   reviews:        response.reviews
                             ,   assessor_1: {
                                     name: "Assessor 1 Full Name",
                                     score: "3",
@@ -2501,119 +2502,150 @@ function _competitionTimer (  )
         ,   displayName
         ,   statusMsg
         ,   successMsg
-        ,   assessorList        =   []
-        ,   judgeList           =   []
-        ,   status              =   data.status
-        ,   entityId            =   data.entityId
-        ,   snippetSuccess      =   $("#success-card").html().replace(/(<!--)*(-->)*/g, "")
-        ,   assessorLength      =   _.size(updateActorsList['assessors'])
-        ,   judgeLength         =   _.size(updateActorsList['judges'])
-        ,   $assessors          =   $listItem.find( "[name='assessors-" + entityId + "']" )
-        ,   $judges             =   $listItem.find( "[name='judges-" + entityId + "']" )
-        ,   $btnAssessor        =   $listItem.find( ".assign-assessor-" + entityId )
-        ,   $btnJudge           =   $listItem.find( ".assign-judge-" + entityId )
-        ,   $wrapperAssessor    =   $listItem.find( ".assign-assessor" )
-        ,   $wrapperJudge       =   $listItem.find( ".assign-judge" )
-        ,   $cardHeader         = $listItem.find( ".cardHeader" + entityId )
+        ,   assessorList            =   []
+        ,   judgeList               =   []
+        ,   assessorReviewsList     =   []
+        ,   assignedAssesorsIdList  =   []
+        ,   judgeReviewsList        =   []
+        ,   assignedJudgesIdList  =   []
+        ,   status                  =   data.status
+        ,   entityId                =   data.entityId
+        ,   snippetSuccess          =   $("#success-card").html().replace(/(<!--)*(-->)*/g, "")
+        ,   assessorLength          =   _.size(updateActorsList['assessors'])
+        ,   judgeLength             =   _.size(updateActorsList['judges'])
+        ,   $assessors              =   $listItem.find( "[name='assessors-" + entityId + "']" )
+        ,   $judges                 =   $listItem.find( "[name='judges-" + entityId + "']" )
+        ,   $btnAssessor            =   $listItem.find( ".assign-assessor-" + entityId )
+        ,   $btnJudge               =   $listItem.find( ".assign-judge-" + entityId )
+        ,   $wrapperAssessor        =   $listItem.find( ".assign-assessor" )
+        ,   $wrapperJudge           =   $listItem.find( ".assign-judge" )
+        ,   $cardHeader             =   $listItem.find( ".cardHeader" + entityId )
+        ,   reviews                 =   data.reviews
         ;
 
-        /* Assessor Dropdown */
-        $assessors.chosen(
+        if(status === 'SUBMITTED')
         {
-            placeholder_text_single : bidx.i18n.i( "Loading" )
-        ,   width                   : "40%"
-        });
-
-        if( assessorLength )
-        {
-            $.each( actorIdList['assessors'], function( idx, actorObject )
+            /* Assessor Dropdown */
+            $assessors.chosen(
             {
-                actorId      =   actorObject.actorId;
-                displayName  =   actorObject.userDisplayName;
+                placeholder_text_single : bidx.i18n.i( "Loading" )
+            ,   width                   : "40%"
+            });
 
-                option      =   $( "<option/>",
+            if( assessorLength )
+            {
+                $.each( actorIdList['assessors'], function( idx, actorObject )
+                {
+                    actorId      =   actorObject.actorId;
+                    displayName  =   actorObject.userDisplayName;
+
+                    option      =   $( "<option/>",
+                                    {
+                                        value: actorId
+                                    } );
+
+                    option.text( displayName );
+
+                    assessorList.push( option );
+
+                });
+
+                $assessors.append( assessorList );
+
+                /* Get Already Assigned Assessors if any */
+                assessorReviewsList         =   _.where(reviews, {role: "COMPETITION_ASSESSOR"}); // Returns object who is having assessor role
+                assignedAssesorsIdList      =   _.pluck( assessorReviewsList, 'competitionActorId'); //return back only actorids from the object
+
+                if( assignedAssesorsIdList )
+                {
+                    bidx.utils.setElementValue( $assessors, assignedAssesorsIdList );
+                }
+
+                $assessors.trigger( "chosen:updated" );
+                $wrapperAssessor.removeClass ( 'hide');
+
+                 _assignActorAction(
+                {
+                    $btnAssign: $btnAssessor
+                ,   role:       'assessors'
+                ,   success:    function( response )
                                 {
-                                    value: actorId
-                                } );
+                                    successMsg = bidx.i18n.i('SUCCESS_ASSESSOR' , appName);
 
-                option.text( displayName );
+                                    statusMsg = snippetSuccess
+                                                .replace( /%successMsg%/g, successMsg)
+                                                .replace( /%entityId%/g, entityId)
+                                                ;
 
-                assessorList.push( option );
+                                    $cardHeader.empty().prepend($(statusMsg));
 
-            });
+                                    _showAllView('successCard' + entityId );
 
-            $assessors.append( assessorList );
-            $assessors.trigger( "chosen:updated" );
-            $wrapperAssessor.removeClass ( 'hide');
-
-             _assignActorAction(
-            {
-                $btnAssign: $btnAssessor
-            ,   role:       'assessors'
-            ,   success:    function( response )
-                            {
-                                successMsg = bidx.i18n.i('SUCCESS_ASSESSOR' , appName);
-
-                                statusMsg = snippetSuccess
-                                            .replace( /%successMsg%/g, successMsg)
-                                            .replace( /%entityId%/g, entityId)
-                                            ;
-
-                                $cardHeader.empty().prepend($(statusMsg));
-
-                                _showAllView('successCard' + entityId );
-
-                            }
-            });
+                                }
+                });
+            }
         }
 
-        /* Judge Dropdown */
-        $judges.chosen(
+        if( status === 'FINALIST' )
         {
-            placeholder_text_single : bidx.i18n.i( "Loading" )
-        ,   width                   : "40%"
-        });
-
-        if( judgeLength )
-        {
-            $.each( actorIdList['judges'], function( idx, actorObject )
+            /* Judge Dropdown */
+            $judges.chosen(
             {
-                actorId      =   actorObject.actorId;
-                displayName  =   actorObject.userDisplayName;
+                placeholder_text_single : bidx.i18n.i( "Loading" )
+            ,   width                   : "40%"
+            });
 
-                option      =   $( "<option/>",
+            if( judgeLength )
+            {
+                $.each( actorIdList['judges'], function( idx, actorObject )
+                {
+                    actorId      =   actorObject.actorId;
+                    displayName  =   actorObject.userDisplayName;
+
+                    option      =   $( "<option/>",
+                                    {
+                                        value: actorId
+                                    } );
+
+                    option.text( displayName );
+
+                    judgeList.push( option );
+
+                });
+
+                $judges.append( judgeList );
+
+                /* Get Already Assigned Assessors if any */
+                judgeReviewsList            =   _.where(reviews, {role: "COMPETITION_JUDGE"}); // Returns object who is having assessor role
+                assignedJudgesIdList       =   _.pluck( judgeReviewsList, 'competitionActorId'); //return back only actorids from the object
+
+                if( assignedJudgesIdList )
+                {
+                    bidx.utils.setElementValue( $judges, assignedJudgesIdList );
+                }
+
+                $judges.trigger( "chosen:updated" );
+                $wrapperJudge.removeClass ( 'hide');
+
+                 _assignActorAction(
+                {
+                    $btnAssign: $btnJudge
+                ,   role:       'judges'
+                ,   success:    function( response )
                                 {
-                                    value: actorId
-                                } );
+                                    successMsg = bidx.i18n.i('SUCCESS_JUDGE' , appName);
 
-                option.text( displayName );
+                                    statusMsg = snippetSuccess
+                                                .replace( /%successMsg%/g, successMsg)
+                                                .replace( /%entityId%/g, entityId)
+                                                ;
 
-                judgeList.push( option );
+                                    $cardHeader.empty().prepend($(statusMsg));
 
-            });
-
-            $judges.append( judgeList );
-            $judges.trigger( "chosen:updated" );
-            $wrapperJudge.removeClass ( 'hide');
-
-             _assignActorAction(
-            {
-                $btnAssign: $btnJudge
-            ,   role:       'judges'
-            ,   success:    function( response )
-                            {
-                                successMsg = bidx.i18n.i('SUCCESS_JUDGE' , appName);
-
-                                statusMsg = snippetSuccess
-                                            .replace( /%successMsg%/g, successMsg)
-                                            .replace( /%entityId%/g, entityId)
-                                            ;
-
-                                $cardHeader.empty().prepend($(statusMsg));
-
-                                _showAllView('successCard' + entityId );
-                            }
-            });
+                                    _showAllView('successCard' + entityId );
+                                }
+                });
+            }
         }
     }
 
