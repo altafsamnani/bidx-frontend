@@ -1,7 +1,6 @@
 <?php get_header(); ?>
 <section id="page-title-wrapper" class="page-title-wrapper pattern-1 service">
     <div class="container">
-        <?php edit_post_link('<small>Edit Our Team page</small>','',''); ?>
         <h1><?php the_title(); ?></h1>
     </div>
 </section>
@@ -9,125 +8,134 @@
             <div id="pricing-tables" class="main-wrapper">
                 <section id="pricing-tables" class="pad-25 pattern-7">
                     <div class="container">
-                        <div class="pad-0">
-                            <div class="row flush">
-                                <div class="col-md-3">
-                                    <div class="pricing groups">
-                                        <div class="p-header">
-                                            <div class="title">
-                                                <h4>GROUPS</h4>
-                                            </div>
-                                            <div class="price">
-                                                <span class="dollar">$</span>
-                                                <h2>6800</h2><br>
-                                                <span class="per">/year</span>
-                                            </div>
-                                        </div>
-                                        <ul class="details">
-                                            <li>Max Users<br><strong>Unlimited</strong></li>
-                                            <!-- <li>Discounts<br><strong>>10 Groups 30% less</strong></li> -->
-                                            <li>Customization<br><strong>$1000 per day</strong></li>
-                                            <li>Delivery time<br><strong>4 weeks, max</strong></li>
-                                            <li>Customer support response time<br><strong>2 days, max</strong></li>
-                                            <li>Branding<br><strong>Your brand</strong></li>
-                                            <li>Languages<br><strong>English, Spanish, French</strong></li>
-                                        </ul>
-                                        <div class="p-footer">
-                                            <a href="/get-started" class="btn btn-flat flat-warning">Get Started</a>
-                                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="package">
+                                    <div class="package-title">Do it yourself</div>
+                                    <div class="sect-portal">
+                                        <div class="product-title">Portal</div>
+                                        <div class="product-descr">Portal Basic</div>
+                                        <div class="product-divider"></div>
                                     </div>
-                                    <!-- /.pricing -->
-                                </div>
-                                <!-- /.col-md-4 -->
-                                <div class="col-md-3">
-                                    <div class="pricing competition">
-                                        <div class="p-header">
-                                            <div class="title">
-                                                <h4>COMPETITION</h4>
-                                            </div>
-                                            <div class="price">
-                                                <span class="dollar">$</span>
-                                                <h2>6800</h2><br>
-                                                <span class="per"></span>
-                                            </div>
-                                        </div>
-                                        <ul class="details">
-                                            <li>Max Users<br><strong>Unlimited</strong></li>
-                                            <!-- <li>Discounts<br><strong>$3000 for each next competiton</strong></li> -->
-                                            <li>Customization<br><strong>$1000 per day</strong></li>
-                                            <li>Delivery time<br><strong>2 weeks, max</strong></li>
-                                            <li>Customer support response time<br><strong>2 days, max</strong></li>
-                                            <li>Branding<br><strong>Your brand</strong></li>
-                                            <li>Languages<br><strong>English, Spanish, French</strong></li>
-                                        </ul>
-                                        <div class="p-footer">
-                                            <a href="/get-started" class="btn btn-flat flat-warning">Get Started</a>
-                                        </div>
+                                    <div class="sect-competition">
+                                        <div class="product-title">Competition</div>
+                                        <div class="product-descr">Order separately</div>
+                                        <div class="product-divider"></div>
                                     </div>
-                                    <!-- /.pricing -->
-                                </div>
-                                <!-- /.col-md-4 -->
-                                <div class="col-md-3">
-                                    <div class="pricing hotline">
-                                        <div class="p-header">
-                                            <div class="title">
-                                                <h4>HOTLINE</h4>
-                                            </div>
-                                            <div class="price">
-                                                <span class="dollar">$</span>
-                                                <h2>6800</h2><br>
-                                                <span class="per">/year</span>
-                                            </div>
-                                        </div>
-                                        <ul class="details">
-                                            <li>Max Users<br><strong>Unlimited</strong></li>
-                                            <!-- <li>Discounts<br><strong>No discounts applicable</strong></li> -->
-                                            <li>Customization<br><strong>$1000 per day</strong></strong></li>
-                                            <li>Delivery time<br><strong>4 weeks, max</strong></li>
-                                            <li>Customer support response time<br><strong>2 days, max</strong></li>
-                                            <li>Branding<br><strong>Your brand</strong></li>
-                                            <li>Languages<br><strong>English, Spanish, French</strong></li>
-                                        </ul>
-                                        <div class="p-footer">
-                                            <a href="/get-started" class="btn btn-flat flat-warning">Get Started</a>
-                                        </div>
+                                    <div class="sect-hotline">
+                                        <div class="product-title">Hotline</div>
+                                        <div class="product-descr">Order separately</div>
+                                        <div class="product-divider"></div>
                                     </div>
-                                    <!-- /.pricing -->
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="pricing ecosystem">
-                                        <div class="p-header">
-                                            <div class="title">
-                                                <h4>ECOSYSTEM</h4>
-                                            </div>
-                                            <div class="price">
-                                                <span class="dollar">$</span>
-                                                <h2>500000</h2><br>
-                                                <span class="per">/1st 2 years</span>
-                                            </div>
-                                        </div>
-                                        <ul class="details">
-                                            <li>Max Users<br><strong>Unlimited</strong></li>
-                                            <!-- <li>Discounts</strong><br><strong>Negotiable for small populations</strong></li> -->
-                                            <li>Customization<br><strong>All in</strong></li>
-                                            <li>Delivery time</strong><br><strong>2 year project</strong></li>
-                                            <li>Customer support response time<br><strong>2 days, max</strong></li>
-                                            <li>Branding<br><strong>Your brand</strong></li>
-                                            <li>Languages<br><strong>English, Spanish, French</strong></li>
-                                        </ul>
-                                        <div class="p-footer">
-                                            <a href="/get-started" class="btn btn-flat flat-warning">Get Started</a>
-                                        </div>
+                                    <div class="sect-other">
+                                        <div class="product-title">Service</div>
+                                        <div class="product-descr">Read Tutorials <br> Or Buy</div>
+                                        <div class="product-divider"></div>
                                     </div>
-                                    <!-- /.pricing -->
+                                    <div class="sect-other">
+                                        <div class="product-title">Training</div>
+                                        <div class="product-descr">Online Training <br> Or Buy training</div>
+                                        <div class="product-divider"></div>
+                                    </div>
+                                    <div class="sect-price">$ 1.999</div>
                                 </div>
-                                <!-- /.col-md-4 -->
                             </div>
-                            <!-- /.row -->
+                            <div class="col-sm-3">
+                                <div class="package">
+                                    <div class="package-title">Startup</div>
+                                    <div class="sect-portal">
+                                        <div class="product-title">Portal</div>
+                                        <div class="product-descr">Portal Basic</div>
+                                        <div class="product-divider"></div>
+                                    </div>
+                                    <div class="sect-competition">
+                                        <div class="product-title">Competition</div>
+                                        <div class="product-descr">Startup competition <br> in 1st 6 months</div>
+                                        <div class="product-divider"></div>
+                                    </div>
+                                    <div class="sect-hotline">
+                                        <div class="product-title">Hotline</div>
+                                        <div class="product-descr">1 month Hotline campaign <br> in 1st 6 months</div>
+                                        <div class="product-divider"></div>
+                                    </div>
+                                    <div class="sect-other">
+                                        <div class="product-title">Service</div>
+                                        <div class="product-descr">6 month Servicedesk <br> Marketing</div>
+                                        <div class="product-divider"></div>
+                                    </div>
+                                    <div class="sect-other">
+                                        <div class="product-title">Training</div>
+                                        <div class="product-descr">Startup Training</div>
+                                        <div class="product-divider"></div>
+                                    </div>
+                                    <div class="sect-price">$ 9.999</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="package">
+                                    <div class="package-title">Complete</div>
+                                    <div class="sect-portal">
+                                        <div class="product-title">Portal</div>
+                                        <div class="product-descr">Portal Basic <br> Full custom domain name</div>
+                                        <div class="product-divider"></div>
+                                    </div>
+                                    <div class="sect-competition">
+                                        <div class="product-title">Competition</div>
+                                        <div class="product-descr">1 competition per year</div>
+                                        <div class="product-divider"></div>
+                                    </div>
+                                    <div class="sect-hotline">
+                                        <div class="product-title">Hotline</div>
+                                        <div class="product-descr">1 month Hotline campaign <br> in 1st 6 months</div>
+                                        <div class="product-divider"></div>
+                                    </div>
+                                    <div class="sect-other">
+                                        <div class="product-title">Service</div>
+                                        <div class="product-descr">Servicedesk <br> Marketing Pro <br> Monitoring</div>
+                                        <div class="product-divider"></div>
+                                    </div>
+                                    <div class="sect-other">
+                                        <div class="product-title">Training</div>
+                                        <div class="product-descr">Startup Training <br> Moderator training <br> SEO Package</div>
+                                        <div class="product-divider"></div>
+                                    </div>
+                                    <div class="sect-price">$ 14.999</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="package">
+                                    <div class="package-title">Superpack</div>
+                                    <div class="sect-portal">
+                                        <div class="product-title">Portal</div>
+                                        <div class="product-descr">Up to 3 Portal Basic <br> Full custom domain name</div>
+                                        <div class="product-divider"></div>
+                                    </div>
+                                    <div class="sect-competition">
+                                        <div class="product-title">Competition</div>
+                                        <div class="product-descr">3 competitions per year</div>
+                                        <div class="product-divider"></div>
+                                    </div>
+                                    <div class="sect-hotline">
+                                        <div class="product-title">Hotline</div>
+                                        <div class="product-descr">3 Numbers <br> 10 Campaigns</div>
+                                        <div class="product-divider"></div>
+                                    </div>
+                                    <div class="sect-other">
+                                        <div class="product-title">Service</div>
+                                        <div class="product-descr">Servicedesk pro <br> Marketing Pro <br> Monitoring pro</div>
+                                        <div class="product-divider"></div>
+                                    </div>
+                                    <div class="sect-other">
+                                        <div class="product-title">Training</div>
+                                        <div class="product-descr">Startup Training <br> Moderator training <br> SEO Package <br> 40 hours expert</div>
+                                        <div class="product-divider"></div>
+                                    </div>
+                                    <div class="sect-price">$ 24.999</div>
+                                </div>
+                            </div>
                         </div>
-                        <!-- /.pad-0 -->
                     </div>
-                    <!-- /.container -->
+
                 </section>
                 <section>
                     <div class="container service pad-25">
@@ -135,7 +143,7 @@
                             <h2>
                                 <?php echo _e('Contact us to get started', 'bidxtheme'); ?>
                             </h2>
-                            <a href="/contact" type="button" class="btn btn-flat flat-warning btn-lg"><?php echo _e('Contact Us', 'bidxtheme'); ?></a>
+                            <a href="/get-started" type="button" class="btn btn-flat flat-warning btn-lg"><?php echo _e('Get started', 'bidxtheme'); ?></a>
                         </div>
                     </div>
                 </section>

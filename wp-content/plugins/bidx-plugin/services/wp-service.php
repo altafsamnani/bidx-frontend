@@ -643,7 +643,21 @@ function create_bidx_po ()
             case 'module' :
                 $pathName = $_GET['path'];
                 $language = (isset ($body['lang'])) ? $body['lang'] : 'Original';
-                $po = '# Language ' . $language . PHP_EOL;
+                $po =   '# _e("","bidxplugin");'. PHP_EOL.
+                        '# Context  Textdomain bidxplugin'. PHP_EOL.
+                        'msgid ""'. PHP_EOL.
+                        'msgstr ""'. PHP_EOL.
+                        '"Project-Id-Version: \n"'. PHP_EOL.
+                        '"POT-Creation-Date: \n"'. PHP_EOL.
+                        '"PO-Revision-Date: \n"'. PHP_EOL.
+                        '"Last-Translator: Altaf <altaf@bidx.net>\n"'. PHP_EOL.
+                        '"Language-Team: Bidx\n"'. PHP_EOL.
+                        '"MIME-Version: 1.0\n"'. PHP_EOL.
+                        '"Content-Type: text/plain; charset=UTF-8\n"'. PHP_EOL.
+                        '"Content-Transfer-Encoding: 8bit\n"'. PHP_EOL;
+
+
+                $po .=PHP_EOL. '# Language ' . $language . PHP_EOL;
 
 
                 $body = $_GET;
@@ -760,7 +774,21 @@ function plugin_theme_po_action ($displayData, $body)
 {
 
     $language = (isset ($body['lang'])) ? $body['lang'] : 'Original';
-    $po = '# Language ' . $language . PHP_EOL;
+    $po =   '# _e("","bidxplugin");'. PHP_EOL.
+             '# Context  Textdomain bidxplugin'. PHP_EOL.
+             'msgid ""'. PHP_EOL.
+             'msgstr ""'. PHP_EOL.
+             '"Project-Id-Version: \n"'. PHP_EOL.
+             '"POT-Creation-Date: \n"'. PHP_EOL.
+             '"PO-Revision-Date: \n"'. PHP_EOL.
+             '"Last-Translator: Altaf <altaf@bidx.net>\n"'. PHP_EOL.
+             '"Language-Team: Bidx\n"'. PHP_EOL.
+             '"MIME-Version: 1.0\n"'. PHP_EOL.
+             '"Content-Type: text/plain; charset=UTF-8\n"'. PHP_EOL.
+             '"Content-Transfer-Encoding: 8bit\n"'. PHP_EOL;
+
+
+    $po .=PHP_EOL. '# Language ' . $language . PHP_EOL;
     $count = 1;
     $validate = array ();
 
