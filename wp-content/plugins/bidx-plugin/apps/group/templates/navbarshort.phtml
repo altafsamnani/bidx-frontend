@@ -78,7 +78,7 @@
     $isCompetition  = get_option ('skipso-competition');
     $skipsoJudgeUrl = get_option ('skipso-judge-url');
     $userName       = $this -> sessionData -> data -> username;
-    $displayName    = $this -> sessionData -> data -> bidxMemberProfile -> firstName ? $this -> sessionData -> data -> bidxMemberProfile -> firstName : 'User';
+    $displayName    = $this -> sessionData -> data -> bidxMemberProfile -> firstName ? $this -> sessionData -> data -> bidxMemberProfile -> firstName : $this -> sessionData -> data -> displayName ;
     $judgeEmails    = explode(",", get_option ('skipso-judge-emails'));
     $isJudge        = ($isCompetition && in_array( $userName, $judgeEmails )) ? true : false;
     $showLogout     = true;
