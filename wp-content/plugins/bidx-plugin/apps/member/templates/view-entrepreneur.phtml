@@ -104,14 +104,17 @@ if ($entrepreneurDetails &&
                                             <div class="row">
                                                 <div class="col-sm-2">
 <?php
-                                                    if ( empty( $business -> externalVideoPitch ) ) {
+                                                    if ( $this -> exst( $business->logo )  && $this -> exst( $business->logo->document ) )
+                                                    {
+                                                        echo '<div class="img-cropper pull-left"><span class="valign"></span><img src="' . $business->logo->document . '" alt=""></div>';
+                                                    }
+                                                    elseif ( $this -> exst( $business->cover )  && $this -> exst( $business->cover->document ) )
+                                                    {
+                                                        echo '<div class="img-cropper pull-left"><span class="valign"></span><img src="' . $business->cover->document . '" alt=""></div>';
+                                                    }
+                                                    else
+                                                    {
                                                         echo '<div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>';
-                                                    } else {
-                                                        $videoUrl = $this->exst($business -> externalVideoPitch);
-                                                        $parsedVideo = $this->parseVideos( $videoUrl );
-                                                        $videoThumb = $parsedVideo[0]['fullsize'];
-
-                                                        echo '<div class="img-cropper pull-left"><img src="' . $videoThumb . '" alt=""></div>';
                                                     }
 ?>
                                                 </div>
