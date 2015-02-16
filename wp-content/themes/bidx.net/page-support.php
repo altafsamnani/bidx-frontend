@@ -1,4 +1,7 @@
 <?php
+/*
+ Template Name: Services
+*/
 
 get_header(); ?>
 
@@ -13,27 +16,8 @@ get_header(); ?>
         <div class="row">
             <div class="col-xs-12">
                 <div class="service">
-                    <div class="trial-title"><?php _e('Requires a Portal Package','bidxtheme');?></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="service">
-                    <div class="trial-title small"><?php _e('Easy and Simple','bidxtheme');?></div>
-                    <div class="trial-sub"><?php _e('Monthly $299 - Annualy $1.999','bidxtheme');?></div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="service">
-                    <div class="trial-title small"><?php _e('Extensive and Detailed','bidxtheme');?></div>
-                    <div class="trial-sub"><?php _e('Annualy $9.999','bidxtheme');?></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="service">
+                    <div class="trial-title"><?php _e('Choose a suitable package','bidxtheme');?></div>
+                    <br>
                     <a href="/get-started" class="btn btn-flat flat-warning"><?php _e('I want to try','bidxtheme');?></a>
                     <a href="/pricing" class="btn btn-flat flat-warning"><?php _e('All Packages','bidxtheme');?></a>
                 </div>
