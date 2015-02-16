@@ -247,6 +247,10 @@ class TemplateLibrary
             case 'investmentType':
                 $values = $this->getStaticVal ('investmentType', $values);
                 break;
+                
+            case 'typicalInvolvement':
+                $values = $this->getStaticVal ('typicalInvolvement', $values);
+                break;
         }
 
         return $values;
@@ -310,6 +314,7 @@ class TemplateLibrary
             case 'mentorExpertise':
             case 'productService':
             case 'reasonForSubmission':
+            case 'typicalInvolvement':
                 $values = $this->getStaticVal ($label, $values);
 
                 break;

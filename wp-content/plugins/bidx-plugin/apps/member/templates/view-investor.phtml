@@ -42,8 +42,8 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
             }
 
             $investmentSize = array(
-                $this->exst( $investorDetails->minInvestment, '' ),
-                $this->exst( $investorDetails->maxInvestment, '' )
+                $this->addPrefixSuffix ( $this->exst($investorDetails->minInvestment ), '$ ', '' ),
+                $this->addPrefixSuffix ( $this->exst($investorDetails->maxInvestment ), '$ ', '' )
             );
 
             $rowValues = array(
@@ -115,7 +115,7 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
 
             $rowValues = array (
                 __('Number of investments in the last 12 months','bidxplugin') => $this->exst( $investorDetails->numberInvestments ),
-                __('Total investments made in the last 12 months','bidxplugin') => $this->exst( $investorDetails->totalInvestment ),
+                __('Total investments made in the last 12 months','bidxplugin') => $this->addPrefixSuffix ( $this->exst($investorDetails->totalInvestment ), '$ ', '' ),
                 __('Typical involvement','bidxplugin') => $this->getStaticVal('typicalInvolvement', $this->exst ($investorDetails->typicalInvolvement))
             );
 
