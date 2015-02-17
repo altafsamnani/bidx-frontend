@@ -111,7 +111,7 @@ bidx.widgets = {
                 hasSummaries = false;
 
                 // Create an <option> tag object to prepend to our findings
-                result = '<option value"">Select Business</option>';
+                result = '<option value="">Select Business</option>';
 
                 // Iterate the entities to find the ones with a Business Summary
                 for ( i = 0, iLen = data.entities.length; i < iLen; i++)
