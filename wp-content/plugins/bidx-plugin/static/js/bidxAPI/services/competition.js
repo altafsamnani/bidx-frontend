@@ -77,10 +77,42 @@
         api._call( requestParams );
     };
 
+    // POST /competition/{competitionId}/application/%entityId%/review
+    competition.updateRecommendationForCompetition      = function( params )
+    {
+         var method          = "POST"
+        ,   url             = baseUrl
+        ,   requestParams   =
+            {
+                method:         method
+            ,   groupDomain:    params.groupDomain
+            ,   baseUrl:        url
+            ,   data:           params.data
+            ,   success:        function( data, textStatus, jqXhr )
+                {
+                    params.success( data, textStatus, jqXhr );
+                }
+            ,   error:          function( jqXhr, textStatus, errorThrown )
+                {
+                    params.error( jqXhr, textStatus, errorThrown );
+                }
+            }
+        ;
+
+        if ( params.competitionId && params.entityId )
+        {
+            requestParams.baseUrl  +=   '/%competitionId%/application/%entityId%/review';
+            requestParams.baseUrl   =   requestParams.baseUrl.replace( "%competitionId%", params.competitionId )
+                                                             .replace( "%entityId%", params.entityId );
+        }
+
+        api._call( requestParams );
+    };
+
     // POST /competition/{competitionId}/application
     // PUT /competition/{competitionId}/application/{entityId}
     // Apply for competition --> Apply --> Submit --> Withdraw --> Reject
-    competition.assignPlanToCompetition      = function( params )
+    competition.updatePlanStatusForCompetition      = function( params )
     {
         var method          = params.method
         ,   requestParams   =

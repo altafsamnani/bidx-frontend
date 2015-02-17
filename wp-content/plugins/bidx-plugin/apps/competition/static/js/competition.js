@@ -6,6 +6,8 @@
     var competitionVars             = window.__bidxCompetition || {}
     ,   applicationObj
     ,   actorsObj
+    ,   competitionBidxMeta
+
     ,   $element                    = $( "#competitionSummary" )
     ,   $snippets                   = $element.find( ".snippets" )
 
@@ -166,6 +168,9 @@
         applicationObj              = bidx.utils.getValue( competitionVars, 'applications');
 
         actorsObj                   = bidx.utils.getValue( competitionVars, 'actors');
+
+        competitionBidxMeta         = bidx.utils.getValue( competitionVars, 'bidxMeta');
+
     }
 
     // Constants
@@ -1261,26 +1266,43 @@ function formatold ( d ) {
 /* Formatting function for row details - modify as you need */
 function format ( data, row )
 {
-    var     snippet                 = $("#list-card-snippet").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listError              = $("#error-card").html().replace(/(<!--)*(-->)*/g, "")
-        ,   isGroupAdmin            = _.contains( loggedInMemberRoles, 'GroupAdmin')
-        ,   status                  = data.status
+    var     snippet
+        ,   $listError                  =   $("#error-card").html().replace(/(<!--)*(-->)*/g, "")
+        ,   isGroupAdmin                =   _.contains( loggedInMemberRoles, 'GroupAdmin')
+        ,   loggedInCompetitionRoles    =   competitionBidxMeta.bidxCompetitionRoles
+        ,   status                      =   data.status
+        ,   reviews                     =   data.reviews
         ,   $listItem
-        ,   competitionManagers
-        ,   isCompetitionManager
+        ,   isHavingAssessorReview
+        ,   isHavingJudgeReview
+        ,   isHavingAdminRole
         ,   bidxMeta
         ,   listItem
         ;
 
-        isCompetitionManager        = _.findWhere(  competitionManagers
+        isHavingAdminRole    = _.findWhere(  reviews
                                                 ,   {
                                                         role:   "COMPETITION_ADMIN"
                                                     ,   userId: loggedInMemberId
                                                     }  );
 
+        isHavingAssessorReview       = _.findWhere(  reviews
+                                                ,   {
+                                                        role:   "COMPETITION_ASSESSOR"
+                                                    ,   userId: loggedInMemberId
+                                                    }  );
+
+        isHavingJudgeReview         = _.findWhere(  reviews
+                                                ,   {
+                                                        role:   "COMPETITION_JUDGE"
+                                                    ,   userId: loggedInMemberId
+                                                    }  );
+
         switch(true)
         {
-            case isGroupAdmin || isCompetitionManager:
+            case isGroupAdmin || !_.isEmpty ( isHavingAdminRole ):
+
+            snippet     =   $("#admin-card-snippet").html().replace(/(<!--)*(-->)*/g, "");
 
             listItem    =   snippet
                         .replace( /%entityId%/g,    data.entityId )
@@ -1293,11 +1315,49 @@ function format ( data, row )
 
             break;
 
-            case 'assessor':
+            case !_.isEmpty ( isHavingAssessorReview ):
+
+            snippet     =   $("#assessor-card-snippet").html().replace(/(<!--)*(-->)*/g, "");
+            listItem    =   snippet
+                            .replace( /%entityId%/g,            data.entityId )
+                            .replace( /%bidxRatingAverage%/g,   isHavingAssessorReview.reviewRating)
+                            ;
+
+            $listItem   =   $(listItem);
+
+            /* Assign Next Action According to Role */
+            data.role      =   'COMPETITION_ASSESSOR';
+            data.action    =   'finalist';
+
+            _assignAssessorJudgeActions( {
+                                            $listItem:  $listItem
+                                        ,   review:     isHavingAssessorReview
+                                        ,   data:       data
+                                        ,   row:        row
+                                    });
 
             break;
 
-            case 'judge':
+            case !_.isEmpty ( isHavingJudgeReview ):
+
+            snippet     =   $("#judge-card-snippet").html().replace(/(<!--)*(-->)*/g, "");
+            listItem    =   snippet
+                            .replace( /%entityId%/g,            data.entityId )
+                            .replace( /%bidxRatingAverage%/g,   isHavingJudgeReview.reviewRating)
+                            ;
+
+            $listItem   =   $(listItem);
+
+            /* Assign Next Action According to Role */
+            data.role      =   'COMPETITION_JUDGE';
+            data.action    =   'winner';
+
+            _assignAssessorJudgeActions( {
+                                            $listItem:  $listItem
+                                        ,   review:     isHavingJudgeReview
+                                        ,   data:       data
+                                        ,   row:        row
+                                        });
 
             break;
         }
@@ -1313,7 +1373,7 @@ function _initApplicationsView()
     ,   bidxMeta
     ,   business
     ,   entrepreneur
-    ,   score
+    ,   rating
     ;
     bidx.utils.log(applicationObj, 'applicationObj');
 
@@ -1322,11 +1382,11 @@ function _initApplicationsView()
         bidxMeta        =   bidx.utils.getValue( response, 'bidxMeta');
         business        =   bidx.utils.getValue( bidxMeta, 'bidxEntityDisplayName');
         entrepreneur    =   bidx.utils.getValue( bidxMeta, 'bidxOwnerDisplayName');
-        score           =   bidx.utils.getValue( bidxMeta, 'bidxRatingAverage');
+        rating          =   bidx.utils.getValue( bidxMeta, 'bidxRatingAverage');
         displayRows     =   {
                                 business:       business
                             ,   entrepreneur:   entrepreneur
-                            ,   score:          (score) ? score : 0
+                            ,   rating:         (rating) ? rating : 0
                             ,   status:         response.status
                             ,   entityId:       response.entityId
                             ,   reviews:        response.reviews
@@ -1367,7 +1427,7 @@ function _initApplicationsView()
                 },
                 { "data": "business" },
                 { "data": "entrepreneur" },
-                { "data": "score" },
+                { "data": "rating" },
                 { "data": "status" }
             ]
         ,   "order": [[1, 'asc']]
@@ -2616,8 +2676,8 @@ function _competitionTimer (  )
                 $judges.append( judgeList );
 
                 /* Get Already Assigned Assessors if any */
-                judgeReviewsList            =   _.where(reviews, {role: "COMPETITION_JUDGE"}); // Returns object who is having assessor role
-                assignedJudgesIdList       =   _.pluck( judgeReviewsList, 'competitionActorId'); //return back only actorids from the object
+                judgeReviewsList        =   _.where(reviews, {role: "COMPETITION_JUDGE"}); // Returns object who is having assessor role
+                assignedJudgesIdList    =   _.pluck( judgeReviewsList, 'competitionActorId'); //return back only actorids from the object
 
                 if( assignedJudgesIdList )
                 {
@@ -2648,6 +2708,188 @@ function _competitionTimer (  )
             }
         }
     }
+    //Start here
+    function _assignRecommendations( options )
+    {
+        var successMsg
+        ,   statusMsg
+        ,   rating
+        ,   $cardEntity
+        ,   $listItem   =   options.$listItem
+        ,   $raty       =   options.$raty
+        ,   data        =   options.data
+        ,   row         =   options.row
+        ,   role        =   data.role
+        ,   action      =   data.action
+        ,   entityId    =   data.entityId
+        ,   btnClass    =   ".set-" + action +"-" + entityId
+        ,   $btnAction  =   $listItem.find( btnClass )
+        ,   confirmTimer
+        ,   orgText
+        ;
+
+        $btnAction.click( function( e )
+        {
+            e.preventDefault();
+
+            var params
+            ,   recommendation
+            ,   btnEntityId
+            ,   businessPlanEntityId
+            ,   radioName
+            ,   data
+            ,   $radio
+            ,   $comment
+            ,   comment
+            ,   commentName
+            ;
+
+            businessPlanEntityId    =   $btnAction.data( "entityid" );
+            radioName               =   'is' + action + businessPlanEntityId;
+            $radio                  =   $listItem.find( "[name=" + radioName + "]" );
+            recommendation          =   bidx.utils.getElementValue( $radio ); // Finalist/Winner Recommendation value ex Finalist/Not Finalist/Winner/Not Winner
+
+            commentName             =   'comment-' + action + '-' + businessPlanEntityId;
+            $comment                =   $listItem.find( "[name=" + commentName + "]" );
+            comment                 =   bidx.utils.getElementValue( $comment );
+
+            $raty                   =   $ratingWrapper.find( ".raty-" + businessPlanEntityId );
+            rating                  =   $raty.data( 'rating' );
+
+            if ( !businessPlanEntityId )
+            {
+                bidx.utils.error( "[competition] No entity id, unable to apply!", businessPlanEntityId );
+                return;
+            }
+
+            bidx.utils.log('[competition] Competition Action Button Clicked', recommendation);
+            bidx.utils.log('[competition] Competition Action EntityId', businessPlanEntityId);
+
+            function startConfirmTimer( $btn, orgText )
+            {
+                confirmTimer = setTimeout( function( )
+                {
+                    $btn.text( orgText );
+                    $btn.data( "confirm", false );
+
+                    $btn.removeClass( "btn-danger" );
+                    $btn.addClass( "btn-md" );
+
+                }, 5000 );
+
+            }
+
+            if ( $btnAction.data( "confirm" ) )
+            {
+                clearTimeout( confirmTimer );
+
+                //quick reset of the timer array you just cleared
+
+                _recoverOrigForm( $btnAction
+                                ,   {
+                                        message:    bidx.i18n.i( "Loading" )
+                                    ,   disabled:   'disabled'
+                                    }
+                                );
+
+                data    =   {
+                                "role":           role,
+                                "recommendation": recommendation,
+                                "comment":        comment,
+                                "rating":         rating
+                            };
+
+
+                _assignRecommendationForCompetition(
+                {
+                    competitionId:  competitionSummaryId
+                ,   entityId:       businessPlanEntityId
+                ,   data:           data
+                ,   callback:       function( response )
+                                    {
+                                        if (options && options.success)
+                                        {
+                                            options.success( response );
+                                        }
+
+                                        $btnAction.text( orgText );
+                                        //_recoverOrigForm( $btnAction, $btnAction.data( "confirm" ));
+                                    }
+                ,  error:           function ( )
+                                    {
+                                        $btnAction.text( orgText );
+                                    }
+                } );
+
+            }
+            else
+            {
+                orgText = $btnAction.text();
+
+                $btnAction.data( "confirm", true );
+
+                $btnAction.addClass( "btn-danger" );
+                $btnAction.i18nText( "btnConfirm" );
+
+                startConfirmTimer( $btnAction, orgText );
+            }
+        });
+
+    }
+
+    function  _assignAssessorJudgeActions( options )
+    {
+        var $radio
+        ,   $raty
+        ,   radioName
+        ,   review          =   options.review
+        ,   $listItem       =   options.$listItem
+        ,   data            =   options.data
+        ,   row             =   options.row
+        ,   role            =   data.role
+        ,   action          =   data.action
+        ,   entityId        =   data.entityId
+        ,   wrapperClass    =   ".wrapper-" + action +"-" + entityId
+        ,   $wrapper        =   $listItem.find( wrapperClass )
+        ,   commentName
+        ,   $comment
+        ,   commentText     =  ( review.comment ) ? review.comment : false
+        ,   recommendation  =  ( review.competitionRecommendation ) ? review.competitionRecommendation : false
+        ;
+
+        if( recommendation )
+        {
+            radioName           =   'is' + action + entityId;
+            $radio              =   $listItem.find( "[name=" + radioName + "]" );
+            bidx.utils.setElementValue( $radio, recommendation ); // Finalist/Winner Recommendation value ex Finalist/Not Finalist/Winner/Not Winner
+        }
+
+        if( commentText )
+        {
+            commentName     =   'comment-' + action + '-' + entityId;
+            $comment        =   $listItem.find( "[name=" + commentName + "]" );
+            bidx.utils.setElementValue( $comment, commentText );
+        }
+
+        /* Displaying Rating Star Logic */
+        $ratingWrapper      =  $listItem.find( ".rating-wrapper" );
+        $raty               =  $ratingWrapper.find( ".raty-" + data.entityId );
+
+        $raty.raty ({
+                        starType:   'i',
+                        hints:      ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent'],
+                        score:      review.reviewRating,
+                        click:      function ( value )
+                                    {
+                                        $(this).data( 'rating', value );
+                                    }
+                    });
+
+        $wrapper.removeClass('hide');
+
+        _assignRecommendations( options );
+
+    }
 
     function _assignManagerActions( $listItem, data, row )
     {
@@ -2672,6 +2914,7 @@ function _competitionTimer (  )
         bidx.utils.log('status',status);
 
         _displayButtonsAccordingToStatus( $listItem, data );
+
         _loadActorDropdownAccordingToStatus( $listItem, data);
 
          _assignBtnAction(
@@ -2762,8 +3005,8 @@ function _competitionTimer (  )
         ,   successMsg
         ,   statusMsg
         ,   $cardEntity
-        ,   $setSubmit     = $listItem.find( ".set-submit")
-        ,   $setWithdraw   = $listItem.find( ".set-withdraw")
+        ,   $setSubmit      = $listItem.find( ".set-submit")
+        ,   $setWithdraw    = $listItem.find( ".set-withdraw")
         ,   $cardHeader     = $listItem.find( ".cardHeader")
         ,   snippetSuccess  = $("#success-card").html().replace(/(<!--)*(-->)*/g, "")
         ,   entityId
@@ -2912,13 +3155,64 @@ function _competitionTimer (  )
         );
     }
 
+     function _assignRecommendationForCompetition( options )
+    {
+        var entityId    =   options.entityId
+        ;
+
+        bidx.api.call(
+            "competition.updateRecommendationForCompetition"
+        ,   {
+                competitionId:  options.competitionId
+            ,   entityId:       entityId
+            ,   groupDomain:    bidx.common.groupDomain
+            ,   data:           options.data
+            ,   success:        function( response )
+                {
+                    // Do we have edit perms?
+                    //
+                    bidx.utils.log('response',response);
+                    //  execute callback if provided
+                    if (options && options.callback)
+                    {
+                        options.callback( response );
+                    }
+                }
+
+                , error: function(jqXhr, textStatus)
+                {
+                    var errorMsg
+                    ,   statusMsg
+                    ,   $cardHeader     = $element.find( ".cardHeader" + entityId )
+                    ,   snippetError    = $("#errorapp-card").html().replace(/(<!--)*(-->)*/g, "")
+                    ,   status          = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                    errorMsg = status + ' ' + bidx.i18n.i( "ERROR_ASSIGNACTOR", appName) + entityId  ;
+
+                    statusMsg = snippetError
+                                .replace( /%errorMsg%/g, errorMsg)
+                                .replace( /%entityId%/g, entityId);
+
+                    $cardHeader.empty().prepend($(statusMsg));
+
+                    _showAllView('errorCard' + entityId );
+
+                    if (options && options.error)
+                    {
+                        options.error( );
+                    }
+                }
+            }
+        );
+    }
+
     function _updatePlanStatusToCompetition( options )
     {
         var entityId    =   options.data.entityId
         ;
 
         bidx.api.call(
-            "competition.assignPlanToCompetition"
+            "competition.updatePlanStatusForCompetition"
         ,   {
                 competitionId:  options.competitionId
             ,   groupDomain:    bidx.common.groupDomain
