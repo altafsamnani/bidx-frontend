@@ -15,8 +15,15 @@
  */
 class GroupService extends APIbridge {
 
-	/** cache timeout **/
-	private $cache = 5;
+	/**
+	 * Acceptable cache timeout (seconds) used when getting latest business summaries
+	 * and latest group members.
+	 * 
+	 * (Arjan, 2014-01-19: other group API results are cached for an hour, and it seems
+	 * that the latest business summaries and latest group members results are based on
+	 * the very same JSON results from the backend group API, hence could be shared?) 
+	 */
+	private $cache = 600;
 
 
 	/**
@@ -71,7 +78,7 @@ class GroupService extends APIbridge {
    * Retrieves the full group data
    * @param string $group_id optional a group id otherwise the current
    * @param string $transient optionally the name of the transient storage value named localgroup
-   * @param string $cached amount of seconds cache
+   * @param string $cached number of seconds before cache should be refreshed
    * @link http://bidx.net/api/v1/group
    * @return full result from the service in JSON form
    */
@@ -89,7 +96,7 @@ class GroupService extends APIbridge {
 			// method added for robustness
 			if ( "ERROR" != $result->status ) {
 				set_transient( $transient, $result, $cached ); //1 hour default
-				set_transient( $transient . '_backup', $result, $cached + 5 ); //backup store for 5 minute
+				set_transient( $transient . '_backup', $result, $cached + 5*60 ); // store backup for 5 minutes more
 			} else {
 				$result = get_transient( $transient . '_backup' );
 			}

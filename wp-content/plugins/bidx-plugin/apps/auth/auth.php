@@ -46,6 +46,39 @@ class auth {
 	 */
 	function load($atts) {
 
+        // BIDX-2837 Very quick and dirty workaround for MEK/GESR
+        // BEWARE: see the very same hack in auth.js and login.php
+
+        // This "auth" app also handles views for /join and /activate. Beware that /join behaves
+        // differently when authenticated (choose a role, or join the group, or show the homepage)
+        // and when not authenticated (show all login options).
+        //
+        // After successful authentication bidx-soca always redirects to /join, which will then
+        // figure out if the user still needs to select a role or join the group. If true, join.js
+        // will set the fragment to #join/auth which in its navigate(...) is handled exactly like
+        // #join/portal and #join/role, by again checking the current situation and rewriting to
+        // one of those three options. This works fine if the user indeed needs to authenticate
+        // and is shown some other web page after going to /auth/#auth/login. But if there is no
+        // need to authenticate, the user will go from /auth/#auth/login to /join on the very same 
+        // website, making browsers append the original fragment, effectively taking the user to
+        // /join/#auth/login, which is invalid.
+        //
+        // To fix the illegal fragment in PHP, we cannot easily first clear the fragment. However,
+        // we can add a fragment to the bidx-soca URL (which is not used by bidx-soca). Adding an
+        // empty fragment (just the #) works in Chrome, but Firefox then still appends #auth/login.
+        // So, the solution is to add the expected fragment, #join/role, to the bidx-soca URL (or
+        // configure bidx-soca to add the fragment in its redirect).
+
+        $authenticated = ( BidxCommon::$staticSession->authenticated === 'true' );
+        $siteUrl = get_site_url();
+        $subdomain = BidxCommon::get_bidx_subdomain( false, $siteUrl );
+        if ( $subdomain === "gesr" && !$authenticated ) {
+            // If the domain has 2 subdomains such as gesr.demo.bidx.net, then assume beta testing.
+            $isGesrBeta = substr_count( $siteUrl, "." ) > 2;
+            header( "Location: " . $siteUrl. "/bidx-soca/bidxauth?id=http://gesr.net/" . ($isGesrBeta ? "beta" : "") . '#join/role' );
+            return;
+        }
+
 		// 1. Template Rendering
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/auth/templates/' );
