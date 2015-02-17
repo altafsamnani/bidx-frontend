@@ -7,7 +7,7 @@ get_header(); ?>
 
 <section id="page-title-wrapper" class="page-title-wrapper pattern-6 service">
     <div class="container">
-        <?php edit_post_link('<small>Edit this page</small>','',''); ?>
+        <?php edit_post_link('<small>Edit</small>','',''); ?>
         <h1><?php the_title(); ?></h1>
     </div>
 </section>

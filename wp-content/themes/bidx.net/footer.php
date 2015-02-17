@@ -4,7 +4,7 @@
             <div class="col-md-3">
                 <div class="widget about-us">
                     <div class="footer-brand"><?php _e('<span>bidx</span>.net','bidxtheme');?></div>
-                    <p><?php _e('Grow your local business network and create new jobs. Your economy depends on it!','bidxtheme');?></p>
+                    <p><?php _e('With multiple bidx portals in one country you can create an entrepreneurial ecosystem','bidxtheme');?></p>
                 </div>
                 <!-- /.about-us -->
                 <div class="widget stay-connedted">

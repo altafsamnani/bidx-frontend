@@ -538,9 +538,21 @@ h1, h2, h3, h4, h5, h6,
     }
 }
 
-.table-bottom-border
+table.table-bottom-border
 {
     border-bottom: 1px solid @table-border-color;
+    th, td
+    {
+        background-color: transparent;
+    }
+    td
+    {
+        width: 40%;
+        & + td
+        {
+            width: auto;
+        }
+    }
 }
 
 // Cropping
@@ -2126,6 +2138,10 @@ hr
 .table
 {
     font-size: @font-size-base;
+    th, td
+    {
+        background-color: @white;
+    }
 }
 .table-label-width td:first-child
 {

@@ -157,7 +157,7 @@ $exo: 'Exo 2', sans-serif;
 
 body {
     font-family: $exo;
-    font-size: 20px;
+    font-size: 18px;
     color: $color_0;
     font-weight: 200;
 }
@@ -606,6 +606,41 @@ a {
             @include opacity(1);
             @include filter(alpha(opacity=100));
         }
+    }
+}
+.free-trial
+{
+    background-color: rgba(19,63,33,0.75);
+    padding: 20px 30px 30px;
+}
+.trial-title
+{
+    font-family: $exo;
+    color: #fff;
+    font-size: 55px;
+    font-weight: 100;
+    color: #f9b822;
+    &.small
+    {
+        font-size: 35px;
+    }
+}
+.trial-sub
+{
+    font-family: $exo;
+    color: #fff;
+    font-size: 25px;
+    font-weight: 600;
+}
+@media (max-width: 767px)
+{
+    .trial-title
+    {
+        font-size: 45px;
+    }
+    .trial-sub
+    {
+        font-size: 25px;
     }
 }
 .tp-leftarrow {
@@ -2153,6 +2188,117 @@ blockquote small {
     margin-bottom: 20px;
 }
 
+.steps
+{
+    .step
+    {
+        padding: 20px;
+        text-align: center;
+    }
+    .step-number
+    {
+        font-size: 30px;
+    }
+    .step-description
+    {
+        font-size: 20px;
+    }
+}
+
+.package
+{
+    @include single-box-shadow(rgba(80,80,80,0.35), 0, 0, 5px, 0);
+    margin: 0 0 20px 0;
+    background-color: #fff;
+}
+.package-title
+{
+    text-align: center;
+    font-weight: 600;
+    font-size: 22px;
+    padding: 8px;
+    background-color: lighten( darken($hc2_yellow, 40%), 10% );
+    color: #FFF;
+}
+.product-title
+{
+    text-align: center;
+    font-weight: 500;
+    font-size: 20px;
+    padding: 8px 8px 0 8px;
+    background-color: lighten($hc2_yellow, 40%);
+    color: lighten( darken($hc2_yellow, 40%), 10% );
+}
+.product-descr
+{
+    text-align: center;
+    font-weight: 300;
+    font-size: 15px;
+    padding: 0 8px 8px 8px;
+    background-color: lighten($hc2_yellow, 40%);
+}
+.product-divider
+{
+    border-bottom: 1px solid #E4CEAF;
+}
+.sect-portal
+{
+    .product-descr
+    {
+        min-height: 50px;
+    }
+}
+.sect-training
+{
+    .product-descr
+    {
+        min-height: 95px;    
+    }
+}
+.sect-service
+{
+    .product-descr
+    {
+        min-height: 75px;
+    }
+}
+.sect-competition
+{
+    .product-descr
+    {
+        min-height: 50px;
+    }
+}
+.sect-hotline
+{
+    .product-descr
+    {
+        min-height: 50px;
+    }
+}
+.sect-other
+{
+    .product-descr
+    {
+        min-height: 100px;
+    }
+}
+.sect-empty
+{
+    .product-descr
+    {
+        min-height: 129px;
+    }
+}
+.sect-price
+{
+    background-color: lighten($hc2_yellow, 40%);
+    text-align: center;
+    font-weight: 600;
+    font-size: 25px;
+    padding: 8px;
+    color: lighten( darken($hc2_yellow, 20%), 10% );
+}
 
 @media (max-width: 767px) {
     .front-mobile {
@@ -2382,12 +2528,18 @@ blockquote small {
                 }
                 .active > {
                     a {
-                        @extend %extend_9;
+                        border-bottom: 3px solid $lightgreen;
+                        padding-bottom: 37px;
+                        background-color: $color_17;
                         &:hover {
-                            @extend %extend_9;
+                            border-bottom: 3px solid $lightgreen;
+                            padding-bottom: 37px;
+                            background-color: $color_17;
                         }
                         &:focus {
-                            @extend %extend_9;
+                            border-bottom: 3px solid $lightgreen;
+                            padding-bottom: 37px;
+                            background-color: $color_17;
                         }
                         &:after {
                             position: absolute;
@@ -2439,13 +2591,17 @@ blockquote small {
                     border-left: 5px solid $white;
                     color: $lightgreen;
                     &:hover {
-                        @extend %extend_10;
+                        color: $lightgreen !important;
+                        background-color: $lightgreen;
+                        border-color: $lightgreen;
                         background-color: $color_12;
                         border-left: 5px solid $darkgreen;
                         color: $black;
                     }
                     &:focus {
-                        @extend %extend_10;
+                        color: $lightgreen !important;
+                        background-color: $lightgreen;
+                        border-color: $lightgreen;
                         background-color: $white;
                     }
                 }
@@ -2457,7 +2613,9 @@ blockquote small {
             }
             .active > {
                 a {
-                    @extend %extend_10;
+                    color: $lightgreen !important;
+                    background-color: $lightgreen;
+                    border-color: $lightgreen;
                     background-color: $darkgreen;
                     border-left: 5px solid $darkgreen;
                     color: $white;
