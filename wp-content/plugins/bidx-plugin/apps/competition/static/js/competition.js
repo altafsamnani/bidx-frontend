@@ -1263,64 +1263,183 @@ function formatold ( d ) {
     '</div>';
 }
 
+function _displayRecommendations( options )
+{
+    var $listItem           =   options.$listItem
+    ,   reviews             =   options.reviews
+    ,   snippet             =   $("#recommendation-display-snippet").html().replace(/(<!--)*(-->)*/g, "")
+    ,   assessorReviews
+    ,   assesorReviewItem   =   ''
+    ,   judgeReviews
+    ;
+    bidx.utils.log('review' , reviews);
+    assessorReviews     =   _.where(  reviews
+                                            ,   {
+                                                    role:   "COMPETITION_ASSESSOR"
+                                                }  );
+    judgeReviews        =   _.where(  reviews
+                                            ,   {
+                                                    role:   "COMPETITION_JUDGE"
+                                                }  );
+
+    $.each( assessorReviews, function( idx, review )
+    {
+        bidx.utils.log('review' , review);
+        assesorReviewItem    +=   snippet
+                                .replace ( /%recommendationTitle%/g,        bidx.i18n.i( 'assessorRecommendation', appName) )
+                                .replace( /%userDisplayName%/g,             review.userDisplayName )
+                                .replace( /%reviewRating%/g,                review.reviewRating)
+                                .replace( /%competitionRecommendation%/g,   review.competitionRecommendation)
+                                .replace( /%comment%/g,                     review.comment)
+                                ;
+
+
+    });
+    bidx.utils.log('assesorReviewItem' , assesorReviewItem);
+    return assesorReviewItem;
+
+}
+
 /* Formatting function for row details - modify as you need */
 function format ( data, row )
 {
-    var     snippet
-        ,   $listError                  =   $("#error-card").html().replace(/(<!--)*(-->)*/g, "")
-        ,   isGroupAdmin                =   _.contains( loggedInMemberRoles, 'GroupAdmin')
-        ,   loggedInCompetitionRoles    =   competitionBidxMeta.bidxCompetitionRoles
-        ,   status                      =   data.status
-        ,   reviews                     =   data.reviews
-        ,   $listItem
-        ,   isHavingAssessorReview
-        ,   isHavingJudgeReview
-        ,   isHavingAdminRole
-        ,   bidxMeta
-        ,   listItem
-        ;
+    var snippet
+    ,   assesorReviewItem           =   ''
+    ,   $wrapperAssessor
+    ,   $listError                  =   $("#error-card").html().replace(/(<!--)*(-->)*/g, "")
+    ,   isGroupAdmin                =   _.contains( loggedInMemberRoles, 'GroupAdmin')
+    ,   loggedInCompetitionRoles    =   competitionBidxMeta.bidxCompetitionRoles
+    ,   status                      =   data.status
+    ,   reviews                     =   data.reviews
+    ,   $listItem
+    ,   isHavingAssessorReview
+    ,   isHavingJudgeReview
+    ,   isHavingAdminRoleReview
+    ,   bidxMeta
+    ,   listItem
+    ,   ratingClass
+    ,   reviewRating
+    ,   regularExp
+    ,   displayReview
+    ;
 
-        isHavingAdminRole    = _.findWhere(  reviews
-                                                ,   {
-                                                        role:   "COMPETITION_ADMIN"
-                                                    ,   userId: loggedInMemberId
-                                                    }  );
+    isHavingAdminRoleReview    = _.findWhere(  reviews
+                                            ,   {
+                                                    role:   "COMPETITION_ADMIN"
+                                                ,   userId: loggedInMemberId
+                                                }  );
 
-        isHavingAssessorReview       = _.findWhere(  reviews
-                                                ,   {
-                                                        role:   "COMPETITION_ASSESSOR"
-                                                    ,   userId: loggedInMemberId
-                                                    }  );
+    isHavingAssessorReview       = _.findWhere(  reviews
+                                            ,   {
+                                                    role:   "COMPETITION_ASSESSOR"
+                                                ,   userId: loggedInMemberId
+                                                }  );
 
-        isHavingJudgeReview         = _.findWhere(  reviews
-                                                ,   {
-                                                        role:   "COMPETITION_JUDGE"
-                                                    ,   userId: loggedInMemberId
-                                                    }  );
+    isHavingJudgeReview         = _.findWhere(  reviews
+                                            ,   {
+                                                    role:   "COMPETITION_JUDGE"
+                                                ,   userId: loggedInMemberId
+                                                }  );
 
-        switch(true)
-        {
-            case isGroupAdmin || !_.isEmpty ( isHavingAdminRole ):
+    switch(true)
+    {
+        case isGroupAdmin || !_.isEmpty ( isHavingAdminRoleReview ):
 
-            snippet     =   $("#admin-card-snippet").html().replace(/(<!--)*(-->)*/g, "");
+            snippet             =   $("#admin-card-snippet").html().replace(/(<!--)*(-->)*/g, "");
+            ratingClass         =   "%bidx" + status + "RatingAverage%"; //Start from here
+            regularExp          =   new RegExp ( ratingClass, "g" ) ;
+            reviewRating        =   bidx.utils.getValue(isHavingAdminRoleReview, 'reviewRating' );
+
+            displayReview       =   _displayRecommendations(
+                                    {
+                                        $listItem:  $listItem
+                                    ,   reviews:     reviews
+                                    });
 
             listItem    =   snippet
-                        .replace( /%entityId%/g,    data.entityId )
-                        ;
+                            .replace( /%entityId%/g,                data.entityId )
+                            .replace( regularExp,                   ( reviewRating )  ? reviewRating : 0)
+                            .replace( /%assessorsRecommendation%/g, displayReview)
+                            ;
 
             $listItem   =   $(listItem);
 
+            /* Dislay Assessor Review if it exists */
+            $wrapperAssessor    =   $listItem.find('.wrapper-recommend-assesor-' + data.entityId);
+            if( displayReview !== '' )
+            {
+                $wrapperAssessor.removeClass('hide');
+            }
             /* Assign Next Action According to Role */
             _assignManagerActions( $listItem,  data, row);
 
+            if( status === 'SUBMITTED' )
+            {
+                /* Assign Next Action According to Role */
+                data.role      =   'COMPETITION_ADMIN';
+                data.action    =   'finalist';
+                bidx.utils.log('COMPETITION_ADMIN', isHavingAdminRoleReview );
+                _assignAssessorJudgeActions( {
+                                                $listItem:  $listItem
+                                            ,   review:     isHavingAdminRoleReview
+                                            ,   data:       data
+                                            ,   row:        row
+                                            });
+            }
+
+
+
             break;
 
-            case !_.isEmpty ( isHavingAssessorReview ):
+        case !_.isEmpty ( isHavingJudgeReview ):
+
+            if( !_.isEmpty ( isHavingAssessorReview ) )
+            {
+                var snippetAssessor  =   $("#recommendation-display-snippet").html().replace(/(<!--)*(-->)*/g, "");
+
+                assesorReviewItem    =   snippetAssessor
+                                        .replace ( /%recommendationTitle%/g, bidx.i18n.i( 'assessorRecommendation', appName) )
+                                        .replace( /%userDisplayName%/g, isHavingAssessorReview.userDisplayName )
+                                        .replace( /%reviewRating%/g,    isHavingAssessorReview.reviewRating)
+                                        .replace( /%competitionRecommendation%/g,  isHavingAssessorReview.competitionRecommendation)
+                                        .replace( /%comment%/g,         isHavingAssessorReview.comment)
+                                        ;
+            }
+
+            snippet         =   $("#judge-card-snippet").html().replace(/(<!--)*(-->)*/g, "");
+            ratingClass     =   '/%bidx' + status + 'RatingAverage%/g';
+            reviewRating    =   bidx.utils.getValue(isHavingJudgeReview, 'reviewRating' );
+
+            listItem        =   snippet
+                                .replace( /%entityId%/g,            data.entityId )
+                                .replace( ratingClass,   ( reviewRating )  ? reviewRating : 0)
+                                .replace( /%assesorReviewItem%/g,   assesorReviewItem)
+                                ;
+
+            $listItem       =   $(listItem);
+
+            /* Assign Next Action According to Role */
+            data.role       =   'COMPETITION_JUDGE';
+            data.action     =   'winner';
+
+            _assignAssessorJudgeActions( {
+                                            $listItem:  $listItem
+                                        ,   review:     isHavingJudgeReview
+                                        ,   data:       data
+                                        ,   row:        row
+                                        });
+
+            break;
+
+        case !_.isEmpty ( isHavingAssessorReview ):
 
             snippet     =   $("#assessor-card-snippet").html().replace(/(<!--)*(-->)*/g, "");
+            ratingClass     =   '/%bidx' + status + 'RatingAverage%/g';
+            reviewRating    =   bidx.utils.getValue(isHavingAssessorReview, 'reviewRating' );
+
             listItem    =   snippet
                             .replace( /%entityId%/g,            data.entityId )
-                            .replace( /%bidxRatingAverage%/g,   isHavingAssessorReview.reviewRating)
+                            .replace( ratingClass,   ( reviewRating )  ? reviewRating : 0)
                             ;
 
             $listItem   =   $(listItem);
@@ -1336,33 +1455,11 @@ function format ( data, row )
                                         ,   row:        row
                                     });
 
-            break;
+        break;
 
-            case !_.isEmpty ( isHavingJudgeReview ):
+    }
 
-            snippet     =   $("#judge-card-snippet").html().replace(/(<!--)*(-->)*/g, "");
-            listItem    =   snippet
-                            .replace( /%entityId%/g,            data.entityId )
-                            .replace( /%bidxRatingAverage%/g,   isHavingJudgeReview.reviewRating)
-                            ;
-
-            $listItem   =   $(listItem);
-
-            /* Assign Next Action According to Role */
-            data.role      =   'COMPETITION_JUDGE';
-            data.action    =   'winner';
-
-            _assignAssessorJudgeActions( {
-                                            $listItem:  $listItem
-                                        ,   review:     isHavingJudgeReview
-                                        ,   data:       data
-                                        ,   row:        row
-                                        });
-
-            break;
-        }
-
-        return $listItem;
+    return $listItem;
 
 }
 
@@ -2708,13 +2805,107 @@ function _competitionTimer (  )
             }
         }
     }
+
+
+    function  _assignAssessorJudgeActions( options )
+    {
+        var $radio
+        ,   $raty
+        ,   ratingClass
+        ,   ratingWrapperClass
+        ,   radioName
+        ,   statusMsg
+        ,   successMsg
+        ,   status
+        ,   review          =   options.review
+        ,   $listItem       =   options.$listItem
+        ,   data            =   options.data
+        ,   row             =   options.row
+        ,   role            =   data.role
+        ,   action          =   data.action
+        ,   entityId        =   data.entityId
+        ,   wrapperClass    =   ".wrapper-recommend-" + action +"-" + entityId
+        ,   $recommendTitle =   $listItem.find('.recommendationTitle')
+        ,   $wrapper        =   $listItem.find( wrapperClass )
+        ,   commentName
+        ,   $comment
+        ,   commentText     =  bidx.utils.getValue( review, 'comment')
+        ,   recommendation  =  bidx.utils.getValue( review, 'competitionRecommendation')
+        ,   reviewRating    =  bidx.utils.getValue( review, 'reviewRating')
+
+        ,   $cardHeader     = $listItem.find( ".cardHeader" + entityId )
+        ,   snippetSuccess  = $("#success-card").html().replace(/(<!--)*(-->)*/g, "")
+        ;
+
+        if( recommendation )
+        {
+            radioName           =   'recommend-' + action + '-' + entityId;
+            $radio              =   $listItem.find( "[name=" + radioName + "]" );
+            bidx.utils.setElementValue( $radio, recommendation ); // Finalist/Winner Recommendation value ex Finalist/Not Finalist/Winner/Not Winner
+        }
+
+        if( commentText )
+        {
+            commentName     =   'comment-' + action + '-' + entityId;
+            $comment        =   $listItem.find( "[name=" + commentName + "]" );
+            bidx.utils.setElementValue( $comment, commentText );
+        }
+
+        /* Displaying Rating Star Logic */
+        ratingWrapperClass  =   ".rating-wrapper-" + action + '-' + entityId;
+        $ratingWrapper      =  $listItem.find( ratingWrapperClass );
+
+        ratingClass         =  ".raty-" + action + '-' + entityId;
+        $raty               =  $ratingWrapper.find( ratingClass );
+
+        $raty.raty ({
+                        starType:   'i',
+                        hints:      ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent'],
+                        score:      (reviewRating) ? reviewRating : 0,
+                        click:      function ( value )
+                                    {
+                                        $(this).data( 'rating', value );
+                                    }
+                    });
+        $recommendTitle.removeClass('hide');
+        $wrapper.removeClass('hide');
+
+        _assignRecommendations( {
+                                    options:    options
+                                ,   successs:   function( response )
+                                                {
+                                                    entityId    = response.data.id;
+                                                    status      = response.data.status;
+
+                                                    successMsg = bidx.i18n.i('SUCCESS_' + status ,appName);
+
+                                                    statusMsg = snippetSuccess
+                                                                .replace( /%successMsg%/g, successMsg)
+                                                                .replace( /%entityId%/g, entityId)
+                                                                ;
+
+                                                    $cardHeader.prepend($(statusMsg));
+
+                                                    _showAllView('successCard' + entityId );
+
+                                                    _displayButtonsAccordingToStatus( $listItem, response.data );
+
+                                                }
+                                });
+
+    }
+
     //Start here
-    function _assignRecommendations( options )
+    function _assignRecommendations( params )
     {
         var successMsg
         ,   statusMsg
         ,   rating
+        ,   ratingWrapperClass
+        ,   ratingClass
+        ,   $ratingWrapper
         ,   $cardEntity
+        ,   options     =   params.options
         ,   $listItem   =   options.$listItem
         ,   $raty       =   options.$raty
         ,   data        =   options.data
@@ -2722,7 +2913,7 @@ function _competitionTimer (  )
         ,   role        =   data.role
         ,   action      =   data.action
         ,   entityId    =   data.entityId
-        ,   btnClass    =   ".set-" + action +"-" + entityId
+        ,   btnClass    =   ".set-recommend-" + action +"-" + entityId
         ,   $btnAction  =   $listItem.find( btnClass )
         ,   confirmTimer
         ,   orgText
@@ -2745,7 +2936,7 @@ function _competitionTimer (  )
             ;
 
             businessPlanEntityId    =   $btnAction.data( "entityid" );
-            radioName               =   'is' + action + businessPlanEntityId;
+            radioName               =   'recommend-' + action + '-' + businessPlanEntityId;
             $radio                  =   $listItem.find( "[name=" + radioName + "]" );
             recommendation          =   bidx.utils.getElementValue( $radio ); // Finalist/Winner Recommendation value ex Finalist/Not Finalist/Winner/Not Winner
 
@@ -2753,7 +2944,11 @@ function _competitionTimer (  )
             $comment                =   $listItem.find( "[name=" + commentName + "]" );
             comment                 =   bidx.utils.getElementValue( $comment );
 
-            $raty                   =   $ratingWrapper.find( ".raty-" + businessPlanEntityId );
+            ratingWrapperClass      =   ".rating-wrapper-" + action + '-' + businessPlanEntityId;
+            $ratingWrapper          =   $listItem.find( ratingWrapperClass );
+
+            ratingClass             =  ".raty-" + action + '-' + businessPlanEntityId;
+            $raty                   =   $ratingWrapper.find( ratingClass );
             rating                  =   $raty.data( 'rating' );
 
             if ( !businessPlanEntityId )
@@ -2834,60 +3029,6 @@ function _competitionTimer (  )
                 startConfirmTimer( $btnAction, orgText );
             }
         });
-
-    }
-
-    function  _assignAssessorJudgeActions( options )
-    {
-        var $radio
-        ,   $raty
-        ,   radioName
-        ,   review          =   options.review
-        ,   $listItem       =   options.$listItem
-        ,   data            =   options.data
-        ,   row             =   options.row
-        ,   role            =   data.role
-        ,   action          =   data.action
-        ,   entityId        =   data.entityId
-        ,   wrapperClass    =   ".wrapper-" + action +"-" + entityId
-        ,   $wrapper        =   $listItem.find( wrapperClass )
-        ,   commentName
-        ,   $comment
-        ,   commentText     =  ( review.comment ) ? review.comment : false
-        ,   recommendation  =  ( review.competitionRecommendation ) ? review.competitionRecommendation : false
-        ;
-
-        if( recommendation )
-        {
-            radioName           =   'is' + action + entityId;
-            $radio              =   $listItem.find( "[name=" + radioName + "]" );
-            bidx.utils.setElementValue( $radio, recommendation ); // Finalist/Winner Recommendation value ex Finalist/Not Finalist/Winner/Not Winner
-        }
-
-        if( commentText )
-        {
-            commentName     =   'comment-' + action + '-' + entityId;
-            $comment        =   $listItem.find( "[name=" + commentName + "]" );
-            bidx.utils.setElementValue( $comment, commentText );
-        }
-
-        /* Displaying Rating Star Logic */
-        $ratingWrapper      =  $listItem.find( ".rating-wrapper" );
-        $raty               =  $ratingWrapper.find( ".raty-" + data.entityId );
-
-        $raty.raty ({
-                        starType:   'i',
-                        hints:      ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent'],
-                        score:      review.reviewRating,
-                        click:      function ( value )
-                                    {
-                                        $(this).data( 'rating', value );
-                                    }
-                    });
-
-        $wrapper.removeClass('hide');
-
-        _assignRecommendations( options );
 
     }
 

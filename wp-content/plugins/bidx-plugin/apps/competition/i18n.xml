@@ -19,6 +19,7 @@
     <Item value="FINALIST">Finalist</Item>
     <Item value="NOT_WINNER">Not Winner</Item>
     <Item value="WINNER">Winner</Item>
+    <Item value="assessorRecommendation">Assessor Recommendation</Item>
 
     <!-- Success Messages -->
     <Item value="SUCCESS_APPLIED">You have succesfully applied for this competition, Once you are ready you need to submit this plan for reviewing, Thank you!</Item>

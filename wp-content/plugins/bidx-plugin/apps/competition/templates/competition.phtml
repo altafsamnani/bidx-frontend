@@ -736,6 +736,69 @@ if ( !empty( $attachment ) )
         <div class="cardContent main-padding">
             <div class="cardTop">
                 <div class="row">
+                    <div class="col-sm-9 pull-left recommendationTitle hide">
+                        <h4><?php _e('Recommendations', 'bidxplugin');?></h4>
+                    </div>
+                    <div class ="wrapper-recommend-assesor-%entityId% hide" >
+                       %assessorsRecommendation%
+                    </div>
+                    <div class ="wrapper-recommend-judge-%entityId% hide" >
+                       %judgeRecommendation%
+                    </div>
+                    <div class ="wrapper-recommend-finalist-%entityId% hide" >
+                        <div class="col-sm-8">
+                            <label class="inline">Mark as:</label>
+                            <div class="radio inline-radio">
+                                <input data-entityid = "%entityId%" type="radio" value="FINALIST" id="recommend-finalist-%entityId%" name="recommend-finalist-%entityId%" data-toggle="radio" />
+                                <label for="recommend-finalist-%entityId%"><span></span><?php _e('Finalist', 'bidxplugin');?></label>
+                            </div>
+                            <div class="radio inline-radio">
+                                <input data-entityid = "%entityId%" type="radio" value="NOT_FINALIST" id="recommend-notfinalist-%entityId%" name="recommend-finalist-%entityId%" data-toggle="radio" />
+                                <label for="recommend-notfinalist-%entityId%"><span></span><?php _e('Not Finalist', 'bidxplugin');?></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 pull-left">
+                            <div class="rating-wrapper-finalist-%entityId%">
+                                <div data-rating="%bidxFINALISTRatingAverage%" class="raty-finalist-%entityId%"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <textarea type="text" class="form-control" name="comment-finalist-%entityId%" placeholder="<?php _e('Explain your recommendations','bidxplugin');?>"></textarea>
+                        </div>
+                        <div class="col-sm-3 pull-right main-padding">
+                            <div class="text-right">
+                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md set-recommend-finalist-%entityId%"><?php _e('Set','bidxplugin');?></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class ="wrapper-recommend-winner-%entityId% hide" >
+                        <div class="col-sm-8">
+                            <label class="inline">Mark as:</label>
+                            <div class="radio inline-radio">
+                                <input data-entityid = "%entityId%" type="radio" value="WINNER" id="recommend-winner-%entityId%" name="recommend-winner-%entityId%" data-toggle="radio" />
+                                <label for="recommend-winner-%entityId%"><span></span><?php _e('Winner', 'bidxplugin');?></label>
+                            </div>
+                            <div class="radio inline-radio">
+                                <input data-entityid = "%entityId%" type="radio" value="NOT_WINNER" id="recommend-notWinner-%entityId%" name="recommend-winner-%entityId%" data-toggle="radio" />
+                                <label for="recommend-notWinner-%entityId%"><span></span><?php _e('Not Winner', 'bidxplugin');?></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 pull-left">
+                            <div class="rating-wrapper-winner-%entityId%">
+                                <div data-rating="%bidxWINNERRatingAverage%" class="raty-winner-%entityId%"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <textarea type="text" class="form-control" name="comment-winner-%entityId%" placeholder="<?php _e('Explain your recommendations','bidxplugin');?>"></textarea>
+                        </div>
+                        <div class="col-sm-3 pull-right main-padding">
+                            <div class="text-right">
+                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md set-recommend-winner-%entityId%"><?php _e('Set','bidxplugin');?></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-sm-12 wrapper-qualification-%entityId% hide">
                         <div class="hide-overflow">
                             <label class="inline">Qualification:</label>
@@ -817,40 +880,53 @@ if ( !empty( $attachment ) )
     </div>
 -->
 </script>
+
+<script type="text/html" id="recommendation-display-snippet">
+<!--
+    <div class="row">
+        <div class="col-sm-4">%userDisplayName%</div>
+        <div class="col-sm-2">Score: %reviewRating%</div>
+        <div class="col-sm-6">Recommendation: %competitionRecommendation%</div>
+        <div class="col-sm-12"><p class="bottom-border"><i class="fa fa-pencil-square-o"></i> %comment%</p></div>
+    </div>
+-->
+</script>
+
+
 <script type="text/html" id="assessor-card-snippet">
 <!--
-    <div class="cardEntity%entityId%">
+    <div class="cardEntity%entityId% main-padding">
        <div class="row">
             <div class="col-sm-9 pull-left">
                 <h4><?php _e('Assessors Recommendations', 'bidxplugin');?></h4>
             </div>
             <div class="cardHeader%entityId% hide-overflow">
             </div>
-            <div class="cardContent main-padding">
+            <div class="cardContent">
                 <div class="cardTop">
-                    <div class="wrapper-finalist-%entityId% hide">
-                        <div class="col-sm-9">
+                    <div class="wrapper-recommend-finalist-%entityId% hide">
+                        <div class="col-sm-8">
                             <label class="inline">Mark as:</label>
                             <div class="radio inline-radio">
-                                <input data-entityid = "%entityId%" type="radio" value="FINALIST" id="radio-finalist-%entityId%" name="isfinalist%entityId%" data-toggle="radio" />
-                                <label for="radio-finalist"><span></span><?php _e('Finalist', 'bidxplugin');?></label>
+                                <input data-entityid = "%entityId%" type="radio" value="FINALIST" id="recommend-finalist-%entityId%" name="recommend-finalist-%entityId%" data-toggle="radio" />
+                                <label for="recommend-finalist-%entityId%"><span></span><?php _e('Finalist', 'bidxplugin');?></label>
                             </div>
                             <div class="radio inline-radio">
-                                <input data-entityid = "%entityId%" type="radio" value="NOT_FINALIST" id="radio-notFinalist-%entityId%" name="isfinalist%entityId%" data-toggle="radio" />
-                                <label for="radio-notFinalist"><span></span><?php _e('Not Finalist', 'bidxplugin');?></label>
+                                <input data-entityid = "%entityId%" type="radio" value="NOT_FINALIST" id="recommend-notFinalist-%entityId%" name="recommend-finalist-%entityId%" data-toggle="radio" />
+                                <label for="recommend-notFinalist-%entityId%"><span></span><?php _e('Not Finalist', 'bidxplugin');?></label>
                             </div>
                         </div>
-                        <div class="col-sm-3">
-                            <div class="rating-wrapper">
-                                <div data-rating="%bidxRatingAverage%" class="raty-%entityId%"></div>
+                        <div class="col-sm-4 pull-left">
+                            <div class="rating-wrapper-finalist-%entityId%">
+                                <div data-rating="%bidxFINALISTRatingAverage%" class="raty-finalist-%entityId%"></div>
                             </div>
                         </div>
                         <div class="col-sm-12">
                              <textarea type="text" class="form-control" name="comment-finalist-%entityId%" placeholder="<?php _e('Explain your recommendations','bidxplugin');?>"></textarea>
                         </div>
-                        <div class="col-sm-3 pull-right">
+                        <div class="col-sm-3 pull-right main-padding">
                             <div class="text-right">
-                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md set-finalist-%entityId%"><?php _e('Set','bidxplugin');?></a>
+                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md set-recommend-finalist-%entityId%"><?php _e('Set','bidxplugin');?></a>
                             </div>
                         </div>
                     </div>
@@ -863,38 +939,40 @@ if ( !empty( $attachment ) )
 
 <script type="text/html" id="judge-card-snippet">
 <!--
-    <div class="cardEntity%entityId%">
+
+    <div class="cardEntity%entityId% main-padding">
+        %assesorReviewItem%
         <div class="row">
             <div class="col-sm-9 pull-left">
                 <h4><?php _e('Judge Recommendations', 'bidxplugin');?></h4>
             </div>
             <div class="cardHeader%entityId% hide-overflow">
             </div>
-            <div class="cardContent main-padding">
+            <div class="cardContent">
                 <div class="cardTop">
-                    <div class="row  wrapper-winner-%entityId% hide">
-                        <div class="col-sm-9">
+                    <div class="wrapper-recommend-winner-%entityId% hide">
+                        <div class="col-sm-8">
                             <label class="inline">Mark as:</label>
                             <div class="radio inline-radio">
-                                <input data-entityid = "%entityId%" type="radio" value="WINNER" id="radio-winner-%entityId%" name="iswinner%entityId%" data-toggle="radio" />
-                                <label for="radio-winner"><span></span><?php _e('Winner', 'bidxplugin');?></label>
+                                <input data-entityid = "%entityId%" type="radio" value="WINNER" id="recommend-winner-%entityId%" name="recommend-winner-%entityId%" data-toggle="radio" />
+                                <label for="recommend-winner-%entityId%"><span></span><?php _e('Winner', 'bidxplugin');?></label>
                             </div>
                             <div class="radio inline-radio">
-                                <input data-entityid = "%entityId%" type="radio" value="NOT_WINNER" id="radio-notWinner-%entityId%" name="iswinner%entityId%" data-toggle="radio" />
-                                <label for="radio-notWinner"><span></span><?php _e('Not Winner', 'bidxplugin');?></label>
+                                <input data-entityid = "%entityId%" type="radio" value="NOT_WINNER" id="recommend-notWinner-%entityId%" name="recommend-winner-%entityId%" data-toggle="radio" />
+                                <label for="recommend-notWinner-%entityId%"><span></span><?php _e('Not Winner', 'bidxplugin');?></label>
                             </div>
                         </div>
-                        <div class="col-sm-3">
-                            <div class="rating-wrapper">
-                                <div data-rating="%bidxRatingAverage%" class="raty-%entityId%"></div>
+                        <div class="col-sm-4 pull-left">
+                            <div class="rating-wrapper-winner-%entityId%">
+                                <div data-rating="%bidxWINNERRatingAverage%" class="raty-winner-%entityId%"></div>
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <textarea type="text" class="form-control" name="comment-winner-%entityId%" placeholder="<?php _e('Explain your recommendations','bidxplugin');?>"></textarea>
                         </div>
-                        <div class="col-sm-3 pull-right">
+                        <div class="col-sm-3 pull-right main-padding">
                             <div class="text-right">
-                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md set-winner-%entityId%"><?php _e('Set','bidxplugin');?></a>
+                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md set-recommend-winner-%entityId%"><?php _e('Set','bidxplugin');?></a>
                             </div>
                         </div>
                     </div>
