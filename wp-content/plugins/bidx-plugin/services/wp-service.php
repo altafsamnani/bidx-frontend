@@ -1008,6 +1008,11 @@ function get_redirect ($url, $requestData, $domain = NULL)
     /****** If have a particular Redirect in params *************** */
     if (isset ($_POST['redirect_to'])) {
         $redirect_to = $_POST['redirect_to'];
+        // Despite that Base64 encoded strings might be padded with an equals-character,
+        // which should be percent-encoded but is not in our case, PHP still returns the
+        // full string including that character when using $_POST['redirect_to']. But
+        // even it would not, base64_decode is actually quite lenient for errors (as its
+        // $strict parameter defaults to false).
         $redirect = base64_decode ($redirect_to);
     }
 
