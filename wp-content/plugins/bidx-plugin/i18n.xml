@@ -5,6 +5,7 @@
     <Item value="msgOnPageUnload">Your changes have not yet been saved. Are you sure you want to navigate away from this page and lose your pending changes?</Item>
     <Item value="msgWaitForRedirect">Please wait while you are redirected</Item>
     <Item value="msgWaitForSave">Processing request</Item>
+    <Item value="statusPending">Pending</Item>
 
     <Item value="docDeleted">This document has been removed from your media library.</Item>
 

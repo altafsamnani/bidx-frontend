@@ -229,7 +229,8 @@ if ( !empty( $attachment ) )
                     {
 ?>
                         <a class="btn btn-primary editBS" href="#editCompetition/<?php echo $competitionId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
-                        <button class="btn btn-success endPhase"><i class="fa fa-flag-checkered fa-big fa-above"></i> <?php _e( 'End Phase', 'bidxplugin' ); ?></button>
+                        <button data-roundstatus = 'JUDGING' class="btn btn-success btn-phase judgePhase hide"><i class="fa fa-flag-checkered fa-big fa-above"></i> <?php _e( 'Judging Phase', 'bidxplugin' ); ?></button>
+                        <button data-roundstatus = 'ENDED' class="btn btn-success btn-phase endPhase hide"><i class="fa fa-trophy fa-big fa-above"></i> <?php _e( 'Declare Winners', 'bidxplugin' ); ?></button>
 <?php
                     }
 ?>
@@ -697,12 +698,14 @@ if ( !empty( $attachment ) )
 <script type="text/html" id="entrpreneur-card-snippet">
 <!--
     <div class="cardView cardEntity%entityId%">
-        <div class="cardHeader hide-overflow">
+        <div class=" cardHeader hide-overflow">
             <div class="info-cell pull-left"><?php echo _e( 'Score', 'bidxplugin' ); ?>: %bidxRatingCount%</div>
             <div class="info-cell pull-left"><?php echo _e( 'Applied on', 'bidxplugin' ); ?>: %created%</div>
             <div class="info-cell pull-right cardStatus bg-success"><?php echo _e( 'Status', 'bidxplugin' ); ?>: %status%</div>
         </div>
         <div class="cardContent main-padding">
+            <div class="cardHeader%entityId%">
+            </div>
             <div class="cardTop">
                 <div class="row">
                     <div class="col-sm-8">
@@ -735,16 +738,22 @@ if ( !empty( $attachment ) )
         </div>
         <div class="cardContent main-padding">
             <div class="cardTop">
-                <div class="row">
-                    <div class="col-sm-9 pull-left recommendationTitle hide">
-                        <h4><?php _e('Recommendations', 'bidxplugin');?></h4>
+                <div class="">
+                    <div class="row">
+                        <div class="col-sm-9 pull-left recommendationTitle hide">
+                            <h4><?php _e('Recommendations', 'bidxplugin');?></h4>
+                        </div>
                     </div>
-                    <div class ="wrapper-recommend-assesor-%entityId% hide" >
-                       %assessorsRecommendation%
+                    <div class ="wrapper-recommend-assesor-%entityId% hide well" >
+                       <h4><?php _e('Assesor Recommendations', 'bidxplugin');?></h4>
+                            %assessorsRecommendation%
                     </div>
-                    <div class ="wrapper-recommend-judge-%entityId% hide" >
-                       %judgeRecommendation%
+                    <div class ="wrapper-recommend-judge-%entityId% hide well" >
+                       <h4><?php _e('Judge Recommendations', 'bidxplugin');?></h4>
+                            %judgesRecommendation%
                     </div>
+                </div>
+                 <div class="row">
                     <div class ="wrapper-recommend-finalist-%entityId% hide" >
                         <div class="col-sm-8">
                             <label class="inline">Mark as:</label>
@@ -759,7 +768,7 @@ if ( !empty( $attachment ) )
                         </div>
                         <div class="col-sm-4 pull-left">
                             <div class="rating-wrapper-finalist-%entityId%">
-                                <div data-rating="%bidxFINALISTRatingAverage%" class="raty-finalist-%entityId%"></div>
+                                <div  class="raty-finalist-%entityId%"></div>
                             </div>
                         </div>
                         <div class="col-sm-12">
@@ -785,7 +794,7 @@ if ( !empty( $attachment ) )
                         </div>
                         <div class="col-sm-4 pull-left">
                             <div class="rating-wrapper-winner-%entityId%">
-                                <div data-rating="%bidxWINNERRatingAverage%" class="raty-winner-%entityId%"></div>
+                                <div  class="raty-winner-%entityId%"></div>
                             </div>
                         </div>
                         <div class="col-sm-12">
@@ -883,7 +892,7 @@ if ( !empty( $attachment ) )
 
 <script type="text/html" id="recommendation-display-snippet">
 <!--
-    <div class="row">
+    <div class="row %warningClass%">
         <div class="col-sm-4">%userDisplayName%</div>
         <div class="col-sm-2">Score: %reviewRating%</div>
         <div class="col-sm-6">Recommendation: %competitionRecommendation%</div>

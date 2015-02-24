@@ -10,6 +10,37 @@
     ,   baseUrl         = "/api/v1/competition"
     ,   params          = []
     ;
+    // PUT /competition/{competitionId}/round
+    // Send it to next phase
+    competition.nextPhase = function( params )
+    {
+        var method          = "PUT"
+        ,   url             = baseUrl
+        ,   requestParams   =
+            {
+                method:         method
+            ,   groupDomain:    params.groupDomain
+            ,   baseUrl:        url
+            ,   data:           params.data
+            ,   success:        function( data, textStatus, jqXhr )
+                {
+                    params.success( data, textStatus, jqXhr );
+                }
+            ,   error:          function( jqXhr, textStatus, errorThrown )
+                {
+                    params.error( jqXhr, textStatus, errorThrown );
+                }
+            }
+        ;
+
+        if ( params.competitionId )
+        {
+            requestParams.baseUrl  +=   '/%id%/round';
+            requestParams.baseUrl   =   requestParams.baseUrl.replace( "%id%", params.competitionId );
+        }
+
+        api._call( requestParams );
+    };
 
     // PUT /competition/{competitionId}/actors
     // Add/Update Actor to Competition
