@@ -488,7 +488,13 @@ class BidxCommon
                 // 2015-02-03: Somehow the logic from 'mail' below does not really log out the user.
                 // Using bidx_signout() shows a "Please wait", and does not pick up the "redirect_to" URL. 
 
-                $redirect_url = $http . $_SERVER['HTTP_HOST'] .'/'.$langUrl. '/auth?redirect_to=' . base64_encode ( $_GET['url'] ) . '/#auth/login';
+                // If Apache redirected before this is handled (like to redirect from HTTP to HTTPS) then
+                // the "url" parameter might have been percent-encoded twice, leaving $_GET['url'] with a
+                // (single) encoded value. Hence we're calling urldecode(...) just in case, though that
+                // will cause issues if the bare URL actually includes percent characters. (See also 
+                // http://serverfault.com/questions/331899/apache-mod-rewrite-double-encodes-query-string)
+
+                $redirect_url = $http . $_SERVER['HTTP_HOST'] .'/'.$langUrl. '/auth?redirect_to=' . base64_encode ( urldecode($_GET['url']) ) . '#auth/login';
 
                 clear_bidx_cookies ();
                 $params['domain'] = get_bidx_subdomain ();
