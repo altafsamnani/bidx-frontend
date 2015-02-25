@@ -140,6 +140,20 @@ class BidxCommon
     }
 
     /**
+     * Clear the full session, EXCEPT for a possible redirect setting which is needed after login.
+     */
+    static function clearWpBidxSession ()
+    {
+        session_start ();
+        $redirect = $_SESSION['returnAfterLogin'];
+        session_destroy ();
+        if( isset($redirect) ){
+            session_start ();
+            $_SESSION['returnAfterLogin'] = $redirect;
+        }
+    }
+
+    /**
      * Clear Session From GET param rs
      * @param $session_id Wordpress php session id to be cleared
      *
@@ -148,11 +162,8 @@ class BidxCommon
     function clearSessionFromParam ($session_id, $clearSession = false)
     {
         if (((isset ($_GET['rs']) && $_GET['rs']) || $clearSession )) {
-            /* Clear the Session */
-            //session_id ($session_id);
-            session_start ();
-            session_destroy ();
-            //setcookie ('session_id', ' ', time () - YEAR_IN_SECONDS, '/', 'bidx.net');
+            // This clears the full session, except for any post-login redirect setting.
+            $this::clearWpBidxSession();
         }
 
         return;
@@ -167,7 +178,8 @@ class BidxCommon
             $sessionVars = $_SESSION[$subDomain];
 
         } else {
-            session_unset ();
+            // This clears the full session, except for any post-login redirect setting.
+            $this::clearWpBidxSession();
             $sessionVars = false;
         }
 
@@ -400,6 +412,28 @@ class BidxCommon
                     }
 
                 break;
+
+                case 'auth':
+                case 'join':
+                case 'login':
+                    // Store REFERER for later use in function #redirectUrls when the homepage is loaded.
+                    // To ensure excessive (Backbone) redirects do not change this into a different page,
+                    // only change it if not already set. Once the homepage is loaded, the session value
+                    // will be cleared, and a redirect might be triggered.
+
+                    // We cannot (easily) set this in the array $this::$bidxSession[$subDomain] as then
+                    // it's not (easily) preserved it in clearWpBidxSession.
+
+                    if( empty( $_SESSION['returnAfterLogin'] ) ) 
+                    {
+                        $referrer = $_SERVER[ "HTTP_REFERER" ];
+                        if( preg_match("(/join|/auth|/login)", $referrer) !== 1 )
+                        {
+                            $_SESSION['returnAfterLogin'] = $referrer;
+                        }
+                    }
+                    break;
+
             }
 
             if ($jsSessionData) {
@@ -470,8 +504,8 @@ class BidxCommon
                     $redirect_url = $http . $_SERVER['HTTP_HOST'] .'/'.$langUrl . '/' . $redirect . $param;
                     wp_clear_auth_cookie ();
 
-                    //Clear Session and Static variables
-                    session_destroy ();
+                    //Clear Session and Static variables (except for any redirect setting)
+                    $this::clearWpBidxSession();
 
                     $this::$staticSession = NULL;
                     unset ($this::$bidxSession[$subDomain]);
@@ -500,7 +534,10 @@ class BidxCommon
                 $params['domain'] = get_bidx_subdomain ();
                 call_bidx_service ('session', $params, 'DELETE');
                 wp_clear_auth_cookie ();
-                clear_wp_bidx_session ();
+
+                // This clears the full session, except for any post-login redirect setting, so clear that too.
+                $this::clearWpBidxSession();
+                unset( $_SESSION['returnAfterLogin'] );
 
                 break;
 
@@ -510,8 +547,8 @@ class BidxCommon
                     $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .'/'.$langUrl. '/auth?redirect_to=' . base64_encode ($current_url) . '/#auth/login';
                     wp_clear_auth_cookie ();
 
-                    //Clear Session and Static variables
-                    session_destroy ();
+                    //Clear Session and Static variables (except for any redirect setting)
+                    $this::clearWpBidxSession();
 
                     $this::$staticSession = NULL;
                     unset ($this::$bidxSession[$subDomain]);
@@ -533,6 +570,16 @@ class BidxCommon
                 }
                 break;*/
 
+            case '' :
+                // Only on the homepage, and if authenticated and still some redirect is pending: redirect.
+                session_start();
+                $returnTo = $_SESSION['returnAfterLogin'];
+                if( $authenticated == 'true' && !empty($returnTo) )
+                {
+                    $redirect_url = $returnTo;
+                }
+                unset( $_SESSION['returnAfterLogin'] );
+                break;
 
             default:
                 if ($uriString != 'auth' && $authenticated == 'false') {

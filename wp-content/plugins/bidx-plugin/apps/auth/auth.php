@@ -53,9 +53,9 @@ class auth {
         // differently when authenticated (choose a role, or join the group, or show the homepage)
         // and when not authenticated (show all login options).
         //
-        // After successful authentication bidx-soca always redirects to /join, which will then
+        // After successful authentication bidx-soca always redirects to /join, and join.js will
         // figure out if the user still needs to select a role or join the group. If true, join.js
-        // will set the fragment to #join/auth which in its navigate(...) is handled exactly like
+        // will set the fragment to #join/auth, which in its navigate(...) is handled exactly like
         // #join/portal and #join/role, by again checking the current situation and rewriting to
         // one of those three options. This works fine if the user indeed needs to authenticate
         // and is shown some other web page after going to /auth/#auth/login. But if there is no
