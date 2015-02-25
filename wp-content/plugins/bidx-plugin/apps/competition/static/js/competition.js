@@ -69,6 +69,7 @@
     ,   rejectByMentor              = []
     ,   timeouts                    = []
     ,   actorArr                    = {}
+    ,   canParticipate              = {}
     ,   updateActorsList            = {
                                             'judges':       []
                                         ,   'assessors':    []
@@ -259,7 +260,7 @@
                                     ,   disable_search_threshold : 10
                                     });
             bidx.utils.log('listDropdownBp', listDropdownBp);
-            bpLength    = _.size(listDropdownBp); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
+            bpLength    = _.size(canParticipate); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
 
             if( bpLength )
             {
@@ -341,7 +342,15 @@
          var option
          ,   visibilityArrItems  =   [ ]
          ;
+
          _loadCompetitionVars( competitionVars );
+
+        //Display Winners if round is ended.
+        if( competitionBidxMeta.bidxCompetitionRoundStatus === 'ENDED')
+        {
+            _displayWinners();
+        }
+
         _setupApplyButton();
         _competitionTimer();
         _snippets();
@@ -351,7 +360,7 @@
         _loadMyApplications( ); // Load My applications now
         _loadActors();
         _initApplicationsView( );
-        _loadBpSummaries();
+        _loadBpSummaries( );
 
 
 
@@ -403,6 +412,12 @@
                                             ,   success: function( competitionVars )
                                                         {
                                                             _loadCompetitionVars( competitionVars );
+                                                            //Display Winners if round is ended.
+                                                            if( competitionBidxMeta.bidxCompetitionRoundStatus === 'ENDED')
+                                                            {
+                                                                _displayWinners();
+                                                            }
+
                                                             _initApplicationsView();
                                                         }
                                             ,   error:  function ( err )
@@ -1545,6 +1560,8 @@ function _initApplicationsView( )
         data.push( displayRows );
     });
 
+
+
     if( data.length )
     {
         _displayButtonsAccordingToPhases( );
@@ -1591,6 +1608,7 @@ function _initApplicationsView( )
                 $(this).find('.fa').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
             }
             else {
+                bidx.utils.log('dataaaaaaaa',row.data());
                 // Open this row
                 row.child( format(row.data(),row ) ).show();
                 tr.addClass('shown');
@@ -1807,7 +1825,7 @@ function _competitionTimer (  )
     function _getBusinessPlans(  )
     {
         var option
-        ,   bpLength    = _.size(listDropdownBp)
+        ,   bpLength    = _.size(canParticipate)
         ,   counter     = 0
         ,   promises    = []
         ,   listBpItems = []
@@ -1816,7 +1834,7 @@ function _competitionTimer (  )
 
 
 
-            $.each( listDropdownBp, function( idx, entityId )
+            $.each( canParticipate, function( idx, entityId )
             {
                 bidx.api.call(
                     "entity.fetch"
@@ -2915,9 +2933,9 @@ function _competitionTimer (  )
 
         _assignRecommendations( {
                                     options:    options
-                                ,   successs:   function( response )
+                                ,   success:   function( recommData )
                                                 {
-                                                    status      = response.competitionRecommendation;
+                                                    status      = recommData.competitionRecommendation;
 
                                                     successMsg = bidx.i18n.i('RECOMM_' + status ,appName);
 
@@ -2963,8 +2981,7 @@ function _competitionTimer (  )
         {
             e.preventDefault();
 
-            var params
-            ,   recommendation
+            var recommendation
             ,   btnEntityId
             ,   businessPlanEntityId
             ,   radioName
@@ -3041,11 +3058,11 @@ function _competitionTimer (  )
                     competitionId:  competitionSummaryId
                 ,   entityId:       businessPlanEntityId
                 ,   data:           data
-                ,   callback:       function( response )
+                ,   success:       function( data )
                                     {
-                                        if (options && options.success)
+                                        if (params && params.success)
                                         {
-                                            options.success( response );
+                                            params.success( data );
                                         }
 
                                         $btnAction.text( orgText );
@@ -3189,6 +3206,8 @@ function _competitionTimer (  )
         ,   $cardEntity
         ,   $setSubmit      = $listItem.find( ".set-submit")
         ,   $setWithdraw    = $listItem.find( ".set-withdraw")
+        ,   $cardInfoText   = $listItem.find( ".cardInfoText")
+        ,   $cardFooter     = $listItem.find( ".cardFooter")
         ,   $cardHeader     = $listItem.find( ".cardHeader")
         ,   snippetSuccess  = $("#success-card").html().replace(/(<!--)*(-->)*/g, "")
         ,   entityId
@@ -3226,6 +3245,7 @@ function _competitionTimer (  )
                                     $cardHeader.prepend($(statusMsg));
 
                                     //$successLabel.empty().i18nText('successSubmitted', appName);
+                                    $cardInfoText.i18nText('withdrawText', appName);
 
                                     _showAllView('successCard' + entityId );
                                 }
@@ -3244,14 +3264,18 @@ function _competitionTimer (  )
                                     //Slowly Removes the content
                                     $cardEntity.i18nText("SUCCESS_WITHDRAWN", appName);
                                     $cardEntity.addClass('alert alert-info text-center');
+                                    $cardFooter.addClass('hide');
 
                                 }
                 });
 
 
                 /*Show buttons*/
+
                 $setSubmit.removeClass('hide');
                 $setWithdraw.removeClass('hide');
+                $cardFooter.removeClass('hide');
+
             break;
 
             case  'SUBMITTED' :
@@ -3274,11 +3298,14 @@ function _competitionTimer (  )
                                     //Slowly Removes the content
                                     $cardEntity.i18nText("SUCCESS_WITHDRAWN", appName);
                                     $cardEntity.addClass('alert alert-info text-center');
+                                    $cardFooter.addClass('hide');
                                 }
                 });
 
                 /*Show buttons*/
+                $cardInfoText.i18nText('withdrawText', appName);
                 $setWithdraw.removeClass('hide');
+                $cardFooter.removeClass('hide');
 
             break;
         }
@@ -3355,35 +3382,35 @@ function _competitionTimer (  )
                     //
                     bidx.utils.log('response',response);
                     //  execute callback if provided
-                    if (options && options.callback)
+                    if (options && options.success)
                     {
-                        options.callback( response );
+                        options.success( response.data );
                     }
                 }
 
-                , error: function(jqXhr, textStatus)
+            , error: function(jqXhr, textStatus)
+            {
+                var errorMsg
+                ,   statusMsg
+                ,   $cardHeader     = $element.find( ".cardHeader" + entityId )
+                ,   snippetError    = $("#errorapp-card").html().replace(/(<!--)*(-->)*/g, "")
+                ,   status          = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                errorMsg = status + ' ' + bidx.i18n.i( "ERROR_ASSIGNACTOR", appName) + entityId  ;
+
+                statusMsg = snippetError
+                            .replace( /%errorMsg%/g, errorMsg)
+                            .replace( /%entityId%/g, entityId);
+
+                $cardHeader.empty().prepend($(statusMsg));
+
+                _showAllView('errorCard' + entityId );
+
+                if (options && options.error)
                 {
-                    var errorMsg
-                    ,   statusMsg
-                    ,   $cardHeader     = $element.find( ".cardHeader" + entityId )
-                    ,   snippetError    = $("#errorapp-card").html().replace(/(<!--)*(-->)*/g, "")
-                    ,   status          = bidx.utils.getValue(jqXhr, "status") || textStatus;
-
-                    errorMsg = status + ' ' + bidx.i18n.i( "ERROR_ASSIGNACTOR", appName) + entityId  ;
-
-                    statusMsg = snippetError
-                                .replace( /%errorMsg%/g, errorMsg)
-                                .replace( /%entityId%/g, entityId);
-
-                    $cardHeader.empty().prepend($(statusMsg));
-
-                    _showAllView('errorCard' + entityId );
-
-                    if (options && options.error)
-                    {
-                        options.error( );
-                    }
+                    options.error( );
                 }
+            }
             }
         );
     }
@@ -3790,8 +3817,74 @@ function _competitionTimer (  )
 
                     bidx.utils.log('myApplicationsAny', myApplicationsAny);
                 }
+                else
+                {
+                    canParticipate[ entityId ]  =   entityId;
+                }
             });
         }
+    }
+
+    function _displayWinners( )
+    {
+        var entityId
+        ,   bidxMeta
+        ,   listItem
+        ,   $listItem
+        ,   winnersObj
+        ,   $list               = $element.find(".winnerDisplay")
+        ,   snippet             = $("#winner-snippet").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $listError          = $("#error-card").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $ratingWrapper
+        ,   $raty
+        ,   emptyVal            = ''
+        ;
+
+        winnersObj          = _.where( applicationObj, { status : 'WINNER' } );
+
+        if( winnersObj )
+        {
+            $.each( winnersObj, function( idx, winnerDisplay )
+            {
+                if ( !$.isEmptyObject(winnerDisplay) )
+                {
+                    entityId    =   winnerDisplay.entityId;
+
+                    bidxMeta    =   bidx.utils.getValue(winnerDisplay, "bidxMeta");
+
+                    listItem    =   snippet
+                             .replace( /%entityId%/g,                    entityId                        ? entityId     : emptyVal )
+                            .replace( /%bidxOwnerId%/g,                 bidxMeta.bidxOwnerId )
+                            .replace( /%bidxOwnerDisplayName%/g,        bidxMeta.bidxOwnerDisplayName   ? bidxMeta.bidxOwnerDisplayName     : emptyVal )
+                            .replace( /%bidxRatingAverage%/g,           bidxMeta.bidxRatingAverage      ? bidxMeta.bidxRatingAverage     : emptyVal )
+                            .replace( /%bidxEntityDisplayName%/g,       bidxMeta.bidxEntityDisplayName  ? bidxMeta.bidxEntityDisplayName     : emptyVal )
+                            ;
+                    $listItem   =   $(listItem);
+
+                    /* Displaying Rating Star Logic */
+                    $ratingWrapper              = $listItem.find( ".rating-wrapper" );
+                    $raty                       = $ratingWrapper.find( ".raty" );
+
+                    $raty.raty({
+                        starType: 'i',
+                        readOnly: true,
+                        // TODO Arjan remove or translate?
+                        hints:  ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent'],
+                        score:  bidxMeta.bidxRatingAverage
+
+                    });
+
+                    $list.append( $listItem );
+
+                }
+            });
+
+            _showAllView('winners');
+        }
+
+
+
+
     }
 
     // Private functions

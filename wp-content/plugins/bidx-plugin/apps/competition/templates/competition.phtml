@@ -311,7 +311,12 @@ if ( !empty( $attachment ) )
 
 
     <div class="competition-description"><?php echo $this->exst( $competition->description ); ?></div>
-
+    <div class="view viewWinners well">
+        <div class="main-padding">
+            <i class="fa fa-trophy fa-big fa-above">&nbsp;&nbsp;<?php _e( 'Winners', 'bidxplugin' ); ?></i>
+        </div>
+        <div class='winnerDisplay'> </div>
+    </div>
     <div class="view viewOwnCard">
         <h3> <?php _e('My applications','bidxplugin'); ?> </h3>
     </div>
@@ -673,6 +678,29 @@ if ( !empty( $attachment ) )
 </div><!-- /competition -->
 </div>
 </div>
+
+
+<script type="text/html" id="winner-snippet">
+<!--
+<div class="cardView">
+     <div class="cardContent main-padding">
+         <div class="cardTop">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h4><a href="/businesssummary/%entityId%" target="_blank">%bidxEntityDisplayName%</a>
+                    &nbsp;&nbsp;<small><?php _e('by','bidxplugin'); ?></small><a href="/member/%bidxOwnerId%">&nbsp;&nbsp;%bidxOwnerDisplayName%</a></h4>
+
+                </div>
+                <div class="col-sm-4 text-right">
+                    <div class="rating-wrapper">
+                        <div data-rating="%bidxRatingAverage%" class="raty"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->
 </script>
 
 <script type="text/html" id="actors-snippet">
@@ -721,9 +749,9 @@ if ( !empty( $attachment ) )
                 </div>
             </div>
         </div>
-        <div class="cardFooter">
+        <div class="cardFooter hide">
             <div class="alert alert-info text-right">
-            <span class="cardInfoText">Add an explanatory text <strong>here</strong></span>
+                <span class="cardInfoText"></span>
                 <a  data-entityid = "%entityId%" data-status = "" class="btn btn-success btn-xs btn-action set-submit hide"><?php _e('Submit', 'bidxplugin');?></a>
                 <a  data-entityid = "%entityId%" data-status = "" class="btn btn-warning btn-xs btn-action set-withdraw hide"><?php _e('Withdraw', 'bidxplugin');?></a>
             </div>
@@ -811,12 +839,12 @@ if ( !empty( $attachment ) )
                     <div class="col-sm-12 wrapper-qualification-%entityId% hide">
                         <div class="hide-overflow">
                             <label class="inline">Qualification:</label>
-                            <div class="radio inline-radio">
-                                <input type="radio" id="radio-accept-%entityId%" checked="checked" value="SUBMITTED" name="isqualification%entityId%" data-toggle="radio" />
+                            <div class="radio inline-radio hide">
+                                <input type="radio" id="radio-accept-%entityId%"  value="SUBMITTED" name="isqualification%entityId%" data-toggle="radio" />
                                 <label for="radio-accept-%entityId%"><span></span><?php _e("Submit",'bidxplugin');?></label>
                             </div>
                             <div class="radio inline-radio">
-                                <input type="radio" id="radio-reject-%entityId%" value="REJECTED" name="isqualification%entityId%" data-toggle="radio" />
+                                <input type="radio" id="radio-reject-%entityId%" checked="checked" value="REJECTED" name="isqualification%entityId%" data-toggle="radio" />
                                 <label for="radio--reject-%entityId%"><span></span><?php _e("Reject",'bidxplugin');?></label>
                             </div>
                             <div class="text-right">
