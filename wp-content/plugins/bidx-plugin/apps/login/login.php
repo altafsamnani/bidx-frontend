@@ -62,6 +62,10 @@ class login {
 
         $render    = array_key_exists( 'view', $atts ) ? $atts['view'] : "login";
         $view->showLink = (isset($atts['link'])) ? $atts['link'] : "true";
+
+        // Beware: even when no explicit redirect_to is set, HTTP REFERER might have been put into the session 
+        // and may trigger a redirect in common.php.
+        //
         $view->redirectTo = isset($_GET['redirect_to']) ? $_GET['redirect_to'] : NULL ; // For SSO-Auth redirect_to = aHR0cHM6Ly9iaWR4Lm5ldC9hcHAvYXBpL3YxL29wZW5pZC9zc28=
 
         if(isset($atts['view']) && $atts['view'] == 'logout') {
