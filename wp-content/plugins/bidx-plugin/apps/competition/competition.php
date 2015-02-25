@@ -76,7 +76,7 @@ class competition
             $competitionData = $competitionObj->getCompetitionDetails( $competitionId );
 
 
-      /*      echo "<pre>";
+            /*echo "<pre>";
             print_r($competitionData);
             echo "</pre>";exit;*/
 

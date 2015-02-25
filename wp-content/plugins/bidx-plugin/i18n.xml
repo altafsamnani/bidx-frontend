@@ -5,6 +5,7 @@
     <Item value="msgOnPageUnload">Your changes have not yet been saved. Are you sure you want to navigate away from this page and lose your pending changes?</Item>
     <Item value="msgWaitForRedirect">Please wait while you are redirected</Item>
     <Item value="msgWaitForSave">Processing request</Item>
+    <Item value="statusPending">Pending</Item>
 
     <Item value="docDeleted">This document has been removed from your media library.</Item>
 
@@ -96,30 +97,23 @@
 
 
     <!-- Modal dialogs status messages -->
-     <Item value="modalSend">You are about to send the request. Are you sure?</Item>
+     <Item value="modalSend">You are about to send request. Are you sure?</Item>
      <Item value="modalBpSend">You are about to send the request. Are you sure?</Item>
      <Item value="modalAccept">You are about to accept the request. Are you sure?</Item>
      <Item value="modalReject">You are about to ignore the request. Are you sure?</Item>
      <Item value="modalCancel">You are about to cancel the request. Are you sure?</Item>
-     <Item value="modalBpCancel">You are about to cancel the request. Are you sure?</Item>
+     <Item value="modalBpCancel">You are about to cancel request. Are you sure?</Item>
      <Item value="modalStop">You are about to stop the mentoring. Are you sure?</Item>
     <!-- Modal button messages -->
-     <Item value="modalBtnSend">Send request</Item>
+     <Item value="modalBtnSend">Send mentoring request</Item>
      <Item value="modalBtnBpSend">Send request</Item>
      <Item value="modalBtnAccept">Accept request</Item>
      <Item value="modalBtnReject">Ignore request</Item>
      <Item value="modalBtnCancel">Cancel request</Item>
-     <Item value="modalBtnBpCancel">Cancel request</Item>
+     <Item value="modalBtnBpCancel">Cancel mentoring request</Item>
      <Item value="modalBtnStop">Stop mentoring</Item>
 
-      <!-- Facet Entity types -->
-    <Item value="bidxMemberProfile">Member profile</Item>
-    <Item value="bidxBusinessSummary">Business summary</Item>
-    <Item value="bidxInvestorProfile">Investor</Item>
-    <Item value="bidxEntrepreneurProfile">Entrepreneur</Item>
-    <Item value="bidxBusinessGroup">Group</Item>
-    <Item value="bidxCompany">Company</Item>
-    <Item value="bidxMentorProfile">Mentor</Item>
+
 
     <!-- Facet Title -->
     <Item value="facet_industry">Industry</Item>
