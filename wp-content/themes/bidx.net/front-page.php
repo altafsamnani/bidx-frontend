@@ -218,7 +218,7 @@
                 </a>
             </div>
             <div class="col-xs-12 col-sm-3">
-                <a href="/help" class="btn btn-block flat flat-clients">
+                <a href="/demo-videos" class="btn btn-block flat flat-clients">
                     <div class="service">
                         <div class="handicon handicon-20"></div>
                         <p><?php _e('Portal Videos','bidxtheme');?></p>
