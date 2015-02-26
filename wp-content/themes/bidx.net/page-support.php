@@ -16,7 +16,7 @@ get_header(); ?>
         <div class="row">
             <div class="col-xs-12">
                 <div class="service">
-                    <div class="trial-title"><?php _e('Choose a suitable package','bidxtheme');?></div>
+                    <div class="trial-title"><?php _e('Choose a suitable add-on','bidxtheme');?></div>
                     <br>
                     <a href="/get-started" class="btn btn-flat flat-warning"><?php _e('I want to try','bidxtheme');?></a>
                     <a href="/pricing" class="btn btn-flat flat-warning"><?php _e('All Packages','bidxtheme');?></a>

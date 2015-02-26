@@ -22,19 +22,13 @@
                     data-easing="easeOutExpo" style="font-size: 50px;"><?php _e('ENTREPRENEURS<br>ONLINE','bidxtheme');?></div>
                 <div class="tp-caption theme_caption3 sfl stl"
                     data-x="105"
-                    data-y="225"
+                    data-y="225"    
                     data-speed="500"
                     data-start="1400"
                     data-easing="easeOutExpo" style="font-family: 'Montserrat', sans-serif; color: #34495e;">
                     <?php _e('Match your entrepreneurs<br>
                     with banks, investors and mentors.','bidxtheme');?>
                 </div>
-                <a href="/get-started" class="caption btn btn-flat flat-warning sfb stb"
-                    data-x="105"
-                    data-y="320"
-                    data-speed="500"
-                    data-start="1600"
-                    data-easing="easeOutExpo"><?php _e('Get Started','bidxtheme');?></a>
                 <div class="caption lfr ltr"
                     data-x="635"
                     data-y="70"
@@ -80,105 +74,6 @@
             <!-- /.col-sm-6 -->
         </div>
         <!-- /.row -->
-    </div>
-    <!-- /.container -->
-</section>
-
-<section id="action-box" class="pad-25">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-3 pad-top-50">
-                <div class="service">
-                    <div class="handicon handicon-10"></div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-9 action-box">
-                <h1><?php _e('More impact per dollar','bidxtheme');?></h1>
-                <p><?php _e('Bidx has grown and started over 1000 businesses and helped create over 7500 jobs. Our investors have financed for USD 23 million. All this at a cost of USD 2000 per direct new job.','bidxtheme');?></p>
-                <a href="/get-started" class="btn btn-flat flat-warning"><?php _e('Get Started','bidxtheme');?></a>
-            </div>
-        <!-- /.action-box -->
-    </div>
-    <!-- /.container -->
-</section>
-
-<section id="blog-posts" class="pad-25 pad-top-50">
-    <div class="container">
-        <div class="subpage-title">
-            <h5><?php _e('Latest Portals','bidxtheme');?></h5>
-            <!-- Controls -->
-            <div class="controls">
-                <span id="blog-posts-prev" class="prev"><i class="fa fa-angle-left"></i></span>
-                <span id="blog-posts-next" class="next"><i class="fa fa-angle-right"></i></span>
-            </div>
-        </div>
-        <div class="row flush">
-            <div id="caroufredsel-blog-posts-container">
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <article class="post pad-0">
-                        <div class="post-thumb">
-                            <a href="/portals"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo1.png" class="img-responsive" alt="Responsive image"></a>
-                        </div>
-                        <!-- /.post-thumb -->
-                    </article>
-                    <!-- /.post -->
-                </div>
-                <!-- /.col-md-4 -->
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <article class="post pad-0">
-                        <div class="post-thumb">
-                            <a href="/portals"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo17.jpg" class="img-responsive" alt="Responsive image"></a>
-                        </div>
-                        <!-- /.post-thumb -->
-                    </article>
-                    <!-- /.post -->
-                </div>
-                <!-- /.col-md-4 -->
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <article class="post pad-0">
-                        <div class="post-thumb">
-                            <a href="/portals"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo14.png" class="img-responsive" alt="Responsive image"></a>
-                        </div>
-                        <!-- /.post-thumb -->
-                    </article>
-                    <!-- /.post -->
-                </div>
-                <!-- /.col-md-4 -->
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <article class="post pad-0">
-                        <div class="post-thumb">
-                            <a href="/portals"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo13.png" class="img-responsive" alt="Responsive image"></a>
-                        </div>
-                        <!-- /.post-thumb -->
-                    </article>
-                    <!-- /.post -->
-                </div>
-                <!-- /.col-md-4 -->
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <article class="post pad-0">
-                        <div class="post-thumb">
-                            <a href="/portals"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo16.png" class="img-responsive" alt="Responsive image"></a>
-                        </div>
-                        <!-- /.post-thumb -->
-                    </article>
-                    <!-- /.post -->
-                </div>
-                <!-- /.col-md-4 -->
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <article class="post pad-0">
-                        <div class="post-thumb">
-                            <a href="/portals"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo10.png" class="img-responsive" alt="Responsive image"></a>
-                        </div>
-                        <!-- /.post-thumb -->
-                    </article>
-                    <!-- /.post -->
-                </div>
-                <!-- /.col-md-4 -->
-            </div>
-            <!-- /#caroufredsel-blog-posts-container -->
-        </div>
-        <!-- /.row -->
-        <a href="/active-portals" class="btn btn-flat flat-warning"><?php _e('View all active Portals','bidxtheme');?></a>
     </div>
     <!-- /.container -->
 </section>
@@ -249,7 +144,7 @@
 
 <section id="quote" class="pad-25 pattern-1">
     <div class="container">
-        <h1 class="service"><?php _e('We Offer','bidxtheme');?></h1>
+        <h1 class="service"><?php _e('We Offer Solutions to','bidxtheme');?></h1>
         <div class="row">
             <div class="col-xs-12 col-sm-3 pad-top-25">
                 <div class="service">
