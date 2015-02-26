@@ -795,8 +795,8 @@ if ( !empty( $attachment ) )
                             <h4><?php _e('Recommendations', 'bidxplugin');?></h4>
                         </div>
                     </div>
-                    <div class ="wrapper-recommend-assesor-%entityId% hide well" >
-                       <h4><?php _e('Assesor Recommendations', 'bidxplugin');?></h4>
+                    <div class ="wrapper-recommend-assessor-%entityId% hide well" >
+                       <h4><?php _e('Assessor Recommendations', 'bidxplugin');?></h4>
                             <div class='assessor-recommendation-%entityId%'>%assessorsRecommendation%</div>
                     </div>
                     <div class ="wrapper-recommend-judge-%entityId% hide well" >
@@ -961,7 +961,7 @@ if ( !empty( $attachment ) )
 
 <script type="text/html" id="recommendation-display-snippet">
 <!--
-    <div class="row %warningClass%">
+    <div class="row %warningClass% review-%id%">
         <div class="col-sm-4">%userDisplayName%</div>
         <div class="col-sm-2">Score: %reviewRating%</div>
         <div class="col-sm-6">Recommendation: %competitionRecommendation%</div>
@@ -1019,7 +1019,7 @@ if ( !empty( $attachment ) )
 <!--
 
     <div class="cardEntity%entityId% main-padding">
-        %assesorReviewItem%
+        %assessorReviewItem%
         <div class="row">
             <div class="col-sm-9 pull-left">
                 <h4><?php _e('Judge Recommendations', 'bidxplugin');?></h4>
