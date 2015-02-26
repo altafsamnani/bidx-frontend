@@ -17,8 +17,8 @@ get_header();
         <div class="row">
             <div class="col-xs-12">
                 <div class="service">
-                    <div class="trial-title"><?php _e('Get a 6 months free trial period','bidxtheme');?></div>
-                    <div class="trial-sub"><?php _e('Regular yearly subscription is $1.999','bidxtheme');?></div>
+                    <div class="trial-title"><?php _e('Get a 6 month free trial','bidxtheme');?></div>
+                    <div class="trial-sub"><?php _e('Annual subscription starting at $1.999','bidxtheme');?></div>
                     <br>
                     <a href="/get-started" class="btn btn-flat flat-warning"><?php _e('I want to try','bidxtheme');?></a>
                     <a href="/pricing" class="btn btn-flat flat-warning"><?php _e('All Packages','bidxtheme');?></a>

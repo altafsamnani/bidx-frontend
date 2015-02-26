@@ -206,10 +206,8 @@ abstract class APIbridge
 
     function clear_wp_bidx_session ()
     {
-
-        session_start ();
-        session_destroy ();
-
+        // This clears the full session, except for any post-login redirect setting.
+        BidxCommon::clearWpBidxSession();
     }
 
     function clear_bidx_cookies ()

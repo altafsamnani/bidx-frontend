@@ -10,7 +10,6 @@
 
     ,   $editControls               = $element.find( ".editControls" )
 
-    ,   $industry                   = $element.find( "[name='industry']" )
     ,   $expertiseNeeded            = $element.find( "[name='expertiseNeeded']" )
     ,   $productService             = $element.find( "[name='productService']" )
     ,   $countryOperation           = $element.find( "[name='countryOperation']" )
@@ -215,11 +214,11 @@
         {
             "_root":
             [
-                "industry"
+                // "industry"
             // ,   "suggestedIndustry"
             // ,   "productService"
             // ,   "suggestedProductService"
-            ,   "countryOperation"
+                "countryOperation"
             ,   "socialImpact"
             ,   "envImpact"
             ,   "consumerType"
@@ -321,11 +320,6 @@
         ,   emptyValue:         bidx.i18n.i( "selectReasonForSubmission", appName )
         });
 
-        // $industry.bidx_chosen(
-        // {
-        //     dataKey:            "industry"
-        // });
-
         $expertiseNeeded.bidx_chosen(
         {
             dataKey:            "mentorExpertise"
@@ -388,7 +382,7 @@
             //
             forms.generalOverview.$el.validate(
             {
-                ignore:         ""
+                ignore:         "#frmeditMedia input, #frmeditMedia select"
             ,   debug:          false
             ,   rules:
                 {
@@ -405,24 +399,14 @@
                     {
                         maxlength:              900
                     }
-                ,   reasonForSubmission:
-                    {
-                        // required:               true
-                    }
                 ,   equityRetained:
                     {
-                        // number:                 true
                         min:                    0
                     ,   max:                    100
                     }
                 ,   financingNeeded:
                     {
-                        // required:               true
                         monetaryAmount:         true
-                    }
-                ,   "investmentType[]":
-                    {
-                        // required:               true
                     }
                 ,   summaryFinancingNeeded:
                     {
@@ -1999,7 +1983,6 @@
 
         // Update the chosen components with our set values
         //
-        $industry.trigger( "chosen:updated" );
         $expertiseNeeded.trigger( "chosen:updated" );
         $productService.trigger( "chosen:updated" );
         $countryOperation.trigger( "chosen:updated" );
