@@ -1009,9 +1009,15 @@
 
         $roleButton.click ( function ( e )
         {
-            var     actorId             = $roles.data('id')
+            var  $this = $(this)
+            ,    actorId             = $roles.data('id')
             ;
+
+            $roles.removeClass('disabled').removeAttr("disabled");
+            $roles.val('');
             _appendActorCard( actorId );
+
+
 
         } );
 
