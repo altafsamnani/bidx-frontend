@@ -419,6 +419,9 @@
                                                         {
                                                             _loadCompetitionVars( competitionVars );
 
+                                                            location.reload();
+
+                                                            /*
                                                             if( competitionBidxMeta.bidxCompetitionRoundStatus === 'JUDGING')
                                                             {
                                                                 _displayWinners( 'finalist');
@@ -431,6 +434,8 @@
                                                             }
 
                                                             _initApplicationsView();
+
+                                                            */
                                                         }
                                             ,   error:  function ( err )
                                                         {
@@ -1300,8 +1305,6 @@ function _displayRecommendations( options )
         judgeReviewItem     +=  _addReview( judgeReview);
     });
 
-    bidx.utils.log('assessorReviewItem' , assessorReviewItem);
-
     displayReview   =   {
                             'assessor':     assessorReviewItem
                         ,   'judge':        judgeReviewItem
@@ -1562,8 +1565,10 @@ function _initApplicationsView( )
 
     bidx.utils.log(applicationObj, 'applicationObj');
 
+  /*  $('.viewApplications tbody').empty();
     table = $('.viewApplications').DataTable();
     table.destroy();
+    $('.viewApplications tbody').empty();*/
 
     $.each( applicationObj, function( idx, response )
     {
@@ -1592,7 +1597,7 @@ function _initApplicationsView( )
     if( data.length )
     {
         _displayButtonsAccordingToPhases( );
-        bidx.utils.log('adataaaa',data)
+
         table = $('.viewApplications').DataTable(
         {
             "bPaginate": true
@@ -1635,7 +1640,7 @@ function _initApplicationsView( )
                 $(this).find('.fa').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
             }
             else {
-                bidx.utils.log('dataaaaaaaa',row.data());
+                bidx.utils.log('dataaaaaaaa',row);
                 // Open this row
                 row.child( format(row.data(), row ) ).show();
                 tr.addClass('shown');
@@ -2689,6 +2694,7 @@ function _competitionTimer (  )
             break;
             case 'SUBMITTED':
                 var isAdminAssessorReview   =   bidx.utils.getValue( review, 'isAdminAssessorReview')
+                ,   $assignAssessor         =  $listItem.find('.assign-assessor')
                 ;
 
                 displayQual         = true;
@@ -2696,6 +2702,7 @@ function _competitionTimer (  )
                 bidx.utils.setElementValue( $radioQualification, status );
                 _assignRadioActions( $listItem, data );
                 $wrapperQualification.addClass('hide');
+                $assignAssessor.removeClass('hide');
                 //$wrapperFinalist.removeClass('hide');
 
                 /* Assign Next Action According to Role */

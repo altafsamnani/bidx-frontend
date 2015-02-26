@@ -846,7 +846,7 @@ if ( !empty( $attachment ) )
                                 <input data-entityid = "%entityId%" type="radio" value="NOT_WINNER" id="recommend-notWinner-%entityId%" name="recommend-winner-%entityId%" data-toggle="radio" />
                                 <label for="recommend-notWinner-%entityId%"><span></span><?php _e('Not Winner', 'bidxplugin');?></label>
                             </div>
-                            <div class="radio inline-radio">
+                            <div class="radio inline-radio hide">
                                 <input data-entityid = "%entityId%" type="radio" value="REJECTED" id="recommend-rejected-%entityId%" name="recommend-rejected-%entityId%" data-toggle="radio" />
                                 <label for="recommend-rejected-%entityId%"><span></span><?php _e('Reject', 'bidxplugin');?></label>
                             </div>
@@ -919,7 +919,7 @@ if ( !empty( $attachment ) )
                             <label for="radio-notWinner-%entityId%"><span></span><?php _e('Not Winner', 'bidxplugin');?></label>
                         </div>
                         <div class="text-right">
-                            <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block btn-block set-winner-%entityId%"><?php _e('Set','bidxplugin');?></a>
+                            <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block set-winner-%entityId%"><?php _e('Set','bidxplugin');?></a>
                         </div>
                     </div>
                     <div class="assign-assessor hide">
@@ -975,11 +975,12 @@ if ( !empty( $attachment ) )
 <!--
     <div class="cardEntity%entityId% main-padding">
        <div class="row">
-            <div class="col-sm-9 pull-left">
+            <div class="col-sm-12 cardHeader%entityId% hide-overflow">
+            </div>
+            <div class="col-sm-12 pull-left">
                 <h4><?php _e('Assessors Recommendations', 'bidxplugin');?></h4>
             </div>
-            <div class="cardHeader%entityId% hide-overflow">
-            </div>
+
             <div class="cardContent">
                 <div class="cardTop">
                     <div class="wrapper-recommend-finalist-%entityId% hide">
@@ -1019,13 +1020,14 @@ if ( !empty( $attachment ) )
 <!--
 
     <div class="cardEntity%entityId% main-padding">
+         <div class="col-sm-12 cardHeader%entityId% hide-overflow">
+            </div>
         %assessorReviewItem%
         <div class="row">
-            <div class="col-sm-9 pull-left">
+            <div class="col-sm-12 pull-left">
                 <h4><?php _e('Judge Recommendations', 'bidxplugin');?></h4>
             </div>
-            <div class="cardHeader%entityId% hide-overflow">
-            </div>
+
             <div class="cardContent">
                 <div class="cardTop">
                     <div class="wrapper-recommend-winner-%entityId% hide">
