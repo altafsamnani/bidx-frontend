@@ -47,6 +47,11 @@
 
 // REMOVE FROM HERE AND UP WHEN SWITCHED TO NEW THEME
 
+@gray-darker:            lighten(#000, 13.5%); // #222
+@gray-dark:              lighten(#000, 20%);   // #333
+@gray:                   lighten(#000, 33.5%); // #555
+@gray-light:             lighten(#000, 60%);   // #999
+@gray-lighter:           lighten(#000, 93.5%); // #eee
 
 .bidx-businesssummary
 {
@@ -131,7 +136,8 @@
     }
     .fs-cell
     {
-        margin: 0 1px 1px 0;
+        // margin: 0 1px 1px 0;
+        margin: 2px 3px;
         position: relative;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
@@ -163,7 +169,7 @@
     .fs-section-header
     {
         height:                     80px;
-        background-color:           #f8f7f6;
+        // background-color:           #f8f7f6;
         div.fs-content
         {
             position:                   absolute;
@@ -199,12 +205,12 @@
         }
         .fs-header
         {
-            background-color: #BE2025;
-            color: white;
+            background-color: lighten(@brand-primary, 30%);
+            margin: 0;
+            // color: white;
             a
             {
-                background-color: #BE2025;
-                color: white;
+                color: @brand-danger;
             }
             p
             {
@@ -228,11 +234,10 @@
             .fs-header
             {
                 color: #34495e;
-                background-color: #d2b58d;
+                background-color: lighten(@brand-primary, 15%);
                 a
                 {
-                    background-color: #d2b58d;
-                    color: #BE2025;
+                    color: @brand-danger;
                     &.btnDelete
                     {
                         color: #BE2025;
@@ -265,9 +270,13 @@
     .fs-header-controls-right
     {
         display: none;
-        padding: 16px 0;
+        padding: 16px 10px;
         position: absolute;
         top: 0;
+        a
+        {
+            color: darken(@brand-primary, 30%) !important;
+        }
     }
     .fs-header-controls-left
     {
@@ -289,6 +298,7 @@
     {
         width: 33.333%;
         float: left;
+        background-color: #FFF;
         @media (max-width: @screen-xs-max)
         {
             display: none;
@@ -305,12 +315,16 @@
             }
             .addYear
             {
-                padding-top: 20px;
-                a
-                {
-                    font-size: 18px;
-                }
+                // padding-top: 20px;
+                // a
+                // {
+                //     font-size: 18px;
+                // }
             }
+        }
+        &.addYearCol
+        {
+            background-color: transparent;
         }
         .fs-header
         {
@@ -328,6 +342,8 @@
         }
         &.selected
         {
+            border-right: 2px solid lighten(@gray-light, 34%);
+            border-left: 2px solid lighten(@gray-light, 34%);
             @media (max-width: @screen-xs-max)
             {
                 display: block;

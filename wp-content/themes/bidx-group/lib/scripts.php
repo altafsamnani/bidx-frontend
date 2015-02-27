@@ -17,7 +17,7 @@ function roots_scripts() {
 
   // wp_enqueue_style('bidx-plugin',                 get_template_directory_uri() . '/../../plugins/bidx-plugin/static/css/bidx-plugin.css', false, null);
 
-  wp_register_script( 'bootstrap',                get_template_directory_uri() . '/assets/bootstrap-3.2.0/dist/js/bootstrap.min.js',  array( 'jquery' ),      '3.2.0',            true );
+  wp_register_script( 'bootstrap',                get_template_directory_uri() . '/assets/bootstrap-3.3.2/dist/js/bootstrap.min.js',  array( 'jquery' ),      '3.3.2',            true );
 
   wp_register_script( 'bidx-checkbox',            get_template_directory_uri() . '/assets/js/bidx-checkbox.js',                       array( 'jquery' ),      '0.0.2',            true );
   wp_register_script( 'bidx-radio',               get_template_directory_uri() . '/assets/js/bidx-radio.js',                          array( 'jquery' ),      '0.0.2',            true );
