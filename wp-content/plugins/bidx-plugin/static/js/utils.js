@@ -747,7 +747,7 @@
         var y = obj.getFullYear()
         ,   m = obj.getMonth() + 1
         ,   d = obj.getDate() * 1
-        ,   h = obj.getHours()
+        ,   h = obj.getHours()   < 10 ? "0" + obj.getHours() : obj.getHours()
         ,   n = obj.getMinutes() < 10 ? "0" + obj.getMinutes() : obj.getMinutes()
         ,   s = obj.getSeconds() < 10 ? "0" + obj.getSeconds() : obj.getSeconds()
         ;
@@ -761,6 +761,7 @@
         {
             d = "0" + d;
         }
+
 
         result += y + "-" + m + "-" + d + "T" + h + ":" + n + ":" + s + "Z" ;
 
