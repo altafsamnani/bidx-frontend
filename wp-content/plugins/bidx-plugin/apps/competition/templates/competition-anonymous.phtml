@@ -1,0 +1,170 @@
+<?php
+
+$competition = $this->data;
+// d($competition);
+
+$competitionBidxMeta = isset($competition->bidxMeta)
+    ? $competition->bidxMeta
+    : null;
+
+$canEdit                    = $this->exst($competitionBidxMeta->bidxCanEdit, false);
+
+$endDateTime                = ( isset( $competition->endDateTime ) ) ? date( 'd M Y H:i', strtotime ( $this->exst( $competition->endDateTime ) ) ) : NULL;
+
+$endTimeStamp               = ( isset( $competition->endDateTime ) ) ? strtotime ( $this->exst( $competition->endDateTime ) )  : NULL;
+
+$competitionId = $competitionBidxMeta->bidxCompetitionId;
+
+if ( !($competition->competitionLogo && $competition->competitionLogo->document) )
+{
+    if ( $canEdit || $newBusiness )
+    {
+        $hasCover = 'hide-it';
+    }
+    else
+    {
+        $hasCover = 'hide';
+    }
+}
+
+
+?>
+<div class="competitionSummary box-border top-margin-lineheight" id="competitionSummary" data-bsid="<?php echo $competitionId; ?>">
+    <div class="competitionCover">
+        <div class="coverImageContainer <?php echo $hasCover; ?>">
+<?php
+            if ( $competition->competitionLogo && $competition->competitionLogo->document ) :
+?>
+            <div class="coverImage">
+                <img src="<?php echo $competition->competitionLogo->document ?>" alt="Cover Image" data-initop="<?php echo $competition->competitionLogo->top?>" style="position: relative; top: <?php echo $competition->competitionLogo->top?>px">
+            </div>
+<?php
+            endif;
+?>
+        </div>
+    </div>
+
+    <div class="competition-info hide-overflow text-center">
+        <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+            <div class="row main-padding">
+                <div class="col-sm-3">
+                    <div class="participants-number"><?php echo $competition->appliedCount;?></div>
+                    <div class="participants-state"><?php echo _e( 'Participants', 'bidxplugin' ); ?></div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="participants-number"><?php echo $competition->submittedCount;?></div>
+                    <div class="participants-state"><?php echo _e( 'Submitted', 'bidxplugin' ); ?></div>
+                </div>
+<?php
+                 if($competition->withdrawnCount && $canEdit )
+                 {
+?>
+                 <div class="col-sm-3">
+                    <div class="participants-number"><?php echo $competition->withdrawnCount;?></div>
+                    <div class="participants-state"><?php echo _e( 'Submitted', 'bidxplugin' ); ?></div>
+                </div>
+<?php
+                 }
+                 if($competition->rejectedCount && $canEdit )
+                 {
+?>
+                 <div class="col-sm-3">
+                    <div class="participants-number"><?php echo $competition->rejectedCount;?></div>
+                    <div class="participants-state"><?php echo _e( 'Submitted', 'bidxplugin' ); ?></div>
+                </div>
+<?php
+            }
+?>
+                <div class="col-sm-3">
+                    <div class="participants-number">-</div>
+                    <div class="participants-state"><?php echo _e( 'Finalists', 'bidxplugin' ); ?></div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="participants-number">-</div>
+                    <div class="participants-state"><?php echo _e( 'Winners', 'bidxplugin' ); ?></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php
+    if ( $this->exst($competitionBidxMeta->bidxEntityId) )
+    {
+?>
+    <div class="main-padding bg-info">
+        <div class="row view viewShow viewParticipate">
+            <div class="col-sm-8 col-sm-offset-2">
+                <h4 class="text-center"><?php echo _e( 'Apply before', 'bidxplugin' ); ?>:
+                    <strong><?php echo $endDateTime;?></strong>
+                </h4>
+<?php
+                if ( $this->exst($competitionBidxMeta->bidxEntityId) )
+                {
+?>
+                    <div class="counter hide-overflow text-center flat" data-time="<?php echo $endTimeStamp; ?>">
+<?php
+                        if ( $endTimeStamp < time() )
+                        {
+?>
+                            <div class="alert alert-warning">
+                                <strong><i class="fa fa-exclamation-triangle"></i> <?php _e( 'This competition has expired','bidxplugin' ); ?></strong>
+                            </div>
+                            <a class="btn btn-secondary btn-block" href="/competition"><?php _e( 'Visit our competition overview','bidxplugin' ); ?> </a>
+<?php
+                        }
+                        else
+                        { 
+?>
+                            <div class="counter-block">
+                                <div class="days counter-number"></div>
+                                <div class="counter-text"><?php _e( 'DAYS','bidxplugin' ); ?></div>
+                            </div>
+                            <div class="counter-block">
+                                <div class="hours counter-number"></div>
+                                <div class="counter-text"><?php _e( 'HOURS','bidxplugin' ); ?></div>
+                            </div>
+                            <div class="counter-block">
+                                <div class="minutes counter-number"></div>
+                                <div class="counter-text"><?php _e( 'MINUTES','bidxplugin' ); ?></div>
+                            </div>
+                            <div class="counter-block">
+                                <div class="seconds counter-number"></div>
+                                <div class="counter-text"><?php _e( 'SECONDS','bidxplugin' ); ?></div>
+                            </div>
+<?php
+                        }
+?>
+                    </div>
+<?php
+                }
+?>
+            </div>
+        </div>
+    </div>
+<?php
+    }
+?>
+
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+<?php
+            if ( $this->exst($competitionBidxMeta->bidxEntityId) )
+            {
+?>
+                <h1>
+                    <?php echo $this->exst( $competition->name ); ?>
+                </h1>
+<?php
+            }
+?>
+            <div class="competition-description"><?php echo $this->exst( $competition->description ); ?></div>
+            <div class="row">
+                <div class="col-sm-4 col-sm-offset-4 big-padding-vertical">
+                    <a href="/join" class="btn btn-lg btn-block btn-secondary"><?php echo _e( 'Participate', 'bidxplugin' ); ?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

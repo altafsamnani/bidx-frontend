@@ -47,12 +47,50 @@
 
 // REMOVE FROM HERE AND UP WHEN SWITCHED TO NEW THEME
 
+@gray-darker:            lighten(#000, 13.5%); // #222
+@gray-dark:              lighten(#000, 20%);   // #333
+@gray:                   lighten(#000, 33.5%); // #555
+@gray-light:             lighten(#000, 60%);   // #999
+@gray-lighter:           lighten(#000, 93.5%); // #eee
 
 .bidx-businesssummary
 {
+    &.bidx-edit
+    {
+        .businessCover .logoImage
+        {
+            display: none;
+        }
+    }
+    .table-financial,
+    .table-company
+    {
+        th
+        {
+            background-color: #efefef;
+        }
+    }
+    .main-padding-vertical
+    {
+        td
+        {
+            width: 35%;
+        }
+        td + td
+        {
+            width: auto;
+        }
+    }
+    .table-company
+    {
+        td
+        {
+            width: auto !important;
+        }
+    }
     .viewMainsuccess
     {
-        float:right;
+        float: right;
     }
     .viewShow
     {
@@ -98,7 +136,8 @@
     }
     .fs-cell
     {
-        margin: 0 1px 1px 0;
+        // margin: 0 1px 1px 0;
+        margin: 2px 3px;
         position: relative;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
@@ -130,7 +169,7 @@
     .fs-section-header
     {
         height:                     80px;
-        background-color:           #f8f7f6;
+        // background-color:           #f8f7f6;
         div.fs-content
         {
             position:                   absolute;
@@ -166,12 +205,12 @@
         }
         .fs-header
         {
-            background-color: #BE2025;
-            color: white;
+            background-color: lighten(@brand-primary, 30%);
+            margin: 0;
+            // color: white;
             a
             {
-                background-color: #BE2025;
-                color: white;
+                color: @brand-danger;
             }
             p
             {
@@ -195,11 +234,10 @@
             .fs-header
             {
                 color: #34495e;
-                background-color: #d2b58d;
+                background-color: lighten(@brand-primary, 15%);
                 a
                 {
-                    background-color: #d2b58d;
-                    color: #BE2025;
+                    color: @brand-danger;
                     &.btnDelete
                     {
                         color: #BE2025;
@@ -232,9 +270,13 @@
     .fs-header-controls-right
     {
         display: none;
-        padding: 16px 0;
+        padding: 16px 10px;
         position: absolute;
         top: 0;
+        a
+        {
+            color: darken(@brand-primary, 30%) !important;
+        }
     }
     .fs-header-controls-left
     {
@@ -256,6 +298,7 @@
     {
         width: 33.333%;
         float: left;
+        background-color: #FFF;
         @media (max-width: @screen-xs-max)
         {
             display: none;
@@ -272,12 +315,16 @@
             }
             .addYear
             {
-                padding-top: 20px;
-                a
-                {
-                    font-size: 18px;
-                }
+                // padding-top: 20px;
+                // a
+                // {
+                //     font-size: 18px;
+                // }
             }
+        }
+        &.addYearCol
+        {
+            background-color: transparent;
         }
         .fs-header
         {
@@ -295,6 +342,8 @@
         }
         &.selected
         {
+            border-right: 2px solid lighten(@gray-light, 34%);
+            border-left: 2px solid lighten(@gray-light, 34%);
             @media (max-width: @screen-xs-max)
             {
                 display: block;
@@ -318,7 +367,6 @@
         color: @gray-lighter;
         margin: 0;
         padding: ceil(@padding-base-horizontal * 0.5);
-        text-align: center;
         font-weight: 100;
         .percentage
         {
@@ -341,3 +389,119 @@
     }
 }
 
+.businessSummary
+{
+    background-color: #fff;
+}
+
+.businessCover
+{
+    position: relative;
+}
+.coverImageContainer
+{
+    height: 250px;
+    width: 100%;
+    @topright: lighten(@brand-primary, 35%);
+    @bottomleft: darken(@brand-primary, 25%);
+    background:@bottomleft;
+    background:-webkit-gradient(linear,right top,left bottom,color-stop(1.82%,@topright),color-stop(100%,@bottomleft));
+    background:-webkit-linear-gradient(top right,@topright 1.82%,@bottomleft 100%);
+    background:-moz-linear-gradient(top right,@topright 1.82%,@bottomleft 100%);
+    background:-o-linear-gradient(top right,@topright 1.82%,@bottomleft 100%);
+    background:-ms-linear-gradient(top right,@topright 1.82%,@bottomleft 100%);
+    background:linear-gradient(to bottom left,@topright 1.82%,@bottomleft 100%);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#b2f0cc', endColorstr='#0e5d30',GradientType=1);
+    position: relative;
+    overflow: hidden;
+    @media (max-width: @screen-sm-min)
+    {
+        height: 170px;
+    }
+    @media (max-width: @screen-xs-min)
+    {
+        height: 170px;
+    }
+    .coverBtns
+    {
+        .transform(translateY(-50%) translateX(-50%));
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 1;
+    }
+    .coverImage
+    {
+        img
+        {
+            width: 1140px;
+            height: auto;
+            .transform(translateY(0) translateX(-50%));
+            position: absolute;
+            // top: 50%;
+            left: 50%;
+            @media (max-width: @screen-md-min)
+            {
+                position: absolute !important;
+                top: 50% !important;
+                .transform(translateY(-50%) translateX(-50%));
+                width: 940px;
+            }
+            @media (max-width: @screen-sm-min)
+            {
+                position: absolute !important;
+                top: 50% !important;
+                .transform(translateY(-50%) translateX(-50%));
+                width: 786px;
+            }
+            @media (max-width: @screen-xs-min)
+            {
+                position: absolute !important;
+                top: 50% !important;
+                .transform(translateY(-50%) translateX(-50%));
+                width: 480px;
+            }
+        }
+    }
+}
+.logoContainer
+{
+    width: 160px;
+    height: 160px;
+    border: 10px solid @white;
+    background-color: @white;
+    position: relative;
+    img
+    {
+        .center-img();
+        max-width: 100%;
+        height: auto;
+    }
+}
+.logoImage
+{
+    position: absolute;
+    bottom: 0;
+    left: 50px;
+    width: 160px;
+    height: 160px;
+    background-color: @white;
+    border: 10px solid @white;
+    @media (max-width: @screen-md-min)
+    {
+        left: 40px;
+    }
+    @media (max-width: @screen-sm-min)
+    {
+        left: 20px;
+    }
+    @media (max-width: @screen-xs-min)
+    {
+        left: 10px;
+    }
+    img
+    {
+        .center-img();
+        max-width: 100%;
+    }
+}

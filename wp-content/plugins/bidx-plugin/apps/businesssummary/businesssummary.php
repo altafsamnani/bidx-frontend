@@ -7,7 +7,7 @@
 class businesssummary
 {
     static $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2',
-        'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-industries', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
+        'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-industries','bidx-cover', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
         'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
         'bidx-location', 'bidx-chosen', 'jquery-fitvids', 'jquery-raty'
     );
@@ -68,21 +68,21 @@ class businesssummary
             $view->data = $businessSummaryData->data;
 
             if ( isset( $businessSummaryData -> data -> completeness ) ) {
-            	$completeness = $businessSummaryData -> data -> completeness;
+                $completeness = $businessSummaryData -> data -> completeness;
 
-            	//TODO : structurally fix this using the scoring service
-            	$view->completenessScore = min(round(($completeness / 68)*100), 100);
-            	if ( $view->completenessScore < 30 ) {
-            		$view->completenessColour = 'incomplete';
-            	} else if ( $view->completenessScore < 60 ) {
-            		$view->completenessColour = 'medium';
-            	} else {
-            		$view->completenessColour = 'good';
-            	}
+                //TODO : structurally fix this using the scoring service
+                $view->completenessScore = round($completeness);
+                if ( $view->completenessScore < 30 ) {
+                    $view->completenessColour = 'incomplete';
+                } else if ( $view->completenessScore < 60 ) {
+                    $view->completenessColour = 'medium';
+                } else {
+                    $view->completenessColour = 'good';
+                }
             }
             else {
-            	$view->completenessScore = 0;
-            	$view->completenessColour = 'red';
+                $view->completenessScore = 0;
+                $view->completenessColour = 'red';
             }
 
             /* Fetch the detailed rating if needed. The count and average are available in

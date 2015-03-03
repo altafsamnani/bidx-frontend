@@ -200,6 +200,16 @@
                 $el.datepicker( "setUTCDate", date );
             }
         }
+        else if ( dataType === "datetime" )
+        {
+            if ( value )
+            {
+                dateObj = parseISODate( value );
+                date    = new Date( dateObj.y, dateObj.m - 1, dateObj.d );
+
+                $el.datetimepicker( "setUTCDate", date );
+            }
+        }
         else if ( dataType === "tagsinput" )
         {
             if ( value )
@@ -247,7 +257,7 @@
                                 }
                                 else
                                 {
-                                    $this.prop( "checked", false );
+                                    $this.prop( "checked", true ); // Plz set it to false if error occurs somewhere, fixed for competition listing checkboxes
                                 }
                             }
                         } );
@@ -354,7 +364,21 @@
                 }
 
             break;
+            case 'datetime':
+                date    = $input.datetimepicker( "getUTCDate" );
 
+                // BIDX-1620: datepicker returns Invalid date value when nothing is selected, this value will be converted to NaN value by the getIsoDate function
+                //
+                if ( date instanceof Date && isFinite( date ) )
+                {
+                    value   = getISODateTime( date );
+                }
+                else
+                {
+                    value = "";
+                }
+
+            break;
             case 'tagsinput':
                 values = $input.tagsinput( "getValues" );
 
@@ -710,6 +734,40 @@
         return result;
     };
 
+    var getISODateTime = function( obj )
+    {
+        var result = "";
+
+        if ( !obj )
+        {
+            return result;
+        }
+
+
+        var y = obj.getFullYear()
+        ,   m = obj.getMonth() + 1
+        ,   d = obj.getDate() * 1
+        ,   h = obj.getHours()   < 10 ? "0" + obj.getHours() : obj.getHours()
+        ,   n = obj.getMinutes() < 10 ? "0" + obj.getMinutes() : obj.getMinutes()
+        ,   s = obj.getSeconds() < 10 ? "0" + obj.getSeconds() : obj.getSeconds()
+        ;
+
+        if ( m < 10 )
+        {
+            m = "0" + m;
+        }
+
+        if ( d < 10 )
+        {
+            d = "0" + d;
+        }
+
+
+        result += y + "-" + m + "-" + d + "T" + h + ":" + n + ":" + s + "Z" ;
+
+        return result;
+    };
+
     var parseISODate = function( str )
     {
         if ( !str )
@@ -803,7 +861,7 @@
             ,   d:      d.getDate()
             ,   h:      d.getHours()
             ,   n:      d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes()
-            ,   s:      d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds() 
+            ,   s:      d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds()
             }
         ,   result
         ;
@@ -893,6 +951,7 @@
     ,   getGroupDomain:             getGroupDomain
     ,   toTimeStamp:                toTimeStamp
     ,   getISODate:                 getISODate
+    ,   getISODateTime:             getISODateTime
     ,   parseISODate:               parseISODate
     ,   parseISODateTime:           parseISODateTime
     ,   parseTimestampToDateStr:    parseTimestampToDateStr

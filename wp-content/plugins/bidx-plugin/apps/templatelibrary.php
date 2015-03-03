@@ -247,6 +247,10 @@ class TemplateLibrary
             case 'investmentType':
                 $values = $this->getStaticVal ('investmentType', $values);
                 break;
+                
+            case 'typicalInvolvement':
+                $values = $this->getStaticVal ('typicalInvolvement', $values);
+                break;
         }
 
         return $values;
@@ -310,6 +314,7 @@ class TemplateLibrary
             case 'mentorExpertise':
             case 'productService':
             case 'reasonForSubmission':
+            case 'typicalInvolvement':
                 $values = $this->getStaticVal ($label, $values);
 
                 break;
@@ -360,6 +365,80 @@ class TemplateLibrary
             $pairRow .= "</div>";
         }
         return $pairRow;
+    }
+
+
+    /**
+     * Create pairs of labels / values inline
+     * @param Array $pairs
+     * @param Array $properties Label's Tag and Value's Tag
+     *
+     * @return String $inlineRow Row html
+     *
+     */
+    public function inlineRow ( $rowValues, $properties = array () )
+    {
+        /** Class * */
+        $classLabel = (isset ($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
+        $classValue = (isset ($properties['class_value']) && $properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
+
+        /** Tag * */
+        $tagLabel = (isset ($properties['tag_label']) && $properties['tag_label']) ? $properties['tag_label'] : 'strong';
+        $tagValue = (isset ($properties['tag_value']) && $properties['tag_value']) ? $properties['tag_value'] : 'span';
+
+        $rowHtml = '';
+        foreach ($rowValues as $label => $value) {
+        $rowHtml .= "<div>";
+            if ($value && $value != 'null') {
+                //Display Label
+                $rowHtml .= "<$tagLabel " . $classLabel . " > " . $label . " </$tagLabel>";
+                //Display Value
+                $rowHtml .= "<$tagValue " . $classValue . " > " . $value . " </$tagValue>";
+            }
+        $rowHtml .="</div>";
+        }
+        return $rowHtml;
+    }
+
+
+    /**
+     * Create pairs of labels / values in a table
+     * @param Array $pairs
+     * @param Array $properties Label's Tag and Value's Tag
+     *
+     * @return String $tableRow Row html
+     *
+     */
+    public function tableRow ( $rowValues, $properties = array () )
+    {
+        /** Class * */
+        $classLabel = (isset ($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
+        $classValue = (isset ($properties['class_value']) && $properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
+
+        /** Tag * */
+        $tagLabel = (isset ($properties['tag_label']) && $properties['tag_label']) ? $properties['tag_label'] : 'td';
+        $tagValue = (isset ($properties['tag_value']) && $properties['tag_value']) ? $properties['tag_value'] : 'td';
+
+        $rowHtml = '<table class="table table-condensed table-bottom-border"><tbody>';
+        foreach ($rowValues as $label => $value)
+        {
+            if ( is_array( $value ) )
+            {
+                $value = $value[0];
+            }
+            
+            if ($value && $value != 'null')
+            {
+                $rowHtml .= "<tr>";
+                    //Display Label
+                    $rowHtml .= "<$tagLabel " . $classLabel . " > " . $label . " </$tagLabel>";
+                    //Display Value
+                    $rowHtml .= "<$tagValue " . $classValue . " > " . $value . " </$tagValue>";
+                $rowHtml .="</tr>";
+            }
+        }
+        $rowHtml .="</tbody></table>";
+        return $rowHtml;
     }
 
     /**
@@ -603,15 +682,18 @@ class TemplateLibrary
         return $returnHtml;
     }
 
-    public function displayDocuments( $docs, $label )
+    public function displayDocuments( $docs, $label = NULL )
     {
         $html = '<div class="row"><div class="col-sm-12">';
-        $html .= '<h4>' . $label . '</h4>';
+        if ( $label )
+        {
+            $html .= '<h4>' . $label . '</h4>';
+        }
         $html .= '<table class="table table-bordered"> <tbody>';
         $html .= '<tr>';
         $html .= '<th>' . __('Name', 'bidxplugin') . '</th>';
-        $html .= '<th>' . __('Purpose', 'bidxplugin') . '</th>';
-        $html .= '<th>' . __('Type', 'bidxplugin') . '</th>';
+        $html .= '<th class="hidden-sm hidden-xs">' . __('Purpose', 'bidxplugin') . '</th>';
+        $html .= '<th class="hidden-sm hidden-xs">' . __('Type', 'bidxplugin') . '</th>';
         $html .= '</tr>';
         foreach ($docs as $doc) {
             if ( isset( $doc->bidxMeta->bidxUploadId ) )
@@ -619,8 +701,8 @@ class TemplateLibrary
                 $purpose = $doc->purpose ? $doc->purpose : '-';
                 $html .= '<tr>';
                 $html .= '<td><a class="word-break" href="'.$doc->document.'">'. $doc->documentName .'</a></td>';
-                $html .= '<td>'. $purpose .'</td>';
-                $html .= '<td>'. $this->getMultiReplacedValues( 'documentType', $doc->documentType ) .'</td>';
+                $html .= '<td class="hidden-sm hidden-xs">'. $purpose .'</td>';
+                $html .= '<td class="hidden-sm hidden-xs">'. $this->getMultiReplacedValues( 'documentType', $doc->documentType ) .'</td>';
                 $html .= '</tr>';
             }
         }
@@ -926,7 +1008,7 @@ class TemplateLibrary
                         if (preg_match($videoIdRegex, $link, $results)) {
                             if ( in_array( "youtube", $results ) ) {
                                 $video_str = 'http://www.youtube.com/v/%s?fs=1&amp;autoplay=1';
-                                $videoPlayer = '<iframe src="//www.youtube.com/embed/%s" frameborder="0" allowfullscreen></iframe>';
+                                $videoPlayer = '<iframe src="//www.youtube.com/embed/%s" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>';
                                 $thumbnail_str = 'http://img.youtube.com/vi/%s/2.jpg';
                                 $fullsize_str = 'http://img.youtube.com/vi/%s/0.jpg';
                                 $video_id = $results[2];
@@ -937,7 +1019,7 @@ class TemplateLibrary
                                     $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$video_id.php"));
                                     if (!empty($hash) && is_array($hash)) {
                                         $video_str = 'http://vimeo.com/moogaloop.swf?clip_id=%s';
-                                        $videoPlayer = '<iframe src="//player.vimeo.com/video/%s?title=0&amp;byline=0&amp;portrait=0" frameborder="0"></iframe>';
+                                        $videoPlayer = '<iframe src="//player.vimeo.com/video/%s?title=0&amp;byline=0&amp;portrait=0" class="embed-responsive-item" frameborder="0"></iframe>';
                                         $thumbnail_str = $hash[0]['thumbnail_small'];
                                         $fullsize_str = $hash[0]['thumbnail_large'];
                                     } else {
@@ -1158,6 +1240,32 @@ class TemplateLibrary
     {
         $var = ($escape && is_string ($var)) ? $this->escapeHtml ($var) : $var;
         return empty ($var) ? $var = $default : $var;
+    }
+
+    function addPrefixSuffix ( $data, $prefix = '', $suffix = '' )
+    {
+        $return = NULL;
+        if ( $data )
+        {
+            $return = $prefix . $data . $suffix;
+        }
+
+        return $return;
+    }
+
+    function checkEmpty( $vars )
+    {
+        $hasValue = false;
+        foreach ($vars as $var)
+        {
+            if ( $var != NULL || $var != "" )
+            {
+                $hasValue = true;
+                break;
+            }
+        }
+
+        return $hasValue;
     }
 
     function getBidxToken ($token)

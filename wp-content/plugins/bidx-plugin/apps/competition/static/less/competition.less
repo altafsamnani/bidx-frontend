@@ -1,0 +1,162 @@
+// REMOVE FROM HERE AND BELOW WHEN SWITCHED TO NEW THEME
+
+@brand-success: #1abc9c;
+@brand-warning: #f0ad4e;
+@brand-danger:  #d9534f;
+@gray-lighter: lighten(#000, 93.5%);
+@padding-base-horizontal: 12px;
+@font-size-base: 14px;
+
+//== Media queries breakpoints
+//
+//## Define the breakpoints at which your layout will change, adapting to different screen sizes.
+
+// Extra small screen / phone
+//** Deprecated `@screen-xs` as of v3.0.1
+@screen-xs:                  480px;
+//** Deprecated `@screen-xs-min` as of v3.2.0
+@screen-xs-min:              @screen-xs;
+//** Deprecated `@screen-phone` as of v3.0.1
+@screen-phone:               @screen-xs-min;
+
+// Small screen / tablet
+//** Deprecated `@screen-sm` as of v3.0.1
+@screen-sm:                  768px;
+@screen-sm-min:              @screen-sm;
+//** Deprecated `@screen-tablet` as of v3.0.1
+@screen-tablet:              @screen-sm-min;
+
+// Medium screen / desktop
+//** Deprecated `@screen-md` as of v3.0.1
+@screen-md:                  992px;
+@screen-md-min:              @screen-md;
+//** Deprecated `@screen-desktop` as of v3.0.1
+@screen-desktop:             @screen-md-min;
+
+// Large screen / wide desktop
+//** Deprecated `@screen-lg` as of v3.0.1
+@screen-lg:                  1200px;
+@screen-lg-min:              @screen-lg;
+//** Deprecated `@screen-lg-desktop` as of v3.0.1
+@screen-lg-desktop:          @screen-lg-min;
+
+// So media queries don't overlap when required, provide a maximum
+@screen-xs-max:              (@screen-sm-min - 1);
+@screen-sm-max:              (@screen-md-min - 1);
+@screen-md-max:              (@screen-lg-min - 1);
+
+// REMOVE FROM HERE AND UP WHEN SWITCHED TO NEW THEME
+
+.bidx-competition
+{
+    &.bidx-edit
+    {
+        .businessCover .hide-it
+        {
+            display: block;
+        }
+    }
+    .viewMainsuccess
+    {
+        float:right;
+    }
+    .viewShow
+    {
+        display: block;
+    }
+    .controls .radio
+    {
+        margin: 0;
+    }
+    .dropup ul
+    {
+        left: auto;
+        right: 0;
+    }
+
+    .counter
+    {
+        margin-bottom: 0;
+    }
+    .counter-number
+    {
+        font-family: "@{menu-font}", sans-serif;
+        font-size: ceil(@font-size-base * 1.4);
+        font-weight: 100;
+        @media (max-width: @screen-md-min)
+        {
+            font-size: ceil(@font-size-base * 1.4);
+        }
+        @media (max-width: @screen-sm-min)
+        {
+            font-size: ceil(@font-size-base * 1.4);
+        }
+        @media (max-width: @screen-xs-min)
+        {
+            font-size: ceil(@font-size-base * 1.4);
+        }
+    }
+    .counter-text
+    {
+        font-weight: 600;
+        padding: ceil(@font-size-base * 0.3);
+        font-size: ceil(@font-size-base * 0.75);
+        @media (max-width: @screen-md-min)
+        {
+            font-size: ceil(@font-size-base * 0.75);
+        }
+        @media (max-width: @screen-xs-min)
+        {
+            font-size: ceil(@font-size-base * 0.75);
+        }
+    }
+
+
+}
+.competition-description
+{
+    font-weight: 300;
+    font-size: ceil(@font-size-base * 1.25);
+}
+.competition-info
+{
+    font-weight: 100;
+    line-height: 1;
+    border-bottom: 1px solid lighten(@gray-light, 46%);
+    background: lighten(@gray-light, 49%);
+}
+
+.participants-number
+{
+    font-size: ceil(@font-size-base * 3.5);
+}
+.participants-state
+{
+    font-size: ceil(@font-size-base * 1.5);
+}
+
+.competitionSummary .label.bidx-competition
+{
+    background-color: #2c3e50;
+}
+
+.btn-assessors.active
+{
+    color: #ffffff;
+    background-color: #217dbb;
+    border-color: #1c699d;
+}
+
+.btn-judges.active
+{
+    color: #ffffff;
+    background-color: #1abc9c;
+    border-color: #1c699d;
+}
+
+.btn-administrators.active
+{
+    color: #ffffff;
+    background-color: #ec971f;
+    border-color: #d58512;
+}

@@ -57,46 +57,35 @@
                 $summaryBidxMeta = isset( $summary->bidxMeta ) ? $summary->bidxMeta : $summary;
  ?>
                 <li class="media">
-<?php
-                    if ( $authenticated ) {
-?>
                         <a class="pull-left" href="/businesssummary/<?php echo $summary -> bidxMeta -> bidxEntityId ?>">
 <?php
-                    }
 
-                    if ( empty( $summary -> externalVideoPitch ) ) {
-                        echo '<div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>';
-                    } else {
-                        $videoUrl = $this->exst($summary -> externalVideoPitch);
-                        $parsedVideo = $this->parseVideos( $videoUrl );
-                        $videoThumb = $parsedVideo[0]['fullsize'];
+                            if ( $this -> exst( $summary->logo )  && $this -> exst( $summary->logo->document ) )
+                            {
+                                echo '<div class="img-cropper img-logo pull-left"><span class="valign"></span><img src="' . $summary->logo->document . '" alt=""></div>';
+                            }
+                            elseif ( $this -> exst( $summary->cover )  && $this -> exst( $summary->cover->document ) )
+                            {
+                                echo '<div class="img-cropper img-logo pull-left"><span class="valign"></span><img src="' . $summary->cover->document . '" alt=""></div>';
+                            }
+                            else
+                            {
+                                echo '<div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>';
+                            }
 
-                        echo '<div class="img-cropper pull-left"><img src="' . $videoThumb . '" alt=""></div>';
-                    }
 
-                    if ( $authenticated ) {
+
+
 ?>
                         </a>
-<?php
-                    }
-?>
+
                     <div class="media-body">
                         <div class="media-heading">
-<?php
-                        if ( $authenticated ) {
-?>
                             <a href="/businesssummary/<?php echo $summary -> bidxMeta -> bidxEntityId ?>"><strong>
 <?php
-                        }
-
                         echo html_entity_decode( $summary -> name  );
-
-                        if ( $authenticated ) {
 ?>
                             </strong></a>
-<?php
-                        }
-?>
 
                         </div>
                         <div>
@@ -111,11 +100,12 @@
                                 foreach ( $industries as $industry )
                                 {
                                     echo $this->getStaticVal( 'industry', $industry ) ;
-                                    if ( count( $industries ) != $ix )
-                                    {
-                                        echo ", ";
-                                    }
-                                    $ix++;
+                                    // if ( count( $industries ) != $ix )
+                                    // {
+                                    //     echo ", ";
+                                    // }
+                                    // $ix++;
+                                    break;
                                 }
                             }
 ?>

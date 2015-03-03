@@ -1,96 +1,82 @@
 <div id="editEntrepreneur" class="mainState mainStateEditEntrepreneur">
 
     <!-- LOAD -->
-    <div class="view viewLoad alert alert-info text-center">
+    <div class="view viewLoad alert alert-info text-center main-margin">
         <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Retrieving entrepreneur information...','bidxplugin'); ?>
     </div>
 
     <!-- ERROR -->
-    <div class="view viewError alert alert-warning">
+    <div class="view viewError alert alert-warning main-margin">
         <h2><?php _e('Error','bidxplugin'); ?></h2>
         <p class="errorMsg"></p>
     </div>
 
     <!-- EDIT -->
-    <div class="view viewEdit">
+    <div class="view viewEdit main-margin">
 
         <form id="frmeditEntrepreneur">
+            <div class="row tabs-vertical">
 
-            <div id="entrepreneurProfileEdit">
-                <div class="panel panel-default panel-open">
-                    <div class="panel-heading">
-                        <a class="btn-block" data-toggle="collapse" data-parent="#entrepreneurProfileEdit" href="#entrepreneurProfileDetails">
-                            <span class="fa fa-chevron-right accordion-state-icon"></span>
-                            <?php _e('Entrepreneur profile','bidxplugin');?>
-                        </a>
-                    </div>
-                <div id="entrepreneurProfileDetails" class="panel-collapse collapse in">
-                    <div class="panel-body">
-
-                        <blockquote class="alert-info">
-                            <?php _e('Complete this short form with information about you as entrepreneur. Be aware that investors and other members potentially interested in your business will be very interested to know more about you, your motivation and what makes you thrive as an entrepreneur. Treat this form as your first contact with, and pitch to potential investors and business partners.', 'bidxplugin')?>
-                        </blockquote>
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label><?php _e('Summary','bidxplugin'); ?></label>
-                                    <textarea name="summary" class="form-control" placeholder="<?php _e('Please describe yourself as an entrepreneur (max. 900 characters)','bidxplugin'); ?>" ></textarea>
-                                </div>
-                            </div>
-<!--                              <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label><?php _e('Focus industry','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <select name="focusIndustry" multiple></select>
-                                    </div>
-                                </div>
-                            </div>
- -->                         </div>
-
-                        <div class="industrySectors">
-                            <label><?php _e('Focus industry','bidxplugin'); ?></label>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-6">
-
-                                <div class="form-group">
-                                    <label><?php _e('Have you ever owned a business before?','bidxplugin'); ?></label>
-
-                                    <div class="radio">
-                                        <input type="radio" value="true" id="radio-prevRunBusinessYes" name="prevRunBusiness" data-toggle="radio" />
-                                        <label for="radio-prevRunBusinessYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
-                                    </div>
-                                    <div class="radio">
-                                        <input type="radio" value="false" id="radio-prevRunBusinessNo" name="prevRunBusiness" data-toggle="radio" />
-                                        <label for="radio-prevRunBusinessNo"><span></span><?php _e('No','bidxplugin'); ?></label>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="toggle togglePrevRunBusiness">
-                            <h4><?php _e('Previous businesses','bidxplugin'); ?>
-                                <a href="#addPreviousBusiness" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e('Add','bidxplugin'); ?></a>
-                            </h4>
-                        </div>
-
-                        <div class="toggle togglePrevRunBusiness previousBusinessContainer"></div>
-                        </div>
-                    </div>
+                <div class="col-sm-3 tabs-nav">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs tabs-left">
+                        <li class="active"><a href="#tab-entrepreneur-profile" data-toggle="tab"><?php _e('Entrepreneur profile','bidxplugin');?></a></li>
+                        <li><a href="#tab-cv" data-toggle="tab"><?php _e('Curriculum Vitae','bidxplugin');?></a></li>
+                        <li><a href="#tab-other-documents" data-toggle="tab"><?php _e('Other documents','bidxplugin');?></a></li>
+                    </ul>
                 </div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading  js-cv-panel">
-                        <a class="btn-block" data-toggle="collapse" data-parent="#entrepreneurProfileEdit" href="#entrepreneurProfileCV">
-                            <span class="fa fa-chevron-right accordion-state-icon"></span>
-                            <?php _e('CV','bidxplugin');?>
-                        </a>
-                    </div>
-                    <div id="entrepreneurProfileCV" class="panel-collapse collapse cvControl">
-                        <div class="panel-body">
+                <div class="col-sm-9 tabs-content">
+                    <div class="tab-content">
+
+                        <div class="tab-pane active" id="tab-entrepreneur-profile">
+
+                            <blockquote class="alert-info">
+                                <?php _e('Complete this short form with information about you as entrepreneur. Be aware that investors and other members potentially interested in your business will be very interested to know more about you, your motivation and what makes you thrive as an entrepreneur. Treat this form as your first contact with, and pitch to potential investors and business partners.', 'bidxplugin')?>
+                            </blockquote>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label><?php _e('Summary','bidxplugin'); ?></label>
+                                        <textarea name="summary" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="industrySectors">
+                                <label><?php _e('Focus industry','bidxplugin'); ?></label>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+
+                                    <div class="form-group">
+                                        <label><?php _e('Have you ever owned a business before?','bidxplugin'); ?></label>
+
+                                        <div class="radio">
+                                            <input type="radio" value="true" id="radio-prevRunBusinessYes" name="prevRunBusiness" data-toggle="radio" />
+                                            <label for="radio-prevRunBusinessYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" value="false" id="radio-prevRunBusinessNo" name="prevRunBusiness" data-toggle="radio" />
+                                            <label for="radio-prevRunBusinessNo"><span></span><?php _e('No','bidxplugin'); ?></label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="toggle togglePrevRunBusiness">
+                                <h4><?php _e('Previous businesses','bidxplugin'); ?>
+                                    <a href="#addPreviousBusiness" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e('Add','bidxplugin'); ?></a>
+                                </h4>
+                            </div>
+
+                            <div class="toggle togglePrevRunBusiness previousBusinessContainer"></div>
+                        </div>
+
+                        <div class="tab-pane cvControl" id="tab-cv">
                             <div class="row cvContainer">
                                 <div class="col-sm-6">
 
@@ -150,19 +136,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <a class="btn-block" data-toggle="collapse" data-parent="#entrepreneurProfileEdit" href="#entrepreneurProfileDocs">
-                            <span class="fa fa-chevron-right accordion-state-icon"></span>
-                            <?php _e('Other documents','bidxplugin');?>
-                        </a>
-                    </div>
-                    <div id="entrepreneurProfileDocs" class="panel-collapse collapse attachmentsControl">
-                        <div class="panel-body">
-
+                        <div class="tab-pane attachmentsControl" id="tab-other-documents">
                             <div class="attachmentsContainer"></div>
 
                             <button data-toggle="modal" class="btn btn-primary js-btn-add-attachments" data-target="#otherDocumentsModal"><span class="fa fa-plus"></span> <?php _e('Add documents', 'bidxplugin')?></button>
@@ -190,10 +165,10 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
-            </div>
-
+            </div> <!-- tabs-vertical -->
         </form>
     </div>
 
@@ -204,7 +179,7 @@
                     <label><?php _e('Name of company','bidxplugin'); ?></label>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-building-o"></i></span>
-                        <input type="text" class="form-control" name="company" placeholder="<?php _e('Please enter the business name','bidxplugin'); ?>">
+                        <input type="text" class="form-control" name="company">
                     </div>
                 </div>
 
@@ -214,10 +189,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label><?php _e('Company website?','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                    <label><?php _e('Company website?','bidxplugin'); ?></label>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-                        <input type="text" class="form-control" name="webSite" placeholder="<?php _e('Please enter the URL of the company','bidxplugin'); ?>">
+                        <input type="text" class="form-control" name="webSite">
                     </div>
                 </div>
 
@@ -226,7 +201,7 @@
         </div>
 
         <!-- Attachment -->
-        <div class="attachmentItem col-md-4">
+        <div class="attachmentItem col-md-6">
             <div class="media well">
                 <div class="pull-left icons-rounded attachmentMissing"><i class="fa fa-question-circle text-primary-light"></i></div>
                 <a class="pull-left documentLink img-cropper" href="#">

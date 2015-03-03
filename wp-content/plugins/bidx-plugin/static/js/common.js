@@ -829,7 +829,7 @@
 
         }
 
-    ,   errorElement: "div"
+    ,   errorElement: "span"
 
     ,   highlight: function( element, errorClass, validClass)
         {
@@ -855,7 +855,7 @@
 
             // update error count in accordion heading (if exists)
             //
-            updateAccordionHeadingErrors( element, "highlight" );
+            updateTabPanesErrors( element, "highlight" );
         }
 
     ,   unhighlight: function( element, errorClass, validClass)
@@ -889,7 +889,7 @@
 
             // update error count in accordion heading (if exists)
             //
-            updateAccordionHeadingErrors( element, "unhighlight" );
+            updateTabPanesErrors( element, "unhighlight" );
         }
 
         // when element receives focus
@@ -900,28 +900,28 @@
         }
     } );
 
-    function updateAccordionHeadingErrors( element, action )
+    function updateTabPanesErrors( element, action )
     {
-        var accordionHeadingSelector    = ".panel-heading"
-        ,   $element                    = $( element )
-        ,   $accordionGroup             = $element.closest( ".panel" )
-        ,   $accordionHeading
+        var $element           = $( element )
+        ,   $tabPane           = $element.closest( ".tab-pane" )
+        ,   tabPaneId          = $tabPane.attr( "id" )
+        ,   $tabNavItem
         ,   $errorCount
         ,   errorCount
         ;
 
-        // if element is not part of an accordiongroup, we do not need to proceed any further
+        // if element is not part of an tabPane, we do not need to proceed any further
         //
-        if (!$accordionGroup.length )
+        if (!$tabPane.length )
         {
             return;
         }
 
-        $accordionHeading = $accordionGroup.find( accordionHeadingSelector );
+        $tabNavItem = $tabPane.parents( ".tabs-vertical" ).find( ".tabs-nav").find( "a[href=#"+tabPaneId+"]" );
 
         // get the error count from the data-error attribute
         //
-        errorCount = $accordionHeading.data( "data-bidx-errorCount" );
+        errorCount = $tabNavItem.data( "data-bidx-errorCount" );
 
         // increase error count
         //
@@ -944,7 +944,7 @@
             if ( !errorCount )
             {
 
-                $accordionHeading.addClass( "heading-error" );
+                $tabNavItem.addClass( "heading-error" );
                 errorCount = 1;
                 _showErrorCount();
 
@@ -978,7 +978,7 @@
         //
         function _showErrorCount()
         {
-            var $errorCount = $accordionHeading.find( ".js-error-count" );
+            var $errorCount = $tabNavItem.find( ".js-error-count" );
 
             // if error count does not yet exist
             //
@@ -989,7 +989,7 @@
                     "class":      "pull-right badge js-error-count"
                 } );
 
-                $accordionHeading.prepend( $errorCount );
+                $tabNavItem.prepend( $errorCount );
             }
 
             if ( errorCount > 0 )
@@ -997,16 +997,16 @@
                 // change the errorCount value
                 //
                 $errorCount.text( errorCount );
-                $accordionHeading.addClass( "heading-error" );
-                $accordionHeading.data( "data-bidx-errorCount", errorCount );
+                $tabNavItem.addClass( "heading-error" );
+                $tabNavItem.data( "data-bidx-errorCount", errorCount );
             }
             else
             {
                 // remove error count and error class from heading
                 //
                 $errorCount.remove();
-                $accordionHeading.removeClass( "heading-error" );
-                $accordionHeading.removeData( "data-bidx-errorCount" );
+                $tabNavItem.removeClass( "heading-error" );
+                $tabNavItem.removeData( "data-bidx-errorCount" );
             }
             updateValidationToasts();
         }
@@ -1017,6 +1017,7 @@
         {
             var $editControls               = $( ".editControls" ).parent()
             ,   $toast                      = $editControls.find( ".total-error-message" )
+            ,   errorElements              = $( ".tabs-content .has-error" ).length
             ,   message                     = bidx.i18n.i( "frmInvalidMsg" )
             ;
 
@@ -1029,7 +1030,7 @@
                     .hide()
                 ;
             }
-            if ( errorCount > 0 )
+            if ( errorElements > 0 )
             {
                 $toast.fadeIn();
             }
@@ -1041,9 +1042,8 @@
     }
 
 
-
     // General function to remove validation errors, meant to be used before we show the forms in various edit states
-    // TODO: check for any remainings in the $accordionHeading.data( "data-bidx-errorCount" )
+    // TODO: check for any remainings in the $tabNavItem.data( "data-bidx-errorCount" )
     var removeValidationErrors = function ()
     {
         var $panels          = $( ".panel" )
@@ -1154,6 +1154,7 @@
     {
         $.fn.bootstrapPaginator.defaults.bootstrapMajorVersion = 3;
     }
+
     // Expose
     //
     if ( !window.bidx )
@@ -1220,21 +1221,6 @@
     ,   modalLogin:                     modalLogin
     };
 
-    // Control Bootstraps' tab control from outside of the tab header
-    //
-    $( ".tabControl" ).click(function(e)
-    {
-        e.preventDefault();
-
-        var $btn    = $( this )
-        ,   btnhref = $btn.attr( "href" )
-        ,   tab     = $btn.data( "tab" )
-        ,   $tab    = $( tab )
-        ;
-
-        $tab.find( "[href$='" + btnhref + "']" ).tab( "show" );
-    });
-
     // Instantiate bidx tagsinputs
     // The ones with a class 'defer' on them are left alone in case there is a dependency
     // with the app that otherwise can't be fixed
@@ -1260,12 +1246,46 @@
         ,   language:               currentLanguage
         } );
     }
+
+    if ( typeof $.prototype.datetimepicker === "function" )
+    {
+        $( "input[data-type=datetime]" ).datetimepicker(
+        {
+            format:                 "d M yyyy - hh:ii"
+        ,   showMeridian:           true
+        ,   autoclose:              true
+        ,   todayHighlight:         true
+        ,   pickerPosition:         "top-left"
+        ,   language:               currentLanguage
+        } );
+    }
+
     // Disable disabled links
     //
     $body.delegate( "a.disabled", "click", function( e )
     {
         e.preventDefault();
     } );
+
+    // Edit Profile
+    //
+    $( ".member" ).on( "click", "button.editProfile", function()
+    {
+        var editHref = $(".tab-pane.active a[href*='#edit']").first().attr( "href" );
+
+        window.location.href = window.location.pathname + editHref;
+    });
+
+    $( "a[data-toggle='tab']" ).click( function( e )
+    {
+        if ( $(this).attr("href") === "#tab-address" )
+        {
+            // For some reason this needs to be triggered twice in order to show the correct position
+            //
+            bidx.member._updateCurrentAddressMap();
+            bidx.member._updateCurrentAddressMap();
+        }
+    });
 
     // Administer the toggle state of an accordion by putting a .accordion-open class on the group when the accordion group is open
     // Usefull for setting icons / colors etc
@@ -1296,7 +1316,7 @@
             ,   offSet = 165
             ,   targetOffset = $accordionBody.offset().top - offSet
             ;
-            
+
             if ( $(".bidx-edit .panel-collapse .viewEdit").is( ":visible" ) )
             {
                 $accordionBody.closest( ".panel" )
@@ -1308,7 +1328,6 @@
             // Trigger the _updateCurrentAddressMap function when the panel is shown
             if ($accordionBody.hasClass( 'addressItem' ))
             {
-                bidx.member._updateCurrentAddressMap();
             }
 
             $('html,body').delay( 300 ).animate( {scrollTop:targetOffset}, 200 );
@@ -1320,12 +1339,12 @@
     if ( window.location.hash )
     {
         var windowHash  = window.location.hash.split('/')
-        ,   panelHash   = windowHash[windowHash.length-1]
+        ,   tabHash   = windowHash[windowHash.length-1]
         ;
 
-        if ( panelHash.match( /^#/ ) )
+        if ( tabHash.match( /^#/ ) )
         {
-            $( 'a[href='+ panelHash +']' ).click();
+            $( 'a[href='+ tabHash +']' ).click();
         }
     }
 

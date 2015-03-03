@@ -179,12 +179,7 @@
 
 		                    <?php
 
-		                    $args = array(	'textarea_name' => 'content'
-		                    	    , 		'editor_class' 	=> 'editor_connect'
-		                    	    ,		'quicktags' 	=> false
-		                    	    ,       'tinymce'       => false
-		                    	    ,       'media_buttons' => false
-		                    	    );
+		                    $args = array("textarea_name" => "content", "editor_class" => "editor_connect",'quicktags' => false);
                             wp_editor(__('','bidxplugin'), "connect_editor_id", $args); ?>
 
 		                    <div id="major-publishing-actions">
@@ -279,7 +274,7 @@
 <!-- snippets -->
 <script type="text/html" id="mailbox-listitem">
 <!--
-	<tr class="type-page status-publish hentry alternate iedit author-self level-0 %emailNew%">
+	<tr class="type-page status-publish hentry alternate iedit author-self level-0">
 		<th scope="row" class="check-column">
 			<label class="screen-reader-text" for="checkbox-mailboxItem"><span></span></label>
 			<input type="checkbox" value="" id="checkbox-mailboxItem" class="mailboxItem" name="mailboxItem" data-toggle="checkbox" data-id="">
@@ -291,7 +286,7 @@
 		</td>
 
 		<td class="author column-author">
-			<a href="%readEmailHref%">%senderReceiverName%</a>
+			<a href="%readEmailHref%">%senderReceiverName%%emailNew%</a>
 		</td>
 
 		<td class="date column-date">
