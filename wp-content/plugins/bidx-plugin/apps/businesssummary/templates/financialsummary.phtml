@@ -37,9 +37,6 @@ $financialSummariesItem = <<<EOT
                     <input type="text" class="form-control text-center" name="salesRevenue[{{year}}]" class="">
                 </div>
             </div>
-            <div class="view viewShow value fs-content text-center">
-                <span>$ {{salesRevenue}}</span>
-            </div>
         </div>
 
         <!-- Operational Costs -->
@@ -51,9 +48,6 @@ $financialSummariesItem = <<<EOT
                     <input type="text" class="form-control text-center" name="operationalCosts[{{year}}]" class="noValidationErrorMessage">
                 </div>
             </div>
-            <div class="view viewShow value fs-content text-center">
-                <span>$ {{operationalCosts}}</span>
-            </div>
         </div>
 
         <!-- Operational Costs -->
@@ -61,7 +55,6 @@ $financialSummariesItem = <<<EOT
             <label class="fs-cell-label">{{lblTotalIncome}}</label>
             <div class="totalIncome value fs-content text-center">
                 <span class="view viewEdit">$ -</span>
-                <span class="view viewShow">$ {{totalIncome}}</span>
             </div>
         </div>
 
@@ -76,9 +69,6 @@ $financialSummariesItem = <<<EOT
                     <input type="text" class="form-control text-center" name="financeNeeded[{{year}}]" class="noValidationErrorMessage">
                 </div>
             </div>
-            <div class="view viewShow value fs-content text-center">
-                <span>$ {{financeNeeded}}</span>
-            </div>
         </div>
 
         <div class="fs-cell fs-section-header"></div>
@@ -91,9 +81,6 @@ $financialSummariesItem = <<<EOT
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
                     <input type="text" class="form-control text-center" name="numberOfEmployees[{{year}}]" class="noValidationErrorMessage">
                 </div>
-            </div>
-            <div class="view viewShow value fs-content text-center">
-                <span>{{numberOfEmployees}}</span>
             </div>
         </div>
 
@@ -229,13 +216,13 @@ if ( $hasYears == false ) {
 
     <div class="fs-col-years clearfix">
 
-        <div class="financialSummariesItem addItem <?php echo ( $hasPrevYear ? 'ds-none' : '' ); ?>">
+        <div class="financialSummariesItem addItem addYearCol <?php echo ( $hasPrevYear ? 'ds-none' : '' ); ?>">
 
             <!-- EDIT -->
             <div class="view viewEdit">
-                <p class="addYear">
-                    <a href="#addPreviousYear"><i class="fa fa-plus-circle"></i> <?php _e( 'Add previous year','bidxplugin' ); ?></a>
-                </p>
+                <div class="addYear">
+                    <a class="btn btn-sm" href="#addPreviousYear"><i class="fa fa-plus-circle fa-big fa-above"></i> <?php _e( 'Add a previous year','bidxplugin' ); ?></a>
+                </div>
             </div><!-- /EDIT -->
 
             <!-- SHOW -->
@@ -304,13 +291,13 @@ if ( $hasYears == false ) {
         }
     }
 ?>
-        <div class="financialSummariesItem addItem <?php echo ( $hasNextYear ? 'ds-none' : '' ); ?>">
+        <div class="financialSummariesItem addItem addYearCol <?php echo ( $hasNextYear ? 'ds-none' : '' ); ?>">
 
             <!-- EDIT -->
             <div class="view viewEdit">
-                <p class="addYear">
-                    <a href="#addNextYear"><?php _e('Add year forward','bidxplugin'); ?> <i class="fa fa-plus-circle"></i></a>
-                </p>
+                <div class="addYear">
+                    <a class="btn btn-sm" href="#addNextYear"><i class="fa fa-plus-circle fa-big fa-above"></i> <?php _e('Add a year forward','bidxplugin'); ?></a>
+                </div>
             </div><!-- /EDIT -->
 
             <!-- SHOW -->

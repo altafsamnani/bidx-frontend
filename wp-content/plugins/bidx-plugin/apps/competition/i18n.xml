@@ -1,0 +1,50 @@
+<I18N>
+    <Item value="selectReasonForSubmission">Select what best matches your reason for submission</Item>
+    <Item value="currentYear">Current year</Item>
+    <Item value="actuals">Actuals</Item>
+    <Item value="forecast">Forecast</Item>
+    <Item value="matchCount">%count% matches found</Item>
+    <Item value="ratingAverageLabel">Rating (%d vote)</Item>
+    <Item value="ratingAverageLabelPlural">Rating (%d votes)</Item>
+    <Item value="ratingUserLabel">Your rating</Item>
+    <Item value="ratingUserLabelNone">Rate this plan</Item>
+    <Item value="public">Public</Item>
+    <Item value="closed">Closed</Item>
+    <Item value="invited">Invited persons</Item>
+    <Item value="APPLIED">Applied</Item>
+    <Item value="SUBMITTED">Submitted</Item>
+    <Item value="WITHDRAWN">Withdrawn</Item>
+    <Item value="REJECTED">Rejected</Item>
+    <Item value="NOT_FINALIST">Not finalist</Item>
+    <Item value="FINALIST">Finalist</Item>
+    <Item value="NOT_WINNER">Not Winner</Item>
+    <Item value="WINNER">Winner</Item>
+    <Item value="assessorRecommendation">Assessor Recommendation</Item>
+    <Item value="PHASE_JUDGING">You are updating phase of competition to Judging. Status of the participants will be updated according to your recommendation and emails will be send out. Are you sure ?  </Item>
+    <Item value="PHASE_ENDED">You are ending Competition and Winners will be declared. Participants will be informed about their status. Are you sure ?  </Item>
+
+    <!-- Success Messages -->
+    <Item value="SUCCESS_APPLIED">You have succesfully applied for this competition, Once you are ready you need to submit this plan for reviewing, Thank you!</Item>
+    <Item value="SUCCESS_SUBMITTED">You have succesfully submitted for this competition, We will inform you once we assess your plan, Good luck!</Item>
+    <Item value="SUCCESS_WITHDRAWN">You have withdrawn from this competition, We hope that you will participate again!</Item>
+    <Item value="SUCCESS_REJECTED">You have rejected this plan.</Item>
+    <Item value="SUCCESS_FINALIST">This buisness plan is qualified as a Finalist!</Item>
+    <Item value="SUCCESS_NOT_FINALIST">This buisness plan is not qualified as a Finalist!</Item>
+    <Item value="SUCCESS_WINNER">The status of this buisnessplan is set as a Winner! Get ready with his price money!</Item>
+    <Item value="SUCCESS_NOT_WINNER">The status of this buisnessplan is set as Not a Winner! </Item>
+
+    <Item value="SUCCESS_ASSESSOR">You have succesfully assigned Assessors for this application!</Item>
+    <Item value="SUCCESS_JUDGE">You have succesfully assigned Judges for this application!</Item>
+
+    <Item value="RECOMM_FINALIST">You have recommended this plan as Finalist</Item>
+    <Item value="RECOMM_NOT_FINALIST">You have recommended this plan as Not a Finalist</Item>
+    <Item value="RECOMM_WINNER">You have recommended this plan as Winner</Item>
+    <Item value="RECOMM_NOT_WINNER">You have recommended this plan as Not a Winner</Item>
+    <Item value="RECOMM_REJECTED">You have rejected this plan.</Item>
+
+    <Item value="ERROR_ASSIGNACTOR">Something went wrong while applying while assigning for entityId </Item>
+    <Item value="commentPending">No comments</Item>
+
+    <Item value="submitText">Submit your business plan.</Item>
+    <Item value="withdrawText">Withdraw your business plan.</Item>
+</I18N>

@@ -8,18 +8,7 @@ $mentorDetailsBidxMeta = isset( $mentorDetails->bidxMeta )
 if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED' || $mentorDetailsBidxMeta->bidxCanEdit  ) ) {
 
     //$mentorType = $this->exst ($mentorDetails->investorType);
-?>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <a class="btn-block" data-toggle="collapse" data-parent="#myProfile" href="#mentor-profile">
-            <span class="fa fa-chevron-right accordion-state-icon"></span>
-            <?php _e('Mentor profile','bidxplugin');?>
-        </a>
-    </div>
-    <div id="mentor-profile" class="panel-collapse collapse">
-        <div class="panel-body">
-<?php 
                 if ($mentorDetailsBidxMeta->bidxCanEdit)
                 {
 ?>
@@ -32,49 +21,62 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
 ?>
 
             <div class="profile-block">
-            <?php
+<?php
                 if ($mentorDetailsBidxMeta->bidxCanEdit)
-                {  ?>
+                {
+?>
                     <div class="btn-group show hide-overflow">
-
-            <?php
+<?php
 
                             $href = "#editMentor/" . $this -> exst( $mentorDetailsBidxMeta->bidxOwnerId );
-            ?>
-                            <a class="btn btn-sm btn-primary pull-right" href="<?php echo $href; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+?>
+                            <a class="btn btn-sm btn-primary pull-right hide" href="<?php echo $href; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
                     </div>
-            <?php
-
+<?php
                 }
-            ?>
-
-
-
-        <?php
 
                 $rowValues = array(
-                    __('Mentor profile summary','bidxplugin')     =>  $this->exst ($mentorDetails->summary),
+                    __('Mentor profile summary','bidxplugin')     =>  $this->exst($mentorDetails->summary),
                     __('Institution name','bidxplugin')           =>  $this->exst($mentorDetails->institutionName),
-                    __('Institution website','bidxplugin')        =>  $this->exst($mentorDetails->institutionWebsite),
-                    __('Focus Gender','bidxplugin')               =>  $this->getMultiValues($this->exst ($mentorDetails->focusGender), ', ','gender'),
-                    __('Stage of business','bidxplugin')          =>  $this->getMultiValues($this->exst ($mentorDetails->focusStageBusiness), ', ','stageBusiness'),
-                    __('Focus Industry','bidxplugin')             =>  $this->getMultiValues($this->exst ($mentorDetails->focusIndustry), '<br> ','industry'),
-                    __('Focus Expertise','bidxplugin')            =>  $this->getMultiValues($this->exst ($mentorDetails->focusExpertise), ', ','mentorExpertise'),
-                    __('Languages','bidxplugin')                  =>  $this->getMultiValues($this->exst ($mentorDetails->focusLanguage), ', ','language'),
-                    __('Social impact','bidxplugin')              =>  $this->getMultiValues($this->exst ($mentorDetails->focusSocialImpact), ', ','socialImpact'),
-                    __('Environmental impact','bidxplugin')       =>  $this->getMultiValues($this->exst ($mentorDetails->focusEnvImpact), ', ','envImpact'),
+                    __('Institution website','bidxplugin')        =>  $this->exst($mentorDetails->institutionWebsite)
                 );
-                echo $this->pairRows( $rowValues );
-        ?>
-                <!-- <h4>Reach</h4> -->
-        <?php
+
+                if ( $this->checkEmpty( $rowValues ) ) :
+?>
+                    <h4><?php _e('About', 'bidxplugin')?></h4>
+<?php               
+                    echo $this->tableRow ( $rowValues );
+                endif;
+
+
+
+
+                $rowValues = array(
+                    __('Languages','bidxplugin')                => $this->getMultiValues( $this->exst( $mentorDetails->focusLanguage ), ', ','language' ),
+                    __('Focus countries','bidxplugin')          => $this->getMultiValues( $this->exst( $mentorDetails->focusCountry ), ', ','country' ),
+                    __('Focus cities','bidxplugin')             => $this->getMultiValues( $this->exst( $mentorDetails->focusCity ), ',', null, 'cityTown' ),
+                    __('Focus Industry','bidxplugin')           => $this->getMultiValues( $this->exst( $mentorDetails->focusIndustry ), '<br> ','industry' ),
+                    __('Focus Expertise','bidxplugin')          => $this->getMultiValues( $this->exst( $mentorDetails->focusExpertise ), ', ','mentorExpertise' ),
+                    __('Focus Gender','bidxplugin')             => $this->getMultiValues( $this->exst( $mentorDetails->focusGender ), ', ','gender' ),
+                    __('Stage of business','bidxplugin')        => $this->getMultiValues( $this->exst( $mentorDetails->focusStageBusiness ), ', ','stageBusiness' ),
+                    __('Social impact','bidxplugin')            => $this->getMultiValues( $this->exst( $mentorDetails->focusSocialImpact ), ', ','socialImpact' ),
+                    __('Environmental impact','bidxplugin')     => $this->getMultiValues( $this->exst( $mentorDetails->focusEnvImpact ), ', ','envImpact' ),
+                    _x('Other preferences','test','bidxplugin') => $this->exst ($mentorDetails->focusPreferences)
+                );
+
+                if ( $this->checkEmpty( $rowValues ) ) :
+?>
+                    <h4><?php _e('Mentoring Preferences', 'bidxplugin')?></h4>
+<?php               
+                    echo $this->tableRow ( $rowValues );
+                endif;
 
                 $focusReach = $this->exst($mentorDetails->focusReach);
                 if ( $this->exst($focusReach->coordinates) && $this->exst($focusReach->coordinates) ) {
-        ?>
+?>
                     <div class="row">
                         <div class="col-sm-6 reach-map">
-        <?php
+<?php
                     $mapParams = array(
                         'center'        => $focusReach->coordinates,
                         'size'          => '640x300',
@@ -87,22 +89,11 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
                         'https://maps.googleapis.com/maps/api/staticmap',
                         http_build_query( $mapParams )
                     );
-        ?>
+?>
                         </div>
                     </div>
-        <?php
+<?php
                 }
-
-                $rowValues = array (
-                    __('Focus countries','bidxplugin') => $this->getMultiValues ($this->exst ($mentorDetails->focusCountry), ', ','country'),
-                    __('Focus cities','bidxplugin') => $this->getMultiValues($this->exst ($mentorDetails->focusCity), ',', null, 'cityTown'),
-                );
-                echo $this->pairRows( $rowValues );
-
-                $rowValues = array (
-                    _x('Other preferences','test','bidxplugin') => $this->exst ($mentorDetails->focusPreferences),
-                );
-                echo $this->pairRows( $rowValues );
 
                 if ( $this->exst ($mentorDetails->attachment) )
                 {
@@ -158,17 +149,14 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
                     echo $this->addTableRows($header, $this->exst( $mentorDetails->references ), 'table table-bordered', $merge, array('linkedIn' => 'hidden-xs', 'emailAddress' => 'hidden-xs') );
                 }
 
-        ?>
+                if ($mentorDetailsBidxMeta->bidxCanEdit)
+                {
+?>
+                <a class="view viewMentoringbutton btn btn-xs bidx-mentor label bidx-label" href="<?php echo _l('mentor-dashboard');?>">
+                    <span class="countMentoringProposals"><?php _e('%count% business proposals want mentoring', 'bidxplugin')?></span>
+                </a>
+<?php
+                }
+?>
             </div><!-- // details-block of investor -->
-        <?php
-            if ($mentorDetailsBidxMeta->bidxCanEdit)
-            {  ?>
-            <a class="view viewMentoringbutton btn btn-xs bidx-mentor label pull-right bidx-label" href="<?php echo _l('mentor-dashboard');?>">
-                <span class="countMentoringProposals"><?php _e('%count% business proposals want mentoring', 'bidxplugin')?></span>
-            </a>
-        <?php
-            } ?>
-        </div>
-    </div>
-</div>
 <?php } ?>

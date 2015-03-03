@@ -1,0 +1,1094 @@
+<?php
+
+$competition    = $this->data;
+// d($competition);
+
+$competitionBidxMeta = isset($competition->bidxMeta)
+    ? $competition->bidxMeta
+    : null;
+
+$canEdit                    = $this->exst($competitionBidxMeta->bidxCanEdit, false) || ( in_array('COMPETITION_ADMIN', $competitionBidxMeta->bidxCompetitionRoles ) );
+$isNewCompetition           = ($competitionBidxMeta->bidxEntityStatus == 'DRAFT' ) ? true : false;
+$isManager                  = $canEdit;
+$isAssessor                 = in_array('COMPETITION_ASSESSOR',$competitionBidxMeta->bidxCompetitionRoles );
+$isJudge                    = in_array('COMPETITION_JUDGE',$competitionBidxMeta->bidxCompetitionRoles );
+
+$createdtDateTime           = ( isset( $competitionBidxMeta->bidxCreationDateTime ) ) ? date( 'd M Y', $competitionBidxMeta->bidxCreationDateTime  ) : NULL;
+
+$updatedDate                = ( isset( $competitionBidxMeta->bidxLastUpdateDateTime ) ) ? date( 'd M Y', $competitionBidxMeta->bidxLastUpdateDateTime  ) : NULL;
+
+$startDateTime              = ( isset( $competition->startDateTime ) ) ? date( 'd M Y H:i ', strtotime ( $this->exst( $competition->startDateTime ) ) ) : NULL;
+
+$endDateTime                = ( isset( $competition->endDateTime ) ) ? date( 'd M Y H:i', strtotime ( $this->exst( $competition->endDateTime ) ) ) : NULL;
+
+$endTimeStamp               = ( isset( $competition->endDateTime ) ) ? strtotime ( $this->exst( $competition->endDateTime ) )  : NULL;
+
+$gender                     = $this->getMultiValues( $this->exst($competition->competitionGender), ', ', 'gender' );
+
+// get the entities of the current user
+//
+$sessionData    = BidxCommon::$staticSession;
+$entities       = isset( $sessionData->data->wp->entities ) ? $sessionData->data->wp->entities : null;
+
+$ownerId        = $competition->bidxMeta->bidxOwnerId;
+$loggedInUserId = $sessionData->data->id;
+
+// if a user has an investorProfile, he is allowed to request access to a business summary
+//
+$canRequestAccess = isset( $entities->bidxInvestorProfile );
+
+$competitionId = $competitionBidxMeta->bidxCompetitionId;
+
+// get accessrequest status for this user and competition
+//
+$requestStatus = isset( $competition->accessAuthorization ) ? $competition->accessAuthorization : null;
+
+
+if ( !($competition->competitionLogo && $competition->competitionLogo->document) )
+{
+    if ( $isNewCompetition )
+    {
+        //$hasCover = 'hide-it';
+    }
+}
+
+$isParticipant = true;
+if ( $canEdit || $isAssessor || $isJudge )
+{
+    $isParticipant = false;
+}
+
+$attachmentItem = <<<EOT
+    <div class="attachmentItem col-md-6">
+        <div class="media well">
+            <div class="pull-left img-cropper">
+                {{documentImage}}
+            </div>
+            <div class="media-body">
+                <strong class="media-heading documentName">{{documentName}}</strong>
+                <div class="purpose">{{purpose}}</div>
+                <div class="documentType">{{documentType}}</div>
+                {{documentLink}}
+            </div>
+        </div>
+    </div>
+EOT;
+
+// The attachments item template exists of two types of variables, dynamic values and translations
+//
+$attachmentItemTranslations = array();
+
+
+$attachment = $this->exst ($competition->competitionDocument);
+
+$hasAttachments = false;
+
+if ( !empty( $attachment ) )
+{
+    foreach ($attachment as $key => $att)
+    {
+        if ( $this->exst ( $att->document ) )
+        {
+            $hasAttachments = true;
+        }
+        break;
+    }
+}
+
+
+?>
+<div class="competitionSummary box-border top-margin-lineheight" id="competitionSummary" data-bsid="<?php echo $competitionId; ?>">
+    <div class="competitionCover">
+        <div class="coverImageContainer <?php echo $hasCover; ?>">
+<?php
+            if ( $competition->competitionLogo && $competition->competitionLogo->document ) :
+?>
+            <div class="coverImage">
+                <img src="<?php echo $competition->competitionLogo->document ?>" alt="Cover Image" data-initop="<?php echo $competition->competitionLogo->top?>" style="position: relative; top: <?php echo $competition->competitionLogo->top?>px">
+            </div>
+<?php
+            endif;
+?>
+            <div class="view viewEdit">
+<?php
+            if ( $canEdit )
+            {
+    ?>
+                <div class="btn-group coverBtns">
+                    <a class="btn btn-primary btn-large btnCover" data-toggle="modal" href="#coverImage"><?php echo _e( 'Add or Change', 'bidxplugin' ); ?></a>
+                    <!-- <a class="btn btn-primary btn-large btnRemove" data-toggle="modal" href="#coverRemove"><?php echo _e( 'Remove', 'bidxplugin' ); ?></a> -->
+                </div>
+
+                <div class="coverModal modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
+                                <h3><?php _e('Check the file you want to use as your cover', 'bidxplugin' ); ?></h3>
+                            </div>
+                            <div class="modal-body">
+<?php
+                                // Media app will only be inserted once, this is by design!
+                                //
+                                echo do_shortcode( '[bidx app="media"]' );
+?>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></button>
+                                <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<?php
+            }
+?>
+            </div>
+        </div>
+    </div>
+    <div class="competition-info hide-overflow text-center">
+        <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+            <div class="row main-padding">
+                <div class="col-sm-3">
+                    <div class="participants-number"><?php echo $competition->appliedCount;?></div>
+                    <div class="participants-state"><?php echo _e( 'Participants', 'bidxplugin' ); ?></div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="participants-number"><?php echo $competition->submittedCount;?></div>
+                    <div class="participants-state"><?php echo _e( 'Submitted', 'bidxplugin' ); ?></div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="participants-number">-</div>
+                    <div class="participants-state"><?php echo _e( 'Finalists', 'bidxplugin' ); ?></div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="participants-number">-</div>
+                    <div class="participants-state"><?php echo _e( 'Winners', 'bidxplugin' ); ?></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php
+    if ( $this->exst($competitionBidxMeta->bidxEntityId) )
+    {
+?>
+        <div class="main-padding bg-info">
+            <div class="row view viewShow viewParticipate">
+                <div class="col-sm-4 col-sm-offset-2">
+                    <h4 class="text-center"><?php echo _e( 'Apply before', 'bidxplugin' ); ?>:
+                        <strong><?php echo $endDateTime;?></strong>
+                    </h4>
+<?php
+                    if ( $this->exst($competitionBidxMeta->bidxEntityId) )
+                    {
+?>
+                        <div class="counter hide-overflow text-center flat" data-time="<?php echo $endTimeStamp; ?>">
+                            <?php
+                                if ( $endTimeStamp < time() ) {
+                        ?>
+                                    <div class="alert alert-warning">
+                                        <strong><i class="fa fa-exclamation-triangle"></i> <?php _e( 'This competition has expired','bidxplugin' ); ?></strong>
+                                    </div>
+                                    <a class="btn btn-secondary btn-block" href="/competition"><?php _e( 'Visit our competition overview','bidxplugin' ); ?> </a><?php
+                                } else {  ?>
+                                    <div class="counter-block">
+                                        <div class="days counter-number"></div>
+                                        <div class="counter-text"><?php _e( 'DAYS','bidxplugin' ); ?></div>
+                                    </div>
+                                    <div class="counter-block">
+                                        <div class="hours counter-number"></div>
+                                        <div class="counter-text"><?php _e( 'HOURS','bidxplugin' ); ?></div>
+                                    </div>
+                                    <div class="counter-block">
+                                        <div class="minutes counter-number"></div>
+                                        <div class="counter-text"><?php _e( 'MINUTES','bidxplugin' ); ?></div>
+                                    </div>
+                                    <div class="counter-block">
+                                        <div class="seconds counter-number"></div>
+                                        <div class="counter-text"><?php _e( 'SECONDS','bidxplugin' ); ?></div>
+                                    </div>
+                                <?php } ?>
+                        </div>
+<?php
+                    }
+?>
+                </div>
+                <div class="col-sm-4 text-right">
+<?php
+                    if ( $isParticipant ) :
+?>
+                        <button class="btn btn-primary btn-participate hide"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
+<?php
+                    endif;
+?>
+<?php
+                    // does a user have rights to edit ( is the owner )
+                    //
+                    if ( $canEdit )
+                    {
+?>
+                        <a class="btn btn-primary editBS" href="#editCompetition/<?php echo $competitionId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                        <button data-roundstatus = 'JUDGING' class="btn btn-success btn-phase judgePhase hide"><i class="fa fa-flag-checkered fa-big fa-above"></i> <?php _e( 'Judging Phase', 'bidxplugin' ); ?></button>
+                        <button data-roundstatus = 'ENDED' class="btn btn-success btn-phase endPhase hide"><i class="fa fa-trophy fa-big fa-above"></i> <?php _e( 'Declare Winners', 'bidxplugin' ); ?></button>
+<?php
+                    }
+?>
+                </div>
+            </div>
+
+            <div class="row view viewEdit">
+                <div class="col-sm-8 col-sm-offset-2 editControlsContainer hide-overflow">
+                    <div class="editControls pull-right">
+
+                        <!-- EDIT, conditionally filled by the app -->
+                        <div class="view viewEdit btn-group"></div>
+
+                        <!-- sucess msg, used as a placeholder for showing msgs -->
+
+                        <div class=" alert alert-success">
+                            <p class="successMsg"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row main-padding view viewApply">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="form-group">
+                        <label><?php _e('Select one of your business summaries','bidxplugin'); ?></label>
+                         <select class="chosen-summary" name="businessSummary"></select>
+                        <div class="main-padding-vertical hide-overflow">
+                            <a  data-status="APPLIED" class="btn btn-lg btn-primary btn-apply pull-right"><?php echo _e( 'Apply', 'bidxplugin' ); ?></a>
+                            <a href="#viewCompetition/<?php echo $competitionId;?>/cancel=true" class="btn btn-lg btn-link btn-cancel"><?php echo _e( 'Cancel', 'bidxplugin' ); ?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row main-padding view viewSuccess">
+                <div class="col-sm-10 col-sm-offset-2 successLabel">
+
+                </div>
+            </div>
+        </div>
+<?php
+    }
+?>
+
+
+<!-- SHOW -->
+<div class="view viewShow">
+
+
+
+<div class="mainBusiness hide-overflow">
+    <!-- Consider for deleting
+    <div class="row hide">
+    <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+<?php
+           // if ( $competition->competitionLogo && $competition->competitionLogo->document ):
+?>
+            <div class="competitionLogoImage hide">
+                <img src="<?php //echo $competition->competitionLogo->document ?>" class="center-img" alt="competitionLogo Image">
+            </div>
+<?php
+            //endif;
+?>
+
+    </div>
+    </div> -->
+<div class="row">
+<div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+<?php
+            if ( $this->exst($competitionBidxMeta->bidxEntityId) )
+            {
+?>
+                <h1>
+                    <?php echo $this->exst( $competition->name ); ?>
+                </h1>
+<?php
+            }
+?>
+
+
+    <div class="competition-description"><?php echo $this->exst( $competition->description ); ?></div>
+    <div class="view viewWinner well">
+        <div>
+            <h3><i class="fa fa-trophy fa-big fa-above pull-left"></i>&nbsp;<?php _e( 'WINNERS', 'bidxplugin' ); ?></h3>
+        </div>
+        <div>
+            <table class="table table-condensed table-bottom-border">
+                <thead>
+                <tr>
+                    <th>Business</th>
+                    <th>Entrepreneur</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+                <tbody class='winnerDisplay'></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="view viewOwnCard">
+        <h3> <?php _e('My applications','bidxplugin'); ?> </h3>
+    </div>
+
+<?php
+    if ( $canEdit || $isJudge || $isAssessor ) :
+?>
+        <table id="listApplications" class="viewApplications table table-bordered hide">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Business</th>
+                    <th>Entrepreneur</th>
+                    <th>Score</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+        </table>
+<?php
+    endif;
+?>
+    <div class="view viewFinalist">
+        <div>
+            <h3><?php _e( 'FINALISTS', 'bidxplugin' ); ?></h3>
+        </div>
+        <div>
+            <table class="table table-condensed table-bottom-border">
+                <thead>
+                <tr>
+                    <th>Business</th>
+                    <th>Entrepreneur</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+                <tbody class='finalistDisplay'></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="main-padding-vertical">
+<?php
+
+            $rowValues = array
+            (
+                __('Gender') => $gender,
+                __('Industry') => $this->getMultiValues( $this->exst($competition->competitionIndustry), '<br> ','industry'),
+                __('Country of business','bidxplugin') => $this->getMultiValues( $this->exst($competition->competitionCountry), ', ', 'country' ),
+                __('Social impact','bidxplugin') => $this->getMultiValues( $this->exst($competition->competitionSocialImpact), ', ', 'socialImpact' ),
+                __('Environmental impact','bidxplugin') => $this->getMultiValues( $this->exst($competition->competitionEnvImpact), ', ', 'envImpact' ),
+                __('Complimentary criteria','bidxplugin') => $this->exst( $competition->competitionComplementaryCriteria )
+            );
+
+            if ( $this->checkEmpty( $rowValues ) ) :
+?>
+                <h3 class="text-uppercase"><?php _e('Participant criteria', 'bidxplugin')?></h3>
+<?php
+                echo $this->tableRow ( $rowValues );
+            endif;
+?>
+    </div>
+
+<?php if ( $hasAttachments ) :
+?>
+            <div class="main-padding-vertical">
+                <h3 class="text-uppercase"><?php _e('Attached Documents', 'bidxplugin')?></h3>
+<?php
+                echo $this->displayDocuments ( $competition->competitionDocument );
+?>
+            </div>
+<?php
+    endif;
+?>
+
+</div>
+<div class="col-sm-4 panel-feedback hide"></div>
+</div>
+</div>
+</div>
+<!-- LOAD -->
+<div class="view viewLoad main-padding">
+    <div class="alert alert-info text-center">
+        <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Retrieving competition information...','bidxplugin'); ?>
+    </div>
+</div>
+
+
+<!-- ERROR -->
+<div class="view viewError main-padding">
+    <div class="alert alert-warning">
+        <p class="errorMsg"></p>
+    </div>
+</div>
+
+<div class="view viewEdit main-padding">
+    <!-- Accordion -->
+    <div class="row tabs-vertical">
+        <div class="col-sm-3 tabs-nav">
+            <ul class="nav nav-tabs tabs-left">
+                <li class="active"><a href="#tab-comp-overview" data-toggle="tab"><?php _e('General Overview','bidxplugin'); ?></a></li>
+                <li><a href="#tab-comp-invite" data-toggle="tab"><?php _e('Invite Assessors and Judges','bidxplugin'); ?></a></li>
+                <li><a href="#tab-comp-about-participants" data-toggle="tab"><?php _e('About participants','bidxplugin'); ?></a></li>
+                <li><a href="#tab-comp-documents" data-toggle="tab"><?php _e('Documents','bidxplugin'); ?></a></li>
+                <!-- <li>
+                    <a href="#tab-comp-management" data-toggle="tab"><?php //_e('Management rules','bidxplugin'); ?></a>
+                </li> -->
+            </ul>
+        </div>
+        <div class="col-sm-9 tabs-content">
+            <div class="tab-content">
+                <div class="tab-pane hide-overflow active" id="tab-comp-overview">
+                    <!-- General Overview -->
+                    <div  id="competitionCollapse-GeneralOverview">
+                        <!-- EDIT -->
+                        <div class="view viewEdit">
+                            <blockquote class="alert-info"><?php _e('Use this section to describe your competition. Think about what information you would like participants to know about competition if you only had a few minutes to explain.','bidxplugin')?></blockquote>
+                            <!--  Consider it for deleting competitionLogo
+                                <div class="row bscompetitionLogo form-group">
+
+                                    <div class="col-sm-6">
+                                        <a href="#addcompetitionLogo" data-toggle="modal" class="btn btn-primary">
+                                            <?php //_e('Select Logo'); ?>
+                                        </a>
+
+                                        <div class="addcompetitionLogoImage modal fade">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
+                                                <h3><?php //_e('Check the file you want to use as your competitionLogo', 'bidxplugin' ); ?></h3>
+                                                </div>
+                                                <div class="modal-body">
+                            <?php
+                                                    // Media app will only be inserted once, this is by design!
+                                                    //
+                                                    //echo do_shortcode( '[bidx app="media"]' );
+                            ?>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary btnSelectFile"><?php// _e( 'Select file(s)', 'bidxplugin' ); ?></button>
+                                                    <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php //_e( 'Cancel', 'bidxplugin' ); ?></button>
+
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="competitionLogoContainer"></div>
+                                    </div>
+                                </div> -->
+                            <form id="frmCompetition-GeneralOverview">
+                                <div class="row">
+                                    <!-- Name -->
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Competition name','bidxplugin'); ?></label>
+                                        <input type="text" class="form-control" name="name" placeholder="<?php _e('Competition name','bidxplugin'); ?>">
+                                    </div>
+
+                                    <!-- Slogan -->
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Give a short description of competition in a maximum of 30 words','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <textarea type="text" class="form-control" name="description" placeholder="<?php _e('Description of the goals of the competition','bidxplugin'); ?>"></textarea>
+                                    </div>
+                                </div>
+                                 <div class="row">
+                                    <!-- Summary -->
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Start date','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                             <input type="text" class="form-control"  readonly data-type="datetime" name="startDateTime" placeholder="<?php _e('Please select start date','bidxplugin'); ?>">
+                                        </div>
+                                    </div>
+
+                                    <!-- Reason For Submission -->
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('End date','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            <input readonly type="text" class="form-control" name="endDateTime" data-type="datetime" placeholder="<?php _e('Please select end date','bidxplugin'); ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div><!-- /EDIT -->
+                    </div><!-- /General Overview -->
+                </div>
+                <div class="tab-pane hide-overflow" id="tab-comp-invite">
+                    <div class="view viewEdit">
+                        <blockquote class="alert-info"><?php _e('Select the members that will participate as Assessors, Judges and Competition managers','bidxplugin')?></blockquote>
+                        <label><?php _e('Search','bidxplugin'); ?></label>
+                         <div class="input-group ">
+                            <input type="text" name="roles" class="form-control typeahead" autocomplete="off" disabled placeholder="<?php _e('Search a member name','bidxplugin'); ?>" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default js-btn-add-role disabled" ><?php _e('Add to list','bidxplugin'); ?></button>
+                            </span>
+                        </div>
+
+                        <div class="">
+                            <table class="table table-compressed">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Roles</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="showActors">
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Management
+                <div class="tab-pane hide-overflow" id="tab-comp-management">
+
+                        <div  id="competitionCollapse-Management">
+
+                                <div class="view viewEdit">
+                                    <blockquote class="alert-info"><?php //_e('Here we provide you with tools to set the criteria about competition.','bidxplugin')?></blockquote>
+                                    <form id="frmCompetition-Management">
+                                        <div class="row">
+
+                                            <div class="form-group col-sm-6">
+                                                <label><?php //_e('Competition visibility','bidxplugin'); ?></label>
+                                                <select name="visibility" multiple></select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                    </div><
+                </div> -->
+
+                <div class="tab-pane hide-overflow" id="tab-comp-about-participants">
+                    <!-- About you & your team -->
+                        <div  id="competitionCollapse-AboutParticipants">
+
+                                <!-- EDIT -->
+                                <div class="view viewEdit">
+                                    <blockquote class="alert-info"><?php _e('Here you can set a criteria for participants to participate in the competition.','bidxplugin');?></blockquote>
+                                    <form id="frmCompetition-AboutParticipants">
+                                        <div class="industrySectors">
+                                            <label><?php _e('Industry','bidxplugin'); ?></label>
+                                        </div>
+                                        <div class="row">
+                                            <!-- Country operation -->
+                                            <div class="form-group col-sm-6">
+                                                <label><?php _e('Regional focus','bidxplugin'); ?></label>
+                                                <select name="competitionCountry" multiple></select>
+                                            </div>
+
+                                            <!-- Social impact -->
+                                            <div class="form-group col-sm-6">
+                                                <label><?php _e('Social impact','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                                <select name="competitionSocialImpact" multiple></select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <!-- Env impact -->
+                                            <div class="form-group col-sm-6">
+                                                <label><?php _e('Environmental impact','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                                <select name="competitionEnvImpact" multiple></select>
+                                            </div>
+
+                                            <div class="form-group col-sm-6">
+                                                <label><?php _e('Complementary criteria','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 140 characters)','bidxplugin'); ?></small></label>
+                                                <textarea type="text" class="form-control" name="competitionComplementaryCriteria" placeholder="<?php _e('Here you can add complimentary criteria.','bidxplugin'); ?>"></textarea>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label><?php _e('Gender','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                                    <div class="radio">
+                                                        <input selected type="radio" value='both' id="radio-personalDetailsB" name="competitionGender" data-toggle="radio" />
+                                                        <label for="radio-personalDetailsM"><span></span><?php _e('Both','bidxplugin'); ?></label>
+                                                    </div>
+
+                                                    <div class="radio">
+                                                        <input type="radio" value="m" id="radio-personalDetailsM" name="competitionGender" data-toggle="radio" />
+                                                        <label for="radio-personalDetailsM"><span></span><?php _e('Male','bidxplugin'); ?></label>
+                                                    </div>
+
+                                                    <div class="radio">
+                                                        <input type="radio" value="f" id="radio-personalDetailsF" name="competitionGender" data-toggle="radio" />
+                                                        <label for="radio-personalDetailsF"><span></span><?php _e('Female','bidxplugin'); ?></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div><!-- /EDIT -->
+
+                    </div><!-- /About you & your team -->
+                </div>
+                <div class="tab-pane hide-overflow" id="tab-comp-documents">
+                <!-- Documents -->
+                    <div  id="competitionSummaryCollapse-Documents">
+                        <!-- EDIT -->
+                        <div class="view viewEdit">
+
+                            <blockquote class="alert-info"><?php _e('Please upload your competition related documents here.','bidxplugin');?></blockquote>
+
+                            <div class="attachmentContainer"></div>
+                            <a href="#addFiles" data-toggle="modal" class="btn btn-primary"><span class="fa fa-plus"></span> <?php _e('Add files', 'bidxplugin')?></a>
+
+                            <div class="addFiles modal fade">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
+                                            <h3><?php _e('Check the files you want to attach to your business plan', 'bidxplugin' ); ?></h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <?php
+                                            echo do_shortcode( '[bidx app="media"]' );
+                                            ?>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
+                                            <a href="#" class="btn btn-default btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div><!-- /Documents -->
+            </div>
+        </div> <!-- tabs-content mycompetition -->
+    </div>
+
+    <!-- EDIT DOCUMENT MODAL -->
+    <div class="js-edit-document modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
+                </div>
+                <div class="modal-body clearfix">
+<?php
+                    echo do_shortcode( '[bidx app="media"]' );
+?>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SNIPPETS -->
+    <div class="snippets hide">
+        <!-- Attachment -->
+        <div class="attachmentItem col-md-6">
+            <div class="media well">
+                <div class="pull-left icons-rounded attachmentMissing"><i class="fa fa-question-circle text-primary-light"></i></div>
+                <a class="pull-left documentLink img-cropper" href="#">
+                    <div class="icons-rounded attachmentDefault"><i class="fa fa-file-text-o text-primary-light"></i></div>
+                    <img class="media-object img-rounded documentImage">
+                </a>
+                <div class="media-body">
+                    <strong class="media-heading documentName"></strong>
+                    <div class="createdDateTime"></div>
+                    <div class="purpose"></div>
+                    <div class="documentType"></div>
+                </div>
+                <a href="#removeItem" class="btn btn-danger btn-sm btn-block clearboth top-margin-lineheight"><?php _e('Remove','bidxplugin'); ?></a>
+                <!-- <a href="#editDocument" class="btn btn-block editDocumentProp"><?php _e( 'Edit document properties', 'bidxplugin' ); ?></a> -->
+            </div>
+        </div>
+    </div>
+</div><!-- /competition -->
+</div>
+</div>
+
+<script type="text/html" id="finalist-snippet">
+<!--
+    <tr>
+        <td><a href="/businesssummary/%entityId%" target="_blank">%bidxEntityDisplayName%</a></td>
+        <td> <a href="/member/%bidxOwnerId%">%bidxOwnerDisplayName%</a> </td>
+        <td> %bidxRatingAverage% </td>
+    </tr>
+-->
+</script>
+<script type="text/html" id="winner-snippet">
+<!--
+<tr>
+        <td><a href="/businesssummary/%entityId%" target="_blank">%bidxEntityDisplayName%</a></td>
+        <td> <a href="/member/%bidxOwnerId%">%bidxOwnerDisplayName%</a> </td>
+        <td> %bidxRatingAverage% </td>
+</tr>
+-->
+</script>
+
+<script type="text/html" id="actors-snippet">
+    <tr class="row-%userId%">
+        <td>%memberName%</td>
+        <td>
+            <div class="btn-group" role="group" aria-label="...">
+                <button data-userid = "%userId%" data-role = 'assessors' type="button" class="btn btn-xs btn-assessors btn-actor-action"><?php _e('Assessor','bidxplugin');?></button>
+                <button data-userid = "%userId%" data-role = 'judges' type="button" class="btn btn-xs btn-judges btn-actor-action"><?php _e('Judge','bidxplugin');?></button>
+                <button data-userid = "%userId%" data-role = 'administrators' type="button" class="btn btn-xs btn-administrators btn-actor-action"><?php _e('Administrators','bidxplugin');?></button>
+            </div>
+        </td>
+        <td class="text-right">
+            <div class="btn-group dropup">
+                <button data-userid = "%userId%" data-role = 'all' type="button" class="btn btn-xs btn-default btn-actor-action">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+</script>
+
+<script type="text/html" id="entrpreneur-card-snippet">
+<!--
+    <div class="cardView cardEntity%entityId%">
+        <div class=" cardHeader hide-overflow">
+            <div class="info-cell pull-left"><?php echo _e( 'Score', 'bidxplugin' ); ?>: %bidxRatingCount%</div>
+            <div class="info-cell pull-left"><?php echo _e( 'Applied on', 'bidxplugin' ); ?>: %created%</div>
+            <div class="info-cell pull-right cardStatus bg-success"><?php echo _e( 'Status', 'bidxplugin' ); ?>: %status%</div>
+        </div>
+        <div class="cardContent main-padding">
+            <div class="cardHeader%entityId%">
+            </div>
+            <div class="cardTop">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h4><a href="/businesssummary/%entityId%" target="_blank">%bidxEntityDisplayName%</a>
+                        &nbsp;&nbsp;<small><?php _e('by','bidxplugin'); ?></small><a href="/member/%bidxOwnerId%">&nbsp;&nbsp;%bidxOwnerDisplayName%</a></h4>
+
+                    </div>
+                    <div class="col-sm-4 text-right">
+                        <div class="rating-wrapper">
+                            <div data-rating="%bidxRatingAverage%" class="raty"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cardFooter hide">
+            <div class="alert alert-info text-right">
+                <span class="cardInfoText"></span>
+                <a  data-entityid = "%entityId%" data-status = "" class="btn btn-success btn-xs btn-action set-submit hide"><?php _e('Submit', 'bidxplugin');?></a>
+                <a  data-entityid = "%entityId%" data-status = "" class="btn btn-warning btn-xs btn-action set-withdraw hide"><?php _e('Withdraw', 'bidxplugin');?></a>
+            </div>
+        </div>
+    </div>
+-->
+</script>
+<script type="text/html" id="admin-card-snippet">
+<!--
+    <div class="cardEntity%entityId%">
+        <div class="cardHeader%entityId% hide-overflow">
+        </div>
+        <div class="cardContent main-padding">
+            <div class="cardTop">
+                <div class="">
+                    <div class="row">
+                        <div class="col-sm-9 pull-left hide">
+                            <h4><?php _e('Recommendations', 'bidxplugin');?></h4>
+                        </div>
+                    </div>
+                    <div class ="wrapper-recommend-assessor-%entityId% hide well" >
+                       <h4><?php _e('Assessor Recommendations', 'bidxplugin');?></h4>
+                            <div class='assessor-recommendation-%entityId%'>%assessorsRecommendation%</div>
+                    </div>
+                    <div class ="wrapper-recommend-judge-%entityId% hide well" >
+                       <h4><?php _e('Judge Recommendations', 'bidxplugin');?></h4>
+                            <div class='judge-recommendation-%entityId%'>%judgesRecommendation%</div>
+                    </div>
+                </div>
+                 <div class="row">
+                    <div class ="wrapper-recommend-finalist-%entityId% hide" >
+                        <div class="col-sm-8">
+                            <label class="inline">Mark as:</label>
+                            <div class="radio inline-radio">
+                                <input data-entityid = "%entityId%" type="radio" value="FINALIST" id="recommend-finalist-%entityId%" name="recommend-finalist-%entityId%" data-toggle="radio" />
+                                <label for="recommend-finalist-%entityId%"><span></span><?php _e('Finalist', 'bidxplugin');?></label>
+                            </div>
+                            <div class="radio inline-radio">
+                                <input data-entityid = "%entityId%" type="radio" value="NOT_FINALIST" id="recommend-notfinalist-%entityId%" name="recommend-finalist-%entityId%" data-toggle="radio" />
+                                <label for="recommend-notfinalist-%entityId%"><span></span><?php _e('Not Finalist', 'bidxplugin');?></label>
+                            </div>
+                             <div class="radio inline-radio hide">
+                                <input data-entityid = "%entityId%" type="radio" value="REJECTED" id="recommend-rejected-%entityId%" name="recommend-rejected-%entityId%" data-toggle="radio" />
+                                <label for="recommend-rejected-%entityId%"><span></span><?php _e('Reject', 'bidxplugin');?></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 pull-left">
+                            <div class="rating-wrapper-finalist-%entityId%">
+                                <div  class="raty-finalist-%entityId%"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <textarea type="text" class="form-control" name="comment-finalist-%entityId%" placeholder="<?php _e('Explain your recommendations','bidxplugin');?>"></textarea>
+                        </div>
+                        <div class="col-sm-3 pull-right main-padding">
+                            <div class="text-right">
+                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block set-recommend-finalist-%entityId%"><?php _e('Set','bidxplugin');?></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class ="wrapper-recommend-winner-%entityId% hide" >
+                        <div class="col-sm-8">
+                            <label class="inline">Mark as:</label>
+                            <div class="radio inline-radio">
+                                <input data-entityid = "%entityId%" type="radio" value="WINNER" id="recommend-winner-%entityId%" name="recommend-winner-%entityId%" data-toggle="radio" />
+                                <label for="recommend-winner-%entityId%"><span></span><?php _e('Winner', 'bidxplugin');?></label>
+                            </div>
+                            <div class="radio inline-radio">
+                                <input data-entityid = "%entityId%" type="radio" value="NOT_WINNER" id="recommend-notWinner-%entityId%" name="recommend-winner-%entityId%" data-toggle="radio" />
+                                <label for="recommend-notWinner-%entityId%"><span></span><?php _e('Not Winner', 'bidxplugin');?></label>
+                            </div>
+                            <div class="radio inline-radio hide">
+                                <input data-entityid = "%entityId%" type="radio" value="REJECTED" id="recommend-rejected-%entityId%" name="recommend-rejected-%entityId%" data-toggle="radio" />
+                                <label for="recommend-rejected-%entityId%"><span></span><?php _e('Reject', 'bidxplugin');?></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 pull-left">
+                            <div class="rating-wrapper-winner-%entityId%">
+                                <div  class="raty-winner-%entityId%"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <textarea type="text" class="form-control" name="comment-winner-%entityId%" placeholder="<?php _e('Explain your recommendations','bidxplugin');?>"></textarea>
+                        </div>
+                        <div class="col-sm-3 pull-right main-padding">
+                            <div class="text-right">
+                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block  set-recommend-winner-%entityId%"><?php _e('Set','bidxplugin');?></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 wrapper-qualification-%entityId% hide">
+                        <div class="hide-overflow">
+                            <label class="inline">Qualification:</label>
+                            <div class="radio inline-radio">
+                                <input type="radio" id="radio-accept-%entityId%"  value="SUBMITTED" name="isqualification%entityId%" data-toggle="radio" />
+                                <label for="radio-accept-%entityId%"><span></span><?php _e("Submit",'bidxplugin');?></label>
+                            </div>
+                            <div class="radio inline-radio">
+                                <input type="radio" id="radio-reject-%entityId%" value="REJECTED" name="isqualification%entityId%" data-toggle="radio" />
+                                <label for="radio--reject-%entityId%"><span></span><?php _e("Reject",'bidxplugin');?></label>
+                            </div>
+                            <div class="">
+                                <div class="col-sm-3 pull-right">
+                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block set-submit-%entityId% set-qualification-%entityId% hide"><?php _e('Set','bidxplugin');?></a>
+                                </div>
+                                <div class="reject-set-%entityId% hide">
+                                    <div class="col-sm-12">
+                                        <textarea type="text" class="form-control" name="reject-comment-%entityId%" placeholder="<?php _e('Explain your rejection','bidxplugin');?>"></textarea>
+                                    </div>
+                                    <div class="col-sm-3 pull-right main-padding">
+                                        <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block set-recommend-reject-%entityId% set-qualification-%entityId%"><?php _e('Reject','bidxplugin');?></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-12 wrapper-finalist-%entityId% hide">
+                        <label class="inline">Mark as:</label>
+                        <div class="radio inline-radio">
+                            <input data-entityid = "%entityId%" checked="checked" type="radio" value="FINALIST" id="radio-finalist-%entityId%" name="isfinalist%entityId%" data-toggle="radio" />
+                            <label for="radio-finalist"><span></span><?php _e('Finalist', 'bidxplugin');?></label>
+                        </div>
+                        <div class="radio inline-radio">
+                            <input data-entityid = "%entityId%" type="radio" value="NOT_FINALIST" id="radio-notFinalist-%entityId%" name="isfinalist%entityId%" data-toggle="radio" />
+                            <label for="radio-notFinalist"><span></span><?php _e('Not Finalist', 'bidxplugin');?></label>
+                        </div>
+                        <div class="text-right">
+                            <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block set-finalist-%entityId%"><?php _e('Set','bidxplugin');?></a>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 wrapper-winner-%entityId% hide">
+                        <label class="inline">Mark as:</label>
+                        <div class="radio inline-radio">
+                            <input data-entityid = "%entityId%" checked="checked" type="radio" value="WINNER" id="radio-winner-%entityId%" name="iswinner%entityId%" data-toggle="radio" />
+                            <label for="radio-winner-%entityId%"><span></span><?php _e('Winner', 'bidxplugin');?></label>
+                        </div>
+                        <div class="radio inline-radio">
+                            <input data-entityid = "%entityId%" type="radio" value="NOT_WINNER" id="radio-notWinner-%entityId%" name="iswinner%entityId%" data-toggle="radio" />
+                            <label for="radio-notWinner-%entityId%"><span></span><?php _e('Not Winner', 'bidxplugin');?></label>
+                        </div>
+                        <div class="text-right">
+                            <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block set-winner-%entityId%"><?php _e('Set','bidxplugin');?></a>
+                        </div>
+                    </div>
+                    <div class="assign-assessor hide">
+                        <div class="col-sm-12">
+                            <label class="inline">Assign Assessor:</label>
+                        </div>
+                        <div class="col-sm-12">
+                            <select multiple class="chosen-assessors-%entityId%" name="assessors-%entityId%"></select>
+                            <div class="pull-right">
+                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block assign-assessor-%entityId%"><?php _e('Assign','bidxplugin');?></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="assign-judge hide">
+                        <div class="col-sm-12">
+                            <label class="inline">Assign Judge:</label>
+                        </div>
+                        <div class="col-sm-12">
+                            <select multiple class="chosen-judges-%entityId%" name="judges-%entityId%"></select>
+                            <div class="pull-right">
+                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block assign-judge-%entityId%"><?php _e('Assign','bidxplugin');?></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cardFooter%entityId% hide">
+            <div class="alert alert-info text-right">
+                <span class="cardInfoText">Add an explanatory text <strong>here</strong></span>
+                <a  data-entityid = "%entityId%" data-status = "" class="btn btn-success btn-xs btn-action set-submit-%entityId% hide">
+                    <?php _e('Submit', 'bidxplugin');?>
+                </a>
+            </div>
+        </div>
+    </div>
+-->
+</script>
+
+<script type="text/html" id="recommendation-display-snippet">
+<!--
+    <div class="row %warningClass% review-%id%">
+        <div class="col-sm-4">%userDisplayName%</div>
+        <div class="col-sm-2">Score: %reviewRating%</div>
+        <div class="col-sm-6">Recommendation: %competitionRecommendation%</div>
+        <div class="col-sm-12"><p class="bottom-border"><i class="fa fa-pencil-square-o"></i> %comment%</p></div>
+    </div>
+-->
+</script>
+
+
+<script type="text/html" id="assessor-card-snippet">
+<!--
+    <div class="cardEntity%entityId% main-padding">
+       <div class="row">
+            <div class="col-sm-12 cardHeader%entityId% hide-overflow">
+            </div>
+            <div class="col-sm-12 pull-left">
+                <h4><?php _e('Assessors Recommendations', 'bidxplugin');?></h4>
+            </div>
+
+            <div class="cardContent">
+                <div class="cardTop">
+                    <div class="wrapper-recommend-finalist-%entityId% hide">
+                        <div class="col-sm-8">
+                            <label class="inline">Mark as:</label>
+                            <div class="radio inline-radio">
+                                <input data-entityid = "%entityId%" type="radio" value="FINALIST" id="recommend-finalist-%entityId%" name="recommend-finalist-%entityId%" data-toggle="radio" />
+                                <label for="recommend-finalist-%entityId%"><span></span><?php _e('Finalist', 'bidxplugin');?></label>
+                            </div>
+                            <div class="radio inline-radio">
+                                <input data-entityid = "%entityId%" type="radio" value="NOT_FINALIST" id="recommend-notFinalist-%entityId%" name="recommend-finalist-%entityId%" data-toggle="radio" />
+                                <label for="recommend-notFinalist-%entityId%"><span></span><?php _e('Not Finalist', 'bidxplugin');?></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 pull-left">
+                            <div class="rating-wrapper-finalist-%entityId%">
+                                <div data-rating="%bidxFINALISTRatingAverage%" class="raty-finalist-%entityId%"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                             <textarea type="text" class="form-control" name="comment-finalist-%entityId%" placeholder="<?php _e('Explain your recommendations','bidxplugin');?>"></textarea>
+                        </div>
+                        <div class="col-sm-3 pull-right main-padding">
+                            <div class="text-right">
+                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block set-recommend-finalist-%entityId%"><?php _e('Set','bidxplugin');?></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+-->
+</script>
+
+<script type="text/html" id="judge-card-snippet">
+<!--
+
+    <div class="cardEntity%entityId% main-padding">
+         <div class="col-sm-12 cardHeader%entityId% hide-overflow">
+            </div>
+        %assessorReviewItem%
+        <div class="row">
+            <div class="col-sm-12 pull-left">
+                <h4><?php _e('Judge Recommendations', 'bidxplugin');?></h4>
+            </div>
+
+            <div class="cardContent">
+                <div class="cardTop">
+                    <div class="wrapper-recommend-winner-%entityId% hide">
+                        <div class="col-sm-8">
+                            <label class="inline">Mark as:</label>
+                            <div class="radio inline-radio">
+                                <input data-entityid = "%entityId%" type="radio" value="WINNER" id="recommend-winner-%entityId%" name="recommend-winner-%entityId%" data-toggle="radio" />
+                                <label for="recommend-winner-%entityId%"><span></span><?php _e('Winner', 'bidxplugin');?></label>
+                            </div>
+                            <div class="radio inline-radio">
+                                <input data-entityid = "%entityId%" type="radio" value="NOT_WINNER" id="recommend-notWinner-%entityId%" name="recommend-winner-%entityId%" data-toggle="radio" />
+                                <label for="recommend-notWinner-%entityId%"><span></span><?php _e('Not Winner', 'bidxplugin');?></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 pull-left">
+                            <div class="rating-wrapper-winner-%entityId%">
+                                <div data-rating="%bidxWINNERRatingAverage%" class="raty-winner-%entityId%"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <textarea type="text" class="form-control" name="comment-winner-%entityId%" placeholder="<?php _e('Explain your recommendations','bidxplugin');?>"></textarea>
+                        </div>
+                        <div class="col-sm-3 pull-right main-padding">
+                            <div class="text-right">
+                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block set-recommend-winner-%entityId%"><?php _e('Set','bidxplugin');?></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+-->
+</script>
+
+<script type="text/html" id="success-card">
+<!--
+    <div class="">
+        <div class="viewSuccessCard%entityId% alert alert-success">
+            %successMsg%
+        </div>
+    </div>
+-->
+</script>
+
+<script type="text/html" id="errorapp-card">
+<!--
+    <div class="">
+        <div class="viewErrorCard%entityId% alert alert-danger">
+            %errorMsg%
+        </div>
+    </div>
+-->
+</script>
+
+<script type="text/html" id="error-card">
+<!--
+    <div>
+        <div class="viewLoadrequest alert alert-danger">
+            <?php _e ('Error loading card', 'bidxplugin') ?>
+        </div>
+    </div>
+-->
+</script>

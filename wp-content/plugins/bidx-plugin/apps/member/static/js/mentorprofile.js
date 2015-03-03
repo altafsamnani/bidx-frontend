@@ -10,7 +10,6 @@
     ,   $focusLanguage                      = $editForm.find( "[name='focusLanguage']" )
     ,   $focusSocialImpact                  = $editForm.find( "[name='focusSocialImpact']" )
     ,   $focusEnvImpact                     = $editForm.find( "[name='focusEnvImpact']" )
-    // ,   $focusIndustry                      = $editForm.find( "[name='focusIndustry']" )
     ,   $focusExpertise                     = $editForm.find( "[name='focusExpertise']" )
     ,   $focusCountry                       = $editForm.find( "[name='focusCountry']" )
 
@@ -64,7 +63,7 @@
         ,   'focusCountry'
         ,   'focusLanguage'
         ,   'focusExpertise'
-        // ,   'focusIndustry'
+        ,   'focusIndustry'
         ,   'focusGender'
         ,   'focusStageBusiness'
         ,   'focusSocialImpact'
@@ -121,11 +120,6 @@
 
         // Populate the selects
         //
-        // $focusIndustry.bidx_chosen(
-        // {
-        //     dataKey:            "industry"
-        // });
-
         $focusExpertise.bidx_chosen(
         {
             dataKey:            "mentorExpertise"
@@ -243,7 +237,7 @@
             //
             $attachmentsContainer.reflowrower(
             {
-                itemsPerRow:        3
+                itemsPerRow:        2
             ,   itemClass:          "attachmentItem"
             } );
         }    }
@@ -558,7 +552,6 @@
 
         // Update the chosen components with our set values
         //
-        // $focusIndustry.trigger( "chosen:updated" );
         $focusExpertise.trigger( "chosen:updated" );
         $focusLanguage.trigger( "chosen:updated" );
         $focusCountry.trigger( "chosen:updated" );
@@ -691,12 +684,12 @@
         $preferredCommunication.find( "input[type='text']" ).hide();
         // Inject the save and button into the controls
         //
-        var $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save"    })
-        ,   $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: "#cancel"  })
+        var $btnSave    = $( "<a />", { "class": "btn btn-primary btn-sm disabled", href: "#save"    })
+        ,   $btnCancel  = $( "<a />", { "class": "btn btn-primary btn-sm disabled", href: "#cancel"  })
         ;
 
-        $btnSave.i18nText( "btnSaveProfile" );
-        $btnCancel.i18nText( "btnCancel" );
+        $btnSave.i18nText( "btnSaveProfile" ).prepend( $( "<div />", { "class": "fa fa-check fa-above fa-big" } ) );
+        $btnCancel.i18nText( "btnCancel" ).prepend( $( "<div />", { "class": "fa fa-times fa-above fa-big" } ) );
 
         bidx.controller.addControlButtons( [ $btnSave, $btnCancel ] );
 

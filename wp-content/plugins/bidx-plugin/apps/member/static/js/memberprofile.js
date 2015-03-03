@@ -253,7 +253,7 @@
             });
 
             $languageSelect.on('change', function(event) {
-                
+
                 var language        = $(this).find( "option:selected" ).text()
                 ,   value
                 ;
@@ -415,7 +415,7 @@
             //
             $attachmentsContainer.reflowrower(
             {
-                itemsPerRow:        3
+                itemsPerRow:        2
             ,   itemClass:          "attachmentItem"
             } );
         }
@@ -474,7 +474,7 @@
                                 {
                                     // if active contact id is matched with visiting member id then hide the button
 
-                                    if ( showConnectBtn  && (item.id === parseInt(visitingMemberPageId)))
+                                    if ( showConnectBtn && ( item.id === parseInt( visitingMemberPageId, 10 ) ) )
                                     {
                                         showConnectBtn =  false;
 
@@ -767,17 +767,27 @@
             var $input  = $editForm.find( "[name='personalDetails." + f + "']" )
             ,   value   = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails." + f )
             ;
+            if( f === 'gender')
+            {
+                bidx.utils.log('$input', $input);
+                bidx.utils.log('valueee',value);
 
+            }
             $input.each( function()
             {
+                if(f === 'gender')
+                {
+                    bidx.utils.log(' $( this )', $( this ));
+                }
                 bidx.utils.setElementValue( $( this ), value );
             } );
         } );
 
         // Profile picture is 'special'
         //
-        var profilePicture  = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.document" )
-        ,   profilePictureId    = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.fileUpload" )
+        var profilePicture   = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.document" )
+        ,   profilePictureId = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.fileUpload" )
+        ,   profileUploadId  = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.bidxMeta.bidxUploadId" )
         ;
 
         if ( profilePicture )
@@ -788,10 +798,30 @@
             _enableCropping( bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture" ) );
         }
 
-        var profileUploadId = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.bidxMeta.bidxUploadId" );
-        if ( !profileUploadId )
+        if ( !profileUploadId && !profilePictureId )
         {
-            $profilePictureContainer.append( $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
+            $profilePictureContainer
+                    .append
+                    (
+                        $( "<div />", { "class": "icons-rounded" } )
+                        .append
+                        (
+                            $( "<i />", { "class": "fa fa-user document-icon" } )
+                        )
+                    );
+        }
+
+        if ( !profileUploadId && profilePictureId )
+        {
+            $profilePictureContainer
+                    .append
+                    (
+                        $( "<div />", { "class": "icons-rounded" } )
+                        .append
+                        (
+                            $( "<i />", { "class": "fa fa-question-circle document-icon" } )
+                        )
+                    );
             $profilePictureContainer.append( $( "<p />", { "html": bidx.i18n.i( "docDeleted" ) } ) );
         }
 
@@ -1136,12 +1166,12 @@
 
         // Inject the save and button into the controls
         //
-        var $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save"    })
-        ,   $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: "#cancel"  })
+        var $btnSave    = $( "<a />", { "class": "btn btn-primary btn-sm disabled", href: "#save"    })
+        ,   $btnCancel  = $( "<a />", { "class": "btn btn-primary btn-sm disabled", href: "#cancel"  })
         ;
 
-        $btnSave.i18nText( "btnSaveProfile" );
-        $btnCancel.i18nText( "btnCancel" );
+        $btnSave.i18nText( "btnSaveProfile" ).prepend( $( "<div />", { "class": "fa fa-check fa-above fa-big" } ) );
+        $btnCancel.i18nText( "btnCancel" ).prepend( $( "<div />", { "class": "fa fa-times fa-above fa-big" } ) );
 
         bidx.controller.addControlButtons( [ $btnSave, $btnCancel ] );
 

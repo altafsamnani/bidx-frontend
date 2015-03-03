@@ -1,43 +1,44 @@
 <div id="editInvestor" class="mainState mainStateEditInvestor">
 
     <!-- LOAD -->
-    <div class="view viewLoad alert alert-info text-center">
+    <div class="view viewLoad alert alert-info text-center main-margin">
         <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Retrieving investor information...','bidxplugin'); ?>
     </div>
 
     <!-- CREATE -->
-    <div class="view viewCreate alert alert-info text-center">
+    <div class="view viewCreate alert alert-info text-center main-margin">
         <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Creating investor profile...','bidxplugin'); ?>
     </div>
 
     <!-- ERROR -->
-    <div class="view viewError alert alert-warning">
+    <div class="view viewError alert alert-warning main-margin">
         <h2><?php _e('Error','bidxplugin'); ?></h2>
         <p class="errorMsg"></p>
     </div>
 
     <!-- EDIT -->
-    <div class="view viewEdit">
+    <div class="view viewEdit main-margin">
 
         <form id="frmeditInvestor">
+            <div class="row tabs-vertical">
 
+                <div class="col-sm-3 tabs-nav">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs tabs-left">
+                        <li class="active"><a href="#tab-general-info" data-toggle="tab"><?php _e('General information','bidxplugin');?></a></li>
+                        <li><a href="#tab-investment-preferences" data-toggle="tab"><?php _e('Investment preferences','bidxplugin');?></a></li>
+                        <li><a href="#tab-investment-history" data-toggle="tab"><?php _e('Investment history','bidxplugin');?></a></li>
+                        <li><a href="#tab-investor-references" data-toggle="tab"><?php _e('References','bidxplugin');?></a></li>
+                        <li><a href="#tab-investor-documents" data-toggle="tab"><?php _e('Documents','bidxplugin');?></a></li>
+                    </ul>
+                </div>
 
-            <div id="investorProfileEdit">
+                <div class="col-sm-9 tabs-content">
+                    <div class="tab-content">
 
-                <!-- investorProfileGeneralInformation -->
-                <div class="panel panel-default panel-open">
-
-                    <div class="panel-heading">
-                        <a class="btn-block" data-toggle="collapse" data-parent="#investorProfileEdit" href="#investorProfileGeneralInformation">
-                            <span class="fa fa-chevron-right accordion-state-icon"></span>
-                            <?php _e('General information','bidxplugin'); ?>
-                        </a>
-                    </div>
-
-                    <div id="investorProfileGeneralInformation" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <!-- accordion body -->
-
+                        <!-- investorProfileGeneralInformation -->
+                        <div class="tab-pane active" id="tab-general-info">
+                            
                             <blockquote class="alert-info">
                                 <?php _e('Tell visitors and members of the group how you see yourself as an investor. Give a brief description of your investment interests.', 'bidxplugin')?>
                             </blockquote>
@@ -45,7 +46,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label><?php _e('Describe yourself as an investor','bidxplugin'); ?></label>
-                                        <textarea name="summary" class="form-control" placeholder="<?php _e('Please give a description of you as an investor','bidxplugin'); ?>" ></textarea>
+                                        <textarea name="summary" class="form-control"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -58,7 +59,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label><?php _e('Do you invest on behalf of an institution?','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Do you invest on behalf of an institution?','bidxplugin'); ?></label>
 
                                         <div class="radio">
                                             <input type="radio" value="true" id="radio-investsForInstYes" name="investsForInst" data-toggle="radio" />
@@ -79,7 +80,7 @@
                                         <label><?php _e('Institution name','bidxplugin'); ?></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-building-o"></i></span>
-                                            <input type="text" class="form-control" name="institutionName" placeholder="<?php _e('Please enter the name of your institution','bidxplugin'); ?>">
+                                            <input type="text" class="form-control" name="institutionName">
                                         </div>
                                     </div>
                                 </div>
@@ -88,7 +89,7 @@
                                         <label><?php _e('Institution website'); ?></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-                                            <input type="text" class="form-control" name="institutionWebsite" placeholder="<?php _e('Please enter the website of your institution','bidxplugin'); ?>">
+                                            <input type="text" class="form-control" name="institutionWebsite">
                                         </div>
                                     </div>
                                 </div>
@@ -103,23 +104,23 @@
                                     </div>
                                     <div class="form-group">
                                         <label><?php _e('City','bidxplugin'); ?></label>
-                                        <input type="text" class="form-control" name="institutionAddress.cityTown" placeholder="<?php _e('Please enter your city','bidxplugin'); ?>" />
+                                        <input type="text" class="form-control" name="institutionAddress.cityTown" />
                                     </div>
                                     <div class="form-group">
-                                        <label><?php _e('Street','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                        <input type="text" class="form-control" name="institutionAddress.street" placeholder="<?php _e('Please enter your street name','bidxplugin'); ?>" />
+                                        <label><?php _e('Street','bidxplugin'); ?></label>
+                                        <input type="text" class="form-control" name="institutionAddress.street" />
                                     </div>
                                     <div class="form-group">
-                                        <label><?php _e('Building number','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                        <input type="text" class="form-control" name="institutionAddress.streetNumber" placeholder="<?php _e('Please enter your building number','bidxplugin'); ?>" />
+                                        <label><?php _e('Building number','bidxplugin'); ?></label>
+                                        <input type="text" class="form-control" name="institutionAddress.streetNumber" />
                                     </div>
                                     <div class="form-group">
-                                        <label><?php _e('Postal code','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                        <input type="text" class="form-control" name="institutionAddress.postalCode" placeholder="<?php _e('Please enter your postcode','bidxplugin'); ?>" />
+                                        <label><?php _e('Postal code','bidxplugin'); ?></label>
+                                        <input type="text" class="form-control" name="institutionAddress.postalCode" />
                                     </div>
                                     <div class="form-group">
-                                        <label><?php _e('Neighborhood','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                        <input type="text" class="form-control" name="institutionAddress.neighborhood" placeholder="<?php _e('Please enter your neighborhood','bidxplugin'); ?>" />
+                                        <label><?php _e('Neighborhood','bidxplugin'); ?></label>
+                                        <input type="text" class="form-control" name="institutionAddress.neighborhood" />
                                     </div>
                                 </div>
 
@@ -128,22 +129,11 @@
                                 </div>
                             </div>
 
-                            <!-- \\ accordion body -->
                         </div>
-                    </div>
-                </div>
 
-                <!-- investorProfileInvestmentPreferences -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <a class="btn-block" data-toggle="collapse" data-parent="#investorProfileEdit" href="#investorProfileInvestmentPreferences">
-                            <span class="fa fa-chevron-right accordion-state-icon"></span>
-                            <?php _e('Investment preferences','bidxplugin'); ?>
-                        </a>
-                    </div>
-                    <div id="investorProfileInvestmentPreferences" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <!-- accordion body -->
+                        <!-- investorProfileInvestmentPreferences -->
+                        <div class="tab-pane" id="tab-investment-preferences">
+                            
                             <blockquote class="alert-info">
                                 <?php _e('Use this section to define your investment preferences, such as countries, products or industries that you would like to invest in. This information will be used to match your profile to businesses that fit these criteria.', 'bidxplugin')?>
                             </blockquote>
@@ -155,7 +145,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label><?php _e('Language(s) of operation','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Language(s) of operation','bidxplugin'); ?></label>
                                         <select name="focusLanguage" multiple></select>
                                     </div>
                                 </div>
@@ -177,7 +167,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label><?php _e('Consumer type','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Consumer type','bidxplugin'); ?></label>
                                         <select name="focusConsumerType" multiple></select>
                                     </div>
                                 </div>
@@ -191,7 +181,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label><?php _e('Stage of business','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Stage of business','bidxplugin'); ?></label>
                                         <div class="checkbox">
                                             <input type="checkbox" value="startup" id="checkbox-cbFocusStageBusinessStartup" name="focusStageBusiness" />
                                             <label for="checkbox-cbFocusStageBusinessStartup"><span></span><?php _e('Startup (has no sales revenues yet)','bidxplugin'); ?></label>
@@ -204,7 +194,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label><?php _e('Gender of entrepreneur','bidxplugin');?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Gender of entrepreneur','bidxplugin');?></label>
                                         <div class="checkbox">
                                             <input type="checkbox" value="m" id="checkbox-cbFocusGenderMale" name="focusGender" data-toggle="checkbox" />
                                             <label for="checkbox-cbFocusGenderMale"><span></span><?php _e('Male','bidxplugin'); ?></label>
@@ -231,14 +221,9 @@
                                             <input type="radio" value="city" id="radio-focusLocationTypeCity" name="focusLocationType" data-toggle="radio" />
                                             <label for="radio-focusLocationTypeCity"><span></span><?php _e('City / Cities','bidxplugin'); ?></label>
                                         </div>
-<!--                                         <div class="radio">
-                                            <input type="radio" value="reach" id="radio-focusLocationTypeReach" name="focusLocationType" data-toggle="radio" />
-                                            <label for="radio-focusLocationTypeReach"><span></span><?php _e('Region','bidxplugin'); ?></label>
-                                        </div>
- -->                                    </div>
-
-
+                                    </div>
                                 </div>
+
                                 <div class="col-sm-6">
                                     <div class="form-group toggle toggle-focusLocationType toggle-focusLocationType-country">
                                         <label><?php _e('Country','bidxplugin'); ?></label>
@@ -248,7 +233,7 @@
                                     <div class="form-group toggle toggle-focusLocationType toggle-focusLocationType-city">
                                         <label><?php _e('City','bidxplugin'); ?> <small class="text-muted"><?php _e('Press tab, enter or comma to add more','bidxplugin'); ?></small></label>
                                         <div class="bidx-tagsinput-container">
-                                            <input type="text" class="bidx-tagsinput enclosed" autocomplete="off" name="focusCity" class="bidx-tagsinput enclosed" placeholder="<?php _e('City','bidxplugin'); ?>">
+                                            <input type="text" class="bidx-tagsinput enclosed" autocomplete="off" name="focusCity" class="bidx-tagsinput enclosed">
                                         </div>
                                     </div>
 
@@ -256,30 +241,29 @@
                                         <label><?php _e('Region','bidxplugin'); ?></label>
                                         <input type="text" class="form-control" name="focusReach" data-type="location" />
                                     </div>
-
                                 </div>
+
                             </div>
                             <hr>
 
                             <h4><?php _e('Investment size','bidxplugin'); ?></h4>
 
                             <div class="row">
-
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label><?php _e('Maximum investment','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Maximum investment','bidxplugin'); ?></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                                            <input type="text" class="form-control" name="maxInvestment" placeholder="<?php _e('Maximum investment','bidxplugin'); ?>" min="0">
+                                            <input type="text" class="form-control" name="maxInvestment">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label><?php _e('Minimum investment','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Minimum investment','bidxplugin'); ?></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                                            <input type="text" class="form-control" name="minInvestment" placeholder="<?php _e('Minimal investment','bidxplugin'); ?>" min="0">
+                                            <input type="text" class="form-control" name="minInvestment">
                                         </div>
                                     </div>
                                 </div>
@@ -289,46 +273,36 @@
                                 <div class="col-sm-6">
 
                                     <div class="form-group">
-                                        <label><?php _e('Other preferences (max. 60 words)','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                        <textarea name="additionalPreferences" class="form-control" placeholder="<?php _e('Please enter any additional preferences','bidxplugin'); ?>"></textarea>
+                                        <label><?php _e('Other preferences (max. 60 words)','bidxplugin'); ?></label>
+                                        <textarea name="additionalPreferences" class="form-control"></textarea>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- \\ accordion body -->
                         </div>
-                    </div>
-                </div>
-                <!-- investorProfileInvestmentHistory -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <a class="btn-block" data-toggle="collapse" data-parent="#investorProfileEdit" href="#investorProfileInvestmentHistory">
-                            <span class="fa fa-chevron-right accordion-state-icon"></span>
-                            <?php _e('Investment history','bidxplugin'); ?>
-                        </a>
-                    </div>
-                    <div id="investorProfileInvestmentHistory" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <!-- accordion body -->
+
+                        <!-- investorProfileInvestmentHistory -->
+                        <div class="tab-pane" id="tab-investment-history">
+                            
                             <blockquote class="alert-info">
                                 <?php _e('Entrepreneurs are interested in the investments you have made in the past. Give a few details about investments made in the last 12 months or earlier (if  any).', 'bidxplugin')?>
                             </blockquote>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label><?php _e('Number of investments in the last 12 months','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Number of investments in the last 12 months','bidxplugin'); ?></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                                            <input type="text" class="form-control" name="numberInvestments" placeholder="<?php _e('Number of investments','bidxplugin'); ?>">
+                                            <input type="text" class="form-control" name="numberInvestments">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label><?php _e('Amount invested in the last 12 months','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Amount invested in the last 12 months','bidxplugin'); ?></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                                            <input type="text" class="form-control" name="totalInvestment" placeholder="<?php _e('Amount invested in US Dollar','bidxplugin'); ?>">
+                                            <input type="text" class="form-control" name="totalInvestment">
                                         </div>
                                     </div>
                                 </div>
@@ -356,22 +330,11 @@
 
                             <div class="previousInvestmentContainer"></div>
 
-                            <!-- \\ accordion body -->
                         </div>
-                    </div>
-                </div>
 
-                <!-- investorProfileReferences -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <a class="btn-block" data-toggle="collapse" data-parent="#investorProfileEdit" href="#investorProfileReferences">
-                           <span class="fa fa-chevron-right accordion-state-icon"></span>
-                           <?php _e('References','bidxplugin'); ?>
-                        </a>
-                    </div>
-                    <div id="investorProfileReferences" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <!-- accordion body -->
+                        <!-- investorProfileReferences -->
+                        <div class="tab-pane" id="tab-investor-references">
+                            
                             <blockquote class="alert-info">
                                 <?php _e('References from other entrepreneurs or investment partners are important when getting in touch with another member of the platform. Fill in details of those you have worked with  and are willing recommend you.', 'bidxplugin')?>
                             </blockquote>
@@ -383,17 +346,9 @@
                             <div class="referencesContainer"></div>
 
                         </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <a class="btn-block" data-toggle="collapse" data-parent="#investorProfileEdit" href="#investorProfileDocuments">
-                           <span class="fa fa-chevron-right accordion-state-icon"></span>
-                           <?php _e('Documents','bidxplugin'); ?>
-                        </a>
-                    </div>
-                    <div id="investorProfileDocuments" class="panel-collapse collapse">
-                        <div class="panel-body attachmentsControl">
+
+                        <div class="tab-pane attachmentsControl" id="tab-investor-documents">
+                            
                             <div class="attachmentsContainer"></div>
 
                             <button data-toggle="modal" class="btn btn-primary js-btn-add-attachments"><span class="fa fa-plus"></span> <?php _e('Add documents','bidxplugin');?></button>
@@ -406,11 +361,11 @@
                                             <h3><?php _e('Check the files you want to attach to your investor profile', 'bidxplugin' ); ?></h3>
                                         </div>
                                         <div class="modal-body">
-<?php
+        <?php
                                             // Media app will only be inserted once, this is by design!
                                             //
                                             echo do_shortcode( '[bidx app="media"]' );
-?>
+        ?>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file', 'bidxplugin' ); ?></button>
@@ -421,13 +376,10 @@
                             </div>
 
                         </div>
+
                     </div>
-
                 </div>
-
-                <!-- \\ accordion -->
-            </div>
-
+            </div> <!-- tabs-vertical -->
         </form>
     </div>
 
@@ -441,28 +393,28 @@
                         <label><?php _e('Company name','bidxplugin'); ?></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-building-o"></i></span>
-                            <input type="text" class="form-control" name="companyName" placeholder="<?php _e('Please enter the company name','bidxplugin'); ?>">
+                            <input type="text" class="form-control" name="companyName">
                         </div>
                     </div>
 
                     <div class="form-group col-sm-12">
-                        <label><?php _e('Company website?','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                        <label><?php _e('Company website?','bidxplugin'); ?></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-                            <input type="text" class="form-control" name="companyWebsite" placeholder="<?php _e('Please enter the company URL','bidxplugin'); ?>">
+                            <input type="text" class="form-control" name="companyWebsite">
                         </div>
                     </div>
 
                     <div class="form-group col-sm-12">
-                        <label><?php _e('Amount invested','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                        <label><?php _e('Amount invested','bidxplugin'); ?></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                            <input type="text" class="form-control" name="investment" placeholder="<?php _e('Amount invested in US Dollar','bidxplugin'); ?>">
+                            <input type="text" class="form-control" name="investment">
                         </div>
                     </div>
 
                     <div class="form-group col-sm-12">
-                        <label><?php _e('Investment type','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                        <label><?php _e('Investment type','bidxplugin'); ?></label>
                         <select name="investmentType"></select>
                     </div>
                 </div>
@@ -477,48 +429,48 @@
                 <div class="row">
                     <div class="form-group col-sm-12">
                         <label><?php _e('First name','bidxplugin'); ?></label>
-                        <input type="text" class="form-control" name="firstName" placeholder="<?php _e('Please enter the first name','bidxplugin'); ?>">
+                        <input type="text" class="form-control" name="firstName" />
                     </div>
 
                     <div class="form-group col-sm-12">
                         <label><?php _e('Last name','bidxplugin'); ?></label>
-                        <input type="text" class="form-control" name="lastName" placeholder="<?php _e('Please enter the last name','bidxplugin'); ?>">
+                        <input type="text" class="form-control" name="lastName" />
                     </div>
 
                     <div class="form-group col-sm-12">
-                        <label><?php _e('Professional title','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                        <input type="text" class="form-control" name="professionalTitle" placeholder="<?php _e('Please enter the professional title','bidxplugin'); ?>">
+                        <label><?php _e('Professional title','bidxplugin'); ?></label>
+                        <input type="text" class="form-control" name="professionalTitle" />
                     </div>
 
                     <div class="form-group col-sm-12" >
-                        <label><?php _e('LinkedIn profile','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                        <label><?php _e('LinkedIn profile','bidxplugin'); ?></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-linkedin-square"></i></span>
-                            <input type="text" class="form-control" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
+                            <input type="text" class="form-control" name="linkedIn" />
                         </div>
                     </div>
 
                     <div class="form-group col-sm-12">
-                        <label><?php _e('Email address','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                        <label><?php _e('Email address','bidxplugin'); ?></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                            <input type="email" class="form-control" name="emailAddress" placeholder="<?php _e('Please enter your email address','bidxplugin'); ?>" />
+                            <input type="email" class="form-control" name="emailAddress" />
                         </div>
                     </div>
 
                     <div class="form-group col-sm-12">
-                        <label><?php _e('Landline','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                        <label><?php _e('Landline','bidxplugin'); ?></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
-                            <input type="text" class="form-control" name="landLine" placeholder="<?php _e('Please enter your landline number','bidxplugin'); ?>" />
+                            <input type="text" class="form-control" name="landLine" />
                         </div>
                     </div>
 
                     <div class="form-group col-sm-12">
-                        <label><?php _e('Mobile','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                        <label><?php _e('Mobile','bidxplugin'); ?></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-tablet"></i></span>
-                            <input type="text" class="form-control" name="mobile" placeholder="<?php _e('Please enter your mobile number','bidxplugin'); ?>" />
+                            <input type="text" class="form-control" name="mobile" />
                         </div>
                     </div>
                 </div>
@@ -527,7 +479,7 @@
         </div>
 
         <!-- Attachment -->
-        <div class="attachmentItem col-md-4">
+        <div class="attachmentItem col-md-6">
             <div class="media well">
                 <div class="pull-left icons-rounded attachmentMissing"><i class="fa fa-question-circle text-primary-light"></i></div>
                 <a class="pull-left documentLink img-cropper" href="#">

@@ -10,7 +10,6 @@
 
     ,   $editControls               = $element.find( ".editControls" )
 
-    ,   $industry                   = $element.find( "[name='industry']" )
     ,   $expertiseNeeded            = $element.find( "[name='expertiseNeeded']" )
     ,   $productService             = $element.find( "[name='productService']" )
     ,   $countryOperation           = $element.find( "[name='countryOperation']" )
@@ -33,7 +32,6 @@
     ,   $ratingWrapper              = $element.find( ".rating-wrapper" )
     ,   $ratingAverage              = $ratingWrapper.find( ".rating-average" )
     ,   $ratingVote                 = $ratingWrapper.find( ".rating-vote" )
-    ,   $ratingTotal                = $ratingWrapper.find( ".rating-total" )
     ,   $ratingTotalVoters          = $ratingWrapper.find( ".rating-total-voters-count" )
     ,   $ratingUserLabel            = $ratingWrapper.find( ".rating-user-label" )
     ,   $ratingScore                = $ratingWrapper.find( ".rating-score" )
@@ -85,6 +83,21 @@
         //
     ,   $financialSummary                   = $element.find( ".financialSummary")
     ,   $financialSummaryYearsContainer     = $financialSummary.find( ".fs-col-years" )
+
+        // Cover Image
+        //
+    ,   $coverImage                         = $element.find( ".businessCover" )
+    ,   $coverImageBtn                      = $coverImage.find( "[href$='#coverImage']" )
+    ,   $coverRemoveBtn                     = $coverImage.find( "[href$='#coverRemove']" )
+    ,   $coverImageModal                    = $coverImage.find( ".coverModal" )
+    ,   $coverImageContainer                = $coverImage.find( ".coverImageContainer" )
+
+        // Logo
+        //
+    ,   $bsLogo                             = $element.find( ".bsLogo" )
+    ,   $bsLogoBtn                          = $bsLogo.find( "[href$='#addLogo']" )
+    ,   $bsLogoModal                        = $bsLogo.find( ".addLogoImage" )
+    ,   $logoContainer                      = $bsLogo.find( ".logoContainer" )
 
         // Managament Team
         //
@@ -192,10 +205,6 @@
                 // but until that is available, send in reasonforSubmsision as an array
                 //
             ,   "reasonForSubmission"
-            ,   "equityRetained"
-            // ,   "financingNeeded"
-            ,   "investmentType"
-            ,   "summaryFinancingNeeded"
             ,   "externalVideoPitch"
             ,   "externalAudioPitch"
             ]
@@ -205,11 +214,11 @@
         {
             "_root":
             [
-                "industry"
+                // "industry"
             // ,   "suggestedIndustry"
             // ,   "productService"
             // ,   "suggestedProductService"
-            ,   "countryOperation"
+                "countryOperation"
             ,   "socialImpact"
             ,   "envImpact"
             ,   "consumerType"
@@ -254,6 +263,9 @@
         ,   "_root":
             [
                 "yearSalesStarted"
+            ,   "equityRetained"
+            ,   "investmentType"
+            ,   "summaryFinancingNeeded"
             ]
 
         ,   "financialSummaries":
@@ -283,6 +295,7 @@
     {
         _snippets();
         _setupValidation();
+        _coverImage();
         _financialSummary();
         _managementTeam();
         _companyDetails();
@@ -306,11 +319,6 @@
             dataKey:            "reasonForSubmission"
         ,   emptyValue:         bidx.i18n.i( "selectReasonForSubmission", appName )
         });
-
-        // $industry.bidx_chosen(
-        // {
-        //     dataKey:            "industry"
-        // });
 
         $expertiseNeeded.bidx_chosen(
         {
@@ -374,7 +382,7 @@
             //
             forms.generalOverview.$el.validate(
             {
-                ignore:         ""
+                ignore:         "#frmeditMedia input, #frmeditMedia select"
             ,   debug:          false
             ,   rules:
                 {
@@ -391,24 +399,14 @@
                     {
                         maxlength:              900
                     }
-                ,   reasonForSubmission:
-                    {
-                        // required:               true
-                    }
                 ,   equityRetained:
                     {
-                        // number:                 true
                         min:                    0
                     ,   max:                    100
                     }
                 ,   financingNeeded:
                     {
-                        // required:               true
                         monetaryAmount:         true
-                    }
-                ,   "investmentType[]":
-                    {
-                        // required:               true
                     }
                 ,   summaryFinancingNeeded:
                     {
@@ -433,22 +431,22 @@
             ,   ignore:         ""
             ,   rules:
                 {
-                //     industry:
-                //     {
-                //         required:      true
-                //     }
-                // ,   productService:
-                //     {
-                //         required:      true
-                //     }
-                // ,   countryOperation:
-                //     {
-                //         required:      true
-                //     }
-                // ,   "consumerType[]":
-                //     {
-                //         required:      true
-                //     }
+                    industry:
+                    {
+                        // required:      true
+                    }
+                ,   productService:
+                    {
+                        // required:      true
+                    }
+                ,   countryOperation:
+                    {
+                        // required:      true
+                    }
+                ,   "consumerType[]":
+                    {
+                        // required:      true
+                    }
                 }
             ,   messages:
                 {
@@ -464,26 +462,26 @@
             //
             forms.aboutYouAndYourTeam.$el.validate(
             {
-                ignore:         ""
-            ,   debug:          false
-            ,   rules:
-                {
-                    personalRole:
-                    {
-                        // required:               true
-                        maxlength:              30
-                    }
-                ,   personalExpertise:
-                    {
-                        // required:               true
-                        maxlength:              180
-                    }
-                }
-            ,   messages:
-                {
+            //     ignore:         ""
+            // ,   debug:          false
+            // ,   rules:
+            //     {
+            //         personalRole:
+            //         {
+            //             // required:               true
+            //             maxlength:              30
+            //         }
+            //     ,   personalExpertise:
+            //         {
+            //             // required:               true
+            //             maxlength:              180
+            //         }
+            //     }
+            // ,   messages:
+            //     {
 
-                }
-            ,   submitHandler:          function( e )
+            //     }
+                submitHandler:          function( e )
                 {
                     _doSave();
                 }
@@ -576,6 +574,89 @@
                     _doSave();
                 }
             } );
+        }
+
+        function _coverImage()
+        {
+            $coverImageContainer.cover();
+
+            $coverImageBtn.click( function( e )
+            {
+                e.preventDefault();
+
+                // Make sure the media app is within our modal container
+                //
+                $( "#media" ).appendTo( $coverImageModal.find( ".modal-body" ) );
+
+                var $selectBtn = $coverImageModal.find(".btnSelectFile")
+                ,   $cancelBtn = $coverImageModal.find(".btnCancelSelectFile");
+
+                // Navigate the media app into list mode for selecting files
+                //
+                bidx.media.navigate(
+                {
+                    requestedState:         "list"
+                ,   slaveApp:               true
+                ,   selectFile:             true
+                ,   multiSelect:            false
+                ,   showEditBtn:            false
+                ,   btnSelect:              $selectBtn
+                ,   btnCancel:              $cancelBtn
+                ,   callbacks:
+                    {
+                        ready:                  function( state )
+                        {
+                            bidx.utils.log( "[Cover Image] ready in state", state );
+                        }
+
+                    ,   cancel:                 function()
+                        {
+                            // Stop selecting files, back to previous stage
+                            //
+                            $coverImageModal.modal('hide');
+                        }
+
+                    ,   success:                function( file )
+                        {
+                            bidx.utils.log( "[Cover Image] uploaded", file );
+
+                            // NOOP.. the parent app is not interested in when the file is uploaded
+                            // only when it is attached / selected
+                        }
+
+                    ,   select:               function( file )
+                        {
+                            bidx.utils.log( "[Cover Image] selected cover", file );
+
+                            $coverImageContainer.data( "bidxData", file );
+                            
+                            $coverImageModal.modal( "hide" );
+
+                            if ( $coverImageContainer.find( "img" ).length )
+                            {
+                                $coverImageContainer.cover( "updateCover", file );
+                            }
+                            else
+                            {
+                                $coverImageContainer.cover( "constructHtml", file );
+                            }
+
+                        }
+                    }
+                } );
+
+                $coverImageModal.modal();
+            } );
+
+            $coverRemoveBtn.click( function( e )
+            {
+                e.preventDefault();
+
+                $coverImageContainer.find( "img" ).remove();
+
+                businessSummary.cover = null;
+            } );
+
         }
 
         // Setup the management team components
@@ -783,13 +864,11 @@
                     {
                         // required:               true
                         monetaryAmount:         true
-                    ,   range :                 [-2147483648, 2147483647]   //PM-393
 
                     ,   messages:
                         {
                             required:               ""
                         ,   monetaryAmount:         "Please enter only numbers"
-                        ,   range:                  "Please enter lower value"
                         }
                     } );
                 } );
@@ -1139,6 +1218,69 @@
             } );
 
         }
+
+        // Logo
+        //
+        $bsLogoBtn.click( function( e )
+        {
+            e.preventDefault();
+
+            // Make sure the media app is within our modal container
+            //
+            $( "#media" ).appendTo( $bsLogoModal.find( ".modal-body" ) );
+
+            var $selectBtn = $bsLogoModal.find( ".btnSelectFile" )
+            ,   $cancelBtn = $bsLogoModal.find( ".btnCancelSelectFile" )
+            ;
+
+            // Navigate the media app into list mode for selecting files
+            //
+            bidx.media.navigate(
+            {
+                requestedState:         "list"
+            ,   slaveApp:               true
+            ,   selectFile:             true
+            ,   multiSelect:            false
+            ,   showEditBtn:            false
+            ,   btnSelect:              $selectBtn
+            ,   btnCancel:              $cancelBtn
+            ,   callbacks:
+                {
+                    ready:                  function( state )
+                    {
+                        bidx.utils.log( "[logo] ready in state", state );
+                    }
+
+                ,   cancel:                 function()
+                    {
+                        // Stop selecting files, back to previous stage
+                        //
+                        $bsLogoModal.modal('hide');
+                    }
+
+                ,   success:                function( file )
+                    {
+                        bidx.utils.log( "[logo] uploaded", file );
+
+                        // NOOP.. the parent app is not interested in when the file is uploaded
+                        // only when it is attached / selected
+                    }
+
+                ,   select:               function( file )
+                    {
+                        bidx.utils.log( "[logo] selected profile picture", file );
+
+                        $logoContainer.data( "bidxData", file );
+                        $logoContainer.html( $( "<img />", { "src": file.document, "data-fileUploadId": file.fileUpload } ));
+
+                        $bsLogoModal.modal( "hide" );
+                    }
+                }
+            } );
+
+            $bsLogoModal.modal();
+        } );
+
 
         // Setup the Documents component
         //
@@ -1734,13 +1876,33 @@
             }
         } );
 
-        // // Industry Sectors
-        // //
+        // Industry Sectors
+        //
         var data = bidx.utils.getValue( businessSummary, "industry", true );
 
         if ( data )
         {
             $industrySectors.industries( "populateInEditScreen",  data );
+        }
+
+        var logoImage = bidx.utils.getValue( businessSummary, "logo" );
+
+        if ( logoImage )
+        {
+            $logoContainer.empty();
+            $logoContainer.append( "<img src='"+ logoImage.document +"' />" );
+        }
+        
+
+        var coverImage = bidx.utils.getValue( businessSummary, "cover" );
+
+        if ( coverImage )
+        {
+            $coverImageContainer.cover( "repositionCover" );
+        }
+        else
+        {
+            $coverImageContainer.cover( "constructEmpty" );
         }
 
         // Now the nested objects
@@ -1821,9 +1983,8 @@
 
         // Update the chosen components with our set values
         //
-        // $industry.trigger( "chosen:updated" );
         $expertiseNeeded.trigger( "chosen:updated" );
-        // $productService.trigger( "chosen:updated" );
+        $productService.trigger( "chosen:updated" );
         $countryOperation.trigger( "chosen:updated" );
         $reasonForSubmission.trigger( "chosen:updated" );
         $envImpact.trigger( "chosen:updated" );
@@ -2089,6 +2250,39 @@
         } );
 
         bidx.utils.setValue( businessSummary, "attachment", attachments );
+
+        // Cover Image
+        //
+        var coverImageData = $coverImageContainer.data( "bidxData" )
+        ,   coverImgTopPos = $coverImageContainer.length ? parseInt( $coverImageContainer.find( "img" ).css( "top" ), 10) : false
+        ;
+
+        if ( coverImageData )
+        {
+            bidx.utils.setValue( businessSummary, "cover.fileUpload", coverImageData.fileUpload );
+        }
+
+        if ( coverImgTopPos )
+        {
+            if ( coverImgTopPos <= 0 )
+            {
+                bidx.utils.setValue( businessSummary, "cover.top", coverImgTopPos );
+            }
+            else
+            {
+                bidx.utils.setValue( businessSummary, "cover.top", 0 );
+            }
+        }
+
+        // Logo
+        //
+        var logoImageData = $logoContainer.data( "bidxData" );
+
+        if ( logoImageData )
+        {
+            bidx.utils.setValue( businessSummary, "logo.fileUpload", logoImageData.fileUpload );
+        }
+
     }
 
     function showEntity( options )
@@ -3121,6 +3315,8 @@
                 _showAllView( "mentor" );
                 _hideView( "matchingmentors" );
             }
+
+            $coverImageContainer.cover( "disable" );
         } );
 
         $btnSave.bind( "click", function( e )
@@ -3130,8 +3326,8 @@
             _doSave();
         } );
 
-        $btnSave.i18nText( ( state === "create" ? "btnAddAndView" : "btnSaveAndView" ) );
-        $btnCancel.i18nText( "btnCancel" );
+        $btnSave.i18nText( ( state === "create" ? "btnSave" : "btnSave" ) ).prepend( $( "<div />", { "class": "fa fa-check fa-above fa-big" } ) );
+        $btnCancel.i18nText( "btnCancel" ).prepend( $( "<div />", { "class": "fa fa-times fa-above fa-big" } ) );
 
         $controlsForEdit.empty();
         $controlsForEdit.append( $btnSave, $btnCancel );
