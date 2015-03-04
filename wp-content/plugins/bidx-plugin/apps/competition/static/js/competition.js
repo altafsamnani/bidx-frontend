@@ -1583,6 +1583,10 @@ function _initApplicationsView( )
     ,   rating
     ,   reviews
     ,   table
+    ,   entrepreneurData
+    ,   businessData
+    ,   entityId
+    ,   ownerId
     ,   competitionRoles      =  competitionBidxMeta.bidxCompetitionRoles
     ,   isCompetitionManager  = _.contains( competitionRoles, 'COMPETITION_ADMIN')
     ;
@@ -1601,16 +1605,23 @@ function _initApplicationsView( )
 
         if( reviews.length || isCompetitionManager )
         {
-                bidxMeta        =   bidx.utils.getValue( response, 'bidxMeta');
-                business        =   bidx.utils.getValue( bidxMeta, 'bidxEntityDisplayName');
-                entrepreneur    =   bidx.utils.getValue( bidxMeta, 'bidxOwnerDisplayName');
-                rating          =   bidx.utils.getValue( bidxMeta, 'bidxRatingAverage');
+                entityId            =   bidx.utils.getValue( response, 'entityId');
+                bidxMeta            =   bidx.utils.getValue( response, 'bidxMeta');
+                business            =   bidx.utils.getValue( bidxMeta, 'bidxEntityDisplayName');
+                entrepreneur        =   bidx.utils.getValue( bidxMeta, 'bidxOwnerDisplayName');
+                ownerId             =   bidx.utils.getValue( bidxMeta, 'bidxOwnerId');
+                rating              =   bidx.utils.getValue( bidxMeta, 'bidxRatingAverage');
+
+                businessData        = '<a href="/businesssummary/' + entityId +  '" target="_blank">' + business + '</a>';
+                entrepreneurData    = '<a href="/member/' + ownerId + '" target="_blank">' + entrepreneur + '</a>';
+
+
                 displayRows     =   {
-                                        business:       business
-                                    ,   entrepreneur:   entrepreneur
+                                        business:       businessData
+                                    ,   entrepreneur:   entrepreneurData
                                     ,   rating:         (rating) ? rating : 0
                                     ,   status:         response.status
-                                    ,   entityId:       response.entityId
+                                    ,   entityId:       entityId
                                     ,   reviews:        response.reviews
                                     };
                 data.push( displayRows );
@@ -1665,7 +1676,6 @@ function _initApplicationsView( )
                 $(this).find('.fa').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
             }
             else {
-                bidx.utils.log('dataaaaaaaa',row);
                 // Open this row
                 row.child( format(row.data(), row ) ).show();
                 tr.addClass('shown');
