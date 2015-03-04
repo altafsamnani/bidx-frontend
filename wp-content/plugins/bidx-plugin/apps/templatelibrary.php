@@ -85,7 +85,7 @@ class TemplateLibrary
      */
     public function __get ($name)
     {
-        return $this->vars[$name];
+         return (isset( $this->vars[$name] ) ) ? $this->vars[$name] : NULL;
     }
 
     /**
@@ -247,7 +247,7 @@ class TemplateLibrary
             case 'investmentType':
                 $values = $this->getStaticVal ('investmentType', $values);
                 break;
-                
+
             case 'typicalInvolvement':
                 $values = $this->getStaticVal ('typicalInvolvement', $values);
                 break;
@@ -426,7 +426,7 @@ class TemplateLibrary
             {
                 $value = $value[0];
             }
-            
+
             if ($value && $value != 'null')
             {
                 $rowHtml .= "<tr>";

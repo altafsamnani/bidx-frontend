@@ -3060,8 +3060,6 @@ function _competitionTimer (  )
 
                                                     _showAllView('successCard' + entityId );
 
-                                                    bidx.utils.log('wrapperRecommendation', $wrapperRecommendation);
-                                                    bidx.utils.log('roleRecommendation', $roleRecommendation);
                                                     if( $roleRecommendation.length )
                                                     {
 
@@ -3179,7 +3177,7 @@ function _competitionTimer (  )
                 }, 5000 );
 
             }
-            bidx.utils.log('btnConfirm', $btnAction.data("confirm") );
+
             if ( $btnAction.data( "confirm" ) )
             {
                 clearTimeout( confirmTimer );

@@ -60,13 +60,13 @@ $competitionId = $competitionBidxMeta->bidxCompetitionId;
 $requestStatus = isset( $competition->accessAuthorization ) ? $competition->accessAuthorization : null;
 
 
-if ( !($competition->competitionLogo && $competition->competitionLogo->document) )
+/*if ( !($competition->competitionLogo && $competition->competitionLogo->document) )
 {
     if ( $isNewCompetition )
     {
         //$hasCover = 'hide-it';
     }
-}
+} */
 
 $isParticipant = true;
 if ( $canEdit || $isAssessor || $isJudge )
@@ -117,7 +117,7 @@ if ( !empty( $attachment ) )
     <div class="competitionCover">
         <div class="coverImageContainer <?php echo $hasCover; ?>">
 <?php
-            if ( $competition->competitionLogo && $competition->competitionLogo->document ) :
+            if ( isset( $competition->competitionLogo ) && isset( $competition->competitionLogo->document ) ) :
 ?>
             <div class="coverImage">
                 <img src="<?php echo $competition->competitionLogo->document ?>" alt="Cover Image" data-initop="<?php echo $competition->competitionLogo->top?>" style="position: relative; top: <?php echo $competition->competitionLogo->top?>px">
