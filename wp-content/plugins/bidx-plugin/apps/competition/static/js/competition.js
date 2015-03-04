@@ -228,7 +228,7 @@
         {
             $btnAction: $btnApply
         ,   action:     'apply'
-        ,   success:   function( response )
+        ,   success:    function( response )
                         {
                             entityId    = response.data.id;
                             status      = response.data.status;
@@ -241,7 +241,22 @@
 
                             _hideView('apply');
                             $successLabel.empty().i18nText('SUCCESS_APPLIED', appName);
+                            _showAllView('participate');
                             _showAllView('success');
+
+                            canParticipate  =   _.omit( canParticipate, entityId.toString( ));
+
+                            //If more business plan then popup the current  entity id and display others in dropdown
+                            if( !$.isEmptyObject( canParticipate ) )
+                            {
+                                $businessSummary.find("option[value='" + entityId + "']").remove( );
+                                $businessSummary.trigger( "chosen:updated" );
+                                $btnParticipate.removeClass('hide');
+                            }
+                            else
+                            {
+                                $btnParticipate.addClass('hide');
+                            }
                         }
         });
     }
@@ -270,7 +285,7 @@
                     bidx.utils.log('listbpitemss', listBpItems);
                     $businessSummary.append( listBpItems );
                     $businessSummary.trigger( "chosen:updated" );
-                    $btnParticipate.removeClass( 'hide');
+                    $btnParticipate.removeClass( 'disabled');
                 } );
             }
 
@@ -1348,7 +1363,11 @@ function format ( data, row )
     ,   isAdminAssessorReview
     ,   isAdminJudgeReview
     ,   reviewObj
+    ,   isCompetitionManager
     ;
+
+    isCompetitionManager        =   _.contains( loggedInCompetitionRoles, 'COMPETITION_ADMIN');
+
 
     isHavingAdminRoleReview     =   _.findWhere(  reviews
                                             ,   {
@@ -1367,10 +1386,10 @@ function format ( data, row )
                                                     role:   "COMPETITION_JUDGE"
                                                 ,   userId: loggedInMemberId
                                                 }  );
-
+    bidx.utils.log('isCompetitionManager', isCompetitionManager);
     switch(true)
     {
-        case isGroupAdmin || !_.isEmpty ( isHavingAdminRoleReview ):
+        case isGroupAdmin || isCompetitionManager :
 
             isAdminAssessorReview   =   _.findWhere(  reviews
                                                     ,   {
@@ -2817,7 +2836,7 @@ function _competitionTimer (  )
             $assessors.chosen(
             {
                 placeholder_text_single : bidx.i18n.i( "Loading" )
-            ,   width                   : "40%"
+            ,   width                   : "100%"
             });
 
             if( assessorLength )
@@ -2880,7 +2899,7 @@ function _competitionTimer (  )
             $judges.chosen(
             {
                 placeholder_text_single : bidx.i18n.i( "Loading" )
-            ,   width                   : "40%"
+            ,   width                   : "100%"
             });
 
             if( judgeLength )
@@ -3262,6 +3281,8 @@ function _competitionTimer (  )
                             _showAllView('successCard' + entityId );
 
                             _displayButtonsAccordingToStatus( $listItem, response.data, row );
+
+                            _loadActorDropdownAccordingToStatus( $listItem, response.data);
 
                         }
         });
