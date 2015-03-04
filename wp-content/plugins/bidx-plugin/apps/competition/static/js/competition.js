@@ -1389,7 +1389,7 @@ function format ( data, row )
     bidx.utils.log('isCompetitionManager', isCompetitionManager);
     switch(true)
     {
-        case isGroupAdmin || isCompetitionManager :
+        case isCompetitionManager :
 
             isAdminAssessorReview   =   _.findWhere(  reviews
                                                     ,   {
@@ -1657,7 +1657,7 @@ function _initApplicationsView( )
         ,   "order": [[1, 'asc']]
         ,   "fnRowCallback": function( nRow, aData, iDisplayIndex )
             {
-                nRow.className = aData.state;
+                nRow.className = 'competitionRecord ' + aData.status;
                 return nRow;
             }
         } );
