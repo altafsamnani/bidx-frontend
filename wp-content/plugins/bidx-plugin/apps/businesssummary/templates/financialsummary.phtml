@@ -216,13 +216,13 @@ if ( $hasYears == false ) {
 
     <div class="fs-col-years clearfix">
 
-        <div class="financialSummariesItem addItem <?php echo ( $hasPrevYear ? 'ds-none' : '' ); ?>">
+        <div class="financialSummariesItem addItem addYearCol <?php echo ( $hasPrevYear ? 'ds-none' : '' ); ?>">
 
             <!-- EDIT -->
             <div class="view viewEdit">
-                <p class="addYear">
-                    <a href="#addPreviousYear"><i class="fa fa-plus-circle"></i> <?php _e( 'Add a previous year','bidxplugin' ); ?></a>
-                </p>
+                <div class="addYear">
+                    <a class="btn btn-sm" href="#addPreviousYear"><i class="fa fa-plus-circle fa-big fa-above"></i> <?php _e( 'Add a previous year','bidxplugin' ); ?></a>
+                </div>
             </div><!-- /EDIT -->
 
             <!-- SHOW -->
@@ -291,13 +291,13 @@ if ( $hasYears == false ) {
         }
     }
 ?>
-        <div class="financialSummariesItem addItem <?php echo ( $hasNextYear ? 'ds-none' : '' ); ?>">
+        <div class="financialSummariesItem addItem addYearCol <?php echo ( $hasNextYear ? 'ds-none' : '' ); ?>">
 
             <!-- EDIT -->
             <div class="view viewEdit">
-                <p class="addYear">
-                    <a href="#addNextYear"><?php _e('Add a year forward','bidxplugin'); ?> <i class="fa fa-plus-circle"></i></a>
-                </p>
+                <div class="addYear">
+                    <a class="btn btn-sm" href="#addNextYear"><i class="fa fa-plus-circle fa-big fa-above"></i> <?php _e('Add a year forward','bidxplugin'); ?></a>
+                </div>
             </div><!-- /EDIT -->
 
             <!-- SHOW -->

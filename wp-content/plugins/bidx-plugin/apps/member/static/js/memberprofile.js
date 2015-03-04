@@ -785,8 +785,9 @@
 
         // Profile picture is 'special'
         //
-        var profilePicture  = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.document" )
-        ,   profilePictureId    = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.fileUpload" )
+        var profilePicture   = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.document" )
+        ,   profilePictureId = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.fileUpload" )
+        ,   profileUploadId  = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.bidxMeta.bidxUploadId" )
         ;
 
         if ( profilePicture )
@@ -797,10 +798,30 @@
             _enableCropping( bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture" ) );
         }
 
-        var profileUploadId = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.bidxMeta.bidxUploadId" );
-        if ( !profileUploadId )
+        if ( !profileUploadId && !profilePictureId )
         {
-            $profilePictureContainer.append( $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
+            $profilePictureContainer
+                    .append
+                    (
+                        $( "<div />", { "class": "icons-rounded" } )
+                        .append
+                        (
+                            $( "<i />", { "class": "fa fa-user document-icon" } )
+                        )
+                    );
+        }
+
+        if ( !profileUploadId && profilePictureId )
+        {
+            $profilePictureContainer
+                    .append
+                    (
+                        $( "<div />", { "class": "icons-rounded" } )
+                        .append
+                        (
+                            $( "<i />", { "class": "fa fa-question-circle document-icon" } )
+                        )
+                    );
             $profilePictureContainer.append( $( "<p />", { "html": bidx.i18n.i( "docDeleted" ) } ) );
         }
 

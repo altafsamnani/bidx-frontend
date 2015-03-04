@@ -427,14 +427,15 @@ class TemplateLibrary
                 $value = $value[0];
             }
             
-            $rowHtml .= "<tr>";
-                if ($value && $value != 'null') {
+            if ($value && $value != 'null')
+            {
+                $rowHtml .= "<tr>";
                     //Display Label
                     $rowHtml .= "<$tagLabel " . $classLabel . " > " . $label . " </$tagLabel>";
                     //Display Value
                     $rowHtml .= "<$tagValue " . $classValue . " > " . $value . " </$tagValue>";
-                }
-            $rowHtml .="</tr>";
+                $rowHtml .="</tr>";
+            }
         }
         $rowHtml .="</tbody></table>";
         return $rowHtml;

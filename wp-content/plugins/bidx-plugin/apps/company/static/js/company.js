@@ -540,7 +540,7 @@
                 $logoContainer
                     .append( $( "<div />", { "class": "icons-rounded" } ) )
                     .find(".icons-rounded")
-                    .append( $( "<i />", { "class": "fa fa-tasks text-primary-light" } ) )
+                    .append( $( "<i />", { "class": "fa fa-building text-primary-light" } ) )
                     ;
             }
         ,   _logoRemoved = function()

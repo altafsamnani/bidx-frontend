@@ -94,11 +94,6 @@ if ( $businessSummary->mentorAdvisory === TRUE && ( $this->exst ($businessSummar
 //
 $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class_label' => 'bidx-label', 'class_value' => 'bidx-value', 'class_row' => '' );
 
-// Find the Download Financial templates URL
-// TODO: Not the final version
-//
-$dlpage = get_page_by_title( 'Download financial templates' );
-$dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
 <div class="businessSummary box-border top-margin-lineheight" id="businessSummary" data-bsid=<?php echo $businessSummaryId; ?>>
     <div class="businessCover">
@@ -395,7 +390,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
     {
 ?>
         <div class="main-padding-vertical">
-            <h3 class="to-uppercase"><?php _e('In a few words', 'bidxplugin')?></h3>
+            <h3 class="text-uppercase"><?php _e('In a few words', 'bidxplugin')?></h3>
             <div>
 <?php
                 echo $this->exst($businessSummary->summary);
@@ -439,7 +434,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
             if ( $this->checkEmpty( $rowValues ) ) :
 ?>
-                <h3 class="to-uppercase"><?php _e('General Overview', 'bidxplugin')?></h3>
+                <h3 class="text-uppercase"><?php _e('General Overview', 'bidxplugin')?></h3>
 <?php               
                 echo $this->tableRow ( $rowValues );
             endif;
@@ -470,7 +465,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
             if ( $this->checkEmpty( $rowValues ) ) :
 ?>
-                <h3 class="to-uppercase"><?php _e('The Business', 'bidxplugin')?></h3>
+                <h3 class="text-uppercase"><?php _e('The Business', 'bidxplugin')?></h3>
 <?php               
                 echo $this->tableRow ( $rowValues );
             endif;
@@ -490,7 +485,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
             if ( $this->checkEmpty( $rowValues ) ) :
 ?>
-                <h3 class="to-uppercase"><?php _e('The Team', 'bidxplugin')?></h3>
+                <h3 class="text-uppercase"><?php _e('The Team', 'bidxplugin')?></h3>
 <?php               
                 echo $this->tableRow ( $rowValues );
             endif;
@@ -565,7 +560,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
 
 
-            <h3 class="to-uppercase"><?php _e('Financial Details', 'bidxplugin')?></h3>
+            <h3 class="text-uppercase"><?php _e('Financial Details', 'bidxplugin')?></h3>
 <?php
             if ( $hasAccess )
             {
@@ -670,7 +665,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         $countryOperationSpecifics = isset ($company->countryOperationSpecifics) ? $company->countryOperationSpecifics : NULL;
 ?>
         <div class="main-padding-vertical">
-            <h3 class="to-uppercase"><?php _e('Company Details', 'bidxplugin')?></h3>
+            <h3 class="text-uppercase"><?php _e('Company Details', 'bidxplugin')?></h3>
 <?php
                 $companyWebsite = null;
 
@@ -710,7 +705,10 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 __('Statutory country, city') => $arStatutoryCityCountry ? implode( ', ', $arStatutoryCityCountry ) : NULL,
                 __('Statutory address') => $arStatutoryAddress ? implode( ' ', $arStatutoryAddress ) : NULL
             );
-            echo $this->tableRow ( $rowValues );
+
+            if ( $this->checkEmpty( $rowValues ) ) :
+                echo $this->tableRow ( $rowValues );
+            endif;
 
             if ( $countryOperationSpecifics )
             {
@@ -738,7 +736,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
     if ( $hasMentorAdvisory ) :
 ?>
     <div class="main-padding-vertical ">
-            <h3 class="to-uppercase"><?php _e('For Mentors', 'bidxplugin')?></h3>
+            <h3 class="text-uppercase"><?php _e('For Mentors', 'bidxplugin')?></h3>
 <?php
                 $rowValues = array
                 (
@@ -755,7 +753,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
     if ( $hasAttachments && $hasAccess ) :
 ?>
             <div class="main-padding-vertical">
-                <h3 class="to-uppercase"><?php _e('Attached Documents', 'bidxplugin')?></h3>
+                <h3 class="text-uppercase"><?php _e('Attached Documents', 'bidxplugin')?></h3>
 <?php
                 echo $this->displayDocuments ( $businessSummary->attachment );
 ?>
@@ -1022,23 +1020,6 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         <div class="view viewEdit">
                             <blockquote class="alert-info"><?php _e('Here you should provide a very general overview of your finances, the financing you need, the number of employees you have currently and how you think your business has, and will continue to grow over time','bidxplugin')?></blockquote>
                             <!-- numYear-->
-
-<?php
-?>
-
-                            <!-- If there is no financial plan uploaded -->
-                            <a class="btn btn-primary" href="#businessSummaryCollapse-Documents" data-toggle="collapse" data-parent="#businessSummaryCollapse" ><span class="fa fa-upload"></span> <?php _e('Upload your financial plan', 'bidxplugin'); ?></a>
-
-<?php
-                            if ( $dlurl !== false) :
-?>
-                                <a  class="btn btn-link" href="<?php echo $dlurl; ?>"><?php _e('Or download a financial plan template.', 'bidxplugin'); ?>&nbsp;<span class="icon-download text-info"></span></a>
-<?php
-                            endif;
-?>
-
-
-                            <hr>
                             <div class="row">
                                 <div class="form-group formfield col-sm-6">
                                     <label><?php _e('Sales started in','bidxplugin'); ?></label>

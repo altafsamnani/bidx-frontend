@@ -402,7 +402,7 @@ if ( !empty( $attachment ) )
 
             if ( $this->checkEmpty( $rowValues ) ) :
 ?>
-                <h3 class="to-uppercase"><?php _e('Participant criteria', 'bidxplugin')?></h3>
+                <h3 class="text-uppercase"><?php _e('Participant criteria', 'bidxplugin')?></h3>
 <?php
                 echo $this->tableRow ( $rowValues );
             endif;
@@ -412,7 +412,7 @@ if ( !empty( $attachment ) )
 <?php if ( $hasAttachments ) :
 ?>
             <div class="main-padding-vertical">
-                <h3 class="to-uppercase"><?php _e('Attached Documents', 'bidxplugin')?></h3>
+                <h3 class="text-uppercase"><?php _e('Attached Documents', 'bidxplugin')?></h3>
 <?php
                 echo $this->displayDocuments ( $competition->competitionDocument );
 ?>

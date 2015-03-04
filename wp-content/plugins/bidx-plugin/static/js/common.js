@@ -829,7 +829,7 @@
 
         }
 
-    ,   errorElement: "div"
+    ,   errorElement: "span"
 
     ,   highlight: function( element, errorClass, validClass)
         {
