@@ -1619,7 +1619,7 @@ function _initApplicationsView( )
                 displayRows     =   {
                                         business:       businessData
                                     ,   entrepreneur:   entrepreneurData
-                                    ,   rating:         (rating) ? rating : 0
+                                    ,   rating:         (rating) ? rating.toFixed(1) : 0
                                     ,   status:         response.status
                                     ,   entityId:       entityId
                                     ,   reviews:        response.reviews
@@ -2626,7 +2626,7 @@ function _competitionTimer (  )
                             .replace( /%entityId%/g,                    entityId                        ? entityId     : emptyVal )
                             .replace( /%bidxOwnerId%/g,                 bidxMeta.bidxOwnerId )
                             .replace( /%bidxOwnerDisplayName%/g,        bidxMeta.bidxOwnerDisplayName   ? bidxMeta.bidxOwnerDisplayName     : emptyVal )
-                            .replace( /%bidxRatingAverage%/g,           bidxMeta.bidxRatingAverage      ? bidxMeta.bidxRatingAverage     : emptyVal )
+                            .replace( /%bidxRatingAverage%/g,           bidxMeta.bidxRatingAverage      ? bidxMeta.bidxRatingAverage.toFixed(1)     : emptyVal )
                             .replace( /%bidxRatingCount%/g,             bidxMeta.bidxRatingCount        ? bidxMeta.bidxRatingCount     : emptyVal )
                             .replace( /%bidxEntityDisplayName%/g,       bidxMeta.bidxEntityDisplayName  ? bidxMeta.bidxEntityDisplayName     : emptyVal )
                             .replace( /%created%/g,                     businessData.created            ? bidx.utils.parseTimestampToDateStr(businessData.created) : emptyVal )
@@ -4080,7 +4080,7 @@ function _competitionTimer (  )
                              .replace( /%entityId%/g,                    entityId                        ? entityId     : emptyVal )
                             .replace( /%bidxOwnerId%/g,                 bidxMeta.bidxOwnerId )
                             .replace( /%bidxOwnerDisplayName%/g,        bidxMeta.bidxOwnerDisplayName   ? bidxMeta.bidxOwnerDisplayName     : emptyVal )
-                            .replace( /%bidxRatingAverage%/g,           bidxMeta.bidxRatingAverage      ? bidxMeta.bidxRatingAverage     : emptyVal )
+                            .replace( /%bidxRatingAverage%/g,           bidxMeta.bidxRatingAverage      ? bidxMeta.bidxRatingAverage.toFixed(1)     : emptyVal )
                             .replace( /%bidxEntityDisplayName%/g,       bidxMeta.bidxEntityDisplayName  ? bidxMeta.bidxEntityDisplayName     : emptyVal )
                             ;
                     $listItem   =   $(listItem);
@@ -4094,7 +4094,7 @@ function _competitionTimer (  )
                         readOnly: true,
                         // TODO Arjan remove or translate?
                         hints:  ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent'],
-                        score:  bidxMeta.bidxRatingAverage
+                        score:  bidxMeta.bidxRatingAverage.toFixed(1)
 
                     });
 
