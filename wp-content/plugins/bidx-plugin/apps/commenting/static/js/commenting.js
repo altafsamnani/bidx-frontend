@@ -207,7 +207,7 @@
                                     )
         ;
 
-        $( ".text-right .btn-group" ).append( $btnFeedbackSnippet.clone() );
+        $( ".info-bar .text-right" ).prepend( $btnFeedbackSnippet.clone() );
         $panelFeedback.append( $feedbackBoxSnippet.clone() );
 
         // Run this only if there are feedback panels created

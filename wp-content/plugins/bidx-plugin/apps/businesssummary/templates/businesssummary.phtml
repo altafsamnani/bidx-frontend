@@ -163,7 +163,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 
         <div class="bs-info hide-overflow">
             <div class="bs-cell main-padding pull-left"><i class="fa fa-line-chart"></i> <span class="hidden-xs"><?php echo _e('Completed', 'bidxplugin')?>:</span> <?php echo $progress; ?><span>%</span></div>
-            <div class="bs-cell main-padding pull-left hidden-xs">
+            <div class="bs-cell main-padding pull-left hidden-xs bs-score">
                 <div class="rating-wrapper">
                     <div class="rating-no-score <?php echo !$ratingAverage ? '' : 'hide' ?>">
                         <span class="rating-score-text"><?php echo _e('No Score', 'bidxplugin'); ?></span>
@@ -213,8 +213,8 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                             $accessGranted = 'hide';
                     }
 ?>
-                    <div class="bs-cell main-padding pull-left hidden-xs <?php echo $accessGranted; ?>"><i class="fa fa-check"></i> <?php echo _e('Full Access Granted', 'bidxplugin')?></div>
-                    <div class="bs-cell main-padding pull-left hidden-xs <?php echo $accessRequestProgress; ?>"><i class="fa fa-exclamation-circle"></i> <?php echo _e('Access request pending', 'bidxplugin')?></div>
+                    <div class="bs-cell main-padding pull-left hidden-xs access-granted <?php echo $accessGranted; ?>"><i class="fa fa-check"></i> <?php echo _e('Full Access Granted', 'bidxplugin')?></div>
+                    <div class="bs-cell main-padding pull-left hidden-xs access-pending <?php echo $accessRequestProgress; ?>"><i class="fa fa-exclamation-circle"></i> <?php echo _e('Access request pending', 'bidxplugin')?></div>
 <?php
                 }
 
@@ -243,11 +243,15 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
     }
 ?>
 
-    <div class="main-padding bg-info">
+    <div class="main-padding bg-info info-bar">
         <div class="row">
-            <div class="col-sm-4"></div>
+            <div class="col-sm-4 col-sm-offset-4">
+                
+                <!-- sucess msg, used as a placeholder for showing msgs -->
 
-            <div class="col-sm-5">
+                <div class="view viewMainsuccess alert alert-success">
+                    <p class="successMsg"></p>
+                </div>
     <?php
                 /*
                  * We want ratings to be indexed by Google, so need to include this on page load. It
@@ -270,8 +274,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 ?>
                 </div>
             </div>
-            <div class="col-sm-3 text-right">
-                <div class="btn-group">
+            <div class="col-sm-4 text-right">
 <?php
                     // if a user is allowed to request full access to a business summary and it NOT The owner of the business summary
                     //
@@ -311,7 +314,6 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 <?php
                     }
 ?>
-                </div>
                 <div class="editControlsContainer">
                     <div class="editControls pull-right">
 
@@ -320,12 +322,6 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 
                         <!-- EDIT, conditionally filled by the app -->
                         <div class="view viewEdit btn-group"></div>
-
-                        <!-- sucess msg, used as a placeholder for showing msgs -->
-
-                        <div class="view viewMainsuccess alert alert-success">
-                            <p class="successMsg"></p>
-                        </div>
                     </div>
                 </div>
 
@@ -1452,24 +1448,24 @@ $this->render('../../mentor/templates/dashboard/main.phtml'); ?>
 </script>
 <script type="text/html" id="active-mentor-action">
 <!--
-<a href="#" data-href="#mentoring/confirmInitiateMentoring/entityId=%entityId%&requestId=%requestId%&type=mentor&action=bpCancel" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-reject"><?php _e('Cancel request','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmInitiateMentoring/entityId=%entityId%&requestId=%requestId%&type=mentor&action=bpCancel" class="view viewRequestmentor btn btn-xs btn-danger pull-right btn-bidx-reject"><?php _e('Cancel request','bidxplugin');?></a>
 -->
 </script>
 <script type="text/html" id="send-mentor-action">
 <!--
-<a href="#" data-href="#mentoring/confirmInitiateMentoring/entityId=%entityId%&mentorId=%mentorId%&initiatorId=%initiatorId%&type=mentor&action=bpSend" class="view viewRequestmentor btn btn-xs btn-success pull-right label bidx-label btn-bidx-send" ><?php _e('Request mentoring','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmInitiateMentoring/entityId=%entityId%&mentorId=%mentorId%&initiatorId=%initiatorId%&type=mentor&action=bpSend" class="view viewRequestmentor btn btn-xs btn-success pull-right btn-bidx-send" ><?php _e('Request mentoring','bidxplugin');?></a>
 -->
 </script>
 <script type="text/html" id="respond-mentor-action">
 <!--
-<a href="#" data-href="#mentoring/confirmInitiateMentoring/requestId=%requestId%&type=mentor&action=rejected&initiate=bp" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-ignore" ><?php _e('Ignore','bidxplugin');?></a>
-<a href="#" data-href="#mentoring/confirmInitiateMentoring/requestId=%requestId%&type=mentor&action=accepted&initiate=bp" class="view viewRequestmentor btn btn-success pull-right label bidx-label btn-bidx-accept" ><?php _e('Accept','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmInitiateMentoring/requestId=%requestId%&type=mentor&action=rejected&initiate=bp" class="view viewRequestmentor btn btn-xs btn-danger pull-right btn-bidx-ignore" ><?php _e('Ignore','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmInitiateMentoring/requestId=%requestId%&type=mentor&action=accepted&initiate=bp" class="view viewRequestmentor btn btn-success pull-right btn-bidx-accept" ><?php _e('Accept','bidxplugin');?></a>
 
 -->
 </script>
 <script type="text/html" id="load-mentor">
 <!--
-    <div class="col-sm-6 member%contactId%">
+    <div class="col-sm-12 member%contactId%">
         <div class="viewLoadrequest alert alert-info text-center">
                 <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e ('Loading active mentors', 'bidxplugin') ?>
         </div>
