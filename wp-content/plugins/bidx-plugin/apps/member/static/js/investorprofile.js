@@ -1405,17 +1405,23 @@
             ,   "minInvestment":
                 {
                     monetaryAmount:         true
-                ,   max:                    function() { return $editForm.find( "[name='maxInvestment']" ).val(); }
+                ,   max:                    function()
+                                            {
+                                                return $editForm.find( "[name='maxInvestment']" ).val()
+                                                       ? $editForm.find( "[name='maxInvestment']" ).val()
+                                                       : $editForm.find( "[name='minInvestment']" ).val();
+                                            }
                 }
             ,   "maxInvestment":
                 {
                     monetaryAmount:         true
-                ,   min:                    function() { return $editForm.find( "[name='minInvestment']" ).val(); }
+                ,   min:                    function()
+                                            {
+                                                return $editForm.find( "[name='minInvestment']" ).val()
+                                                       ? $editForm.find( "[name='minInvestment']" ).val()
+                                                       : 0;
+                                            }
                 }
-            // ,   "focusIndustry":
-            //     {
-            //         required:               true
-            //     }
             ,   "focusSocialImpact":
                 {
                     required:               true

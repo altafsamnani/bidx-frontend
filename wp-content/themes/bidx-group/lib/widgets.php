@@ -139,6 +139,7 @@ require_once locate_template('lib/widgets/starthere.php');
 require_once locate_template('lib/widgets/video.php');
 require_once locate_template('lib/widgets/multicolumn.php');
 require_once locate_template('lib/widgets/post.php');
+require_once locate_template('lib/widgets/competitioncounter.php');
 
 // Activate default widgets
 //

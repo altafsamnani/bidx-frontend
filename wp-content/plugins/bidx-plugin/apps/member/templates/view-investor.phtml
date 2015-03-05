@@ -42,8 +42,8 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
             }
 
             $investmentSize = array(
-                $this->addPrefixSuffix ( $this->exst($investorDetails->minInvestment ), '$ ', '' ),
-                $this->addPrefixSuffix ( $this->exst($investorDetails->maxInvestment ), '$ ', '' )
+                $this->addPrefixSuffix ( $this->exst($investorDetails->minInvestment ), '$', '' ),
+                $this->addPrefixSuffix ( $this->exst($investorDetails->maxInvestment ), '$', '' )
             );
 
             $rowValues = array(
@@ -71,10 +71,10 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
                 __('Investment types','bidxplugin')           =>  $this->getMultiValues($this->exst( $investorDetails->investmentType ), ', ','investmentType'),
                 __('Stage of business','bidxplugin')          =>  $this->getMultiValues($this->exst ($investorDetails->focusStageBusiness), ', ','stageBusiness'),
                 __('Gender','bidxplugin')                     =>  $this->getMultiValues($this->exst ($investorDetails->focusGender), ', ','gender'),
-                __('Focus countries','bidxplugin')            => $this->getMultiValues ($this->exst ($investorDetails->focusCountry), ', ','country'),
-                __('Focus cities','bidxplugin')               => $this->getMultiValues($this->exst ($investorDetails->focusCity), ',', null, 'cityTown'),
-                __('Investment size','bidxplugin')            =>  implode( $investmentSize, ' - ' ),
-                __('Other preferences','bidxplugin')          => $this->exst ($investorDetails->additionalPreferences)
+                __('Focus countries','bidxplugin')            =>  $this->getMultiValues ($this->exst ($investorDetails->focusCountry), ', ','country'),
+                __('Focus cities','bidxplugin')               =>  $this->getMultiValues($this->exst ($investorDetails->focusCity), ',', null, 'cityTown'),
+                __('Investment size','bidxplugin')            =>  ( $this->exst($investorDetails->minInvestment ) && $this->exst($investorDetails->maxInvestment ) ) ? implode( $investmentSize, ' - ' ) : "",
+                __('Other preferences','bidxplugin')          =>  $this->exst ($investorDetails->additionalPreferences)
             );
 
             if ( $this->checkEmpty( $rowValues ) ) :

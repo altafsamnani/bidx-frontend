@@ -37,6 +37,7 @@
     ,   $ratingScore                = $ratingWrapper.find( ".rating-score" )
     ,   $ratingNoScore              = $ratingWrapper.find( ".rating-no-score" )
     ,   $raty                       = $ratingWrapper.find( ".raty" )
+    ,   $bsScore                    = $element.find( ".bs-score" )
 
     ,   $fakecrop                   = $views.find( ".bidx-profilepicture img" )
 
@@ -172,7 +173,7 @@
     //
     var CONSTANTS =
         {
-            SEARCH_LIMIT:                       4
+            SEARCH_LIMIT:                       10
         ,   NUMBER_OF_PAGES_IN_PAGINATOR:       10
         ,   LOAD_COUNTER:                       0
         ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
@@ -1455,6 +1456,13 @@
                             $ratingNoScore.removeClass( "hide" );
                             $ratingScore.addClass( "hide" );
                         }
+
+                        $bsScore.addClass( "blink" );
+                        
+                        setTimeout( function()
+                        {
+                            $bsScore.removeClass( "blink" );
+                        }, 5000);
                     } );
                 },
                 score: function()
@@ -1512,6 +1520,7 @@
                         //
                         $bidxAccessRequestPending.toggleClass( "hide" );
                         $btnFullAccessRequest.toggleClass( "hide" );
+                        $( ".access-pending" ).toggleClass( "hide" ).toggleClass( "blink" );
                     }
 
                 }
@@ -2829,11 +2838,18 @@
                                                     .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
                                                     ;
 
-
-
                                                 $listItem                = $( listItem );
-                                                //$requestMentoringBtn     = $listItem.find( '.btn-mentoring' );
+                                                
+                                                var roleLabel = $listItem.find( ".bidx-label" );
+                                                $.each( roleLabel, function( index, val )
+                                                {
+                                                    if ( $(this).text() === "" )
+                                                    {
+                                                        $(this).remove();
+                                                    }
+                                                });
 
+                                                //$requestMentoringBtn     = $listItem.find( '.btn-mentoring' );
                                                 //$requestMentoringBtn.addClass('disabled').i18nText("btnRequestSent");
 
                                                 if( options && options.cb )

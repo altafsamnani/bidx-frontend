@@ -806,7 +806,7 @@
         //
         var $validator = $editForm.validate(
         {
-            ignore: ".chosen-search input, .search-field input"
+            ignore: ".chosen-search input, .search-field input, #frmeditMedia input, #frmeditMedia select"
         ,   rules:
             {
                 "name":

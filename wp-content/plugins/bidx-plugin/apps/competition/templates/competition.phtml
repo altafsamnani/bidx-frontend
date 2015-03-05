@@ -17,11 +17,27 @@ $createdtDateTime           = ( isset( $competitionBidxMeta->bidxCreationDateTim
 
 $updatedDate                = ( isset( $competitionBidxMeta->bidxLastUpdateDateTime ) ) ? date( 'd M Y', $competitionBidxMeta->bidxLastUpdateDateTime  ) : NULL;
 
-$startDateTime              = ( isset( $competition->startDateTime ) ) ? date( 'd M Y H:i ', strtotime ( $this->exst( $competition->startDateTime ) ) ) : NULL;
+$nowTime                    = strtotime('now');
 
-$endDateTime                = ( isset( $competition->endDateTime ) ) ? date( 'd M Y H:i', strtotime ( $this->exst( $competition->endDateTime ) ) ) : NULL;
+$startTime                  = strtotime ( $this->exst( $competition->startDateTime ) );
+
+$endTime                    = strtotime ( $this->exst( $competition->endDateTime ) );
+
+$startDateTime              = ( isset( $competition->startDateTime ) ) ? date( 'd M Y H:i ',  $startTime) : NULL;
+
+$endDateTime                = ( isset( $competition->endDateTime ) ) ? date( 'd M Y H:i', $endTime ) : NULL;
+
+$nowDateTime                = date( 'd M Y H:i');
 
 $endTimeStamp               = ( isset( $competition->endDateTime ) ) ? strtotime ( $this->exst( $competition->endDateTime ) )  : NULL;
+
+$isCompetitionActive        = false;
+
+
+if( ( ( $nowTime >= $startTime ) && ( $nowTime <= $endTime ) ) || $canEdit )  // If its withink the start date and enddate or loggedin user is admin
+{
+    $isCompetitionActive    = true;
+}
 
 $gender                     = $this->getMultiValues( $this->exst($competition->competitionGender), ', ', 'gender' );
 
@@ -44,13 +60,13 @@ $competitionId = $competitionBidxMeta->bidxCompetitionId;
 $requestStatus = isset( $competition->accessAuthorization ) ? $competition->accessAuthorization : null;
 
 
-if ( !($competition->competitionLogo && $competition->competitionLogo->document) )
+/*if ( !($competition->competitionLogo && $competition->competitionLogo->document) )
 {
     if ( $isNewCompetition )
     {
         //$hasCover = 'hide-it';
     }
-}
+} */
 
 $isParticipant = true;
 if ( $canEdit || $isAssessor || $isJudge )
@@ -101,7 +117,7 @@ if ( !empty( $attachment ) )
     <div class="competitionCover">
         <div class="coverImageContainer <?php echo $hasCover; ?>">
 <?php
-            if ( $competition->competitionLogo && $competition->competitionLogo->document ) :
+            if ( isset( $competition->competitionLogo ) && isset( $competition->competitionLogo->document ) ) :
 ?>
             <div class="coverImage">
                 <img src="<?php echo $competition->competitionLogo->document ?>" alt="Cover Image" data-initop="<?php echo $competition->competitionLogo->top?>" style="position: relative; top: <?php echo $competition->competitionLogo->top?>px">
@@ -146,32 +162,35 @@ if ( !empty( $attachment ) )
             </div>
         </div>
     </div>
-    <div class="competition-info hide-overflow text-center">
-        <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-            <div class="row main-padding">
-                <div class="col-sm-3">
-                    <div class="participants-number"><?php echo $competition->appliedCount;?></div>
-                    <div class="participants-state"><?php echo _e( 'Participants', 'bidxplugin' ); ?></div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="participants-number"><?php echo $competition->submittedCount;?></div>
-                    <div class="participants-state"><?php echo _e( 'Submitted', 'bidxplugin' ); ?></div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="participants-number">-</div>
-                    <div class="participants-state"><?php echo _e( 'Finalists', 'bidxplugin' ); ?></div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="participants-number">-</div>
-                    <div class="participants-state"><?php echo _e( 'Winners', 'bidxplugin' ); ?></div>
+    <?php
+    if($isCompetitionActive)
+    { ?>
+        <div class="competition-info hide-overflow text-center">
+            <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+                <div class="row main-padding">
+                    <div class="col-sm-3">
+                        <div class="participants-number"><?php echo $competition->appliedCount;?></div>
+                        <div class="participants-state"><?php echo _e( 'Participants', 'bidxplugin' ); ?></div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="participants-number"><?php echo $competition->submittedCount;?></div>
+                        <div class="participants-state"><?php echo _e( 'Submitted', 'bidxplugin' ); ?></div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="participants-number">-</div>
+                        <div class="participants-state"><?php echo _e( 'Finalists', 'bidxplugin' ); ?></div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="participants-number">-</div>
+                        <div class="participants-state"><?php echo _e( 'Winners', 'bidxplugin' ); ?></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
 <?php
-    if ( $this->exst($competitionBidxMeta->bidxEntityId) )
-    {
+
+        if ( $this->exst($competitionBidxMeta->bidxEntityId) )
+        {
 ?>
         <div class="main-padding bg-info">
             <div class="row view viewShow viewParticipate">
@@ -218,7 +237,7 @@ if ( !empty( $attachment ) )
 <?php
                     if ( $isParticipant ) :
 ?>
-                        <button class="btn btn-primary btn-participate hide"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
+                        <button class="btn btn-primary btn-participate disabled"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
 <?php
                     endif;
 ?>
@@ -265,12 +284,13 @@ if ( !empty( $attachment ) )
                 </div>
             </div>
             <div class="row main-padding view viewSuccess">
-                <div class="col-sm-10 col-sm-offset-2 successLabel">
+                <div class="col-sm-8 col-sm-offset-2 successLabel">
 
                 </div>
             </div>
         </div>
 <?php
+        }
     }
 ?>
 
@@ -772,6 +792,9 @@ if ( !empty( $attachment ) )
                 </div>
             </div>
         </div>
+        <?php
+        if($isCompetitionActive)
+        { ?>
         <div class="cardFooter hide">
             <div class="alert alert-info text-right">
                 <span class="cardInfoText"></span>
@@ -779,6 +802,7 @@ if ( !empty( $attachment ) )
                 <a  data-entityid = "%entityId%" data-status = "" class="btn btn-warning btn-xs btn-action set-withdraw hide"><?php _e('Withdraw', 'bidxplugin');?></a>
             </div>
         </div>
+        <?php } ?>
     </div>
 -->
 </script>
@@ -787,8 +811,36 @@ if ( !empty( $attachment ) )
     <div class="cardEntity%entityId%">
         <div class="cardHeader%entityId% hide-overflow">
         </div>
-        <div class="cardContent main-padding">
+        <div class="cardContent">
             <div class="cardTop">
+                <div class="row">
+                     <div class="assign-assessor hide">
+                        <div class="col-sm-12">
+                            <label class="inline">Assign Assessor:</label>
+                        </div>
+                        <div>
+                            <div class="col-sm-9">
+                                <select multiple class="chosen-assessors-%entityId%" name="assessors-%entityId%"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 pull-right">
+                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block assign-assessor-%entityId%"><?php _e('Assign','bidxplugin');?></a>
+                        </div>
+                    </div>
+                    <div class="assign-judge hide">
+                        <div class="col-sm-12">
+                            <label class="inline">Assign Judge:</label>
+                        </div>
+                        <div>
+                            <div class="col-sm-9">
+                                <select multiple class="chosen-judges-%entityId%" name="judges-%entityId%"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 pull-right">
+                               <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block assign-judge-%entityId%"><?php _e('Assign','bidxplugin');?></a>
+                        </div>
+                    </div>
+                </div>
                 <div class="">
                     <div class="row">
                         <div class="col-sm-9 pull-left hide">
@@ -920,28 +972,6 @@ if ( !empty( $attachment ) )
                         </div>
                         <div class="text-right">
                             <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block set-winner-%entityId%"><?php _e('Set','bidxplugin');?></a>
-                        </div>
-                    </div>
-                    <div class="assign-assessor hide">
-                        <div class="col-sm-12">
-                            <label class="inline">Assign Assessor:</label>
-                        </div>
-                        <div class="col-sm-12">
-                            <select multiple class="chosen-assessors-%entityId%" name="assessors-%entityId%"></select>
-                            <div class="pull-right">
-                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block assign-assessor-%entityId%"><?php _e('Assign','bidxplugin');?></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="assign-judge hide">
-                        <div class="col-sm-12">
-                            <label class="inline">Assign Judge:</label>
-                        </div>
-                        <div class="col-sm-12">
-                            <select multiple class="chosen-judges-%entityId%" name="judges-%entityId%"></select>
-                            <div class="pull-right">
-                                <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block assign-judge-%entityId%"><?php _e('Assign','bidxplugin');?></a>
-                            </div>
                         </div>
                     </div>
                 </div>
