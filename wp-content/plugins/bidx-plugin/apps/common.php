@@ -145,7 +145,7 @@ class BidxCommon
     static function clearWpBidxSession ()
     {
         session_start ();
-        $redirect = $_SESSION['returnAfterLogin'];
+        $redirect = (isset($_SESSION['returnAfterLogin'])) ? $_SESSION['returnAfterLogin'] : '';
         session_destroy ();
         if( isset($redirect) ){
             session_start ();
@@ -243,10 +243,11 @@ class BidxCommon
                 $bidxEntityType = $meta->bidxEntityType;
                 $bidxEntityValue = $meta->bidxEntityId;
 
-                if(!is_object($this::$bidxSession[$subDomain]->data->wp->entities))
-                {
-                    $this::$bidxSession[$subDomain]->data->wp->entities = new stdClass();
-                }
+                //Creat empty object to store values
+                ( !isset($this::$bidxSession[$subDomain]->data->wp ) ) ? $this::$bidxSession[$subDomain]->data->wp = new stdClass() : '';
+
+                (!isset($this::$bidxSession[$subDomain]->data->wp->entities)) ? $this::$bidxSession[$subDomain]->data->wp->entities = new stdClass() : '';
+
 
                 if($bidxEntityType == 'bidxBusinessSummary') {
                     $this::$bidxSession[$subDomain]->data->wp->entities->bidxBusinessSummary[$bidxEntityValue] = $bidxEntityValue;
@@ -299,7 +300,9 @@ class BidxCommon
 
         echo "<pre>";
         print_r($currentLanguage);
-        echo "</pre>";exit;*/
+        echo "</pre>";exit;
+        Script bidxConfig.currentLanguage  = '{$langCountry[0]}';
+        */
 
         $scriptJs           = "<script>
                                     var bidxConfig              = bidxConfig || {};
@@ -311,7 +314,6 @@ class BidxCommon
                                     bidxConfig.session          = $jsSessionVars ; /* Dump response of the session-api */
                                     bidxConfig.now              = $now;
                                     bidxConfig.groupName        = '{$subDomain}';
-                                    bidxConfig.currentLanguage  = '{$langCountry[0]}';
                                     bidxConfig.authenticated    = {$jsAuthenticated};
                                 </script>
                             ";
@@ -424,7 +426,7 @@ class BidxCommon
                     // We cannot (easily) set this in the array $this::$bidxSession[$subDomain] as then
                     // it's not (easily) preserved it in clearWpBidxSession.
 
-                    if( empty( $_SESSION['returnAfterLogin'] ) ) 
+                    if( empty( $_SESSION['returnAfterLogin'] ) )
                     {
                         $referrer = $_SERVER[ "HTTP_REFERER" ];
                         if( preg_match("(/join|/auth|/login)", $referrer) !== 1 )
@@ -520,12 +522,12 @@ class BidxCommon
                 // following that link is actually not the user for whom the link was intended.
 
                 // 2015-02-03: Somehow the logic from 'mail' below does not really log out the user.
-                // Using bidx_signout() shows a "Please wait", and does not pick up the "redirect_to" URL. 
+                // Using bidx_signout() shows a "Please wait", and does not pick up the "redirect_to" URL.
 
                 // If Apache redirected before this is handled (like to redirect from HTTP to HTTPS) then
                 // the "url" parameter might have been percent-encoded twice, leaving $_GET['url'] with a
                 // (single) encoded value. Hence we're calling urldecode(...) just in case, though that
-                // will cause issues if the bare URL actually includes percent characters. (See also 
+                // will cause issues if the bare URL actually includes percent characters. (See also
                 // http://serverfault.com/questions/331899/apache-mod-rewrite-double-encodes-query-string)
 
                 $redirect_url = $http . $_SERVER['HTTP_HOST'] .'/'.$langUrl. '/auth?redirect_to=' . base64_encode ( urldecode($_GET['url']) ) . '#auth/login';

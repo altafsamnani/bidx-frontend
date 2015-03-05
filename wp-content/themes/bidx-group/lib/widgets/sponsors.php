@@ -39,7 +39,7 @@ class Sponsors_Widget extends WP_Widget {
         else
         {
             $title ='';
-            $select ='';
+            $select = array();
         }
 ?>
 

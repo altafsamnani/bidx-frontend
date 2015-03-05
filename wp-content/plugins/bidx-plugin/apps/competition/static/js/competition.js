@@ -228,7 +228,7 @@
         {
             $btnAction: $btnApply
         ,   action:     'apply'
-        ,   success:   function( response )
+        ,   success:    function( response )
                         {
                             entityId    = response.data.id;
                             status      = response.data.status;
@@ -241,7 +241,22 @@
 
                             _hideView('apply');
                             $successLabel.empty().i18nText('SUCCESS_APPLIED', appName);
+                            _showAllView('participate');
                             _showAllView('success');
+
+                            canParticipate  =   _.omit( canParticipate, entityId.toString( ));
+
+                            //If more business plan then popup the current  entity id and display others in dropdown
+                            if( !$.isEmptyObject( canParticipate ) )
+                            {
+                                $businessSummary.find("option[value='" + entityId + "']").remove( );
+                                $businessSummary.trigger( "chosen:updated" );
+                                $btnParticipate.removeClass('hide');
+                            }
+                            else
+                            {
+                                $btnParticipate.addClass('hide');
+                            }
                         }
         });
     }
@@ -270,7 +285,7 @@
                     bidx.utils.log('listbpitemss', listBpItems);
                     $businessSummary.append( listBpItems );
                     $businessSummary.trigger( "chosen:updated" );
-                    $btnParticipate.removeClass( 'hide');
+                    $btnParticipate.removeClass( 'disabled');
                 } );
             }
 
@@ -1348,7 +1363,11 @@ function format ( data, row )
     ,   isAdminAssessorReview
     ,   isAdminJudgeReview
     ,   reviewObj
+    ,   isCompetitionManager
     ;
+
+    isCompetitionManager        =   _.contains( loggedInCompetitionRoles, 'COMPETITION_ADMIN');
+
 
     isHavingAdminRoleReview     =   _.findWhere(  reviews
                                             ,   {
@@ -1367,10 +1386,10 @@ function format ( data, row )
                                                     role:   "COMPETITION_JUDGE"
                                                 ,   userId: loggedInMemberId
                                                 }  );
-
+    bidx.utils.log('isCompetitionManager', isCompetitionManager);
     switch(true)
     {
-        case isGroupAdmin || !_.isEmpty ( isHavingAdminRoleReview ):
+        case isCompetitionManager :
 
             isAdminAssessorReview   =   _.findWhere(  reviews
                                                     ,   {
@@ -1564,6 +1583,10 @@ function _initApplicationsView( )
     ,   rating
     ,   reviews
     ,   table
+    ,   entrepreneurData
+    ,   businessData
+    ,   entityId
+    ,   ownerId
     ,   competitionRoles      =  competitionBidxMeta.bidxCompetitionRoles
     ,   isCompetitionManager  = _.contains( competitionRoles, 'COMPETITION_ADMIN')
     ;
@@ -1582,16 +1605,23 @@ function _initApplicationsView( )
 
         if( reviews.length || isCompetitionManager )
         {
-                bidxMeta        =   bidx.utils.getValue( response, 'bidxMeta');
-                business        =   bidx.utils.getValue( bidxMeta, 'bidxEntityDisplayName');
-                entrepreneur    =   bidx.utils.getValue( bidxMeta, 'bidxOwnerDisplayName');
-                rating          =   bidx.utils.getValue( bidxMeta, 'bidxRatingAverage');
+                entityId            =   bidx.utils.getValue( response, 'entityId');
+                bidxMeta            =   bidx.utils.getValue( response, 'bidxMeta');
+                business            =   bidx.utils.getValue( bidxMeta, 'bidxEntityDisplayName');
+                entrepreneur        =   bidx.utils.getValue( bidxMeta, 'bidxOwnerDisplayName');
+                ownerId             =   bidx.utils.getValue( bidxMeta, 'bidxOwnerId');
+                rating              =   bidx.utils.getValue( bidxMeta, 'bidxRatingAverage');
+
+                businessData        = '<a href="/businesssummary/' + entityId +  '" target="_blank">' + business + '</a>';
+                entrepreneurData    = '<a href="/member/' + ownerId + '" target="_blank">' + entrepreneur + '</a>';
+
+
                 displayRows     =   {
-                                        business:       business
-                                    ,   entrepreneur:   entrepreneur
-                                    ,   rating:         (rating) ? rating : 0
+                                        business:       businessData
+                                    ,   entrepreneur:   entrepreneurData
+                                    ,   rating:         (rating) ? rating.toFixed(1) : 0
                                     ,   status:         response.status
-                                    ,   entityId:       response.entityId
+                                    ,   entityId:       entityId
                                     ,   reviews:        response.reviews
                                     };
                 data.push( displayRows );
@@ -1627,7 +1657,7 @@ function _initApplicationsView( )
         ,   "order": [[1, 'asc']]
         ,   "fnRowCallback": function( nRow, aData, iDisplayIndex )
             {
-                nRow.className = aData.state;
+                nRow.className = 'competitionRecord ' + aData.status;
                 return nRow;
             }
         } );
@@ -1646,7 +1676,6 @@ function _initApplicationsView( )
                 $(this).find('.fa').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
             }
             else {
-                bidx.utils.log('dataaaaaaaa',row);
                 // Open this row
                 row.child( format(row.data(), row ) ).show();
                 tr.addClass('shown');
@@ -2597,7 +2626,7 @@ function _competitionTimer (  )
                             .replace( /%entityId%/g,                    entityId                        ? entityId     : emptyVal )
                             .replace( /%bidxOwnerId%/g,                 bidxMeta.bidxOwnerId )
                             .replace( /%bidxOwnerDisplayName%/g,        bidxMeta.bidxOwnerDisplayName   ? bidxMeta.bidxOwnerDisplayName     : emptyVal )
-                            .replace( /%bidxRatingAverage%/g,           bidxMeta.bidxRatingAverage      ? bidxMeta.bidxRatingAverage     : emptyVal )
+                            .replace( /%bidxRatingAverage%/g,           bidxMeta.bidxRatingAverage      ? bidxMeta.bidxRatingAverage.toFixed(1)     : emptyVal )
                             .replace( /%bidxRatingCount%/g,             bidxMeta.bidxRatingCount        ? bidxMeta.bidxRatingCount     : emptyVal )
                             .replace( /%bidxEntityDisplayName%/g,       bidxMeta.bidxEntityDisplayName  ? bidxMeta.bidxEntityDisplayName     : emptyVal )
                             .replace( /%created%/g,                     businessData.created            ? bidx.utils.parseTimestampToDateStr(businessData.created) : emptyVal )
@@ -2817,7 +2846,7 @@ function _competitionTimer (  )
             $assessors.chosen(
             {
                 placeholder_text_single : bidx.i18n.i( "Loading" )
-            ,   width                   : "40%"
+            ,   width                   : "100%"
             });
 
             if( assessorLength )
@@ -2880,7 +2909,7 @@ function _competitionTimer (  )
             $judges.chosen(
             {
                 placeholder_text_single : bidx.i18n.i( "Loading" )
-            ,   width                   : "40%"
+            ,   width                   : "100%"
             });
 
             if( judgeLength )
@@ -3031,8 +3060,6 @@ function _competitionTimer (  )
 
                                                     _showAllView('successCard' + entityId );
 
-                                                    bidx.utils.log('wrapperRecommendation', $wrapperRecommendation);
-                                                    bidx.utils.log('roleRecommendation', $roleRecommendation);
                                                     if( $roleRecommendation.length )
                                                     {
 
@@ -3150,7 +3177,7 @@ function _competitionTimer (  )
                 }, 5000 );
 
             }
-            bidx.utils.log('btnConfirm', $btnAction.data("confirm") );
+
             if ( $btnAction.data( "confirm" ) )
             {
                 clearTimeout( confirmTimer );
@@ -3262,6 +3289,8 @@ function _competitionTimer (  )
                             _showAllView('successCard' + entityId );
 
                             _displayButtonsAccordingToStatus( $listItem, response.data, row );
+
+                            _loadActorDropdownAccordingToStatus( $listItem, response.data);
 
                         }
         });
@@ -4049,7 +4078,7 @@ function _competitionTimer (  )
                              .replace( /%entityId%/g,                    entityId                        ? entityId     : emptyVal )
                             .replace( /%bidxOwnerId%/g,                 bidxMeta.bidxOwnerId )
                             .replace( /%bidxOwnerDisplayName%/g,        bidxMeta.bidxOwnerDisplayName   ? bidxMeta.bidxOwnerDisplayName     : emptyVal )
-                            .replace( /%bidxRatingAverage%/g,           bidxMeta.bidxRatingAverage      ? bidxMeta.bidxRatingAverage     : emptyVal )
+                            .replace( /%bidxRatingAverage%/g,           bidxMeta.bidxRatingAverage      ? bidxMeta.bidxRatingAverage.toFixed(1)     : emptyVal )
                             .replace( /%bidxEntityDisplayName%/g,       bidxMeta.bidxEntityDisplayName  ? bidxMeta.bidxEntityDisplayName     : emptyVal )
                             ;
                     $listItem   =   $(listItem);
@@ -4063,7 +4092,7 @@ function _competitionTimer (  )
                         readOnly: true,
                         // TODO Arjan remove or translate?
                         hints:  ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent'],
-                        score:  bidxMeta.bidxRatingAverage
+                        score:  bidxMeta.bidxRatingAverage.toFixed(1)
 
                     });
 

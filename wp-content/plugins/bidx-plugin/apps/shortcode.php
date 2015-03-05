@@ -185,7 +185,7 @@ class BidxShortcode
     {
         $bidxJsDir          =   sprintf ('%s/../static/js',    BIDX_PLUGIN_URI);
         $vendorDir          =   sprintf ('%s/../static/vendor', BIDX_PLUGIN_URI);
-        $serverReferer      =   $_SERVER[ "HTTP_REFERER" ]; // To avoid in theme customization (iframe is detect here), dont load scripts and everything.
+        $serverReferer      =   ( isset ( $_SERVER[ "HTTP_REFERER" ] )) ? $_SERVER[ "HTTP_REFERER" ] : NULL ; // To avoid in theme customization (iframe is detect here), dont load scripts and everything.
 
         if (BidxCommon :: isWPInternalFunction () || is_super_admin() || preg_match ( '/customize.php/i', $serverReferer ) ) {
             Logger :: getLogger ('shortcode')->trace ('Skipping enqueueing because of admin.');
