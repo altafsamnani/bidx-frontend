@@ -292,6 +292,17 @@ if ( !empty( $attachment ) )
 <?php
         }
     }
+    else
+    {
+        ?>
+        <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+            <div class="alert alert-danger">
+                <strong><?php echo sprintf ( __('Competition is not active. Start date %1$s - End date %2$s ','bidxplugin'), $startDateTime, $endDateTime ); ?></strong>
+            </div>
+        </div>
+        </div>
+<?php }
 ?>
 
 
@@ -772,7 +783,7 @@ if ( !empty( $attachment ) )
         <div class=" cardHeader hide-overflow">
             <div class="info-cell pull-left"><?php echo _e( 'Score', 'bidxplugin' ); ?>: %bidxRatingCount%</div>
             <div class="info-cell pull-left"><?php echo _e( 'Applied on', 'bidxplugin' ); ?>: %created%</div>
-            <div class="info-cell pull-right cardStatus bg-success"><?php echo _e( 'Status', 'bidxplugin' ); ?>: %status%</div>
+            <div class="info-cell pull-right cardStatus bg-success"><?php echo _e( 'Status', 'bidxplugin' ); ?>: <span class='currentStatus'>%status%</span></div>
         </div>
         <div class="cardContent main-padding">
             <div class="cardHeader%entityId%">

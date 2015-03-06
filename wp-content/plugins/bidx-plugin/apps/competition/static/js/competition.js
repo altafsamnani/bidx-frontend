@@ -3411,6 +3411,7 @@ function _competitionTimer (  )
         ,   statusMsg
         ,   $cardEntity
         ,   $cardEntityHeader
+        ,   $cardHeaderStatus
         ,   status              = businessData.status
         ,   $setSubmit          = $listItem.find( ".set-submit")
         ,   $setWithdraw        = $listItem.find( ".set-withdraw")
@@ -3426,109 +3427,119 @@ function _competitionTimer (  )
 
         switch (status)
         {
-            case 'APPLIED' :
-                /* Change the button Label */
-/*                $setSubmit.i18nText("btnCompetitionSubmit", appName);
-                $setWithdraw.i18nText("btnCompetitionWithdraw", appName);*/
-
-                /* Change the data-status field of button */
-                $setSubmit.data('status', 'SUBMITTED');
-                $setWithdraw.data('status', 'WITHDRAWN');
-
-                _assignBtnAction(
-                {
-                    $btnAction: $setSubmit
-                ,   action:     'submit'
-                ,   success:   function( response )
-                                {
-                                    entityId            = response.data.id;
-                                    status              = response.data.status;
-                                    $cardEntityHeader   = $element.find('.cardHeader' + entityId);
-                                    $setSubmit.addClass("hide");
-
-                                    successMsg = bidx.i18n.i('SUCCESS_SUBMITTED' ,appName);
-
-                                    statusMsg = snippetSuccess
-                                                .replace( /%successMsg%/g, successMsg)
-                                                .replace( /%entityId%/g, entityId);
-
-                                    $cardEntityHeader.empty().append($(statusMsg));
-
-                                    //$successLabel.empty().i18nText('successSubmitted', appName);
-                                    $cardInfoText.i18nText('withdrawText', appName);
-
-                                    _showAllView('successCard' + entityId );
-                                }
-                });
-
-                _assignBtnAction(
-                {
-                    $btnAction: $setWithdraw
-                ,   action:     'withdraw'
-                ,   success:   function( response )
-                                {
-                                    entityId            = response.data.id;
-                                    status              = response.data.status;
-                                    $cardEntityHeader   = $element.find('.cardHeader' + entityId);
-
-                                     successMsg = bidx.i18n.i('SUCCESS_WITHDRAWN' ,appName);
-
-                                    statusMsg = snippetDanger
-                                                .replace( /%successMsg%/g, successMsg)
-                                                .replace( /%entityId%/g, entityId);
-
-                                    $cardEntityHeader.empty().append($(statusMsg));
-
-                                    $cardFooter.addClass('hide');
-
-                                }
-                });
-
+            case 'WITHDRAWN':
 
                 /*Show buttons*/
                 $cardInfoText.i18nText('submitText', appName);
+
                 $setSubmit.removeClass('hide');
+
+                $cardFooter.removeClass('hide');
+
+                break;
+
+            case 'APPLIED' :
+
+                /*Show buttons*/
+                $cardInfoText.i18nText('submitText', appName);
+
+                $setSubmit.removeClass('hide');
+
                 $setWithdraw.removeClass('hide');
+
                 $cardFooter.removeClass('hide');
 
             break;
 
             case  'SUBMITTED' :
-                /* Change the button Label */
-        /*        $setWithdraw.i18nText("btnCompetitionWithdraw", appName);*/
 
-                /* Change the data-status field of button */
-                $setWithdraw.data('status', 'WITHDRAWN');
-
-                _assignBtnAction(
-                {
-                    $btnAction: $setWithdraw
-                ,   action:     'withdraw'
-                ,   success:   function( response )
-                                {
-                                    entityId            = response.data.id;
-                                    status              = response.data.status;
-                                    $cardEntityHeader   = $element.find('.cardHeader' + entityId);
-
-                                     successMsg = bidx.i18n.i('SUCCESS_WITHDRAWN' ,appName);
-
-                                    statusMsg = snippetDanger
-                                                .replace( /%successMsg%/g, successMsg)
-                                                .replace( /%entityId%/g, entityId);
-
-                                    $cardEntityHeader.empty().append($(statusMsg));
-
-                                    $cardFooter.addClass('hide');
-                                }
-                });
-
-                /*Show buttons*/
+                 /*Show buttons*/
                 $cardInfoText.i18nText('withdrawText', appName);
+
                 $setWithdraw.removeClass('hide');
+
                 $cardFooter.removeClass('hide');
 
             break;
         }
+
+        /* Its written outside switch case and true for all cases because we are toggling buttons according to status and reusing same action buttons again so */
+
+        /* Change the data-status field of button */
+        $setSubmit.data('status', 'SUBMITTED');
+
+        _assignBtnAction(
+        {
+            $btnAction: $setSubmit
+        ,   action:     'submit'
+        ,   success:   function( response )
+                        {
+                            entityId            = response.data.id;
+                            status              = response.data.status;
+                            $cardEntity         = $element.find('.cardEntity' + entityId);
+                            $cardEntityHeader   = $element.find('.cardHeader' + entityId);
+                            $cardHeaderStatus   = $cardEntity.find('.currentStatus');
+
+                            successMsg = bidx.i18n.i('SUCCESS_SUBMITTED' ,appName);
+
+                            statusMsg = snippetSuccess
+                                        .replace( /%successMsg%/g, successMsg)
+                                        .replace( /%entityId%/g, entityId);
+
+                            $cardEntityHeader.empty().append($(statusMsg));
+
+                            //$successLabel.empty().i18nText('successSubmitted', appName);
+                            $setSubmit.addClass("hide");
+
+                            $setWithdraw.removeClass("hide");
+
+                            $cardInfoText.i18nText('withdrawText', appName);
+
+                             bidx.utils.log('$cardHeaderStatus', $cardHeaderStatus);
+
+                            $cardHeaderStatus.i18nText(status, appName);
+
+                            _showAllView('successCard' + entityId );
+                        }
+        });
+
+        /* Change the data-status field of button */
+        $setWithdraw.data('status', 'WITHDRAWN');
+
+        _assignBtnAction(
+        {
+            $btnAction: $setWithdraw
+        ,   action:     'withdraw'
+        ,   success:   function( response )
+                        {
+                            entityId            = response.data.id;
+                            status              = response.data.status;
+                            $cardEntity         = $element.find('.cardEntity' + entityId);
+                            $cardEntityHeader   = $element.find('.cardHeader' + entityId);
+                            $cardHeaderStatus   = $cardEntity.find('.currentStatus');
+
+                            successMsg = bidx.i18n.i('SUCCESS_WITHDRAWN' ,appName);
+
+                            statusMsg = snippetDanger
+                                        .replace( /%errorMsg%/g, successMsg)
+                                        .replace( /%entityId%/g, entityId);
+
+                            $cardEntityHeader.empty().append($(statusMsg));
+
+                            $setSubmit.removeClass("hide");
+
+                            $setWithdraw.addClass("hide");
+
+                            $cardInfoText.i18nText('submitText', appName);
+
+                            bidx.utils.log('$cardHeaderStatus', $cardHeaderStatus);
+
+                            $cardHeaderStatus.i18nText(status, appName);
+
+                             _showAllView('successCard' + entityId );
+
+                        }
+        });
     }
 
     function _updateActorsToApplications( options )
