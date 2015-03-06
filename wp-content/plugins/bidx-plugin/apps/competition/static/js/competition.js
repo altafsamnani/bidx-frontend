@@ -1282,7 +1282,7 @@ function _addReview( review )
                     .replace ( /%recommendationTitle%/g,        bidx.i18n.i( 'assessorRecommendation', appName) )
                     .replace( /%userDisplayName%/g,             review.userDisplayName )
                     .replace( /%reviewRating%/g,                (reviewRating) ? reviewRating : 0)
-                    .replace( /%competitionRecommendation%/g,   (competitionRecommendation) ? competitionRecommendation : bidx.i18n.i( 'statusPending' ) )
+                    .replace( /%competitionRecommendation%/g,   (competitionRecommendation) ? bidx.i18n.i(competitionRecommendation, appName) : bidx.i18n.i( 'statusPending' ) )
                     .replace( /%comment%/g,                     (comment) ? comment : bidx.i18n.i( 'commentPending', appName ) )
                     .replace( /%warningClass%/g,                (!competitionRecommendation) ? 'bg-warning' : '')
                     ;
@@ -1445,36 +1445,6 @@ function format ( data, row )
                 $wrapperJudge           =   $listItem.find('.wrapper-recommend-judge-' + data.entityId);
                 $wrapperJudge.removeClass('hide');
             }
-
-            /*if( status === 'SUBMITTED' )
-            {
-                /* Assign Next Action According to Role
-                data.role      =   'COMPETITION_ADMIN';
-                data.action    =   'finalist';
-                _assignAssessorJudgeActions(
-                {
-                    $listItem:  $listItem
-                ,   review:     isAdminAssessorReview
-                ,   data:       data
-                ,   row:        row
-                });
-            }
-
-            if( status === 'FINALIST' )
-            {
-                /* Assign Next Action According to Role
-                data.role      =   'COMPETITION_ADMIN';
-                data.action    =   'winner';
-                _assignAssessorJudgeActions(
-                {
-                    $listItem:  $listItem
-                ,   review:     isAdminJudgeReview
-                ,   data:       data
-                ,   row:        row
-                });
-            }*/
-
-
 
             break;
 
@@ -2679,35 +2649,72 @@ function _competitionTimer (  )
     {
         var status              = data.status
         ,   entityId            = data.entityId
-        ,   $radioQualification = $listItem.find( "[name='isqualification" + entityId + "']" )
-        ,   $wrapperFinalist        = $listItem.find( ".wrapper-finalist-" + entityId )
-        ,   $wrapperWinner          = $listItem.find( ".wrapper-winner-" + entityId )
         ;
 
-        $radioQualification.change( function( e )
+        switch ( status )
         {
-            e.preventDefault();
+            case 'APPLIED'   :
+            case 'WITHDRAWN' :
+            case 'REJECTED'  :
 
-            var $this           = $(this)
-            ,   qualVal         = bidx.utils.getElementValue( $this )
-            ,   $rejectSet      = $listItem.find( ".reject-set-" + entityId  )
-            ,   $submitSet      = $listItem.find( ".set-submit-" + entityId  )
-            ;
+                var $radioQualification = $listItem.find( "[name='isqualification" + entityId + "']" )
+                ;
 
-            if( qualVal === 'REJECTED' )
-            {
-                $rejectSet.removeClass('hide');
-                $submitSet.addClass('hide');
+                $radioQualification.change( function( e )
+                {
+                    e.preventDefault();
 
-                /*Show buttons*/
-            }
-            else if( qualVal === 'SUBMITTED')
-            {
-                $submitSet.removeClass('hide');
-                $rejectSet.addClass('hide');
-            }
+                    var $this           = $(this)
+                    ,   qualVal         = bidx.utils.getElementValue( $this )
+                    ,   $rejectSet      = $listItem.find( ".reject-set-" + entityId  )
+                    ,   $submitSet      = $listItem.find( ".set-submit-" + entityId  )
+                    ;
 
-        });
+                    if( qualVal === 'REJECTED' )
+                    {
+                        $rejectSet.removeClass('hide');
+                        $submitSet.addClass('hide');
+
+                        /*Show buttons*/
+                    }
+                    else if( qualVal === 'SUBMITTED')
+                    {
+                        $submitSet.removeClass('hide');
+                        $rejectSet.addClass('hide');
+                    }
+
+                });
+
+            break;
+
+            case 'SUBMITTED' :
+            case 'FINALIST'  :
+
+                var lCaseStatus =   data.action
+                ,   $wrapper    =   $listItem.find( '.wrapper-recommend-' + lCaseStatus + '-' + entityId )
+                ,   $radio      =   $listItem.find( "[name='recommend-" + lCaseStatus + '-' + entityId + "']" )
+                ;
+
+                bidx.utils.log('radio', $radio);
+                $radio.change( function( e )
+                {
+                    e.preventDefault();
+
+                    var $this           = $(this)
+                    ,   qualVal         = bidx.utils.getElementValue( $this )
+                    ,   $ratingSet      = $wrapper.find( ".rating-wrapper" )
+                    ,   $commentSet     = $wrapper.find( ".comment-wrapper" )
+                    ,   $buttonSet      = $wrapper.find( ".set-wrapper"  )
+                    ;
+
+                    $ratingSet.removeClass('hide');
+                    $commentSet.removeClass('hide');
+                    $buttonSet.removeClass('hide');
+
+                });
+
+            break;
+        }
     }
 
     function _displayButtonsAccordingToStatus( $listItem, data, row, review)
@@ -2715,42 +2722,44 @@ function _competitionTimer (  )
         var displayQual
         ,   displayFinalist
         ,   displayWinner
-        ,   status                  = data.status
-        ,   entityId                = data.entityId
-        ,   $radioFinalist          = $listItem.find( "[name='isfinalist" + entityId + "']" )
-        ,   $radioWinner            = $listItem.find( "[name='iswinner" + entityId+ "']" )
-        ,   $radioQualification     = $listItem.find( "[name='isqualification" + entityId + "']" )
-        ,   $setSubmit              = $listItem.find( ".set-submit-" + entityId )
-        ,   $setQual                = $listItem.find( ".set-qualification-" + entityId )
-        ,   $setFinalist            = $listItem.find( ".set-finalist-" + entityId )
-        ,   $setWinner              = $listItem.find( ".set-winner-" + entityId )
-        ,   $wrapperFinalist        = $listItem.find( ".wrapper-finalist-" + entityId )
-        ,   $wrapperWinner          = $listItem.find( ".wrapper-winner-" + entityId )
-        ,   $wrapperQualification   = $listItem.find( ".wrapper-qualification-" + entityId )
-        ,   $rejectComment          = $listItem.find( "[name='reject-comment-" + entityId + "']" )
+        ,   status                  =   data.status
+        ,   entityId                =   data.entityId
+        ,   $radioFinalist          =   $listItem.find( "[name='isfinalist" + entityId + "']" )
+        ,   $radioWinner            =   $listItem.find( "[name='iswinner" + entityId+ "']" )
+        ,   $radioQualification     =   $listItem.find( "[name='isqualification" + entityId + "']" )
+        ,   $setSubmit              =   $listItem.find( ".set-submit-" + entityId )
+        ,   $setQual                =   $listItem.find( ".set-qualification-" + entityId )
+        ,   $setFinalist            =   $listItem.find( ".set-finalist-" + entityId )
+        ,   $setWinner              =   $listItem.find( ".set-winner-" + entityId )
+        ,   $wrapperFinalist        =   $listItem.find( ".wrapper-finalist-" + entityId )
+        ,   $wrapperWinner          =   $listItem.find( ".wrapper-winner-" + entityId )
+        ,   $wrapperQualification   =   $listItem.find( ".wrapper-qualification-" + entityId )
+        ,   $rejectComment          =   $listItem.find( "[name='reject-comment-" + entityId + "']" )
+        ,   assessorLength          =   _.size(updateActorsList['assessors'])
         ;
 
         switch(status)
         {
             case 'APPLIED':
-                displayQual         = true;
+            case 'WITHDRAWN':
+
                 _assignRadioActions( $listItem, data );
                 $wrapperQualification.removeClass('hide');
 
             break;
             case 'SUBMITTED':
                 var isAdminAssessorReview   =   bidx.utils.getValue( review, 'isAdminAssessorReview')
-                ,   $assignAssessor         =  $listItem.find('.assign-assessor')
+                ,   $wrapperAssessor        =   $listItem.find( ".assign-assessor" )
                 ;
 
-                displayQual         = true;
-                displayFinalist     = true;
-                bidx.utils.setElementValue( $radioQualification, status );
-                _assignRadioActions( $listItem, data );
-                $wrapperQualification.addClass('hide');
-                $assignAssessor.removeClass('hide');
-                //$wrapperFinalist.removeClass('hide');
+                //bidx.utils.setElementValue( $radioQualification, status );
 
+                //$wrapperQualification.addClass('hide');
+
+                if(assessorLength) // If there are assessor then show the dropdown
+                {
+                    $wrapperAssessor.removeClass('hide');
+                }
                 /* Assign Next Action According to Role */
                 data.role      =   'COMPETITION_ADMIN';
                 data.action    =   'finalist';
@@ -2767,7 +2776,6 @@ function _competitionTimer (  )
 
             case 'REJECTED':
 
-                displayQual         = true;
                 bidx.utils.setElementValue( $radioQualification, status );
                 _assignRadioActions( $listItem, data );
                 //$rejectComment.removeClass('hide');
@@ -2778,7 +2786,9 @@ function _competitionTimer (  )
             case 'FINALIST':
                 var isAdminJudgeReview   =   bidx.utils.getValue( review, 'isAdminJudgeReview')
                 ;
-                displayWinner      = true;
+
+
+
                 /* Assign Next Action According to Role */
                 data.role      =   'COMPETITION_ADMIN';
                 data.action    =   'winner';
@@ -2796,7 +2806,6 @@ function _competitionTimer (  )
 
             case 'NOT_FINALIST':
 
-                displayFinalist    = true;
                 bidx.utils.setElementValue( $radioFinalist , status );
                //$wrapperFinalist.removeClass('hide');
 
@@ -2804,15 +2813,13 @@ function _competitionTimer (  )
 
             case 'WINNER':
 
-                displayWinner      = true;
                 bidx.utils.setElementValue( $radioWinner, status );
                // $wrapperWinner.removeClass('hide');
 
             break;
 
             case 'NOT_WINNER':
-                displayFinalist    = true;
-                displayWinner      = true;
+
                 bidx.utils.setElementValue( $radioWinner, status );
                // $wrapperFinalist.removeClass('hide');
                // $wrapperWinner.removeClass('hide');
@@ -2833,9 +2840,9 @@ function _competitionTimer (  )
         ,   assessorList            =   []
         ,   judgeList               =   []
         ,   assessorReviewsList     =   []
-        ,   assignedAssessorsIdList  =   []
+        ,   assignedAssessorsIdList =   []
         ,   judgeReviewsList        =   []
-        ,   assignedJudgesIdList  =   []
+        ,   assignedJudgesIdList    =   []
         ,   status                  =   data.status
         ,   entityId                =   data.entityId
         ,   snippetSuccess          =   $("#success-card").html().replace(/(<!--)*(-->)*/g, "")
@@ -2853,15 +2860,16 @@ function _competitionTimer (  )
 
         if(status === 'SUBMITTED')
         {
-            /* Assessor Dropdown */
-            $assessors.chosen(
-            {
-                placeholder_text_single : bidx.i18n.i( "Loading" )
-            ,   width                   : "100%"
-            });
 
             if( assessorLength )
             {
+                /* Assessor Dropdown */
+                $assessors.chosen(
+                {
+                    placeholder_text_single : bidx.i18n.i( "Loading" )
+                ,   width                   : "100%"
+                });
+
                 $.each( actorIdList['assessors'], function( idx, actorObject )
                 {
                     actorId      =   actorObject.actorId;
@@ -2916,15 +2924,16 @@ function _competitionTimer (  )
 
         if( status === 'FINALIST' )
         {
-            /* Judge Dropdown */
-            $judges.chosen(
-            {
-                placeholder_text_single : bidx.i18n.i( "Loading" )
-            ,   width                   : "100%"
-            });
 
             if( judgeLength )
             {
+                /* Judge Dropdown */
+                $judges.chosen(
+                {
+                    placeholder_text_single : bidx.i18n.i( "Loading" )
+                ,   width                   : "100%"
+                });
+
                 $.each( actorIdList['judges'], function( idx, actorObject )
                 {
                     actorId      =   actorObject.actorId;
@@ -3010,11 +3019,22 @@ function _competitionTimer (  )
         ,   snippetSuccess              = $("#success-card").html().replace(/(<!--)*(-->)*/g, "")
         ;
 
+
+
         if( recommendation )
         {
-            radioName           =   'recommend-' + action + '-' + entityId;
-            $radio              =   $listItem.find( "[name=" + radioName + "]" );
+            radioName       =   'recommend-' + action + '-' + entityId;
+            $radio          =   $listItem.find( "[name=" + radioName + "]" );
             bidx.utils.setElementValue( $radio, recommendation ); // Finalist/Winner Recommendation value ex Finalist/Not Finalist/Winner/Not Winner
+
+            /* Remove hide classes if its recommended already */
+            $wrapper.find('.rating-wrapper').removeClass('hide');
+            $wrapper.find('.comment-wrapper').removeClass('hide');
+            $wrapper.find('.set-wrapper').removeClass('hide');
+        }
+        else
+        {
+            _assignRadioActions( $listItem, data );
         }
 
         if( commentText )
@@ -3257,12 +3277,13 @@ function _competitionTimer (  )
 
     function _assignManagerActions( $listItem, data, row, review )
     {
-        var successMsg
+        var d
+        ,   successMsg
         ,   errorMsg
         ,   statusMsg
         ,   rejectOptions
         ,   reviewItem
-
+        ,   rowStatus
         ,   $cardEntity
         ,   $wrapperRecommendation
         ,   status                      =   data.status
@@ -3297,7 +3318,13 @@ function _competitionTimer (  )
 
                             status      = response.data.status;
 
-                            row.cell(row[0],4).data(status);
+                            rowStatus   =   bidx.i18n.i(status, appName);
+
+                            //row.cell(row[0],4).data(rowStatus);
+                            d           =   row.data();
+                            d.state     =   rowStatus;
+                            d.status    =   status;
+                            row.data(d);
 
                             successMsg = bidx.i18n.i('SUCCESS_' + status ,appName);
 
