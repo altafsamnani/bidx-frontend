@@ -1794,7 +1794,7 @@ function _updateAttachment( $attachment, attachment )
     ,   deletedDoc          = false
     ;
 
-    if ( !attachment.bidxMeta.bidxbusinessPlanEntityId )
+    if ( !attachment.bidxMeta.bidxUploadId )
     {
         bidx.utils.warn( "competitionSummary::_updateAttachment: attachment has been deleted!" );
         deletedDoc = true;
