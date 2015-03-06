@@ -7,6 +7,7 @@
     ,   applicationObj
     ,   actorsObj
     ,   competitionBidxMeta
+    ,   table
 
     ,   $element                    = $( "#competitionSummary" )
     ,   $snippets                   = $element.find( ".snippets" )
@@ -1582,7 +1583,6 @@ function _initApplicationsView( )
     ,   entrepreneur
     ,   rating
     ,   reviews
-    ,   table
     ,   entrepreneurData
     ,   businessData
     ,   entityId
@@ -1620,6 +1620,7 @@ function _initApplicationsView( )
                                         business:       businessData
                                     ,   entrepreneur:   entrepreneurData
                                     ,   rating:         (rating) ? rating.toFixed(1) : 0
+                                    ,   state:          bidx.i18n.i(response.status, appName)
                                     ,   status:         response.status
                                     ,   entityId:       entityId
                                     ,   reviews:        response.reviews
@@ -1637,12 +1638,14 @@ function _initApplicationsView( )
         table = $('.viewApplications').DataTable(
         {
             "bPaginate": true
-        ,    aLengthMenu: [
+        ,    aLengthMenu:
+            [
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, "All"]
             ]
         ,   "data":     data
-        ,   "columns": [
+        ,   "columns":
+            [
                 {
                     "className":      'details-control',
                     "orderable":      false,
@@ -1652,9 +1655,9 @@ function _initApplicationsView( )
                 { "data": "business" },
                 { "data": "entrepreneur" },
                 { "data": "rating" },
-                { "data": "status" }
+                { "data": "state" }
             ]
-        ,   "order": [[1, 'asc']]
+        ,   "order": [ [1, 'asc'] ]
         ,   "fnRowCallback": function( nRow, aData, iDisplayIndex )
             {
                 nRow.className = 'competitionRecord ' + aData.status;
@@ -1663,22 +1666,30 @@ function _initApplicationsView( )
         } );
 
         // Add event listener for opening and closing details
-        $('.viewApplications tbody').on('click', 'td.details-control', function ()
+        $('.viewApplications tbody').on('click', 'td.details-control', function ( )
         {
-            var tr = $(this).closest('tr');
-            var row = table.row( tr );
+            var tr = $(this).closest('tr')
+            ,   row = table.row( tr )
+            ;
 
-            if ( row.child.isShown() ) {
+            if ( row.child.isShown() )
+            {
                 // This row is already open - close it
                 row.child.hide();
+
                 tr.removeClass('shown');
+
                 tr.next().removeClass('extrapanel');
+
                 $(this).find('.fa').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
             }
-            else {
+            else
+            {
                 // Open this row
                 row.child( format(row.data(), row ) ).show();
+
                 tr.addClass('shown');
+
                 if ( tr.hasClass( "withdrawn" ) )
                 {
                     tr.next().addClass('extrapanel withdrawn');
@@ -2977,6 +2988,7 @@ function _competitionTimer (  )
         ,   statusMsg
         ,   successMsg
         ,   status
+        ,   recommendationStatus
         ,   review                      =   options.review
         ,   $listItem                   =   options.$listItem
         ,   data                        =   options.data
@@ -3047,9 +3059,13 @@ function _competitionTimer (  )
                                                     ,   $wrapperRecommendation  =   $listItem.find( ".wrapper-recommend-" + role +"-" + entityId )
                                                     ;
 
-                                                    status      = recommData.competitionRecommendation;
+                                                    recommendationStatus        =   recommData.competitionRecommendation;
 
-                                                    successMsg = bidx.i18n.i('RECOMM_' + status ,appName);
+                                                    status                      =   recommData.status;
+
+                                                    row.cell(row[0],4).data(status);
+
+                                                    successMsg = bidx.i18n.i('RECOMM_' + recommendationStatus ,appName);
 
                                                     statusMsg = snippetSuccess
                                                                 .replace( /%successMsg%/g, successMsg)
@@ -3132,6 +3148,7 @@ function _competitionTimer (  )
             {
                 radioName               =   'isqualification' + businessPlanEntityId;
                 commentName             =   'reject-comment-' + businessPlanEntityId;
+
             }
             else
             {
@@ -3141,6 +3158,8 @@ function _competitionTimer (  )
                 ratingClass             =  ".raty-" + action + '-' + businessPlanEntityId;
                 $raty                   =   $ratingWrapper.find( ratingClass );
                 rating                  =   $raty.data( 'rating' );
+
+                 orgText                 = $btnAction.text();  // We dont  need are you sure option for other than reject so
             }
 
 
@@ -3178,7 +3197,7 @@ function _competitionTimer (  )
 
             }
 
-            if ( $btnAction.data( "confirm" ) )
+            if ( $btnAction.data( "confirm" ) || action !== 'reject')
             {
                 clearTimeout( confirmTimer );
 
@@ -3275,8 +3294,11 @@ function _competitionTimer (  )
         ,   success:   function( response )
                         {
                             entityId    = response.data.id;
+
                             status      = response.data.status;
+
                             row.cell(row[0],4).data(status);
+
                             successMsg = bidx.i18n.i('SUCCESS_' + status ,appName);
 
                             statusMsg = snippetSuccess
@@ -3309,12 +3331,28 @@ function _competitionTimer (  )
             options:    rejectOptions
         ,   success:   function( recommData )
                         {
-                            var $recommendContainer  = $listItem.find('recommend-' + recommData.id)
+                            var recommendationStatus
+                            ,   rowStatus
+                            ,   d                       =   row.data( )
+                            ,   reviews                 =   []
+                            ,   extendD                 =   { }
+                            ,   $recommendContainer     =   $listItem.find('recommend-' + recommData.id)
                             ,   $roleRecommendation     =   $listItem.find( ".assessor-recommendation-" + entityId )
                             ;
-                            status      =   recommData.competitionRecommendation;
 
-                            errorMsg    =   bidx.i18n.i('RECOMM_' + status ,appName);
+                            recommendationStatus        =   recommData.competitionRecommendation;
+
+                            rowStatus                   =   bidx.i18n.i(recommData.competitionRecommendation, appName);
+
+                            //row.cell(row[0],4).data(rowStatus);
+
+                            d.state                     =   rowStatus;
+                            d.status                    =   recommendationStatus;
+                            d.reviews.push( recommData );
+
+                            row.data(d);
+
+                            errorMsg    =   bidx.i18n.i('RECOMM_' + recommendationStatus ,appName);
 
                             statusMsg   =   snippetError
                                             .replace( /%errorMsg%/g, errorMsg)
@@ -3326,6 +3364,7 @@ function _competitionTimer (  )
                             _showAllView('errorCard' + entityId );
 
                             recommData.status       =   recommData.competitionRecommendation;
+
                             recommData.entityId     =   entityId;
 
                             _displayButtonsAccordingToStatus( $listItem, recommData, row );
@@ -3342,6 +3381,7 @@ function _competitionTimer (  )
                             }
 
                             $wrapperRecommendation       =   $listItem.find( ".wrapper-recommend-assessor-" + entityId );
+
                             $wrapperRecommendation.removeClass('hide');
 
                         }
@@ -3413,6 +3453,7 @@ function _competitionTimer (  )
         ,   $cardEntityHeader
         ,   $cardHeaderStatus
         ,   status              = businessData.status
+        ,   $setApply           = $listItem.find( ".set-apply")
         ,   $setSubmit          = $listItem.find( ".set-submit")
         ,   $setWithdraw        = $listItem.find( ".set-withdraw")
         ,   $cardInfoText       = $listItem.find( ".cardInfoText")
@@ -3430,9 +3471,9 @@ function _competitionTimer (  )
             case 'WITHDRAWN':
 
                 /*Show buttons*/
-                $cardInfoText.i18nText('submitText', appName);
+                $cardInfoText.i18nText('applyText', appName);
 
-                $setSubmit.removeClass('hide');
+                $setApply.removeClass('hide');
 
                 $cardFooter.removeClass('hide');
 
@@ -3442,6 +3483,8 @@ function _competitionTimer (  )
 
                 /*Show buttons*/
                 $cardInfoText.i18nText('submitText', appName);
+
+                $setApply.addClass('hide');
 
                 $setSubmit.removeClass('hide');
 
@@ -3456,6 +3499,8 @@ function _competitionTimer (  )
                  /*Show buttons*/
                 $cardInfoText.i18nText('withdrawText', appName);
 
+                $setApply.addClass('hide');
+
                 $setWithdraw.removeClass('hide');
 
                 $cardFooter.removeClass('hide');
@@ -3464,6 +3509,45 @@ function _competitionTimer (  )
         }
 
         /* Its written outside switch case and true for all cases because we are toggling buttons according to status and reusing same action buttons again so */
+
+        /* Change the data-status field of button */
+        $setApply.data('status', 'APPLIED');
+
+        _assignBtnAction(
+        {
+            $btnAction: $setApply
+        ,   action:     'apply'
+        ,   success:   function( response )
+                        {
+                            entityId            = response.data.id;
+                            status              = response.data.status;
+                            $cardEntity         = $element.find('.cardEntity' + entityId);
+                            $cardEntityHeader   = $element.find('.cardHeader' + entityId);
+                            $cardHeaderStatus   = $cardEntity.find('.currentStatus');
+
+                            successMsg = bidx.i18n.i('SUCCESS_APPLIED' ,appName);
+
+                            statusMsg = snippetSuccess
+                                        .replace( /%successMsg%/g, successMsg)
+                                        .replace( /%entityId%/g, entityId);
+
+                            $cardEntityHeader.empty().append($(statusMsg));
+
+                            $setApply.addClass('hide');
+
+                            $setSubmit.removeClass("hide");
+
+                            $setWithdraw.removeClass("hide");
+
+                            $cardInfoText.i18nText('submitText', appName);
+
+                            $cardHeaderStatus.i18nText(status, appName);
+
+                             _showAllView('successCard' + entityId );
+
+                        }
+        });
+
 
         /* Change the data-status field of button */
         $setSubmit.data('status', 'SUBMITTED');
@@ -3495,8 +3579,6 @@ function _competitionTimer (  )
 
                             $cardInfoText.i18nText('withdrawText', appName);
 
-                             bidx.utils.log('$cardHeaderStatus', $cardHeaderStatus);
-
                             $cardHeaderStatus.i18nText(status, appName);
 
                             _showAllView('successCard' + entityId );
@@ -3526,17 +3608,17 @@ function _competitionTimer (  )
 
                             $cardEntityHeader.empty().append($(statusMsg));
 
-                            $setSubmit.removeClass("hide");
+                            $setApply.removeClass('hide');
 
                             $setWithdraw.addClass("hide");
 
-                            $cardInfoText.i18nText('submitText', appName);
+                            $setSubmit.addClass("hide");
 
-                            bidx.utils.log('$cardHeaderStatus', $cardHeaderStatus);
+                            $cardInfoText.i18nText('submitText', appName);
 
                             $cardHeaderStatus.i18nText(status, appName);
 
-                             _showAllView('successCard' + entityId );
+                            _showAllView('successCard' + entityId );
 
                         }
         });
@@ -3842,24 +3924,38 @@ function _competitionTimer (  )
             switch( action )
             {
                 case 'apply' :
-                businessPlanEntityId    =   $businessSummary.val(); // for First time Particpate/Applied Button
+
+                btnEntityId             =   $btnAction.data( "entityid" ); // For Submit/Withdraw buttons
+
+                businessPlanEntityId    =   (btnEntityId) ? btnEntityId : $businessSummary.val(); // for First time Particpate/Applied Button , next time from card apply button
+
                 status                  =   $btnAction.data( "status" );
+
                 break;
 
                 case'submit':
                 case 'withdraw':
+
                 btnEntityId             =   $btnAction.data( "entityid" ); // For Submit/Withdraw buttons
+
                 businessPlanEntityId    =   btnEntityId;
+
                 status                  =   $btnAction.data( "status" );
+
                 break;
 
                 case 'finalist':
                 case 'winner':
                 case 'qualification':
+
                 businessPlanEntityId    =   $btnAction.data( "entityid" );
+
                 radioName               =   'is' + action + businessPlanEntityId;
+
                 $radio                  =   $element.find( "[name=" + radioName + "]" );
+
                 status                  =   bidx.utils.getElementValue( $radio ); // for First time Particpate/Applied Button
+
                 break;
             }
 
