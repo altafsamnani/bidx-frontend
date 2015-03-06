@@ -1980,10 +1980,10 @@
                     }
                 } );
             }
-
+            bidx.utils.log('attachment', attachment);
             $.each( attachment, function( idx, a )
             {
-                if ( $.inArray( a.fileUpload.toString(), attachmentExists ) === -1 )
+                if ( a.fileUpload && $.inArray( a.fileUpload.toString(), attachmentExists ) === -1 )
                 {
                     _addAttachment( a );
                 }
