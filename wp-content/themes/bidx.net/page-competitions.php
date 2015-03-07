@@ -1,14 +1,45 @@
 <?php
-/*
- Template Name: Competitions overview template
-*/
 
 get_header(); ?>
 
 <section id="page-title-wrapper" class="page-title-wrapper pattern-1 service">
     <div class="container">
-        <?php edit_post_link('<small>Edit Our Team page</small>','',''); ?>
+        <?php edit_post_link('<small>Edit</small>','',''); ?>
         <h1><?php the_title(); ?></h1>
+    </div>
+</section>
+<section class="free-trial">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="service">
+                    <div class="trial-title"><?php _e('Requires a Portal Package','bidxtheme');?></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="service">
+                    <div class="trial-title small"><?php _e('Easy and Simple','bidxtheme');?></div>
+                    <div class="trial-sub"><?php _e('Monthly $299 - Annually $1.999','bidxtheme');?></div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="service">
+                    <div class="trial-title small"><?php _e('Extensive and Detailed','bidxtheme');?></div>
+                    <div class="trial-sub"><?php _e('Annually $9.999','bidxtheme');?></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="service">
+                    <a href="/get-started" class="btn btn-flat flat-warning"><?php _e('I want to try','bidxtheme');?></a>
+                    <a href="/pricing" class="btn btn-flat flat-warning"><?php _e('All Packages','bidxtheme');?></a>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
     </div>
 </section>
 
@@ -36,8 +67,8 @@ get_header(); ?>
             <h2>
                 <?php echo _e('Contact us to get started', 'bidxtheme'); ?>
             </h2>
-            <a href="/contact" type="button" class="btn btn-flat flat-warning btn-lg"><?php echo _e('Contact Us', 'bidxtheme'); ?></a>
-            <a href="/pricing" class="btn btn-flat btn-lg flat-primary"><?php echo _e('Pricing', 'bidxtheme'); ?></a>
+            <a href="/get-started" type="button" class="btn btn-flat flat-warning btn-lg"><?php echo _e('Get Started', 'bidxtheme'); ?></a>
+            <a href="/pricing" class="btn btn-flat btn-lg flat-primary"><?php echo _e('All Packages', 'bidxtheme'); ?></a>
         </div>
     </div>
 </section>

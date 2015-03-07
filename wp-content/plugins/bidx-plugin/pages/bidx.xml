@@ -120,7 +120,6 @@
             <mapping>(.*)media</mapping>
             <content>[bidx app="media"]</content>
         </post>
-
         <post>
             <post_id>18</post_id>
             <name>businesssummary</name>
@@ -128,7 +127,6 @@
             <mapping>(.*)businesssummary</mapping>
             <content>[bidx app="businesssummary"]</content>
         </post>
-
         <post>
             <post_id>19</post_id>
             <name>login</name>
@@ -212,6 +210,13 @@
             <title>Join</title>
             <mapping>(.*)join</mapping>
             <content>[bidx app="auth" view="join"]</content>
+        </post>
+        <post>
+            <post_id>31</post_id>
+            <name>competition</name>
+            <title>Competition</title>
+            <mapping>(.*)competition</mapping>
+            <content>[bidx app="competition"]</content>
         </post>
     </posts>
 

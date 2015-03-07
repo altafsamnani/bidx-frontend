@@ -185,7 +185,7 @@ class BidxShortcode
     {
         $bidxJsDir          =   sprintf ('%s/../static/js',    BIDX_PLUGIN_URI);
         $vendorDir          =   sprintf ('%s/../static/vendor', BIDX_PLUGIN_URI);
-        $serverReferer      =   $_SERVER[ "HTTP_REFERER" ]; // To avoid in theme customization (iframe is detect here), dont load scripts and everything.
+        $serverReferer      =   ( isset ( $_SERVER[ "HTTP_REFERER" ] )) ? $_SERVER[ "HTTP_REFERER" ] : NULL ; // To avoid in theme customization (iframe is detect here), dont load scripts and everything.
 
         if (BidxCommon :: isWPInternalFunction () || is_super_admin() || preg_match ( '/customize.php/i', $serverReferer ) ) {
             Logger :: getLogger ('shortcode')->trace ('Skipping enqueueing because of admin.');
@@ -207,9 +207,18 @@ class BidxShortcode
             {
                 wp_register_script ('bootstrap-datepicker-main', $vendorDir . "/bootstrap-datepicker-1.3.0-rc.2/js/bootstrap-datepicker.js", array ('bootstrap', 'jquery'), '1.3.0-rc.2', TRUE);
                 wp_register_script ('bootstrap-datepicker', $vendorDir . "/bootstrap-datepicker-1.3.0-rc.2/js/locales/bootstrap-datepicker.{$langLocale}.js", array ('bootstrap-datepicker-main'), '1.3.0-rc.2', TRUE);
+
+                wp_register_script ('bootstrap-datetimepicker-main', $vendorDir . "/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js", array ('bootstrap', 'jquery'), '1', TRUE);
+                wp_register_script ('bootstrap-datetimepicker', $vendorDir . "/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.{$langLocale}.js", array ('bootstrap-datepicker-main'), '1.3.0-rc.2', TRUE);
+
+
+
             } else
             {
                 wp_register_script ('bootstrap-datepicker', $vendorDir . "/bootstrap-datepicker-1.3.0-rc.2/js/bootstrap-datepicker.js", array ('bootstrap', 'jquery'), '1.3.0-rc.2', TRUE);
+
+                wp_register_script ('bootstrap-datetimepicker', $vendorDir . "/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js", array ('bootstrap', 'jquery'), '1', TRUE);
+
             }
 
             wp_register_script ('jquery-fitvids', $bidxJsDir . '/vendor/jquery.fitvids.js', array ('jquery'), '20140321', TRUE);
@@ -224,7 +233,7 @@ class BidxShortcode
             //bidX scripts
             wp_register_script ('bidx-api-core', $bidxJsDir . '/bidxAPI/api-core.js', array ('jquery'), '20130501', TRUE);
 
-            $sitepressArr = array_merge( array ('jquery','bootstrap-datepicker'), $sitepressDepArr  );
+            $sitepressArr = array_merge( array ('jquery', 'bootstrap-datepicker', 'bootstrap-datetimepicker'), $sitepressDepArr  );
             wp_register_script ('bidx-utils', $bidxJsDir . '/utils.js', $sitepressArr, '20130501', TRUE);
 
             wp_register_script ('bidx-tagsinput', $bidxJsDir . '/bidx-tagsinput.js', array ('bidx-bootstrap-tagmanager', 'bidx-utils', 'bidx-data'), '20130703', TRUE);
@@ -236,6 +245,7 @@ class BidxShortcode
 
             wp_register_script ('bidx-reflowrower', $bidxJsDir . '/bidx-reflowrower.js', array ('jquery', 'jquery-ui-widget'), '20130501', TRUE);
             wp_register_script ('bidx-industries', $bidxJsDir . '/bidx-industries.js', array ('jquery', 'jquery-ui-widget'), '20141010', TRUE);
+            wp_register_script ('bidx-cover', $bidxJsDir . '/bidx-cover.js', array ('jquery', 'jquery-ui-widget', 'jquery-ui-draggable'), '20141119', TRUE);
             wp_register_script ('bidx-data', $bidxJsDir . '/data.js', array ('jquery'), '20130626', TRUE);
             wp_register_script ('bidx-i18n', $bidxJsDir . '/i18n.js', array ('jquery'), '20130626', TRUE);
             wp_register_script ('bidx-delaykeyup', $bidxJsDir . '/bidx-delaykeyup.js', array ('jquery'), '20131103', TRUE);

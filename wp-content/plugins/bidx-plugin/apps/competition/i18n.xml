@@ -1,0 +1,50 @@
+<I18N>
+    <Item value="selectReasonForSubmission">Please select the reason why you are participating</Item>
+    <Item value="currentYear">Current year</Item>
+    <Item value="actuals">Actuals</Item>
+    <Item value="forecast">Forecast</Item>
+    <Item value="matchCount">%count% matches found</Item>
+    <Item value="ratingAverageLabel">Rating (%d vote)</Item>
+    <Item value="ratingAverageLabelPlural">Rating (%d votes)</Item>
+    <Item value="ratingUserLabel">Your rating</Item>
+    <Item value="ratingUserLabelNone">Rate this plan</Item>
+    <Item value="public">Public</Item>
+    <Item value="closed">Closed</Item>
+    <Item value="invited">Invited persons</Item>
+    <Item value="APPLIED">Applied</Item>
+    <Item value="SUBMITTED">Submitted</Item>
+    <Item value="WITHDRAWN">Withdrawn</Item>
+    <Item value="REJECTED">Rejected</Item>
+    <Item value="NOT_FINALIST">Not a finalist</Item>
+    <Item value="FINALIST">Finalist</Item>
+    <Item value="NOT_WINNER">Not a Winner</Item>
+    <Item value="WINNER">Winner</Item>
+    <Item value="assessorRecommendation">Assessor's recommendation</Item>
+    <Item value="PHASE_JUDGING">You are updating this competition to the Judging phase. The status of all submissions will be updated according to your recommendation. All participants will receive a notification of this change in status.  Are you sure you want to proceed? </Item>
+    <Item value="PHASE_ENDED">By declaring the winner(s), you are closing this competition. All participants will receive a notification of this change in status. Are you sure you want to proceed?</Item>
+
+    <!-- Success Messages -->
+    <Item value="SUCCESS_APPLIED">You have successfully applied for this competition. Thank you for participating! Please note: Your application is now in draft status, you can still review and edit your business plan. If you are ready to have your application reviewed by the competition assessors, please submit your application by clicking on the Submit button</Item>
+    <Item value="SUCCESS_SUBMITTED">You have successfully submitted your application. Thank you for participating! Your submission will now be reviewed by our competition assessors. Good luck!</Item>
+    <Item value="SUCCESS_WITHDRAWN">You have successfully withdrawn your application from this competition. Please feel free to join future competitions. We wish you the best of luck! </Item>
+    <Item value="SUCCESS_REJECTED">You have successfully rejected this submission. A notification has been sent out to the participant</Item>
+    <Item value="SUCCESS_FINALIST">This submission is qualified as a finalist! </Item>
+    <Item value="SUCCESS_NOT_FINALIST">This submission is qualified as not a finalist</Item>
+    <Item value="SUCCESS_WINNER">This submission has been declared a winner!</Item>
+    <Item value="SUCCESS_NOT_WINNER">This submission has not been declared a winner</Item>
+
+    <Item value="SUCCESS_ASSESSOR">You have successfully assigned assessors to this submission. </Item>
+    <Item value="SUCCESS_JUDGE">You have successfully assigned judges for this submission. </Item>
+
+    <Item value="RECOMM_FINALIST">You have recommended this plan as a finalist</Item>
+    <Item value="RECOMM_NOT_FINALIST">You have recommended this plan as not a finalist</Item>
+    <Item value="RECOMM_WINNER">You have recommended this plan as a Winner</Item>
+    <Item value="RECOMM_NOT_WINNER">You have recommended this plan as not a winner</Item>
+    <Item value="RECOMM_REJECTED">You have successfully rejected this submission</Item>
+
+    <Item value="ERROR_ASSIGNACTOR">Something went wrong</Item>
+    <Item value="commentPending">No comments</Item>
+
+    <Item value="submitText">Submit your business plan</Item>
+    <Item value="withdrawText">Withdraw your business plan</Item>
+</I18N>

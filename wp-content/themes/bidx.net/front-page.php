@@ -13,29 +13,22 @@
                     data-y="65"
                     data-speed="500"
                     data-start="1000"
-                    data-easing="easeOutExpo" style="font-size: 25px;"><?php _e('Entrepreneurial Ecosystems Online','bidxtheme');?></div>
+                    data-easing="easeOutExpo" style="font-size: 38px;"><?php _e('Grow your community of','bidxtheme');?></div>
                 <div class="tp-caption very_large_black_text lft ltt"
                     data-x="105"
                     data-y="115"
                     data-speed="500"
                     data-start="1200"
-                    data-easing="easeOutExpo" style="font-size: 50px;"><?php _e('CREATE YOUR<br>NETWORK','bidxtheme');?></div>
+                    data-easing="easeOutExpo" style="font-size: 50px;"><?php _e('ENTREPRENEURS<br>ONLINE','bidxtheme');?></div>
                 <div class="tp-caption theme_caption3 sfl stl"
                     data-x="105"
-                    data-y="225"
+                    data-y="225"    
                     data-speed="500"
                     data-start="1400"
                     data-easing="easeOutExpo" style="font-family: 'Montserrat', sans-serif; color: #34495e;">
-                    <?php _e('Start, grow and finance your entrepreneurs.<br>
-                    Connect them with investors, mentors<br>
-                    and business partners.','bidxtheme');?>
+                    <?php _e('Match your entrepreneurs<br>
+                    with banks, investors and mentors.','bidxtheme');?>
                 </div>
-                <a href="/get-started" class="caption btn btn-flat flat-warning sfb stb"
-                    data-x="105"
-                    data-y="320"
-                    data-speed="500"
-                    data-start="1600"
-                    data-easing="easeOutExpo"><?php _e('Get Started','bidxtheme');?></a>
                 <div class="caption lfr ltr"
                     data-x="635"
                     data-y="70"
@@ -51,137 +44,34 @@
 <section class="visible-xs">
     <div class="front-mobile">
         <div class="center-video">
-            <h5 class="text-center"><?php _e('Entrepreneurial Ecosystems Online','bidxtheme');?></h5>
+            <h5 class="text-center"><?php _e('Grow your community of','bidxtheme');?></h5>
             <iframe src="//player.vimeo.com/video/83490916?title=0&amp;byline=0&amp;portrait=0" width="270" height="152"></iframe>
-            <h3 class="text-center"><?php _e('CREATE YOUR NETWORK','bidxtheme');?></h3>
+            <h3 class="text-center"><?php _e('ENTREPRENEURS ONLINE','bidxtheme');?></h3>
             <a href="/get-started" class="btn btn-flat btn-block flat-warning navbar-btn"><?php _e('Get started','bidxtheme');?></a>
         </div>
     </div>
 </section>
-
-<section id="our-services" class="pad-25">
+<section id="our-services" class="pad-25 free-trial">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-3 pad-top-50">
+            <div class="col-xs-12 col-sm-5">
                 <div class="service">
-                    <h1><?php _e('Portals','bidxtheme');?></h1>
-                    <p><?php _e('Grow your online entrepreneurial network','bidxtheme');?></p>
+                    <div class="trial-title"><?php _e('Portals','bidxtheme');?></div>
+                    <div class="trial-sub"><?php _e('Match your entrepreneurs with financiers and mentors. A portal in your brand and language','bidxtheme');?></div>
                     <br>
-                    <a href="/portals" class="btn btn-flat flat-warning"><?php _e('Learn More','bidxtheme');?></a>
+                    <a href="/portals" class="btn btn-flat flat-warning"><?php _e('6 month free trial','bidxtheme');?></a>
                 </div>
             </div>
             <!-- /.col-sm-6 -->
-            <div class="col-xs-12 col-sm-5">
-                <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/bidxgroupicon.png" class="img-responsive" alt="bidx Groups">
-            </div>
-            <!-- /.col-sm-4 -->
-            <div class="col-xs-12 col-sm-4 pad-top-50">
+            <div class="col-xs-12 col-sm-5 col-sm-offset-2">
                 <div class="service">
-                    <h1><?php _e('Competitions','bidxtheme');?></h1>
-                    <p><?php _e('Launch your business plan competition online.','bidxtheme');?></p>
+                    <div class="trial-title"><?php _e('Hotline','bidxtheme');?></div>
+                    <div class="trial-sub"><?php _e('Efficient lead generation for banks. Attract loan applications by phone.','bidxtheme');?></div>
                     <br>
-                    <a href="/competitions" class="btn btn-flat flat-warning"><?php _e('Learn More','bidxtheme');?></a>
+                    <a href="/hotline" class="btn btn-flat flat-warning"><?php _e('First campaign free','bidxtheme');?></a>
                 </div>
             </div>
-            <!-- /.col-sm-4 -->
-        </div>
-        <!-- /.row -->
-    </div>
-    <!-- /.container -->
-</section>
-
-<section id="action-box" class="pad-25">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-3 pad-top-50">
-                <div class="service">
-                    <div class="handicon handicon-10"></div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-9 action-box">
-                <h1><?php _e('More impact per dollar','bidxtheme');?></h1>
-                <p><?php _e('bidx has grown and started over 100 businesses which create over 500 direct jobs every year. Our investors have financed for USD 18 million. All this at a cost of USD 2000 per direct new job.','bidxtheme');?></p>
-                <a href="/get-started" class="btn btn-flat flat-warning"><?php _e('Get Started','bidxtheme');?></a>
-            </div>
-        <!-- /.action-box -->
-    </div>
-    <!-- /.container -->
-</section>
-
-<section id="blog-posts" class="pad-25 pad-top-50">
-    <div class="container">
-        <div class="subpage-title">
-            <h5><?php _e('Latest Portals','bidxtheme');?></h5>
-            <!-- Controls -->
-            <div class="controls">
-                <span id="blog-posts-prev" class="prev"><i class="fa fa-angle-left"></i></span>
-                <span id="blog-posts-next" class="next"><i class="fa fa-angle-right"></i></span>
-            </div>
-        </div>
-        <div class="row flush">
-            <div id="caroufredsel-blog-posts-container">
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <article class="post pad-0">
-                        <div class="post-thumb">
-                            <a href="/groups"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo1.png" class="img-responsive" alt="Responsive image"></a>
-                        </div>
-                        <!-- /.post-thumb -->
-                    </article>
-                    <!-- /.post -->
-                </div>
-                <!-- /.col-md-4 -->
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <article class="post pad-0">
-                        <div class="post-thumb">
-                            <a href="/groups"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo2.png" class="img-responsive" alt="Responsive image"></a>
-                        </div>
-                        <!-- /.post-thumb -->
-                    </article>
-                    <!-- /.post -->
-                </div>
-                <!-- /.col-md-4 -->
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <article class="post pad-0">
-                        <div class="post-thumb">
-                            <a href="/groups"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo3.png" class="img-responsive" alt="Responsive image"></a>
-                        </div>
-                        <!-- /.post-thumb -->
-                    </article>
-                    <!-- /.post -->
-                </div>
-                <!-- /.col-md-4 -->
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <article class="post pad-0">
-                        <div class="post-thumb">
-                            <a href="/groups"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo4.png" class="img-responsive" alt="Responsive image"></a>
-                        </div>
-                        <!-- /.post-thumb -->
-                    </article>
-                    <!-- /.post -->
-                </div>
-                <!-- /.col-md-4 -->
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <article class="post pad-0">
-                        <div class="post-thumb">
-                            <a href="/groups"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo5.png" class="img-responsive" alt="Responsive image"></a>
-                        </div>
-                        <!-- /.post-thumb -->
-                    </article>
-                    <!-- /.post -->
-                </div>
-                <!-- /.col-md-4 -->
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <article class="post pad-0">
-                        <div class="post-thumb">
-                            <a href="/groups"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo6.png" class="img-responsive" alt="Responsive image"></a>
-                        </div>
-                        <!-- /.post-thumb -->
-                    </article>
-                    <!-- /.post -->
-                </div>
-                <!-- /.col-md-4 -->
-            </div>
-            <!-- /#caroufredsel-blog-posts-container -->
+            <!-- /.col-sm-6 -->
         </div>
         <!-- /.row -->
     </div>
@@ -207,64 +97,42 @@
     <!-- /.container -->
 </section>
 
-<section id="quote" class="pad-25">
+<section id="try-demo" class="pad-25">
     <div class="container">
-        <h1 class="service"><?php _e('Our tools have been built for you','bidxtheme');?></h1>
-        <div class="row">
-            <div class="col-xs-12 col-sm-4">
-                <a href="/banks-funds-angels" class="btn btn-block flat flat-clients">
-                    <div class="service">
-                        <div class="handicon handicon-8"></div>
-                        <p><?php _e('Banks, Funds & Angels','bidxtheme');?></p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                <a href="/cities-and-governments" class="btn btn-block flat flat-clients">
-                    <div class="service">
-                        <div class="handicon handicon-24"></div>
-                        <p><?php _e('Cities & Governments','bidxtheme');?></p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                <a href="/development-organisations-donors" class="btn btn-block flat flat-clients">
-                    <div class="service">
-                        <div class="handicon handicon-23"></div>
-                        <p><?php _e('Development organisations & Donors','bidxtheme');?></p>
-                    </div>
-                </a>
-            </div>
+        <div class="subpage-title">
+            <h1 class="service"><?php _e('Try a Demo','bidxtheme');?></h1>
+            <!-- Controls -->
         </div>
-        <!-- /.row -->
-    </div>
-    <!-- /.container -->
-</section>
-
-<section id="quote" class="pad-bottom-25">
-    <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-4">
-                <a href="/incubators-chambers-of-commerce" class="btn btn-block flat flat-clients">
-                    <div class="service">
-                        <div class="handicon handicon-19"></div>
-                        <p><?php _e('Incubators & Chambers of Commerce','bidxtheme');?></p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                <a href="/telcos-corporations" class="btn btn-block flat flat-clients">
+            <div class="col-xs-12 col-sm-3">
+                <a target="_blank" href="http://demogroup.demo.bidx.net" class="btn btn-block flat flat-clients">
                     <div class="service">
                         <div class="handicon handicon-12"></div>
-                        <p><?php _e('Telcos & Corporations','bidxtheme');?></p>
+                        <p><?php _e('Demo Portal','bidxtheme');?></p>
                     </div>
                 </a>
             </div>
-            <div class="col-xs-12 col-sm-4">
-                <a href="/consultants" class="btn btn-block flat flat-clients">
+            <div class="col-xs-12 col-sm-3">
+                <a href="/demo-videos" class="btn btn-block flat flat-clients">
+                    <div class="service">
+                        <div class="handicon handicon-20"></div>
+                        <p><?php _e('Portal Videos','bidxtheme');?></p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <a href="tel:+31-85-888-1340" class="btn btn-block flat flat-clients">
                     <div class="service">
                         <div class="handicon handicon-25"></div>
-                        <p><?php _e('Accountants & Consultants','bidxtheme');?></p>
+                        <p><?php _e('Call Hotline','bidxtheme');?></p>
+                    </div>
+                </a>
+            </div>
+            <div target="_blank" class="col-xs-12 col-sm-3">
+                <a href="http://ivr.bidx.net/calls" class="btn btn-block flat flat-clients">
+                    <div class="service">
+                        <div class="handicon handicon-9"></div>
+                        <p><?php _e('Hotline call list','bidxtheme');?></p>
                     </div>
                 </a>
             </div>
@@ -274,7 +142,60 @@
     <!-- /.container -->
 </section>
 
-
+<section id="quote" class="pad-25 pattern-1">
+    <div class="container">
+        <h1 class="service"><?php _e('We Offer Solutions to','bidxtheme');?></h1>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 pad-top-25">
+                <div class="service">
+                    <div class="handicon handicon-8"></div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-9 action-box">
+                <h2><?php _e('BANKS','bidxtheme');?></h2>
+                <ul>
+                    <li>Increased loan origination</li>
+                    <li>Efficient loan application filtering</li>
+                    <li>Increased SME outreach & mentoring</li>
+                </ul>
+            </div>
+        <!-- /.action-box -->
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 pad-top-25">
+                <div class="service">
+                    <div class="handicon handicon-19"></div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-9 action-box">
+                <h2><?php _e('INCUBATORS & ACCELERATORS','bidxtheme');?></h2>
+                <ul>
+                    <li>Increased entrepreneur outreach</li>
+                    <li>Business plans, rating & filtering</li>
+                    <li>Matching with mentors and financiers</li>
+                </ul>
+            </div>
+        <!-- /.action-box -->
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 pad-top-25">
+                <div class="service">
+                    <div class="handicon handicon-23"></div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-9 action-box">
+                <h2><?php _e('NGOs IN DEVELOPMENT','bidxtheme');?></h2>
+                <ul>
+                    <li>Platform for entrepreneur development</li>
+                    <li>Access to mentoring & private finance</li>
+                    <li>Real time monitoring for each branch office</li>
+                </ul>
+            </div>
+        <!-- /.action-box -->
+        </div>
+    </div>
+    <!-- /.container -->
+</section>
 
 <section id="recent-works" class="pad-top-50 top-border thin">
     <div class="container">

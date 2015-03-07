@@ -1,352 +1,254 @@
 <div id="editMentor" class="mainState mainStateEditMentor">
 
     <!-- LOAD -->
-    <div class="view viewLoad alert alert-info text-center">
+    <div class="view viewLoad alert alert-info text-center main-margin">
         <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Retrieving mentor information...','bidxplugin'); ?>
     </div>
 
     <!-- CREATE -->
-    <div class="view viewCreate alert alert-info text-center">
+    <div class="view viewCreate alert alert-info text-center main-margin">
         <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Creating mentor profile...','bidxplugin'); ?>
     </div>
 
     <!-- ERROR -->
-    <div class="view viewError alert alert-warning">
+    <div class="view viewError alert alert-warning main-margin">
         <h2><?php _e('Error','bidxplugin'); ?></h2>
         <p class="errorMsg"></p>
     </div>
 
     <!-- EDIT -->
-    <div class="view viewEdit">
+    <div class="view viewEdit main-margin">
 
         <form id="frmeditMentor">
+            <div class="row tabs-vertical">
+
+                <div class="col-sm-3 tabs-nav">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs tabs-left">
+                        <li class="active"><a href="#tab-about-mentor" data-toggle="tab"><?php _e('About you','bidxplugin');?></a></li>
+                        <li><a href="#tab-mentor-preferences" data-toggle="tab"><?php _e('Mentoring Preferences','bidxplugin');?></a></li>
+                        <li><a href="#tab-mentor-references" data-toggle="tab"><?php _e('References and other documents','bidxplugin');?></a></li>
+                    </ul>
+                </div>
 
 
-                <div id="mentorProfileEdit">
+                <div class="col-sm-9 tabs-content">
+                    <div class="tab-content">
+                        <!-- mentorProfileAbout -->
+                        <div class="tab-pane active" id="tab-about-mentor">
+                            <blockquote class="alert-info">
+                                <?php _e('Tell visitors and members of the group how you see yourself as a mentor. Give a brief description of your mentor interests.', 'bidxplugin')?>
+                            </blockquote>
 
-
-                    <!-- mentorProfileAbout -->
-                    <div class="panel panel-default panel-open">
-
-                        <div class="panel-heading">
-                            <a class="btn-block" data-toggle="collapse" data-parent="#mentorProfileEdit" href="#mentorProfileAbout">
-                                <span class="fa fa-chevron-right accordion-state-icon"></span>
-                                <?php _e('About you','bidxplugin'); ?>
-                            </a>
-                        </div>
-
-                        <div id="mentorProfileAbout" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                <blockquote class="alert-info">
-                                    <?php _e('Tell visitors and members of the group how you see yourself as a mentor. Give a brief description of your mentor interests.', 'bidxplugin')?>
-                                </blockquote>
-
-
-
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label><?php _e('Describe yourself as a mentor','bidxplugin'); ?></label>
-                                            <textarea name="summary" class="form-control" placeholder="<?php _e('Please give a description of you as a mentor','bidxplugin'); ?>" ></textarea>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label><?php _e('Describe yourself as a mentor','bidxplugin'); ?></label>
+                                        <textarea name="summary" class="form-control" ></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label><?php _e('Do you mentor on behalf of an institution?','bidxplugin'); ?></label>
+                                        <div class="radio">
+                                            <input type="radio" value="false" id="radio-mentorsForInstNo" name="mentorsForInst" data-toggle="radio" />
+                                            <label for="radio-mentorsForInstNo"><span></span><?php _e('No, I am an independent mentor','bidxplugin'); ?></label>
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" value="true" id="radio-mentorsForInstYes" name="mentorsForInst" data-toggle="radio" />
+                                            <label for="radio-mentorsForInstYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label><?php _e('Do you mentor on behalf of an institution?','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                            <div class="radio">
-                                                <input type="radio" value="false" id="radio-mentorsForInstNo" name="mentorsForInst" data-toggle="radio" />
-                                                <label for="radio-mentorsForInstNo"><span></span><?php _e('No, I am an independent mentor','bidxplugin'); ?></label>
-                                            </div>
-                                            <div class="radio">
-                                                <input type="radio" value="true" id="radio-mentorsForInstYes" name="mentorsForInst" data-toggle="radio" />
-                                                <label for="radio-mentorsForInstYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
-                                            </div>
+                            </div>
+                            <div class="row toggle toggle-mentorsForInst">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label><?php _e('Institution name','bidxplugin'); ?></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-building-o"></i></span>
+                                            <input type="text" class="form-control" name="institutionName">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row toggle toggle-mentorsForInst">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label><?php _e('Institution name','bidxplugin'); ?></label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-building-o"></i></span>
-                                                <input type="text" class="form-control" name="institutionName" placeholder="<?php _e('Please enter the name of your institution','bidxplugin'); ?>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label><?php _e('Institution website','bidxplugin'); ?></label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-                                                <input type="text" class="form-control" name="institutionWebsite" placeholder="<?php _e('Please enter the website of your institution','bidxplugin'); ?>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row ">
-                                    <div class="col-sm-6">
-                                        <div class="js-PreferredCommunication toggleInput">
-                                            <label><?php _e('Preferred mentorship communication service','bidxplugin'); ?></label>
-                                            <div class="form-group">
-                                                <div class="checkbox">
-                                                    <input type="checkbox" value="" id="checkbox-mtrSkype" name="check.skype" />
-                                                    <label for="checkbox-mtrSkype"><span></span><?php _e('Skype','bidxplugin'); ?></label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="skype" placeholder="<?php _e('Please enter your Skype username','bidxplugin'); ?>" />
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="checkbox">
-                                                    <input type="checkbox" value="" id="checkbox-mtrGoogle" name="check.hangout" />
-                                                    <label for="checkbox-mtrGoogle"><span></span><?php _e('Google hangout','bidxplugin'); ?></label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="hangout" placeholder="<?php _e('Please enter your Google hangout username','bidxplugin'); ?>" />
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="checkbox">
-                                                    <input type="checkbox" value="" id="checkbox-mtrAim" name="check.aim" />
-                                                    <label for="checkbox-mtrAim"><span></span><?php _e('AIM','bidxplugin'); ?></label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="aim" placeholder="<?php _e('Please enter your AIM username','bidxplugin'); ?>" />
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="checkbox">
-                                                    <input type="checkbox" value="" id="checkbox-mtrIcq" name="check.icq" />
-                                                    <label for="checkbox-mtrIcq"><span></span><?php _e('ICQ','bidxplugin'); ?></label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="icq" placeholder="<?php _e('Please enter your ICQ username','bidxplugin'); ?>" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="checkbox" value="" id="preferredCommunicationAll" name="preferredCommunicationAll" class="hide"/>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label><?php _e('Institution website','bidxplugin'); ?></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                            <input type="text" class="form-control" name="institutionWebsite">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                    </div>
+                        <!-- mentorProfilePreferences -->
+                        <div class="tab-pane addressItem" id="tab-mentor-preferences">
+                            <blockquote class="alert-info">
+                                <?php _e('Use this section to define your mentor preferences','bidxplugin');?>
+                            </blockquote>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label><?php _e('Languages','bidxplugin'); ?></label>
+                                        <select name="focusLanguage" multiple></select>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label><?php _e('Location','bidxplugin'); ?></label>
 
-                    <!-- mentorProfilePreferences -->
-                    <div class="panel panel-default">
-
-                        <div class="panel-heading">
-                            <a class="btn-block" data-toggle="collapse" data-parent="#mentorProfileEdit" href="#mentorProfilePreferences">
-                                <span class="fa fa-chevron-right accordion-state-icon"></span>
-                                <?php _e('Mentoring preferences','bidxplugin'); ?>
-                            </a>
-                        </div>
-
-                        <div id="mentorProfilePreferences" class="panel-collapse collapse addressItem" >
-                            <div class="panel-body">
-                                <blockquote class="alert-info">
-                                    <?php _e('Use this section to define your mentor preferences','bidxplugin');?>
-                                </blockquote>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label><?php _e('Languages','bidxplugin'); ?></label>
-                                            <select name="focusLanguage" multiple></select>
+                                        <div class="radio">
+                                            <input type="radio" value="country" id="radio-mentorFocusLocationTypeCountry" name="focusLocationType" data-toggle="radio" />
+                                            <label for="radio-mentorFocusLocationTypeCountry"><span></span><?php _e('Country / Countries','bidxplugin'); ?></label>
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" value="city" id="radio-mentorFocusLocationTypeCity" name="focusLocationType" data-toggle="radio" />
+                                            <label for="radio-mentorFocusLocationTypeCity"><span></span><?php _e('City / Cities','bidxplugin'); ?></label>
                                         </div>
                                     </div>
                                 </div>
-
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label><?php _e('Location','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-
-                                            <div class="radio">
-                                                <input type="radio" value="country" id="radio-mentorFocusLocationTypeCountry" name="focusLocationType" data-toggle="radio" />
-                                                <label for="radio-mentorFocusLocationTypeCountry"><span></span><?php _e('Country / Countries','bidxplugin'); ?></label>
-                                            </div>
-                                            <div class="radio">
-                                                <input type="radio" value="city" id="radio-mentorFocusLocationTypeCity" name="focusLocationType" data-toggle="radio" />
-                                                <label for="radio-mentorFocusLocationTypeCity"><span></span><?php _e('City / Cities','bidxplugin'); ?></label>
-                                            </div>
-<!--                                             <div class="radio">
-                                                <input type="radio" value="reach" id="radio-mentorFocusLocationTypeReach" name="focusLocationType" data-toggle="radio" />
-                                                <label for="radio-mentorFocusLocationTypeReach"><span></span><?php _e('Region','bidxplugin'); ?></label>
-                                            </div>
- -->                                        </div>
-
-
+                                <div class="col-sm-6">
+                                    <div class="form-group toggle toggle-focusLocationType toggle-focusLocationType-country">
+                                        <label><?php _e('Country','bidxplugin'); ?></label>
+                                        <select name="focusCountry" multiple></select>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group toggle toggle-focusLocationType toggle-focusLocationType-country">
-                                            <label><?php _e('Country','bidxplugin'); ?></label>
-                                            <select name="focusCountry" multiple></select>
-                                        </div>
 
-                                        <div class="form-group toggle toggle-focusLocationType toggle-focusLocationType-city">
-                                            <label><?php _e('City','bidxplugin'); ?> <small><?php _e('Press tab, enter or comma to add more','bidxplugin'); ?></small></label>
-                                            <div class="bidx-tagsinput-container">
-                                                <input type="text" class="bidx-tagsinput enclosed" autocomplete="off" name="focusCity" class="bidx-tagsinput enclosed" placeholder="<?php _e('City','bidxplugin'); ?>">
-                                            </div>
+                                    <div class="form-group toggle toggle-focusLocationType toggle-focusLocationType-city">
+                                        <label><?php _e('City','bidxplugin'); ?> <small><?php _e('Press tab, enter or comma to add more','bidxplugin'); ?></small></label>
+                                        <div class="bidx-tagsinput-container">
+                                            <input type="text" class="bidx-tagsinput enclosed" autocomplete="off" name="focusCity" class="bidx-tagsinput enclosed">
                                         </div>
-
-                                        <div class="form-group toggle toggle-focusLocationType toggle-focusLocationType-reach">
-                                            <label><?php _e('Region','bidxplugin'); ?></label>
-                                            <input type="text" class="form-control" name="focusReach" data-type="location" />
-                                        </div>
-
                                     </div>
+
+                                    <div class="form-group toggle toggle-focusLocationType toggle-focusLocationType-reach">
+                                        <label><?php _e('Region','bidxplugin'); ?></label>
+                                        <input type="text" class="form-control" name="focusReach" data-type="location" />
+                                    </div>
+
                                 </div>
-                                <hr>
+                            </div>
+                            <hr>
 
-                                <div class="industrySectors">
-                                    <label><?php _e('Focus industry','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                            <div class="industrySectors">
+                                <label><?php _e('Focus industry','bidxplugin'); ?></label>
+                            </div>
+                            
+                            <div class="row">
+                                <!-- Suggested Industry -->
+                                <div class="form-group col-sm-12">
+                                    <label><?php _e('Focus expertise','bidxplugin'); ?></label>
+                                    <select name="focusExpertise" multiple></select>
                                 </div>
-
-                                <div class="row">
-                                    <!-- Suggested Industry -->
-                                    <div class="form-group col-sm-12">
-                                        <label><?php _e('Focus expertise','bidxplugin'); ?></label>
-                                        <select name="focusExpertise" multiple></select>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label><?php _e('Gender of entrepreneur','bidxplugin');?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                            <div class="checkbox">
-                                                <input type="checkbox" value="m" id="checkbox-focusGenderMale" name="focusGender" data-toggle="checkbox" />
-                                                <label for="checkbox-focusGenderMale"><span></span><?php _e('Male','bidxplugin'); ?></label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <input type="checkbox" value="f" id="checkbox-focusGenderFemale" name="focusGender" data-toggle="checkbox" />
-                                                <label for="checkbox-focusGenderFemale"><span></span><?php _e('Female','bidxplugin'); ?></label>
-                                            </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label><?php _e('Gender of entrepreneur','bidxplugin');?></label>
+                                        <div class="checkbox">
+                                            <input type="checkbox" value="m" id="checkbox-focusGenderMale" name="focusGender" data-toggle="checkbox" />
+                                            <label for="checkbox-focusGenderMale"><span></span><?php _e('Male','bidxplugin'); ?></label>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label><?php _e('Stage of business','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                            <div class="checkbox">
-                                                <input type="checkbox" value="startup" id="checkbox-focusStageBusinessStartup" name="focusStageBusiness" />
-                                                <label for="checkbox-focusStageBusinessStartup"><span></span><?php _e('Startup (has no sales revenues yet)','bidxplugin'); ?></label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <input type="checkbox" value="established" id="checkbox-focusStageBusinessEstablished" name="focusStageBusiness" />
-                                                <label for="checkbox-focusStageBusinessEstablished"><span></span><?php _e('Established (has sales revenues)','bidxplugin'); ?></label>
-                                            </div>
+                                        <div class="checkbox">
+                                            <input type="checkbox" value="f" id="checkbox-focusGenderFemale" name="focusGender" data-toggle="checkbox" />
+                                            <label for="checkbox-focusGenderFemale"><span></span><?php _e('Female','bidxplugin'); ?></label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label><?php _e('Social impact','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                            <select name="focusSocialImpact" multiple></select>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label><?php _e('Stage of business','bidxplugin'); ?></label>
+                                        <div class="checkbox">
+                                            <input type="checkbox" value="startup" id="checkbox-focusStageBusinessStartup" name="focusStageBusiness" />
+                                            <label for="checkbox-focusStageBusinessStartup"><span></span><?php _e('Startup (has no sales revenues yet)','bidxplugin'); ?></label>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label><?php _e('Environmental impact','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                            <select name="focusEnvImpact" multiple></select>
+                                        <div class="checkbox">
+                                            <input type="checkbox" value="established" id="checkbox-focusStageBusinessEstablished" name="focusStageBusiness" />
+                                            <label for="checkbox-focusStageBusinessEstablished"><span></span><?php _e('Established (has sales revenues)','bidxplugin'); ?></label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label><?php _e('Keywords in a Business Proposal (max. 400 characters)','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                            <textarea name="focusPreferences" class="form-control" placeholder="<?php _e('Please enter any additional preferences','bidxplugin'); ?>"></textarea>
-                                        </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label><?php _e('Social impact','bidxplugin'); ?></label>
+                                        <select name="focusSocialImpact" multiple></select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label><?php _e('Environmental impact','bidxplugin'); ?></label>
+                                        <select name="focusEnvImpact" multiple></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label><?php _e('Keywords in a Business Proposal','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 400 characters)','bidxplugin'); ?></small></label>
+                                        <textarea name="focusPreferences" class="form-control"></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                    </div>
 
+                        <!-- mentorProfileReferences -->
+                        <div class="tab-pane" id="tab-mentor-references">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="panel-body attachmentsControl">
+                                        <div class="attachmentsContainer"></div>
 
-                    <!-- mentorProfileReferences -->
-                    <div class="panel panel-default">
+                                        <button data-toggle="modal" class="btn btn-primary js-btn-add-attachments"><span class="fa fa-plus"></span> <?php _e('Add documents','bidxplugin');?></button>
 
-                        <div class="panel-heading">
-                            <a class="btn-block" data-toggle="collapse" data-parent="#mentorProfileEdit" href="#mentorProfileReferences">
-                                <span class="fa fa-chevron-right accordion-state-icon"></span>
-                                <?php _e('References and other documents','bidxplugin'); ?>
-                            </a>
-                        </div>
-
-                        <div id="mentorProfileReferences" class="panel-collapse collapse" >
-                            <div class="panel-body">
-<!--                                 <blockquote class="alert-info">
-                                    <?php _e('Please provide your LinkedIn profile or / and upload your CV.', 'bidxplugin')?>
-                                </blockquote>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group" >
-                                            <label><?php _e('LinkedIn profile','bidxplugin'); ?></label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-linkedin-square"></i></span>
-                                                <input type="text" class="form-control" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
- -->                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="panel-body attachmentsControl">
-                                            <div class="attachmentsContainer"></div>
-
-                                            <button data-toggle="modal" class="btn btn-primary js-btn-add-attachments"><span class="fa fa-plus"></span> <?php _e('Add documents','bidxplugin');?></button>
-
-                                            <div class="addAttachmentsModal modal fade" id="addReferences" role="dialog" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                            <h3><?php _e('Check the files you want to attach to your mentor profile', 'bidxplugin' ); ?></h3>
-                                                        </div>
-                                                        <div class="modal-body">
-                <?php
-                                                            // Media app will only be inserted once, this is by design!
-                                                            //
-                                                            echo do_shortcode( '[bidx app="media"]' );
-                ?>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file', 'bidxplugin' ); ?></button>
-                                                            <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
-                                                        </div>
+                                        <div class="addAttachmentsModal modal fade" id="addReferences" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                        <h3><?php _e('Check the files you want to attach to your mentor profile', 'bidxplugin' ); ?></h3>
+                                                    </div>
+                                                    <div class="modal-body">
+            <?php
+                                                        // Media app will only be inserted once, this is by design!
+                                                        //
+                                                        echo do_shortcode( '[bidx app="media"]' );
+            ?>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file', 'bidxplugin' ); ?></button>
+                                                        <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <input type="checkbox" value="" id="referencesAll" name="referencesAll" class="hide"/>
-                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" value="" id="referencesAll" name="referencesAll" class="hide"/>
                             </div>
                         </div>
-
                     </div>
 
                 </div>
-
+            </div> <!-- tabs-vertical -->
         </form>
     </div>
 
     <div class="snippets hide">
 
         <!-- Attachment -->
-        <div class="attachmentItem col-md-4">
+        <div class="attachmentItem col-md-6">
             <div class="media well">
                 <div class="pull-left icons-rounded attachmentMissing"><i class="fa fa-question-circle text-primary-light"></i></div>
                 <a class="pull-left documentLink img-cropper" href="#">

@@ -4,7 +4,7 @@
             <div class="col-md-3">
                 <div class="widget about-us">
                     <div class="footer-brand"><?php _e('<span>bidx</span>.net','bidxtheme');?></div>
-                    <p><?php _e('Grow your local business network and create new jobs. Your economy depends on it!','bidxtheme');?></p>
+                    <p><?php _e('With multiple bidx portals in one country you can create an entrepreneurial ecosystem','bidxtheme');?></p>
                 </div>
                 <!-- /.about-us -->
                 <div class="widget stay-connedted">
@@ -15,7 +15,7 @@
                         <li><a target="_blank" class="facebook" href="//www.facebook.com/bidxinfo"><i class="fa fa-facebook"></i></a></li>
                         <!-- <li><a target="_blank" class="google-plus" href="#"><i class="fa fa-google-plus"></i></a></li> -->
                         <li><a target="_blank" class="twitter" href="//twitter.com/bid_x"><i class="fa fa-twitter"></i></a></li>
-                        <li><a target="_blank" class="linkedin" href="//www.linkedin.com/company/2999232"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a target="_blank" class="linkedin" href="//www.linkedin.com/company/bidx"><i class="fa fa-linkedin"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -127,7 +127,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-6 footer-info-wrapper">
-                <span><?php _e('bidx.net © 2014. All Rights Reserved.','bidxtheme');?></span>
+                <span><?php _e('bidx.net © 2015. All Rights Reserved.','bidxtheme');?></span>
             </div>
             <!-- /.footer-info-wrapper -->
             <div class="col-xs-12 col-sm-6 footer-links-wrapper">

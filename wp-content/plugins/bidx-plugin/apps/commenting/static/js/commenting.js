@@ -2,8 +2,6 @@
 {
     "use strict";
     var $body               = $( "body" )
-    ,   $mainElement        = $( "#commenting" )
-    
     ,   bidx                = window.bidx
     ,   currentGroupId      = bidx.common.getCurrentGroupId( "currentGroup ")
     ,   currentUserId       = bidx.common.getCurrentUserId( "id" )
@@ -37,28 +35,23 @@
         $btnFeedback.on('click', function()
         {
             var $el = $(this)
-            ,   $feedbackPanel  = $el.closest(".panel-feedback")
-            ,   $feedbackBox    = $feedbackPanel.find(".feedback-box")
-            ,   $feedbackScope  = $feedbackPanel.find(".feedback-scope")
-            ,   $attachmentItem = $feedbackScope.find(".attachmentItem")
-            ,   txt             = $feedbackBox.is( ":visible" ) ? bidx.i18n.i( "showFeedback" ) : bidx.i18n.i( "hideFeedback" )
+            ,   txt             = $panelFeedback.is( ":visible" ) ? bidx.i18n.i( "showFeedback" ) : bidx.i18n.i( "hideFeedback" )
+            ,   mainBsHeight    = $panelFeedback.prev().height() - 180
             ;
 
-            if ( $feedbackBox.hasClass( "hide" ) )
+            if ( $panelFeedback.hasClass( "hide" ) )
             {
-                $feedbackBox.removeClass( "hide" );
-                $feedbackScope.removeClass( "col-sm-12" ).addClass( "col-sm-8 hidden-xs" );
-                $attachmentItem.removeClass( "col-md-4" ).addClass( "col-md-6" );
+                $panelFeedback.removeClass( "hide" );
+                $panelFeedback.prev().removeClass( "col-sm-offset-2" ).addClass( "col-pull hidden-xs" );
+                $panelFeedback.find( ".feedback-posts" ).height( mainBsHeight );
             }
             else
             {
-                $feedbackBox.addClass( "hide" );
-                $feedbackScope.removeClass( "col-sm-8 hidden-xs" ).addClass( "col-sm-12" );
-                $attachmentItem.removeClass( "col-md-6" ).addClass( "col-md-4" );
+                $panelFeedback.addClass( "hide" );
+                $panelFeedback.prev().addClass( "col-sm-offset-2" ).removeClass( "col-pull hidden-xs" );
             }
 
             $el.find( "span" ).text( txt );
-            $feedbackPanel.find(".panel-body").css( { overflow: 'hidden' } );
         });
     }
 
@@ -106,12 +99,10 @@
 
                 case "deleteFeedback" :
 
-                    if( confirm( bidx.i18n.i( "deleteFeedbackConfirm" ) ) )
-                    {
-                        _handleNotificationMessages( target, "" );
+                    _handleNotificationMessages( target, "" );
 
-                        _destroyFeedbackPost( target.feedbackId, target );
-                    }
+                    _destroyFeedbackPost( target.feedbackId, target );
+
                     break;
 
                 case "editFeedback" :
@@ -140,40 +131,26 @@
     //
     function _createFeedbackPanelStructure()
     {
-        var $btnFeedbackSnippet   = $( "<button />", { "class": "btn btn-warning btn-xs btn-feedback" })
+        var $btnFeedbackSnippet   = $( "<button />", { "class": "btn btn-warning btn-feedback" })
                                     .prepend
                                     (
-                                        $("<i/>", { "class": "fa fa-comments" })
+                                        $("<i/>", { "class": "fa fa-comments fa-big fa-above" })
                                     )
                                     .append
                                     (
                                         $("<span/>", { text: bidx.i18n.i( "showFeedback" ) })
                                     )
-        ,   $addFeedbackBtn       = $( "<button />", { "class": "btn btn-primary btn-add-feedback btn-sm btn-block bottom-margin-lineheight", "data-purpose": "addFeedback", html: bidx.i18n.i( "addNewFeedback" ) } )
         ,   $textarea             = $( "<textarea />", { "class": "form-control" } )
-        ,   $divCol12             = $( "<div />", { "class": "col-sm-12 feedback-scope" } )
         ,   $divRow               = $( "<div />", { "class": "row" } )
-        ,   $cancelFeedbackBtn    = $( "<button />", { "class": "btn btn-link btn-cancel-feedback btn-xs pull-right", "data-purpose": "cancelFeedback", html: bidx.i18n.i( "btnCancel" ) } )
+        ,   $cancelFeedbackBtn    = $( "<button />", { "class": "btn btn-link btn-cancel-feedback btn-xs pull-right", "data-purpose": "cancelFeedback", html: bidx.i18n.i( "btnClear" ) } )
         ,   $submitFeedbackBtn    = $( "<button />", { "class": "btn btn-success btn-submit-feedback btn-xs pull-left", "data-purpose": "submitFeedback", html: bidx.i18n.i( "submitFeedback" ) } )
-        ,   $feedbackBoxSnippet   = $( "<div />", { "class": "col-sm-4 main-padding feedback-box bg-warning hide" } )
+        ,   $feedbackBoxSnippet   = $( "<div />", { "class": "main-padding feedback-box bg-warning" } )
                                     .append
                                     (
                                         $( "<div />", { "class": "feedback-notifications" } )
                                         .append
                                         (
                                             $( "<div />", { "class": "feedback-notification-success-add alert alert-success hide", html: bidx.i18n.i( "successAddingMsgFeedback" ) } )
-                                            .append
-                                            (
-                                                 $( "<button />", { "class": "close", "type": "button" })
-                                                .append
-                                                (
-                                                    $( "<span />", { "aria-hidden": "true", html: "&times;" })
-                                                )
-                                            )
-                                        )
-                                        .append
-                                        (
-                                            $( "<div />", { "class": "feedback-notification-success-update alert alert-success hide", html: bidx.i18n.i( "successUpdatingMsgFeedback" ) } )
                                             .append
                                             (
                                                  $( "<button />", { "class": "close", "type": "button" })
@@ -210,11 +187,7 @@
                                     )
                                     .append
                                     (
-                                        $addFeedbackBtn
-                                    )
-                                    .append
-                                    (
-                                        $( "<div />", { "class": "feedback-submit hide-overflow hide" } )
+                                        $( "<div />", { "class": "feedback-submit hide-overflow" } )
                                         .append
                                         (
                                             $textarea
@@ -234,23 +207,8 @@
                                     )
         ;
 
-        $.each( $panelFeedback, function( index, panel )
-        {
-            var $panelHeading  = $(panel).find( ".panel-heading" ).first()
-            ,   $panelShowView = $(panel).find( ".panel-body .viewShow" )
-            ,   panelScope     = "bs" + $panelHeading.find( "a" ).attr("href").split("-")[1]
-            ;
-
-            $panelHeading.append( $btnFeedbackSnippet.clone() );
-
-            $panelShowView
-                .wrapInner( $divCol12.clone() )
-                .wrapInner( $divRow.clone() )
-                .children().first()
-                .append( $feedbackBoxSnippet.clone() );
-
-            $panelShowView.find( ".feedback-box" ).attr( "data-scope", panelScope );
-        });
+        $( ".info-bar .text-right" ).prepend( $btnFeedbackSnippet.clone() );
+        $panelFeedback.append( $feedbackBoxSnippet.clone() );
 
         // Run this only if there are feedback panels created
         //
@@ -273,11 +231,11 @@
                                 $("<small/>")
                                 .append
                                 (
-                                    $("<span/>", { "class": "feedback-date", text: bidx.utils.parseTimestampToDateTime( feedback.created, "date" ) + " by " })
+                                    $("<a/>", { "class": "feedback-commentor-name", href: "/member/" + feedback.commentorId, text: feedback.commentorDisplayName })
                                 )
                                 .append
                                 (
-                                    $("<a/>", { "class": "feedback-commentor-name", href: "/member/" + feedback.commentorId, text: feedback.commentorDisplayName })
+                                    $("<span/>", { "class": "feedback-date", text: " " + bidx.utils.parseTimestampToDateTime( feedback.created, "date" ) })
                                 )
                             )
                         )
@@ -322,7 +280,7 @@
                 )
             );
 
-        $('*[data-scope="'+feedback.scope+'"]').find( ".feedback-posts" ).prepend( $html.fadeIn( "slow" ) );
+        $( ".feedback-posts" ).prepend( $html.fadeIn( "slow" ) );
     }
 
     // Regular expression to change "returns" to <breaks> || Used in post listing
@@ -338,7 +296,9 @@
     //
     function _unParseComment( comment )
     {
-        return comment.replace( /<br\s*[\/]?>/gi, "\n" );
+        var $htmlParser = $( "<div/>", { "class": "feedback-temp-unparse-comment", html: comment } );
+
+        return $htmlParser.text().replace( /<br\s*[\/]?>/gi, "\n" );
     }
 
     // Show the textarea to write a feedback
@@ -354,7 +314,7 @@
     //
     function _hideFeedbackSubmitionForm( $elem )
     {
-        $elem.$feedbackSubmitBox.addClass( "hide" );
+        // $elem.$feedbackSubmitBox.addClass( "hide" );
         $elem.$element.show();
     }
 
@@ -362,22 +322,21 @@
     //
     function _submitFeedbackPost( $elem )
     {
-        var toEditId
+        var toRemoveId
         ,   postData   = {
                              commentorId:     currentUserId
                          ,   comment:         $elem.message
-                         ,   scope:           $elem.scope
                          }
         ;
 
-        toEditId = $elem.$feedbackBox.find( ".feedback-to-edit" ).length ? $elem.$feedbackBox.find( ".feedback-to-edit" ).data( "feedbackid" ) : false;
+        toRemoveId = $elem.$feedbackBox.find( ".feedback-to-remove" ).length ? $elem.$feedbackBox.find( ".feedback-to-remove" ).data( "feedbackid" ) : false;
 
         if ( $elem.message )
         {
             $elem.$btnSubmitFeedback.addClass( "disabled" );
             $elem.$textarea.attr( "disabled" , true);
 
-            _doPostFeedback( postData, $elem, toEditId );
+            _doPostFeedback( postData, $elem, toRemoveId );
         }
     }
 
@@ -392,7 +351,7 @@
             _doDestroyFeedback( postData, $elem );
     }
 
-    // Edit the post by copying a new instance in the textarea, and edit the one that has the class "feedback-to-edit"
+    // Fake edit the post by copying a new instance in the textarea, creating new post in order to appear at the top and on success delete the one that has the class "feedback-to-remove"
     //
     function _editFeedbackPost( target )
     {
@@ -405,9 +364,9 @@
 
         target.$feedbackBox.find( ".btn-edit-feedback" ).removeClass( "disabled" );
         target.$feedbackBox.find( ".btn-delete-feedback" ).removeClass( "disabled" );
-        target.$feedbackBox.find( ".feedback-post" ).removeClass( "feedback-to-edit" );
+        target.$feedbackBox.find( ".feedback-post" ).removeClass( "feedback-to-remove" );
 
-        target.$feedbackPost.addClass( "feedback-to-edit" );
+        target.$feedbackPost.addClass( "feedback-to-remove" );
         target.$btnDeleteFeedback.addClass( "disabled" );
         target.$btnEditFeedback.addClass( "disabled" );
     }
@@ -418,11 +377,11 @@
     {
         $elem.$btnSubmitFeedback.removeClass( "disabled" );
         $elem.$textarea.val( "" ).attr( "disabled" , false);
-        $elem.$feedbackSubmitBox.addClass( "hide" );
+        // $elem.$feedbackSubmitBox.addClass( "hide" );
         $elem.$feedbackBox.find( ".btn-edit-feedback" ).removeClass( "disabled" );
         $elem.$feedbackBox.find( ".btn-delete-feedback" ).removeClass( "disabled" );
-        $elem.$feedbackBox.find( ".feedback-post" ).removeClass( "feedback-to-edit" );
-        $elem.$btnAddFeedback.show();
+        $elem.$feedbackBox.find( ".feedback-post" ).removeClass( "feedback-to-remove" );
+        // $elem.$btnAddFeedback.show();
     }
 
     // Show a notification message according the action that was taken
@@ -443,12 +402,6 @@
 
                         break;
 
-                    case "updated":
-
-                        $elem.$notiUpdated.removeClass( "hide" );
-
-                        break;
-
                     case "deleted" :
 
                         $elem.$notiDeleted.removeClass( "hide" );
@@ -466,9 +419,9 @@
 
     }
 
-    // actual sending of message to API || POST or PUT
+    // actual sending of message to API || POST
     //
-    function _doPostFeedback( postData, $elem, toEditId )
+    function _doPostFeedback( postData, $elem, toRemoveId )
     {
         if ( !postData.comment )
         {
@@ -476,48 +429,41 @@
         }
 
         bidx.api.call(
-            toEditId ? "feedback.mutate" : "feedback.create"
+            "feedback.create"
         ,   {
                 groupDomain:              bidx.common.groupDomain
             ,   id:                       entityId
-            ,   data:                     toEditId ? $.extend( {"feedbackId" : toEditId}, postData ) : postData
+            ,   data:                     postData
 
             ,   success: function( response )
                 {
                     bidx.utils.log( "[commenting] Comment sent", response );
 
-                    if( toEditId )
+                    if ( toRemoveId )
                     {
-                        $('*[data-feedbackid="'+toEditId+'"]').find(".feedback-comment").html( _parseComment( response.data.comment ) );
-                        _handleNotificationMessages( $elem, "updated" );
+                        _destroyFeedbackPost( toRemoveId, false );
                     }
-                    else
+
+                    _createFeedbackPost( response.data );
+
+                    var $newAddedFeedback  = $( "[data-feedbackid="+ response.data.feedbackId +"]" )
+                    ,   $btnDeleteFeedback = $newAddedFeedback.find( ".btn-delete-feedback" )
+                    ,   $btnEditFeedback   = $newAddedFeedback.find( ".btn-edit-feedback" )
+                    ;
+
+                    $btnDeleteFeedback.on('click', function()
                     {
-                        _createFeedbackPost( response.data );
+                        _destroyFeedbackPost( response.data.feedbackId, _getTargetedParams( this ) );
+                    });
 
-                        var $newAddedFeedback  = $( "[data-feedbackid="+ response.data.feedbackId +"]" )
-                        ,   $btnDeleteFeedback = $newAddedFeedback.find( ".btn-delete-feedback" )
-                        ,   $btnEditFeedback   = $newAddedFeedback.find( ".btn-edit-feedback" )
-                        ;
-
-                        $btnDeleteFeedback.on('click', function()
-                        {
-                            if( confirm( bidx.i18n.i( "deleteFeedbackConfirm" ) ) )
-                            {
-                                _destroyFeedbackPost( response.data.feedbackId, _getTargetedParams( this ) );
-                            }
-                        });
-
-                        $btnEditFeedback.on('click', function()
-                        {
-                            _editFeedbackPost( _getTargetedParams( this ) );
-                        });
-
-                        _handleNotificationMessages( $elem, "added" );
-                    }
+                    $btnEditFeedback.on('click', function()
+                    {
+                        _editFeedbackPost( _getTargetedParams( this ) );
+                    });
 
                     _resetFeedbackSubmitForm( $elem );
 
+                    _handleNotificationMessages( $elem, "added" );
                 }
 
             ,   error: function( jqXhr, textStatus )
@@ -677,12 +623,10 @@
         ,   $btnEditFeedback        = $feedbackPost.find( ".btn-edit-feedback" )
         ,   $notifications          = $feedbackBox.find( ".feedback-notifications" )
         ,   $notiAdded              = $notifications.find( ".feedback-notification-success-add" )
-        ,   $notiUpdated            = $notifications.find( ".feedback-notification-success-update" )
         ,   $notiDeleted            = $notifications.find( ".feedback-notification-success-delete" )
         ,   $notiError              = $notifications.find( ".feedback-notification-error" )
         ,   comment                 = $feedbackPost.find( ".feedback-comment" ).html()
         ,   feedbackId              = $feedbackPost.attr( "data-feedbackid" )
-        ,   scope                   = $feedbackBox.attr( "data-scope" )
         ,   message                 = $textarea.val()
         ,   params
         ;
@@ -690,7 +634,6 @@
         params =
         {
             entityId                : entityId
-        ,   scope                   : scope
         ,   message                 : message
         ,   feedbackId              : feedbackId
         ,   comment                 : comment
@@ -706,7 +649,6 @@
         ,   $btnEditFeedback        : $btnEditFeedback
         ,   $notifications          : $notifications
         ,   $notiAdded              : $notiAdded
-        ,   $notiUpdated            : $notiUpdated
         ,   $notiDeleted            : $notiDeleted
         ,   $notiError              : $notiError
         ,   $element                : $elem
@@ -715,20 +657,6 @@
 
         return params;
     }
-
-    //expose
-    // var commenting =
-    //         {
-    //             navigate    : navigate
-    //         ,   refresh     : _setCountsAndDisplays
-    //         };
-
-
-    // if (!window.bidx)
-    // {
-    //     window.bidx = {};
-    // }
-    // window.bidx.commenting = commenting;
 
     // Make sure the i18n translations for this app are available before initing
     //

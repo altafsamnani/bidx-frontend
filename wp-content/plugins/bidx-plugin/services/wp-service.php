@@ -916,14 +916,8 @@ add_action ('wp_ajax_bidx_clearwpsession', 'clear_wp_bidx_session');
 
 function clear_wp_bidx_session ()
 {
-
-    /* Clear the Session */
-    // if (isset ($_COOKIE['session_id'])) {
-    //session_id ($_COOKIE['session_id']);
-    session_start ();
-    session_destroy ();
-    // setcookie ('session_id', ' ', time () - YEAR_IN_SECONDS, '/', 'bidx.net');
-    // }
+    // This clears the full session, except for any post-login redirect setting.
+    BidxCommon::clearWpBidxSession();
 }
 
 /**
@@ -1008,6 +1002,11 @@ function get_redirect ($url, $requestData, $domain = NULL)
     /****** If have a particular Redirect in params *************** */
     if (isset ($_POST['redirect_to'])) {
         $redirect_to = $_POST['redirect_to'];
+        // Despite that Base64 encoded strings might be padded with an equals-character,
+        // which should be percent-encoded but is not in our case, PHP still returns the
+        // full string including that character when using $_POST['redirect_to']. But
+        // even it would not, base64_decode is actually quite lenient for errors (as its
+        // $strict parameter defaults to false).
         $redirect = base64_decode ($redirect_to);
     }
 

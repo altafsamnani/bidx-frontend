@@ -54,7 +54,7 @@ class member {
 	    $view = new TemplateLibrary(BIDX_PLUGIN_DIR.'/member/templates/');
 
 		// 3. Determine the view needed
-		$command = $atts['view'];
+		$command = ( isset( $atts['view'] ) ) ? $atts['view']: NULL;
 
 		switch ( $command ) {
 			case 'entrepreneur-profile-links':

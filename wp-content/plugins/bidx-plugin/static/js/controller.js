@@ -308,6 +308,12 @@
         ,   'editBusinessSummary(/:id)(*splat)':                'editBusinessSummary'
         ,   'createBusinessSummary':                            'createBusinessSummary'
         ,   'viewBusinessSummary':                              'viewBusinessSummary'
+
+        ,   'editCompetition(/:id)(*splat)':                    'editCompetition'
+        ,   'createCompetition':                                'createCompetition'
+        ,   'viewCompetition(/:id)(*splat)':                    'viewCompetition'
+
+
         ,   'loadMentors(/:id)(*splat)':                        'loadMentors'
 
         ,   'auth(/:state)(*splat)':                            'auth'
@@ -609,6 +615,52 @@
                 "businesssummary"
             ,   {
                     requestedState: "view"
+                }
+            );
+        }
+    ,   editCompetition:    function( id, splat )
+        {
+            bidx.utils.log( "AppRouter::editCompetition", id  );
+
+            mainState   = "editCompetition";
+
+            _doNavigateToApp
+            (
+                "competition"
+            ,   {
+                    requestedState: "edit"
+                ,   id:             id
+                ,   params:   _deparamSplat( splat )
+                }
+            );
+        }
+    ,   createCompetition:          function()
+        {
+            bidx.utils.log( "AppRouter::createCompetition" );
+
+            mainState       = "editCompetition";
+
+             _navigateToApp
+            (
+                "competition"
+            ,   {
+                    requestedState: "create"
+                }
+            );
+        }
+    ,   viewCompetition:          function( id, splat )
+        {
+            bidx.utils.log( "AppRouter::viewCompetition" );
+
+            mainState       = "viewCompetition";
+
+             _navigateToApp
+            (
+                "competition"
+            ,   {
+                    requestedState: "view"
+                ,   id:             id
+                ,   params:   _deparamSplat( splat )
                 }
             );
         }

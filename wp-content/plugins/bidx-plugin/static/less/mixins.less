@@ -235,3 +235,38 @@
         border-color: darken(@social-bg, 12%);
     }
 }
+.center-img
+{
+    .transform(translateY(-50%) translateX(-50%));
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+@-webkit-keyframes blink {
+    0% { background: rgba(234, 245, 134,0.7); }
+    50% { background: rgba(234, 245, 134,0.5); }
+    75% { background: rgba(234, 245, 134,0.25); }
+    100% { background: rgba(234, 245, 134,0); }
+}
+
+@keyframes blink {
+    0% { background: rgba(234, 245, 134,0.7); }
+    50% { background: rgba(234, 245, 134,0.5); }
+    75% { background: rgba(234, 245, 134,0.25); }
+    100% { background: rgba(234, 245, 134,0.5); }
+}
+
+.blink {
+    -webkit-animation-direction: normal;
+    -webkit-animation-duration: 5s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-name: blink;
+    -webkit-animation-timing-function: ease-in;   
+
+    animation-direction: normal;
+    animation-duration: 5s;
+    animation-iteration-count: 1;
+    animation-name: blink;
+    animation-timing-function: ease-in;       
+}

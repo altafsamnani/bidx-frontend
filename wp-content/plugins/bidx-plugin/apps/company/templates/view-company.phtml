@@ -6,92 +6,92 @@
     $comLogo = $this->exst($this->company->logo->document);
     $countryOperationSpecifics = isset ($this->company->countryOperationSpecifics) ? $this->company->countryOperationSpecifics : NULL;
 ?>
-<div class="panel-heading">
-    <h3 class="panel-title"><?php _e('Company details','bidxplugin'); ?></h3>
+<div class="bg-primary-light main-padding">
+    <h1 class="text-center"><?php echo ($this->companyTitle) ? ucwords( $this->company->name) :''; ?></h1>
 </div>
-<div class="panel-body">
+
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+
 <?php
-        if ($companyBidxMeta->bidxCanEdit) {
+        if ( $companyBidxMeta->bidxCanEdit )
+        {
 ?>
-                <div class="btn-group controls pull-right">
-                    <a class="btn btn-primary" href="#editCompany/<?php echo $companyBidxMeta->bidxEntityId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
-                </div>
+            <div class="btn-group controls pull-right top-margin-lineheight">
+                <a class="btn btn-primary" href="#editCompany/<?php echo $companyBidxMeta->bidxEntityId; ?>"><i class="fa fa-big fa-above fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+            </div>
 <?php
         }
+?>
+    </div>
+</div>
 
-        if (!$comLogo){
-            echo '<div class="icons-rounded"><i class="fa fa-tasks text-primary-light"></i></div>';
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+    <div class="text-center bottom-margin-lineheight top-margin-lineheight">
+<?php
+        if ( !$comLogo )
+        {
+            echo '<div class="icons-rounded"><i class="fa fa-building text-primary-light"></i></div>';
         }
         else
         {
-            echo '<img class="img-thumbnail" src="'.$comLogo.'"/>';
+            echo '<img class="img-responsive center-image" src="'.$comLogo.'"/>';
         }
 ?>
-<hr>
+    </div>
 <?php
 
     $companySite = $this->exst( $this->company->website ) ? sprintf( '<a href="%1$s" target="_blank">%1$s</a>', $this->exst( $this->company->website )) : NULL;
-    $rowValues = array(
-        __('Company name','bidxplugin') => $this->exst( $this->company->name ),
-        __('Company website','bidxplugin') => $companySite
-    );
-    echo $this->pairRows( $rowValues );
 
-    if (!empty($this->company->registered)) {
+    if ( !empty( $this->company->registered ) )
+    {
 
-        $statutoryAddress = $this->exst($this->company->statutoryAddress);
+        $statutoryAddress = $this->exst( $this->company->statutoryAddress );
 
         $arStatutoryAddress = array();
-        if ($this->exst($statutoryAddress->streetNumber))   { $arStatutoryAddress[] = $statutoryAddress->streetNumber; }
-        if ($this->exst($statutoryAddress->street))         { $arStatutoryAddress[] = $statutoryAddress->street . ', '; }
-        if ($this->exst($statutoryAddress->postalCode))     { $arStatutoryAddress[] = $statutoryAddress->postalCode; }
+        if ( $this->exst( $statutoryAddress->streetNumber ) ) { $arStatutoryAddress[] = $statutoryAddress->streetNumber; }
+        if ( $this->exst( $statutoryAddress->street ) )       { $arStatutoryAddress[] = $statutoryAddress->street . ', '; }
+        if ( $this->exst( $statutoryAddress->postalCode ) )   { $arStatutoryAddress[] = $statutoryAddress->postalCode; }
+        if ( $this->exst( $statutoryAddress->neighborhood ) ) { $arStatutoryAddress[] = $statutoryAddress->neighborhood; }
 
         $arStatutoryCityCountry = array();
-        if ($this->exst($statutoryAddress->cityTown))       { $arStatutoryCityCountry[] = $statutoryAddress->cityTown; }
-        if ($this->exst($statutoryAddress->country))        { $arStatutoryCityCountry[] = $this->getStaticVal( 'country', $statutoryAddress->country ); }
+        if ( $this->exst( $statutoryAddress->country ) )      { $arStatutoryCityCountry[] = $this->getStaticVal( 'country', $statutoryAddress->country ); }
+        if ( $this->exst( $statutoryAddress->cityTown ) )     { $arStatutoryCityCountry[] = $statutoryAddress->cityTown; }
 
-        $rowValues = array(
-            __('Date of registration','bidxplugin') =>  date( 'j F Y', strtotime( $this->company->dateCompanyEstab )),
-            __('Legal form of business','bidxplugin') => $this->addExtraValuesToRows( 'legalForm', $this->exst($this->company->legalFormBusiness )),
-            __('Statutory address','bidxplugin') => implode( ' ', $arStatutoryAddress ),
-            __('Statutory city, country','bidxplugin') => implode( ', ', $arStatutoryCityCountry ),
-            __('Fiscal number','bidxplugin') => $this->exst($this->company->fiscalNumber),
-            __('Company registration number','bidxplugin') => $this->exst($this->company->registrationNumber)
-        );
-        echo '<hr>';
-        echo $this->pairRows( $rowValues );
     }
-
-    if ( $this->exst($this->company->numPermFemaleEmpl) ||
-         $this->exst($this->company->numPermMaleEmpl) ||
-         $this->exst($this->company->numTempFemaleEmpl) ||
-         $this->exst($this->company->numTempMaleEmpl))
-    {
-        $rowValues = array(
-            __('Number of permanent male employees','bidxplugin') => $this->exst($this->company->numPermMaleEmpl),
-            __('Number of permanent female employees','bidxplugin') => $this->exst($this->company->numPermFemaleEmpl),
-            __('Number of temporary male employees','bidxplugin') => $this->exst($this->company->numTempMaleEmpl),
-            __('Number of temporary female employees','bidxplugin') => $this->exst($this->company->numTempFemaleEmpl)
-        );
-        echo '<hr>';
-        echo $this->pairRows( $rowValues );
-    }
+    $rowValues = array(
+        __('Company name','bidxplugin') => $this->exst($this->company->name),
+        __('Company website') => $this->companyWebsite,
+        __('Registered') => $this->exst($this->company->registered) == true ? __('Yes','bidxplugin') : __('No','bidxplugin'),
+        __('Legal form of business') => $this->getStaticVal( 'legalForm', $this->exst($this->company->legalFormBusiness) ),
+        __('Registration number') => $this->exst($this->company->registrationNumber),
+        __('Fiscal number') => $this->exst($this->company->fiscalNumber),
+        __('Date of registration') => $this->exst($this->company->dateCompanyEstab),
+        __('Permanent female employees') => $this->exst($this->company->numPermFemaleEmpl ),
+        __('Permanent male employees') => $this->exst($this->company->numPermMaleEmpl ),
+        __('Temporary female employees') => $this->exst($this->company->numTempFemaleEmpl ),
+        __('Temporary male employees') => $this->exst($this->company->numTempMaleEmpl ),
+        __('Statutory country, city') => $arStatutoryCityCountry ? implode( ', ', $arStatutoryCityCountry ) : NULL,
+        __('Statutory address') => $arStatutoryAddress ? implode( ' ', $arStatutoryAddress ) : NULL
+    );
+    echo $this->tableRow( $rowValues );
 
     if ( $countryOperationSpecifics )
     {
         $header = array (
             __('Country','bidxplugin') => 'country',
             __('Company trade name','bidxplugin') => 'companyTradeName',
-            __('Permits and/or licenses','bidxplugin') => 'permitsLicencesObtained',
+            __('Permit or licences','bidxplugin') => 'permitsLicencesObtained',
             __('Company Address','bidxplugin') => 'companyAddress'
         );
 
         $countryOperationSpecificsHtml = $this->addTableRows( $header, $countryOperationSpecifics, 'table table-bordered', '', array('permitsLicencesObtained' => 'hidden-xs'), array( 'permitsLicencesObtained', 'country', 'companyAddress' ) );
         
-        $rowValues = array ( __('Country Operation Specifics','bidxplugin') => $countryOperationSpecificsHtml);
+        $rowValues = array ( __('Country Operation Specifics','bidxplugin') => $countryOperationSpecificsHtml );
         
-        echo '<hr>';
-        echo $this->addRowsWithLabelBelow ('col-sm-12', 'col-sm-12', $rowValues, array ('tag_label' => 'h5'));
+        echo $this->addRowsWithLabelBelow ( 'col-sm-12', 'col-sm-12', $rowValues, array ( 'tag_label' => 'h4' ) );
     }
 ?>
+    </div>
 </div>

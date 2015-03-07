@@ -11,7 +11,6 @@
 
     ,   $investorType                   = $editForm.find( "[name='investorType']" )
 
-    // ,   $focusIndustry                  = $editForm.find( "[name='focusIndustry']" )
     ,   $focusLanguage                  = $editForm.find( "[name='focusLanguage']" )
     ,   $focusSocialImpact              = $editForm.find( "[name='focusSocialImpact']" )
     ,   $focusEnvImpact                 = $editForm.find( "[name='focusEnvImpact']" )
@@ -84,7 +83,7 @@
         ,   'institutionWebsite'
         ,   'minInvestment'
         ,   'maxInvestment'
-        // ,   'focusIndustry'
+        ,   'focusIndustry'
         ,   'focusSocialImpact'
         ,   'focusEnvImpact'
         ,   'focusConsumerType'
@@ -174,11 +173,6 @@
 
         // Populate the selects
         //
-        // $focusIndustry.bidx_chosen(
-        // {
-        //     dataKey:            "industry"
-        // });
-
         $focusLanguage.bidx_chosen(
         {
             dataKey:            "language"
@@ -361,7 +355,7 @@
             //
             $attachmentsContainer.reflowrower(
             {
-                itemsPerRow:        3
+                itemsPerRow:        2
             ,   itemClass:          "attachmentItem"
             } );
         }
@@ -1076,7 +1070,6 @@
 
         // Update the chosen components with our set values
         //
-        // $focusIndustry.trigger( "chosen:updated" );
         $focusLanguage.trigger( "chosen:updated" );
         $focusSocialImpact.trigger( "chosen:updated" );
         $focusEnvImpact.trigger( "chosen:updated" );
@@ -1308,14 +1301,14 @@
 
         // Inject the save and button into the controls
         //
-        $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save" } );
+        $btnSave    = $( "<a />", { "class": "btn btn-primary btn-sm disabled", href: "#save" } );
 
         cancelHref  = redirect.cancel ? "#cancel/redirect=" + encodeURIComponent( redirect.cancel ) : "#cancel";
-        $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: cancelHref } );
+        $btnCancel  = $( "<a />", { "class": "btn btn-primary btn-sm disabled", href: cancelHref } );
 
 
-        $btnSave.i18nText( "btnSaveProfile" );
-        $btnCancel.i18nText( "btnCancel" );
+        $btnSave.i18nText( "btnSaveProfile" ).prepend( $( "<div />", { "class": "fa fa-check fa-above fa-big" } ) );
+        $btnCancel.i18nText( "btnCancel" ).prepend( $( "<div />", { "class": "fa fa-times fa-above fa-big" } ) );
 
         bidx.controller.addControlButtons( [ $btnSave, $btnCancel ] );
 
@@ -1412,17 +1405,23 @@
             ,   "minInvestment":
                 {
                     monetaryAmount:         true
-                ,   max:                    function() { return $editForm.find( "[name='maxInvestment']" ).val(); }
+                ,   max:                    function()
+                                            {
+                                                return $editForm.find( "[name='maxInvestment']" ).val()
+                                                       ? $editForm.find( "[name='maxInvestment']" ).val()
+                                                       : $editForm.find( "[name='minInvestment']" ).val();
+                                            }
                 }
             ,   "maxInvestment":
                 {
                     monetaryAmount:         true
-                ,   min:                    function() { return $editForm.find( "[name='minInvestment']" ).val(); }
+                ,   min:                    function()
+                                            {
+                                                return $editForm.find( "[name='minInvestment']" ).val()
+                                                       ? $editForm.find( "[name='minInvestment']" ).val()
+                                                       : 0;
+                                            }
                 }
-            // ,   "focusIndustry":
-            //     {
-            //         required:               true
-            //     }
             ,   "focusSocialImpact":
                 {
                     required:               true

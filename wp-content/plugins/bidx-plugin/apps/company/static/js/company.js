@@ -496,7 +496,7 @@
                     bidx.utils.log( "[company] selected profile picture", file );
 
                     $logoContainer.data( "bidxData", file );
-                    $logoContainer.html( $( "<img />", { "src": file.document, "class": "img-thumbnail"  } ) );
+                    $logoContainer.html( $( "<img />", { "src": file.document, "class": "img-responsive"  } ) );
 
                     $changeLogoModal.modal( "hide" );
                 }
@@ -540,7 +540,7 @@
                 $logoContainer
                     .append( $( "<div />", { "class": "icons-rounded" } ) )
                     .find(".icons-rounded")
-                    .append( $( "<i />", { "class": "fa fa-tasks text-primary-light" } ) )
+                    .append( $( "<i />", { "class": "fa fa-building text-primary-light" } ) )
                     ;
             }
         ,   _logoRemoved = function()
@@ -551,7 +551,7 @@
         ,   _logoIsSet = function()
             {
                 $logoContainer.data( "bidxData", logo[ 0 ] );
-                $logoContainer.append( $( "<img />", { "src": logo[ 0 ].document, "class": "img-thumbnail" } ) );
+                $logoContainer.append( $( "<img />", { "src": logo[ 0 ].document, "class": "img-responsive" } ) );
             }
         ;
 
@@ -794,6 +794,10 @@
                 $editForm.submit();
             } );
 
+            $btnSave.i18nText( ( state === "create" ? "btnAddCompany" : "btnSaveCompany" ), appName ).prepend( $( "<div />", { "class": "fa fa-check fa-above fa-big" } ) );
+            $btnCancel.i18nText( "btnCancel" ).prepend( $( "<div />", { "class": "fa fa-times fa-above fa-big" } ) );
+
+
             $controls.append( $btnSave );
             $controls.append( $btnCancel );
         }
@@ -802,7 +806,7 @@
         //
         var $validator = $editForm.validate(
         {
-            ignore: ".chosen-search input, .search-field input"
+            ignore: ".chosen-search input, .search-field input, #frmeditMedia input, #frmeditMedia select"
         ,   rules:
             {
                 "name":

@@ -24,38 +24,34 @@ if ($entrepreneurDetails &&
     ?>
 
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <a class="btn-block" data-toggle="collapse" data-parent="#myProfile" href="#entrepreneur-profile">
-            <span class="fa fa-chevron-right accordion-state-icon"></span>
-            <?php _e('Entrepreneur profile','bidxplugin');?>
-        </a>
-    </div>
-    <div id="entrepreneur-profile" class="panel-collapse collapse">
-        <div class="panel-body">
-
-
 
 
                 <div class="btn-group show hide-overflow">
 <?php               if ($entrepreneurBidxMeta->bidxCanEdit)
                     {
 ?>
-                        <a class="btn btn-sm btn-primary pull-right" href="#editEntrepreneur/<?php echo $this->exst ($entrepreneurBidxMeta->bidxOwnerId); ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                        <a class="btn btn-sm btn-primary pull-right hide" href="#editEntrepreneur/<?php echo $this->exst ($entrepreneurBidxMeta->bidxOwnerId); ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
 <?php
                     }
 ?>
                 </div>
 
-                    <?php
-                    $rowValues = array(
-                        __('Summary','bidxplugin')          =>  $this->exst ($entrepreneurDetails->summary),
-                        __('Focus industry','bidxplugin')  =>  $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustry), '<br> ','industry')
-                        );
-                    echo $this->pairRows( $rowValues );
-?>
-                    <hr>
 <?php
+                    if ( $this->exst ($entrepreneurDetails->summary) )
+                    {
+?>
+                        <h4><?php _e( 'Summary', 'bidxplugin' ); ?></h4>
+                        <div><?php echo $this->exst ($entrepreneurDetails->summary); ?></div>
+<?php                         
+                    }
+
+                    if ( $this->exst ($entrepreneurDetails->focusIndustry) )
+                    {
+?>
+                        <h4><?php _e( 'Focus Industry', 'bidxplugin' ); ?></h4>
+                        <div><?php echo $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustry), '<br> ','industry'); ?></div>
+<?php                         
+                    }
 
                     $previousBusiness = $this->exst ($entrepreneurDetails->previousBusiness);
                     $header = array (
@@ -108,14 +104,17 @@ if ($entrepreneurDetails &&
                                             <div class="row">
                                                 <div class="col-sm-2">
 <?php
-                                                    if ( empty( $business -> externalVideoPitch ) ) {
+                                                    if ( $this -> exst( $business->logo )  && $this -> exst( $business->logo->document ) )
+                                                    {
+                                                        echo '<div class="img-cropper pull-left"><span class="valign"></span><img src="' . $business->logo->document . '" alt=""></div>';
+                                                    }
+                                                    elseif ( $this -> exst( $business->cover )  && $this -> exst( $business->cover->document ) )
+                                                    {
+                                                        echo '<div class="img-cropper pull-left"><span class="valign"></span><img src="' . $business->cover->document . '" alt=""></div>';
+                                                    }
+                                                    else
+                                                    {
                                                         echo '<div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>';
-                                                    } else {
-                                                        $videoUrl = $this->exst($business -> externalVideoPitch);
-                                                        $parsedVideo = $this->parseVideos( $videoUrl );
-                                                        $videoThumb = $parsedVideo[0]['fullsize'];
-
-                                                        echo '<div class="img-cropper pull-left"><img src="' . $videoThumb . '" alt=""></div>';
                                                     }
 ?>
                                                 </div>
@@ -199,7 +198,7 @@ if ($entrepreneurDetails &&
                                             if ( $company->logo && $company->logo->document) {
                                                 echo '<div class="img-cropper pull-left"><img src="' . $company->logo->document . '" alt=""></div>';
                                             } else {
-                                                echo '<div class="icons-rounded pull-left"><i class="fa fa-tasks text-primary-light"></i></div>';
+                                                echo '<div class="icons-rounded pull-left"><i class="fa fa-building text-primary-light"></i></div>';
                                             }
 ?>
                                         </div>
@@ -269,8 +268,5 @@ if ($entrepreneurDetails &&
 <?php
             }
 ?>
-        </div>
-    </div>
-</div>
 
 <?php } ?>

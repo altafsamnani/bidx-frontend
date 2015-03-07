@@ -73,6 +73,8 @@
             {
                 // Anything that is app specific, the general validations should have been set
                 // in common.js already
+                "acceptTerms": ""
+            ,   "preventSpam": ""
             }
         ,   submitHandler:  function()
             {

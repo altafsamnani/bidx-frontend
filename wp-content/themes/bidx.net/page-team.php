@@ -5,7 +5,7 @@
 		<?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
 			<section id="page-title-wrapper" class="page-title-wrapper pattern-10 service">
 			    <div class="container">
-					<?php edit_post_link('<small>Edit Our Team page</small>','',''); ?>
+					<?php edit_post_link('<small>Edit</small>','',''); ?>
 			        <h1><?php the_title(); ?></h1>
 			        <?php the_content(); ?>
 			    </div>
