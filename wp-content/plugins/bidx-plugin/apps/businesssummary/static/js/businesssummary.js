@@ -2804,7 +2804,7 @@
                                                 isMentor        =   bidx.utils.getValue( itemMember,        "bidxMentorProfile" );
 
                                                 /* Profile Picture */
-                                                if ( profilePic )
+                                                if ( profilePic && profilePic.document )
                                                 {
                                                     imageWidth  = bidx.utils.getValue( profilePic, "width" );
                                                     imageLeft   = bidx.utils.getValue( profilePic, "left" );
