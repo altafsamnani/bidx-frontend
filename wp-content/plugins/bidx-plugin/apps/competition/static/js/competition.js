@@ -2724,7 +2724,6 @@ function _competitionTimer (  )
                 ,   $radio      =   $listItem.find( "[name='recommend-" + lCaseStatus + '-' + entityId + "']" )
                 ;
 
-                bidx.utils.log('radio', $radio);
                 $radio.change( function( e )
                 {
                     e.preventDefault();
@@ -3254,8 +3253,7 @@ function _competitionTimer (  )
 
                 _recoverOrigForm( $btnAction
                                 ,   {
-                                        message:    bidx.i18n.i( "Loading" )
-                                    ,   disabled:   'disabled'
+                                        disabled:   'disabled'
                                     }
                                 );
 
@@ -3280,7 +3278,7 @@ function _competitionTimer (  )
                                         }
 
                                         $btnAction.text( orgText ).removeClass('disabled');
-                                        //_recoverOrigForm( $btnAction, $btnAction.data( "confirm" ));
+
                                     }
                 ,  error:           function ( )
                                     {
@@ -3838,12 +3836,16 @@ function _competitionTimer (  )
     function _recoverOrigForm( $btn, options)
     {
         var label = options.label
+
         ,   isdisabled = options.disabled
         ;
 
-        $btn.text( label );
+        $btn.i18nText( "Loading" );
+
         $btn.data( "confirm", false );
-        $btn.addClass( isdisabled);
+
+        $btn.addClass( isdisabled );
+
         $btn.removeClass( "btn-danger" );
     }
 
@@ -3901,8 +3903,7 @@ function _competitionTimer (  )
 
                     _recoverOrigForm( $btnAssign
                                     ,   {
-                                            message:    bidx.i18n.i( "Loading" )
-                                        ,   disabled:   'disabled'
+                                            disabled:   'disabled'
                                         }
                                     );
 
@@ -4047,8 +4048,7 @@ function _competitionTimer (  )
 
                 _recoverOrigForm( $btnAction
                                 ,   {
-                                        message:    bidx.i18n.i( "Loading" )
-                                    ,   disabled:   'disabled'
+                                        disabled:   'disabled'
                                     }
                                 );
 
@@ -4070,7 +4070,6 @@ function _competitionTimer (  )
                                         }
 
                                         $btnAction.text( orgText ).removeClass('disabled');
-                                        //_recoverOrigForm( $btnAction, $btnAction.data( "confirm" ));
                                     }
                 ,  error:           function ( )
                                     {
