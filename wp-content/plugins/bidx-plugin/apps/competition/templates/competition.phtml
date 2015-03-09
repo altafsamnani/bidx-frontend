@@ -575,27 +575,6 @@ if ( !empty( $attachment ) )
                     </div>
                 </div>
 
-                <!-- Management
-                <div class="tab-pane hide-overflow" id="tab-comp-management">
-
-                        <div  id="competitionCollapse-Management">
-
-                                <div class="view viewEdit">
-                                    <blockquote class="alert-info"><?php //_e('Here we provide you with tools to set the criteria about competition.','bidxplugin')?></blockquote>
-                                    <form id="frmCompetition-Management">
-                                        <div class="row">
-
-                                            <div class="form-group col-sm-6">
-                                                <label><?php //_e('Competition visibility','bidxplugin'); ?></label>
-                                                <select name="visibility" multiple></select>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
-                    </div><
-                </div> -->
-
                 <div class="tab-pane hide-overflow" id="tab-comp-about-participants">
                     <!-- About you & your team -->
                         <div  id="competitionCollapse-AboutParticipants">
@@ -832,7 +811,7 @@ if ( !empty( $attachment ) )
                         </div>
                         <div>
                             <div class="col-sm-9">
-                                <select multiple class="chosen-assessors-%entityId%" name="assessors-%entityId%"></select>
+                                <select data-placeholder="<?php _e('Select Assessor','bidxplugin');?>" multiple class="chosen-assessors-%entityId%" name="assessors-%entityId%"></select>
                             </div>
                         </div>
                         <div class="col-sm-3 pull-right">
@@ -845,7 +824,7 @@ if ( !empty( $attachment ) )
                         </div>
                         <div>
                             <div class="col-sm-9">
-                                <select multiple class="chosen-judges-%entityId%" name="judges-%entityId%"></select>
+                                <select data-placeholder="<?php _e('Select Judge','bidxplugin');?>" multiple class="chosen-judges-%entityId%" name="judges-%entityId%"></select>
                             </div>
                         </div>
                         <div class="col-sm-3 pull-right">

@@ -2783,7 +2783,7 @@ function _competitionTimer (  )
 
                 //bidx.utils.setElementValue( $radioQualification, status );
 
-                //$wrapperQualification.addClass('hide');
+                $wrapperQualification.addClass('hide');
 
                 if(assessorLength) // If there are assessor then show the dropdown
                 {
@@ -3889,6 +3889,7 @@ function _competitionTimer (  )
                                         'actorId':   actorId
                                     });
                 });
+            }
 
                  updateAppsActors [ role ]   =   actorsArr;
 
@@ -3937,7 +3938,7 @@ function _competitionTimer (  )
 
                     startConfirmTimer( $btnAssign, orgText );
                 }
-            }
+            //}
 
             function startConfirmTimer( $btn, orgText )
             {
