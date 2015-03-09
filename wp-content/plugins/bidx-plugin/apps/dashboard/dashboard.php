@@ -185,6 +185,14 @@ class dashboard
             case 'general-settings' :
 
                 $view->groupNews = get_option ('group-news');
+		if ( get_option ( 'bidx-ssoredirect-url' ) ) {
+                	$view->ssoRedirect = true;
+		} else {
+			$view->ssoRedirect = false;
+		}
+
+                $view->ssoRedirectUrl = get_option( 'bidx-ssoredirect-url' );
+
                 $template = 'groupowner/general-settings.phtml';
                 break;
 

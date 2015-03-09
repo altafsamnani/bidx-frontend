@@ -12,14 +12,16 @@
         // BIDX-2837 Very quick and dirty workaround for MEK/GESR
         // BEWARE: see the very same hack in auth.php and login.php; also see comments about
         // the #join/role URL fragment in that first file.
-        if ( bidx.common.groupDomain === "gesr" ) 
-        {
+	// DISABLED
+	//
+        // if ( bidx.common.groupDomain === "gesr" ) 
+        //{
             // If the domain has 2 subdomains such as gesr.demo.bidx.net, then assume beta testing.
-            var isGesrBeta = window.location.host.split(".").length > 2;
-            document.location.href = window.location.protocol + "//" + window.location.host + 
-                "/bidx-soca/bidxauth?id=http://gesr.net/" + (isGesrBeta ? "beta" : "") + "#join/role";
-            return;
-        }
+        //    var isGesrBeta = window.location.host.split(".").length > 2;
+        //    document.location.href = window.location.protocol + "//" + window.location.host + 
+        //        "/bidx-soca/bidxauth?id=http://gesr.net/" + (isGesrBeta ? "beta" : "") + "#join/role";
+        //    return;
+        //}
 
         var $view = $views.hide().filter( bidx.utils.getViewName( view ) ).show();
 

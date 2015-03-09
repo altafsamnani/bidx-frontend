@@ -19,6 +19,31 @@
                 </div>
             </div>
         </div>       
+        <div id='categorydiv' class='postbox'>
+            <div class='handlediv' title='Click to toggle'><br></div><h3 class='hndle'><span>SSO Login redirect</span></h3> 
+            <div class='inside'>
+                <div id='taxonomy-category' class='categorydiv'>
+                    <div class=''>
+		    	<p>
+				When integrating with an external single sign on mechanism a specific redirect is needed. It can be enabled and set here by a Wordpress administrator.<br />For security reasons only a local URI redirect is allowed which can loop it through the SSO mechanism in Bidx-Soca.
+			</p>
+                        <div class='label'>
+                            <label class='selectit'>
+                                <input <?php echo (isset($this->ssoRedirect) && $this->ssoRedirect) ? 'checked':'';?> value='1' type='checkbox' name='bidx-sso-redirect' id='bidx-sso-redirect'>
+				<span class="description">Enable an external SSO redirect URL for my portal.</span>
+                            </label>
+                        </div>
+                    </div>
+                        <div class='label'>
+                            <label class='selectit' for='bidx-ssoredirect-url'>
+                                <span class="description">SSO redirect URI for my portal.</span><br/>
+                                <input <?php if( isset( $this->ssoRedirectUrl ) ) { echo 'value="'.$this->ssoRedirectUrl.'"'; }?> type='text' name='bidx-ssoredirect-url' id='bidx-ssoredirect-url' class='regular-text' <?php disabled( $this->ssoRedirect, 'disabled', true ); ?> >
+                            </label>                        
+			</div>
+                    </div>        
+                </div>
+            </div>
+        </div>
        <div class="updated inline below-h2">
             <p><strong>Important:</strong> Refresh the page after saving the option to see the News & Events category in Left menu.</p>
        </div><br/>
