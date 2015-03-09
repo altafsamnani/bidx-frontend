@@ -1290,12 +1290,9 @@ function _addReview( review )
     return reviewItem;
 }
 
-function _displayRecommendations( options )
+function _displayRecommendations( reviews )
 {
-    var $listItem           =   options.$listItem
-    ,   reviews             =   options.reviews
-
-    ,   reviewRating
+    var reviewRating
     ,   competitionRecommendation
     ,   displayReview
     ,   assessorReviews
@@ -1304,8 +1301,6 @@ function _displayRecommendations( options )
     ,   judgeReviews
     ,   comment
     ;
-
-    bidx.utils.log('review' , reviews);
 
     assessorReviews     =   _.where(  reviews
                             ,   {
@@ -1387,7 +1382,10 @@ function format ( data, row )
                                                     role:   "COMPETITION_JUDGE"
                                                 ,   userId: loggedInMemberId
                                                 }  );
-    bidx.utils.log('isCompetitionManager', isCompetitionManager);
+    bidx.utils.log('reviews', reviews);
+
+    displayReview           =   _displayRecommendations( reviews );
+
     switch(true)
     {
         case isCompetitionManager :
@@ -1408,11 +1406,6 @@ function format ( data, row )
             ratingClass             =   "%bidx" + status + "RatingAverage%"; //Start from here
             regularExp              =   new RegExp ( ratingClass, "g" ) ;
             reviewRating            =   bidx.utils.getValue(isHavingAdminRoleReview, 'reviewRating' );
-            displayReview           =   _displayRecommendations(
-                                        {
-                                            $listItem:  $listItem
-                                        ,   reviews:     reviews
-                                        });
 
             listItem                =   snippet
                                         .replace( /%entityId%/g,                data.entityId )
@@ -1450,18 +1443,22 @@ function format ( data, row )
 
         case !_.isEmpty ( isHavingJudgeReview ):
 
-            if( !_.isEmpty ( isHavingAssessorReview ) )
+            if( competitionBidxMeta.bidxCompetitionRoundStatus === 'JUDGING')
             {
-                var snippetAssessor  =   $("#recommendation-display-snippet").html().replace(/(<!--)*(-->)*/g, "");
+            }
 
-                assessorReviewItem    =   snippetAssessor
+            //if( !_.isEmpty ( isHavingAssessorReview ) )
+            //{
+              //  var snippetAssessor  =   $("#recommendation-display-snippet").html().replace(/(<!--)*(-->)*/g, "");
+
+                /* assessorReviewItem    =   snippetAssessor
                                         .replace ( /%recommendationTitle%/g, bidx.i18n.i( 'assessorRecommendation', appName) )
                                         .replace( /%userDisplayName%/g, isHavingAssessorReview.userDisplayName )
                                         .replace( /%reviewRating%/g,    isHavingAssessorReview.reviewRating)
                                         .replace( /%competitionRecommendation%/g,  isHavingAssessorReview.competitionRecommendation)
                                         .replace( /%comment%/g,         isHavingAssessorReview.comment)
-                                        ;
-            }
+                                        ; */
+            //}
 
             snippet         =   $("#judge-card-snippet").html().replace(/(<!--)*(-->)*/g, "");
             ratingClass     =   '/%bidx' + status + 'RatingAverage%/g';
@@ -1470,25 +1467,45 @@ function format ( data, row )
             listItem        =   snippet
                                 .replace( /%entityId%/g,            data.entityId )
                                 .replace( ratingClass,   ( reviewRating )  ? reviewRating : 0)
-                                .replace( /%assessorReviewItem%/g,   assessorReviewItem)
+                                .replace( /%assessorsRecommendation%/g,   displayReview.assessor)
+                                .replace( /%judgesRecommendation%/g,   displayReview.judge )
                                 ;
 
             $listItem       =   $(listItem);
 
-            /* Assign Next Action According to Role */
-            data.role       =   'COMPETITION_JUDGE';
-            data.action     =   'winner';
+            if( displayReview.assessor !== '' && competitionBidxMeta.bidxCompetitionRoundStatus !== 'ASSESSMENT')
+            {
+                /* Dislay Assessor Review if it exists */
+                $wrapperAssessor        =   $listItem.find('.wrapper-recommend-assessor-' + data.entityId);
+                $wrapperAssessor.removeClass('hide');
+            }
 
-            _assignAssessorJudgeActions( {
-                                            $listItem:  $listItem
-                                        ,   review:     isHavingJudgeReview
-                                        ,   data:       data
-                                        ,   row:        row
-                                        });
+            if( displayReview.judge !== '' && competitionBidxMeta.bidxCompetitionRoundStatus !== 'JUDGING')
+            {
+                /* Dislay Judge Review if it exists */
+                $wrapperJudge           =   $listItem.find('.wrapper-recommend-judge-' + data.entityId);
+                $wrapperJudge.removeClass('hide');
+            }
+
+            if( competitionBidxMeta.bidxCompetitionRoundStatus === 'JUDGING' )
+            {
+
+                /* Assign Next Action According to Role */
+                data.role       =   'COMPETITION_JUDGE';
+                data.action     =   'winner';
+
+                _assignAssessorJudgeActions( {
+                                                $listItem:  $listItem
+                                            ,   review:     isHavingJudgeReview
+                                            ,   data:       data
+                                            ,   row:        row
+                                            });
+            }
 
             break;
 
         case !_.isEmpty ( isHavingAssessorReview ):
+
 
             snippet     =   $("#assessor-card-snippet").html().replace(/(<!--)*(-->)*/g, "");
             ratingClass     =   '/%bidx' + status + 'RatingAverage%/g';
@@ -1496,21 +1513,33 @@ function format ( data, row )
 
             listItem    =   snippet
                             .replace( /%entityId%/g,            data.entityId )
+                            .replace( /%assessorsRecommendation%/g, displayReview.assessor )
                             .replace( ratingClass,   ( reviewRating )  ? reviewRating : 0)
                             ;
 
             $listItem   =   $(listItem);
 
-            /* Assign Next Action According to Role */
-            data.role      =   'COMPETITION_ASSESSOR';
-            data.action    =   'finalist';
+            if( displayReview.assessor !== '' && competitionBidxMeta.bidxCompetitionRoundStatus !== 'ASSESSMENT' )
+            {
+                /* Dislay Assessor Review if it exists */
+                $wrapperAssessor        =   $listItem.find('.wrapper-recommend-assessor-' + data.entityId);
+                $wrapperAssessor.removeClass('hide');
+            }
 
-            _assignAssessorJudgeActions( {
-                                            $listItem:  $listItem
-                                        ,   review:     isHavingAssessorReview
-                                        ,   data:       data
-                                        ,   row:        row
-                                    });
+            if( competitionBidxMeta.bidxCompetitionRoundStatus === 'ASSESSMENT' )
+            {
+
+                /* Assign Next Action According to Role */
+                data.role      =   'COMPETITION_ASSESSOR';
+                data.action    =   'finalist';
+
+                _assignAssessorJudgeActions( {
+                                                $listItem:  $listItem
+                                            ,   review:     isHavingAssessorReview
+                                            ,   data:       data
+                                            ,   row:        row
+                                        });
+            }
 
         break;
 
