@@ -9,6 +9,16 @@
         $authenticated = true;
         $authClass = "auth";
     }
+
+    $isEntrepreneur = isset( $session->data->wp->entities->bidxEntrepreneurProfile )   ? TRUE : FALSE ;
+    $isInvestor     = isset( $session->data->wp->entities->bidxInvestorProfile )       ? TRUE : FALSE;
+    $isMentor       = isset( $session->data->wp->entities->bidxMentorProfile )         ? TRUE : FALSE;
+
+    $hasRole = false;
+    if ( $isEntrepreneur || $isInvestor || $isMentor )
+    {
+        $hasRole = true;
+    }
 ?>
 
     <div class="bg-primary-darker navbar navbar-fixed-top">
@@ -93,6 +103,12 @@
                             {
 ?>
                                 <a href="<?php echo _l('join');?>" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Start Here','bidxplugin'); ?></a>
+<?php
+                            }
+                            if( !$hasRole )
+                            {
+?>
+                                <a href="<?php echo _l('join');?>" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Choose a role','bidxplugin'); ?></a>
 <?php
                             }
 ?>
