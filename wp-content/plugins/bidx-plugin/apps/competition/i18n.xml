@@ -45,6 +45,7 @@
     <Item value="ERROR_ASSIGNACTOR">Something went wrong</Item>
     <Item value="commentPending">No comments</Item>
 
+    <Item value="applyText">Apply to the competition</Item>
     <Item value="submitText">Submit your business plan</Item>
     <Item value="withdrawText">Withdraw your business plan</Item>
 </I18N>

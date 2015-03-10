@@ -31,7 +31,7 @@ class auth {
 	function register_auth_bidx_ui_libs() {
 
         wp_register_script( 'registration',  plugins_url( 'static/js/group-registration.js',    __FILE__ ), array(), '20130501', TRUE );
-        wp_register_script( 'join', plugins_url( 'static/js/join.js', __FILE__ ), $deps, '20140710', TRUE );
+        wp_register_script( 'join', plugins_url( 'static/js/join.js', __FILE__ ), array(), '20140710', TRUE );
 
         $deps = array_merge( self :: $deps, array( 'registration', 'join' ) );
 
@@ -56,7 +56,7 @@ class auth {
         // #join/portal and #join/role, by again checking the current situation and rewriting to
         // one of those three options. This works fine if the user indeed needs to authenticate
         // and is shown some other web page after going to /auth/#auth/login. But if there is no
-        // need to authenticate, the user will go from /auth/#auth/login to /join on the very same 
+        // need to authenticate, the user will go from /auth/#auth/login to /join on the very same
         // website, making browsers append the original fragment, effectively taking the user to
         // /join/#auth/login, which is invalid.
         //
