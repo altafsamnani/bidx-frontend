@@ -414,7 +414,7 @@
                             "round": 1
                         ,   "roundStatus": $this.data('roundstatus')
                         };
-            bidx.utils.log('dataaaa', data);
+
             bidx.common._notify(
             {
                 text:       bidx.i18n.i( "PHASE_" + phase, appName )
@@ -435,9 +435,11 @@
                                                         {
                                                             _loadCompetitionVars( competitionVars );
 
-                                                            location.reload();
+                                                            //bidx.common.notifyRedirect();
 
-                                                            /*
+                                                            //location.reload();
+
+
                                                             if( competitionBidxMeta.bidxCompetitionRoundStatus === 'JUDGING')
                                                             {
                                                                 _displayWinners( 'finalist');
@@ -451,7 +453,7 @@
 
                                                             _initApplicationsView();
 
-                                                            */
+
                                                         }
                                             ,   error:  function ( err )
                                                         {
@@ -1656,6 +1658,7 @@ function _initApplicationsView( )
     ,   entityId
     ,   ownerId
     ,   recommendation
+    ,   destroy               =  false
     ,   competitionRoles      =  competitionBidxMeta.bidxCompetitionRoles
     ,   isCompetitionManager  = _.contains( competitionRoles, 'COMPETITION_ADMIN')
     ;
@@ -1708,35 +1711,41 @@ function _initApplicationsView( )
     {
         _displayButtonsAccordingToPhases( );
 
+        if ( $.fn.dataTable.isDataTable( '.viewApplications' ) )
+        {
+            destroy     =   true;
+        }
+
         table = $('.viewApplications').DataTable(
         {
-            "bPaginate": true
-        ,    aLengthMenu:
-            [
-                [10, 25, 50, 100, -1],
-                [10, 25, 50, 100, "All"]
-            ]
-        ,   "data":     data
-        ,   "columns":
-            [
-                {
-                    "className":      'details-control',
-                    "orderable":      false,
-                    "data":           null,
-                    "defaultContent": '<i class="fa fa-plus-square-o"></i>'
-                },
-                { "data": "business" },
-                { "data": "entrepreneur" },
-                { "data": "rating" },
-                { "data": "recommendation"},
-                { "data": "state" }
-            ]
-        ,   "order": [ [1, 'asc'] ]
-        ,   "fnRowCallback": function( nRow, aData, iDisplayIndex )
-            {
-                nRow.classList.add( aData.status );
-                return nRow;
-            }
+            destroy:            true
+        ,   "bPaginate":        true
+        ,   aLengthMenu:        [
+                                    [10, 25, 50, 100, -1],
+                                    [10, 25, 50, 100, "All"]
+                                ]
+        ,   "data":             data
+        ,   "columns":          [
+                                    {
+                                        "className":      'details-control',
+                                        "orderable":      false,
+                                        "data":           null,
+                                        "defaultContent": '<i class="fa fa-plus-square-o"></i>'
+                                    },
+                                    { "data": "business" },
+                                    { "data": "entrepreneur" },
+                                    { "data": "rating" },
+                                    { "data": "recommendation"},
+                                    { "data": "state" }
+                                ]
+        ,   "order":            [
+                                    [1, 'asc']
+                                ]
+        ,   "fnRowCallback":    function( nRow, aData, iDisplayIndex )
+                                {
+                                    nRow.classList.add( aData.status );
+                                    return nRow;
+                                }
         } );
 
         // Add event listener for opening and closing details
@@ -2969,7 +2978,7 @@ function _competitionTimer (  )
                 /* Assessor Dropdown */
                 $assessors.chosen(
                 {
-                    placeholder_text_single : bidx.i18n.i( "Loading" )
+                    placeholder_text_single : bidx.i18n.i( "loadingLbl" )
                 ,   width                   : "100%"
                 });
 
@@ -3033,7 +3042,7 @@ function _competitionTimer (  )
                 /* Judge Dropdown */
                 $judges.chosen(
                 {
-                    placeholder_text_single : bidx.i18n.i( "Loading" )
+                    placeholder_text_single : bidx.i18n.i( "loadingLbl" )
                 ,   width                   : "100%"
                 });
 
@@ -3919,7 +3928,7 @@ function _competitionTimer (  )
         ,   isdisabled  = options.disabled
         ;
 
-        $btn.i18nText( "Loading" );
+        $btn.i18nText( "loadingLbl" );
 
         $btn.data( "confirm", false );
 

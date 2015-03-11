@@ -744,6 +744,8 @@
                         }
                         params.error( jqXHR );
                     }
+
+                    params.callback( );
                 }
 
             ,   error:  function( jqXhr )
@@ -751,6 +753,8 @@
                     $frmLoginModal.find(".error-separate").text( jqXhr.statusText ).show();
 
                     params.error( "Error", jqXhr );
+
+                    params.callback( );
                 }
             }
         );
@@ -758,12 +762,22 @@
 
     $frmLoginModal.find( ".js-relogin" ).click( function()
     {
+        var $this       =   $(this)
+        ,   orgText     =   $this.text()
+        ;
+        bidx.utils.log('this', $this);
+        bidx.utils.log('orgText', orgText);
+        $this.i18nText( "btnPleaseWait" ).addClass('disabled');
         modalLogin(
         {
-            error: function( jqXhr )
-            {
-                bidx.utils.log('jqXhr', jqXhr);
-            }
+            callback:   function()
+                        {
+                            $this.text( orgText ).removeClass('disabled');
+                        }
+        ,   error:      function( jqXhr )
+                        {
+                            bidx.utils.log('jqXhr', jqXhr);
+                        }
         } );
     });
 
