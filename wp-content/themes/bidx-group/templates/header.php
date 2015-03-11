@@ -105,7 +105,7 @@
                                 <a href="<?php echo _l('join');?>" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Start Here','bidxplugin'); ?></a>
 <?php
                             }
-                            if( !$hasRole )
+                            if( $authenticated && !$hasRole )
                             {
 ?>
                                 <a href="<?php echo _l('join');?>" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Choose a role','bidxplugin'); ?></a>
