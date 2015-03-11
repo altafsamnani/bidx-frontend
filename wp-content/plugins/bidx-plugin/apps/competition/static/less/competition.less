@@ -111,7 +111,21 @@
         }
     }
 
+    .table-bordered > tbody > tr > td
+    {
+        border:0px;
+        border-top: 1px solid #dddddd;
+    }
 
+    .table-bordered > tbody > tr.extrapanel > td
+    {
+        border-top:0px;
+    }
+
+    tr.shown .fa-plus-square-o:before
+    {
+        content: "\f147";
+    }
 }
 .competition-description
 {
@@ -174,9 +188,4 @@ tbody tr.extrapanel td
 .assign-assessor, .assign-judge
 {
     padding-bottom:13%;
-}
-
-.competitionRecord a
-{
-
 }
