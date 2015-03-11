@@ -374,7 +374,6 @@
         }
 
         _setupApplyButton();
-        _competitionTimer();
         _snippets();
         _setupValidation();
         _coverImage();
@@ -4519,7 +4518,12 @@ function _competitionTimer (  )
 
     // Engage!
     //
-    _oneTimeSetup();
+    _competitionTimer();
+
+    if(loggedInMemberId)
+    {
+        _oneTimeSetup();
+    }
 
     // Expose
     //

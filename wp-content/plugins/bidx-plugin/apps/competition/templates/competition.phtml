@@ -59,14 +59,7 @@ $competitionId = $competitionBidxMeta->bidxCompetitionId;
 //
 $requestStatus = isset( $competition->accessAuthorization ) ? $competition->accessAuthorization : null;
 
-
-/*if ( !($competition->competitionLogo && $competition->competitionLogo->document) )
-{
-    if ( $isNewCompetition )
-    {
-        //$hasCover = 'hide-it';
-    }
-} */
+$hasCover   = '';
 
 $isParticipant = true;
 if ( $canEdit || $isAssessor || $isJudge )
@@ -109,6 +102,12 @@ if ( !empty( $attachment ) )
         }
         break;
     }
+}
+
+if ( !(isset($competition->competitionLogo) && isset($competition->competitionLogo->document) ) && !$canEdit )
+{
+    $hasCover = 'hide';
+
 }
 
 
@@ -177,11 +176,11 @@ if ( !empty( $attachment ) )
                         <div class="participants-state"><?php echo _e( 'Submitted', 'bidxplugin' ); ?></div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="participants-number">-</div>
+                        <div class="participants-number">0</div>
                         <div class="participants-state"><?php echo _e( 'Finalists', 'bidxplugin' ); ?></div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="participants-number">-</div>
+                        <div class="participants-number">0</div>
                         <div class="participants-state"><?php echo _e( 'Winners', 'bidxplugin' ); ?></div>
                     </div>
                 </div>

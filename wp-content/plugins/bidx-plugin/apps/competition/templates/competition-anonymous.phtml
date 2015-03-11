@@ -1,32 +1,69 @@
 <?php
-
-$competition = $this->data;
+$finalistDisplay   =   '';
+$winnerDisplay     =   '';
+$winnerCount       =    0;
+$finalistCount     =    0;
+$snippet        =   "<tr>
+                        <td><a href='/businesssummary/%entityId%' target='_blank'>%bidxEntityDisplayName%</a></td>
+                        <td> <a href='/member/%bidxOwnerId%'>%bidxOwnerDisplayName%</a> </td>
+                        <td> %bidxRatingAverage% </td>
+                    </tr>";
+$competition    = $this->data;
 // d($competition);
 
 $competitionBidxMeta = isset($competition->bidxMeta)
     ? $competition->bidxMeta
     : null;
 
-$canEdit                    = $this->exst($competitionBidxMeta->bidxCanEdit, false);
-
-$endDateTime                = ( isset( $competition->endDateTime ) ) ? date( 'd M Y H:i', strtotime ( $this->exst( $competition->endDateTime ) ) ) : NULL;
-
-$endTimeStamp               = ( isset( $competition->endDateTime ) ) ? strtotime ( $this->exst( $competition->endDateTime ) )  : NULL;
-
-$competitionId = $competitionBidxMeta->bidxCompetitionId;
-
-if ( !($competition->competitionLogo && $competition->competitionLogo->document) )
+foreach($competition->applications as $application)
 {
-    if ( $canEdit || $newBusiness )
+    $bidxMeta   =   $application->bidxMeta;
+
+    if( $application->status === 'WINNER')
     {
-        $hasCover = 'hide-it';
+        $winnerHtml =  str_replace("%entityId%", $application->id , $snippet);
+        $winnerHtml =  str_replace("%bidxEntityDisplayName%", $bidxMeta->bidxEntityDisplayName , $winnerHtml);
+        $winnerHtml =  str_replace("%bidxOwnerId%", $bidxMeta->bidxOwnerId , $winnerHtml);
+        $winnerHtml =  str_replace("%bidxOwnerDisplayName%", $bidxMeta->bidxOwnerDisplayName , $winnerHtml);
+        $winnerHtml =  str_replace("%bidxRatingAverage%", round($bidxMeta->bidxRatingAverage,2) , $winnerHtml);
+
+        $winnerDisplay .= $winnerHtml;
+
+        $winnerCount++;
+
     }
-    else
+
+    if( $application->status === 'FINALIST')
     {
-        $hasCover = 'hide';
+        $finalistHtml =  str_replace("%entityId%", $application->id , $snippet);
+        $finalistHtml =  str_replace("%bidxEntityDisplayName%", $bidxMeta->bidxEntityDisplayName , $finalistHtml);
+        $finalistHtml =  str_replace("%bidxOwnerId%", $bidxMeta->bidxOwnerId , $finalistHtml);
+        $finalistHtml =  str_replace("%bidxOwnerDisplayName%", $bidxMeta->bidxOwnerDisplayName , $finalistHtml);
+        $finalistHtml =  str_replace("%bidxRatingAverage%", round($bidxMeta->bidxRatingAverage,2) , $finalistHtml);
+
+        $finalistDisplay .= $finalistHtml;
+
+        $finalistCount++;
     }
 }
 
+
+
+$canEdit        = $this->exst($competitionBidxMeta->bidxCanEdit, false);
+
+$endDateTime    = ( isset( $competition->endDateTime ) ) ? date( 'd M Y H:i', strtotime ( $this->exst( $competition->endDateTime ) ) ) : NULL;
+
+$endTimeStamp   = ( isset( $competition->endDateTime ) ) ? strtotime ( $this->exst( $competition->endDateTime ) )  : NULL;
+
+$competitionId  = $competitionBidxMeta->bidxCompetitionId;
+
+$hasCover       = '';
+
+if ( !(isset($competition->competitionLogo) && isset($competition->competitionLogo->document) ) )
+{
+    $hasCover = 'hide';
+
+}
 
 ?>
 <div class="competitionSummary box-border top-margin-lineheight" id="competitionSummary" data-bsid="<?php echo $competitionId; ?>">
@@ -76,11 +113,11 @@ if ( !($competition->competitionLogo && $competition->competitionLogo->document)
             }
 ?>
                 <div class="col-sm-3">
-                    <div class="participants-number">-</div>
+                    <div class="participants-number"><?php echo $finalistCount;?></div>
                     <div class="participants-state"><?php echo _e( 'Finalists', 'bidxplugin' ); ?></div>
                 </div>
                 <div class="col-sm-3">
-                    <div class="participants-number">-</div>
+                    <div class="participants-number"><?php echo $winnerCount;?></div>
                     <div class="participants-state"><?php echo _e( 'Winners', 'bidxplugin' ); ?></div>
                 </div>
             </div>
@@ -113,7 +150,7 @@ if ( !($competition->competitionLogo && $competition->competitionLogo->document)
 <?php
                         }
                         else
-                        { 
+                        {
 ?>
                             <div class="counter-block">
                                 <div class="days counter-number"></div>
@@ -158,6 +195,52 @@ if ( !($competition->competitionLogo && $competition->competitionLogo->document)
             }
 ?>
             <div class="competition-description"><?php echo $this->exst( $competition->description ); ?></div>
+            <?php
+            if($winnerDisplay)
+            { ?>
+            <div class="viewWinner well">
+                <div>
+                    <h3><i class="fa fa-trophy fa-big fa-above pull-left"></i>&nbsp;<?php _e( 'WINNERS', 'bidxplugin' ); ?></h3>
+                </div>
+                <div>
+                    <table class="table table-condensed table-bottom-border">
+                        <thead>
+                        <tr>
+                            <th><?php _e('Business','bidxplugin');?></th>
+                            <th><?php _e('Entrepreneur','bidxplugin');?></th>
+                            <th><?php _e('Score','bidxplugin');?></th>
+                        </tr>
+                    </thead>
+                        <tbody class='winnerDisplay'>
+                            <?php echo $winnerDisplay;?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <?php
+            }
+            if($finalistDisplay)
+            { ?>
+                <div class="viewFinalist">
+                    <div>
+                        <h3><?php _e( 'FINALISTS', 'bidxplugin' ); ?></h3>
+                    </div>
+                    <div>
+                        <table class="table table-condensed table-bottom-border">
+                            <thead>
+                            <tr>
+                                <th><?php _e('Business','bidxplugin');?></th>
+                                <th><?php _e('Entrepreneur','bidxplugin');?></th>
+                                <th><?php _e('Score','bidxplugin');?></th>
+                            </tr>
+                        </thead>
+                            <tbody class='finalistDisplay'>
+                                <?php echo $finalistDisplay;?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            <?php } ?>
             <div class="row">
                 <div class="col-sm-4 col-sm-offset-4 big-padding-vertical">
                     <a href="/join" class="btn btn-lg btn-block btn-secondary"><?php echo _e( 'Participate', 'bidxplugin' ); ?></a>
