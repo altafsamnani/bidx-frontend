@@ -296,11 +296,11 @@ if ( !empty( $attachment ) )
     {
         ?>
         <div class="row">
-        <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-            <div class="alert alert-danger">
-                <strong><?php echo sprintf ( __('Competition is not active. Start date %1$s - End date %2$s ','bidxplugin'), $startDateTime, $endDateTime ); ?></strong>
+            <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+                <div class="alert alert-danger">
+                    <strong><?php echo sprintf ( __('Competition is not active. Start date %1$s - End date %2$s ','bidxplugin'), $startDateTime, $endDateTime ); ?></strong>
+                </div>
             </div>
-        </div>
         </div>
 <?php }
 ?>
@@ -350,9 +350,9 @@ if ( !empty( $attachment ) )
             <table class="table table-condensed table-bottom-border">
                 <thead>
                 <tr>
-                    <th>Business</th>
-                    <th>Entrepreneur</th>
-                    <th>Score</th>
+                    <th><?php _e('Business','bidxplugin');?></th>
+                    <th><?php _e('Entrepreneur','bidxplugin');?></th>
+                    <th><?php _e('Score','bidxplugin');?></th>
                 </tr>
             </thead>
                 <tbody class='winnerDisplay'></tbody>
@@ -371,10 +371,11 @@ if ( !empty( $attachment ) )
             <thead>
                 <tr>
                     <th></th>
-                    <th>Business</th>
-                    <th>Entrepreneur</th>
-                    <th>Score</th>
-                    <th>State</th>
+                    <th><?php _e('Business','bidxplugin');?></th>
+                    <th><?php _e('Entrepreneur','bidxplugin');?></th>
+                    <th><?php _e('Score','bidxplugin');?></th>
+                    <th><?php _e('My Recommendation','bidxplugin');?> </th>
+                    <th><?php _e('State','bidxplugin');?></th>
                 </tr>
             </thead>
         </table>
@@ -389,9 +390,9 @@ if ( !empty( $attachment ) )
             <table class="table table-condensed table-bottom-border">
                 <thead>
                 <tr>
-                    <th>Business</th>
-                    <th>Entrepreneur</th>
-                    <th>Score</th>
+                    <th><?php _e('Business','bidxplugin');?></th>
+                    <th><?php _e('Entrepreneur','bidxplugin');?></th>
+                    <th><?php _e('Score','bidxplugin');?></th>
                 </tr>
             </thead>
                 <tbody class='finalistDisplay'></tbody>
@@ -995,6 +996,7 @@ if ( !empty( $attachment ) )
 <script type="text/html" id="assessor-card-snippet">
 <!--
     <div class="cardEntity%entityId% main-padding">
+         <div class="col-sm-12 cardHeader%entityId% hide-overflow"></div>
         <div class="row">
             <div class="col-sm-12 pull-left">
                 <h4><?php _e('Assessors Recommendations', 'bidxplugin');?></h4>
@@ -1004,8 +1006,7 @@ if ( !empty( $attachment ) )
             <div class='assessor-recommendation-%entityId%'>%assessorsRecommendation%</div>
         </div>
        <div class="row">
-            <div class="col-sm-12 cardHeader%entityId% hide-overflow">
-            </div>
+
 
             <div class="cardContent">
                 <div class="cardTop">
