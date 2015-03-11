@@ -46,9 +46,6 @@ class auth {
 	 */
 	function load($atts) {
 
-        // BIDX-2837 Very quick and dirty workaround for MEK/GESR
-        // BEWARE: see the very same hack in auth.js and login.php
-
         // This "auth" app also handles views for /join and /activate. Beware that /join behaves
         // differently when authenticated (choose a role, or join the group, or show the homepage)
         // and when not authenticated (show all login options).
@@ -72,12 +69,11 @@ class auth {
         $authenticated = ( BidxCommon::$staticSession->authenticated === 'true' );
         $siteUrl = get_site_url();
         $subdomain = BidxCommon::get_bidx_subdomain( false, $siteUrl );
-        if ( $subdomain === "gesr" && !$authenticated ) {
-            // If the domain has 2 subdomains such as gesr.demo.bidx.net, then assume beta testing.
-            $isGesrBeta = substr_count( $siteUrl, "." ) > 2;
-            header( "Location: " . $siteUrl. "/bidx-soca/bidxauth?id=http://gesr.net/" . ($isGesrBeta ? "beta" : "") . '#join/role' );
-            return;
-        }
+
+	if ( get_option( 'bidx-ssoredirect-url' ) ) {
+    		header( "Location: " . $siteUrl . get_option( 'bidx-ssoredirect-url' ) );
+    		return;
+	}
 
 		// 1. Template Rendering
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
