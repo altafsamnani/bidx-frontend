@@ -613,26 +613,19 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
 
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label><?php _e('Gender','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                                    <div class="radio">
-                                                        <input selected type="radio" value='both' id="radio-personalDetailsB" name="competitionGender" data-toggle="radio" />
-                                                        <label for="radio-personalDetailsM"><span></span><?php _e('Both','bidxplugin'); ?></label>
+                                            <div class="form-group col-sm-6">
+                                                <label><?php _e('Gender','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                                    <div class="checkbox">
+                                                        <input type="checkbox" value="m" id="checkbox-personalDetailsM" name="competitionGender[]" />
+                                                        <label for="checkbox-personalDetailsM"><span></span><?php _e('Male','bidxplugin'); ?></label>
                                                     </div>
-
-                                                    <div class="radio">
-                                                        <input type="radio" value="m" id="radio-personalDetailsM" name="competitionGender" data-toggle="radio" />
-                                                        <label for="radio-personalDetailsM"><span></span><?php _e('Male','bidxplugin'); ?></label>
+                                                    <div class="checkbox">
+                                                        <input type="checkbox" value="f" id="checkbox-personalDetailsF" name="competitionGender[]" />
+                                                        <label for="checkbox-personalDetailsF"><span></span><?php _e('Female','bidxplugin'); ?></label>
                                                     </div>
-
-                                                    <div class="radio">
-                                                        <input type="radio" value="f" id="radio-personalDetailsF" name="competitionGender" data-toggle="radio" />
-                                                        <label for="radio-personalDetailsF"><span></span><?php _e('Female','bidxplugin'); ?></label>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
+
 
                                     </form>
                                 </div><!-- /EDIT -->

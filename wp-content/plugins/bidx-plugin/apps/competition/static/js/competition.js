@@ -214,6 +214,7 @@
             ,   "competitionCountry"
             ,   "competitionSocialImpact"
             ,   "competitionEnvImpact"
+            ,   "competitionGender"
             ,   "competitionComplementaryCriteria"
             ]
         }
@@ -2078,21 +2079,6 @@ function _competitionTimer (  )
             }
         } );
 
-
-        //Gender
-        var genderValue = bidx.utils.getValue( competitionSummary, "competitionGender" );
-
-        if ( genderValue && genderValue.length === 2 )
-        {
-            genderValue = 'both';
-        }
-        else
-        {
-            genderValue = _.first(genderValue);
-        }
-
-        bidx.utils.setElementValue( $gender, genderValue );
-
         // Industry Sectors
         var data = bidx.utils.getValue( competitionSummary, "competitionIndustry", true );
 
@@ -2190,7 +2176,7 @@ function _competitionTimer (  )
             }
 
             //Gender
-            var genderValue = bidx.utils.getElementValue( $gender );
+            /*var genderValue = bidx.utils.getElementValue( $gender );
 
             if( genderValue === 'both' )
             {
@@ -2198,7 +2184,7 @@ function _competitionTimer (  )
             }
 
 
-            bidx.utils.setValue( competitionSummary, 'competitionGender', genderValue );
+            bidx.utils.setValue( competitionSummary, 'competitionGender', genderValue );*/
 
             // Industry Sectors
             var endSectors = $industrySectors.find( "[name*='endSector']" );
