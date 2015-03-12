@@ -176,11 +176,11 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                         <div class="participants-state"><?php echo _e( 'Submitted', 'bidxplugin' ); ?></div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="participants-number"><?php echo $competition->finalistCount == null ? "-" : $competition->finalistCount ;?></div>
+                        <div class="participants-number"><?php echo isset($competition->finalistCount) ?  $competition->finalistCount : '-' ;?></div>
                         <div class="participants-state"><?php echo _e( 'Finalists', 'bidxplugin' ); ?></div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="participants-number"><?php echo $competition->winnerCount == null ? "-" : $competition->winnerCount ;?></div>
+                        <div class="participants-number"><?php echo isset($competition->winnerCount) ?  $competition->winnerCount : '-' ;?></div>
                         <div class="participants-state"><?php echo _e( 'Winners', 'bidxplugin' ); ?></div>
                     </div>
                 </div>
@@ -610,7 +610,6 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                                                 <label><?php _e('Complementary criteria','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 140 characters)','bidxplugin'); ?></small></label>
                                                 <textarea type="text" class="form-control" name="competitionComplementaryCriteria" placeholder="<?php _e('Here you can add complimentary criteria.','bidxplugin'); ?>"></textarea>
                                             </div>
-
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-sm-6">
@@ -625,8 +624,6 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                                                     </div>
                                             </div>
                                         </div>
-
-
                                     </form>
                                 </div><!-- /EDIT -->
 
