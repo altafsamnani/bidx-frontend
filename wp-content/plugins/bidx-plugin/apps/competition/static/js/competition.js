@@ -415,6 +415,8 @@
                         ,   "roundStatus": $this.data('roundstatus')
                         };
 
+
+
             bidx.common._notify(
             {
                 text:       bidx.i18n.i( "PHASE_" + phase, appName )
@@ -1714,11 +1716,13 @@ function _initApplicationsView( )
         if ( $.fn.dataTable.isDataTable( '.viewApplications' ) )
         {
             destroy     =   true;
+            //$('.viewApplications tbody').empty();
         }
 
         table = $('.viewApplications').DataTable(
         {
-            destroy:            true
+             destroy:            destroy
+        //,    "bDestroy": true
         ,   "bPaginate":        true
         ,   aLengthMenu:        [
                                     [10, 25, 50, 100, -1],
@@ -1746,15 +1750,25 @@ function _initApplicationsView( )
                                     nRow.classList.add( aData.status );
                                     return nRow;
                                 }
+        /*,   "fnInfoCallback":   function()
+                                {
+                                    if (row !== undefined)
+                                    {
+                                        bidx.utils.log('Row removed');
+                                        row.child.remove();
+                                    }
+                                }*/
         } );
 
+        if(!destroy)
+        {
         // Add event listener for opening and closing details
         $('.viewApplications tbody').on('click', 'td.details-control', function ( )
         {
-            var tr = $(this).closest('tr')
-            ,   row = table.row( tr )
-            ;
-
+            var formatHtml
+            ,   tr = $(this).closest('tr')
+            ,   row = table.row( tr );
+            bidx.utils.log('trrrrrrrrr',tr);
             if ( row.child.isShown() )
             {
                 // This row is already open - close it
@@ -1768,8 +1782,28 @@ function _initApplicationsView( )
             }
             else
             {
+
+                if( tr.hasClass ("data-visible") )
+                {
+                    row.child.show();
+                }
+                else
+                {
+
+                    bidx.utils.log('data', row.data());
+                    formatHtml  =   format(row.data(), row );
+
+                    bidx.utils.log( 'row', row);
+                    bidx.utils.log( 'formatHtml', formatHtml);
+
+                    row.child(  formatHtml ).show( );
+
+                    tr.addClass("data-visible");
+                }
+
+
                 // Open this row
-                row.child( format(row.data(), row ) ).show();
+                //row.child( format(row.data(), row ) ).show();
 
                 tr.addClass('shown');
 
@@ -1787,6 +1821,7 @@ function _initApplicationsView( )
                 tr.next().find( ".selectAssessors" ).bidx_chosen();
             }
         } );
+        }
 
         $( ".dataTables_length select" ).bidx_chosen();
 
@@ -1794,6 +1829,7 @@ function _initApplicationsView( )
 
     }
 }
+
 
 
 
