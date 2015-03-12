@@ -176,11 +176,11 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                         <div class="participants-state"><?php echo _e( 'Submitted', 'bidxplugin' ); ?></div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="participants-number">0</div>
+                        <div class="participants-number"><?php echo $competition->finalistCount == null ? "-" : $competition->finalistCount ;?></div>
                         <div class="participants-state"><?php echo _e( 'Finalists', 'bidxplugin' ); ?></div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="participants-number">0</div>
+                        <div class="participants-number"><?php echo $competition->winnerCount == null ? "-" : $competition->winnerCount ;?></div>
                         <div class="participants-state"><?php echo _e( 'Winners', 'bidxplugin' ); ?></div>
                     </div>
                 </div>
