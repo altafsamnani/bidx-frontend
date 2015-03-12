@@ -1750,25 +1750,18 @@ function _initApplicationsView( )
                                     nRow.classList.add( aData.status );
                                     return nRow;
                                 }
-        /*,   "fnInfoCallback":   function()
-                                {
-                                    if (row !== undefined)
-                                    {
-                                        bidx.utils.log('Row removed');
-                                        row.child.remove();
-                                    }
-                                }*/
         } );
 
-        if(!destroy)
+        if ( !destroy )
         {
         // Add event listener for opening and closing details
         $('.viewApplications tbody').on('click', 'td.details-control', function ( )
         {
             var formatHtml
-            ,   tr = $(this).closest('tr')
-            ,   row = table.row( tr );
-            bidx.utils.log('trrrrrrrrr',tr);
+            ,   tr          =   $(this).closest('tr')
+            ,   row         =   table.row( tr )
+            ;
+
             if ( row.child.isShown() )
             {
                 // This row is already open - close it
@@ -1789,21 +1782,12 @@ function _initApplicationsView( )
                 }
                 else
                 {
-
-                    bidx.utils.log('data', row.data());
                     formatHtml  =   format(row.data(), row );
-
-                    bidx.utils.log( 'row', row);
-                    bidx.utils.log( 'formatHtml', formatHtml);
 
                     row.child(  formatHtml ).show( );
 
                     tr.addClass("data-visible");
                 }
-
-
-                // Open this row
-                //row.child( format(row.data(), row ) ).show();
 
                 tr.addClass('shown');
 
