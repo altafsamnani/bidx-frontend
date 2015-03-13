@@ -1,5 +1,6 @@
 <I18N>
     <Item value="selectReasonForSubmission">Please select the reason why you are participating</Item>
+    <Item value="pendingStatus">Pending</Item>
     <Item value="currentYear">Current year</Item>
     <Item value="actuals">Actuals</Item>
     <Item value="forecast">Forecast</Item>
