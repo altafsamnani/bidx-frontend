@@ -683,6 +683,7 @@
                                 $coverImageContainer.cover( "constructHtml", file );
                             }
 
+                            $coverImageContainer.find( "[href$='#coverRemove']" ).removeClass( "hide" );
                         }
                     }
                 } );
@@ -694,11 +695,9 @@
             {
                 e.preventDefault();
 
-                $coverImageContainer.find( "img" ).remove();
-
-                competitionSummary.competitionLogo = null;
+                $coverImageContainer.find( "img" ).hide();
+                $coverImageContainer.find( "[href$='#coverRemove']" ).addClass( "hide" );
             } );
-
         }
 
 
@@ -2129,6 +2128,7 @@ function _competitionTimer (  )
         if ( coverImage )
         {
             $coverImageContainer.cover( "repositionCover" );
+            $coverImageContainer.find( "[href$='#coverRemove']" ).removeClass( "hide" );
         }
         else
         {
@@ -2339,13 +2339,14 @@ function _competitionTimer (  )
         // Cover Image
         //
         var coverImageData = $coverImageContainer.data( "bidxData" )
+        ,   $coverImg       = $coverImageContainer.find( "img" )
         ,   coverImgTopPos = $coverImageContainer.length ? parseInt( $coverImageContainer.find( "img" ).css( "top" ), 10) : false
         ;
 
         if ( coverImageData )
         {
             bidx.utils.setValue( competitionSummary, "competitionLogo.fileUpload", coverImageData.fileUpload );
-    }
+        }
 
         if ( coverImgTopPos )
         {
@@ -2358,6 +2359,12 @@ function _competitionTimer (  )
                 bidx.utils.setValue( competitionSummary, "competitionLogo.top", 0 );
             }
         }
+
+        if ( $coverImg.is(':hidden') )
+        {
+            competitionSummary.cover = null;
+        }
+
 
         // competitionLogo
         //
@@ -2498,6 +2505,7 @@ function _competitionTimer (  )
             {
                 bidx.common.removeAppWithPendingChanges( appName );
                 bidx.controller.updateHash( "#viewCompetition", true );
+                $coverImageContainer.find( "img" ).show();
 
                 reset();
 

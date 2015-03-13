@@ -19,6 +19,7 @@
     ,   $profilePictureControl              = $editForm.find( ".profilePictureControl" )
     ,   $profilePictureContainer            = $profilePictureControl.find( ".profilePictureContainer" )
     ,   $btnChangeProfilePicture            = $profilePictureControl.find( "a[href$='#changeProfilePicture']" )
+    ,   $btnRemoveProfilePicture            = $profilePictureControl.find( "a[href$='#removeProfilePicture']" )
     ,   $changeProfilePictureModal          = $profilePictureControl.find( ".changeProfilePictureModal" )
     ,   $scaleBtns                          = $profilePictureControl.find( ".js-scale" )
 
@@ -170,6 +171,15 @@
             dataKey:            "education"
         ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
+
+        $btnRemoveProfilePicture.click( function( e )
+        {
+            e.preventDefault();
+
+            $profilePictureContainer.find( "img" ).remove();
+            $profilePictureContainer.find( ".js-cropper" ).remove();
+        } );
+
 
         // Profile picture
         //
@@ -1143,6 +1153,11 @@
         {
             bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture.left", 0 );
             bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture.top", 0 );
+        }
+
+        if ( $profilePicture.length === 0 )
+        {
+            bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture", null );
         }
 
     }
