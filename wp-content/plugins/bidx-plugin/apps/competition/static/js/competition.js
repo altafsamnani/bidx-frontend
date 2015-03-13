@@ -329,7 +329,7 @@
                     }
                     catch ( e )
                     {
-                        bidx.utils.error( "problem parsing error response from phase update" );
+                        bidx.utils.error( "Problem parsing error response from phase update" );
                     }
 
                     if (options && options.error)
@@ -467,7 +467,7 @@
                                             ,   error:  function ( err )
                                                         {
                                                             var errMessage = bidx.i18n.i('msgError')
-                                                            bidx.common.notifyError( err);
+                                                            bidx.common.notifyError( err );
                                                             /*if ( err )
                                                            {
                                                                 alert( err );
@@ -1089,9 +1089,6 @@
                     ,   data:           updateActorsList
                     ,   success:        function( response )
                         {
-                            // Do we have edit perms?
-                            //
-                            bidx.utils.log('response',response);
 
                             $this.text(orgText);
 
@@ -1122,9 +1119,17 @@
                         }
                         , error: function(jqXhr, textStatus)
                         {
-                            var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+                            $this.text(orgText);
 
-                            _showError("Something went wrong while applying for the competition for entityId: " + params.data.entityId);
+                            if( jqXhr.responseJSON.code )
+                            {
+
+                                bidx.common.notifyError( jqXhr.responseJSON.code );
+                            }
+                            else
+                            {
+                                bidx.utils.error( "Problem parsing error response from phase update" );
+                            }
                         }
                     }
                 );
