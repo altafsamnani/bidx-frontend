@@ -327,11 +327,21 @@
                 }
                 , error: function(jqXhr, textStatus)
                 {
-                    bidx.utils.log( "bidx::requestAccess::save::error", jqXhr, textStatus );
+                    var response;
+                    try
+                    {
+                        // Not really needed for now, but just have it on the screen, k thx bye
+                        //
+                        response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
+                    }
+                    catch ( e )
+                    {
+                        bidx.utils.error( "problem parsing error response from phase update" );
+                    }
 
                     if (options && options.error)
                     {
-                        options.error( new Error( jqXhr.responseJSON.code ) );
+                        options.error( response ) ;
                     }
                 }
             }
@@ -415,7 +425,7 @@
                         ,   "roundStatus": $this.data('roundstatus')
                         };
 
-
+           // data.roundStatus = 'test';
 
             bidx.common._notify(
             {
@@ -430,14 +440,15 @@
                     ,   text:           "Ok"
                     ,   onClick: function( $noty )
                         {
+                            $noty.close();
+
+                            bidx.common.notifyInformationModal( bidx.i18n.i('msgWaitforPhaseUpdate', appName));
 
                             _sendToNextPhase({
                                                 data :  data
                                             ,   success: function( competitionVars )
                                                         {
                                                             _loadCompetitionVars( competitionVars );
-
-                                                            //bidx.common.notifyRedirect();
 
                                                             //location.reload();
 
@@ -455,18 +466,23 @@
 
                                                             _initApplicationsView();
 
+                                                            bidx.common.closeNotifications();
+                                                            bidx.common.notifyCustomSuccess( bidx.i18n.i('msgSuccessforPhaseUpdate', appName));
+
 
                                                         }
                                             ,   error:  function ( err )
                                                         {
-                                                            if ( err )
+                                                            var errMessage = bidx.i18n.i('msgError')
+                                                            bidx.common.notifyError( err);
+                                                            /*if ( err )
                                                            {
                                                                 alert( err );
-                                                            }
+                                                            }*/
                                                         }
                                             });
 
-                            $noty.close();
+
                         }
                     }
                 ,   {
@@ -1371,10 +1387,16 @@ function currentUserRecommendationForCurrentPhase( response )
     {
         case isCompetitionManager :
 
-            if( status !== 'REJECTED' )
+            //If status is rejected or its ended directly shows status in recommendation then
+            if( status === 'REJECTED' || competitionBidxMeta.bidxCompetitionRoundStatus === 'ENDED')
+            {
+                displayReview = bidx.i18n.i( status,  appName );
+
+            }
+            else
             {
                 //If round is ended then display Judging recommendatin for admin
-                competitionRoundStatus    =   ( competitionBidxMeta.bidxCompetitionRoundStatus === 'ENDED' )  ? 'JUDGING' : competitionBidxMeta.bidxCompetitionRoundStatus;
+                competitionRoundStatus    =   competitionBidxMeta.bidxCompetitionRoundStatus;
 
                 currentPhaseReview          =   _.findWhere(  reviews
                                                 ,   {
@@ -1388,10 +1410,6 @@ function currentUserRecommendationForCurrentPhase( response )
                 {
                     displayReview = bidx.i18n.i( currentPhaseReview.competitionRecommendation, appName );
                 }
-            }
-            else
-            {
-                displayReview = bidx.i18n.i( status,  appName );
             }
 
         break;
@@ -4320,7 +4338,7 @@ function _competitionTimer (  )
 
         statusObj          = _.where( applicationObj, { status : planStatus.toUpperCase() } );
 
-        if( statusObj )
+        if( statusObj.length )
         {
             $.each( statusObj, function( idx, result )
             {
@@ -4331,7 +4349,7 @@ function _competitionTimer (  )
                     bidxMeta    =   bidx.utils.getValue(result, "bidxMeta");
 
                     listItem    =   snippet
-                             .replace( /%entityId%/g,                    entityId                        ? entityId     : emptyVal )
+                            .replace( /%entityId%/g,                    entityId                        ? entityId     : emptyVal )
                             .replace( /%bidxOwnerId%/g,                 bidxMeta.bidxOwnerId )
                             .replace( /%bidxOwnerDisplayName%/g,        bidxMeta.bidxOwnerDisplayName   ? bidxMeta.bidxOwnerDisplayName     : emptyVal )
                             .replace( /%bidxRatingAverage%/g,           bidxMeta.bidxRatingAverage      ? bidxMeta.bidxRatingAverage.toFixed(1)     : emptyVal )
