@@ -120,6 +120,16 @@
                             </div>
 <?php
                         }
+
+                        if ( get_option( 'logo_alignment' ) === 'middle' )
+                        {
+                            if( $authenticated && !$hasRole )
+                            {
+?>
+                                <a href="<?php echo _l('join');?>" class="btn btn-secondary btn-lg start-btn choose-role"><?php _e('Choose a role','bidxplugin'); ?></a>
+<?php
+                            }
+                        }
 ?>
                     </div>
                 </div>
