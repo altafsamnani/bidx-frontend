@@ -2284,6 +2284,7 @@
             var $view                   = $views.filter( bidx.utils.getViewName( options.view ) )
             ,   $list                   = $view.find( ".list" )
             ,   listItem               =  $( "#mailbox-listitem" ).html().replace( /(<!--)*(-->)*/g, "" )
+            ,   notificationItem        = $( "#mailbox-notificationitem" ).html().replace( /(<!--)*(-->)*/g, "" )
             ,   $listEmpty              = $( $( "#mailbox-empty") .html().replace( /(<!--)*(-->)*/g, "" ) )
             ,   messages
             ,   newListItem
@@ -2338,7 +2339,9 @@
                                 {
                                     var    subject;
 
-                                    newListItem = listItem;
+                                    // select the template; system inmails only have a subject and cannot be clicked
+                                    //
+                                    newListItem = item.type === "MAIL_SYSTEM_INMAIL" ? notificationItem : listItem;
                                     recipients = [];
 
                                     if( _isSenderOfMessage( item ) )
