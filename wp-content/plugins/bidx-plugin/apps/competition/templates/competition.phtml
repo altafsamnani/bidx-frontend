@@ -176,11 +176,11 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                         <div class="participants-state"><?php echo _e( 'Submitted', 'bidxplugin' ); ?></div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="participants-number">0</div>
+                        <div class="participants-number"><?php echo isset($competition->finalistCount) ?  $competition->finalistCount : '-' ;?></div>
                         <div class="participants-state"><?php echo _e( 'Finalists', 'bidxplugin' ); ?></div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="participants-number">0</div>
+                        <div class="participants-number"><?php echo isset($competition->winnerCount) ?  $competition->winnerCount : '-' ;?></div>
                         <div class="participants-state"><?php echo _e( 'Winners', 'bidxplugin' ); ?></div>
                     </div>
                 </div>
@@ -208,7 +208,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                                     <div class="alert alert-warning">
                                         <strong><i class="fa fa-exclamation-triangle"></i> <?php _e( 'This competition has expired','bidxplugin' ); ?></strong>
                                     </div>
-                                    <a class="btn btn-secondary btn-block" href="/competition"><?php _e( 'Visit our competition overview','bidxplugin' ); ?> </a><?php
+                        <?php
                                 } else {  ?>
                                     <div class="counter-block">
                                         <div class="days counter-number"></div>
@@ -519,14 +519,14 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
 
                                     <!-- Slogan -->
                                     <div class="form-group col-sm-6">
-                                        <label><?php _e('Give a short description of competition in a maximum of 30 words','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Give a short description of competition in a maximum of 30 words','bidxplugin'); ?> </label>
                                         <textarea type="text" class="form-control" name="description" placeholder="<?php _e('Description of the goals of the competition','bidxplugin'); ?>"></textarea>
                                     </div>
                                 </div>
                                  <div class="row">
                                     <!-- Summary -->
                                     <div class="form-group col-sm-6">
-                                        <label><?php _e('Start date','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Start date','bidxplugin'); ?></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                              <input type="text" class="form-control"  readonly data-type="datetime" name="startDateTime" placeholder="<?php _e('Please select start date','bidxplugin'); ?>">
@@ -535,7 +535,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
 
                                     <!-- Reason For Submission -->
                                     <div class="form-group col-sm-6">
-                                        <label><?php _e('End date','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('End date','bidxplugin'); ?></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                             <input readonly type="text" class="form-control" name="endDateTime" data-type="datetime" placeholder="<?php _e('Please select end date','bidxplugin'); ?>">
@@ -610,30 +610,20 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                                                 <label><?php _e('Complementary criteria','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 140 characters)','bidxplugin'); ?></small></label>
                                                 <textarea type="text" class="form-control" name="competitionComplementaryCriteria" placeholder="<?php _e('Here you can add complimentary criteria.','bidxplugin'); ?>"></textarea>
                                             </div>
-
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label><?php _e('Gender','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                                    <div class="radio">
-                                                        <input selected type="radio" value='both' id="radio-personalDetailsB" name="competitionGender" data-toggle="radio" />
-                                                        <label for="radio-personalDetailsM"><span></span><?php _e('Both','bidxplugin'); ?></label>
+                                            <div class="form-group col-sm-6">
+                                                <label><?php _e('Gender','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                                    <div class="checkbox">
+                                                        <input type="checkbox" value="m" id="checkbox-personalDetailsM" name="competitionGender[]" />
+                                                        <label for="checkbox-personalDetailsM"><span></span><?php _e('Male','bidxplugin'); ?></label>
                                                     </div>
-
-                                                    <div class="radio">
-                                                        <input type="radio" value="m" id="radio-personalDetailsM" name="competitionGender" data-toggle="radio" />
-                                                        <label for="radio-personalDetailsM"><span></span><?php _e('Male','bidxplugin'); ?></label>
+                                                    <div class="checkbox">
+                                                        <input type="checkbox" value="f" id="checkbox-personalDetailsF" name="competitionGender[]" />
+                                                        <label for="checkbox-personalDetailsF"><span></span><?php _e('Female','bidxplugin'); ?></label>
                                                     </div>
-
-                                                    <div class="radio">
-                                                        <input type="radio" value="f" id="radio-personalDetailsF" name="competitionGender" data-toggle="radio" />
-                                                        <label for="radio-personalDetailsF"><span></span><?php _e('Female','bidxplugin'); ?></label>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
-
                                     </form>
                                 </div><!-- /EDIT -->
 

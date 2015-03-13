@@ -187,13 +187,6 @@
             [
                 "name"
             ,   "description"
-
-                // This is actually an array in the data model, but presented as a dropdown in the UI designs.
-                // Conflict!
-                // We need to force it to be an array when sending into the API
-                // After disucssion with Jeroen created BIDX-1435 to request any non-array value to be interpreted as an array by the API,
-                // but until that is available, send in reasonforSubmsision as an array
-                //
             ,   "startDateTime"
             ,   "endDateTime"
             ]
@@ -214,6 +207,7 @@
             ,   "competitionCountry"
             ,   "competitionSocialImpact"
             ,   "competitionEnvImpact"
+            ,   "competitionGender"
             ,   "competitionComplementaryCriteria"
             ]
         }
@@ -326,11 +320,21 @@
                 }
                 , error: function(jqXhr, textStatus)
                 {
-                    bidx.utils.log( "bidx::requestAccess::save::error", jqXhr, textStatus );
+                    var response;
+                    try
+                    {
+                        // Not really needed for now, but just have it on the screen, k thx bye
+                        //
+                        response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
+                    }
+                    catch ( e )
+                    {
+                        bidx.utils.error( "Problem parsing error response from phase update" );
+                    }
 
                     if (options && options.error)
                     {
-                        options.error( new Error( jqXhr.responseJSON.code ) );
+                        options.error( response ) ;
                     }
                 }
             }
@@ -414,6 +418,8 @@
                         ,   "roundStatus": $this.data('roundstatus')
                         };
 
+           // data.roundStatus = 'test';
+
             bidx.common._notify(
             {
                 text:       bidx.i18n.i( "PHASE_" + phase, appName )
@@ -427,14 +433,15 @@
                     ,   text:           "Ok"
                     ,   onClick: function( $noty )
                         {
+                            $noty.close();
+
+                            bidx.common.notifyInformationModal( bidx.i18n.i('msgWaitforPhaseUpdate', appName));
 
                             _sendToNextPhase({
                                                 data :  data
                                             ,   success: function( competitionVars )
                                                         {
                                                             _loadCompetitionVars( competitionVars );
-
-                                                            //bidx.common.notifyRedirect();
 
                                                             //location.reload();
 
@@ -452,18 +459,23 @@
 
                                                             _initApplicationsView();
 
+                                                            bidx.common.closeNotifications();
+                                                            bidx.common.notifyCustomSuccess( bidx.i18n.i('msgSuccessforPhaseUpdate', appName));
+
 
                                                         }
                                             ,   error:  function ( err )
                                                         {
-                                                            if ( err )
+                                                            var errMessage = bidx.i18n.i('msgError')
+                                                            bidx.common.notifyError( err );
+                                                            /*if ( err )
                                                            {
                                                                 alert( err );
-                                                            }
+                                                            }*/
                                                         }
                                             });
 
-                            $noty.close();
+
                         }
                     }
                 ,   {
@@ -553,9 +565,10 @@
                         required:               true
                     ,   maxlength:              30
                     }
-                ,   summary:
+                ,   description:
                     {
-                        maxlength:              900
+                        required:               true
+                    ,   maxlength:              900
                     }
                 ,   startdate:
                     {
@@ -576,19 +589,7 @@
                     _doSave();
                 }
             } );
-            /*
-            forms.management.$el.validate(
-            {
-                debug:          false
-            ,   ignore:         ""
-            ,   rules:
-                {
-                    visibility:
-                    {
-                        required:      true
-                    }
-                }
-            } ); */
+
             // About your business
             //
             forms.aboutParticipants.$el.validate(
@@ -1087,9 +1088,6 @@
                     ,   data:           updateActorsList
                     ,   success:        function( response )
                         {
-                            // Do we have edit perms?
-                            //
-                            bidx.utils.log('response',response);
 
                             $this.text(orgText);
 
@@ -1120,9 +1118,17 @@
                         }
                         , error: function(jqXhr, textStatus)
                         {
-                            var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+                            $this.text(orgText);
 
-                            _showError("Something went wrong while applying for the competition for entityId: " + params.data.entityId);
+                            if( jqXhr.responseJSON.code )
+                            {
+
+                                bidx.common.notifyError( jqXhr.responseJSON.code );
+                            }
+                            else
+                            {
+                                bidx.utils.error( "Problem parsing error response from phase update" );
+                            }
                         }
                     }
                 );
@@ -1367,10 +1373,16 @@ function currentUserRecommendationForCurrentPhase( response )
     {
         case isCompetitionManager :
 
-            if( status !== 'REJECTED' )
+            //If status is rejected or its ended directly shows status in recommendation then
+            if( status === 'REJECTED' || competitionBidxMeta.bidxCompetitionRoundStatus === 'ENDED')
+            {
+                displayReview = bidx.i18n.i( status,  appName );
+
+            }
+            else
             {
                 //If round is ended then display Judging recommendatin for admin
-                competitionRoundStatus    =   ( competitionBidxMeta.bidxCompetitionRoundStatus === 'ENDED' )  ? 'JUDGING' : competitionBidxMeta.bidxCompetitionRoundStatus;
+                competitionRoundStatus    =   competitionBidxMeta.bidxCompetitionRoundStatus;
 
                 currentPhaseReview          =   _.findWhere(  reviews
                                                 ,   {
@@ -1384,10 +1396,6 @@ function currentUserRecommendationForCurrentPhase( response )
                 {
                     displayReview = bidx.i18n.i( currentPhaseReview.competitionRecommendation, appName );
                 }
-            }
-            else
-            {
-                displayReview = bidx.i18n.i( status,  appName );
             }
 
         break;
@@ -1712,11 +1720,13 @@ function _initApplicationsView( )
         if ( $.fn.dataTable.isDataTable( '.viewApplications' ) )
         {
             destroy     =   true;
+            //$('.viewApplications tbody').empty();
         }
 
         table = $('.viewApplications').DataTable(
         {
-            destroy:            true
+             destroy:            destroy
+        //,    "bDestroy": true
         ,   "bPaginate":        true
         ,   aLengthMenu:        [
                                     [10, 25, 50, 100, -1],
@@ -1746,11 +1756,14 @@ function _initApplicationsView( )
                                 }
         } );
 
+        if ( !destroy )
+        {
         // Add event listener for opening and closing details
         $('.viewApplications tbody').on('click', 'td.details-control', function ( )
         {
-            var tr = $(this).closest('tr')
-            ,   row = table.row( tr )
+            var formatHtml
+            ,   tr          =   $(this).closest('tr')
+            ,   row         =   table.row( tr )
             ;
 
             if ( row.child.isShown() )
@@ -1766,8 +1779,19 @@ function _initApplicationsView( )
             }
             else
             {
-                // Open this row
-                row.child( format(row.data(), row ) ).show();
+
+                if( tr.hasClass ("data-visible") )
+                {
+                    row.child.show();
+                }
+                else
+                {
+                    formatHtml  =   format(row.data(), row );
+
+                    row.child(  formatHtml ).show( );
+
+                    tr.addClass("data-visible");
+                }
 
                 tr.addClass('shown');
 
@@ -1785,6 +1809,7 @@ function _initApplicationsView( )
                 tr.next().find( ".selectAssessors" ).bidx_chosen();
             }
         } );
+        }
 
         $( ".dataTables_length select" ).bidx_chosen();
 
@@ -1792,6 +1817,7 @@ function _initApplicationsView( )
 
     }
 }
+
 
 
 
@@ -2077,21 +2103,6 @@ function _competitionTimer (  )
             }
         } );
 
-
-        //Gender
-        var genderValue = bidx.utils.getValue( competitionSummary, "competitionGender" );
-
-        if ( genderValue && genderValue.length === 2 )
-        {
-            genderValue = 'both';
-        }
-        else
-        {
-            genderValue = _.first(genderValue);
-        }
-
-        bidx.utils.setElementValue( $gender, genderValue );
-
         // Industry Sectors
         var data = bidx.utils.getValue( competitionSummary, "competitionIndustry", true );
 
@@ -2190,7 +2201,7 @@ function _competitionTimer (  )
             }
 
             //Gender
-            var genderValue = bidx.utils.getElementValue( $gender );
+            /*var genderValue = bidx.utils.getElementValue( $gender );
 
             if( genderValue === 'both' )
             {
@@ -2198,7 +2209,7 @@ function _competitionTimer (  )
             }
 
 
-            bidx.utils.setValue( competitionSummary, 'competitionGender', genderValue );
+            bidx.utils.setValue( competitionSummary, 'competitionGender', genderValue );*/
 
             // Industry Sectors
             var endSectors = $industrySectors.find( "[name*='endSector']" );
@@ -4322,7 +4333,7 @@ function _competitionTimer (  )
 
         statusObj          = _.where( applicationObj, { status : planStatus.toUpperCase() } );
 
-        if( statusObj )
+        if( statusObj.length )
         {
             $.each( statusObj, function( idx, result )
             {
@@ -4333,7 +4344,7 @@ function _competitionTimer (  )
                     bidxMeta    =   bidx.utils.getValue(result, "bidxMeta");
 
                     listItem    =   snippet
-                             .replace( /%entityId%/g,                    entityId                        ? entityId     : emptyVal )
+                            .replace( /%entityId%/g,                    entityId                        ? entityId     : emptyVal )
                             .replace( /%bidxOwnerId%/g,                 bidxMeta.bidxOwnerId )
                             .replace( /%bidxOwnerDisplayName%/g,        bidxMeta.bidxOwnerDisplayName   ? bidxMeta.bidxOwnerDisplayName     : emptyVal )
                             .replace( /%bidxRatingAverage%/g,           bidxMeta.bidxRatingAverage      ? bidxMeta.bidxRatingAverage.toFixed(1)     : emptyVal )
