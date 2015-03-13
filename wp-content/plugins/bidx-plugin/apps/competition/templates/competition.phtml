@@ -59,14 +59,7 @@ $competitionId = $competitionBidxMeta->bidxCompetitionId;
 //
 $requestStatus = isset( $competition->accessAuthorization ) ? $competition->accessAuthorization : null;
 
-
-/*if ( !($competition->competitionLogo && $competition->competitionLogo->document) )
-{
-    if ( $isNewCompetition )
-    {
-        //$hasCover = 'hide-it';
-    }
-} */
+$hasCover   = '';
 
 $isParticipant = true;
 if ( $canEdit || $isAssessor || $isJudge )
@@ -109,6 +102,12 @@ if ( !empty( $attachment ) )
         }
         break;
     }
+}
+
+if ( !(isset($competition->competitionLogo) && isset($competition->competitionLogo->document) ) && !$canEdit )
+{
+    $hasCover = 'hide';
+
 }
 
 
@@ -177,11 +176,11 @@ if ( !empty( $attachment ) )
                         <div class="participants-state"><?php echo _e( 'Submitted', 'bidxplugin' ); ?></div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="participants-number">-</div>
+                        <div class="participants-number"><?php echo isset($competition->finalistCount) ?  $competition->finalistCount : '-' ;?></div>
                         <div class="participants-state"><?php echo _e( 'Finalists', 'bidxplugin' ); ?></div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="participants-number">-</div>
+                        <div class="participants-number"><?php echo isset($competition->winnerCount) ?  $competition->winnerCount : '-' ;?></div>
                         <div class="participants-state"><?php echo _e( 'Winners', 'bidxplugin' ); ?></div>
                     </div>
                 </div>
@@ -209,7 +208,7 @@ if ( !empty( $attachment ) )
                                     <div class="alert alert-warning">
                                         <strong><i class="fa fa-exclamation-triangle"></i> <?php _e( 'This competition has expired','bidxplugin' ); ?></strong>
                                     </div>
-                                    <a class="btn btn-secondary btn-block" href="/competition"><?php _e( 'Visit our competition overview','bidxplugin' ); ?> </a><?php
+                        <?php
                                 } else {  ?>
                                     <div class="counter-block">
                                         <div class="days counter-number"></div>
@@ -296,11 +295,11 @@ if ( !empty( $attachment ) )
     {
         ?>
         <div class="row">
-        <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-            <div class="alert alert-danger">
-                <strong><?php echo sprintf ( __('Competition is not active. Start date %1$s - End date %2$s ','bidxplugin'), $startDateTime, $endDateTime ); ?></strong>
+            <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+                <div class="alert alert-danger">
+                    <strong><?php echo sprintf ( __('Competition is not active. Start date %1$s - End date %2$s ','bidxplugin'), $startDateTime, $endDateTime ); ?></strong>
+                </div>
             </div>
-        </div>
         </div>
 <?php }
 ?>
@@ -350,9 +349,9 @@ if ( !empty( $attachment ) )
             <table class="table table-condensed table-bottom-border">
                 <thead>
                 <tr>
-                    <th>Business</th>
-                    <th>Entrepreneur</th>
-                    <th>Score</th>
+                    <th><?php _e('Business','bidxplugin');?></th>
+                    <th><?php _e('Entrepreneur','bidxplugin');?></th>
+                    <th><?php _e('Score','bidxplugin');?></th>
                 </tr>
             </thead>
                 <tbody class='winnerDisplay'></tbody>
@@ -371,10 +370,11 @@ if ( !empty( $attachment ) )
             <thead>
                 <tr>
                     <th></th>
-                    <th>Business</th>
-                    <th>Entrepreneur</th>
-                    <th>Score</th>
-                    <th>State</th>
+                    <th><?php _e('Business','bidxplugin');?></th>
+                    <th><?php _e('Entrepreneur','bidxplugin');?></th>
+                    <th><?php _e('Score','bidxplugin');?></th>
+                    <th><?php _e('My Recommendation','bidxplugin');?> </th>
+                    <th><?php _e('State','bidxplugin');?></th>
                 </tr>
             </thead>
         </table>
@@ -389,9 +389,9 @@ if ( !empty( $attachment ) )
             <table class="table table-condensed table-bottom-border">
                 <thead>
                 <tr>
-                    <th>Business</th>
-                    <th>Entrepreneur</th>
-                    <th>Score</th>
+                    <th><?php _e('Business','bidxplugin');?></th>
+                    <th><?php _e('Entrepreneur','bidxplugin');?></th>
+                    <th><?php _e('Score','bidxplugin');?></th>
                 </tr>
             </thead>
                 <tbody class='finalistDisplay'></tbody>
@@ -610,30 +610,20 @@ if ( !empty( $attachment ) )
                                                 <label><?php _e('Complementary criteria','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 140 characters)','bidxplugin'); ?></small></label>
                                                 <textarea type="text" class="form-control" name="competitionComplementaryCriteria" placeholder="<?php _e('Here you can add complimentary criteria.','bidxplugin'); ?>"></textarea>
                                             </div>
-
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label><?php _e('Gender','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                                    <div class="radio">
-                                                        <input selected type="radio" value='both' id="radio-personalDetailsB" name="competitionGender" data-toggle="radio" />
-                                                        <label for="radio-personalDetailsM"><span></span><?php _e('Both','bidxplugin'); ?></label>
+                                            <div class="form-group col-sm-6">
+                                                <label><?php _e('Gender','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                                    <div class="checkbox">
+                                                        <input type="checkbox" value="m" id="checkbox-personalDetailsM" name="competitionGender[]" />
+                                                        <label for="checkbox-personalDetailsM"><span></span><?php _e('Male','bidxplugin'); ?></label>
                                                     </div>
-
-                                                    <div class="radio">
-                                                        <input type="radio" value="m" id="radio-personalDetailsM" name="competitionGender" data-toggle="radio" />
-                                                        <label for="radio-personalDetailsM"><span></span><?php _e('Male','bidxplugin'); ?></label>
+                                                    <div class="checkbox">
+                                                        <input type="checkbox" value="f" id="checkbox-personalDetailsF" name="competitionGender[]" />
+                                                        <label for="checkbox-personalDetailsF"><span></span><?php _e('Female','bidxplugin'); ?></label>
                                                     </div>
-
-                                                    <div class="radio">
-                                                        <input type="radio" value="f" id="radio-personalDetailsF" name="competitionGender" data-toggle="radio" />
-                                                        <label for="radio-personalDetailsF"><span></span><?php _e('Female','bidxplugin'); ?></label>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
-
                                     </form>
                                 </div><!-- /EDIT -->
 
@@ -995,6 +985,7 @@ if ( !empty( $attachment ) )
 <script type="text/html" id="assessor-card-snippet">
 <!--
     <div class="cardEntity%entityId% main-padding">
+         <div class="col-sm-12 cardHeader%entityId% hide-overflow"></div>
         <div class="row">
             <div class="col-sm-12 pull-left">
                 <h4><?php _e('Assessors Recommendations', 'bidxplugin');?></h4>
@@ -1004,8 +995,7 @@ if ( !empty( $attachment ) )
             <div class='assessor-recommendation-%entityId%'>%assessorsRecommendation%</div>
         </div>
        <div class="row">
-            <div class="col-sm-12 cardHeader%entityId% hide-overflow">
-            </div>
+
 
             <div class="cardContent">
                 <div class="cardTop">
