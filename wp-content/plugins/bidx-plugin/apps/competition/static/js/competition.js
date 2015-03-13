@@ -1119,12 +1119,15 @@
                         }
                         , error: function(jqXhr, textStatus)
                         {
+                            var errorTxt
+                            ;
+
                             $this.text(orgText);
 
                             if( jqXhr.responseJSON.code )
                             {
-
-                                bidx.common.notifyError( jqXhr.responseJSON.code );
+                                errorTxt    =   jqXhr.responseJSON.code + ' ' + jqXhr.responseJSON.text;
+                                bidx.common.notifyError( errorTxt );
                             }
                             else
                             {
