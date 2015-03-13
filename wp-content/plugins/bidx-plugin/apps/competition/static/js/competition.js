@@ -187,13 +187,6 @@
             [
                 "name"
             ,   "description"
-
-                // This is actually an array in the data model, but presented as a dropdown in the UI designs.
-                // Conflict!
-                // We need to force it to be an array when sending into the API
-                // After disucssion with Jeroen created BIDX-1435 to request any non-array value to be interpreted as an array by the API,
-                // but until that is available, send in reasonforSubmsision as an array
-                //
             ,   "startDateTime"
             ,   "endDateTime"
             ]
@@ -572,9 +565,10 @@
                         required:               true
                     ,   maxlength:              30
                     }
-                ,   summary:
+                ,   description:
                     {
-                        maxlength:              900
+                        required:               true
+                    ,   maxlength:              900
                     }
                 ,   startdate:
                     {
@@ -595,19 +589,7 @@
                     _doSave();
                 }
             } );
-            /*
-            forms.management.$el.validate(
-            {
-                debug:          false
-            ,   ignore:         ""
-            ,   rules:
-                {
-                    visibility:
-                    {
-                        required:      true
-                    }
-                }
-            } ); */
+
             // About your business
             //
             forms.aboutParticipants.$el.validate(
