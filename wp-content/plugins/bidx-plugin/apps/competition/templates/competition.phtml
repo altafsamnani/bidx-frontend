@@ -129,9 +129,9 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
             if ( $canEdit )
             {
     ?>
-                <div class="btn-group coverBtns">
-                    <a class="btn btn-primary btn-large btnCover" data-toggle="modal" href="#coverImage"><?php echo _e( 'Add or Change', 'bidxplugin' ); ?></a>
-                    <!-- <a class="btn btn-primary btn-large btnRemove" data-toggle="modal" href="#coverRemove"><?php echo _e( 'Remove', 'bidxplugin' ); ?></a> -->
+                <div class="coverBtns">
+                    <a class="btn btn-primary btn-large btnCover" data-toggle="modal" href="#coverImage"><?php echo _e( 'Select', 'bidxplugin' ); ?></a>
+                    <a class="btn btn-primary btn-large btnRemove hide" href="#coverRemove"><?php echo _e( 'Remove', 'bidxplugin' ); ?></a>
                 </div>
 
                 <div class="coverModal modal fade">
