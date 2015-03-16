@@ -29,20 +29,11 @@ get_header();
     </div>
 </section>
 <div class="container">
-<<<<<<< HEAD
     <div id="content">
         <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
             <div id="post-<?php the_ID(); ?>" <?php post_class('page'); ?>>
                 <article>
                     <?php if ( has_post_thumbnail() ) { /* loades the post's featured thumbnail, requires Wordpress 3.0+ */ echo '<div class="featured-thumbnail">'; the_post_thumbnail(); echo '</div>'; } ?>
-=======
-
-	<div id="content">
-		<?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
-			<div id="post-<?php the_ID(); ?>" <?php post_class('page'); ?>>
-				<article>
-					<?php if ( has_post_thumbnail() ) { /* loades the post's featured thumbnail, requires Wordpress 3.0+ */ echo '<div class="featured-thumbnail">'; the_post_thumbnail(); echo '</div>'; } ?>
->>>>>>> 2d84706a9825eeef1f27a50961029ce018463309
 
                     <div class="post-content page-content pad-25">
                         <?php the_content(); ?>
