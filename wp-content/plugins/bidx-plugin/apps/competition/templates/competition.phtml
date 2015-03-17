@@ -794,13 +794,15 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
         </div>
         <div class="cardContent">
             <div class="cardTop">
-                <div class="row">
-                     <div class="assign-assessor hide">
+                <div class="assign-assessor hide">
+                    <div class="row">
                         <div class="col-sm-12">
                             <label class="inline">Assign Assessor:</label>
                         </div>
+                    </div>
+                    <div class="row">
                         <div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8 chosen-drpdwnsetting">
                                 <select data-placeholder="<?php _e('Select Assessor','bidxplugin');?>" multiple class="chosen-assessors-%entityId%" name="assessors-%entityId%"></select>
                             </div>
                         </div>
@@ -808,12 +810,16 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                                 <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block assign-assessor-%entityId%"><?php _e('Assign','bidxplugin');?></a>
                         </div>
                     </div>
-                    <div class="assign-judge hide">
+                </div>
+                <div class="assign-judge hide">
+                    <div class="row">
                         <div class="col-sm-12">
                             <label class="inline">Assign Judge:</label>
                         </div>
+                    </div>
+                    <div class="row">
                         <div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8 chosen-drpdwnsetting">
                                 <select data-placeholder="<?php _e('Select Judge','bidxplugin');?>" multiple class="chosen-judges-%entityId%" name="judges-%entityId%"></select>
                             </div>
                         </div>
