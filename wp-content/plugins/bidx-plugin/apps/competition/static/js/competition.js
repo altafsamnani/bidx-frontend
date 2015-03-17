@@ -2797,23 +2797,26 @@ function _competitionTimer (  )
                 {
                     e.preventDefault();
 
-                    var $this           = $(this)
-                    ,   qualVal         = bidx.utils.getElementValue( $this )
-                    ,   $rejectSet      = $listItem.find( ".reject-set-" + entityId  )
-                    ,   $submitSet      = $listItem.find( ".set-submit-" + entityId  )
-                    ;
-
-                    if( qualVal === 'REJECTED' )
+                    if( $(this).is(":checked")  )
                     {
-                        $rejectSet.removeClass('hide');
-                        $submitSet.addClass('hide');
+                        var $this           = $(this)
+                        ,   qualVal         = bidx.utils.getElementValue( $this )
+                        ,   $rejectSet      = $listItem.find( ".reject-set-" + entityId  )
+                        ,   $submitSet      = $listItem.find( ".set-submit-" + entityId  )
+                        ;
 
-                        /*Show buttons*/
-                    }
-                    else if( qualVal === 'SUBMITTED')
-                    {
-                        $submitSet.removeClass('hide');
-                        $rejectSet.addClass('hide');
+                        if( qualVal === 'REJECTED' )
+                        {
+                            $rejectSet.removeClass('hide');
+                            $submitSet.addClass('hide');
+
+                            /*Show buttons*/
+                        }
+                        else if( qualVal === 'SUBMITTED')
+                        {
+                            $submitSet.removeClass('hide');
+                            $rejectSet.addClass('hide');
+                        }
                     }
 
                 });
@@ -2831,20 +2834,43 @@ function _competitionTimer (  )
                 $radio.change( function( e )
                 {
                     e.preventDefault();
+                    bidx.utils.log('$this', $this);
 
-                    var $this           = $(this)
-                    ,   qualVal         = bidx.utils.getElementValue( $this )
-                    ,   $ratingSet      = $wrapper.find( ".rating-wrapper" )
-                    ,   $commentSet     = $wrapper.find( ".comment-wrapper" )
-                    ,   $buttonSet      = $wrapper.find( ".set-wrapper"  )
-                    ;
-
-                    $commentSet.removeClass('hide');
-                    $buttonSet.removeClass('hide');
-                    bidx.utils.log('wrapper',  qualVal);
-                    if( qualVal !== 'REJECTED' )
+                    if( $(this).is(":checked")  )
                     {
-                        $ratingSet.removeClass('hide');
+                        var $this           = $(this)
+                        ,   score
+                        ,   qualVal         = bidx.utils.getElementValue( $this )
+                        ,   $ratingSet      = $wrapper.find( ".rating-wrapper" )
+                        ,   $commentSet     = $wrapper.find( ".comment-wrapper" )
+                        ,   $buttonSet      = $wrapper.find( ".set-wrapper"  )
+                        ,   ratingClass     =  ".raty-" + lCaseStatus + '-' + entityId
+                        ,   $raty           =  $ratingSet.find( ratingClass )
+                        ,   finalistRating
+                        ;
+
+                        $commentSet.removeClass('hide');
+
+                        $buttonSet.removeClass('hide');
+
+                        bidx.utils.log('qualVal', qualVal);
+
+                        if( qualVal !== 'REJECTED' )
+                        {
+                            score  =   $raty.data( lCaseStatus );
+                            $ratingSet.removeClass('hide');
+                        }
+                        else
+                        {
+                            finalistRating  =   $raty.raty( 'score' );
+                            $raty.data( lCaseStatus, finalistRating );
+                            
+                            score           =   0;
+                            $ratingSet.addClass('hide');
+                        }
+
+                        $raty.raty('set', { score:  score } );
+                        $raty.data( 'rating', score );
                     }
 
                 });
@@ -2880,6 +2906,7 @@ function _competitionTimer (  )
             case 'WITHDRAWN':
 
                 _assignRadioActions( $listItem, data );
+
                 $wrapperQualification.removeClass('hide');
 
             break;
@@ -2896,9 +2923,12 @@ function _competitionTimer (  )
                 {
                     $wrapperAssessor.removeClass('hide');
                 }
+
                 /* Assign Next Action According to Role */
                 data.role      =   'COMPETITION_ADMIN';
                 data.action    =   'finalist';
+
+                _assignRadioActions( $listItem, data );
 
                 _assignAssessorJudgeActions(
                 {
@@ -2913,7 +2943,9 @@ function _competitionTimer (  )
             case 'REJECTED':
 
                 bidx.utils.setElementValue( $radioQualification, status );
+
                 _assignRadioActions( $listItem, data );
+
                 //$rejectComment.removeClass('hide');
                 $wrapperQualification.addClass('hide');
 
@@ -2923,11 +2955,11 @@ function _competitionTimer (  )
                 var isAdminJudgeReview   =   bidx.utils.getValue( review, 'isAdminJudgeReview')
                 ;
 
-
-
                 /* Assign Next Action According to Role */
                 data.role      =   'COMPETITION_ADMIN';
                 data.action    =   'winner';
+
+                _assignRadioActions( $listItem, data );
 
                 _assignAssessorJudgeActions(
                 {
@@ -3168,10 +3200,10 @@ function _competitionTimer (  )
             $wrapper.find('.comment-wrapper').removeClass('hide');
             $wrapper.find('.set-wrapper').removeClass('hide');
         }
-        else
-        {
-            _assignRadioActions( $listItem, data );
-        }
+       // else
+       // {
+           
+       // }
 
         if( commentText )
         {
