@@ -30,6 +30,7 @@
     ,   $btnFullAccessRequest       = $element.find( ".bidxRequestFullAccess")
     ,   $bidxAccessRequestPending   = $element.find( ".bidxAccessRequestPending")
     ,   $btnParticipate             = $element.find( ".btn-participate")
+    ,   $btnCreateBp                = $element.find( ".btn-business")
     ,   $btnApply                   = $element.find( ".btn-apply")
 
     ,   $btnPhase                   = $element.find( ".btn-phase" )
@@ -259,6 +260,7 @@
     function _loadBpSummaries()
     {
         var bpLength
+        ,   isEntrepreneur
         ;
         if( $businessSummary )
         {
@@ -269,19 +271,29 @@
                                     ,   width                   : "100%"
                                     ,   disable_search_threshold : 10
                                     });
-            bidx.utils.log('listDropdownBp', listDropdownBp);
+
             bpLength    = _.size(canParticipate); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
 
             if( bpLength )
             {
+                $btnParticipate.removeClass( 'hide');
+
                 _getBusinessPlans( )
                 .done( function( listBpItems )
                 {
-                    bidx.utils.log('listbpitemss', listBpItems);
                     $businessSummary.append( listBpItems );
                     $businessSummary.trigger( "chosen:updated" );
                     $btnParticipate.removeClass( 'disabled');
                 } );
+            }
+            else
+            {
+                isEntrepreneur = bidx.utils.getValue( bidxConfig.session, "wp.entities.bidxEntrepreneurProfile" );
+
+                if(isEntrepreneur)
+                {
+                    $btnCreateBp.removeClass( 'hide');
+                }
             }
 
             $btnParticipate.click( function( e )
@@ -2864,7 +2876,7 @@ function _competitionTimer (  )
                         {
                             finalistRating  =   $raty.raty( 'score' );
                             $raty.data( lCaseStatus, finalistRating );
-                            
+
                             score           =   0;
                             $ratingSet.addClass('hide');
                         }

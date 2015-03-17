@@ -236,7 +236,8 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
 <?php
                     if ( $isParticipant ) :
 ?>
-                        <button class="btn btn-primary btn-participate disabled"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
+                        <button class="btn btn-primary btn-participate disabled hide"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
+                        <a href="/businesssummary/#createBusinessSummary" class="btn btn-primary btn-business hide"><i class="fa fa-suitcase fa-big fa-above"></i><?php echo _e( 'Create Business', 'bidxplugin' ); ?></a>
 <?php
                     endif;
 ?>
