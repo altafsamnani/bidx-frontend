@@ -320,21 +320,20 @@
                 }
                 , error: function(jqXhr, textStatus)
                 {
-                    var response;
-                    try
+                    var errorTxt;
+
+                    if( jqXhr.responseJSON.code )
                     {
-                        // Not really needed for now, but just have it on the screen, k thx bye
-                        //
-                        response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
+                        errorTxt    =   jqXhr.responseJSON.code;
                     }
-                    catch ( e )
+                    else
                     {
-                        bidx.utils.error( "Problem parsing error response from phase update" );
+                        errorTxt    =   "Problem parsing error response from phase update";
                     }
 
                     if (options && options.error)
                     {
-                        options.error( response ) ;
+                        options.error( errorTxt ) ;
                     }
                 }
             }
@@ -466,7 +465,7 @@
                                                         }
                                             ,   error:  function ( err )
                                                         {
-                                                            var errMessage = bidx.i18n.i('msgError')
+                                                            bidx.common.closeNotifications();
                                                             bidx.common.notifyError( err );
                                                             /*if ( err )
                                                            {
@@ -1553,14 +1552,14 @@ function format ( data, row )
 
             $listItem       =   $(listItem);
 
-            if( displayReview.assessor !== '' && competitionBidxMeta.bidxCompetitionRoundStatus !== 'ASSESSMENT')
+            if( displayReview.assessor !== '' ) // && competitionBidxMeta.bidxCompetitionRoundStatus !== 'ASSESSMENT', in case you only want to display it other than assessment phases
             {
                 /* Dislay Assessor Review if it exists */
                 $wrapperAssessor        =   $listItem.find('.wrapper-recommend-assessor-' + data.entityId);
                 $wrapperAssessor.removeClass('hide');
             }
 
-            if( displayReview.judge !== '' && competitionBidxMeta.bidxCompetitionRoundStatus !== 'JUDGING')
+            if( displayReview.judge !== '' ) // && competitionBidxMeta.bidxCompetitionRoundStatus !== 'JUDGING', in case you only want to display it other than Judging phases
             {
                 /* Dislay Judge Review if it exists */
                 $wrapperJudge           =   $listItem.find('.wrapper-recommend-judge-' + data.entityId);
@@ -1599,7 +1598,7 @@ function format ( data, row )
 
             $listItem   =   $(listItem);
 
-            if( displayReview.assessor !== '' && competitionBidxMeta.bidxCompetitionRoundStatus !== 'ASSESSMENT' )
+            if( displayReview.assessor !== '' ) //  && competitionBidxMeta.bidxCompetitionRoundStatus !== 'ASSESSMENT', in case you only want to display it other than assessment phases
             {
                 /* Dislay Assessor Review if it exists */
                 $wrapperAssessor        =   $listItem.find('.wrapper-recommend-assessor-' + data.entityId);
@@ -2840,9 +2839,13 @@ function _competitionTimer (  )
                     ,   $buttonSet      = $wrapper.find( ".set-wrapper"  )
                     ;
 
-                    $ratingSet.removeClass('hide');
                     $commentSet.removeClass('hide');
                     $buttonSet.removeClass('hide');
+                    bidx.utils.log('wrapper',  qualVal);
+                    if( qualVal !== 'REJECTED' )
+                    {
+                        $ratingSet.removeClass('hide');
+                    }
 
                 });
 
@@ -3186,7 +3189,7 @@ function _competitionTimer (  )
             ratingClass         =  ".raty-" + action + '-' + entityId;
             $raty               =  $ratingWrapper.find( ratingClass );
             $raty.data('rating', reviewRating);
-
+            //$raty.replace( /%bidxFINALISTRatingAverage%/g, reviewRating);
             $raty.raty ({
                             starType:   'i',
                             hints:      ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent'],
@@ -3199,6 +3202,7 @@ function _competitionTimer (  )
         }
 
         $recommendTitle.removeClass('hide');
+
         $wrapper.removeClass('hide');
 
         _assignRecommendations( {
@@ -3212,11 +3216,19 @@ function _competitionTimer (  )
                                                     ,   role                    =   (recommData.competitionRoundStatus === 'ASSESSMENT' ) ? 'assessor' : 'judge'
                                                     ,   $roleRecommendation     =   $listItem.find( "."+ role + "-recommendation-" + entityId )
                                                     ,   $wrapperRecommendation  =   $listItem.find( ".wrapper-recommend-" + role +"-" + entityId )
+                                                    ,   $wrapperAction          =   $listItem.find( ".wrapper-recommend-" + action +"-" + entityId )
                                                     ;
 
                                                     recommendationStatus        =   recommData.competitionRecommendation;
 
                                                     d.recommendation            =   bidx.i18n.i(recommendationStatus, appName);
+
+                                                    if(recommendationStatus === 'REJECTED')
+                                                    {
+                                                        d.status     =    recommendationStatus;
+                                                        d.state      =    d.recommendation;
+                                                        $wrapperAction.addClass('hide');
+                                                    }
 
                                                     d.reviews.push( recommData );
 
@@ -3855,9 +3867,6 @@ function _competitionTimer (  )
             ,   data:           options.data
             ,   success:        function( response )
                 {
-                    // Do we have edit perms?
-                    //
-                    bidx.utils.log('response',response);
                     //  execute callback if provided
                     if (options && options.success)
                     {

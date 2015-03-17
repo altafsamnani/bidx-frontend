@@ -849,8 +849,8 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                                 <input data-entityid = "%entityId%" type="radio" value="NOT_FINALIST" id="recommend-notfinalist-%entityId%" name="recommend-finalist-%entityId%" data-toggle="radio" />
                                 <label for="recommend-notfinalist-%entityId%"><span></span><?php _e('Not Finalist', 'bidxplugin');?></label>
                             </div>
-                             <div class="radio inline-radio hide">
-                                <input data-entityid = "%entityId%" type="radio" value="REJECTED" id="recommend-rejected-%entityId%" name="recommend-rejected-%entityId%" data-toggle="radio" />
+                             <div class="radio inline-radio">
+                                <input data-entityid = "%entityId%" type="radio" value="REJECTED" id="recommend-rejected-%entityId%" name="recommend-finalist-%entityId%" data-toggle="radio" />
                                 <label for="recommend-rejected-%entityId%"><span></span><?php _e('Reject', 'bidxplugin');?></label>
                             </div>
                         </div>
@@ -879,8 +879,8 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                                 <input data-entityid = "%entityId%" type="radio" value="NOT_WINNER" id="recommend-notWinner-%entityId%" name="recommend-winner-%entityId%" data-toggle="radio" />
                                 <label for="recommend-notWinner-%entityId%"><span></span><?php _e('Not Winner', 'bidxplugin');?></label>
                             </div>
-                            <div class="radio inline-radio hide">
-                                <input data-entityid = "%entityId%" type="radio" value="REJECTED" id="recommend-rejected-%entityId%" name="recommend-rejected-%entityId%" data-toggle="radio" />
+                            <div class="radio inline-radio">
+                                <input data-entityid = "%entityId%" type="radio" value="REJECTED" id="recommend-rejected-%entityId%" name="recommend-winner-%entityId%" data-toggle="radio" />
                                 <label for="recommend-rejected-%entityId%"><span></span><?php _e('Reject', 'bidxplugin');?></label>
                             </div>
                         </div>
@@ -1014,7 +1014,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                         </div>
                         <div class="col-sm-4 pull-left rating-wrapper hide">
                             <div class="rating-wrapper-finalist-%entityId%">
-                                <div data-rating="%bidxFINALISTRatingAverage%" class="raty-finalist-%entityId%"></div>
+                                <div class="raty-finalist-%entityId%"></div>
                             </div>
                         </div>
                         <div class="col-sm-12 comment-wrapper hide">
@@ -1074,7 +1074,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                         </div>
                         <div class="col-sm-4 pull-left rating-wrapper hide">
                             <div class="rating-wrapper-winner-%entityId%">
-                                <div data-rating="%bidxWINNERRatingAverage%" class="raty-winner-%entityId%"></div>
+                                <div class="raty-winner-%entityId%"></div>
                             </div>
                         </div>
                         <div class="col-sm-12 comment-wrapper hide">
