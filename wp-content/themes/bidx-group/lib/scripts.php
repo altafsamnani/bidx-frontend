@@ -11,11 +11,8 @@
  * 3. /theme/assets/js/main.min.js (in footer)
  */
 function roots_scripts() {
-  // wp_enqueue_style('bootstrap',                   get_template_directory_uri() . '/assets/css/bootstrap.css', false, null);
   wp_enqueue_style('bootstrap-datepicker',        get_template_directory_uri() . '/../../plugins/bidx-plugin/static/vendor/bootstrap-datepicker-1.3.0-rc.2/css/datepicker3.css', false, null);
   wp_enqueue_style('bootstrap-datetimepicker',    get_template_directory_uri() . '/../../plugins/bidx-plugin/static/vendor/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css', false, null);
-
-  // wp_enqueue_style('bidx-plugin',                 get_template_directory_uri() . '/../../plugins/bidx-plugin/static/css/bidx-plugin.css', false, null);
 
   wp_register_script( 'bootstrap',                get_template_directory_uri() . '/assets/bootstrap-3.3.2/dist/js/bootstrap.min.js',  array( 'jquery' ),      '3.3.2',            true );
 
@@ -31,8 +28,6 @@ function roots_scripts() {
   wp_register_script( 'noty-layout-center',       get_template_directory_uri() . '/assets/noty/layouts/center.js',                    array( 'noty' ),        '2.0.3',            true );
   wp_register_script( 'noty-theme-default',       get_template_directory_uri() . '/assets/noty/themes/default.js',                    array( 'noty' ),        '2.0.3',            true );
 
-
-
   // jQuery is loaded using the same method from HTML5 Boilerplate:
   // Grab Google CDN's latest jQuery with a protocol relative URL; fallback to local if offline
   // It's kept in the header instead of footer to avoid conflicts with plugins.
@@ -47,7 +42,6 @@ function roots_scripts() {
   }
 
   wp_register_script('modernizr', get_template_directory_uri() . '/assets/js/vendor/modernizr-2.7.0.min.js', array(), null, false);
-  // wp_register_script('roots_scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', array(), '0fc6af96786d8f267c8686338a34cd38', true);
 
   wp_enqueue_script( 'jquery-ui-widget' );
   wp_enqueue_script( 'jquery-touch-punch' );

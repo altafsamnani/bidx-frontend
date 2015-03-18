@@ -11,16 +11,20 @@
 @gray-darker:            lighten(@gray-base, 13.5%); // #222
 @gray-dark:              lighten(@gray-base, 20%);   // #333
 @gray:                   lighten(@gray-base, 33.5%); // #555
-@gray-light:             lighten(@gray-base, 46.7%); // #777
+@gray-light:             lighten(@gray-base, 60.1%); // #777
 @gray-lighter:           lighten(@gray-base, 93.5%); // #eee
 
-@brand-primary:         darken(#428bca, 6.5%); // #337ab7
+@brand-primary:         #428bca;
+@brand-secondary:       #1abc9c;
 @brand-success:         #5cb85c;
 @brand-info:            #5bc0de;
 @brand-warning:         #f0ad4e;
 @brand-danger:          #d9534f;
 
-
+// Custom colors
+// -------------------------
+@white:                 #FFF;
+@lato: "Lato", sans-serif;
 //== Scaffolding
 //
 //## Settings for some of the most global styles.
@@ -35,14 +39,14 @@
 //** Link hover color set via `darken()` function.
 @link-hover-color:      darken(@link-color, 15%);
 //** Link hover decoration.
-@link-hover-decoration: underline;
+@link-hover-decoration: none;
 
 
 //== Typography
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-@font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-sans-serif:  @lato;
 @font-family-serif:       Georgia, "Times New Roman", Times, serif;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
 @font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
@@ -348,7 +352,7 @@
 //##
 
 // Basics of a navbar
-@navbar-height:                    50px;
+@navbar-height:                    40px;
 @navbar-margin-bottom:             @line-height-computed;
 @navbar-border-radius:             @border-radius-base;
 @navbar-padding-horizontal:        floor((@grid-gutter-width / 2));
@@ -410,7 +414,7 @@
 //##
 
 //=== Shared nav styles
-@nav-link-padding:                          10px 15px;
+@nav-link-padding:                          15px 15px;
 @nav-link-hover-bg:                         @gray-lighter;
 
 @nav-disabled-link-color:                   @gray-light;
@@ -836,7 +840,7 @@
 //##
 
 //** Horizontal offset for forms and lists.
-@component-offset-horizontal: 180px;
+@component-offset-horizontal: 200px;
 //** Text muted color
 @text-muted:                  @gray-light;
 //** Abbreviations and acronyms border color
