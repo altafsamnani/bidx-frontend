@@ -112,9 +112,9 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             if ( $canEdit || $newBusiness )
             {
     ?>
-                <div class="btn-group coverBtns">
-                    <a class="btn btn-primary btn-large btnCover" data-toggle="modal" href="#coverImage"><?php echo _e( 'Add or Change', 'bidxplugin' ); ?></a>
-                    <!-- <a class="btn btn-primary btn-large btnRemove" data-toggle="modal" href="#coverRemove"><?php echo _e( 'Remove', 'bidxplugin' ); ?></a> -->
+                <div class="coverBtns">
+                    <a class="btn btn-primary btn-large btnCover" data-toggle="modal" href="#coverImage"><?php echo _e( 'Select', 'bidxplugin' ); ?></a>
+                    <a class="btn btn-primary btn-large btnRemove hide" data-toggle="modal" href="#coverRemove"><?php echo _e( 'Remove', 'bidxplugin' ); ?></a>
                 </div>
 
                 <div class="coverModal modal fade">
@@ -820,9 +820,10 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                                         <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
                                     </div>
                                     <br>
-                                    <a href="#addLogo" data-toggle="modal" class="btn btn-primary">
-                                        <?php _e('Select logo'); ?>
-                                    </a>
+                                    <div class="logoBtns">
+                                        <a href="#addLogo" data-toggle="modal" class="btn btn-primary"><?php _e('Select'); ?></a>
+                                        <a href="#removeLogo" class="btn btn-primary hide"><?php _e('Remove'); ?></a>
+                                    </div>
 
                                     <div class="addLogoImage modal fade">
                                         <div class="modal-dialog">
@@ -1388,7 +1389,8 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                         <div class="profilePictureWrapper hide-overflow">
                             <div class="profilePictureContainer"></div>
                         </div>
-                        <a href="#changeProfilePicture" class="btn btn-primary"><?php _e('Upload picture', 'bidxplugin')?></a>
+                        <a href="#changeProfilePicture" class="btn btn-primary"><?php _e('Select', 'bidxplugin')?></a>
+                        <a href="#removeProfilePicture" class="btn btn-primary hide"><?php _e('Remove', 'bidxplugin')?></a>
                     </div>
                 </div>
 

@@ -97,6 +97,7 @@
         //
     ,   $bsLogo                             = $element.find( ".bsLogo" )
     ,   $bsLogoBtn                          = $bsLogo.find( "[href$='#addLogo']" )
+    ,   $bsLogoRemoveBtn                    = $bsLogo.find( "[href$='#removeLogo']" )
     ,   $bsLogoModal                        = $bsLogo.find( ".addLogoImage" )
     ,   $logoContainer                      = $bsLogo.find( ".logoContainer" )
 
@@ -351,6 +352,18 @@
         $industrySectors.industries();
 
         forms.financialDetails.$el.find( "[name='yearSalesStarted']" ).bidx_chosen();
+
+        $bsLogoRemoveBtn.click( function( e )
+        {
+            e.preventDefault();
+
+            $logoContainer.find( "img" ).remove();
+            $logoContainer.html( '<div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>' );
+            $logoContainer.removeClass( "logoPlaced" ).parent().find( "[href$='#removeLogo']" ).addClass( "hide" );
+
+            businessSummary.logo = null;
+        } );
+
 
         // Collect snippets from the DOM
         //
@@ -642,6 +655,7 @@
                                 $coverImageContainer.cover( "constructHtml", file );
                             }
 
+                            $coverImageContainer.find( "[href$='#coverRemove']" ).removeClass( "hide" );
                         }
                     }
                 } );
@@ -653,11 +667,9 @@
             {
                 e.preventDefault();
 
-                $coverImageContainer.find( "img" ).remove();
-
-                businessSummary.cover = null;
+                $coverImageContainer.find( "img" ).hide();
+                $coverImageContainer.find( "[href$='#coverRemove']" ).addClass( "hide" );
             } );
-
         }
 
         // Setup the management team components
@@ -726,9 +738,10 @@
                         {
                             bidx.utils.log( "[management team profile picture] select", file );
 
-                            $profilePictureContainer.replaceWith( $( "<img />", { src: file.document }));
+                            $profilePictureContainer.html( $( "<img />", { src: file.document }));
 
                             var managementTeam = $managementTeamItem.data( "bidxData" );
+                            $managementTeamItem.find( "a[href$='#removeProfilePicture']" ).removeClass( "hide" );
 
                             managementTeam.profilePicture = file;
 
@@ -749,6 +762,19 @@
                 _addManagementTeam();
             } );
         }
+
+        $managementTeamContainer.delegate( "a[href$='#removeProfilePicture']", "click", function( e )
+        {
+            e.preventDefault();
+
+            var $managementTeamItem = $( this ).closest( ".managementTeamItem" )
+            ,   teamData = $managementTeamItem.data("bidxData")
+            ;
+
+            $managementTeamItem.find( "img" ).remove();
+            $managementTeamItem.find( "a[href$='#removeProfilePicture']" ).addClass( "hide" );
+            teamData.profilePicture = null;
+        } );
 
         // Setup the financial summary component
         //
@@ -1273,6 +1299,7 @@
 
                         $logoContainer.data( "bidxData", file );
                         $logoContainer.html( $( "<img />", { "src": file.document, "data-fileUploadId": file.fileUpload } ));
+                        $logoContainer.addClass( "logoPlaced" ).parent().find( "[href$='#removeLogo']" ).removeClass( "hide" );
 
                         $bsLogoModal.modal( "hide" );
                     }
@@ -1781,8 +1808,8 @@
             //
             if ( managementTeam.profilePicture )
             {
-                $managementTeam.find( ".profilePictureContainer" )
-                    .append( $( "<img />", { src: managementTeam.profilePicture.document } ));
+                $managementTeam.find( ".profilePictureContainer" ).append( $( "<img />", { src: managementTeam.profilePicture.document } ));
+                $managementTeam.find( "a[href$='#removeProfilePicture']" ).removeClass( "hide" );
             }
         }
         else
@@ -1900,6 +1927,7 @@
         {
             $logoContainer.empty();
             $logoContainer.append( "<img src='"+ logoImage.document +"' />" );
+            $logoContainer.addClass( "logoPlaced" ).parent().find( "[href$='#removeLogo']" ).removeClass( "hide" );
         }
         
 
@@ -1908,6 +1936,7 @@
         if ( coverImage )
         {
             $coverImageContainer.cover( "repositionCover" );
+            $coverImageContainer.find( "[href$='#coverRemove']" ).removeClass( "hide" );
         }
         else
         {
@@ -2263,7 +2292,8 @@
         // Cover Image
         //
         var coverImageData = $coverImageContainer.data( "bidxData" )
-        ,   coverImgTopPos = $coverImageContainer.length ? parseInt( $coverImageContainer.find( "img" ).css( "top" ), 10) : false
+        ,   $coverImg       = $coverImageContainer.find( "img" )
+        ,   coverImgTopPos = $coverImageContainer.length ? parseInt( $coverImg.css( "top" ), 10) : false
         ;
 
         if ( coverImageData )
@@ -2281,6 +2311,11 @@
             {
                 bidx.utils.setValue( businessSummary, "cover.top", 0 );
             }
+        }
+
+        if ( $coverImg.is(':hidden') )
+        {
+            businessSummary.cover = null;
         }
 
         // Logo
@@ -3319,7 +3354,9 @@
             else
             {
                 bidx.common.removeAppWithPendingChanges( appName );
+                $managementTeamContainer.empty();
                 bidx.controller.updateHash( "#loadMentors", true );
+                $coverImageContainer.find( "img" ).show();
 
                 reset();
 
@@ -3642,6 +3679,8 @@
 
         bidx.common.notifySave();
 
+        bidx.utils.log( "About to save BusinessSummary::: ", businessSummary );
+        
         // Save the data to the API
         //
         bidx.api.call(
