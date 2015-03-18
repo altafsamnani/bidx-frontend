@@ -30,6 +30,7 @@
     ,   $btnFullAccessRequest       = $element.find( ".bidxRequestFullAccess")
     ,   $bidxAccessRequestPending   = $element.find( ".bidxAccessRequestPending")
     ,   $btnParticipate             = $element.find( ".btn-participate")
+    ,   $btnCreateBp                = $element.find( ".btn-business")
     ,   $btnApply                   = $element.find( ".btn-apply")
 
     ,   $btnPhase                   = $element.find( ".btn-phase" )
@@ -259,6 +260,7 @@
     function _loadBpSummaries()
     {
         var bpLength
+        ,   isEntrepreneur
         ;
         if( $businessSummary )
         {
@@ -269,19 +271,29 @@
                                     ,   width                   : "100%"
                                     ,   disable_search_threshold : 10
                                     });
-            bidx.utils.log('listDropdownBp', listDropdownBp);
+
             bpLength    = _.size(canParticipate); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
 
             if( bpLength )
             {
+                $btnParticipate.removeClass( 'hide');
+
                 _getBusinessPlans( )
                 .done( function( listBpItems )
                 {
-                    bidx.utils.log('listbpitemss', listBpItems);
                     $businessSummary.append( listBpItems );
                     $businessSummary.trigger( "chosen:updated" );
                     $btnParticipate.removeClass( 'disabled');
                 } );
+            }
+            else
+            {
+                isEntrepreneur = bidx.utils.getValue( bidxConfig.session, "wp.entities.bidxEntrepreneurProfile" );
+
+                if(isEntrepreneur)
+                {
+                    $btnCreateBp.removeClass( 'hide');
+                }
             }
 
             $btnParticipate.click( function( e )
@@ -320,21 +332,20 @@
                 }
                 , error: function(jqXhr, textStatus)
                 {
-                    var response;
-                    try
+                    var errorTxt;
+
+                    if( jqXhr.responseJSON.code )
                     {
-                        // Not really needed for now, but just have it on the screen, k thx bye
-                        //
-                        response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
+                        errorTxt    =   jqXhr.responseJSON.code;
                     }
-                    catch ( e )
+                    else
                     {
-                        bidx.utils.error( "Problem parsing error response from phase update" );
+                        errorTxt    =   "Problem parsing error response from phase update";
                     }
 
                     if (options && options.error)
                     {
-                        options.error( response ) ;
+                        options.error( errorTxt ) ;
                     }
                 }
             }
@@ -466,7 +477,7 @@
                                                         }
                                             ,   error:  function ( err )
                                                         {
-                                                            var errMessage = bidx.i18n.i('msgError')
+                                                            bidx.common.closeNotifications();
                                                             bidx.common.notifyError( err );
                                                             /*if ( err )
                                                            {
@@ -1553,14 +1564,14 @@ function format ( data, row )
 
             $listItem       =   $(listItem);
 
-            if( displayReview.assessor !== '' && competitionBidxMeta.bidxCompetitionRoundStatus !== 'ASSESSMENT')
+            if( displayReview.assessor !== '' ) // && competitionBidxMeta.bidxCompetitionRoundStatus !== 'ASSESSMENT', in case you only want to display it other than assessment phases
             {
                 /* Dislay Assessor Review if it exists */
                 $wrapperAssessor        =   $listItem.find('.wrapper-recommend-assessor-' + data.entityId);
                 $wrapperAssessor.removeClass('hide');
             }
 
-            if( displayReview.judge !== '' && competitionBidxMeta.bidxCompetitionRoundStatus !== 'JUDGING')
+            if( displayReview.judge !== '' ) // && competitionBidxMeta.bidxCompetitionRoundStatus !== 'JUDGING', in case you only want to display it other than Judging phases
             {
                 /* Dislay Judge Review if it exists */
                 $wrapperJudge           =   $listItem.find('.wrapper-recommend-judge-' + data.entityId);
@@ -1599,7 +1610,7 @@ function format ( data, row )
 
             $listItem   =   $(listItem);
 
-            if( displayReview.assessor !== '' && competitionBidxMeta.bidxCompetitionRoundStatus !== 'ASSESSMENT' )
+            if( displayReview.assessor !== '' ) //  && competitionBidxMeta.bidxCompetitionRoundStatus !== 'ASSESSMENT', in case you only want to display it other than assessment phases
             {
                 /* Dislay Assessor Review if it exists */
                 $wrapperAssessor        =   $listItem.find('.wrapper-recommend-assessor-' + data.entityId);
@@ -2798,23 +2809,26 @@ function _competitionTimer (  )
                 {
                     e.preventDefault();
 
-                    var $this           = $(this)
-                    ,   qualVal         = bidx.utils.getElementValue( $this )
-                    ,   $rejectSet      = $listItem.find( ".reject-set-" + entityId  )
-                    ,   $submitSet      = $listItem.find( ".set-submit-" + entityId  )
-                    ;
-
-                    if( qualVal === 'REJECTED' )
+                    if( $(this).is(":checked")  )
                     {
-                        $rejectSet.removeClass('hide');
-                        $submitSet.addClass('hide');
+                        var $this           = $(this)
+                        ,   qualVal         = bidx.utils.getElementValue( $this )
+                        ,   $rejectSet      = $listItem.find( ".reject-set-" + entityId  )
+                        ,   $submitSet      = $listItem.find( ".set-submit-" + entityId  )
+                        ;
 
-                        /*Show buttons*/
-                    }
-                    else if( qualVal === 'SUBMITTED')
-                    {
-                        $submitSet.removeClass('hide');
-                        $rejectSet.addClass('hide');
+                        if( qualVal === 'REJECTED' )
+                        {
+                            $rejectSet.removeClass('hide');
+                            $submitSet.addClass('hide');
+
+                            /*Show buttons*/
+                        }
+                        else if( qualVal === 'SUBMITTED')
+                        {
+                            $submitSet.removeClass('hide');
+                            $rejectSet.addClass('hide');
+                        }
                     }
 
                 });
@@ -2832,17 +2846,44 @@ function _competitionTimer (  )
                 $radio.change( function( e )
                 {
                     e.preventDefault();
+                    bidx.utils.log('$this', $this);
 
-                    var $this           = $(this)
-                    ,   qualVal         = bidx.utils.getElementValue( $this )
-                    ,   $ratingSet      = $wrapper.find( ".rating-wrapper" )
-                    ,   $commentSet     = $wrapper.find( ".comment-wrapper" )
-                    ,   $buttonSet      = $wrapper.find( ".set-wrapper"  )
-                    ;
+                    if( $(this).is(":checked")  )
+                    {
+                        var $this           = $(this)
+                        ,   score
+                        ,   qualVal         = bidx.utils.getElementValue( $this )
+                        ,   $ratingSet      = $wrapper.find( ".rating-wrapper" )
+                        ,   $commentSet     = $wrapper.find( ".comment-wrapper" )
+                        ,   $buttonSet      = $wrapper.find( ".set-wrapper"  )
+                        ,   ratingClass     =  ".raty-" + lCaseStatus + '-' + entityId
+                        ,   $raty           =  $ratingSet.find( ratingClass )
+                        ,   finalistRating
+                        ;
 
-                    $ratingSet.removeClass('hide');
-                    $commentSet.removeClass('hide');
-                    $buttonSet.removeClass('hide');
+                        $commentSet.removeClass('hide');
+
+                        $buttonSet.removeClass('hide');
+
+                        bidx.utils.log('qualVal', qualVal);
+
+                        if( qualVal !== 'REJECTED' )
+                        {
+                            score  =   $raty.data( lCaseStatus );
+                            $ratingSet.removeClass('hide');
+                        }
+                        else
+                        {
+                            finalistRating  =   $raty.raty( 'score' );
+                            $raty.data( lCaseStatus, finalistRating );
+
+                            score           =   0;
+                            $ratingSet.addClass('hide');
+                        }
+
+                        $raty.raty('set', { score:  score } );
+                        $raty.data( 'rating', score );
+                    }
 
                 });
 
@@ -2877,6 +2918,7 @@ function _competitionTimer (  )
             case 'WITHDRAWN':
 
                 _assignRadioActions( $listItem, data );
+
                 $wrapperQualification.removeClass('hide');
 
             break;
@@ -2893,9 +2935,12 @@ function _competitionTimer (  )
                 {
                     $wrapperAssessor.removeClass('hide');
                 }
+
                 /* Assign Next Action According to Role */
                 data.role      =   'COMPETITION_ADMIN';
                 data.action    =   'finalist';
+
+                _assignRadioActions( $listItem, data );
 
                 _assignAssessorJudgeActions(
                 {
@@ -2910,7 +2955,9 @@ function _competitionTimer (  )
             case 'REJECTED':
 
                 bidx.utils.setElementValue( $radioQualification, status );
+
                 _assignRadioActions( $listItem, data );
+
                 //$rejectComment.removeClass('hide');
                 $wrapperQualification.addClass('hide');
 
@@ -2920,11 +2967,11 @@ function _competitionTimer (  )
                 var isAdminJudgeReview   =   bidx.utils.getValue( review, 'isAdminJudgeReview')
                 ;
 
-
-
                 /* Assign Next Action According to Role */
                 data.role      =   'COMPETITION_ADMIN';
                 data.action    =   'winner';
+
+                _assignRadioActions( $listItem, data );
 
                 _assignAssessorJudgeActions(
                 {
@@ -3165,10 +3212,10 @@ function _competitionTimer (  )
             $wrapper.find('.comment-wrapper').removeClass('hide');
             $wrapper.find('.set-wrapper').removeClass('hide');
         }
-        else
-        {
-            _assignRadioActions( $listItem, data );
-        }
+       // else
+       // {
+           
+       // }
 
         if( commentText )
         {
@@ -3186,7 +3233,7 @@ function _competitionTimer (  )
             ratingClass         =  ".raty-" + action + '-' + entityId;
             $raty               =  $ratingWrapper.find( ratingClass );
             $raty.data('rating', reviewRating);
-
+            //$raty.replace( /%bidxFINALISTRatingAverage%/g, reviewRating);
             $raty.raty ({
                             starType:   'i',
                             hints:      ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent'],
@@ -3199,6 +3246,7 @@ function _competitionTimer (  )
         }
 
         $recommendTitle.removeClass('hide');
+
         $wrapper.removeClass('hide');
 
         _assignRecommendations( {
@@ -3212,11 +3260,19 @@ function _competitionTimer (  )
                                                     ,   role                    =   (recommData.competitionRoundStatus === 'ASSESSMENT' ) ? 'assessor' : 'judge'
                                                     ,   $roleRecommendation     =   $listItem.find( "."+ role + "-recommendation-" + entityId )
                                                     ,   $wrapperRecommendation  =   $listItem.find( ".wrapper-recommend-" + role +"-" + entityId )
+                                                    ,   $wrapperAction          =   $listItem.find( ".wrapper-recommend-" + action +"-" + entityId )
                                                     ;
 
                                                     recommendationStatus        =   recommData.competitionRecommendation;
 
                                                     d.recommendation            =   bidx.i18n.i(recommendationStatus, appName);
+
+                                                    if(recommendationStatus === 'REJECTED')
+                                                    {
+                                                        d.status     =    recommendationStatus;
+                                                        d.state      =    d.recommendation;
+                                                        $wrapperAction.addClass('hide');
+                                                    }
 
                                                     d.reviews.push( recommData );
 
@@ -3855,9 +3911,6 @@ function _competitionTimer (  )
             ,   data:           options.data
             ,   success:        function( response )
                 {
-                    // Do we have edit perms?
-                    //
-                    bidx.utils.log('response',response);
                     //  execute callback if provided
                     if (options && options.success)
                     {
