@@ -1585,6 +1585,8 @@ function format ( data, row )
                 data.role       =   'COMPETITION_JUDGE';
                 data.action     =   'winner';
 
+                _assignRadioActions( $listItem, data );
+
                 _assignAssessorJudgeActions( {
                                                 $listItem:  $listItem
                                             ,   review:     isHavingJudgeReview
@@ -1623,6 +1625,8 @@ function format ( data, row )
                 /* Assign Next Action According to Role */
                 data.role      =   'COMPETITION_ASSESSOR';
                 data.action    =   'finalist';
+
+                _assignRadioActions( $listItem, data );
 
                 _assignAssessorJudgeActions( {
                                                 $listItem:  $listItem
