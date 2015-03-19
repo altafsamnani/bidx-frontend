@@ -39,7 +39,7 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
     </div>
 
     <div class="actions hide-overflow main-margin">
-        <div class="pull-left">
+        <div class="pull-left quick-action-links">
 <?php
             if ( $isLoggedinMemberIsEntrepreneur ) :
 ?>            
@@ -54,6 +54,16 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
                 <a href="/company/#createCompany" class="btn btn-sm btn-primary">
                     <div class="fa fa-building fa-above fa-big"></div>
                     <?php _e('Add Company', 'bidxplugin')?>
+                </a>
+<?php
+            endif;
+?>
+<?php
+            if ( $isLoggedinMemberIsInvestor && !$isLoggedinMemberIsMentor ) :
+?>            
+                <a href="/member/#createMentor" class="btn btn-sm btn-primary">
+                    <div class="fa fa-compass fa-above fa-big"></div>
+                    <?php _e('Become mentor', 'bidxplugin')?>
                 </a>
 <?php
             endif;
