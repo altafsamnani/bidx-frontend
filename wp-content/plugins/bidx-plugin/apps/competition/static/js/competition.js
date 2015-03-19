@@ -1585,8 +1585,6 @@ function format ( data, row )
                 data.role       =   'COMPETITION_JUDGE';
                 data.action     =   'winner';
 
-                _assignRadioActions( $listItem, data );
-
                 _assignAssessorJudgeActions( {
                                                 $listItem:  $listItem
                                             ,   review:     isHavingJudgeReview
@@ -1625,8 +1623,6 @@ function format ( data, row )
                 /* Assign Next Action According to Role */
                 data.role      =   'COMPETITION_ASSESSOR';
                 data.action    =   'finalist';
-
-                _assignRadioActions( $listItem, data );
 
                 _assignAssessorJudgeActions( {
                                                 $listItem:  $listItem
@@ -2944,8 +2940,6 @@ function _competitionTimer (  )
                 data.role      =   'COMPETITION_ADMIN';
                 data.action    =   'finalist';
 
-                _assignRadioActions( $listItem, data );
-
                 _assignAssessorJudgeActions(
                 {
                     $listItem:  $listItem
@@ -2974,8 +2968,6 @@ function _competitionTimer (  )
                 /* Assign Next Action According to Role */
                 data.role      =   'COMPETITION_ADMIN';
                 data.action    =   'winner';
-
-                _assignRadioActions( $listItem, data );
 
                 _assignAssessorJudgeActions(
                 {
@@ -3204,7 +3196,8 @@ function _competitionTimer (  )
         ;
 
 
-
+         _assignRadioActions( $listItem, data );
+         
         if( recommendation )
         {
             radioName       =   'recommend-' + action + '-' + entityId;
@@ -3216,10 +3209,7 @@ function _competitionTimer (  )
             $wrapper.find('.comment-wrapper').removeClass('hide');
             $wrapper.find('.set-wrapper').removeClass('hide');
         }
-       // else
-       // {
-           
-       // }
+ 
 
         if( commentText )
         {
