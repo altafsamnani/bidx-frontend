@@ -95,9 +95,22 @@
     padding-bottom: 20px;
 }
 
-.bidx-member_profile .add-company-container
+.bidx-member_profile
 {
-    padding: 0 20px 10px 0;
+    .add-company-container
+    {
+        padding: 0 20px 10px 0;
+    }
+}
+.bidx-edit
+{
+    .quick-action-links a
+    {
+        cursor: @cursor-disabled;
+        pointer-events: none; // Future-proof disabling of clicks
+        .opacity(.65);
+        .box-shadow(none);
+    }
 }
 
 .languageItem {

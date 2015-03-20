@@ -1,6 +1,4 @@
 <?php
-require dirname(__FILE__).'/vendor/lessphp/lessc.inc.php';
-
 /**
  * LESS compiler
  *
@@ -16,28 +14,28 @@ class WPLessCompiler extends lessc
 	/**
 	 * Instantiate a compiler
 	 *
-   * @api
+   	 * @api
 	 * @see	lessc::__construct
 	 * @param $file	string [optional]	Additional file to parse
 	 */
 	public function __construct($file = null)
 	{
-  	do_action('wp-less_compiler_construct_pre', $this, $file);
+  		do_action('wp-less_compiler_construct_pre', $this, $file);
 		parent::__construct(apply_filters('wp-less_compiler_construct', $file));
 	}
 
-  /**
-   * Registers a set of functions
-   *
-   * @param array $functions
-   */
-  public function registerFunctions(array $functions = array())
-  {
-    foreach ($functions as $name => $args)
-    {
-      $this->registerFunction($name, $args['callback']);
-    }
-  }
+	/**
+   	* Registers a set of functions
+   	*
+   	* @param array $functions
+   	*/
+  	public function registerFunctions(array $functions = array())
+  	{
+  		foreach ($functions as $name => $args)
+  		{
+			$this->registerFunction($name, $args['callback']);
+		}
+  	}
 
 	/**
 	 * Returns available variables
@@ -71,7 +69,7 @@ class WPLessCompiler extends lessc
 	{
 		$cache_name = 'wp_less_compiled_'.md5($stylesheet->getSourcePath());
 		$compiled_cache = get_transient($cache_name);
-		
+
 		if( !$force && !file_exists( $stylesheet->getTargetPath() ) ) $force = true;
 
 		$compiled_cache = $this->cachedCompile($compiled_cache ? $compiled_cache : $stylesheet->getSourcePath(), $force);
@@ -79,7 +77,7 @@ class WPLessCompiler extends lessc
 		// saving compiled stuff
 		if (isset($compiled_cache['compiled']) && $compiled_cache['compiled'])
 		{
-      $stylesheet->setSourceTimestamp($compiled_cache['updated']);
+      			$stylesheet->setSourceTimestamp($compiled_cache['updated']);
 			$this->saveStylesheet($stylesheet, $compiled_cache['compiled']);
 
 			$compiled_cache['compiled'] = NULL;

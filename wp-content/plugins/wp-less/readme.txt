@@ -1,9 +1,9 @@
 === WP-LESS ===
-Contributors: oncletom
+Contributors: fabrizim,oncletom
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=752034
 Tags: dev, theme, themes, toolkit, plugin-toolkit, less, lesscss, lessc, lessphp, productivity, style, stylesheet, api
 Requires at least: 3.2
-Tested up to: 3.4
+Tested up to: 4.0
 Stable tag: trunk
 
 Implementation of LESS (Leaner CSS) in order to make themes development easier.
@@ -68,6 +68,26 @@ Warning: this release has some breaking changes. If you the old selector express
 
 == Changelog ==
 
+= Version 1.7.5 =
+
+ * feature: now works properly in the admin side ([#68](https://github.com/oncletom/wp-less/pull/68))
+
+= Version 1.7.4 =
+
+ * feature: favour composer autoload to manual PHP `require` ([#64](https://github.com/oncletom/wp-less/pull/64))
+
+= Version 1.7.3 =
+
+ * bug: fixed the LESS library loading ([#63](https://github.com/oncletom/wp-less/issues/63))
+ * doc: documented the new LESS library swapping
+
+= Version 1.7.0 =
+
+ * feature: ability to provide your own flavour of `lessphp` or `less.php` ([#53](https://github.com/oncletom/wp-less/pull/53))
+ * bug: fixed stylesheet directory computation ([#61](https://github.com/oncletom/wp-less/pull/61))
+ * bug: unlink exception during utpdated files cleanup ([#49](https://github.com/oncletom/wp-less/pull/49))
+ * style: code cleanup ([#56](https://github.com/oncletom/wp-less/pull/56), [#55](https://github.com/oncletom/wp-less/pull/55))
+
 = Version 1.6.0 =
 
 Read the UPGRADE NOTICE carefully as this release contains BC change. Hence the version bump to `1.6.0`.
@@ -76,8 +96,8 @@ Read the UPGRADE NOTICE carefully as this release contains BC change. Hence the 
 
 = Version 1.5.4 =
 
- * bug: fixed stylesheet URL computation ([#38](https://github.com/oncletom/wp-less/issue/38))
- * bug: fixed cache-hit miss after stylesheet garbage collection ([#40](https://github.com/oncletom/wp-less/issue/40))
+ * bug: fixed stylesheet URL computation ([#38](https://github.com/oncletom/wp-less/pull/38))
+ * bug: fixed cache-hit miss after stylesheet garbage collection ([#40](https://github.com/oncletom/wp-less/pull/40))
  * added a CONTRIBUTORS file
 
 = Version 1.5.3 =
@@ -86,16 +106,16 @@ Read the UPGRADE NOTICE carefully as this release contains BC change. Hence the 
 
 = Version 1.5.2 =
 
- * bug: fixed garbage collector bug ([#28](https://github.com/oncletom/wp-less/issue/28))
- * bug: fixed cachebusting URI generation in deep mode ([#29](https://github.com/oncletom/wp-less/issue/29))
- * bug: fixed access to Plugin instance, matching the documentation ([#20](https://github.com/oncletom/wp-less/issue/20))
+ * bug: fixed garbage collector bug ([#28](https://github.com/oncletom/wp-less/pull/28))
+ * bug: fixed cachebusting URI generation in deep mode ([#29](https://github.com/oncletom/wp-less/pull/29))
+ * bug: fixed access to Plugin instance, matching the documentation ([#39](https://github.com/oncletom/wp-less/pull/39))
 
 = Version 1.5.1 =
 
  * feature(beta): less stylesheets can be enqueued in `wp-admin`
  * feature: added `WPLessConfiguration::getTtl` method to let you configure the delay of old-files cleanup
- * bug: fixed automatic replacements with absolute and data uri ([#19](https://github.com/oncletom/wp-less/issue/19))
- * bug: fixed garbage collector; was pruning active stylesheets even if too old (buggy with active cache) ([#20](https://github.com/oncletom/wp-less/issue/20))
+ * bug: fixed automatic replacements with absolute and data uri ([#19](https://github.com/oncletom/wp-less/pull/19))
+ * bug: fixed garbage collector; was pruning active stylesheets even if too old (buggy with active cache) ([#20](https://github.com/oncletom/wp-less/pull/20))
 
 = Version 1.5 =
 
@@ -105,14 +125,14 @@ Mostly issues related to `lessphp` 0.3.8 features.
  * [dev documentation available online](https://github.com/oncletom/wp-less/wiki)
  * bug: stylesheets compilation is now processed on `wp_enqueue_scripts` ([prop of @RixTox](https://github.com/oncletom/wp-less/pull/18))
  * feature: providing stylesheet and template directory uri variables (`@stylesheet_directory_uri` & `@template_directory_uri`) following WordPress convention
- * feature: Pruning old compiled files [#15](https://github.com/oncletom/wp-less/issues/15)
- * feature: Smarter LESS compilation (following @import file updates) [#13](https://github.com/oncletom/wp-less/issues/13)
- * feature: Systematic LESS rebuild through configuration [#14](https://github.com/oncletom/wp-less/issues/14)
- * improvement: Match lessphp variable API [#12](https://github.com/oncletom/wp-less/issues/12)
+ * feature: Pruning old compiled files [#15](https://github.com/oncletom/wp-less/pull/15)
+ * feature: Smarter LESS compilation (following @import file updates) [#13](https://github.com/oncletom/wp-less/pull/13)
+ * feature: Systematic LESS rebuild through configuration [#14](https://github.com/oncletom/wp-less/pull/14)
+ * improvement: Match lessphp variable API [#12](https://github.com/oncletom/wp-less/pull/12)
 
 = Version 1.4.3 =
 
- * bug: fixed HTTPS/Networked Blog URL replacement ([#8](https://github.com/oncletom/wp-less/issues/8), [#9](https://github.com/oncletom/wp-less/issues/9))
+ * bug: fixed HTTPS/Networked Blog URL replacement ([#8](https://github.com/oncletom/wp-less/pull/8), [#9](https://github.com/oncletom/wp-less/pull/9))
  * bug: fixed the `property of non-object in Plugin.class.php` bug
  * lessphp: updated to 0.3.8 (compatible with lessjs 1.3)
 

@@ -39,10 +39,49 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     public function __construct(WPLessConfiguration $configuration)
     {
         parent::__construct($configuration);
-
+    }
+    
+    public function instantiateCompiler()
+    {
+        if (!class_exists('lessc')) {
+            // Load the parent compiler class
+            require $this->getLessCompilerPath();
+        }
+        
         $this->compiler = new WPLessCompiler;
         $this->compiler->setVariable('stylesheet_directory_uri', "'" . get_stylesheet_directory_uri() . "'");
         $this->compiler->setVariable('template_directory_uri', "'" . get_template_directory_uri() . "'");
+    }
+    
+    /**
+     * Load the parent compiler class. This is provided via lessc.inc.php for
+     * both the lessphp and less.php implementations
+     *
+     * @author  fabrizim
+     * @since   1.7.1
+     *
+     */
+    protected function getLessCompilerPath()
+    {
+        // The usage of the WP_LESS_COMPILER is a holdover from an older implentation
+        // of this opt-in functionality
+        $compiler = defined('WP_LESS_COMPILER') ? WP_LESS_COMPILER : apply_filters('wp_less_compiler', 'lessphp');
+        
+        switch( $compiler ){
+            case 'less.php':
+                return dirname(__FILE__).'/../vendor/oyejorge/less.php/lessc.inc.php';
+            case 'lessphp':
+                return dirname(__FILE__).'/../vendor/leafo/lessphp/lessc.inc.php';
+            default:
+                return $compiler;
+        }
+    }
+    
+    public function getCompiler()
+    {
+        if( $this->compiler ) return $this->compiler;
+        $this->instantiateCompiler();
+        return $this->compiler;
     }
 
     /**
@@ -61,7 +100,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
          * Garbage Collection Registration
          */
         $gc = new WPLessGarbagecollector($this->configuration);
-        add_action('wp-less_garbage_collection', array($gc, 'clean'));
+        add_action('wp-less-garbage-collection', array($gc, 'clean'));
 
         /*
          * Last Hooks
@@ -76,7 +115,20 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function install()
     {
-        wp_schedule_event(time(), 'daily', 'wp-less_garbage_collection');
+        /*
+         * Check to see if it isn't scheduled first, for example
+         * this would occur when loaded via theme
+         */
+        if ( FALSE === wp_get_schedule( 'wp-less-garbage-collection' ) )
+        {
+            wp_schedule_event(time(), 'daily', 'wp-less-garbage-collection');
+        }
+
+        /* 
+         * Clear old hooks, prior to hook change
+         * #57
+         */
+        wp_clear_scheduled_hook( 'wp-less_garbage_collection' );
     }
 
     /**
@@ -86,7 +138,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function uninstall()
     {
-        wp_clear_scheduled_hook('wp-less_garbage_collection');
+        wp_clear_scheduled_hook('wp-less-garbage-collection');
     }
 
     /**
@@ -188,12 +240,12 @@ class WPLessPlugin extends WPPluginToolkitPlugin
         $force = !!$force ? $force : $this->configuration->alwaysRecompile();
 
         $wp_styles = $this->getStyles();
-        $stylesheet = new WPLessStylesheet($wp_styles->registered[$handle], $this->compiler->getVariables());
+        $stylesheet = new WPLessStylesheet($wp_styles->registered[$handle], $this->getCompiler()->getVariables());
 
         if ($this->configuration->getCompilationStrategy() === 'legacy' && $stylesheet->hasToCompile()) {
-            $this->compiler->saveStylesheet($stylesheet);
+            $this->getCompiler()->saveStylesheet($stylesheet);
         } elseif ($this->configuration->getCompilationStrategy() !== 'legacy') {
-            $this->compiler->cacheStylesheet($stylesheet, $force);
+            $this->getCompiler()->cacheStylesheet($stylesheet, $force);
         }
 
         $wp_styles->registered[$handle]->src = $stylesheet->getTargetUri();
@@ -248,6 +300,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
         is_admin() ? do_action('wp-less_init_admin', $this) : do_action('wp-less_init', $this);
         add_action('wp_enqueue_scripts', array($this, 'processStylesheets'), 999, 0);
+        add_action('admin_enqueue_scripts', array($this, 'processStylesheets'), 999, 0);
         add_filter('wp-less_stylesheet_save', array($this, 'filterStylesheetUri'), 10, 2);
 
         return $this->is_hooks_registered = true;
@@ -261,7 +314,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function addVariable($name, $value)
     {
-        $this->compiler->setVariables(array($name => $value));
+        $this->getCompiler()->setVariables(array($name => $value));
     }
 
     /**
@@ -272,7 +325,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function setVariables(array $variables)
     {
-        $this->compiler->setVariables($variables);
+        $this->getCompiler()->setVariables($variables);
     }
 
     /**
@@ -283,7 +336,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function registerFunction($name, $callback)
     {
-        $this->compiler->registerFunction($name, $callback);
+        $this->getCompiler()->registerFunction($name, $callback);
     }
 
     /**
@@ -294,7 +347,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function unregisterFunction($name)
     {
-        $this->compiler->unregisterFunction($name);
+        $this->getCompiler()->unregisterFunction($name);
     }
 
     /**
@@ -306,7 +359,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function getImportDir()
     {
-        return $this->compiler->getImportDir();
+        return $this->getCompiler()->getImportDir();
     }
 
     /**
@@ -318,7 +371,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function addImportDir($dir)
     {
-        $this->compiler->addImportDir($dir);
+        $this->getCompiler()->addImportDir($dir);
     }
 
     /**
@@ -330,6 +383,6 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function setImportDir($dirs)
     {
-        $this->compiler->setImportDir($dirs);
+        $this->getCompiler()->setImportDir($dirs);
     }
 }

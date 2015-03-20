@@ -1923,7 +1923,7 @@
 
         var logoImage = bidx.utils.getValue( businessSummary, "logo" );
 
-        if ( logoImage )
+        if ( logoImage && logoImage.document )
         {
             $logoContainer.empty();
             $logoContainer.append( "<img src='"+ logoImage.document +"' />" );
