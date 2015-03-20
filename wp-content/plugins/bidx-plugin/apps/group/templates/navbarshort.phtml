@@ -45,7 +45,7 @@
     $hasProfiles    = count( $profiles) !== 0;
     $hasGroups      = count( $groups) > 1;
     $isAdmin        = $sessionSvc->isAdmin();
-
+    $isSysAdmin     = $sessionSvc->isSysAdmin();
 
 ?>
 
@@ -79,11 +79,17 @@
     $skipsoJudgeUrl = get_option ('skipso-judge-url');
     $userName       = $this -> sessionData -> data -> username;
     $displayName    = $this -> sessionData -> data -> bidxMemberProfile -> firstName ? $this -> sessionData -> data -> bidxMemberProfile -> firstName : $this -> sessionData -> data -> displayName ;
+    if ( $isSysAdmin )
+    {
+        // we could add something in the account's name, but that would make it very clear who the platform
+        // administrators are if they join a group. So, add some indicator in the navigation instead.
+        $displayName = $displayName . ' ☆';
+    }
     $judgeEmails    = explode(",", get_option ('skipso-judge-emails'));
     $isJudge        = ($isCompetition && in_array( $userName, $judgeEmails )) ? true : false;
     $showLogout     = true;
 
-        if ( $isAdmin || ( $inGroup && $hasProfiles ) || $isJudge)
+        if ( $isSysAdmin || $isAdmin || ( $inGroup && $hasProfiles ) || $isJudge)
         {
  ?>
             <div class="btn-group profiles">
@@ -103,7 +109,7 @@
                             <li><a href="<?php echo $menuLink ?>"><i class="fa fa-angle-right"></i>&nbsp;<?php _e( $menuName, 'bidxplugin' ); ?></a></li>
 <?php                   }
                     }
-                    if ( $isAdmin )
+                    if ( $isSysAdmin || $isAdmin )
                     {
 ?>
                         <li>

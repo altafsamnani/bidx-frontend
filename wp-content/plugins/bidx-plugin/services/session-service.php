@@ -123,20 +123,40 @@ class SessionService extends APIBridge {
     }
 
     /**
+     * Checks if the user has at least one of the roles.
+     * @param mixed $roles single role or array of roles to check.
+     * @return boolean true if the user has at least one of the roles, false if not
+     */
+    function isHavingRole( $roles ) {
+        $sessionData = BidxCommon::$staticSession;
+        if ( !empty( $sessionData ) ) {
+            $userRoles = ( !empty( $sessionData->data->roles )) ? $sessionData->data->roles : NULL;
+            if ( !empty( $userRoles ) ) {
+                if( is_array( $roles ) ) {
+                    return count( array_intersect($userRoles, $roles) ) > 0;
+                }
+                else {
+                    return in_array( $roles, $userRoles );
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Checks if the user is an admin in the current group.
      * @return boolean true if admin, false if not
      */
     function isAdmin( ) {
-    	$sessionData = BidxCommon::$staticSession;
-    	$roles = ( !empty($sessionData->data->roles ) ) ? $sessionData->data->roles:NULL;
-    	$currentGroupAdmin = false;
-    	if ( !empty($sessionData) && !empty($roles) ) {
-    		if ( in_array( 'GroupAdmin', $roles ) ||
-    			 in_array( 'GroupOwner', $roles ) ) {
-    			$currentGroupAdmin = true;
-    		}
-    	}
-    	return $currentGroupAdmin;
+        return $this->isHavingRole( array('GroupAdmin', 'GroupOwner') );
+    }
+
+    /**
+     * Checks if the user is a platform admin.
+     * @return boolean true if platform admin, false if not
+     */
+    function isSysAdmin( ) {
+       return $this->isHavingRole( 'SysAdmin' );
     }
 
     /**
