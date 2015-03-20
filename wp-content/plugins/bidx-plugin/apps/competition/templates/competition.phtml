@@ -129,9 +129,9 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
             if ( $canEdit )
             {
     ?>
-                <div class="btn-group coverBtns">
-                    <a class="btn btn-primary btn-large btnCover" data-toggle="modal" href="#coverImage"><?php echo _e( 'Add or Change', 'bidxplugin' ); ?></a>
-                    <!-- <a class="btn btn-primary btn-large btnRemove" data-toggle="modal" href="#coverRemove"><?php echo _e( 'Remove', 'bidxplugin' ); ?></a> -->
+                <div class="coverBtns">
+                    <a class="btn btn-primary btn-large btnCover" data-toggle="modal" href="#coverImage"><?php echo _e( 'Select', 'bidxplugin' ); ?></a>
+                    <a class="btn btn-primary btn-large btnRemove hide" href="#coverRemove"><?php echo _e( 'Remove', 'bidxplugin' ); ?></a>
                 </div>
 
                 <div class="coverModal modal fade">
@@ -236,7 +236,8 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
 <?php
                     if ( $isParticipant ) :
 ?>
-                        <button class="btn btn-primary btn-participate disabled"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
+                        <button class="btn btn-primary btn-participate disabled hide"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
+                        <a href="/businesssummary/#createBusinessSummary" class="btn btn-primary btn-business hide"><i class="fa fa-suitcase fa-big fa-above"></i><?php echo _e( 'Create Business', 'bidxplugin' ); ?></a>
 <?php
                     endif;
 ?>
@@ -372,7 +373,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                     <th></th>
                     <th><?php _e('Business','bidxplugin');?></th>
                     <th><?php _e('Entrepreneur','bidxplugin');?></th>
-                    <th><?php _e('Score','bidxplugin');?></th>
+                    <th><?php _e('My Rating','bidxplugin');?></th>
                     <th><?php _e('My Recommendation','bidxplugin');?> </th>
                     <th><?php _e('State','bidxplugin');?></th>
                 </tr>
@@ -519,14 +520,14 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
 
                                     <!-- Slogan -->
                                     <div class="form-group col-sm-6">
-                                        <label><?php _e('Give a short description of competition in a maximum of 30 words','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Give a short description of competition in a maximum of 30 words','bidxplugin'); ?> </label>
                                         <textarea type="text" class="form-control" name="description" placeholder="<?php _e('Description of the goals of the competition','bidxplugin'); ?>"></textarea>
                                     </div>
                                 </div>
                                  <div class="row">
                                     <!-- Summary -->
                                     <div class="form-group col-sm-6">
-                                        <label><?php _e('Start date','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('Start date','bidxplugin'); ?></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                              <input type="text" class="form-control"  readonly data-type="datetime" name="startDateTime" placeholder="<?php _e('Please select start date','bidxplugin'); ?>">
@@ -535,7 +536,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
 
                                     <!-- Reason For Submission -->
                                     <div class="form-group col-sm-6">
-                                        <label><?php _e('End date','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                        <label><?php _e('End date','bidxplugin'); ?></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                             <input readonly type="text" class="form-control" name="endDateTime" data-type="datetime" placeholder="<?php _e('Please select end date','bidxplugin'); ?>">
@@ -794,13 +795,15 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
         </div>
         <div class="cardContent">
             <div class="cardTop">
-                <div class="row">
-                     <div class="assign-assessor hide">
+                <div class="assign-assessor hide">
+                    <div class="row">
                         <div class="col-sm-12">
                             <label class="inline">Assign Assessor:</label>
                         </div>
+                    </div>
+                    <div class="row">
                         <div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8 chosen-drpdwnsetting">
                                 <select data-placeholder="<?php _e('Select Assessor','bidxplugin');?>" multiple class="chosen-assessors-%entityId%" name="assessors-%entityId%"></select>
                             </div>
                         </div>
@@ -808,12 +811,16 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                                 <a data-entityid = "%entityId%" class="btn btn-primary btn-md btn-block assign-assessor-%entityId%"><?php _e('Assign','bidxplugin');?></a>
                         </div>
                     </div>
-                    <div class="assign-judge hide">
+                </div>
+                <div class="assign-judge hide">
+                    <div class="row">
                         <div class="col-sm-12">
                             <label class="inline">Assign Judge:</label>
                         </div>
+                    </div>
+                    <div class="row">
                         <div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8 chosen-drpdwnsetting">
                                 <select data-placeholder="<?php _e('Select Judge','bidxplugin');?>" multiple class="chosen-judges-%entityId%" name="judges-%entityId%"></select>
                             </div>
                         </div>
@@ -849,8 +856,8 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                                 <input data-entityid = "%entityId%" type="radio" value="NOT_FINALIST" id="recommend-notfinalist-%entityId%" name="recommend-finalist-%entityId%" data-toggle="radio" />
                                 <label for="recommend-notfinalist-%entityId%"><span></span><?php _e('Not Finalist', 'bidxplugin');?></label>
                             </div>
-                             <div class="radio inline-radio hide">
-                                <input data-entityid = "%entityId%" type="radio" value="REJECTED" id="recommend-rejected-%entityId%" name="recommend-rejected-%entityId%" data-toggle="radio" />
+                             <div class="radio inline-radio">
+                                <input data-entityid = "%entityId%" type="radio" value="REJECTED" id="recommend-rejected-%entityId%" name="recommend-finalist-%entityId%" data-toggle="radio" />
                                 <label for="recommend-rejected-%entityId%"><span></span><?php _e('Reject', 'bidxplugin');?></label>
                             </div>
                         </div>
@@ -879,8 +886,8 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                                 <input data-entityid = "%entityId%" type="radio" value="NOT_WINNER" id="recommend-notWinner-%entityId%" name="recommend-winner-%entityId%" data-toggle="radio" />
                                 <label for="recommend-notWinner-%entityId%"><span></span><?php _e('Not Winner', 'bidxplugin');?></label>
                             </div>
-                            <div class="radio inline-radio hide">
-                                <input data-entityid = "%entityId%" type="radio" value="REJECTED" id="recommend-rejected-%entityId%" name="recommend-rejected-%entityId%" data-toggle="radio" />
+                            <div class="radio inline-radio">
+                                <input data-entityid = "%entityId%" type="radio" value="REJECTED" id="recommend-rejected-%entityId%" name="recommend-winner-%entityId%" data-toggle="radio" />
                                 <label for="recommend-rejected-%entityId%"><span></span><?php _e('Reject', 'bidxplugin');?></label>
                             </div>
                         </div>
@@ -1014,7 +1021,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                         </div>
                         <div class="col-sm-4 pull-left rating-wrapper hide">
                             <div class="rating-wrapper-finalist-%entityId%">
-                                <div data-rating="%bidxFINALISTRatingAverage%" class="raty-finalist-%entityId%"></div>
+                                <div class="raty-finalist-%entityId%"></div>
                             </div>
                         </div>
                         <div class="col-sm-12 comment-wrapper hide">
@@ -1074,7 +1081,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                         </div>
                         <div class="col-sm-4 pull-left rating-wrapper hide">
                             <div class="rating-wrapper-winner-%entityId%">
-                                <div data-rating="%bidxWINNERRatingAverage%" class="raty-winner-%entityId%"></div>
+                                <div class="raty-winner-%entityId%"></div>
                             </div>
                         </div>
                         <div class="col-sm-12 comment-wrapper hide">

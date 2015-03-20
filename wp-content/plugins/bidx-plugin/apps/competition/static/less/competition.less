@@ -115,16 +115,27 @@
     {
         border:0px;
         border-top: 1px solid #dddddd;
+        white-space: normal;
     }
 
     .table-bordered > tbody > tr.extrapanel > td
     {
         border-top:0px;
+        white-space: normal;
     }
 
     tr.shown .fa-plus-square-o:before
     {
         content: "\f147";
+    }
+    .viewApplications
+    {
+        clear:both;
+    }
+    .assign-assessor,
+    .assign-judge
+    {
+        margin-bottom:3%;
     }
 }
 .competition-description
@@ -185,7 +196,10 @@ tbody tr.extrapanel td
 {
     height : auto !important;
 }
-.assign-assessor, .assign-judge
+
+.chosen-drpdwnsetting
 {
     padding-bottom:13%;
+    float:left;
+    position:absolute;
 }

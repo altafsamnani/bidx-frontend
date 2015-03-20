@@ -26,6 +26,7 @@
     ,   $logoControl                        = $editForm.find( ".logo-control"                               )
     ,   $logoContainer                      = $logoControl.find( ".logoContainer"                           )
     ,   $btnChangeLogo                      = $logoControl.find( "a[href$='changeLogo']"                    )
+    ,   $btnRemoveLogo                      = $logoControl.find( "a[href$='removeLogo']"                    )
     ,   $changeLogoModal                    = $logoControl.find( ".changeLogoModal"                         )
 
     ,   $currentAddressMap                  = $editForm.find( ".currentAddressMap"                          )
@@ -152,6 +153,15 @@
             dataKey:            "legalForm"
         ,   emptyValue:         bidx.i18n.i( "legalForm", appName )
         });
+
+        $btnRemoveLogo.click( function( e )
+        {
+            e.preventDefault();
+
+            $logoContainer.find( "img" ).remove();
+        } );
+
+
 
         bidx.data.getContext( "legalForm", function( err, legalForms )
         {
@@ -748,8 +758,18 @@
 
         // Logo
         //
-        var logo = $logoContainer.data( "bidxData" );
-        bidx.utils.setValue( company, "logo", logo );
+        var logo = $logoContainer.data( "bidxData" )
+        ,   logoImg = $logoContainer.find( "img" )
+        ;
+        
+        if ( logoImg.length === 0 )
+        {
+            bidx.utils.setValue( company, "logo", null );
+        }
+        else
+        {
+            bidx.utils.setValue( company, "logo", logo );
+        }
     };
 
 

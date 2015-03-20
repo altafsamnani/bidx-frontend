@@ -53,6 +53,7 @@
                                                     {
                                                         "type": "bidxMentorProfile"
                                                     },
+                                                    // This MUST be the last, as it's removed if applicable
                                                     {
                                                         "type": "bidxInvestorProfile"
                                                     }
@@ -63,12 +64,9 @@
     ,   tempLimit               = CONSTANTS.SEARCH_LIMIT
     ,   currentInvestorId       = bidx.common.getInvestorProfileId()
     ,   roles                   = bidx.utils.getValue( bidxConfig.session, "roles" )
-    ,   displayInvestorProfile  = ( $.inArray("GroupOwner", roles) !== -1 || $.inArray("GroupOwner", roles) !== -1 || currentInvestorId ) ? true : false //If current user not investor or groupadmin then dont allow access for investor profiles
+    // If current user is not investor or group admin then don't allow access to investor profiles
+    ,   displayInvestorProfile  = ( $.inArray("GroupOwner", roles) !== -1 || $.inArray("GroupAdmin", roles) !== -1 || currentInvestorId ) ? true : false
     ;
-
-    if(roles ){
-
-    }
 
     function _oneTimeSetup()
     {
