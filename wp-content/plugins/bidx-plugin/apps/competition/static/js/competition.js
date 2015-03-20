@@ -1363,7 +1363,8 @@ function currentUserRecommendationForCurrentPhase( response )
     ,   isHavingJudgeReview
     ,   reviews                     =   response.reviews
     ,   status                      =   response.status
-    ,   displayReview               =   bidx.i18n.i( 'pendingStatus', appName )
+    ,   recommendation              =   bidx.i18n.i( 'pendingStatus', appName )
+    ,   reviewRating                =   0
     ,   loggedInCompetitionRoles    =   competitionBidxMeta.bidxCompetitionRoles
     ;
 
@@ -1390,13 +1391,13 @@ function currentUserRecommendationForCurrentPhase( response )
             //If status is rejected or its ended directly shows status in recommendation then
             if( status === 'REJECTED' || competitionBidxMeta.bidxCompetitionRoundStatus === 'ENDED')
             {
-                displayReview = bidx.i18n.i( status,  appName );
+                recommendation = bidx.i18n.i( status,  appName );
 
             }
             else
             {
                 //If round is ended then display Judging recommendatin for admin
-                competitionRoundStatus    =   competitionBidxMeta.bidxCompetitionRoundStatus;
+                competitionRoundStatus      =   competitionBidxMeta.bidxCompetitionRoundStatus;
 
                 currentPhaseReview          =   _.findWhere(  reviews
                                                 ,   {
@@ -1408,7 +1409,8 @@ function currentUserRecommendationForCurrentPhase( response )
 
                 if( competitionRecommendation )
                 {
-                    displayReview = bidx.i18n.i( currentPhaseReview.competitionRecommendation, appName );
+                    recommendation  = bidx.i18n.i( currentPhaseReview.competitionRecommendation, appName );
+                    reviewRating    = bidx.utils.getValue(currentPhaseReview, 'reviewRating');
                 }
             }
 
@@ -1420,7 +1422,8 @@ function currentUserRecommendationForCurrentPhase( response )
 
             if( competitionRecommendation )
             {
-                displayReview = bidx.i18n.i( isHavingJudgeReview.competitionRecommendation,  appName );
+                recommendation  = bidx.i18n.i( isHavingJudgeReview.competitionRecommendation,  appName );
+                reviewRating    = bidx.utils.getValue(isHavingJudgeReview, 'reviewRating');
             }
             else
             {
@@ -1428,7 +1431,8 @@ function currentUserRecommendationForCurrentPhase( response )
 
                 if( competitionRecommendation )
                 {
-                    displayReview = bidx.i18n.i( isHavingAssessorReview.competitionRecommendation,  appName );
+                    recommendation  = bidx.i18n.i( isHavingAssessorReview.competitionRecommendation,  appName );
+                    reviewRating    = bidx.utils.getValue(  isHavingAssessorReview, 'reviewRating' );
                 }
             }
 
@@ -1440,13 +1444,17 @@ function currentUserRecommendationForCurrentPhase( response )
 
             if( competitionRecommendation )
             {
-                displayReview = bidx.i18n.i( isHavingAssessorReview.competitionRecommendation,  appName );
+                recommendation  = bidx.i18n.i( isHavingAssessorReview.competitionRecommendation,  appName );
+                reviewRating    = bidx.utils.getValue( isHavingAssessorReview, 'reviewRating' );
             }
 
         break;
     }
 
-    return displayReview;
+    return  {
+                recommendation:  recommendation
+            ,   reviewRating:    reviewRating
+            };
 }
 
 
@@ -1493,7 +1501,7 @@ function format ( data, row )
                                                         role:   "COMPETITION_JUDGE"
                                                     ,   userId: loggedInMemberId
                                                     }  );
-    bidx.utils.log('reviews', reviews);
+
 
     displayReview               =   _displayRecommendations( reviews );
 
@@ -1677,7 +1685,7 @@ function _initApplicationsView( )
     ,   businessData
     ,   entityId
     ,   ownerId
-    ,   recommendation
+    ,   roleReview
     ,   destroy               =  false
     ,   competitionRoles      =  competitionBidxMeta.bidxCompetitionRoles
     ,   isCompetitionManager  = _.contains( competitionRoles, 'COMPETITION_ADMIN')
@@ -1707,13 +1715,15 @@ function _initApplicationsView( )
                 businessData        = '<a href="/businesssummary/' + entityId +  '" target="_blank">' + business + '</a>';
                 entrepreneurData    = '<a href="/member/' + ownerId + '" target="_blank">' + entrepreneur + '</a>';
 
-                recommendation      =  currentUserRecommendationForCurrentPhase( response );
+                roleReview      =  currentUserRecommendationForCurrentPhase( response );
+
+                bidx.utils.log('roleReview', roleReview);
 
                 displayRows     =   {
                                         business:       businessData
                                     ,   entrepreneur:   entrepreneurData
-                                    ,   rating:         (rating) ? rating.toFixed(1) : 0
-                                    ,   recommendation: recommendation
+                                    ,   rating:         (roleReview.reviewRating)? roleReview.reviewRating : 0
+                                    ,   recommendation: roleReview.recommendation
                                     ,   state:          bidx.i18n.i(response.status, appName)
                                     ,   status:         response.status
                                     ,   entityId:       entityId
@@ -2927,8 +2937,6 @@ function _competitionTimer (  )
                 ,   $wrapperAssessor        =   $listItem.find( ".assign-assessor" )
                 ;
 
-                //bidx.utils.setElementValue( $radioQualification, status );
-
                 $wrapperQualification.addClass('hide');
 
                 if(assessorLength) // If there are assessor then show the dropdown
@@ -2956,7 +2964,6 @@ function _competitionTimer (  )
 
                 _assignRadioActions( $listItem, data );
 
-                //$rejectComment.removeClass('hide');
                 $wrapperQualification.addClass('hide');
 
             break;
@@ -2976,29 +2983,24 @@ function _competitionTimer (  )
                 ,   data:       data
                 ,   row:        row
                 });
-                //$wrapperWinner.removeClass('hide');
 
             break;
 
             case 'NOT_FINALIST':
 
                 bidx.utils.setElementValue( $radioFinalist , status );
-               //$wrapperFinalist.removeClass('hide');
 
             break;
 
             case 'WINNER':
 
                 bidx.utils.setElementValue( $radioWinner, status );
-               // $wrapperWinner.removeClass('hide');
 
             break;
 
             case 'NOT_WINNER':
 
                 bidx.utils.setElementValue( $radioWinner, status );
-               // $wrapperFinalist.removeClass('hide');
-               // $wrapperWinner.removeClass('hide');
 
             break;
         }
@@ -3196,8 +3198,8 @@ function _competitionTimer (  )
         ;
 
 
-         _assignRadioActions( $listItem, data );
-         
+        _assignRadioActions( $listItem, data );
+
         if( recommendation )
         {
             radioName       =   'recommend-' + action + '-' + entityId;
@@ -3209,7 +3211,6 @@ function _competitionTimer (  )
             $wrapper.find('.comment-wrapper').removeClass('hide');
             $wrapper.find('.set-wrapper').removeClass('hide');
         }
- 
 
         if( commentText )
         {
@@ -3260,6 +3261,8 @@ function _competitionTimer (  )
                                                     recommendationStatus        =   recommData.competitionRecommendation;
 
                                                     d.recommendation            =   bidx.i18n.i(recommendationStatus, appName);
+
+                                                    d.rating                    =   (recommData.reviewRating) ? recommData.reviewRating : 0;
 
                                                     if(recommendationStatus === 'REJECTED')
                                                     {
@@ -3488,8 +3491,6 @@ function _competitionTimer (  )
         ,   snippetError                =   $("#errorapp-card").html().replace(/(<!--)*(-->)*/g, "")
         ;
 
-        bidx.utils.log('status',status);
-
         _displayButtonsAccordingToStatus( $listItem, data, row, review );
 
         _loadActorDropdownAccordingToStatus( $listItem, data);
@@ -3512,7 +3513,7 @@ function _competitionTimer (  )
                             d.status    =   status;
                             row.data(d);
 
-                            successMsg = bidx.i18n.i('SUCCESS_' + status ,appName);
+                            successMsg = bidx.i18n.i('SUCCESS_ADMIN_' + status ,appName);
 
                             statusMsg = snippetSuccess
                                         .replace( /%successMsg%/g, successMsg)
@@ -3562,6 +3563,7 @@ function _competitionTimer (  )
                             d.state                     =   rowStatus;
                             d.status                    =   recommendationStatus;
                             d.recommendation            =   rowStatus;
+                            d.rating                    =   recommData.reviewRating;
                             d.reviews.push( recommData );
 
                             row.data(d);
