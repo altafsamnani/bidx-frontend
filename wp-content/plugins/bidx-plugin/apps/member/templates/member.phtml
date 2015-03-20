@@ -41,7 +41,7 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
     <div class="actions hide-overflow main-margin">
         <div class="pull-left quick-action-links">
 <?php
-            if ( $isLoggedinMemberIsEntrepreneur ) :
+            if ( $canEdit && $isLoggedinMemberIsEntrepreneur ) :
 ?>            
                 <!-- <a href="#" class="btn btn-sm btn-primary">
                     <div class="fa fa-dashboard fa-above fa-big"></div>

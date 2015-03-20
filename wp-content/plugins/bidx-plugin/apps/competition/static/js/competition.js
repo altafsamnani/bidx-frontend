@@ -1717,10 +1717,12 @@ function _initApplicationsView( )
 
                 roleReview      =  currentUserRecommendationForCurrentPhase( response );
 
+                bidx.utils.log('roleReview', roleReview);
+
                 displayRows     =   {
                                         business:       businessData
                                     ,   entrepreneur:   entrepreneurData
-                                    ,   rating:         roleReview.reviewRating
+                                    ,   rating:         (roleReview.reviewRating)? roleReview.reviewRating : 0
                                     ,   recommendation: roleReview.recommendation
                                     ,   state:          bidx.i18n.i(response.status, appName)
                                     ,   status:         response.status
@@ -2935,8 +2937,6 @@ function _competitionTimer (  )
                 ,   $wrapperAssessor        =   $listItem.find( ".assign-assessor" )
                 ;
 
-                //bidx.utils.setElementValue( $radioQualification, status );
-
                 $wrapperQualification.addClass('hide');
 
                 if(assessorLength) // If there are assessor then show the dropdown
@@ -2964,7 +2964,6 @@ function _competitionTimer (  )
 
                 _assignRadioActions( $listItem, data );
 
-                //$rejectComment.removeClass('hide');
                 $wrapperQualification.addClass('hide');
 
             break;
@@ -2984,29 +2983,24 @@ function _competitionTimer (  )
                 ,   data:       data
                 ,   row:        row
                 });
-                //$wrapperWinner.removeClass('hide');
 
             break;
 
             case 'NOT_FINALIST':
 
                 bidx.utils.setElementValue( $radioFinalist , status );
-               //$wrapperFinalist.removeClass('hide');
 
             break;
 
             case 'WINNER':
 
                 bidx.utils.setElementValue( $radioWinner, status );
-               // $wrapperWinner.removeClass('hide');
 
             break;
 
             case 'NOT_WINNER':
 
                 bidx.utils.setElementValue( $radioWinner, status );
-               // $wrapperFinalist.removeClass('hide');
-               // $wrapperWinner.removeClass('hide');
 
             break;
         }
@@ -3204,8 +3198,8 @@ function _competitionTimer (  )
         ;
 
 
-         _assignRadioActions( $listItem, data );
-         
+        _assignRadioActions( $listItem, data );
+
         if( recommendation )
         {
             radioName       =   'recommend-' + action + '-' + entityId;
@@ -3217,7 +3211,6 @@ function _competitionTimer (  )
             $wrapper.find('.comment-wrapper').removeClass('hide');
             $wrapper.find('.set-wrapper').removeClass('hide');
         }
- 
 
         if( commentText )
         {
@@ -3269,7 +3262,7 @@ function _competitionTimer (  )
 
                                                     d.recommendation            =   bidx.i18n.i(recommendationStatus, appName);
 
-                                                    d.rating                    =   recommData.reviewRating;
+                                                    d.rating                    =   (recommData.reviewRating) ? recommData.reviewRating : 0;
 
                                                     if(recommendationStatus === 'REJECTED')
                                                     {
@@ -3498,8 +3491,6 @@ function _competitionTimer (  )
         ,   snippetError                =   $("#errorapp-card").html().replace(/(<!--)*(-->)*/g, "")
         ;
 
-        bidx.utils.log('status',status);
-
         _displayButtonsAccordingToStatus( $listItem, data, row, review );
 
         _loadActorDropdownAccordingToStatus( $listItem, data);
@@ -3522,7 +3513,7 @@ function _competitionTimer (  )
                             d.status    =   status;
                             row.data(d);
 
-                            successMsg = bidx.i18n.i('SUCCESS_' + status ,appName);
+                            successMsg = bidx.i18n.i('SUCCESS_ADMIN_' + status ,appName);
 
                             statusMsg = snippetSuccess
                                         .replace( /%successMsg%/g, successMsg)

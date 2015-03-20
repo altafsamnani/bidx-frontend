@@ -108,7 +108,11 @@
         }
         else
         {
-            $( "body" ).removeClass( "bidx-edit" );
+            //BIDX-2986 - Hiden edit/feedback button when there is mentoring functionality on bp summary page
+            if ( ! ( s.match( /^(mentor|loadMentor)/ ) && $( "body" ).hasClass( "bidx-businesssummary" ) ) )
+            {
+                $( "body" ).removeClass( "bidx-edit" );
+            }
         }
         $mainStates.hide().filter( ".mainState" + s.charAt( 0 ).toUpperCase() + s.substr( 1 ) ).show();
     }
