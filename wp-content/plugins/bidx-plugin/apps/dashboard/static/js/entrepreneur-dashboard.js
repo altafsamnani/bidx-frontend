@@ -11,6 +11,23 @@
     ;
 
 
+    var placeBusinessThumb = function( $listItem, imageSource )
+    {
+        var $el = $listItem.find("[data-role='businessImage']");
+
+        $el.empty();
+        $el.append
+            (
+                $( "<div />", { "class": "img-cropper" })
+                .append
+                (
+                    $( "<img />", { "src": imageSource, "class": "center-img" })
+                )
+            );
+        $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+    };
+
+
     //public functions
 
     var getInvestors = function(options)
@@ -27,7 +44,10 @@
         ,   i18nItem
         ,   investorType
         ,   emptyVal      = "-"
-        ,   externalVideoPitch
+        ,   logo
+        ,   logoDocument
+        ,   cover
+        ,   coverDocument
         ,   $el
         ,   $listItem
         ;
@@ -115,12 +135,20 @@
                             // Remove the js selector
                             $listItem = $(listItem);
 
-                            externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
+                            logo = bidx.utils.getValue( item, "businessSummary.logo");
+                            logoDocument = bidx.utils.getValue( item, "businessSummary.logo.document");
 
-                            if ( externalVideoPitch )
+                            cover = bidx.utils.getValue( item, "businessSummary.cover");
+                            coverDocument = bidx.utils.getValue( item, "businessSummary.cover.document");
+
+
+                            if ( logo && logoDocument )
                             {
-                                $el         = $listItem.find("[data-role='businessImage']");
-                                _addVideoThumb( externalVideoPitch, $el );
+                                placeBusinessThumb( $listItem, logoDocument );
+                            }
+                            else if ( cover && coverDocument )
+                            {
+                                placeBusinessThumb( $listItem, coverDocument );
                             }
 
                             //  add mail element to list
@@ -297,7 +325,6 @@
         return $el;
     }
 
-
     var getBusinessesAndCompanies = function(options)
     {
 
@@ -309,7 +336,10 @@
         ,   $listItem
         ,   i18nItem
         ,   emptyVal      = "-"
-        ,   externalVideoPitch
+        ,   logo
+        ,   logoDocument
+        ,   cover
+        ,   coverDocument
         ,   $el
         ;
 
@@ -379,13 +409,20 @@
                                     ;
 
                                 $listItem = $(listItem);
+                                
+                                logo = bidx.utils.getValue( item, "logo");
+                                logoDocument = bidx.utils.getValue( item, "logo.document");
 
-                                externalVideoPitch = bidx.utils.getValue( item, "externalVideoPitch");
+                                cover = bidx.utils.getValue( item, "cover");
+                                coverDocument = bidx.utils.getValue( item, "cover.document");
 
-                                if ( externalVideoPitch )
+                                if ( logo && logoDocument )
                                 {
-                                    $el         = $listItem.find("[data-role='businessImage']");
-                                    _addVideoThumb( externalVideoPitch, $el );
+                                    placeBusinessThumb( $listItem, logoDocument );
+                                }
+                                else if ( cover && coverDocument )
+                                {
+                                    placeBusinessThumb( $listItem, coverDocument );
                                 }
 
                                 $list.append( $listItem );
