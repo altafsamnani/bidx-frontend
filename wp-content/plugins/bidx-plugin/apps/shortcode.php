@@ -209,7 +209,7 @@ class BidxShortcode
                 wp_register_script ('bootstrap-datepicker', $vendorDir . "/bootstrap-datepicker-1.3.0-rc.2/js/locales/bootstrap-datepicker.{$langLocale}.js", array ('bootstrap-datepicker-main'), '1.3.0-rc.2', TRUE);
 
                 wp_register_script ('bootstrap-datetimepicker-main', $vendorDir . "/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js", array ('bootstrap', 'jquery'), '1', TRUE);
-                wp_register_script ('bootstrap-datetimepicker', $vendorDir . "/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.{$langLocale}.js", array ('bootstrap-datepicker-main'), '1.3.0-rc.2', TRUE);
+                wp_register_script ('bootstrap-datetimepicker', $vendorDir . "/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.{$langLocale}.js", array ('bootstrap-datetimepicker-main'), '1.3.0-rc.2', TRUE);
 
 
 
