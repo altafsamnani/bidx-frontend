@@ -109,7 +109,15 @@
                             <li><a href="<?php echo $menuLink ?>"><i class="fa fa-angle-right"></i>&nbsp;<?php _e( $menuName, 'bidxplugin' ); ?></a></li>
 <?php                   }
                     }
-                    if ( $isSysAdmin || $isAdmin )
+                    if ( $isSysAdmin )
+                    {
+?>
+                        <li>
+                            <a href="/wp-admin/"><i class="fa fa-angle-right"></i>&nbsp;<?php _e( 'Wordpress dashboard', 'bidxplugin' ); ?></a>
+                        </li>
+<?php
+                    }
+                    if ( $isAdmin )
                     {
 ?>
                         <li>
