@@ -169,42 +169,42 @@
         }
     }
 
-    function _addVideoThumb( url, element )
-    {
-        // This may fail if the URL is not actually a URL, or an unsupported video URL.
-        var matches     = url.match(/(http|https):\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be))\/(video\/|embed\/|watch\?v=)?([A-Za-z0-9._%-]*)(\&\S+)?/)
-        ,   provider    = bidx.utils.getValue(matches, "3")
-        ,   id          = bidx.utils.getValue(matches, "6")
-        ,   $el         = element
-        ;
+    // function _addVideoThumb( url, element )
+    // {
+    //     // This may fail if the URL is not actually a URL, or an unsupported video URL.
+    //     var matches     = url.match(/(http|https):\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be))\/(video\/|embed\/|watch\?v=)?([A-Za-z0-9._%-]*)(\&\S+)?/)
+    //     ,   provider    = bidx.utils.getValue(matches, "3")
+    //     ,   id          = bidx.utils.getValue(matches, "6")
+    //     ,   $el         = element
+    //     ;
 
-        if ( provider === "vimeo.com" )
-        {
-            var videoUrl = "http://vimeo.com/api/v2/video/" + id + ".json?callback=?";
-            $.getJSON( videoUrl, function(data)
-                {
-                    if ( data )
-                    {
-                        $el.find( ".icons-rounded" ).remove();
-                        $el.append( $( "<div />", { "class": "img-cropper" } ) );
-                        $el.find( ".img-cropper" ).append( $( "<img />", { "src": data[0].thumbnail_large } ) );
-                        $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
-                    }
-                }
-            );
-        }
-        else if ( provider === "youtube.com" )
-        {
-            $el.find( ".icons-rounded" ).remove();
-            $el.append( $( "<div />", { "class": "img-cropper" } ) );
-            $el.find( ".img-cropper" ).append( $( "<img />", { "src": "http://img.youtube.com/vi/"+ id +"/0.jpg" } ) );
-            $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
-        }
-        else
-        {
-            bidx.utils.log('_addVideoThumb:: ', 'No matches' + matches );
-        }
-    }
+    //     if ( provider === "vimeo.com" )
+    //     {
+    //         var videoUrl = "http://vimeo.com/api/v2/video/" + id + ".json?callback=?";
+    //         $.getJSON( videoUrl, function(data)
+    //             {
+    //                 if ( data )
+    //                 {
+    //                     $el.find( ".icons-rounded" ).remove();
+    //                     $el.append( $( "<div />", { "class": "img-cropper" } ) );
+    //                     $el.find( ".img-cropper" ).append( $( "<img />", { "src": data[0].thumbnail_large } ) );
+    //                     $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+    //                 }
+    //             }
+    //         );
+    //     }
+    //     else if ( provider === "youtube.com" )
+    //     {
+    //         $el.find( ".icons-rounded" ).remove();
+    //         $el.append( $( "<div />", { "class": "img-cropper" } ) );
+    //         $el.find( ".img-cropper" ).append( $( "<img />", { "src": "http://img.youtube.com/vi/"+ id +"/0.jpg" } ) );
+    //         $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+    //     }
+    //     else
+    //     {
+    //         bidx.utils.log('_addVideoThumb:: ', 'No matches' + matches );
+    //     }
+    // }
 
     function _languages()
     {
@@ -581,6 +581,23 @@
             $moreless.html( bidx.i18n.i( "showMore", appName ) );
         }
     }
+
+    var placeBusinessThumb = function( $listItem, imageSource )
+    {
+        var $el = $listItem.find("[data-role='businessImage']");
+
+        $el.empty();
+        $el.append
+            (
+                $( "<div />", { "class": "img-cropper" })
+                .append
+                (
+                    $( "<img />", { "src": imageSource, "class": "center-img" })
+                )
+            );
+        $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+    };
+
 
     function _getSearchCriteria ( params ) {
 
@@ -1081,6 +1098,10 @@
                 ,   entrpreneurIndustry
                 ,   entrpreneurReason
                 ,   $el
+                ,   logo
+                ,   logoDocument
+                ,   cover
+                ,   coverDocument
                 ;
 
                 $entityElement   = $("#businesssummary-listitem");
@@ -1133,12 +1154,28 @@
 
                 $listItem = $(listItem);
 
-                externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
-                if ( externalVideoPitch )
+                logo = bidx.utils.getValue( i18nItem, "logo");
+                logoDocument = bidx.utils.getValue( i18nItem, "logo.document");
+
+                cover = bidx.utils.getValue( i18nItem, "cover");
+                coverDocument = bidx.utils.getValue( i18nItem, "cover.document");
+
+
+                if ( logo && logoDocument )
                 {
-                    $el         = $listItem.find("[data-role='businessImage']");
-                    _addVideoThumb( externalVideoPitch, $el );
+                    placeBusinessThumb( $listItem, logoDocument );
                 }
+                else if ( cover && coverDocument )
+                {
+                    placeBusinessThumb( $listItem, coverDocument );
+                }
+
+                // externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
+                // if ( externalVideoPitch )
+                // {
+                //     $el         = $listItem.find("[data-role='businessImage']");
+                //     _addVideoThumb( externalVideoPitch, $el );
+                // }
 
                 conditionalElementArr =
                 {
