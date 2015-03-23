@@ -82,6 +82,25 @@
         }
 
     */
+
+    var placeBusinessThumb = function( $listItem, imageSource )
+    {
+        var $el = $listItem.find("[data-role='businessImage']");
+
+        $el.empty();
+        $el.append
+            (
+                $( "<div />", { "class": "img-cropper" })
+                .append
+                (
+                    $( "<img />", { "src": imageSource, "class": "center-img" })
+                )
+            );
+        $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+    };
+
+
+
     function _getSearchCriteria ( params ) {
 
         var q
@@ -370,6 +389,11 @@
 
             $.each( response.docs, function( idx, item )
             {
+                var logo
+                ,   logoDocument
+                ,   cover
+                ,   coverDocument
+                ;
 
                 showEntity(
                 {
@@ -429,12 +453,27 @@
                                                                         // execute cb function                //
                                                                         $listItem = $( listItem );
 
-                                                                        externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
-                                                                        if ( externalVideoPitch )
+                                                                        logo = bidx.utils.getValue( i18nItem, "logo");
+                                                                        logoDocument = bidx.utils.getValue( i18nItem, "logo.document");
+
+                                                                        cover = bidx.utils.getValue( i18nItem, "cover");
+                                                                        coverDocument = bidx.utils.getValue( i18nItem, "cover.document");
+
+                                                                        if ( logo && logoDocument )
                                                                         {
-                                                                            $el         = $listItem.find("[data-role='businessImage']");
-                                                                            _addVideoThumb( externalVideoPitch, $el );
+                                                                            placeBusinessThumb( $listItem, logoDocument );
                                                                         }
+                                                                        else if ( cover && coverDocument )
+                                                                        {
+                                                                            placeBusinessThumb( $listItem, coverDocument );
+                                                                        }
+
+                                                                        // externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
+                                                                        // if ( externalVideoPitch )
+                                                                        // {
+                                                                        //     $el         = $listItem.find("[data-role='businessImage']");
+                                                                        //     _addVideoThumb( externalVideoPitch, $el );
+                                                                        // }
 
                                                                         if( $.isFunction( options.cb ) )
                                                                         {
@@ -714,6 +753,12 @@
         {
             $.each( incomingResponse , function ( idx, item)
             {
+                var logo
+                ,   logoDocument
+                ,   cover
+                ,   coverDocument
+                ;
+
                 showEntity(
                 {
                     entityId    :   item.entityId
@@ -767,12 +812,27 @@
                                                                         // execute cb function                //
                                                                         $listItem = $( listItem );
 
-                                                                        externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
-                                                                        if ( externalVideoPitch )
+                                                                        logo = bidx.utils.getValue( i18nItem, "logo");
+                                                                        logoDocument = bidx.utils.getValue( i18nItem, "logo.document");
+
+                                                                        cover = bidx.utils.getValue( i18nItem, "cover");
+                                                                        coverDocument = bidx.utils.getValue( i18nItem, "cover.document");
+
+                                                                        if ( logo && logoDocument )
                                                                         {
-                                                                            $el         = $listItem.find("[data-role='businessImage']");
-                                                                            _addVideoThumb( externalVideoPitch, $el );
+                                                                            placeBusinessThumb( $listItem, logoDocument );
                                                                         }
+                                                                        else if ( cover && coverDocument )
+                                                                        {
+                                                                            placeBusinessThumb( $listItem, coverDocument );
+                                                                        }
+
+                                                                        // externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
+                                                                        // if ( externalVideoPitch )
+                                                                        // {
+                                                                        //     $el         = $listItem.find("[data-role='businessImage']");
+                                                                        //     _addVideoThumb( externalVideoPitch, $el );
+                                                                        // }
 
                                                                         if( $.isFunction( options.cb ) )
                                                                         {
@@ -780,6 +840,7 @@
                                                                             //
                                                                             options.cb.call( this, $listItem, item, currentUserId, entityOwnerId );
                                                                         }
+
                                                                         //  add mail element to list
                                                                         $list.append( $listItem );
                                                                     }
@@ -849,6 +910,12 @@
         {
             $.each( waitingResponse , function ( idx, item)
             {
+                var logo
+                ,   logoDocument
+                ,   cover
+                ,   coverDocument
+                ;
+
                 showEntity(
                 {
                     entityId    :   item.entityId
@@ -903,12 +970,27 @@
                                                                         // execute cb function                //
                                                                         $listItem = $( listItem );
 
-                                                                        externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
-                                                                        if ( externalVideoPitch )
+                                                                        logo = bidx.utils.getValue( i18nItem, "logo");
+                                                                        logoDocument = bidx.utils.getValue( i18nItem, "logo.document");
+
+                                                                        cover = bidx.utils.getValue( i18nItem, "cover");
+                                                                        coverDocument = bidx.utils.getValue( i18nItem, "cover.document");
+
+                                                                        if ( logo && logoDocument )
                                                                         {
-                                                                            $el         = $listItem.find("[data-role='businessImage']");
-                                                                            _addVideoThumb( externalVideoPitch, $el );
+                                                                            placeBusinessThumb( $listItem, logoDocument );
                                                                         }
+                                                                        else if ( cover && coverDocument )
+                                                                        {
+                                                                            placeBusinessThumb( $listItem, coverDocument );
+                                                                        }
+
+                                                                        // externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
+                                                                        // if ( externalVideoPitch )
+                                                                        // {
+                                                                        //     $el         = $listItem.find("[data-role='businessImage']");
+                                                                        //     _addVideoThumb( externalVideoPitch, $el );
+                                                                        // }
 
                                                                         if( $.isFunction( options.cb ) )
                                                                         {
@@ -983,6 +1065,12 @@
         {
             $.each( ongoingResponse , function ( idx, item)
             {
+                var logo
+                ,   logoDocument
+                ,   cover
+                ,   coverDocument
+                ;
+
                 showEntity(
                 {
                     entityId    :   item.entityId
@@ -1039,12 +1127,27 @@
                                                                         //
                                                                         $listItem = $( listItem );
 
-                                                                        externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
-                                                                        if ( externalVideoPitch )
+                                                                        logo = bidx.utils.getValue( i18nItem, "logo");
+                                                                        logoDocument = bidx.utils.getValue( i18nItem, "logo.document");
+
+                                                                        cover = bidx.utils.getValue( i18nItem, "cover");
+                                                                        coverDocument = bidx.utils.getValue( i18nItem, "cover.document");
+
+                                                                        if ( logo && logoDocument )
                                                                         {
-                                                                            $el         = $listItem.find("[data-role='businessImage']");
-                                                                            _addVideoThumb( externalVideoPitch, $el );
+                                                                            placeBusinessThumb( $listItem, logoDocument );
                                                                         }
+                                                                        else if ( cover && coverDocument )
+                                                                        {
+                                                                            placeBusinessThumb( $listItem, coverDocument );
+                                                                        }
+
+                                                                        // externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
+                                                                        // if ( externalVideoPitch )
+                                                                        // {
+                                                                        //     $el         = $listItem.find("[data-role='businessImage']");
+                                                                        //     _addVideoThumb( externalVideoPitch, $el );
+                                                                        // }
 
                                                                         if( $.isFunction( options.cb ) )
                                                                         {
