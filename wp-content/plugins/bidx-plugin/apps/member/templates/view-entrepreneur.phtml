@@ -106,11 +106,11 @@ if ($entrepreneurDetails &&
 <?php
                                                     if ( $this -> exst( $business->logo )  && $this -> exst( $business->logo->document ) )
                                                     {
-                                                        echo '<div class="img-cropper pull-left"><span class="valign"></span><img src="' . $business->logo->document . '" alt=""></div>';
+                                                        echo '<div class="img-cropper pull-left"><img class="center-img" src="' . $business->logo->document . '" alt=""></div>';
                                                     }
                                                     elseif ( $this -> exst( $business->cover )  && $this -> exst( $business->cover->document ) )
                                                     {
-                                                        echo '<div class="img-cropper pull-left"><span class="valign"></span><img src="' . $business->cover->document . '" alt=""></div>';
+                                                        echo '<div class="img-cropper pull-left"><img class="center-img" src="' . $business->cover->document . '" alt=""></div>';
                                                     }
                                                     else
                                                     {
@@ -196,7 +196,7 @@ if ($entrepreneurDetails &&
                                         <div class="col-sm-2">
 <?php
                                             if ( $company->logo && $company->logo->document) {
-                                                echo '<div class="img-cropper pull-left"><img src="' . $company->logo->document . '" alt=""></div>';
+                                                echo '<div class="img-cropper pull-left"><img class="center-img" src="' . $company->logo->document . '" alt=""></div>';
                                             } else {
                                                 echo '<div class="icons-rounded pull-left"><i class="fa fa-building text-primary-light"></i></div>';
                                             }
