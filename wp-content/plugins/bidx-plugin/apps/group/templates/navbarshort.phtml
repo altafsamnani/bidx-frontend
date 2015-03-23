@@ -43,7 +43,7 @@
     // set boolean to display the profile menu
     //
     $hasProfiles    = count( $profiles) !== 0;
-    $hasGroups      = count( $groups) > 1;
+    $hasGroups      = count( $groups) >= 1;
     $isAdmin        = $sessionSvc->isAdmin();
     $isSysAdmin     = $sessionSvc->isSysAdmin();
 
@@ -229,7 +229,7 @@
 <?php
                 }
 
-                if( !$currentGroupAdmin && $hasGroups )
+                if( $hasGroups )
                 {
 ?>
                     <li><a href="<?php echo _l('mail');?>/#mail/compose"><i class="fa fa-question"></i>&nbsp;<?php _e('Help','bidxplugin')?></a></li>

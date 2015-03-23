@@ -152,7 +152,7 @@
                             }
 
                             //  add mail element to list
-                            $list.append( listItem );
+                            $list.append( $listItem );
 
                             //  load checkbox plugin on element
                             if(item.status === 'pending')
