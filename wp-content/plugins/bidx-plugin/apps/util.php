@@ -195,7 +195,7 @@ function bidx_manage_rewrites( $rules ) {
 
 	if ( isset( $bidx_rewrite_rules ) && is_array( $bidx_rewrite_rules ) ) {
     	foreach ( $rules as $rule => $rewrite ) {
-    		if ( in_array( $bidx_rewrite_rules, $rule ) ) {
+    		if ( in_array( $rule, $bidx_rewrite_rules ) ) {
     			unset($bidx_rewrite_rules[$rule]);
     		}
     	}
