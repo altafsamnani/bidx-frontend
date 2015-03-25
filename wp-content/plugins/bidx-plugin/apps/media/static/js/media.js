@@ -735,7 +735,17 @@
 
                     $.each( response, function( idx, file )
                     {
-                        _addFile( file );
+                        if ( settings.onlyImages )
+                        {
+                            if ( file && file.mimeType && file.mimeType.match( /^image/ ) )
+                            {
+                                _addFile( file );
+                            }
+                        }
+                        else
+                        {
+                            _addFile( file );
+                        }
                     } );
 
                     _showView( "list" );
@@ -895,6 +905,11 @@
             settings.onlyEdit = options.onlyEdit;
         }
 
+        if ( typeof options.onlyImages !== "undefined" )
+        {
+            settings.onlyImages = options.onlyImages;
+        }
+
 
         // Register callbacks
         //
@@ -973,6 +988,7 @@
         settings.showDeleteBtn      = true;
         settings.showDownloadBtn    = true;
         settings.onlyEdit           = false;
+        settings.onlyImages         = false;
 
         bidx.common.removeAppWithPendingChanges( appName );
     }

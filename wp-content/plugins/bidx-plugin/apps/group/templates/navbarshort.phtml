@@ -43,7 +43,7 @@
     // set boolean to display the profile menu
     //
     $hasProfiles    = count( $profiles) !== 0;
-    $hasGroups      = count( $groups) > 1;
+    $hasGroups      = count( $groups) >= 1;
     $isAdmin        = $sessionSvc->isAdmin();
     $isSysAdmin     = $sessionSvc->isSysAdmin();
 
@@ -109,7 +109,15 @@
                             <li><a href="<?php echo $menuLink ?>"><i class="fa fa-angle-right"></i>&nbsp;<?php _e( $menuName, 'bidxplugin' ); ?></a></li>
 <?php                   }
                     }
-                    if ( $isSysAdmin || $isAdmin )
+                    if ( $isSysAdmin )
+                    {
+?>
+                        <li>
+                            <a href="/wp-admin/"><i class="fa fa-angle-right"></i>&nbsp;<?php _e( 'Wordpress dashboard', 'bidxplugin' ); ?></a>
+                        </li>
+<?php
+                    }
+                    if ( $isAdmin )
                     {
 ?>
                         <li>
@@ -221,7 +229,7 @@
 <?php
                 }
 
-                if( !$currentGroupAdmin && $hasGroups )
+                if( $hasGroups )
                 {
 ?>
                     <li><a href="<?php echo _l('mail');?>/#mail/compose"><i class="fa fa-question"></i>&nbsp;<?php _e('Help','bidxplugin')?></a></li>
