@@ -806,7 +806,7 @@ class Bidx_Group_Customizer {
 		$variables = array (
 			'color-main' => get_option( 'brand-primary' ) ? get_option( 'brand-primary' ) : '#222222',
 			'brand-primary' => get_option( 'brand-primary' ) ? get_option( 'brand-primary' ) : '#222222',
-			'color-secondary' => get_option( 'brand-secondary' ) ? get_option( 'brand-secondary' ) : '#aaaaaaa',
+			'color-secondary' => get_option( 'brand-secondary' ) ? get_option( 'brand-secondary' ) : '#aaaaaa',
 			'color-background' => get_option( 'brand-background-color' ) ? get_option( 'brand-background-color' ) : '#fff',
 			'bg-image' => "'".get_option( 'brand-background-color-image' )."'",
 			'text-font' => get_option( 'text_font' ) ? get_option( 'text_font' ) : "Lato",
