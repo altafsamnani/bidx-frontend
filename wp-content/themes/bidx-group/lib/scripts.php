@@ -10,7 +10,8 @@
  * 2. /theme/assets/js/vendor/modernizr-2.7.0.min.js
  * 3. /theme/assets/js/main.min.js (in footer)
  */
-function roots_scripts() {
+function roots_scripts()
+{
   wp_enqueue_style('bootstrap-datepicker',        get_template_directory_uri() . '/../../plugins/bidx-plugin/static/vendor/bootstrap-datepicker-1.3.0-rc.2/css/datepicker3.css', false, null);
   wp_enqueue_style('bootstrap-datetimepicker',    get_template_directory_uri() . '/../../plugins/bidx-plugin/static/vendor/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css', false, null);
 

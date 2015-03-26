@@ -39,8 +39,11 @@ function creategroup_post_type ($post_arr)
 
 }
 
-function theme_enqueue_styles() {
+function theme_enqueue_styles()
+{
+
     wp_enqueue_style('bidx-group', get_stylesheet_directory_uri().'/assets/less/base.less');
+    wp_enqueue_style('bidx-rtl-css', get_stylesheet_directory_uri().'/assets/bootstrap-rtl/bootstrap-rtl.less',array( 'bidx-group' ));
 
     include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
     if (is_plugin_active ('bidx-plugin/bidX-plugin.php'))

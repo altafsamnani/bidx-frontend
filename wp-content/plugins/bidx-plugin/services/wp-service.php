@@ -384,10 +384,10 @@ function callProviderLogoutURL ()
 
     echo '
         <script type="text/javascript" src="/wp-includes/js/jquery/jquery.js?ver=1.10.2"></script>
-        <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/jquery.noty.js?ver=2.0.3"></script>
-        <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/layouts/top.js?ver=2.0.3"></script>
-        <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/layouts/center.js?ver=2.0.3"></script>
-        <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/themes/default.js?ver=2.0.3"></script>
+        <script type="text/javascript" src="/wp-content/themes/bidx-group/assets/noty/jquery.noty.js?ver=2.0.3"></script>
+        <script type="text/javascript" src="/wp-content/themes/bidx-group/assets/noty/layouts/top.js?ver=2.0.3"></script>
+        <script type="text/javascript" src="/wp-content/themes/bidx-group/assets/noty/layouts/center.js?ver=2.0.3"></script>
+        <script type="text/javascript" src="/wp-content/themes/bidx-group/assets/noty/themes/default.js?ver=2.0.3"></script>
         ';
     echo '<iframe id="frontendLogout" src="' . $frontendLogout . '" width="0" height="0"></iframe>';
     echo '<iframe id="backendLogout" src="' . $backendLogout . '" width="0" height="0"></iframe>';
