@@ -62,10 +62,30 @@ RewriteRule . index.php [L]
 # Serve cross-domain Ajax requests, disabled by default.
 # enable-cors.org
 # code.google.com/p/html5security/wiki/CrossOriginRequestSecurity
+#
+# Until March 2015 this was set to the invalid value "*.bidx.net". It's
+# unclear if browsers were silently ignoring that, or indeed used it. But
+# surely Chrome 41+ refuses ANY Ajax request when running into the invalid
+# valid, throwing:
+#
+#   The 'Access-Control-Allow-Origin' header contains the invalid
+#   value '*.bidx.net'. Origin 'https://admin.bidx.net' is therefore
+#   not allowed access.
+#
+# To avoid having to use a true all-domain wildcard "*", functions that need
+# CORS simply must use something like:
+#
+#   // Allow access from the "admin" sub-domain. Note that this header is sent a
+#   // bit late; when the browser rejects its value, it will ignore any response,
+#   // but then this very method has already been executed.
+#   header('Access-Control-Allow-Origin: ' . empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://admin.' . $_SERVER['HTTP_HOST']);
+#
+# Note that Chrome 41+ does not even try to call a URL that would potentially set
+# the header like above, if it finds an invalid value in an earlier response.
 
-<IfModule mod_headers.c>
-  Header set Access-Control-Allow-Origin "*.bidx.net"
-</IfModule>
+# <IfModule mod_headers.c>
+#   Header set Access-Control-Allow-Origin "*"
+# </IfModule>
 
 
 # ----------------------------------------------------------------------
