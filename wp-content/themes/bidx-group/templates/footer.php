@@ -1,10 +1,12 @@
 <?php
     $session = BidxCommon::$staticSession;
 
-    $has_social = false;
+    $has_social           = false;
+    $rightSideFooterColSm = 'col-sm-12';
     if ( get_theme_mod( 'facebook_url' ) || get_theme_mod( 'linkedin_url' ) || get_theme_mod( 'twitter_handle' ) )
     {
         $has_social = true;
+        $rightSideFooterColSm = 'col-sm-8';
     }
 ?>
 
@@ -15,7 +17,7 @@
 <?php
             if ( $has_social ) :
 ?>
-                <div class="pull-left col-sm-4">
+                <div class="col-sm-4">
                     <div class="follow-us pull-left"><?php _e( 'Follow us', 'bidxplugin' ) ?></div>
                     <div class="btn-group">
 <?php
@@ -47,7 +49,7 @@
             endif;
 ?>
 
-                <div class="pull-right col-sm-8 text-right">
+                <div class="<?php echo $rightSideFooterColSm;?> text-right">
                     <div class="copyright">&copy; <?php echo date("Y") ?> bidx.net  <?php _e( 'All rights reserved','bidxplugin' ) ?></div>
                     <div class="inline-list footer-menu">
                         <div><a href="<?php echo _l('terms-of-service');?>" target="_blank"><?php _e('Terms of service','bidxplugin')?></a></div>

@@ -1,0 +1,71 @@
+//RTL overwrites few classes to make Arabic work , mostly it comes from bootstrap-rtl.less
+@import "elements.less";
+
+.rtl
+{
+    .pull-right,
+    .logo-right a
+    {
+        float:left !important;
+    }
+
+    .pull-left,
+    .logo-left a
+    {
+        float:right !important;
+    }
+
+    .text-right
+    {
+        text-align:left !important;
+    }
+
+    .text-left
+    {
+        text-align:right !important;
+    }
+
+    .carousel-description
+    {
+        left:8%;
+        right:52%;
+    }
+    .carousel-caption
+    {
+        left:52%;
+        right:8%;
+    }
+
+    .navbar
+    {
+        .search .input-group
+        {
+            .form-control
+            {
+                .rounded(0 4px 4px 0);
+            }
+            .btn
+            {
+                .rounded(4px 0 0 4px);
+                padding: 5px 8px;
+            }
+        }
+        .fa-home
+        {
+            margin-left:7px;
+            margin-right:0px !important;
+        }
+    }
+
+    .nav-tabs > li,
+    .tabs-right > li
+    {
+        float:none !important;
+    }
+
+    .logoImage
+    {
+        left:0px !important;
+        right:50px;
+    }
+}
