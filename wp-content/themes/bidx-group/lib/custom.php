@@ -41,16 +41,29 @@ function creategroup_post_type ($post_arr)
 
 function theme_enqueue_styles()
 {
+    global $sitepress;
 
     wp_enqueue_style('bidx-group', get_stylesheet_directory_uri().'/assets/less/base.less');
-    //wp_enqueue_style('bidx-rtl-css', get_stylesheet_directory_uri().'/assets/bootstrap-rtl/bootstrap-rtl.less',array( 'bidx-group' ));
+
+    if( $sitepress )
+    {
+        $currentLanguage  = $sitepress->get_current_language();
+
+        if($currentLanguage === 'ar')
+        {
+            wp_enqueue_style('bidx-rtl-css', get_stylesheet_directory_uri().'/assets/bootstrap-rtl/bootstrap-rtl.less',array( 'bidx-group' ));
+        }
+
+    }
 
     include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
     if (is_plugin_active ('bidx-plugin/bidX-plugin.php'))
     {
         wp_enqueue_style('bidx-plugin', plugins_url().'/bidx-plugin/static/less/bidx_newtheme.less');
     }
 }
+
 add_action('init', 'theme_enqueue_styles');
 
 /**
