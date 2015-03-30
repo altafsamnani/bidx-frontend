@@ -12,9 +12,9 @@
 
     <!-- Tags entered by portal admin -->
     <?php
-    if ( get_theme_mod( 'wp_admin_header_tags' ) )
+    if ( get_theme_mod('wp_admin_header_tags') )
     {
-        echo get_theme_mod( 'wp_admin_header_tags' );
+        echo get_theme_mod('wp_admin_header_tags');
     }
     ?>
     
