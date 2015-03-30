@@ -9,6 +9,14 @@
     <title><?php bloginfo('name'); ?> : <?php wp_title(); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <!-- Tags entered by portal admin -->
+    <?php
+    if ( get_theme_mod( 'wp_admin_header_tags' ) )
+    {
+        echo get_theme_mod( 'wp_admin_header_tags' );
+    }
+    ?>
     
     <!-- include wordpress head  -->
     <?php wp_head(); ?>

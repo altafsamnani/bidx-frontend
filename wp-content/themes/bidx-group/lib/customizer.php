@@ -38,6 +38,7 @@ class Bidx_Group_Customizer {
 		Bidx_Group_Customizer :: bidx_color_customizer( $wp_customize );
 		Bidx_Group_Customizer :: bidx_fonts_customizer( $wp_customize );
 		Bidx_Group_Customizer :: bidx_alignment_customizer( $wp_customize );
+		Bidx_Group_Customizer :: bidx_header_tags_customizer( $wp_customize );
 		Bidx_Group_Customizer :: bidx_social_customizer( $wp_customize );
 		Bidx_Group_Customizer :: bidx_analytics_customizer( $wp_customize );
 
@@ -641,7 +642,38 @@ class Bidx_Group_Customizer {
 			
 	}
 		
+	/** 
+	 * Header Tags settings for Portal Head Section
+	 * @param WPCustomizer $wp_customize
+	 */
+	private static function bidx_header_tags_customizer( $wp_customize ) {
 	
+		$wp_customize -> add_section(
+				'wp_admin_header_tags_settings',
+				array(
+						'title' => __( 'Header Tags', 'roots' ),
+						'description' => __( 'Configure tags to go in portal header section', 'roots' ),
+						'priority' => 50,
+				)
+		);
+		$wp_customize->add_setting( 'wp_admin_header_tags' );
+		$wp_customize->add_control(
+				new WP_Customize_Control(
+						$wp_customize,
+						'wp_admin_header_tags',
+						array(
+								'label'          => __( 'Header Tags', 'roots' ),
+								'section'        => 'wp_admin_header_tags_settings',
+								'settings'       => 'wp_admin_header_tags',
+								'type'           => 'text'
+						)
+				)
+		);
+		
+		
+	}
+
+
 	/**
 	 * Social networks settings
 	 * @param WPCustomizer $wp_customize
