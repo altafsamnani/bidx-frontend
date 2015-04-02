@@ -1,5 +1,40 @@
 (function( $ )
 {
+
+     $.validator.addMethod( "tinymceTextarea", function(value, element, param)
+    {
+        var returnFlag
+        ,   elementName =   $( element ).attr('name')
+        ,   ed          =   tinyMCE.get(elementName)
+        ,   editorHtml  =   ed.getContent()
+        ,   editorText  =   $("<div />").html(editorHtml).text().trim()
+        ,   $formGroup  =   $('.tinymce-wrapper')
+        ;
+
+        // add a callback to tinyMCE.onKeyUp event
+        ed.onKeyUp.add ( function( )
+        {
+            editorHtml  =   ed.getContent();
+            editorText  =   $("<div />").html(editorHtml).text().trim();
+
+            if(editorText)
+            {
+                $formGroup.removeClass( "has-error" );
+                $formGroup.find( ".form-control" ).removeClass( "error" );
+                $formGroup.find( "span.error" ).remove();
+
+                return true;
+            }
+
+            return false;
+        });
+
+        returnFlag  = (editorText !== "" && editorText) ? true : false;
+
+        return  returnFlag;
+
+    }, "This field is required" );
+
     // https://support.skype.com/en/faq/FA94/what-is-a-skype-name
     //
     // Your Skype Name must have between 6 and 32 characters. It must start with a letter and can contain only letters, numbers and the following punctuation marks:

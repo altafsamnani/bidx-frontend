@@ -60,7 +60,7 @@ class Bidx_Admin_Admin
 	        $bidxJsDir = sprintf ('%s/../static/js',    BIDX_PLUGIN_URI);
 	        $vendorDir = sprintf ('%s/../static/vendor', BIDX_PLUGIN_URI);
 
-	        wp_enqueue_style('bidx-admin-plugin', get_template_directory_uri() . '/../../plugins/bidx-plugin/static/css/bidx-plugin-admin.css', false, null);
+	        //wp_enqueue_style('bidx-admin-plugin', get_template_directory_uri() . '/../../plugins/bidx-plugin/static/less/bidx-admin.less', false, null);
 
 	        wp_register_script ('google-jsapi', '//www.google.com/jsapi', array (), '20130501', TRUE);
 

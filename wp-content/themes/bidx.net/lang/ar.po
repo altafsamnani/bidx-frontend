@@ -21,7 +21,7 @@ msgid ""
 "The embed code field is empty. Please insert an <code>iframe</code> from "
 "Youtube, Dailymotion, Vimeo, Vevo, Veoh or Metacafe"
 msgstr ""
-" خانة تضمين الكود فارغة. أدخل كود  <code>iframe</code> من Youtube, "
+" خانة تضمين الكود فارغة. ادخل كود  <code>iframe</code> من Youtube, "
 "Dailymotion, Vimeo, Vevo, Veoh أو Metacafe    "
 
 # 2) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/video.php -109
@@ -54,7 +54,7 @@ msgstr "يوجد عامود/أو أكثر فارغ "
 # _e("No posts available, please create a post from Posts section ","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "No posts available, please create a post from Posts section "
-msgstr "لا يوجد مقال، من فضلك قم بانشاء مقال من خلال قسم المقالات"
+msgstr "لا يوجد مقال، يرجى انشاء مقال من خلال قسم المقالات"
 
 # 8) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -166
 # _e("Sidebar","bidxtheme");
@@ -68,7 +68,7 @@ msgstr "لا يوجد مقال، من فضلك قم بانشاء مقال من �
 # _e("Favicon","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Favicon"
-msgstr "أيقونة التفضيل"
+msgstr "أيقونة المفضلة"
 
 # 11) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -505
 # _e("Favicon","bidxtheme");
@@ -113,14 +113,14 @@ msgid ""
 "With multiple bidx portals in one country you can create an entrepreneurial "
 "ecosystem"
 msgstr ""
-" يمكنك انشاء نظام ايكولوجي لريادة أعمال من خلال استخدام بوابات bidx  متعددة "
-"ببلد واحدة"
+" من خلال استخدام بوابات bidx الاكترونية  المتعددة بدولة واحدة، يمكنك انشاء "
+"نظام ايكولوجي لريادة أعمال "
 
 # 19) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -12
 # _e("Stay Connected","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Stay Connected"
-msgstr " ابق على اتصال"
+msgstr " ابقى على اتصال"
 
 # 20) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -26
 # _e("Recent Articles","bidxtheme");
@@ -150,7 +150,7 @@ msgstr "الخصوصية"
 # _e("Terms and Conditions","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Terms and Conditions"
-msgstr "شروط الاستخدام"
+msgstr "الشروط والأحكام"
 
 # 25) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -20
 # _e("Get a 6 month free trial","bidxtheme");
@@ -174,7 +174,7 @@ msgstr "أريد أن أجرب"
 # _e("All Packages","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "All Packages"
-msgstr "كل الحزم"
+msgstr "كل الحِزَم"
 
 # 29) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -325
 # _e("Contact us to get started","bidxtheme");
@@ -184,7 +184,7 @@ msgstr "كل الحزم"
 # _e("Get Started","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Get Started"
-msgstr "إبدأ"
+msgstr "ابدأ"
 
 # 31) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -328
 # _e("All Packages","bidxtheme");
@@ -194,7 +194,7 @@ msgstr "إبدأ"
 # _e("Requires a Portal Package","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Requires a Portal Package"
-msgstr "يتطلب حزمة اشتراك بالبوابة الإلكترونية"
+msgstr "يتطلب حِزمة اشتراك بالبوابة الإلكترونية"
 
 # 33) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -23
 # _e("Easy and Simple","bidxtheme");
@@ -244,7 +244,7 @@ msgstr "9.999 دولار سنوياً"
 # _e("Grow your community of","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Grow your community of"
-msgstr "ابني مجتمع خاص بك"
+msgstr "نمي مجتمعك الخاص بـ"
 
 # 43) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -22
 # _e("ENTREPRENEURS<br>ONLINE","bidxtheme");
@@ -289,8 +289,8 @@ msgid ""
 "Match your entrepreneurs with financiers and mentors. A portal in your brand "
 "and language"
 msgstr ""
-"قم بملائمة رياديين الأعمال مع الممولين والمرشدين. بوابة إلكترونية خاصة "
-"بعلامتك التجارية ولغتك"
+"قم بملائمة رياديين الأعمال مع الممولين والمرشدين. بوابة إلكترونية تحتوي على "
+"علامتك التجارية، وبلغتك."
 
 # 50) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -62
 # _e("6 month free trial","bidxtheme");
@@ -355,7 +355,7 @@ msgstr "اتصل بالخط الساخن"
 # _e("Hotline call list","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Hotline call list"
-msgstr "قائمة الاتصال بالخط الساخن"
+msgstr "قائمة الإتصال بالخط الساخن"
 
 # 60) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -147
 # _e("We Offer Solutions to","bidxtheme");

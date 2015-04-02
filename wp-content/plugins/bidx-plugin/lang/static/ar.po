@@ -11,6 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
+"Language: Arabic\n"
 
 # Language Original
 # 1 renderType
@@ -92,7 +93,7 @@ msgstr "آخر"
 # Context ar_AE Textdomain static
 msgctxt "ar_AE"
 msgid "Arabic (United Arab Emirates)"
-msgstr "محلي"
+msgstr "العربية (الإمارات العربية المتحدة)"
 
 #  _x("Arabic", "ar", "static");
 # Context ar Textdomain static
@@ -482,7 +483,7 @@ msgstr "الاسبانية"
 # Context es_SV Textdomain static
 msgctxt "es_SV"
 msgid "Spanish (El Salvador)"
-msgstr "الاسبانية (السلفادور)"
+msgstr "الاسبانية (ال سلفادور)"
 
 #  _x("Spanish (United States)", "es_US", "static");
 # Context es_US Textdomain static
@@ -566,7 +567,7 @@ msgstr "الفرنسية (لوكسمبرج)"
 # Context ga_IE Textdomain static
 msgctxt "ga_IE"
 msgid "Irish (Ireland)"
-msgstr ""
+msgstr "الآيرلاندية (آيرلندا)"
 
 #  _x("Irish", "ga", "static");
 # Context ga Textdomain static
@@ -638,13 +639,13 @@ msgstr "الايطالية (سويسرا)"
 # Context it Textdomain static
 msgctxt "it"
 msgid "Italian"
-msgstr "الايطالية"
+msgstr "الإيطالية"
 
 #  _x("Italian (Italy)", "it_IT", "static");
 # Context it_IT Textdomain static
 msgctxt "it_IT"
 msgid "Italian (Italy)"
-msgstr "الايطالية (ايطاليا)"
+msgstr "الإيطالية (إيطاليا)"
 
 #  _x("Hebrew", "iw", "static");
 # Context iw Textdomain static
@@ -1005,7 +1006,7 @@ msgstr "المسابقة"
 # Context findBuyer Textdomain static
 msgctxt "findBuyer"
 msgid "Find buyer for business"
-msgstr "ايجاد مشتر للمشروع"
+msgstr "ايجاد مشتري للمشروع"
 
 #  _x("Find supplier", "findSupplier", "static");
 # Context findSupplier Textdomain static
@@ -1018,37 +1019,37 @@ msgstr "ايجاد مورد"
 # Context secondarySchool Textdomain static
 msgctxt "secondarySchool"
 msgid "Secondary school"
-msgstr "التعليم"
+msgstr "المدرسة الثانوية"
 
 #  _x("Vocational training", "vocationalTraining", "static");
 # Context vocationalTraining Textdomain static
 msgctxt "vocationalTraining"
 msgid "Vocational training"
-msgstr "تدريب حرفي"
+msgstr "التدريب حرفي"
 
 #  _x("Technical school", "technicalSchool", "static");
 # Context technicalSchool Textdomain static
 msgctxt "technicalSchool"
 msgid "Technical school"
-msgstr "مدرسة تقنية"
+msgstr "المدرسة التقنية"
 
 #  _x("University - Bachelors", "universityBachelors", "static");
 # Context universityBachelors Textdomain static
 msgctxt "universityBachelors"
 msgid "University - Bachelors"
-msgstr "جامعة - بكالريوس"
+msgstr "الجامعة - بكالريوس"
 
 #  _x("University - Masters", "universityMasters", "static");
 # Context universityMasters Textdomain static
 msgctxt "universityMasters"
 msgid "University - Masters"
-msgstr "جامعة - ماجيستير"
+msgstr "الجامعة - ماجيستير"
 
 #  _x("University - Postgraduate", "universityPostgraduate", "static");
 # Context universityPostgraduate Textdomain static
 msgctxt "universityPostgraduate"
 msgid "University - Postgraduate"
-msgstr "جامعة – دراسات عليا"
+msgstr "الجامعة – دراسات عليا"
 
 # 6 legalForm
 #  _x("Sole trader", "soletrader", "static");
@@ -1074,7 +1075,7 @@ msgstr "شركة"
 # Context povertyReduction Textdomain static
 msgctxt "povertyReduction"
 msgid "Poverty reduction"
-msgstr "الأثر اجتماعي"
+msgstr "تقليل الفقر"
 
 #  _x("Job creation", "jobCreation", "static");
 # Context jobCreation Textdomain static
@@ -1128,7 +1129,7 @@ msgstr "مياه الشرب"
 # Context energy Textdomain static
 msgctxt "energy"
 msgid "Access to energy"
-msgstr "الوصول على الطاقة"
+msgstr "الوصول الى الطاقة"
 
 #  _x("Maternal Health", "maternalHealth", "static");
 # Context maternalHealth Textdomain static
@@ -1202,7 +1203,7 @@ msgstr "تم رفض الصلة"
 # Context relationshipRequest Textdomain static
 msgctxt "relationshipRequest"
 msgid "Relationship Request"
-msgstr "طلب التواصل"
+msgstr "طلب الصلة"
 
 #  _x("Relationship Terminated", "relationshipTerminated", "static");
 # Context relationshipTerminated Textdomain static
@@ -1244,7 +1245,7 @@ msgstr "التذكرة بالحساب"
 # Context invitedRegisteredUserGroup Textdomain static
 msgctxt "invitedRegisteredUserGroup"
 msgid "Group Invitation"
-msgstr "دعوة جماعية"
+msgstr "دعوة للمجموعة"
 
 # 10 industry
 #  _x("Agriculture, forestry and fishing", "A", "static");
@@ -1455,7 +1456,7 @@ msgstr "الحراج، وقطع الأشجار"
 # Context A.02.01 Textdomain static
 msgctxt "A.02.01"
 msgid "Silviculture and other forestry activities"
-msgstr "المزرعة الواسعة وأنشطة حراج أخرى"
+msgstr "الغابات وأنشطة حراج أخرى"
 
 #  _x("Logging", "A.02.02", "static");
 # Context A.02.02 Textdomain static
@@ -1569,7 +1570,7 @@ msgstr "تنقيب عن اليورانيوم والثوريوم الخام"
 # Context B.07.29 Textdomain static
 msgctxt "B.07.29"
 msgid "Mining of other non-ferrous metal ores"
-msgstr "تنقيب عن معادن خام أخرى لا-حديدوز"
+msgstr "تنقيب عن معادن لا-حديدوز خام أخرى "
 
 #  _x("Other mining and quarrying", "B.08", "static");
 # Context B.08 Textdomain static
@@ -1584,7 +1585,7 @@ msgid ""
 "Quarrying of ornamental and building stone, limestone, gypsum, chalk and "
 "slate"
 msgstr ""
-"المحاجر لحجر الزينة واحجار البناء والحجر الجيري والجبس والطباشير وحجر السجيل"
+"محاجر حجر الزينة واحجار البناء والحجر الجيري والجبس والطباشير وحجر السجيل"
 
 #  _x("Operation of gravel and sand pits; mining of clays and kaolin", "B.08.12", "static");
 # Context B.08.12 Textdomain static
@@ -1728,7 +1729,7 @@ msgstr "تصنيع النشا والمنتجات النشوية"
 # Context C.10.71 Textdomain static
 msgctxt "C.10.71"
 msgid "Manufacture of bread; manufacture of fresh pastry goods and cakes"
-msgstr "تصنيع الخبز وتصنيع الكعك والمخبوزات الطازجة"
+msgstr "تصنيع الخبز، تصنيع الكعك والمخبوزات الطازجة"
 
 #  _x("Manufacture of rusks and biscuits; manufacture of preserved pastry goods and cakes", "C.10.72", "static");
 # Context C.10.72 Textdomain static
@@ -1847,7 +1848,7 @@ msgctxt "C.11.07"
 msgid ""
 "Manufacture of soft drinks; production of mineral waters and other bottled "
 "waters"
-msgstr "تصنيع المشروبات الغازية، وتصنيع المياة المعدنية والمياة المعبأة"
+msgstr "تصنيع المشروبات الغازية، وتصنيع المياه المعدنية والمياه المعبأة"
 
 #  _x("Manufacture of tobacco products", "C.12", "static");
 # Context C.12 Textdomain static
@@ -2038,7 +2039,7 @@ msgstr "تصنيع أرضيات الباركيه المجمعة"
 # Context C.16.23 Textdomain static
 msgctxt "C.16.23"
 msgid "Manufacture of other builders' carpentry and joinery"
-msgstr "تصنيع نجارة البناء الأخرى"
+msgstr "تصنيع مستلزمات نجارة البناء الأخرى"
 
 #  _x("Manufacture of wooden containers", "C.16.24", "static");
 # Context C.16.24 Textdomain static
@@ -2070,7 +2071,7 @@ msgstr "تصنيع اللُب"
 # Context C.17.12 Textdomain static
 msgctxt "C.17.12"
 msgid "Manufacture of paper and paperboard"
-msgstr "تثنيع الورق والورق المقوى"
+msgstr "تصنيع الورق والورق المقوى"
 
 #  _x("Manufacture of corrugated paper and paperboard and of containers of paper and paperboard", "C.17.21", "static");
 # Context C.17.21 Textdomain static
@@ -2127,7 +2128,7 @@ msgstr "مطبوعات أخرى"
 # Context C.18.13 Textdomain static
 msgctxt "C.18.13"
 msgid "Pre-press and pre-media services"
-msgstr "خدمات ما قبل النشر والاعلام"
+msgstr "خدمات ما قبل النشر والإعلام"
 
 #  _x("Binding and related services", "C.18.14", "static");
 # Context C.18.14 Textdomain static
@@ -2139,7 +2140,7 @@ msgstr "التغليف والخدمات ذات الصلة"
 # Context C.18.02 Textdomain static
 msgctxt "C.18.02"
 msgid "Reproduction of recorded media"
-msgstr "إعادة انتاج الميديا المسجلة"
+msgstr "إعادة إنتاج الميديا المسجلة"
 
 #  _x("Manufacture of coke and refined petroleum products", "C.19", "static");
 # Context C.19 Textdomain static
@@ -2219,7 +2220,7 @@ msgctxt "C.20.03"
 msgid ""
 "Manufacture of paints, varnishes and similar coatings, printing ink and "
 "mastics"
-msgstr " تصنيع الدهانات والورنيش والطلاءات المماثلة، وحبر الطباعة ومعاجين "
+msgstr " تصنيع الدهانات والورنيش والطلاءات المماثلة، وحبر الطباعة والمعاجين "
 
 #  _x("Manufacture of soap and detergents, cleaning and polishing preparations", "C.20.41", "static");
 # Context C.20.41 Textdomain static
@@ -2231,7 +2232,7 @@ msgstr "تصنيع الصابون والمنظفات وتحضيرات التنظ
 # Context C.20.42 Textdomain static
 msgctxt "C.20.42"
 msgid "Manufacture of perfumes and toilet preparations"
-msgstr "تصنيع العطور وتحضيرات الحمام"
+msgstr "تصنيع العطور ومستلزمات الحمام"
 
 #  _x("Manufacture of explosives", "C.20.51", "static");
 # Context C.20.51 Textdomain static
@@ -2255,7 +2256,7 @@ msgstr "تصنيع الزيوت العطرية"
 # Context C.20.59 Textdomain static
 msgctxt "C.20.59"
 msgid "Manufacture of other chemical products n.e.c."
-msgstr "تصنيع منتجات كيميائية أخرى (لم تذكر بتصنيف آخر)"
+msgstr "تصنيع منتجات كيميائية أخرى (لم تصنف بمكان آخر)"
 
 #  _x("Manufacture of man-made fibres", "C.20.06", "static");
 # Context C.20.06 Textdomain static
@@ -2361,7 +2362,7 @@ msgstr "تصنيع الألياف الزجاجية"
 msgctxt "C.23.19"
 msgid ""
 "Manufacture and processing of other glass, including technical glassware"
-msgstr "تصنيع وتجهيز أنواع زجاج أخرى، متضمنة الأواني الزجاجية التقنية"
+msgstr "تصنيع وتجهيز أنواع زجاج أخرى، متضمنة الأواني التقنية الزجاجية "
 
 #  _x("Manufacture of refractory products", "C.23.02", "static");
 # Context C.23.02 Textdomain static
@@ -2475,7 +2476,7 @@ msgstr "انتاج منتجات حاكة"
 # Context C.23.99 Textdomain static
 msgctxt "C.23.99"
 msgid "Manufacture of other non-metallic mineral products n.e.c."
-msgstr "تصنيع منتجات معدنية لا-فلزية أخرى (غير مذكورة بتصنيف آخر)"
+msgstr "تصنيع منتجات معدنية لا-فلزية أخرى (لم تصنف بمكان آخر)"
 
 #  _x("Manufacture of basic metals", "C.24", "static");
 # Context C.24 Textdomain static
@@ -2746,7 +2747,7 @@ msgstr "تصنيع الساعات"
 msgctxt "C.26.06"
 msgid ""
 "Manufacture of irradiation, electromedical and electrotherapeutic equipment"
-msgstr "تصنيع معدات الاشعاع، والعلاج بالكهرباء"
+msgstr "تصنيع معدات الإشعاع، والعلاج بالكهرباء"
 
 #  _x("Manufacture of optical instruments and photographic equipment", "C.26.07", "static");
 # Context C.26.07 Textdomain static
@@ -2830,7 +2831,7 @@ msgstr "تصنيع معدات كهربائية أخرى"
 # Context C.28 Textdomain static
 msgctxt "C.28"
 msgid "Manufacture of machinery and equipment n.e.c."
-msgstr "تصنيع آلات ومعدات أخرى (لم يتم ذكرها بتصنيف آخر)"
+msgstr "تصنيع آلات ومعدات أخرى (لم تصنف بمكان آخر)"
 
 #  _x("Manufacture of engines and turbines, except aircraft, vehicle and cycle engines", "C.28.11", "static");
 # Context C.28.11 Textdomain static
@@ -2838,7 +2839,7 @@ msgctxt "C.28.11"
 msgid ""
 "Manufacture of engines and turbines, except aircraft, vehicle and cycle "
 "engines"
-msgstr "تصنيع التوربينات والمحركات، باستثناء الطائرات والسيارات ومحركات الدورة"
+msgstr "تصنيع التوربينات والمحركات، باستثناء الطائرات والسيارات والمحركات "
 
 #  _x("Manufacture of fluid power equipment", "C.28.12", "static");
 # Context C.28.12 Textdomain static
@@ -2868,7 +2869,7 @@ msgstr "تصنيع المحامل والتروس وعناصر التعشيق و�
 # Context C.28.21 Textdomain static
 msgctxt "C.28.21"
 msgid "Manufacture of ovens, furnaces and furnace burners"
-msgstr "تصنيع الأفرات والمحارق"
+msgstr "تصنيع الأفران والمحارق"
 
 #  _x("Manufacture of lifting and handling equipment", "C.28.22", "static");
 # Context C.28.22 Textdomain static
@@ -2900,7 +2901,7 @@ msgstr "تصنيع معدات التبريد والتهوئة غير المنز�
 # Context C.28.29 Textdomain static
 msgctxt "C.28.29"
 msgid "Manufacture of other general-purpose machinery n.e.c."
-msgstr "تصنيع آلات استخدام عام أخرى"
+msgstr "تصنيع آلات استخدام عام أخرى (لم تصنف بمكان آخر)"
 
 #  _x("Manufacture of agricultural and forestry machinery", "C.28.03", "static");
 # Context C.28.03 Textdomain static
@@ -3046,7 +3047,7 @@ msgstr "تصنيع الدراجات والعربات ذات الثلاث عجل�
 # Context C.30.99 Textdomain static
 msgctxt "C.30.99"
 msgid "Manufacture of other transport equipment n.e.c."
-msgstr "تصنيع معدات نقل أخرى (لم يتم ذكرها بتصنيف آخر)"
+msgstr "تصنيع معدات نقل أخرى (لم تصنف بمكان آخر)"
 
 #  _x("Manufacture of furniture", "C.31", "static");
 # Context C.31 Textdomain static
@@ -3136,7 +3137,7 @@ msgstr "تصنيع المقشات والفرش"
 # Context C.32.99 Textdomain static
 msgctxt "C.32.99"
 msgid "Other manufacturing n.e.c."
-msgstr "صناعات أخرى"
+msgstr " (لم تصنف بمكان آخر) صناعات أخرى"
 
 #  _x("Repair and installation of machinery and equipment", "C.33", "static");
 # Context C.33 Textdomain static
@@ -3178,7 +3179,7 @@ msgstr "إصلاح وصيانة السفن والمراكب"
 # Context C.33.16 Textdomain static
 msgctxt "C.33.16"
 msgid "Repair and maintenance of aircraft and spacecraft"
-msgstr "إصلاح وصيانة الطاشرات والمركبات الفضائية"
+msgstr "إصلاح وصيانة الطائرات والمركبات الفضائية"
 
 #  _x("Repair and maintenance of other transport equipment", "C.33.17", "static");
 # Context C.33.17 Textdomain static
@@ -3268,19 +3269,19 @@ msgstr " إمدادات البخار وتكييفات الهواء"
 # Context E Textdomain static
 msgctxt "E"
 msgid "Water supply; sewerage, waste management and recycling activities"
-msgstr "إمدادات المياة، المجاري وإدارة النفايات وأنشطة إعادة التصنيع"
+msgstr "إمدادات المياه، المجاري وإدارة النفايات وأنشطة إعادة التصنيع"
 
 #  _x("Water collection, treatment and supply", "E.36", "static");
 # Context E.36 Textdomain static
 msgctxt "E.36"
 msgid "Water collection, treatment and supply"
-msgstr "تجميع ومعالجة وإمدادات المياة"
+msgstr "تجميع ومعالجةالمياه وإمداداتها"
 
 #  _x("Water collection, treatment and supply", "E.36.00", "static");
 # Context E.36.00 Textdomain static
 msgctxt "E.36.00"
 msgid "Water collection, treatment and supply"
-msgstr "جمع ومعالجة وإمدادات المياة"
+msgstr "جمع ومعالجة وإمدادات المياه"
 
 #  _x("Sewerage", "E.37", "static");
 # Context E.37 Textdomain static
@@ -3340,13 +3341,13 @@ msgstr "استرجاع المواد المفرزة"
 # Context E.39 Textdomain static
 msgctxt "E.39"
 msgid "Recycling activities and other waste management services"
-msgstr "أنشطة إعادة التصنيع وخدمات إدارة فضلات أخرى"
+msgstr "أنشطة إعادة التصنيع وخدمات إدارة نفايات أخرى"
 
 #  _x("Recycling activities and other waste management services", "E.39.00", "static");
 # Context E.39.00 Textdomain static
 msgctxt "E.39.00"
 msgid "Recycling activities and other waste management services"
-msgstr "أنشطة إعادة التصنيع وخدمات إدارة فضلات أخرى"
+msgstr "أنشطة إعادة التصنيع وخدمات إدارة نفايات أخرى"
 
 #  _x("Construction", "F", "static");
 # Context F Textdomain static
@@ -3412,7 +3413,7 @@ msgstr "إنشاء مشروعات مرافق الكهرباء والإتصالا
 # Context F.42.91 Textdomain static
 msgctxt "F.42.91"
 msgid "Construction of water projects"
-msgstr "إنشاء مشروعات المياة"
+msgstr "إنشاء مشروعات المياه"
 
 #  _x("Construction of other civil engineering projects n.e.c.", "F.42.99", "static");
 # Context F.42.99 Textdomain static
@@ -3502,7 +3503,7 @@ msgstr "أعمال التسقيف"
 # Context F.43.99 Textdomain static
 msgctxt "F.43.99"
 msgid "Other specialised construction activities n.e.c."
-msgstr "أنشطة إنشائية متخصصة أخرى (لم يتم ذكرها بتصنيف آخر)"
+msgstr "أنشطة إنشائية متخصصة أخرى (لم تصنف بمكان آخر)"
 
 #  _x("Wholesale and retail trade; repair of motor vehicles and motorcycles", "G", "static");
 # Context G Textdomain static
@@ -3538,13 +3539,13 @@ msgstr "إصلاح وصيانة السيارات"
 # Context G.45.31 Textdomain static
 msgctxt "G.45.31"
 msgid "Wholesale trade of motor vehicle parts and accessories"
-msgstr "تجارة الجملة لقطع غيار واكسسوار السيارات "
+msgstr "تجارة الجملة لقطع غيار وإكسسوار السيارات "
 
 #  _x("Retail trade of motor vehicle parts and accessories", "G.45.32", "static");
 # Context G.45.32 Textdomain static
 msgctxt "G.45.32"
 msgid "Retail trade of motor vehicle parts and accessories"
-msgstr "تجارة القطاعي لقطع غيار واكسسوار السيارات"
+msgstr "تجارة القطاعي لقطع غيار وإكسسوار السيارات"
 
 #  _x("Sale, maintenance and repair of motorcycles and related parts and accessories", "G.45.04", "static");
 # Context G.45.04 Textdomain static
@@ -3567,7 +3568,7 @@ msgid ""
 "textile raw materials and semi-finished goods"
 msgstr ""
 "وكلاء بيع المواد الزراعية الخام والحيوانات الحية ومواد النسيج الخام والبضائع "
-"نصف منتجة"
+"نصف المنتجة"
 
 #  _x("Agents involved in the sale of fuels, ores, metals and industrial chemicals", "G.46.12", "static");
 # Context G.46.12 Textdomain static
@@ -3822,7 +3823,7 @@ msgstr "تجارة الجملة للوقود الجامد والسائل وال�
 # Context G.46.72 Textdomain static
 msgctxt "G.46.72"
 msgid "Wholesale of metals and metal ores"
-msgstr "تجارة الجملة للمعادة والمعادن الخام"
+msgstr "تجارة الجملة للمعادن والمعادن الخام"
 
 #  _x("Wholesale of wood, construction materials and sanitary equipment", "G.46.73", "static");
 # Context G.46.73 Textdomain static
@@ -3834,7 +3835,7 @@ msgstr "تجارة الجملة للأخشاب ومواد البناء والأ�
 # Context G.46.74 Textdomain static
 msgctxt "G.46.74"
 msgid "Wholesale of hardware, plumbing and heating equipment and supplies"
-msgstr "تجارة الجملة للأدوات ومعدات السباكة والتدفئة وامداداتهم"
+msgstr "تجارة الجملة لأدوات وإمدادات ومعدات السباكة والتدفئة "
 
 #  _x("Wholesale of chemical products", "G.46.75", "static");
 # Context G.46.75 Textdomain static
@@ -3852,7 +3853,7 @@ msgstr "تجارة الجملة للمنتجات الوسيطة الأخرى"
 # Context G.46.77 Textdomain static
 msgctxt "G.46.77"
 msgid "Wholesale of waste and scrap"
-msgstr "تجارة الجملة للفضلات والخردة"
+msgstr "تجارة الجملة للنفايات والخردة"
 
 #  _x("Non-specialised wholesale trade", "G.46.09", "static");
 # Context G.46.09 Textdomain static
@@ -3890,7 +3891,7 @@ msgstr "بيع التجزئة بمتاجر متخصصة في الفاكهة وا
 # Context G.47.22 Textdomain static
 msgctxt "G.47.22"
 msgid "Retail sale of meat and meat products in specialised stores"
-msgstr "بيع التجزئة في متاجرلا متخصصة في اللحوم ومنتجاتها"
+msgstr "بيع التجزئة في متاجر متخصصة في اللحوم ومنتجاتها"
 
 #  _x("Retail sale of fish, crustaceans and molluscs in specialised stores", "G.47.23", "static");
 # Context G.47.23 Textdomain static
@@ -3904,7 +3905,7 @@ msgctxt "G.47.24"
 msgid ""
 "Retail sale of bread, cakes, flour confectionery and sugar confectionery in "
 "specialised stores"
-msgstr "بيع التجزئة بالمتاجر المتخصصة بالخبز والكعك ودقيق وسكر الحلويات"
+msgstr "بيع التجزئة بالمتاجر المتخصصة في الخبز والكعك ودقيق وسكر الحلويات"
 
 #  _x("Retail sale of beverages in specialised stores", "G.47.25", "static");
 # Context G.47.25 Textdomain static
@@ -3922,7 +3923,7 @@ msgstr "بيع التجزئة بالمتاجر المتخصصة في التبغ"
 # Context G.47.29 Textdomain static
 msgctxt "G.47.29"
 msgid "Other retail sale of food in specialised stores"
-msgstr "بيع تجزئة في متاجر متخصصة أخرى"
+msgstr "بيع التجزئة في متاجر متخصصة أخرى"
 
 #  _x("Retail sale of automotive fuel in specialised stores", "G.47.03", "static");
 # Context G.47.03 Textdomain static
@@ -4169,7 +4170,7 @@ msgstr "النقل من خلال الأنابيب"
 # Context H.50 Textdomain static
 msgctxt "H.50"
 msgid "Water transport"
-msgstr "نقل المياة"
+msgstr "نقل المياه"
 
 #  _x("Sea and coastal passenger water transport", "H.50.01", "static");
 # Context H.50.01 Textdomain static
@@ -4325,7 +4326,7 @@ msgstr "أنشطة خدمات الطعام والمشروبات"
 # Context I.56.01 Textdomain static
 msgctxt "I.56.01"
 msgid "Restaurants and mobile food service activities"
-msgstr "أنشطة خدمات المنطاعم والمطاعم المتنقلة"
+msgstr "أنشطة خدمات المطاعم والمطاعم المتنقلة"
 
 #  _x("Event catering activities", "I.56.21", "static");
 # Context I.56.21 Textdomain static
@@ -4337,7 +4338,7 @@ msgstr "أنشطة توريد الطعام بالمناسبات"
 # Context I.56.29 Textdomain static
 msgctxt "I.56.29"
 msgid "Other food service activities"
-msgstr "أنشطة خدمات ذائية أخرى"
+msgstr "أنشطة خدمات طعام أخرى"
 
 #  _x("Beverage serving activities", "I.56.03", "static");
 # Context I.56.03 Textdomain static
@@ -4367,7 +4368,7 @@ msgstr "نشر الكتب"
 # Context J.58.12 Textdomain static
 msgctxt "J.58.12"
 msgid "Publishing of directories and mailing lists"
-msgstr "نشر المجلدات والقوائم البريدية"
+msgstr "نشر المجلدات والققم بملاءمة البريدية"
 
 #  _x("Publishing of newspapers", "J.58.13", "static");
 # Context J.58.13 Textdomain static
@@ -4534,7 +4535,7 @@ msgstr "معالجة البيانات والاستضافة والأنشطة ذا
 # Context J.63.12 Textdomain static
 msgctxt "J.63.12"
 msgid "Web portals"
-msgstr "البوابات الالكترونية"
+msgstr "البوابات الإلكترونية"
 
 #  _x("News agency activities", "J.63.91", "static");
 # Context J.63.91 Textdomain static
@@ -4546,7 +4547,7 @@ msgstr "أنشطة وكالات الأنباء"
 # Context J.63.99 Textdomain static
 msgctxt "J.63.99"
 msgid "Other information service activities n.e.c."
-msgstr "أنشطة خدمات المعلومات الأخرى (ما لم يتم ذكره بتصنيف آخر)"
+msgstr "أنشطة خدمات المعلومات الأخرى (لم تصنف بمكان آخر)"
 
 #  _x("Financial and insurance activities", "K", "static");
 # Context K Textdomain static
@@ -4594,7 +4595,7 @@ msgstr "التأجير المالي"
 # Context K.64.92 Textdomain static
 msgctxt "K.64.92"
 msgid "Other credit granting"
-msgstr "منح ائتمان أخرى"
+msgstr "منح ائتمانات أخرى"
 
 #  _x("Other financial service activities, except insurance and pension funding n.e.c.", "K.64.99", "static");
 # Context K.64.99 Textdomain static
@@ -4610,7 +4611,7 @@ msgctxt "K.65"
 msgid ""
 "Insurance, reinsurance and pension funding, except compulsory social security"
 msgstr ""
-"التأمين واعادة التأمين وصناديق المعاشات، باستثناء الضمان الاجتماعي الاجباري"
+"التأمين وإعادة التأمين وصناديق المعاشات، باستثناء الضمان الإجتماعي الإجباري"
 
 #  _x("Life insurance", "K.65.11", "static");
 # Context K.65.11 Textdomain static
@@ -4702,7 +4703,7 @@ msgstr "الأنشطة العقارية"
 # Context L.68.01 Textdomain static
 msgctxt "L.68.01"
 msgid "Buying and selling of own real estate"
-msgstr "شراء وبيع العقارات ذات ملكية شخصية"
+msgstr "شراء وبيع عقارات ذات ملكية شخصية"
 
 #  _x("Rental and operating of own or leased real estate", "L.68.02", "static");
 # Context L.68.02 Textdomain static
@@ -4768,7 +4769,7 @@ msgstr "أنشطة التواصل والعلاقات العامة"
 # Context M.70.22 Textdomain static
 msgctxt "M.70.22"
 msgid "Business and other management consultancy activities"
-msgstr "أنشطة إستشارات الأعمال والاستشارات الادارية الأخرى"
+msgstr "أنشطة إستشارات الأعمال والإستشارات الإدارية الأخرى"
 
 #  _x("Architectural and engineering activities; technical testing and analysis", "M.71", "static");
 # Context M.71 Textdomain static
@@ -4793,7 +4794,7 @@ msgstr "أنشطة هندسية واستشارات تقنية ذات صلة"
 # Context M.71.02 Textdomain static
 msgctxt "M.71.02"
 msgid "Technical testing and analysis"
-msgstr "التحليلات والاختبارات التقنية"
+msgstr "التحليلات والإختبارات التقنية"
 
 #  _x("Scientific research and development", "M.72", "static");
 # Context M.72 Textdomain static
@@ -4805,7 +4806,7 @@ msgstr "التطوير والبحث العلمي"
 # Context M.72.11 Textdomain static
 msgctxt "M.72.11"
 msgid "Research and experimental development on biotechnology"
-msgstr "تطوير اختبارات وابحاث التكنولوجيا البيولوجية"
+msgstr "تطوير إختبارات وأبحاث التكنولوجيا البيولوجية"
 
 #  _x("Other research and experimental development on natural sciences and engineering", "M.72.19", "static");
 # Context M.72.19 Textdomain static
@@ -4813,31 +4814,31 @@ msgctxt "M.72.19"
 msgid ""
 "Other research and experimental development on natural sciences and "
 "engineering"
-msgstr "تطوير اختبارات وابحاث علوم طبيعية وهندسة أخرى"
+msgstr "تطوير إختبارات وأبحاث علوم طبيعية وهندسية أخرى"
 
 #  _x("Research and experimental development on social sciences and humanities", "M.72.02", "static");
 # Context M.72.02 Textdomain static
 msgctxt "M.72.02"
 msgid "Research and experimental development on social sciences and humanities"
-msgstr "الأبحاث والتطوير التجريبي للعلوم الاجتماعية والانسانيات"
+msgstr "الأبحاث والتطوير التجريبي للعلوم الاجتماعية والإنسانيات"
 
 #  _x("Advertising and market research", "M.73", "static");
 # Context M.73 Textdomain static
 msgctxt "M.73"
 msgid "Advertising and market research"
-msgstr "الاعلان وابحاث السوق"
+msgstr "الإعلان وأبحاث السوق"
 
 #  _x("Advertising agencies", "M.73.11", "static");
 # Context M.73.11 Textdomain static
 msgctxt "M.73.11"
 msgid "Advertising agencies"
-msgstr "وكالات الاعلان"
+msgstr "وكالات الإعلان"
 
 #  _x("Media representation", "M.73.12", "static");
 # Context M.73.12 Textdomain static
 msgctxt "M.73.12"
 msgid "Media representation"
-msgstr "التمثيل الاعلامي"
+msgstr "التمثيل الإعلامي"
 
 #  _x("Market research and public opinion polling", "M.73.02", "static");
 # Context M.73.02 Textdomain static
@@ -4873,7 +4874,7 @@ msgstr "أنشطة الترجمة"
 # Context M.74.09 Textdomain static
 msgctxt "M.74.09"
 msgid "Other professional, scientific and technical activities n.e.c."
-msgstr "أنشطة احترافية وعلمية وتقنية أخرى (لم يتم ذكرها بتصنيف آخر)"
+msgstr "أنشطة احترافية وعلمية وتقنية أخرى (لم تصنف بمكان آخر)"
 
 #  _x("Veterinary activities", "M.75", "static");
 # Context M.75 Textdomain static
@@ -4903,7 +4904,7 @@ msgstr "أنشطة التأجير"
 # Context N.77.11 Textdomain static
 msgctxt "N.77.11"
 msgid "Rental and leasing of cars and light motor vehicles"
-msgstr "تأجير السيارات والمركبات الخفيفية"
+msgstr "تأجير السيارات والمركبات الخفيفة"
 
 #  _x("Rental and leasing of trucks", "N.77.12", "static");
 # Context N.77.12 Textdomain static
@@ -4915,13 +4916,13 @@ msgstr "تأجير الشاحنات"
 # Context N.77.21 Textdomain static
 msgctxt "N.77.21"
 msgid "Rental and leasing of recreational and sports goods"
-msgstr "تأجير البضائع الرايضية والترفيهية"
+msgstr "تأجير البضائع الرياضية والترفيهية"
 
 #  _x("Rental of video tapes and disks", "N.77.22", "static");
 # Context N.77.22 Textdomain static
 msgctxt "N.77.22"
 msgid "Rental of video tapes and disks"
-msgstr "تأجير شرائط الفيديو والاسطوانات"
+msgstr "تأجير شرائط الفيديو والإسطوانات"
 
 #  _x("Rental and leasing of other personal and household goods", "N.77.29", "static");
 # Context N.77.29 Textdomain static
@@ -4954,7 +4955,7 @@ msgstr "تأجير معدات وماكينات المكاتب"
 # Context N.77.34 Textdomain static
 msgctxt "N.77.34"
 msgid "Rental and leasing of water transport equipment"
-msgstr "تأجير معدات نقل المياة"
+msgstr "تأجير معدات نقل المياه"
 
 #  _x("Rental and leasing of air transport equipment", "N.77.35", "static");
 # Context N.77.35 Textdomain static
@@ -4967,7 +4968,7 @@ msgstr "تأجير معدات النقل الجوي"
 msgctxt "N.77.39"
 msgid ""
 "Rental and leasing of other machinery, equipment and tangible goods n.e.c."
-msgstr "تأجير ماكينات ومعدات وبضائع ملموسة أخرى"
+msgstr "تأجير ماكينات ومعدات وبضائع ملموسة أخرى (لم تصنف بمكان آخر)"
 
 #  _x("Leasing of intellectual property and similar products, except copyrighted works", "N.77.04", "static");
 # Context N.77.04 Textdomain static
@@ -4975,7 +4976,7 @@ msgctxt "N.77.04"
 msgid ""
 "Leasing of intellectual property and similar products, except copyrighted "
 "works"
-msgstr "تأجير الملكية الأدبية ومنتجات مشابهة، باستثناء أعمال لها ملكية الأدبية"
+msgstr "تأجير الملكية الفكرية ومنتجات مشابهة، باستثناء أعمال لها ملكية الأدبية"
 
 #  _x("Employment activities", "N.78", "static");
 # Context N.78 Textdomain static
@@ -4987,7 +4988,7 @@ msgstr "أنشطة التوظيف"
 # Context N.78.01 Textdomain static
 msgctxt "N.78.01"
 msgid "Activities of employment placement agencies"
-msgstr "أنشطة وكالات الحاق العمالة"
+msgstr "أنشطة وكالات إلحاق العمالة"
 
 #  _x("Temporary employment agency activities", "N.78.02", "static");
 # Context N.78.02 Textdomain static
@@ -5025,7 +5026,7 @@ msgstr "أنشطة شركات السياحة"
 # Context N.79.09 Textdomain static
 msgctxt "N.79.09"
 msgid "Other reservation service and related activities"
-msgstr "أنشطة الحجز الأخرى والنشاطات اذت الصلة"
+msgstr "أنشطة الحجز الأخرى والنشاطات ذات الصلة"
 
 #  _x("Security and investigation activities", "N.80", "static");
 # Context N.80 Textdomain static
@@ -5085,7 +5086,7 @@ msgstr "أنشطة التنظيف الأخرى"
 # Context N.81.03 Textdomain static
 msgctxt "N.81.03"
 msgid "Landscape service activities"
-msgstr "أنشة خدمات الحدائق"
+msgstr "أنشطة خدمات تصميم الحدائق"
 
 #  _x("Office administrative, office support and other business support activities", "N.82", "static");
 # Context N.82 Textdomain static
@@ -5112,7 +5113,7 @@ msgstr "أنشطة التصوير الضوئي وتجهيز المستندات �
 # Context N.82.02 Textdomain static
 msgctxt "N.82.02"
 msgid "Activities of call centres"
-msgstr "أنشطة مراكز الاتصال"
+msgstr "أنشطة مراكز الإتصال"
 
 #  _x("Organisation of conventions and trade shows", "N.82.03", "static");
 # Context N.82.03 Textdomain static
@@ -5136,7 +5137,7 @@ msgstr "أنشطة التعبئة"
 # Context N.82.99 Textdomain static
 msgctxt "N.82.99"
 msgid "Other business support service activities n.e.c."
-msgstr "أنشطة دعم أعمال أخرى (لم يتم ذكرها بتصنيف آخر)"
+msgstr "أنشطة دعم أعمال أخرى (لم تصنف بمكان آخر)"
 
 #  _x("Public administration and defence; compulsory social security", "O", "static");
 # Context O Textdomain static
@@ -5207,7 +5208,7 @@ msgstr "أنشطة خدمات الحرائق"
 # Context O.84.03 Textdomain static
 msgctxt "O.84.03"
 msgid "Compulsory social security activities"
-msgstr "أنشطة التأمين الاجتماعي الاجباري"
+msgstr "أنشطة التأمين الاجتماعي الإجباري"
 
 #  _x("Education", "P", "static");
 # Context P Textdomain static
@@ -5279,7 +5280,7 @@ msgstr "أنشطة مدارس القيادة"
 # Context P.85.59 Textdomain static
 msgctxt "P.85.59"
 msgid "Other education n.e.c."
-msgstr "تعليم  أخر (لم يتم ذكره بتصنيف آخر)"
+msgstr "تعليم  آخر (لم تصنف بمكان آخر)"
 
 #  _x("Educational support activities", "P.85.06", "static");
 # Context P.85.06 Textdomain static
@@ -5365,14 +5366,14 @@ msgstr "أنشطة رعاية إقامية أخرى"
 # Context Q.88 Textdomain static
 msgctxt "Q.88"
 msgid "Social work activities without accommodation"
-msgstr "أنشطة الرعاية الإجتماعية بغير إقامة"
+msgstr "أنشطة الرعاية الإجتماعية بدون إقامة"
 
 #  _x("Social work activities without accommodation for the elderly and disabled", "Q.88.01", "static");
 # Context Q.88.01 Textdomain static
 msgctxt "Q.88.01"
 msgid ""
 "Social work activities without accommodation for the elderly and disabled"
-msgstr "الرعاية الإجتماعية بغير إاقمة للمسنين والمعاقين"
+msgstr "الرعاية الإجتماعية بدون إقامة للمسنين والمعاقين"
 
 #  _x("Child day-care activities", "Q.88.91", "static");
 # Context Q.88.91 Textdomain static
@@ -5384,7 +5385,7 @@ msgstr "أنشطة حضانات الأطفال"
 # Context Q.88.99 Textdomain static
 msgctxt "Q.88.99"
 msgid "Other social work activities without accommodation n.e.c."
-msgstr "أنشطة رعاية إجتماعية دون إقامة أخرى (لم يتم ذكرها بتصنيف آخر)"
+msgstr "أنشطة رعاية إجتماعية دون إقامة أخرى (لم تصنف بمكان آخر"
 
 #  _x("Arts, entertainment and recreation", "R", "static");
 # Context R Textdomain static
@@ -5463,7 +5464,7 @@ msgstr "أنشطة المقامرة والمراهانة"
 # Context R.92.00 Textdomain static
 msgctxt "R.92.00"
 msgid "Gambling and betting activities"
-msgstr "أنشطة المقامرة والمراهانة"
+msgstr "أنشطة المقامرة والمراهنة"
 
 #  _x("Sports activities and amusement and recreation activities", "R.93", "static");
 # Context R.93 Textdomain static
@@ -5475,7 +5476,7 @@ msgstr "الأنشطة الرياضية وأنشطة الترفيه والملا
 # Context R.93.11 Textdomain static
 msgctxt "R.93.11"
 msgid "Operation of sports facilities"
-msgstr "تشغيل المنتشآت الرياضية"
+msgstr "تشغيل المنشآت الرياضية"
 
 #  _x("Activities of sports clubs", "R.93.12", "static");
 # Context R.93.12 Textdomain static
@@ -5535,7 +5536,7 @@ msgstr "أنشطة مؤسسات ذات عضوية احترافية"
 # Context S.94.02 Textdomain static
 msgctxt "S.94.02"
 msgid "Activities of trade unions"
-msgstr "أنشطة الاتحادات التجارية"
+msgstr "أنشطة الإتحادات التجارية"
 
 #  _x("Activities of religious organisations", "S.94.91", "static");
 # Context S.94.91 Textdomain static
@@ -5553,7 +5554,7 @@ msgstr "أنشطة مؤسسات سياسية"
 # Context S.94.99 Textdomain static
 msgctxt "S.94.99"
 msgid "Activities of other membership organisations n.e.c."
-msgstr "أنشطة مؤسسات ذات عضوية أخرى (لم يتم ذكرها بتصنيف آخر)"
+msgstr "أنشطة مؤسسات ذات عضوية أخرى (لم تصنف بمكان آخر)"
 
 #  _x("Repair of computers and personal and household goods", "S.95", "static");
 # Context S.95 Textdomain static
@@ -5577,7 +5578,7 @@ msgstr "إصلاح معدات الاتصال"
 # Context S.95.21 Textdomain static
 msgctxt "S.95.21"
 msgid "Repair of consumer electronics"
-msgstr "إصلاح الالكترونيات الاستهلاكية"
+msgstr "إصلاح الإلكترونيات الإستهلاكية"
 
 #  _x("Repair of household appliances and home and garden equipment", "S.95.22", "static");
 # Context S.95.22 Textdomain static
@@ -5619,7 +5620,7 @@ msgstr "أنشطة خدمات شخصية أخرى"
 # Context S.96.01 Textdomain static
 msgctxt "S.96.01"
 msgid "Washing and (dry-)cleaning of textile and fur products"
-msgstr "الغشيل والتنظيف الجاف للمنسوجات ومنتجات الفرو"
+msgstr "الغسل والتنظيف الجاف للمنسوجات ومنتجات الفرو"
 
 #  _x("Hairdressing and other beauty treatment", "S.96.02", "static");
 # Context S.96.02 Textdomain static
@@ -5643,7 +5644,7 @@ msgstr "أنشطة اللياقة البدنية"
 # Context S.96.09 Textdomain static
 msgctxt "S.96.09"
 msgid "Other personal service activities n.e.c."
-msgstr "أنشطة خدمات شخصية أخرى (لم يتم ذكرها بتصنيف آخر)"
+msgstr "أنشطة خدمات شخصية أخرى (لم تصنف بمكان آخر)"
 
 #  _x("Activities of households as employers; undifferentiated goods- and services-producing activities of households for own use", "T", "static");
 # Context T Textdomain static
@@ -5671,14 +5672,14 @@ msgctxt "T.98"
 msgid ""
 "Undifferentiated goods- and services-producing activities of private "
 "households for own use"
-msgstr "أنشطة إنتاج بضائع وخدمات غير تميزية للاستخدام الشخصي المنزلي"
+msgstr "أنشطة إنتاج بضائع وخدمات غير تميزية للإستخدام الشخصي المنزلي"
 
 #  _x("Undifferentiated goods-producing activities of private households for own use", "T.98.01", "static");
 # Context T.98.01 Textdomain static
 msgctxt "T.98.01"
 msgid ""
 "Undifferentiated goods-producing activities of private households for own use"
-msgstr "أنشطة إنتاج بضائع غير تميزية للاستخدام الشخصي المنزلي"
+msgstr "أنشطة إنتاج بضائع غير تميزية للإستخدام الشخصي المنزلي"
 
 #  _x("Undifferentiated service-producing activities of private households for own use", "T.98.02", "static");
 # Context T.98.02 Textdomain static
@@ -5686,7 +5687,7 @@ msgctxt "T.98.02"
 msgid ""
 "Undifferentiated service-producing activities of private households for own "
 "use"
-msgstr "أنشطة إنتاج خدمات غير تميزية للاستخدام الشخصي المنزلي"
+msgstr "أنشطة إنتاج خدمات غير تميزية للإستخدام الشخصي المنزلي"
 
 #  _x("Activities of extraterritorial organisations and bodies", "U", "static");
 # Context U Textdomain static
@@ -5724,7 +5725,7 @@ msgstr "التدريب العملي"
 # Context busAngelGroup Textdomain static
 msgctxt "busAngelGroup"
 msgid "Business Angel Group"
-msgstr "مجموعة منح الأعمال"
+msgstr "مجموعة منح المشروعات"
 
 #  _x("Bank", "bank", "static");
 # Context bank Textdomain static
@@ -5822,32 +5823,32 @@ msgstr "تصدير (عملة محلية)"
 # Context pending Textdomain static
 msgctxt "pending"
 msgid "Pending"
-msgstr "معلقة"
+msgstr "معلق"
 
 #  _x("Granted", "granted", "static");
 # Context granted Textdomain static
 msgctxt "granted"
 msgid "Granted"
-msgstr "ممنوحة"
+msgstr "ممنوح"
 
 #  _x("Rejected", "rejected", "static");
 # Context rejected Textdomain static
 msgctxt "rejected"
 msgid "Rejected"
-msgstr "مرفوضة"
+msgstr "مرفوض"
 
 # 15 exportImport
 #  _x("Exports", "export", "static");
 # Context export Textdomain static
 msgctxt "export"
 msgid "Exports"
-msgstr "تصديرات"
+msgstr "صادرات"
 
 #  _x("Imports", "import", "static");
 # Context import Textdomain static
 msgctxt "import"
 msgid "Imports"
-msgstr "استيرادات"
+msgstr "واردات"
 
 #  _x("Export & Imports", "exportImport", "static");
 # Context exportImport Textdomain static
@@ -5866,7 +5867,7 @@ msgstr "غير مقبول"
 # Context business.plans Textdomain static
 msgctxt "business.plans"
 msgid "Business plans"
-msgstr "خطط الأعمال"
+msgstr "خطط العمل"
 
 #  _x("Certification (iso, hccp, etc.)", "certification", "static");
 # Context certification Textdomain static
@@ -5890,7 +5891,7 @@ msgstr "التجارة الإلكترونية"
 # Context finance.accounting Textdomain static
 msgctxt "finance.accounting"
 msgid "Finance, accounting (operations)"
-msgstr "عمليات المالية والمحاسبة"
+msgstr "(التشغيل) المالية والمحاسبة"
 
 #  _x("Financial valuations", "financial.valuations", "static");
 # Context financial.valuations Textdomain static
@@ -5914,7 +5915,7 @@ msgstr "حقوق الملكية الفكرية وبراءات الاختراع"
 # Context investors Textdomain static
 msgctxt "investors"
 msgid "Investors (pitching, due diligence)"
-msgstr "المستثمرين (الطرح والعناية الواجبة)"
+msgstr "المستثمرين (العرض والعناية الواجبة)"
 
 #  _x("IT - business operations", "IT.business.operations", "static");
 # Context IT.business.operations Textdomain static
@@ -5974,7 +5975,7 @@ msgstr "التسويق عن طريق الإنترنت (مواقع التواصل
 # Context marketing.branding.advertising Textdomain static
 msgctxt "marketing.branding.advertising"
 msgid "Marketing, branding, advertising"
-msgstr "الستويق والعلامة التجارية والاعلان"
+msgstr "التسويق والعلامة التجارية والإعلان"
 
 #  _x("Personnel, HR", "personnel.hr", "static");
 # Context personnel.hr Textdomain static
@@ -5998,7 +5999,7 @@ msgstr "المبيعات"
 # Context impact.csr Textdomain static
 msgctxt "impact.csr"
 msgid "Social & environmental impact & CSR"
-msgstr "الأثر الاجتماعي والبيئي، والمسئولية الاجاتماعية للشركات"
+msgstr "الأثر الإجتماعي والبيئي، والمسئولية الإجتماعية للشركات"
 
 #  _x("Strategy, leadership", "strategy", "static");
 # Context strategy Textdomain static
@@ -6092,7 +6093,7 @@ msgstr "تم تصفية الشركة"
 # Context companyBankrupt Textdomain static
 msgctxt "companyBankrupt"
 msgid "The company went bankrupt"
-msgstr "تم اشهار افلاس الشركة"
+msgstr "تم إشهار إفلاس الشركة"
 
 #  _x("I am still involved with the company", "stillInvolved", "static");
 # Context stillInvolved Textdomain static
@@ -7643,7 +7644,7 @@ msgstr "جزائري"
 # Context as Textdomain static
 msgctxt "as"
 msgid "American Samoan"
-msgstr "أمريكي سامواي"
+msgstr "سامواي أمريكي"
 
 #  _x("Andorran", "ad", "static");
 # Context ad Textdomain static
@@ -9060,7 +9061,7 @@ msgstr "حمايةالطبيعة"
 # Context waterResources Textdomain static
 msgctxt "waterResources"
 msgid "Water resources"
-msgstr "مصادر المياة"
+msgstr "مصادر المياه"
 
 #  _x("Climate change reduction", "climateChangeReduction", "static");
 # Context climateChangeReduction Textdomain static
@@ -9180,7 +9181,7 @@ msgstr "تقليل نسب النفايات السامة والنووية"
 # Context waterResourceImprovement Textdomain static
 msgctxt "waterResourceImprovement"
 msgid "Water resource improvement"
-msgstr "تحسين مصادر المياة"
+msgstr "تحسين مصادر المياه"
 
 # 25 prefNotMethod
 #  _x("Email and message", "emailMessage", "static");
@@ -9212,7 +9213,7 @@ msgstr "جيد"
 # Context basic Textdomain static
 msgctxt "basic"
 msgid "basic"
-msgstr "بدائي"
+msgstr "أساسي"
 
 # 27 language
 #  _x("Malay", "ms", "static");

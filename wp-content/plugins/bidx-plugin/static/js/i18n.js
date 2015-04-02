@@ -298,7 +298,8 @@
     //
     $.fn.i18nText = function i18nText( key, context )
     {
-        var $el = $( this );
+        var decodedString
+        ,   $el = $( this );
 
         getItem( key, context, function( err, label )
         {
@@ -308,6 +309,9 @@
                 bidx.utils.error( "i18n::Problem translating", key, context );
             }
 
+            decodedString = decodeURIComponent(escape(label));
+
+            //$el.text( decodedString );
             $el.text( label );
         } );
 

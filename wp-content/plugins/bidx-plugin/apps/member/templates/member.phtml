@@ -42,7 +42,7 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
         <div class="pull-left quick-action-links">
 <?php
             if ( $canEdit && $isLoggedinMemberIsEntrepreneur ) :
-?>            
+?>
                 <!-- <a href="#" class="btn btn-sm btn-primary">
                     <div class="fa fa-dashboard fa-above fa-big"></div>
                     <?php _e('Dashboard', 'bidxplugin')?>
@@ -60,7 +60,7 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 ?>
 <?php
             if ( $isLoggedinMemberIsInvestor && !$isLoggedinMemberIsMentor ) :
-?>            
+?>
                 <a href="/member/#createMentor" class="btn btn-sm btn-primary">
                     <div class="fa fa-compass fa-above fa-big"></div>
                     <?php _e('Become mentor', 'bidxplugin')?>
@@ -118,37 +118,37 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
             </div>
         </div>
         <div class="col-sm-12">
-        
+
 <div class="row tabs-vertical">
 
     <div class="col-sm-3 tabs-nav">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs tabs-left">
-            <li class="active"><a href="#tab-member" data-toggle="tab"><i class="pull-left fa fa-user"></i> Member</a></li>
+            <li class="active"><a href="#tab-member" data-toggle="tab"><i class="pull-left fa fa-user"></i> <?php _e('Member', 'bidxplugin')?></a></li>
 <?php
             if ( !empty($this->data->bidxEntrepreneurProfile ) ):
-?>          
-            <li><a href="#tab-entreprenuer" data-toggle="tab"><i class="pull-left fa fa-lightbulb-o"></i> Entrepreneur</a></li>
+?>
+            <li><a href="#tab-entreprenuer" data-toggle="tab"><i class="pull-left fa fa-lightbulb-o"></i> <?php _e('Entrepreneur','bidxplugin');?></a></li>
 <?php
             endif;
-?>          
+?>
 <?php
             if ( !empty($this->data->bidxInvestorProfile ) ) :
-?>          
-                <li><a href="#tab-investor" data-toggle="tab"><i class="pull-left fa fa-bank"></i> Investor</a></li>
+?>
+                <li><a href="#tab-investor" data-toggle="tab"><i class="pull-left fa fa-bank"></i> <?php _e('Investor','bidxplugin');?></a></li>
 <?php
             endif;
-?>          
+?>
 <?php
             if ( !empty($this->data->bidxMentorProfile ) ):
-?>          
+?>
 
-            <li><a href="#tab-mentor" data-toggle="tab"><i class="pull-left fa fa-compass"></i> Mentor</a></li>
+            <li><a href="#tab-mentor" data-toggle="tab"><i class="pull-left fa fa-compass"></i> <?php _e('Mentor','bidxplugin');?></a></li>
 <?php
             endif;
-?>          
+?>
         </ul>
-        
+
         <?php // $this-> //render('create-grow.phtml'); ?>
     </div>
 
@@ -160,33 +160,33 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
             </div>
 <?php
             if ( !empty($this->data->bidxEntrepreneurProfile ) ):
-?>          
+?>
             <div class="tab-pane" id="tab-entreprenuer">
                 <?php $this->render('view-entrepreneur.phtml'); ?>
             </div>
 <?php
             endif;
-?>          
+?>
 <?php
             if ( !empty($this->data->bidxInvestorProfile ) ) :
-?>          
+?>
             <div class="tab-pane" id="tab-investor">
                 <?php $this->render('view-investor.phtml'); ?>
             </div>
 <?php
             endif;
-?>          
+?>
 <?php
             if ( !empty($this->data->bidxMentorProfile ) ):
-?>          
+?>
             <div class="tab-pane" id="tab-mentor">
                 <?php $this->render('view-mentor.phtml'); ?>
             </div>
 <?php
             endif;
-?>          
+?>
         </div>
-    </div> 
+    </div>
 
 </div>
 
