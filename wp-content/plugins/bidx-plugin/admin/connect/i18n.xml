@@ -11,6 +11,7 @@
     <Item value="groupInvestors">All Investors</Item>
     <Item value="groupMentors">All Mentors</Item>
     <Item value="groupMembers">All Members</Item>
+    <Item value="groupMembersOnly">Member only</Item>
     <Item value="frmGroupFieldRequired">Please select sender group</Item>
     <Item value="emailSent">Your email has been sent successfully</Item>
     <Item value="moveFolderMsg">Move message to folder</Item>

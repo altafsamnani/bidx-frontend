@@ -148,7 +148,7 @@
 		        </article>
 		        <!-- Compose view -->
 		        <article class="view viewCompose">
-		            <form action="">
+		            <form id="frmComposeEdit">
 		            <div class="panel panel-default">
 		                <div class="panel-heading">
 		                    <h3 class="hndle title titleCompose"><?php _e('Create a new e-mail','bidxplugin')?></h3>
@@ -176,12 +176,12 @@
 									</div>
 								</div>
 							</div>
-
+	                        <div class="form-group tinymce-wrapper">
 		                    <?php
-
-		                    $args = array("textarea_name" => "content", "editor_class" => "editor_connect",'quicktags' => false);
-                            wp_editor(__('','bidxplugin'), "connect_editor_id", $args); ?>
-
+		                    	$args = array("textarea_name" => "connectBody", "editor_class" => "editor_connect",'quicktags' => false);
+                            	wp_editor(__('','bidxplugin'), "connectBody", $args);
+                            ?>
+							</div>
 		                    <div id="major-publishing-actions">
 							   <div id="delete-action">
 							       <a class="submitdelete deletion compose-cancel" href="#connect/discardConfirm"><?php _e('Discard message','bidxplugin');?></a>
