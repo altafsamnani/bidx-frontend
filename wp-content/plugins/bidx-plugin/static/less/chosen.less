@@ -1,6 +1,8 @@
 
 // Chosen Plugin
 // -------------------------
+:not(.rtl)
+{
 .chosen-container {
     position: relative;
     display: inline-block;
@@ -33,6 +35,7 @@
 }
 .chosen-container a {
     cursor: pointer;
+}
 }
 
 /* @end */
@@ -140,6 +143,8 @@
 
 /* @end */
 /* @group Results */
+:not(.rtl)
+{
 .chosen-container .chosen-results {
     position: relative;
     overflow-x: hidden;
@@ -190,6 +195,7 @@
 .chosen-container .chosen-results li em {
     font-style: normal;
     text-decoration: underline;
+}
 }
 
 /* @end */
@@ -346,66 +352,71 @@
 
 /* @end */
 /* @group Right to Left */
-.chosen-rtl {
-    text-align: right;
+.rtl .chosen-container {
+    text-align: right !important;
 }
-.chosen-rtl .chosen-single {
+.rtl .chosen-container .chosen-single {
     overflow: visible;
     padding: 0 8px 0 0;
 }
-.chosen-rtl .chosen-single span {
+.rtl .chosen-container .chosen-single span {
     margin-right: 0;
     margin-left: 26px;
     direction: rtl;
 }
-.chosen-rtl .chosen-single-with-deselect span {
+.rtl .chosen-container .chosen-single-with-deselect span {
     margin-left: 38px;
 }
-.chosen-rtl .chosen-single div {
+.rtl .chosen-container .chosen-single div {
     right: auto;
     left: 3px;
 }
-.chosen-rtl .chosen-single abbr {
+.rtl .chosen-container .chosen-single abbr {
     right: auto;
     left: 26px;
 }
-.chosen-rtl .chosen-choices li {
+.rtl .chosen-container .chosen-choices li {
     float: right;
 }
-.chosen-rtl .chosen-choices li.search-field input[type="text"] {
+.rtl .chosen-container .chosen-choices li.search-field input[type="text"] {
     direction: rtl;
 }
-.chosen-rtl .chosen-choices li.search-choice {
+.rtl .chosen-container .chosen-choices li.search-choice {
     margin: 3px 5px 3px 0;
     padding: 3px 5px 3px 19px;
 }
-.chosen-rtl .chosen-choices li.search-choice .search-choice-close {
+.rtl .chosen-container .chosen-choices li.search-choice .search-choice-close {
     right: auto;
     left: 4px;
 }
-.chosen-rtl.chosen-container-single-nosearch .chosen-search,
-.chosen-rtl .chosen-drop {
+.rtl .chosen-container.chosen-container-single-nosearch .chosen-search,
+.rtl .chosen-container .chosen-drop {
     left: 9999px;
 }
-.chosen-rtl.chosen-container-single .chosen-results {
+.rtl .chosen-container.chosen-container-single .chosen-results {
     margin: 0 0 4px 4px;
     padding: 0 4px 0 0;
 }
-.chosen-rtl .chosen-results li.group-option {
+.rtl .chosen-container .chosen-results li.group-option {
     padding-right: 15px;
     padding-left: 0;
 }
-.chosen-rtl.chosen-container-active.chosen-with-drop .chosen-single div {
+.rtl .chosen-container.chosen-container-active.chosen-with-drop .chosen-single div {
     border-right: none;
 }
-.chosen-rtl .chosen-search input[type="text"] {
+.rtl .chosen-container .chosen-search input[type="text"] {
     padding: 4px 5px 4px 20px;
     direction: rtl;
 }
-.chosen-rtl.chosen-container-single .chosen-single div b {
+.rtl .chosen-container.chosen-container-single .chosen-single div b {
     background-position: 6px 2px;
 }
-.chosen-rtl.chosen-container-single.chosen-with-drop .chosen-single div b {
+.rtl .chosen-container.chosen-container-single.chosen-with-drop .chosen-single div b {
     background-position: -12px 2px;
+}
+
+.rtl .chosen-container-single .chosen-single:after {
+    left: 7px !important;
+    right:initial !important;
 }
 

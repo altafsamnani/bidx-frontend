@@ -311,8 +311,8 @@
 
             decodedString = decodeURIComponent(escape(label));
 
-            //$el.text( decodedString );
-            $el.text( label );
+            $el.text( decodedString );
+
         } );
 
         return $el;
