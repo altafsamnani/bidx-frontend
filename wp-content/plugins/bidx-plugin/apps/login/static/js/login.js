@@ -91,11 +91,8 @@
                                 {
                                     var redirectText;
 
-                                    bidx.i18n.getItem( "msgWaitForRedirect", function( err, label )
-                                    {
-                                        redirectText = label;
-
-                                    } );
+                                    redirectText = bidx.i18n.i( "msgWaitForRedirect" );
+                                    bidx.utils.log('redirectText', redirectText);
 
                                     noty(
                                     {
