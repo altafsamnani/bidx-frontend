@@ -178,7 +178,12 @@
 							</div>
 	                        <div class="form-group tinymce-wrapper">
 		                    <?php
-		                    	$args = array("textarea_name" => "connectBody", "editor_class" => "editor_connect",'quicktags' => false);
+								$args = array(	'textarea_name' => 'content'
+										, 		'editor_class' 	=> 'editor_connect'
+										,		'quicktags' 	=> false
+										,       'tinymce'       => false
+										,       'media_buttons' => false
+										);
                             	wp_editor(__('','bidxplugin'), "connectBody", $args);
                             ?>
 							</div>
