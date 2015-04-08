@@ -40,6 +40,22 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 
     <div class="actions hide-overflow main-margin">
         <div class="pull-left quick-action-links">
+
+            <div class="pull-left hide">
+                <label class="markLabel"><?php _e('Mark as', 'bidxplugin')?>:</label>
+                <button class="btn btn-sm btn-success">
+                    <div class="fa fa-bookmark fa-above fa-big"></div>
+                    <?php _e('Accrediated', 'bidxplugin')?>
+                </button>
+                <button class="btn btn-sm btn-danger">
+                    <div class="fa fa-ban fa-above fa-big"></div>
+                    <?php _e('Not Accrediated', 'bidxplugin')?>
+                </button>
+           </div>
+
+
+
+
 <?php
             if ( $canEdit && $isLoggedinMemberIsEntrepreneur ) :
 ?>
@@ -105,7 +121,30 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 
 
         <div class="editControls btn-group pull-right"></div>
+
+        <span class="hide accreditation-labels">
+            <div class="text-uppercase pull-right main-margin-horizontal accreditation accr-Pending">
+                <span class="fa fa-bookmark-o fa-big pull-left"></span>
+                <?php _e('Pending Accreditation', 'bidxplugin')?>
+                
+            </div>
+
+            <div class="text-uppercase pull-right main-margin-horizontal accreditation accr-Accepted">
+                <span class="fa fa-bookmark fa-big pull-left"></span>
+                <?php _e('Accreditated', 'bidxplugin')?>
+            </div>
+
+            <div class="text-uppercase pull-right main-margin-horizontal accreditation accr-Refused">
+                <span class="fa fa-ban fa-big pull-left"></span>
+                <?php _e('Not Accreditated', 'bidxplugin')?>
+            </div>
+        </span>
+
+
     </div>
+
+
+
 
     <div class="row mainState mainStateShow main-padding">
         <div class="col-sm-12">
