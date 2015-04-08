@@ -25,7 +25,7 @@
         <div class="container">
             <div class="row">
                 <div class="search col-xs-6">
-                    <a class="home-btn" href="<?php echo getLangPrefix('/');?>"><i class="fa fa-home"></i></a>
+                    <a class="home-btn navbar-left flip" href="<?php echo getLangPrefix('/');?>"><i class="fa fa-home"></i></a>
 <?php
                     get_template_part('templates/searchform');
 ?>

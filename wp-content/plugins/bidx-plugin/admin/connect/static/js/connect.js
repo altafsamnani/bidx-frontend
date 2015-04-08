@@ -9,7 +9,7 @@
     ,   $currentView
     ,   $modals                     = $element.find( ".modalView" )
     ,   $modal
-    ,   $frmCompose                 = $views.filter( ".viewCompose" ).find( "form" )
+    ,   $frmCompose                 = $views.filter( ".viewCompose" ).find( "#frmComposeEdit" )
     ,   $btnComposeSubmit           = $frmCompose.find(".compose-submit")
     ,   $btnComposeCancel           = $frmCompose.find(".compose-cancel")
     ,   $mailFolderNavigation       = $element.find(".bidx-mailFolders")
@@ -37,7 +37,7 @@
     ,   $bulkApply                  = $element.find( ".applyBulk" )
     ,   state
     ,   section
-    ,   listDropdownGroup =  [ "groupEntrepreneurs", "groupInvestors", "groupMentors", "groupMembers" ]
+    ,   listDropdownGroup =  [ "groupEntrepreneurs", "groupInvestors", "groupMentors", "groupMembersOnly", "groupMembers" ]
 
 
     ;
@@ -63,7 +63,15 @@
 
         // initiate formvalidation for compose view
         //
-        $frmCompose.validate(
+        $btnComposeSubmit.click( function( e )
+        {
+            e.preventDefault();
+
+            $frmCompose.submit();
+
+        } );
+
+        var $validator = $frmCompose.validate(
         {
             ignore: ".chosen-search input, .search-field input"
         ,   rules:
@@ -76,11 +84,10 @@
                 {
                     required:   true
                 }
-            ,   "content":
+            ,   "connectBody":
                 {
-                    required:   true
+                    tinymceTextarea:   true
                 }
-
             }
         ,   messages:
             {
@@ -89,6 +96,7 @@
             }
         ,   submitHandler:  function()
             {
+
                 if ( $btnComposeSubmit.hasClass( "disabled" ) )
                 {
                     return;
@@ -97,10 +105,15 @@
                 $btnComposeSubmit.addClass( "disabled" );
                 $frmCompose.find('.spinner').show();
 
-                _doSend(
+                 _doSend(
                 {
                     callback: function()
                     {
+                        var ed          =   tinyMCE.get('connectBody')
+                        ;
+
+                        ed.setContent(''); // Clear the tinymce after sending msg
+
                         $frmCompose.find('.spinner').hide();
                     }
                 ,   error: function()
@@ -113,6 +126,8 @@
                 } );
             }
         } );
+
+
 
         // load the active members in the chosen selectbox
         //
@@ -228,11 +243,13 @@
         var entrepreuenrItems       = []
         ,   investorItems           = []
         ,   mentorItems             = []
+        ,   memberOnlyItems         = []
         ,   totalItems              = []
         ,   roles                   = []
         ,   listArrItems            = []
         ,   contactEntrepreneurs    = []
         ,   selectedGroup
+        ,   isMemberOnly
         ;
         // get recipient list and initiate recipient compose combobox (chosen)
         //
@@ -243,7 +260,6 @@
         ,   offset:     0
         ,   callback:   function( data )
             {
-
                 if ( data && data.sortIndex )
                 {
                     // data contains a sortIndex array which we can sort and then iterate and use it's key on the contacts array
@@ -270,9 +286,11 @@
                         data.sortIndex = data.sortIndex.sort();
                     }
 
+
                     $.each( data.sortIndex, function( idx, key )
                     {
-                        roles    =   data.contacts[ key ].roles;
+                        roles           =   data.contacts[ key ].roles;
+                        isMemberOnly    =   true;
                         option = $( "<option/>",
                         {
                             value: data.contacts[ key ].value
@@ -286,16 +304,24 @@
                         if($.inArray( 'entrepreneur' , roles) !== -1 )
                         {
                             entrepreuenrItems.push(data.contacts[ key ] );
+                            isMemberOnly    =   false;
                         }
                         //Get Investor for group  mailing
                         if($.inArray( 'investor' , roles) !== -1 )
                         {
                             investorItems.push(data.contacts[ key ] );
+                            isMemberOnly    =   false;
                         }
                         //Get Mentor for gropu mailing
                         if($.inArray( 'mentor' , roles) !== -1 )
                         {
                             mentorItems.push(data.contacts[ key ] );
+                            isMemberOnly    =   false;
+                        }
+
+                        if(isMemberOnly)
+                        {
+                            memberOnlyItems.push(data.contacts[ key ] );
                         }
 
                         //Get all users for group  mailing
@@ -307,6 +333,7 @@
                                         groupEntrepreneurs : entrepreuenrItems
                                     ,   groupInvestors:      investorItems
                                     ,   groupMentors:        mentorItems
+                                    ,   groupMembersOnly:    memberOnlyItems
                                     ,   groupMembers:        totalItems
                                     };
 
@@ -455,6 +482,9 @@
             ,   "content": "string"
             }
         */
+        var ed          =   tinyMCE.get('connectBody')
+        ,   editorHtml  =   ed.getContent();
+
         message = {}; // clear message because it can still hold the reply content
 
         $currentView = $views.filter( bidx.utils.getViewName( "compose" ) );
@@ -462,9 +492,7 @@
         bidx.utils.setValue( message, "replyToGroupId", currentGroupId );
         bidx.utils.setValue( message, "userIds", $contactsDropdown.val() );
         bidx.utils.setValue( message, "subject", $currentView.find( "[name=subject]" ).val() );
-        bidx.utils.setValue( message, "content", $currentView.find( "[name=content]" ).val() );
-
-
+        bidx.utils.setValue( message, "content", editorHtml );
     }
 
     // display generic error view with msg provided
@@ -1392,7 +1420,7 @@
             $contactsDropdown.bidx_chosen();
             $btnComposeSubmit.removeClass( "disabled" );
             $btnComposeCancel.removeClass( "disabled" );
-            $frmCompose.find( "[name=content]" ).val('');
+            $frmCompose.find( "[name=connectBody]" ).val('');
 
             $frmCompose.validate().resetForm();
 
@@ -1469,8 +1497,8 @@
                                 .replace( "%sender%", message.sender.displayName );
                         content = "\n\n" + lbl + "\n" + content;
 
-                        $frmCompose.find( "[name=content]" ).val( content );
-                        $frmCompose.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
+                        $frmCompose.find( "[name=connectBody]" ).val( content );
+                        $frmCompose.find( "[name=connectBody]" ).trigger("focus"); // Note: doesnt seem to work right now
 
                     break;
 
@@ -1486,8 +1514,8 @@
                         lbl     = "----------" + lbl + "----------";
                         content = "\n\n" + lbl + "\n" + content;
 
-                        $frmCompose.find( "[name=content]" ).val( content );
-                        $frmCompose.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
+                        $frmCompose.find( "[name=connectBody]" ).val( content );
+                        $frmCompose.find( "[name=connectBody]" ).trigger("focus"); // Note: doesnt seem to work right now
 
                     break;
                 }

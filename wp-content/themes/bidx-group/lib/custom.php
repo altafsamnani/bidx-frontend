@@ -39,15 +39,54 @@ function creategroup_post_type ($post_arr)
 
 }
 
-function theme_enqueue_styles() {
-    wp_enqueue_style('bidx-group', get_stylesheet_directory_uri().'/assets/less/base.less');
+function theme_enqueue_styles()
+{
+  global $sitepress;
 
-    include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-    if (is_plugin_active ('bidx-plugin/bidX-plugin.php'))
-    {
-        wp_enqueue_style('bidx-plugin', plugins_url().'/bidx-plugin/static/less/bidx_newtheme.less');
-    }
+  $currentUser      = wp_get_current_user ();
+
+  $serverUri        = $_SERVER[ "REQUEST_URI" ];
+
+  $baseLessFileName = 'base.less';
+
+  $appLessFileName  = 'bidx_newtheme.less';
+
+  $isWpAdminPage    = false;
+
+  //Group admn / owner scripts enqueue Logic
+
+  if ( preg_match ('/wp-admin/i', $serverUri ) ) //(in_array (WP_ADMIN_ROLE, $currentUser->roles) || in_array (WP_OWNER_ROLE, $currentUser->roles)) &&
+  {
+      $baseLessFileName = 'base-admin.less';
+
+      $appLessFileName  = 'bidx-admin.less';
+
+      $isWpAdminPage    = true;
+  }
+
+  wp_enqueue_style('base', get_stylesheet_directory_uri().'/assets/less/'.$baseLessFileName);
+
+  if( $sitepress && !$isWpAdminPage )
+  {
+      $currentLanguage  = $sitepress->get_current_language();
+
+      if($currentLanguage === 'ar')
+      {
+          wp_enqueue_style('base-rtl', get_stylesheet_directory_uri().'/assets/less/base-rtl.less');
+          wp_enqueue_style('bidx-rtl-css', get_stylesheet_directory_uri().'/assets/bootstrap-rtl/bootstrap-rtl.less',array('base','base-rtl'));
+      }
+
+  }
+
+  include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+  if (is_plugin_active ('bidx-plugin/bidX-plugin.php'))
+  {
+      wp_enqueue_style('bidx-plugin', plugins_url().'/bidx-plugin/static/less/'.$appLessFileName);
+  }
+
 }
+
 add_action('init', 'theme_enqueue_styles');
 
 /**

@@ -384,10 +384,10 @@ function callProviderLogoutURL ()
 
     echo '
         <script type="text/javascript" src="/wp-includes/js/jquery/jquery.js?ver=1.10.2"></script>
-        <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/jquery.noty.js?ver=2.0.3"></script>
-        <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/layouts/top.js?ver=2.0.3"></script>
-        <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/layouts/center.js?ver=2.0.3"></script>
-        <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/themes/default.js?ver=2.0.3"></script>
+        <script type="text/javascript" src="/wp-content/themes/bidx-group/assets/noty/jquery.noty.js?ver=2.0.3"></script>
+        <script type="text/javascript" src="/wp-content/themes/bidx-group/assets/noty/layouts/top.js?ver=2.0.3"></script>
+        <script type="text/javascript" src="/wp-content/themes/bidx-group/assets/noty/layouts/center.js?ver=2.0.3"></script>
+        <script type="text/javascript" src="/wp-content/themes/bidx-group/assets/noty/themes/default.js?ver=2.0.3"></script>
         ';
     echo '<iframe id="frontendLogout" src="' . $frontendLogout . '" width="0" height="0"></iframe>';
     echo '<iframe id="backendLogout" src="' . $backendLogout . '" width="0" height="0"></iframe>';
@@ -1259,21 +1259,21 @@ function bidx_wordpress_post_action ($url, $result, $body)
  *
  * @param bool $echo
  */
-function create_bidx_wp_site ($groupName, $email)
+function create_bidx_wp_site ($groupName, $groupDomain, $email)
 {
     global $wpdb, $current_site;
 
     $status = 'ok';
-    $groupName = str_replace (" ", "", strtolower ($groupName));
+    $groupDomain = str_replace (" ", "", strtolower ($groupName));
     //if (preg_match('|^([a-zA-Z0-9-])+$|', $groupName))
     // $groupName = str_replace(" ","",strtolower($groupName));
 
-    $newdomain = $groupName . '.' . preg_replace ('|^www\.|', '', $current_site->domain);
+    $newdomain = $groupDomain . '.' . preg_replace ('|^www\.|', '', $current_site->domain);
     $path = $current_site->path;
 
     $password = 'bidxGeeks9';
     //$user_id = email_exists($email);
-    $userName = $groupName;
+    $userName = $groupDomain;
 
     $user_id = wpmu_create_user ($userName, $password, $email);
     if (false == $user_id) {
@@ -1282,6 +1282,8 @@ function create_bidx_wp_site ($groupName, $email)
         $text = 'here was an error creating the user.';
     } else {
         $wpdb->hide_errors ();
+        // The group name might hold spaces, and is (also) used in HTML <title> tags,
+        // even when the group uploads a logo.
         $id = wpmu_create_blog ($newdomain, $path, $groupName, $user_id, array ('public' => 1), $current_site->id);
         $wpdb->show_errors ();
         if (!is_wp_error ($id)) {
@@ -1308,7 +1310,7 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
       'site_id' => $id,
       'user_id' => $user_id,
       'domain' => $newdomain,
-      'subdomain' => $groupName);
+      'subdomain' => $groupDomain);
     return $siteCreation;
 }
 
@@ -1582,7 +1584,7 @@ function bidx_wordpress_pre_action ($url = 'default', $file_values = NULL)
             $params['name'] = $_POST['groupName'];
 
             //Create Wordpress group.bidx.net website
-            $wp_site = create_bidx_wp_site ($params['name'], $params['username']);
+            $wp_site = create_bidx_wp_site ($params['name'], $params['groupDomain'], $params['username']);
             $response = array ('status' => $wp_site['status'],
               'text' => $wp_site['text'],
               'site_id' => $wp_site['site_id'],

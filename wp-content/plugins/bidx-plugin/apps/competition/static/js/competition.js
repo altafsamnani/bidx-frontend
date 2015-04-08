@@ -336,7 +336,12 @@
 
                     if( jqXhr.responseJSON.code )
                     {
-                        errorTxt    =   jqXhr.responseJSON.code;
+                        errorTxt    =   jqXhr.responseJSON.text;
+
+                        if(jqXhr.responseJSON.code === 'operationNotAllowed')
+                        {
+                            errorTxt    =   bidx.i18n.i( 'errorToNextPhase', appName );
+                        }
                     }
                     else
                     {

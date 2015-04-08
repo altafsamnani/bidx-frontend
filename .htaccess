@@ -63,10 +63,12 @@ RewriteRule . index.php [L]
 # enable-cors.org
 # code.google.com/p/html5security/wiki/CrossOriginRequestSecurity
 #
-# Until March 2015 this was set to the invalid value "*.bidx.net". It's
-# unclear if browsers were silently ignoring that, or indeed used it. But
+# Until March 2015 on some platforms this was set to the invalid value, and
+# on production to the proper "https://admin.bidx.net"
+#
+# It's unclear if browsers were silently ignoring that, or indeed used it. But
 # surely Chrome 41+ refuses ANY Ajax request when running into the invalid
-# valid, throwing:
+# value, throwing:
 #
 #   The 'Access-Control-Allow-Origin' header contains the invalid
 #   value '*.bidx.net'. Origin 'https://admin.bidx.net' is therefore

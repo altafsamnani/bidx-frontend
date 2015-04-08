@@ -27,7 +27,9 @@
     //
     function i( key, context )
     {
-        var result;
+        var result
+        ,   label
+        ,   decodedString;
 
         if ( !context )
         {
@@ -46,13 +48,17 @@
             $.each( key, function( idx, k )
             {
                 //result[ idx ] = bidx.utils.getValue( items, context + ".byKey." + k  + ".label" );
-                result[ idx ] = ( items[ context ].byKey[ k ] || {} ).label;
+                label           =   ( items[ context ].byKey[ k ] || {} ).label;
+                decodedString   =   decodeURIComponent(escape(label));
+                result[ idx ]   =   decodedString;
             } );
         }
         else
         {
             //result = bidx.utils.getValue( items, context + ".byKey." + key  + ".label" );
-            result = ( items[ context ].byKey[ key ] || {} ).label;
+            label   =   ( items[ context ].byKey[ key ] || {} ).label;
+            result  =    decodeURIComponent(escape(label));
+
         }
 
         return result;
@@ -298,7 +304,8 @@
     //
     $.fn.i18nText = function i18nText( key, context )
     {
-        var $el = $( this );
+        var decodedString
+        ,   $el = $( this );
 
         getItem( key, context, function( err, label )
         {
@@ -308,7 +315,10 @@
                 bidx.utils.error( "i18n::Problem translating", key, context );
             }
 
-            $el.text( label );
+            decodedString = decodeURIComponent(escape(label));
+
+            $el.text( decodedString );
+
         } );
 
         return $el;

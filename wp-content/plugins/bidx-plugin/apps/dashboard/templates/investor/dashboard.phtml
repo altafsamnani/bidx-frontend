@@ -200,7 +200,7 @@
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-6">
                             <div class="pull-right">
-                                <span class="placeholder bidxEntityId"><a target = "_blank" href="/businesssummary/%bidxEntityId%"><?php _e('View Proposal','bidxplugin');?></a> </span>
+                                <span class="placeholder bidxEntityId"><a target = "_blank" href="<?php echo _l('businesssummary');?>/%bidxEntityId%"><?php _e('View Proposal','bidxplugin');?></a> </span>
                             </div>
                         </div>
                     </div>
@@ -291,7 +291,7 @@
       </a>
    </td>
    <td>
-      <span class="placeholder creator"><a target = "_blank" href="/member/%creatorId%" >%creator%</a></span>
+      <span class="placeholder creator"><a target = "_blank" href="<?php echo _l('member');?>/%creatorId%" >%creator%</a></span>
    </td>
    <td class="hidden-xs">
       <span class="placeholder countrylabel_ss">%countrylabel_ss%</span>
@@ -313,11 +313,11 @@
             <div class="row">
                 <div class="col-sm-6">
                     <label><?php _e('Business proposal','bidxplugin');?></label>
-                    <div class="placeholder name_s"><a target = "_blank" href="/businesssummary/%entityid_l%">%name_s%</a></div>
+                    <div class="placeholder name_s"><a target = "_blank" href="<?php echo _l('businesssummary');?>/%entityid_l%">%name_s%</a></div>
                 </div>
                 <div class="col-sm-6">
                      <label><?php _e('Entrepreneur','bidxplugin');?></label>
-                     <div class="placeholder creator"><a target = "_blank" href="/member/%creatorId%">%creator%</a></div>
+                     <div class="placeholder creator"><a target = "_blank" href="<?php echo _l('member');?>/%creatorId%">%creator%</a></div>
                 </div>
             </div>
             <div class="row">
@@ -353,7 +353,7 @@
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-6">
                     <div class="pull-right">
-                        <span class="placeholder entityid_l"><a class="btn btn-primary btn-sm" target = "_blank" href="/businesssummary/%entityid_l%"><?php _e('View Proposal','bidxplugin');?></a> </span>
+                        <span class="placeholder entityid_l"><a class="btn btn-primary btn-sm" target = "_blank" href="<?php echo _l('businesssummary');?>/%entityid_l%"><?php _e('View Proposal','bidxplugin');?></a> </span>
                     </div>
                 </div>
             </div>
