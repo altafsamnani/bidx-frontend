@@ -2000,57 +2000,23 @@
                         bidx.utils.log("[members] retrieved following active contacts ", response );
                         if ( response && response.relationshipType && response.relationshipType.contact && response.relationshipType.contact.types )
                         {
-                            // first add the admins and groupowners
-                            //
-                            if ( response.relationshipType.contact.types.groupOwner )
-                            {
-                               $.each( response.relationshipType.contact.types.groupOwner , function ( idx, item)
-                                {
-                                    //Current logged user is not groupadmin
-                                    if( item.id !== currentUserId)
-                                    {
-                                        contacts[ item.name.toLowerCase() ] =
-                                        {
-                                            value:      item.id
-                                        ,   label:      item.name + " (" + bidx.i18n.i( "groupAdmin", appName ) + ")"
-                                        };
-                                        sortIndex.push( item.name.toLowerCase() );
-                                    }
-                                } );
-                            }
+                            // Until April 2015, all users who were returned in data.relationshipType.contact.types.groupOwner
+                            // were added (with a suffix "(Group admin)", even though these were not true contacts. However,
+                            // the API does not allow one to send messages to non-contacts, and we prefer that members use the
+                            // generic "send message to group owner" (to be received in Connect) anyhow.
 
                             if ( response.relationshipType.contact.types.active )
                             {
-                                // then add the active contactsm but we first check if we are not adding a duplicate member id (member who already acts as an admin or groupowner )
+                                // add the active contacts
                                 //
                                 $.each( response.relationshipType.contact.types.active , function ( idx, item)
                                 {
-                                    exists = false;
-
-                                    // test the active contactid against a group owner id
-                                    //
-                                    if ( response.relationshipType.contact.types.groupOwner )
+                                    contacts[ item.name.toLowerCase() ] =
                                     {
-                                        $.map( response.relationshipType.contact.types.groupOwner, function( groupAdmin, index )
-                                        {
-                                            if ( groupAdmin.id === item.id )
-                                            {
-                                                exists = true;
-                                                return false;
-                                            }
-                                        } );
-                                    }
-                                    // if contactId is unique, add it to the contacts list
-                                    //
-                                    if ( !exists  )
-                                    {
-                                        contacts[ item.name.toLowerCase() ] =
-                                        {
-                                            value:      item.id
-                                        ,   label:      item.name
-                                        };
-                                        sortIndex.push( item.name.toLowerCase() );
-                                    }
+                                        value:      item.id
+                                    ,   label:      item.name
+                                    };
+                                    sortIndex.push( item.name.toLowerCase() );
                                 });
 
                                 result =

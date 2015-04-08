@@ -1360,4 +1360,6 @@
         $( ".js-fakecrop img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
     }
 
+    // $('[data-toggle="tooltip"]').tooltip();
+
 } ( jQuery ));
