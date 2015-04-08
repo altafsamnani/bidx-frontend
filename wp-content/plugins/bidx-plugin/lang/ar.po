@@ -819,7 +819,7 @@ msgstr "الفائزون"
 # _e("Business","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Business"
-msgstr "المشرو"
+msgstr "المشروع"
 
 # 143) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition-anonymous.phtml -202
 # _e("Entrepreneur","bidxplugin");

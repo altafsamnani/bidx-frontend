@@ -97,7 +97,7 @@
 <tr>
     <td>
         <span class="placeholder displayName">
-            <a href="/member/%investorId%">%displayName%</a>
+            <a href="<?php echo _l('member');?>/%investorId%">%displayName%</a>
         </span>
     </td>
     <td>
@@ -128,7 +128,7 @@
             <button type="button" data-btn="accept" class="grantAccess btn btn-xs btn-success" data-summaryid="%bidxEntityId%" data-investorid="%investorId%"><?php _e('Accept','bidxplugin')?></button>
             <button type="button" data-btn="reject" class="grantAccess btn btn-xs btn-danger" data-summaryid="%bidxEntityId%" data-investorid="%investorId%" ><?php _e('Reject','bidxplugin')?></button>
         </span>
-        <a href="/mail#mail/compose/recipients=%investorId%" class ="btn btn-xs btn-info" title="Send a message" target="_blank"><?php _e('Contact','bidxplugin')?></a>
+        <a href="<?php echo _l('mail');?>#mail/compose/recipients=%investorId%" class ="btn btn-xs btn-info" title="Send a message" target="_blank"><?php _e('Contact','bidxplugin')?></a>
     </td>
 
 </tr>
@@ -201,7 +201,7 @@
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-6">
                             <div class="pull-right">
-                                <span class="placeholder bidxEntityId"><a class="btn btn-primary btn-sm" target = "_blank" href="/businesssummary/%bidxEntityId%"><?php _e('View Proposal','bidxplugin')?></a> </span>
+                                <span class="placeholder bidxEntityId"><a class="btn btn-primary btn-sm" target = "_blank" href="<?php echo _l('businesssummary');?>/%bidxEntityId%"><?php _e('View Proposal','bidxplugin')?></a> </span>
                             </div>
                         </div>
                     </div>
@@ -309,7 +309,7 @@
                         <div class="row">
                             <div class="col-sm-6 col-sm-offset-6">
                                 <div class="pull-right">
-                                    <div class="placeholder bidxEntityId"><a class="btn btn-primary btn-sm" target = "_blank" href="/businesssummary/%bidxEntityId%"><?php _e('View Proposal','bidxplugin')?></a> </div>
+                                    <div class="placeholder bidxEntityId"><a class="btn btn-primary btn-sm" target = "_blank" href="<?php echo _l('businesssummary');?>/%bidxEntityId%"><?php _e('View Proposal','bidxplugin')?></a> </div>
                                 </div>
                             </div>
                         </div>
@@ -379,5 +379,3 @@
     </td>
     -->
 </script>
-
-
