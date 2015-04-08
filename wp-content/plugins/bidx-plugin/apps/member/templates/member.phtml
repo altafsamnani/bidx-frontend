@@ -47,11 +47,11 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
                     <div class="fa fa-dashboard fa-above fa-big"></div>
                     <?php _e('Dashboard', 'bidxplugin')?>
                 </a> -->
-                <a href="/businesssummary/#createBusinessSummary" class="btn btn-sm btn-primary">
+                <a href="<?php echo _l('businesssummary');?>/#createBusinessSummary" class="btn btn-sm btn-primary">
                     <div class="fa fa-suitcase fa-above fa-big"></div>
                     <?php _e('Create Business', 'bidxplugin')?>
                 </a>
-                <a href="/company/#createCompany" class="btn btn-sm btn-primary">
+                <a href="<?php echo _l('company');?>/#createCompany" class="btn btn-sm btn-primary">
                     <div class="fa fa-building fa-above fa-big"></div>
                     <?php _e('Add Company', 'bidxplugin')?>
                 </a>
@@ -61,7 +61,7 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 <?php
             if ( $isLoggedinMemberIsInvestor && !$isLoggedinMemberIsMentor ) :
 ?>
-                <a href="/member/#createMentor" class="btn btn-sm btn-primary">
+                <a href="<?php echo _l('member');?>/#createMentor" class="btn btn-sm btn-primary">
                     <div class="fa fa-compass fa-above fa-big"></div>
                     <?php _e('Become mentor', 'bidxplugin')?>
                 </a>
