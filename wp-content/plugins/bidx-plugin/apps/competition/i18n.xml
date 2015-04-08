@@ -59,4 +59,6 @@
     <Item value="msgWaitforPhaseUpdate">Please wait while we are updating phase of the competition</Item>
     <Item value="msgSuccessforPhaseUpdate">Congrtatulations, you have succesfully updated phase of this competition.</Item>
 
+    <Item value="errorToNextPhase">Before moving to the next phase, all applications need a competition administrator review</Item>
+
 </I18N>
