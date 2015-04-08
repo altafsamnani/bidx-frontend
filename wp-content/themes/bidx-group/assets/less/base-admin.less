@@ -1,0 +1,28 @@
+// Import
+// -------------------------
+@import "../bootstrap-3.3.2/less/variables.less";
+@import "elements.less";
+@import "basevars-admin.less";
+
+/* Chosen element validation error only */
+.has-error
+{
+    .chosen-container-multi .chosen-choices,
+    .chosen-container-single .chosen-single,
+    .bidx-tagsinput-container,
+    .wp-editor-container
+    {
+        border-color: @state-danger-text;
+    }
+
+    .error
+    {
+    	color: @state-danger-text;
+    }
+
+    #titlediv #title
+    {
+        box-shadow: 0px;
+        border: 2px solid @state-danger-text !important;
+    }
+}
