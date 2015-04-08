@@ -15,8 +15,8 @@ wp-content/uploads
 wp-content/plugins/wordpress-importer
 nbproject
 nbproject/* 
-assets/
-assets/*
+#assets/
+#assets/*
 
 # Packages #
 ############
