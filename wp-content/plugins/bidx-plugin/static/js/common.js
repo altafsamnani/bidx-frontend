@@ -244,7 +244,9 @@
     {
         e.preventDefault();
 
-        var $btn = $( this );
+        var urlLang
+        ,   $btn = $( this )
+        ;
 
         if ( $btn.hasClass( "disabled" ))
         {
@@ -272,12 +274,20 @@
             {
                 bidx.common.notifyRedirect();
 
+                urlLang =   ( currentLanguage && currentLanguage !== 'en'  ) ?   '/' + currentLanguage  : "";
+
                 var url = document.location.protocol
                     + "//"
                     + document.location.hostname
                     + ( document.location.port ? ":" + document.location.port : "" )
+                    + urlLang
                     + "?smsg=2&rs=true"
                 ;
+
+                bidx.utils.log('url --> ', url);
+                bidx.utils.log('hostname --> ', document.location.hostname);
+                bidx.utils.log('port --> ', document.location.port);
+                bidx.utils.log('currentLanguage --> ', currentLanguage);
 
                 document.location.href = url;
             }
@@ -327,7 +337,8 @@
     {
         e.preventDefault();
 
-        var $btn = $( this );
+        var urlLang
+        ,   $btn = $( this );
 
         var groupId = $btn.data( "groupid" );
 
@@ -361,12 +372,19 @@
                             {
                                 bidx.common.notifyRedirect();
 
+                                urlLang =   ( currentLanguage && currentLanguage !== 'en'  ) ?  '/' + currentLanguage  : "";
+
                                 var url = document.location.protocol
                                     + "//"
                                     + document.location.hostname
                                     + ( document.location.port ? ":" + document.location.port : "" )
+                                    + urlLang
                                     + "?smsg=3&rs=true"
                                 ;
+                                bidx.utils.log('url --> ', url);
+                                bidx.utils.log('hostname --> ', document.location.hostname);
+                                bidx.utils.log('port --> ', document.location.port);
+                                bidx.utils.log('currentLanguage --> ', currentLanguage);
 
                                 document.location.href = url;
                             }
@@ -1245,7 +1263,6 @@
     }
     // Activate all datepickers (this was previously done as part of the form.js plugin)
     //
-    bidx.utils.log('currentLangauge', currentLanguage);
 
     if ( typeof $.prototype.datepicker === "function" )
     {

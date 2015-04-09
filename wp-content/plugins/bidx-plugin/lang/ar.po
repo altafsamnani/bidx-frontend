@@ -8921,7 +8921,7 @@ msgstr "في أي مجالات الخبرة تحتاج للدعم؟"
 msgid ""
 "Describe the challenges facing your business, with which you would like the "
 "support of a mentor"
-msgstr ""
+msgstr "صف الصعوبات التي تواجه مشروعك، التي تود من أحد مرشدينا أن يعينك عليها"
 
 # 1758) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1453
 # _e("Cancel request","bidxplugin");
@@ -8943,13 +8943,13 @@ msgstr ""
 # _e("Loading active mentors","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Active mentors"
-msgstr "تحميل المرشدين الناشطين"
+msgstr "مرشدين ناشطين"
 
 # 1756) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1434
 # _e("No matching mentors","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Matching mentors"
-msgstr "لا يوجد مرشد ملائم"
+msgstr "مرشدين ملائمين"
 
 # 1734) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1184
 # _e("(max. 300 characters)","bidxplugin");

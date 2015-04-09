@@ -1216,6 +1216,9 @@ msgstr "قد تم ارسال طلبك بنجاح"
 
 # _e("You have successfully accepted the request", "i18n");
 # Context  TextDomain i18n
+msgid "You have successfully accepted the request"
+msgstr "لقد أتممت قبول الطلب بنجاح"
+
 # _e("You have successfully ignored the request", "i18n");
 # Context  TextDomain i18n
 msgid "You have successfully ignored the request"
