@@ -8160,6 +8160,12 @@ msgstr "أنا أتحدث"
 msgid "Type"
 msgstr "النوعية"
 
+# 1605) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/templatelibrary.php -786
+# _e("and","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "and"
+msgstr "و"
+
 # 1588) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary-anonymous.phtml -140
 # _e("Stage of business","bidxplugin");
 # Context  Textdomain bidxplugin
@@ -8296,7 +8302,7 @@ msgstr "دور رائد الأعمال"
 # _e("Role of the entrepreneur","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Expertise of the entrepreneur"
-msgstr "دور رائد الأعمال"
+msgstr "خبرات رائد الأعمال"
 
 # 1613) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -566
 # _e("Business sales started in","bidxplugin");
@@ -8504,7 +8510,7 @@ msgstr "العنوان الحالي"
 # _e("Expertise needed details","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Expertise needed in detail"
-msgstr "تفاصيل الخبرات المطلوبة"
+msgstr "الخبرات المطلوبة بالتفصيل"
 
 # 1616) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -569
 # _e("Investment type","bidxplugin");
