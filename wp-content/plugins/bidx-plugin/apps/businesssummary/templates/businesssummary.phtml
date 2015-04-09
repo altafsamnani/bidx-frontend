@@ -416,7 +416,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                     $rowValues = array
                     (
                         __('Stage of business','bidxplugin') => $this->getStaticVal( 'stageBusiness', $this->exst($businessSummary->stageBusiness)),
-                        __('Company registration') => $this->exst($company->registered) == true ? __('Yes','bidxplugin') : __('No','bidxplugin')
+                        __('Company registration','bidxplugin') => $this->exst($company->registered) == true ? __('Yes','bidxplugin') : __('No','bidxplugin')
                     );
                 }
                 else
@@ -444,7 +444,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             {
                 $rowValues = array
                 (
-                    __('Industry') => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry'),
+                    __('Industry','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry'),
                     __('Country of business','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' ),
                     __('Social impact','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->socialImpact), ', ', 'socialImpact' ),
                     __('Environmental impact','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->envImpact), ', ', 'envImpact' ),
@@ -455,7 +455,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             {
                 $rowValues = array
                 (
-                    __('Industry') => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry'),
+                    __('Industry','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry'),
                     __('Country of business','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' )
                 );
             }
@@ -477,7 +477,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             $rowValues = array
             (
                 __('Role of the entrepreneur','bidxplugin') => $this->exst($businessSummary->personalRole),
-                __('Expertise of the entrepreneur') => $this->exst($businessSummary->personalExpertise)
+                __('Expertise of the entrepreneur','bidxplugin') => $this->exst($businessSummary->personalExpertise)
             );
 
             if ( $this->checkEmpty( $rowValues ) ) :
@@ -689,18 +689,18 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             $rowValues = array
             (
                 __('Company name','bidxplugin') => $this->exst($company->name),
-                __('Company website') => $companyWebsite,
-                __('Registered') => $this->exst($company->registered) == true ? __('Yes','bidxplugin') : __('No','bidxplugin'),
-                __('Legal form of business') => $this->getStaticVal( 'legalForm', $this->exst($company->legalFormBusiness) ),
-                __('Registration number') => $this->exst($company->registrationNumber),
-                __('Fiscal number') => $this->exst($company->fiscalNumber),
-                __('Date of registration') => $this->exst($company->dateCompanyEstab),
-                __('Permanent female employees') => $this->exst($company->numPermFemaleEmpl ),
-                __('Permanent male employees') => $this->exst($company->numPermMaleEmpl ),
-                __('Temporary female employees') => $this->exst($company->numTempFemaleEmpl ),
-                __('Temporary male employees') => $this->exst($company->numTempMaleEmpl ),
-                __('Statutory country, city') => $arStatutoryCityCountry ? implode( ', ', $arStatutoryCityCountry ) : NULL,
-                __('Statutory address') => $arStatutoryAddress ? implode( ' ', $arStatutoryAddress ) : NULL
+                __('Company website','bidxplugin') => $companyWebsite,
+                __('Registered','bidxplugin') => $this->exst($company->registered) == true ? __('Yes','bidxplugin') : __('No','bidxplugin'),
+                __('Legal form of business','bidxplugin') => $this->getStaticVal( 'legalForm', $this->exst($company->legalFormBusiness) ),
+                __('Registration number','bidxplugin') => $this->exst($company->registrationNumber),
+                __('Fiscal number','bidxplugin') => $this->exst($company->fiscalNumber),
+                __('Date of registration','bidxplugin') => $this->exst($company->dateCompanyEstab),
+                __('Permanent female employees','bidxplugin') => $this->exst($company->numPermFemaleEmpl ),
+                __('Permanent male employees','bidxplugin') => $this->exst($company->numPermMaleEmpl ),
+                __('Temporary female employees','bidxplugin') => $this->exst($company->numTempFemaleEmpl ),
+                __('Temporary male employees','bidxplugin') => $this->exst($company->numTempMaleEmpl ),
+                __('Statutory country, city','bidxplugin') => $arStatutoryCityCountry ? implode( ', ', $arStatutoryCityCountry ) : NULL,
+                __('Statutory address','bidxplugin') => $arStatutoryAddress ? implode( ' ', $arStatutoryAddress ) : NULL
             );
 
             if ( $this->checkEmpty( $rowValues ) ) :
@@ -737,8 +737,8 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 <?php
                 $rowValues = array
                 (
-                    __('Expertise needed') => $this->getMultiValues( $this->exst($businessSummary->expertiseNeeded), ', ', 'mentorExpertise' ),
-                    __('Expertise needed in detail') => $this->exst($businessSummary->expertiseNeededDetail)
+                    __('Expertise needed', 'bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->expertiseNeeded), ', ', 'mentorExpertise' ),
+                    __('Expertise needed in detail', 'bidxplugin') => $this->exst($businessSummary->expertiseNeededDetail)
                 );
 
                 echo $this->tableRow ( $rowValues );
