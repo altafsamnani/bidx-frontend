@@ -284,11 +284,6 @@
                     + "?smsg=2&rs=true"
                 ;
 
-                bidx.utils.log('url --> ', url);
-                bidx.utils.log('hostname --> ', document.location.hostname);
-                bidx.utils.log('port --> ', document.location.port);
-                bidx.utils.log('currentLanguage --> ', currentLanguage);
-
                 document.location.href = url;
             }
         });
@@ -381,10 +376,6 @@
                                     + urlLang
                                     + "?smsg=3&rs=true"
                                 ;
-                                bidx.utils.log('url --> ', url);
-                                bidx.utils.log('hostname --> ', document.location.hostname);
-                                bidx.utils.log('port --> ', document.location.port);
-                                bidx.utils.log('currentLanguage --> ', currentLanguage);
 
                                 document.location.href = url;
                             }
