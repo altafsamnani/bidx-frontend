@@ -6205,10 +6205,10 @@ msgctxt "AW"
 msgid "Aruba"
 msgstr "أروبا"
 
-#  _x("Aland Islands", "AX", "static");
+#  _x("Åland Islands", "AX", "static");
 # Context AX Textdomain static
 msgctxt "AX"
-msgid "Aland Islands"
+msgid "Åland Islands"
 msgstr "جزر أولاند"
 
 #  _x("Azerbaijan", "AZ", "static");
@@ -6271,10 +6271,10 @@ msgctxt "BJ"
 msgid "Benin"
 msgstr "بينين"
 
-#  _x("Saint Barthأ©lemy", "BL", "static");
+#  _x("Saint Barthélemy", "BL", "static");
 # Context BL Textdomain static
 msgctxt "BL"
-msgid "Saint Barthأ©lemy /Saint Barthelemy "
+msgid "Saint Barthélemy"
 msgstr "سانت بارثيلمي "
 
 #  _x("Bermuda", "BM", "static");
@@ -6379,10 +6379,10 @@ msgctxt "CH"
 msgid "Switzerland"
 msgstr "سويسرا"
 
-#  _x("Cأ´te d'Ivoire", "CI", "static");
+#  _x("Côte d'Ivoire", "CI", "static");
 # Context CI Textdomain static
 msgctxt "CI"
-msgid "Cأ´te d'Ivoire"
+msgid "Côte d'Ivoire"
 msgstr "كوت ديفوار"
 
 #  _x("Cook Islands", "CK", "static");
@@ -6436,7 +6436,7 @@ msgstr "الرأس الأخضر"
 #  _x("Curaأ§ao", "CW", "static");
 # Context CW Textdomain static
 msgctxt "CW"
-msgid "Curaأ§ao/ Curaçao "
+msgid "Curaçao"
 msgstr "كوراساو"
 
 #  _x("Christmas Island", "CX", "static");
