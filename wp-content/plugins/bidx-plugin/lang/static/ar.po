@@ -9085,7 +9085,7 @@ msgstr "حماية الأسماك"
 # Context conservationOfForestsAndReforestation Textdomain static
 msgctxt "conservationOfForestsAndReforestation"
 msgid "Conservation of forests and reforestation"
-msgstr ""
+msgstr "المحافظة على الغابات وإعادة التشجير"
 
 #  _x("Conservation of natural resources", "conservationOfNaturalResources", "static");
 # Context conservationOfNaturalResources Textdomain static
