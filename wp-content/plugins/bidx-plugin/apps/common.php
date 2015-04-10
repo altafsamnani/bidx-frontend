@@ -754,14 +754,16 @@ class BidxCommon
 
         $transientStaticData = NULL;
         /* 1. Static Locale Data */
-        if ($static) {
-            $siteLocale = get_locale ();
-            $staticDataObj = new StaticDataService();
-            $transientKey = 'static' . $siteLocale; // Transient key for Static Data
+        if ($static)
+        {
+            $siteLocale     = get_locale ();
+            $staticDataObj  = new StaticDataService();
+            $transientKey   = 'static' . $siteLocale; // Transient key for Static Data
             $transientStaticData = get_transient ($transientKey);
 
             /* If no value then set the site local transient */
-            if ($transientStaticData == false) {
+            if ($transientStaticData == false)
+            {
                 $resultStaticData = $staticDataObj->getStaticData (NULL);
                 $staticDataVars = $resultStaticData->data;
                 $transientStaticData = $staticDataObj->getMultilingualStaticData ($staticDataVars);
@@ -788,24 +790,32 @@ class BidxCommon
 
         $fileArr = array_merge ($i18AppsArr, $i18PluginArr);
 
-        foreach ($fileArr as $fileName) {
+        foreach ($fileArr as $fileName)
+        {
 
-            $dirArr = (preg_match ("/(apps|admin)\/(.*)\/i18n.xml/i", $fileName, $matches));
+            $dirArr     = (preg_match ("/(apps|admin)\/(.*)\/i18n.xml/i", $fileName, $matches));
 
-            $appName = (isset ($matches[2])) ? $matches[2] : '__global';
+            $appName    = (isset ($matches[2])) ? $matches[2] : '__global';
 
-            $document = simplexml_load_file ($fileName);
-            $items = $document->xpath ('//Item');
-            $count = 0;
+            $document   = simplexml_load_file ($fileName);
+
+            $items      = $document->xpath ('//Item');
+
+            $count      = 0;
+
             $transientI18nData[$appName] = array ();
-            foreach ($items as $xmlObj) {
+
+            foreach ($items as $xmlObj)
+            {
 
                 $transientI18nData[$appName][$count] = new stdClass();
 
                 $arr = $xmlObj->attributes ();
+
                 $xmlLabel = $xmlObj->__toString ();
 
-                if ($appName == '__global') {
+                if ($appName == '__global')
+                {
                     $label = __ ($xmlLabel, 'i18n');
                 } else {
                     $label = _x ($xmlLabel, $appName, 'i18n');
@@ -813,8 +823,7 @@ class BidxCommon
 
                 $transientI18nData[$appName][$count]->value = $arr['value']->__toString ();
 
-
-                $transientI18nData[$appName][$count]->label = utf8_encode ( $label );
+                $transientI18nData[$appName][$count]->label =  utf8_encode ( $label );
 
                 $count++;
             }

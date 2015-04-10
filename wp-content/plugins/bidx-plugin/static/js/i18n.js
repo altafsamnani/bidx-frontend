@@ -5,6 +5,9 @@
 {
     var bidx                = window.bidx
     ,   g                   = "__global"
+    ,   iclVars             = window.icl_vars || {}
+    ,   currentLanguage     = ( iclVars.current_language ) ? iclVars.current_language : 'en'
+    ,   rtlLangArr             = ['ar']
     ;
 
         // Internal administration of cached items, let's keep it for now in an object, maybe later sync it to localstorage
@@ -49,15 +52,17 @@
             {
                 //result[ idx ] = bidx.utils.getValue( items, context + ".byKey." + k  + ".label" );
                 label           =   ( items[ context ].byKey[ k ] || {} ).label;
-                decodedString   =   decodeURIComponent(escape(label));
-                result[ idx ]   =   decodedString;
+
+                result[ idx ]   =   ( $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent( escape( label ) ) : label;
+
             } );
         }
         else
         {
             //result = bidx.utils.getValue( items, context + ".byKey." + key  + ".label" );
-            label   =   ( items[ context ].byKey[ key ] || {} ).label;
-            result  =    decodeURIComponent(escape(label));
+            label           =   ( items[ context ].byKey[ key ] || {} ).label;
+
+            result          =   ( $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent( escape( label ) ) : label;
 
         }
 
@@ -315,9 +320,9 @@
                 bidx.utils.error( "i18n::Problem translating", key, context );
             }
 
-            decodedString = decodeURIComponent(escape(label));
+            label           =   ( $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent(escape(label)) : label;
 
-            $el.text( decodedString );
+            $el.text( label );
 
         } );
 

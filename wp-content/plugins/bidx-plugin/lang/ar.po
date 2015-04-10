@@ -8,7 +8,7 @@ msgstr ""
 "PO-Revision-Date: \n"
 "Last-Translator: Altaf <altaf@bidx.net>\n"
 "Language-Team: Bidx\n"
-"Language: Arabic\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -8366,7 +8366,7 @@ msgstr "رقم توثيق الشركة"
 # _e("Statutory country, city","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Statutory country, city"
-msgstr ""
+msgstr "البلد القانوني والمدينة"
 
 # 1231) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -25
 # _e("Current address","bidxplugin");
