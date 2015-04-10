@@ -3,7 +3,8 @@
 {
     "use strict";
 
-    var $element                    = $( "#editMember" )
+    var iclVars                     = window.icl_vars || {}
+    ,   $element                    = $( "#editMember" )
     ,   $views                      = $element.find( ".view" )
     ,   $editForm                   = $views.filter( ".viewEdit" ).find( "form" )
     ,   $snippets                   = $element.find( ".snippets" )
@@ -1383,7 +1384,9 @@
 
         // Force current (0) set to be the current one
         //
-        var contactDetail = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.contactDetail", true );
+        var currentLanguage
+        ,   contactDetail = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.contactDetail", true )
+        ;
 
         if ( contactDetail && contactDetail.length )
         {
@@ -1392,11 +1395,10 @@
 
         // Inform the API we are updating the member profile
         //
-        var bidxMeta = member.bidxMemberProfile.bidxMeta ? member.bidxMemberProfile.bidxMeta : member.bidxMemberProfile;
-        bidxMeta.bidxEntityType = "bidxMemberProfile";
+        var bidxMeta            =   member.bidxMemberProfile.bidxMeta ? member.bidxMemberProfile.bidxMeta : member.bidxMemberProfile;
+        bidxMeta.bidxEntityType =   "bidxMemberProfile";
 
         // Update the member object
-        //
         _getFormValues();
 
         bidx.common.notifySave();
@@ -1417,8 +1419,9 @@
                     bidx.common.removeAppWithPendingChanges( appName );
 
                     // var url = document.location.href.split( "#" ).shift();
+                    currentLanguage     = ( iclVars.current_language ) ? '/' + iclVars.current_language : '';
 
-                    document.location.href = "/member/?rs=true";
+                    document.location.href = currentLanguage + "/member/?rs=true";
                 }
             ,   error:          function( jqXhr )
                 {
@@ -1500,8 +1503,6 @@
                         .done( function()
                         {
                             _init();
-
-                            bidx.i18n.i( "someLBale");
                         } );
                 }
 
@@ -1516,6 +1517,7 @@
 
                     return hash;
                 }
+
             break;
         }
     }
