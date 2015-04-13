@@ -5165,7 +5165,7 @@ msgstr "(بدون أب)"
 
 #: wp-admin/edit-form-advanced.php:348
 msgid "<strong>Template</strong> - Some themes have custom templates you can use for certain pages that might have additional features or custom layouts. If so, you&#8217;ll see them in this dropdown menu."
-msgstr "<strong>نموذج</strong> - بعض القوالب تحوي نماذج مخصصة بإمكانك استخدامها لصفحات معينة بحيث تحوي مزايا إضافية أو مظاهر مخصصة، إن كان كذلك، بإمكانك رؤيتها في القائمة المنسدلة."
+msgstr "<strong>قالب</strong> - بعض القوالب تحوي نماذج مخصصة بإمكانك استخدامها لصفحات معينة بحيث تحوي مزايا إضافية أو مظاهر مخصصة، إن كان كذلك، بإمكانك رؤيتها في القائمة المنسدلة."
 
 #: wp-admin/edit-form-advanced.php:347
 msgid "<strong>Parent</strong> - You can arrange your pages in hierarchies. For example, you could have an &#8220;About&#8221; page that has &#8220;Life Story&#8221; and &#8220;My Dog&#8221; pages under it. There are no limits to how many levels you can nest pages."
@@ -9005,7 +9005,7 @@ msgstr "صفحة الخطأ"
 
 #: wp-admin/includes/file.php:32
 msgid "Links Template"
-msgstr "نموذج الروابط"
+msgstr "قالب الروابط"
 
 #: wp-admin/includes/file.php:33
 msgid "Theme Functions"

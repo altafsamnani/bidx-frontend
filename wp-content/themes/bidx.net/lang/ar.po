@@ -21,7 +21,7 @@ msgid ""
 "The embed code field is empty. Please insert an <code>iframe</code> from "
 "Youtube, Dailymotion, Vimeo, Vevo, Veoh or Metacafe"
 msgstr ""
-" خانة تضمين الكود فارغة. ادخل كود  <code>iframe</code> من Youtube, "
+" حقل  الكود فارغة. ادخل كود  <code>iframe</code> من Youtube, "
 "Dailymotion, Vimeo, Vevo, Veoh أو Metacafe    "
 
 # 2) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/video.php -109

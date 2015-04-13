@@ -8933,7 +8933,7 @@ msgid ""
 "Your team is an essential part of the success of your business. Use this "
 "template to provide more information about yourself and your team members."
 msgstr ""
-"فريقك جزء هام من نجاح مشروعك. استخدم هذا النموذج لتوفير المزيد من المعلومات "
+"فريقك جزء هام من نجاح مشروعك. استخدم هذا القالب لتوفير المزيد من المعلومات "
 "عنك وعن فريقك."
 
 # 1700) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -963
@@ -9554,7 +9554,7 @@ msgstr "شريط جانبي"
 # _e("Widget","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Widget"
-msgstr "مربع مصغر"
+msgstr "عنصر واجهة المستخدم"
 
 # 1813) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/starthere.php -100
 # _e("Start Here","bidxplugin");
@@ -9665,7 +9665,7 @@ msgstr "تصميم العداد:"
 # _e("Fill in the \"End Date and Time\" field","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Fill in the \"End Date and Time\" field"
-msgstr "قم بملء \"End Date and Time\" المجال "
+msgstr "قم بملء حقل \"End Date and Time\"  "
 
 # 1836) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -203
 # _e("This competition has expired","bidxplugin");

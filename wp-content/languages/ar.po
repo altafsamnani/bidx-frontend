@@ -1321,7 +1321,7 @@ msgstr "اختر تصنيف الرابط:"
 
 #: wp-includes/class-wp-xmlrpc-server.php:350
 msgid "Template"
-msgstr "نموذج"
+msgstr "قالب"
 
 #: wp-includes/class-wp-xmlrpc-server.php:355
 msgid "Stylesheet"
@@ -4836,7 +4836,7 @@ msgstr "خصائص المستند"
 
 #: wp-includes/js/tinymce/langs/wp-langs.php:223
 msgid "Insert predefined template content"
-msgstr "أدرج محتوى النموذج المعرف مسبقاً"
+msgstr "أدرج محتوى القالب المعرف مسبقاً"
 
 #: wp-includes/js/tinymce/langs/wp-langs.php:227
 msgid "Visual control characters on/off."
