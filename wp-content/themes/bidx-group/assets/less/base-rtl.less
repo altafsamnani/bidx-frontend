@@ -1,6 +1,7 @@
 //RTL overwrites few classes to make Arabic work , mostly it comes from bootstrap-rtl.less
+@import "../bootstrap-3.3.2/less/variables.less";
 @import "elements.less";
-
+@import "basevars.less";
 .rtl
 {
     .pull-right,
@@ -78,5 +79,74 @@
     .language-switcher #lang_sel_click a
     {
         padding: 10px 24px 10px 12px !important;
+    }
+
+    .tabs-vertical .tabs-content
+    {
+        padding-right:  0px;
+        padding-left:   15px !important;
+    }
+
+    .tabs-nav
+    {
+        padding-left:   0px;
+        padding-right:  15px !important;
+    }
+
+   .tabs-left
+    {
+        > li
+        {
+            > a
+            {
+                .border-radius(4px, 4px, 0, 0);
+                margin-left:    2px;
+                margin-right:   0px !important;
+                @media (max-width: @screen-sm-min)
+                {
+                    margin-right: 0;
+                    .border-radius(4px, 4px, 4px, 4px);
+                }
+                border: none;
+            }
+            &.active
+            {
+                margin-left: -5px;
+                margin-right: 0px;
+                > a
+                {
+                    border: none;
+                    &:focus
+                    {
+                        border: none;
+                    }
+                    &:hover
+                    {
+                        border: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .col-pull
+    {
+        margin-right: 15px !important;
+        margin-left: -15px !important;
+    }
+
+    .industryRowItem .industryActions
+    {
+        float: right;
+    }
+
+    .fa-arrow-circle-left:before
+    {
+        content: "\f0a9" !important;
+    }
+
+    .fa-arrow-circle-right:before
+    {
+        content: "\f0a8" !important;
     }
 }

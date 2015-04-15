@@ -781,8 +781,9 @@ class TemplateLibrary
 
         $seperatorAnd = $seperator;
         //If comma and 2 values then make seperator And
-        if (trim ($seperator) == ',') {
-            $seperatorAnd = ' and ';
+        if (trim ($seperator) == ',')
+        {
+            $seperatorAnd = ' ' + __('and', 'bidxplugin') + ' ';
         }
 
         // exit;

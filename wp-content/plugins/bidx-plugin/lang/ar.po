@@ -8,7 +8,7 @@ msgstr ""
 "PO-Revision-Date: \n"
 "Last-Translator: Altaf <altaf@bidx.net>\n"
 "Language-Team: Bidx\n"
-"Language: Arabic\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -6284,6 +6284,12 @@ msgstr "لم يتم تحميل سيرة ذاتية بعد"
 # 1212) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -110
 # _e("Select a document","bidxplugin");
 # Context  Textdomain bidxplugin
+msgid "Select a different document"
+msgstr "إختر مستندا أخر"
+
+# 1212) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -110
+# _e("Select a document","bidxplugin");
+# Context  Textdomain bidxplugin
 msgid "Select a document"
 msgstr "قم باختيار مستند"
 
@@ -8154,6 +8160,12 @@ msgstr "أنا أتحدث"
 msgid "Type"
 msgstr "النوعية"
 
+# 1605) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/templatelibrary.php -786
+# _e("and","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "and"
+msgstr "و"
+
 # 1588) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary-anonymous.phtml -140
 # _e("Stage of business","bidxplugin");
 # Context  Textdomain bidxplugin
@@ -8224,6 +8236,12 @@ msgstr "المرفق"
 msgid "Attachments"
 msgstr "المرفقات"
 
+# 692) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -206
+# _e("Company registration number","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Company registration"
+msgstr "رقم توثيق الشركة"
+
 # 1601) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -408
 # _e("Stage of business","bidxplugin");
 # Context  Textdomain bidxplugin
@@ -8276,6 +8294,16 @@ msgstr "النوعية الرئيسية للزبون"
 msgid "Role of the entrepreneur"
 msgstr "دور رائد الأعمال"
 
+# 1611) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -459
+# _e("Country of business","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1612) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -479
+# _e("Role of the entrepreneur","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Expertise of the entrepreneur"
+msgstr "خبرات رائد الأعمال"
+
 # 1613) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -566
 # _e("Business sales started in","bidxplugin");
 # Context  Textdomain bidxplugin
@@ -8293,6 +8321,196 @@ msgstr "الغرض من التمويل"
 # Context  Textdomain bidxplugin
 msgid "Equity currently retained"
 msgstr "الحصة المملوكة حالياً"
+
+# 1722) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1121
+# _e("Company name","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1723) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1122
+# _e("Registered","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Registered"
+msgstr "تم التسجيل"
+
+# 692) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -206
+# _e("Company registration number","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Registration number"
+msgstr "رقم توثيق الشركة"
+
+# 1647) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -696
+# _e("Fiscal number","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1648) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -697
+# _e("Date of registration","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1649) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -698
+# _e("Permanent female employees","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1650) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -699
+# _e("Permanent male employees","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1651) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -700
+# _e("Temporary female employees","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1652) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -701
+# _e("Temporary male employees","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1653) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -702
+# _e("Statutory country, city","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Statutory country, city"
+msgstr "البلد القانوني والمدينة"
+
+# 1231) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -25
+# _e("Current address","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Statutory address"
+msgstr "العنوان الحالي"
+
+# 903) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -54
+# _e("Respond to a mentoring request","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 904) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -59
+# _e("Entrepreneur","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 905) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -60
+# _e("Business","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 906) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -61
+# _e("Status","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 907) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -62
+# _e("Actions","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 908) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -70
+# _e("Loading mentoring respond requests...","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 909) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -72
+# _e("Waiting for a mentoring approval","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 910) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -79
+# _e("Entrepreneur","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 911) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -80
+# _e("Business","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 912) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -81
+# _e("Status","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 913) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -82
+# _e("Actions","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 914) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -90
+# _e("Loading mentoring waiting requests...","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 915) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -93
+# _e("Ongoing mentoring","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 916) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -98
+# _e("Entrepreneur","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 917) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -99
+# _e("Business","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 918) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -100
+# _e("Status","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 919) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -101
+# _e("Actions","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 920) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -109
+# _e("Loading mentoring ongoing requests...","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 921) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -112
+# _e("Renew a mentoring","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 922) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -115
+# _e("Loading mentoring renew requests...","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 923) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -120
+# _e("Entrepreneur","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 924) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -121
+# _e("Business","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 925) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -122
+# _e("Status","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 926) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -123
+# _e("Actions","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 927) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -132
+# _e("Display the ended mentoring sessions","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 928) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -135
+# _e("Loading the ended mentoring sessions...","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 929) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -140
+# _e("Entrepreneur","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 930) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -141
+# _e("Business","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 931) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -142
+# _e("Status","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 932) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -143
+# _e("Actions","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 933) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -196
+# _e("Business proposal","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 934) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -200
+# _e("Entrepreneur","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 935) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -206
+# _e("Expertise needed","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 936) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -210
+# _e("Expertise needed details","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Expertise needed in detail"
+msgstr "الخبرات المطلوبة بالتفصيل"
 
 # 1616) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -569
 # _e("Investment type","bidxplugin");
@@ -8715,7 +8933,7 @@ msgid ""
 "Your team is an essential part of the success of your business. Use this "
 "template to provide more information about yourself and your team members."
 msgstr ""
-"فريقك جزء هام من نجاح مشروعك. استخدم هذا النموذج لتوفير المزيد من المعلومات "
+"فريقك جزء هام من نجاح مشروعك. استخدم هذا القالب لتوفير المزيد من المعلومات "
 "عنك وعن فريقك."
 
 # 1700) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -963
@@ -8849,16 +9067,6 @@ msgstr "هل تريد إضافة ملف تعريفي خاص بشركة الى ع
 msgid "Select your company from the list below"
 msgstr "قم باختيار شركتك من القائمة أدناه"
 
-# 1722) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1121
-# _e("Company name","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1723) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1122
-# _e("Registered","bidxplugin");
-# Context  Textdomain bidxplugin
-msgid "Registered"
-msgstr "تم التسجيل"
-
 # 1724) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1123
 # _e("Employees","bidxplugin");
 # Context  Textdomain bidxplugin
@@ -8921,7 +9129,7 @@ msgstr "في أي مجالات الخبرة تحتاج للدعم؟"
 msgid ""
 "Describe the challenges facing your business, with which you would like the "
 "support of a mentor"
-msgstr ""
+msgstr "صف الصعوبات التي تواجه مشروعك، التي تود من أحد مرشدينا أن يعينك عليها"
 
 # 1758) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1453
 # _e("Cancel request","bidxplugin");
@@ -8943,13 +9151,13 @@ msgstr ""
 # _e("Loading active mentors","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Active mentors"
-msgstr "تحميل المرشدين الناشطين"
+msgstr "مرشدين ناشطين"
 
 # 1756) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1434
 # _e("No matching mentors","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Matching mentors"
-msgstr "لا يوجد مرشد ملائم"
+msgstr "مرشدين ملائمين"
 
 # 1734) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1184
 # _e("(max. 300 characters)","bidxplugin");
@@ -9346,7 +9554,7 @@ msgstr "شريط جانبي"
 # _e("Widget","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Widget"
-msgstr "مربع مصغر"
+msgstr "عنصر واجهة المستخدم"
 
 # 1813) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/starthere.php -100
 # _e("Start Here","bidxplugin");
@@ -9457,7 +9665,7 @@ msgstr "تصميم العداد:"
 # _e("Fill in the \"End Date and Time\" field","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Fill in the \"End Date and Time\" field"
-msgstr "قم بملء \"End Date and Time\" المجال "
+msgstr "قم بملء حقل \"End Date and Time\"  "
 
 # 1836) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -203
 # _e("This competition has expired","bidxplugin");

@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
-"Language: Arabic\n"
+"Language: ar\n"
 
 # Language Original
 # _x("Select what best matches your reason for submission", "auth","i18n");
@@ -1216,6 +1216,9 @@ msgstr "قد تم ارسال طلبك بنجاح"
 
 # _e("You have successfully accepted the request", "i18n");
 # Context  TextDomain i18n
+msgid "You have successfully accepted the request"
+msgstr "لقد أتممت قبول الطلب بنجاح"
+
 # _e("You have successfully ignored the request", "i18n");
 # Context  TextDomain i18n
 msgid "You have successfully ignored the request"
@@ -1244,7 +1247,7 @@ msgstr "قم باختيار أحد الخيارات"
 # _e("This field is required", "i18n");
 # Context  TextDomain i18n
 msgid "This field is required"
-msgstr "هذا المجال مطلوب ملأه"
+msgstr "هذا الحقل مطلوب ملأه"
 
 # _e("Please select an item", "i18n");
 # Context  TextDomain i18n
@@ -1324,7 +1327,7 @@ msgstr "يرجى ادخال عدد {0} حرف على الأقل"
 # _e("Please fill all the required fields", "i18n");
 # Context  TextDomain i18n
 msgid "Please fill all the required fields"
-msgstr "يرجى ملء كل المجالات المطلوبة"
+msgstr "يرجى ملء كل الحقول المطلوبة"
 
 # _e("This email address is already in use", "i18n");
 # Context  TextDomain i18n

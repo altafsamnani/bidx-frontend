@@ -37,17 +37,28 @@ class StaticDataService extends APIbridge {
     public function getMultilingualStaticData( $staticDataObj )  {
 
     	$resultStaticData = array();
+
+        $xValue           = '';
     	// what if not an array : PHP Warning:  Invalid argument supplied for foreach()
-        foreach ( $staticDataObj as $staticObjKey => $staticObjValue ) {
+        foreach ( $staticDataObj as $staticObjKey => $staticObjValue )
+        {
+
             $count = 0;
-            foreach ( $staticObjValue as $staticDataKey => $staticDataValue ) {
-            	$resultStaticData[$staticObjKey][$count] = new stdClass();
-                $resultStaticData[$staticObjKey][$count]->value = $staticDataValue->key;
-                $resultStaticData[$staticObjKey][$count]->label = _x ($staticDataValue->value, $staticDataValue->key, 'static');
+
+            foreach ( $staticObjValue as $staticDataKey => $staticDataValue )
+            {
+
+            	$xValue    =   _x ($staticDataValue->value, $staticDataValue->key, 'static');
+
+                $resultStaticData[$staticObjKey][$count]        =   new stdClass();
+
+                $resultStaticData[$staticObjKey][$count]->value =   $staticDataValue->key;
+
+                $resultStaticData[$staticObjKey][$count]->label =   $xValue ;
+
                 $count++;
             }
         }
-
         return $resultStaticData;
     }
 

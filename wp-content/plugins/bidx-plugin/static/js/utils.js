@@ -4,7 +4,7 @@
     var iclVars             = window.icl_vars || {}
     ,   currentLanguage     = ( iclVars.current_language ) ? iclVars.current_language : 'en' // get the current language from sitepress if set
     ,   monthsName          = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
-    ,   months              = ($.fn.datepicker.dates[currentLanguage].months.length) ? $.fn.datepicker.dates[currentLanguage].months : monthsName  // Coming from bootstrap datepicker[ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+    ,   months              = (typeof datepicker === 'function' && $.fn.datepicker.dates[currentLanguage].months.length) ? $.fn.datepicker.dates[currentLanguage].months : monthsName  // Coming from bootstrap datepicker[ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
     ;
     //months =
@@ -204,10 +204,11 @@
         {
             if ( value )
             {
-                dateObj = parseISODate( value );
-                date    = new Date( dateObj.y, dateObj.m - 1, dateObj.d );
 
-                $el.datetimepicker( "setUTCDate", date );
+                //dateObj = parseISODateTime( value );
+                date    = new Date( value );
+
+                $el.datetimepicker( "setDate", date );
             }
         }
         else if ( dataType === "tagsinput" )
@@ -365,7 +366,7 @@
 
             break;
             case 'datetime':
-                date    = $input.datetimepicker( "getUTCDate" );
+                date    = $input.datetimepicker( "getDate" );
 
                 // BIDX-1620: datepicker returns Invalid date value when nothing is selected, this value will be converted to NaN value by the getIsoDate function
                 //
@@ -391,7 +392,6 @@
                 );
 
             break;
-
             default:
 
                 if ( $input.hasClass( "btn-group" ) )
@@ -705,6 +705,18 @@
         return datum/1000;
     };
 
+    function convertLocalDateToUTCDate(date)
+    {
+        var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+
+        var offset = date.getTimezoneOffset() / 60;
+        var hours = date.getHours();
+
+        newDate.setHours(hours + offset);
+
+        return newDate;
+    }
+
     var getISODate = function( obj )
     {
         var result = "";
@@ -785,6 +797,26 @@
         return obj;
     };
 
+    var parseISODateTimeObject = function( str )
+    {
+        if ( !str )
+        {
+            return;
+        }
+
+        var obj =
+        {
+            y:      parseInt( str.substr( 0, 4 ), 10 )
+        ,   m:      parseInt( str.substr( 5, 2 ), 10 )
+        ,   d:      parseInt( str.substr( 8, 2 ), 10 )
+        ,   h:      str.substr( 11,2 )
+        ,   n:      str.substr( 14,2 )
+        ,   s:      str.substr( 17,2 )
+        };
+
+        return obj;
+    };
+
     var parseISODateTime = function( str, format )
     {
         if ( !str )
@@ -818,6 +850,10 @@
 
             case "time":
                 result = obj.h + ":" + obj.n + ":" + obj.s;
+            break;
+
+            case "datetimepicker":
+                result = d.getDate() + " " + months[ d.getMonth() ] + " " + d.getFullYear() + " - " + obj.h + ":" + obj.n ;
             break;
 
             default:
@@ -968,5 +1004,6 @@
     ,   log:                        log
     ,   warn:                       warn
     ,   error:                      error
+    ,   convertLocalDateToUTCDate:  convertLocalDateToUTCDate
     };
 } ( jQuery ));

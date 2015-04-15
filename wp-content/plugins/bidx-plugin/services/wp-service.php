@@ -696,7 +696,6 @@ function create_bidx_po ()
                 break;
 
             case 'bidxtheme' : // bidx main theme
-            case 'bidxgrouptheme':
                 $plugin = $_GET['path'];
                 global $pluginStrings;
                 bidx_st_scan_plugin_files ($plugin);
@@ -774,8 +773,12 @@ function plugin_theme_po_action ($displayData, $body)
 {
 
     $language = (isset ($body['lang'])) ? $body['lang'] : 'Original';
-    $po =   '# _e("","bidxplugin");'. PHP_EOL.
-             '# Context  Textdomain bidxplugin'. PHP_EOL.
+
+    //force some filters
+    $type = (isset ($_GET['type'])) ? $_GET['type'] : NULL;
+
+    $po =   '# _e("","'.$type.'");'. PHP_EOL.
+             '# Context  Textdomain '.$type. PHP_EOL.
              'msgid ""'. PHP_EOL.
              'msgstr ""'. PHP_EOL.
              '"Project-Id-Version: \n"'. PHP_EOL.
@@ -1970,7 +1973,7 @@ function ajax_create_wordpress_site ()
     // adding origin header to allow cross domain ajax call from admin site
     //
     // Actually, this header is sent a bit late; when the browser rejects its value, it will
-    // ignore any response, but then this very method has already been executed. 
+    // ignore any response, but then this very method has already been executed.
     header('Access-Control-Allow-Origin: ' . ( empty($_SERVER['HTTPS']) ? 'http' : 'https' ) . '://admin.' . $_SERVER['HTTP_HOST']);
 
     $bodyGrpData = bidx_wordpress_pre_action ("groups");
@@ -2069,13 +2072,6 @@ function bidx_options ()
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=es&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Es PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=fr&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Fr PO <br/><br/>";
-
-        /* 1.4. Bidx Group Theme Pot Generator
-        echo "<b>Bidx Group Theme Pot Generator (Bidx Theme) (Text domain bidxtheme)</b><br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxgrouptheme&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxgrouptheme&lang=es&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Es PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxgrouptheme&lang=fr&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Fr PO <br/>";
-         */
 
         /* 2 Bidx Push Notification */
         $entrepreneurNotification = get_site_option ('entrepreneur-notification');

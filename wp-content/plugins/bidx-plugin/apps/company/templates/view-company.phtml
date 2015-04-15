@@ -62,18 +62,18 @@
     }
     $rowValues = array(
         __('Company name','bidxplugin') => $this->exst($this->company->name),
-        __('Company website') => $this->companyWebsite,
-        __('Registered') => $this->exst($this->company->registered) == true ? __('Yes','bidxplugin') : __('No','bidxplugin'),
-        __('Legal form of business') => $this->getStaticVal( 'legalForm', $this->exst($this->company->legalFormBusiness) ),
-        __('Registration number') => $this->exst($this->company->registrationNumber),
-        __('Fiscal number') => $this->exst($this->company->fiscalNumber),
-        __('Date of registration') => $this->exst($this->company->dateCompanyEstab),
-        __('Permanent female employees') => $this->exst($this->company->numPermFemaleEmpl ),
-        __('Permanent male employees') => $this->exst($this->company->numPermMaleEmpl ),
-        __('Temporary female employees') => $this->exst($this->company->numTempFemaleEmpl ),
-        __('Temporary male employees') => $this->exst($this->company->numTempMaleEmpl ),
-        __('Statutory country, city') => $arStatutoryCityCountry ? implode( ', ', $arStatutoryCityCountry ) : NULL,
-        __('Statutory address') => $arStatutoryAddress ? implode( ' ', $arStatutoryAddress ) : NULL
+        __('Company website','bidxplugin') => $this->companyWebsite,
+        __('Registered','bidxplugin') => $this->exst($this->company->registered) == true ? __('Yes','bidxplugin') : __('No','bidxplugin'),
+        __('Legal form of business','bidxplugin') => $this->getStaticVal( 'legalForm', $this->exst($this->company->legalFormBusiness) ),
+        __('Registration number','bidxplugin') => $this->exst($this->company->registrationNumber),
+        __('Fiscal number','bidxplugin') => $this->exst($this->company->fiscalNumber),
+        __('Date of registration','bidxplugin') => $this->exst($this->company->dateCompanyEstab),
+        __('Permanent female employees','bidxplugin') => $this->exst($this->company->numPermFemaleEmpl ),
+        __('Permanent male employees','bidxplugin') => $this->exst($this->company->numPermMaleEmpl ),
+        __('Temporary female employees','bidxplugin') => $this->exst($this->company->numTempFemaleEmpl ),
+        __('Temporary male employees','bidxplugin') => $this->exst($this->company->numTempMaleEmpl ),
+        __('Statutory country, city','bidxplugin') => $arStatutoryCityCountry ? implode( ', ', $arStatutoryCityCountry ) : NULL,
+        __('Statutory address','bidxplugin') => $arStatutoryAddress ? implode( ' ', $arStatutoryAddress ) : NULL
     );
     echo $this->tableRow( $rowValues );
 
@@ -87,9 +87,9 @@
         );
 
         $countryOperationSpecificsHtml = $this->addTableRows( $header, $countryOperationSpecifics, 'table table-bordered', '', array('permitsLicencesObtained' => 'hidden-xs'), array( 'permitsLicencesObtained', 'country', 'companyAddress' ) );
-        
+
         $rowValues = array ( __('Country Operation Specifics','bidxplugin') => $countryOperationSpecificsHtml );
-        
+
         echo $this->addRowsWithLabelBelow ( 'col-sm-12', 'col-sm-12', $rowValues, array ( 'tag_label' => 'h4' ) );
     }
 ?>

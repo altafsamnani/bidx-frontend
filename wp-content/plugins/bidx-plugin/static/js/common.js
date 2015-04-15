@@ -244,7 +244,9 @@
     {
         e.preventDefault();
 
-        var $btn = $( this );
+        var urlLang
+        ,   $btn = $( this )
+        ;
 
         if ( $btn.hasClass( "disabled" ))
         {
@@ -272,10 +274,13 @@
             {
                 bidx.common.notifyRedirect();
 
+                urlLang =   ( currentLanguage && currentLanguage !== 'en'  ) ?   '/' + currentLanguage  : "";
+
                 var url = document.location.protocol
                     + "//"
                     + document.location.hostname
                     + ( document.location.port ? ":" + document.location.port : "" )
+                    + urlLang
                     + "?smsg=2&rs=true"
                 ;
 
@@ -327,7 +332,8 @@
     {
         e.preventDefault();
 
-        var $btn = $( this );
+        var urlLang
+        ,   $btn = $( this );
 
         var groupId = $btn.data( "groupid" );
 
@@ -361,10 +367,13 @@
                             {
                                 bidx.common.notifyRedirect();
 
+                                urlLang =   ( currentLanguage && currentLanguage !== 'en'  ) ?  '/' + currentLanguage  : "";
+
                                 var url = document.location.protocol
                                     + "//"
                                     + document.location.hostname
                                     + ( document.location.port ? ":" + document.location.port : "" )
+                                    + urlLang
                                     + "?smsg=3&rs=true"
                                 ;
 
@@ -1245,7 +1254,6 @@
     }
     // Activate all datepickers (this was previously done as part of the form.js plugin)
     //
-    bidx.utils.log('currentLangauge', currentLanguage);
 
     if ( typeof $.prototype.datepicker === "function" )
     {
