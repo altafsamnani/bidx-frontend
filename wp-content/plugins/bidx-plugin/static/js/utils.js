@@ -392,7 +392,6 @@
                 );
 
             break;
-
             default:
 
                 if ( $input.hasClass( "btn-group" ) )
@@ -706,6 +705,18 @@
         return datum/1000;
     };
 
+    function convertLocalDateToUTCDate(date)
+    {
+        var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+
+        var offset = date.getTimezoneOffset() / 60;
+        var hours = date.getHours();
+
+        newDate.setHours(hours + offset);
+
+        return newDate;
+    }
+
     var getISODate = function( obj )
     {
         var result = "";
@@ -993,5 +1004,6 @@
     ,   log:                        log
     ,   warn:                       warn
     ,   error:                      error
+    ,   convertLocalDateToUTCDate:  convertLocalDateToUTCDate
     };
 } ( jQuery ));

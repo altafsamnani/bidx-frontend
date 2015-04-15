@@ -63,9 +63,13 @@ class businesssummary
             $businessSummaryObj = new BusinessSummaryService( );
 
             /* 3. Render Services for Initial View Display */
-            $businessSummaryData = $businessSummaryObj->getSummaryDetails( $businessSummaryId );
+            $businessSummaryData    = $businessSummaryObj->getSummaryDetails( $businessSummaryId );
 
-            $view->data = $businessSummaryData->data;
+            $competitionData        = $businessSummaryObj->isHavingCompetitionRole( $businessSummaryData->data );
+
+            $view->data             = $businessSummaryData->data;
+
+            $view->competitionData  = $competitionData;
 
             if ( isset( $businessSummaryData -> data -> completeness ) ) {
                 $completeness = $businessSummaryData -> data -> completeness;

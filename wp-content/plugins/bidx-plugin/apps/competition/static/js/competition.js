@@ -2223,9 +2223,26 @@ function _competitionTimer (  )
             {
                 $.each( formFields._root, function( i, f )
                 {
-                    var $input = $form.find( "[name^='" + f + "']" )
-                    ,   value  = bidx.utils.getElementValue( $input )
+                    var date
+                    ,   $input = $form.find( "[name^='" + f + "']" )
+                    ,   value
                     ;
+
+                    if( $input.attr( 'data-type' ) === 'datetime')
+                    {
+                        date    = $input.datetimepicker( "getDate" );
+
+                        //date    = $input.datetimepicker( "getUTCDate" );
+
+                        value   = bidx.utils.convertLocalDateToUTCDate( date );
+
+                        value   = bidx.utils.getISODateTime(value);
+
+                    }
+                    else
+                    {
+                        value  = bidx.utils.getElementValue( $input );
+                    }
 
                     bidx.utils.setValue( competitionSummary, f, value );
                 } );

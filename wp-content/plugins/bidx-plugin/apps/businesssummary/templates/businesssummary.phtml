@@ -8,18 +8,20 @@ $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
     ? $businessSummary->bidxMeta
     : null;
 
-$canEdit        = $this->exst($businessSummaryBidxMeta->bidxCanEdit, false);
-$newBusiness    = $businessSummary === NULL ? true : false;
-$canRate        = $this->exst($businessSummaryBidxMeta->bidxCanRate, false);
-$ratingAverage  = $this->exst($businessSummaryBidxMeta->bidxRatingAverage, null);
+$canEdit            = $this->exst($businessSummaryBidxMeta->bidxCanEdit, false);
+$newBusiness        = $businessSummary === NULL ? true : false;
+$canRate            = $this->exst($businessSummaryBidxMeta->bidxCanRate, false);
+$ratingAverage      = $this->exst($businessSummaryBidxMeta->bidxRatingAverage, null);
 
 // get the entities of the current user
 //
-$sessionData    = BidxCommon::$staticSession;
-$entities       = isset( $sessionData->data->wp->entities ) ? $sessionData->data->wp->entities : null;
+$sessionData        = BidxCommon::$staticSession;
+$entities           = isset( $sessionData->data->wp->entities ) ? $sessionData->data->wp->entities : null;
 
-$ownerId        = $businessSummary->bidxMeta->bidxOwnerId;
-$loggedInUserId = $sessionData->data->id;
+$ownerId            = $businessSummary->bidxMeta->bidxOwnerId;
+$loggedInUserId     = $sessionData->data->id;
+
+$competitionData    = $this->competitionData;
 
 // if a user has an investorProfile, he is allowed to request access to a business summary
 //
@@ -31,10 +33,15 @@ $businessSummaryId = $businessSummaryBidxMeta->bidxEntityId;
 //
 $requestStatus = isset( $businessSummary->accessAuthorization ) ? $businessSummary->accessAuthorization : null;
 
+
+
 // check, is access granted?
 $hasAccess = false;
 
-if ( $requestStatus === "granted" || $canEdit )
+if (    $canEdit ||  $requestStatus === "granted"
+     ||  $competitionData['competitionRoles']['loggedInUserIsCompetitionJudge' ]
+     ||  $competitionData['competitionRoles']['loggedInUserIsBpAssessor' ]
+    )
 {
     $hasAccess = true;
 }
