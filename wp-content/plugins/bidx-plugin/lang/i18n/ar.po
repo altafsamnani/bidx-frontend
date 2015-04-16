@@ -1368,39 +1368,33 @@ msgstr "يرجى ملء كل الحقول المطلوبة"
 
 # _e("Please fill all the required fields", "i18n");
 # Context  TextDomain i18n
-#, fuzzy
 msgid "Please fix this field."
-msgstr "يرجى ملء كل الحقول المطلوبة"
+msgstr "يرجى إصلاح هذا الحقل"
 
 # _e("Please enter a valid url", "i18n");
 # Context  TextDomain i18n
-#, fuzzy
 msgid "Please enter a valid number."
-msgstr "يرجى ادخال رابط صحيح"
+msgstr "يرجى إدخال رقم صحيح"
 
 # _e("Please enter a valid date", "i18n");
 # Context  TextDomain i18n
-#, fuzzy
 msgid "Please enter a valid credit card number."
-msgstr "يرجى ادخل تاريخ صحيح"
+msgstr "يرجى إدخال رقم بطاقة إئتمان صحيح"
 
 # _e("Please enter a valid amount", "i18n");
 # Context  TextDomain i18n
-#, fuzzy
 msgid "Please enter the same value againaaaa."
-msgstr "يرجى ادخال قيمة صحيحة"
+msgstr "يرجى إدخال نفس القيمة مرة أخرى"
 
 # _e("Please enter at least {0} characters", "i18n");
 # Context  TextDomain i18n
-#, fuzzy
 msgid "Please enter a value between {0} and {1} characters long."
-msgstr "يرجى ادخال عدد {0} حرف على الأقل"
+msgstr "يرجى إدخال قيمة بين {0} و {1} حرفا"
 
 # _e("Please enter a value less than or equal to {0}", "i18n");
 # Context  TextDomain i18n
-#, fuzzy
 msgid "Please enter a value between {0} and {1}."
-msgstr "يرجى ادخال قيمة أقل من أو مساوية لـ {0} "
+msgstr "يرجى إدخال قيمة بين {0} و {1} "
 
 # _e("This email address is already in use", "i18n");
 # Context  TextDomain i18n
