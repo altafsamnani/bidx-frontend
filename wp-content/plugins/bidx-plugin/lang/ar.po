@@ -1744,14 +1744,20 @@ msgid ""
 "If the message does not appear in your spam box within an hour please notify "
 "us <a href=\"%s\">here</a>."
 msgstr ""
-"إذا لم تظهر الرسالة في صندوق البريد الترويجي خلال ساعة، قم بإعلامنا     a "
-"href=\"%s\">هنا</a>."
+"إذا لم تظهر الرسالة في صندوق البريد الترويجي خلال ساعة، قم بإعلامنا <a href="
+"\"%s\">هنا</a>."
 
 # 315) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/resetpassword/templates/resetpassword.phtml -32
 # _e("Click <a href=\"%s\">here</a> to go to homepage.","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Click <a href=\"%s\">here</a> to go to homepage."
 msgstr "انقر <a href=\"%s\">هنا</a>       لتذهب للصفحة الرئيسية"
+
+# 748) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/account/templates/account.phtml -39
+# _e("Repeat new password","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Reset password"
+msgstr "استعادة كلمة المرور"
 
 # 316) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/resetpassword/templates/resetpassword.phtml -7
 # _e("Email address","bidxplugin");
@@ -3803,6 +3809,58 @@ msgstr "التصاريح و/أو التراخيص"
 # Context  Textdomain bidxplugin
 msgid "Remove this location"
 msgstr "قم بإزالة هذا الموقع"
+
+# 1722) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1121
+# _e("Company name","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1723) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1122
+# _e("Registered","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Registered"
+msgstr "تم التسجيل"
+
+# 692) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -206
+# _e("Company registration number","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Registration number"
+msgstr "رقم توثيق الشركة"
+
+# 1647) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -696
+# _e("Fiscal number","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1648) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -697
+# _e("Date of registration","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1649) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -698
+# _e("Permanent female employees","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1650) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -699
+# _e("Permanent male employees","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1651) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -700
+# _e("Temporary female employees","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1652) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -701
+# _e("Temporary male employees","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1653) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -702
+# _e("Statutory country, city","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Statutory country, city"
+msgstr "البلد القانوني والمدينة"
+
+# 1231) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -25
+# _e("Current address","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Statutory address"
+msgstr "العنوان الحالي"
 
 # 712) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/view-company.phtml -64
 # _e("Company name","bidxplugin");
@@ -8321,58 +8379,6 @@ msgstr "الغرض من التمويل"
 # Context  Textdomain bidxplugin
 msgid "Equity currently retained"
 msgstr "الحصة المملوكة حالياً"
-
-# 1722) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1121
-# _e("Company name","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1723) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1122
-# _e("Registered","bidxplugin");
-# Context  Textdomain bidxplugin
-msgid "Registered"
-msgstr "تم التسجيل"
-
-# 692) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -206
-# _e("Company registration number","bidxplugin");
-# Context  Textdomain bidxplugin
-msgid "Registration number"
-msgstr "رقم توثيق الشركة"
-
-# 1647) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -696
-# _e("Fiscal number","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1648) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -697
-# _e("Date of registration","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1649) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -698
-# _e("Permanent female employees","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1650) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -699
-# _e("Permanent male employees","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1651) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -700
-# _e("Temporary female employees","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1652) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -701
-# _e("Temporary male employees","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1653) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -702
-# _e("Statutory country, city","bidxplugin");
-# Context  Textdomain bidxplugin
-msgid "Statutory country, city"
-msgstr "البلد القانوني والمدينة"
-
-# 1231) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -25
-# _e("Current address","bidxplugin");
-# Context  Textdomain bidxplugin
-msgid "Statutory address"
-msgstr "العنوان الحالي"
 
 # 903) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -54
 # _e("Respond to a mentoring request","bidxplugin");

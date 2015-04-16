@@ -804,7 +804,7 @@
             $.extend( $.validator.messages,
             {
                 required:               bidx.i18n.i( "frmFieldRequired" )
-            ,   email:                  bidx.i18n.i( "frmFieldEmail" )
+            ,   email:                  bidx.i18n.i( "frmInvalidEmail" )
             ,   dpDate:                 bidx.i18n.i( "frmInvalidDate" )
             ,   skypeUsername:          bidx.i18n.i( "frmInvalidSkypeUsername" )
             ,   linkedInUsername:       bidx.i18n.i( "frmInvalidLinkedInUsername" )

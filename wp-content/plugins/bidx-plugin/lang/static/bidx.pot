@@ -1055,21 +1055,7 @@ msgid "University - Postgraduate"
 msgstr ""
 
 
-#6 emailTemplateType
-#  _x("Invite non Bidx-user to group", "email-invitedNonRegisteredUserGroup", "static");
-# Context email-invitedNonRegisteredUserGroup Textdomain static
-msgctxt "email-invitedNonRegisteredUserGroup"
-msgid "Invite non Bidx-user to group"
-msgstr ""
-
-#  _x("Invite Bidx member to group", "email-invitedRegisteredUserGroup", "static");
-# Context email-invitedRegisteredUserGroup Textdomain static
-msgctxt "email-invitedRegisteredUserGroup"
-msgid "Invite Bidx member to group"
-msgstr ""
-
-
-#7 legalForm
+#6 legalForm
 #  _x("Sole trader", "soletrader", "static");
 # Context soletrader Textdomain static
 msgctxt "soletrader"
@@ -1089,7 +1075,7 @@ msgid "Company"
 msgstr ""
 
 
-#8 socialImpact
+#7 socialImpact
 #  _x("Poverty reduction", "povertyReduction", "static");
 # Context povertyReduction Textdomain static
 msgctxt "povertyReduction"
@@ -1193,7 +1179,7 @@ msgid "Womens empowerment"
 msgstr ""
 
 
-#9 gender
+#8 gender
 #  _x("Male", "m", "static");
 # Context m Textdomain static
 msgctxt "m"
@@ -1207,7 +1193,7 @@ msgid "Female"
 msgstr ""
 
 
-#10 systemMailType
+#9 systemMailType
 #  _x("Relationship Accepted", "relationshipAccepted", "static");
 # Context relationshipAccepted Textdomain static
 msgctxt "relationshipAccepted"
@@ -1269,7 +1255,7 @@ msgid "Group Invitation"
 msgstr ""
 
 
-#11 industry
+#10 industry
 #  _x("Agriculture, forestry and fishing", "A", "static");
 # Context A Textdomain static
 msgctxt "A"
@@ -5621,7 +5607,7 @@ msgid "Activities of extraterritorial organisations and bodies"
 msgstr ""
 
 
-#12 investorInvolvement
+#11 investorInvolvement
 #  _x("Advisory", "advisory", "static");
 # Context advisory Textdomain static
 msgctxt "advisory"
@@ -5635,7 +5621,7 @@ msgid "Hands-on"
 msgstr ""
 
 
-#13 investorType
+#12 investorType
 #  _x("Business Angel Group", "busAngelGroup", "static");
 # Context busAngelGroup Textdomain static
 msgctxt "busAngelGroup"
@@ -5709,7 +5695,7 @@ msgid "Private Investor"
 msgstr ""
 
 
-#14 consumerType
+#13 consumerType
 #  _x("Business/Organisations", "businessOrganisations", "static");
 # Context businessOrganisations Textdomain static
 msgctxt "businessOrganisations"
@@ -5735,7 +5721,7 @@ msgid "Export (local currency)"
 msgstr ""
 
 
-#15 summaryRequestStatus
+#14 summaryRequestStatus
 #  _x("Pending", "pending", "static");
 # Context pending Textdomain static
 msgctxt "pending"
@@ -5755,7 +5741,7 @@ msgid "Rejected"
 msgstr ""
 
 
-#16 exportImport
+#15 exportImport
 #  _x("Exports", "export", "static");
 # Context export Textdomain static
 msgctxt "export"
@@ -5781,7 +5767,7 @@ msgid "Not Applicable"
 msgstr ""
 
 
-#17 mentorExpertise
+#16 mentorExpertise
 #  _x("Business plans", "business.plans", "static");
 # Context business.plans Textdomain static
 msgctxt "business.plans"
@@ -5927,7 +5913,7 @@ msgid "Strategy, leadership"
 msgstr ""
 
 
-#18 investmentType
+#17 investmentType
 #  _x("Loan", "loan", "static");
 # Context loan Textdomain static
 msgctxt "loan"
@@ -5953,7 +5939,7 @@ msgid "Not sure"
 msgstr ""
 
 
-#19 stageBusiness
+#18 stageBusiness
 #  _x("Start-up", "startup", "static");
 # Context startup Textdomain static
 msgctxt "startup"
@@ -5967,7 +5953,7 @@ msgid "Established"
 msgstr ""
 
 
-#20 permitsLicencesObtained
+#19 permitsLicencesObtained
 #  _x("Permit obtained", "permitobtained", "static");
 # Context permitobtained Textdomain static
 msgctxt "permitobtained"
@@ -5993,7 +5979,7 @@ msgid "Permit not required"
 msgstr ""
 
 
-#21 businessOutcome
+#20 businessOutcome
 #  _x("I sold the company", "soldCompany", "static");
 # Context soldCompany Textdomain static
 msgctxt "soldCompany"
@@ -6025,7 +6011,7 @@ msgid "I am still involved with the company"
 msgstr ""
 
 
-#22 focusRole
+#21 focusRole
 #  _x("Investor", "investor", "static");
 # Context investor Textdomain static
 msgctxt "investor"
@@ -6039,7 +6025,7 @@ msgid "Entrepreneur"
 msgstr ""
 
 
-#23 country
+#22 country
 #  _x("Andorra", "AD", "static");
 # Context AD Textdomain static
 msgctxt "AD"
@@ -7547,7 +7533,7 @@ msgid "South Sudan"
 msgstr ""
 
 
-#24 nationality
+#23 nationality
 #  _x("Afghan", "af", "static");
 # Context af Textdomain static
 msgctxt "af"
@@ -8963,7 +8949,7 @@ msgid "Zimbabwean"
 msgstr ""
 
 
-#25 envImpact
+#24 envImpact
 #  _x("Pollution reduction", "pollutionReduction", "static");
 # Context pollutionReduction Textdomain static
 msgctxt "pollutionReduction"
@@ -9127,7 +9113,7 @@ msgid "Water resource improvement"
 msgstr ""
 
 
-#26 prefNotMethod
+#25 prefNotMethod
 #  _x("Email and message", "emailMessage", "static");
 # Context emailMessage Textdomain static
 msgctxt "emailMessage"
@@ -9141,7 +9127,7 @@ msgid "telephone"
 msgstr ""
 
 
-#27 languageRating
+#26 languageRating
 #  _x("fluent", "fluent", "static");
 # Context fluent Textdomain static
 msgctxt "fluent"
@@ -9161,7 +9147,7 @@ msgid "basic"
 msgstr ""
 
 
-#28 language
+#27 language
 #  _x("Malay", "ms", "static");
 # Context ms Textdomain static
 # Already exists, doesnt need translation.

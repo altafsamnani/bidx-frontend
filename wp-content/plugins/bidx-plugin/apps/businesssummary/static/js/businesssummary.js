@@ -3353,7 +3353,7 @@
                 //
                 bidx.common.notifyRedirect();
 
-                // @TODO: whereto in case of cancel of a businesssummary create?
+                // @TODO: whereto in case of cancel of a businesssummary create
                 document.location.href = currentLanguage + "/member";
 
             }

@@ -174,4 +174,8 @@
 
     <Item value="loadingLbl">Loading</Item>
 
+    <!-- Backend Login Error, Generated through backend -->
+    <Item value="userNotFound">User not found.</Item>
+    <Item value="userInvalid">Invalid username or password.</Item>
+    <Item value="wordpressLoggedInError">Please log out of wordpress administrator.</Item>
 </I18N>
