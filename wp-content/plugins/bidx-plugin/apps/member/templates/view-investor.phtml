@@ -57,12 +57,12 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
             if ( $this->checkEmpty( $rowValues ) ) :
 ?>
                 <h4><?php _e('General Information', 'bidxplugin')?></h4>
-<?php               
+<?php
                 echo $this->tableRow ( $rowValues );
             endif;
 
 
-            $rowValues = array(                
+            $rowValues = array(
                 __('Industry','bidxplugin')                   =>  $this->getMultiValues($this->exst ($investorDetails->focusIndustry), '<br> ','industry'),
                 __('Language(s) of operation','bidxplugin')   =>  $this->getMultiValues($this->exst ($investorDetails->focusLanguage), ', ','language'),
                 __('Social impact','bidxplugin')              =>  $this->getMultiValues($this->exst ($investorDetails->focusSocialImpact), ', ','socialImpact'),
@@ -80,7 +80,7 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
             if ( $this->checkEmpty( $rowValues ) ) :
 ?>
                 <h4><?php _e('Investment Preferences', 'bidxplugin')?></h4>
-<?php               
+<?php
                 echo $this->tableRow ( $rowValues );
             endif;
 
@@ -116,13 +116,13 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
             $rowValues = array (
                 __('Number of investments in the last 12 months','bidxplugin') => $this->exst( $investorDetails->numberInvestments ),
                 __('Total investments made in the last 12 months','bidxplugin') => $this->addPrefixSuffix ( $this->exst($investorDetails->totalInvestment ), '$ ', '' ),
-                __('Typical involvement','bidxplugin') => $this->getStaticVal('typicalInvolvement', $this->exst ($investorDetails->typicalInvolvement))
+                __('Typical involvement','bidxplugin') => $this->getStaticVal('investorInvolvement', $this->exst ($investorDetails->typicalInvolvement))
             );
 
             if ( $this->checkEmpty( $rowValues ) ) :
 ?>
                 <h4><?php _e('Investment History', 'bidxplugin')?></h4>
-<?php               
+<?php
                 echo $this->tableRow ( $rowValues );
             endif;
 
@@ -137,7 +137,7 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
                 __('URL of Company website','bidxplugin')    => 'companyWebsite'
             );
 
-            echo $this->addTableRows($header, $this->exst( $investorDetails->previousInvestments ), 'table table-bordered', '', array('investmentType' => 'hidden-xs', 'companyWebsite' => 'hidden-xs') );
+            echo $this->addTableRows($header, $this->exst( $investorDetails->previousInvestments ), 'table table-bordered', '', array('investmentType' => 'hidden-xs', 'companyWebsite' => 'hidden-xs'), array( 'investmentType') );
 
 
     ?>
