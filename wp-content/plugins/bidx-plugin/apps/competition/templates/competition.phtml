@@ -195,7 +195,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
             <div class="row view viewShow viewParticipate">
                 <div class="col-sm-4 col-sm-offset-2">
                     <h4 class="text-center"><?php echo _e( 'Apply before', 'bidxplugin' ); ?>:
-                        <strong><?php echo $endDateTime;?></strong>
+                        <strong class="endDateTimeDisplay"></strong>
                     </h4>
 <?php
                     if ( $this->exst($competitionBidxMeta->bidxEntityId) )
