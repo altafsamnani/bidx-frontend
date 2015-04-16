@@ -48,55 +48,59 @@ class BusinessSummaryService extends APIbridge
 
         $competitionsData           =  $businessSummaryData->bidxMeta->bidxCompetitions;
 
-        foreach( $competitionsData as $competition )
+        if ( $competitionsData )
         {
-            /*Check is having Judge Role */
-            $competitionMeta            =   $competition->bidxMeta;
-            $competitionRoles           =   $competitionMeta->bidxCompetitionRoles;
-            $competitionApplications    =   $competition->applications;
-            $competitionData            =   array(  'id'    => $competitionMeta->bidxCompetitionId
-                                            ,       'name'  => $competition->name );
-
-            if( in_array( 'COMPETITION_ASSESSOR' , $competitionRoles) )
+            foreach( $competitionsData as $competition )
             {
-                $loggedInUserIsCompetitionAssessor  =  true;
-                $roleData[ 'loggedInUserIsCompetitionAssessor' ][ ] = $competitionData;
-            }
+                /*Check is having Judge Role */
+                $competitionMeta            =   $competition->bidxMeta;
+                $competitionRoles           =   $competitionMeta->bidxCompetitionRoles;
+                $competitionApplications    =   $competition->applications;
+                $competitionData            =   array(  'id'    => $competitionMeta->bidxCompetitionId
+                                                ,       'name'  => $competition->name );
 
-            if( in_array( 'COMPETITION_JUDGE' , $competitionRoles) )
-            {
-                $loggedInUserIsCompetitionJudge  =  true;
-                $roleData[ 'loggedInUserIsCompetitionJudge' ][ ] = $competitionData;
-
-            }
-
-            /*Check is having Assesor Role */
-            if( !empty($competitionApplications) )
-            {
-                foreach( $competitionApplications as $application )
+                if( in_array( 'COMPETITION_ASSESSOR' , $competitionRoles) )
                 {
-                    if(!empty($application) && $application->entityId ==  $businessSummaryData->bidxMeta->bidxEntityId) // Though it will be always same, just to make sure adding this condition
+                    $loggedInUserIsCompetitionAssessor  =  true;
+                    $roleData[ 'loggedInUserIsCompetitionAssessor' ][ ] = $competitionData;
+                }
+
+                if( in_array( 'COMPETITION_JUDGE' , $competitionRoles) )
+                {
+                    $loggedInUserIsCompetitionJudge  =  true;
+                    $roleData[ 'loggedInUserIsCompetitionJudge' ][ ] = $competitionData;
+
+                }
+
+                /*Check is having Assesor Role */
+                if( !empty($competitionApplications) )
+                {
+                    foreach( $competitionApplications as $application )
                     {
-                        $applicationBidxMeta         =   $application->bidxMeta;
-
-                        if($applicationBidxMeta->bidxCompetitionCanAssess)
+                        if(!empty($application) && $application->entityId ==  $businessSummaryData->bidxMeta->bidxEntityId) // Though it will be always same, just to make sure adding this condition
                         {
-                            $loggedInUserIsBpAssessor   =   true;
-                            $roleData[ 'loggedInUserIsBpAssessor' ][ ] = $competitionData;
+                            $applicationBidxMeta         =   $application->bidxMeta;
+
+                            if($applicationBidxMeta->bidxCompetitionCanAssess)
+                            {
+                                $loggedInUserIsBpAssessor   =   true;
+                                $roleData[ 'loggedInUserIsBpAssessor' ][ ] = $competitionData;
+                            }
+
+                            if($applicationBidxMeta->bidxCompetitionCanJudge)
+                            {
+                                $loggedInUserIsBpJudge      =   true;
+                                $roleData[ 'loggedInUserIsBpJudge' ][ ] = $competitionData;
+                            }
                         }
 
-                        if($applicationBidxMeta->bidxCompetitionCanJudge)
-                        {
-                            $loggedInUserIsBpJudge      =   true;
-                            $roleData[ 'loggedInUserIsBpJudge' ][ ] = $competitionData;
-                        }
                     }
 
                 }
 
             }
-
         }
+
 
         $competitionRoles   =   array(  'loggedInUserIsCompetitionAssessor' =>  $loggedInUserIsCompetitionAssessor
                                     ,   'loggedInUserIsCompetitionJudge'    =>  $loggedInUserIsCompetitionJudge
