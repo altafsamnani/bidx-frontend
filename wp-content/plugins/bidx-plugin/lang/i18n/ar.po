@@ -1689,14 +1689,14 @@ msgstr "تحميل"
 # _e("User not found.", "i18n");
 # Context  TextDomain i18n
 msgid "User not found."
-msgstr ""
+msgstr "لم يعثر على هذا المستخدم"
 
 # _e("Invalid username or password.", "i18n");
 # Context  TextDomain i18n
 msgid "Invalid username or password."
-msgstr ""
+msgstr "الإسم أو كلمة السر غير صحيحين"
 
 # _e("Please log out of wordpress administrator.", "i18n");
 # Context  TextDomain i18n
 msgid "Please log out of wordpress administrator."
-msgstr ""
+msgstr "يرجى تسجيل الخروج كمدير وورد برس"

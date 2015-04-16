@@ -5875,9 +5875,8 @@ msgstr "بأي مجالات الخبرة تسعى لايجاد الدعم؟"
 # 1117) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -322
 # _e("Role of entrepreneur in this business (max. 30 characters)","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Please specify for your business (max. 300 characters)"
-msgstr "دور رائد الأعمال في هذا المشروع"
+msgstr "لماذا لمشروعك؟ (بحد أقصى ٣٠٠ حرفا)"
 
 # 1127) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -359
 # _e("Describe here the problem areas or challenges in your business in the areas of expertise you selected.","bidxplugin");
