@@ -1159,7 +1159,7 @@ msgstr "إلغاء"
 # _e("Ok", "i18n");
 # Context  TextDomain i18n
 msgid "Ok"
-msgstr ""
+msgstr "نعم"
 
 # _e("Save", "i18n");
 # Context  TextDomain i18n
