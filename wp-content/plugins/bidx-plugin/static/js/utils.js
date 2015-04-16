@@ -746,7 +746,7 @@
         return result;
     };
 
-    var getISODateTime = function( obj )
+    var getISODateTime = function( obj, type )
     {
         var result = "";
 
@@ -756,17 +756,19 @@
         }
 
 
-        var y = obj.getFullYear()
-        ,   m = obj.getMonth() + 1
-        ,   d = obj.getDate() * 1
-        ,   h = obj.getHours()   < 10 ? "0" + obj.getHours() : obj.getHours()
-        ,   n = obj.getMinutes() < 10 ? "0" + obj.getMinutes() : obj.getMinutes()
-        ,   s = obj.getSeconds() < 10 ? "0" + obj.getSeconds() : obj.getSeconds()
+        var y       = obj.getFullYear()
+        ,   origm   = obj.getMonth()
+        ,   m       = obj.getMonth() + 1
+        ,   d       = obj.getDate() * 1
+        ,   h       = obj.getHours()   < 10 ? "0" + obj.getHours() : obj.getHours()
+        ,   n       = obj.getMinutes() < 10 ? "0" + obj.getMinutes() : obj.getMinutes()
+        ,   s       = obj.getSeconds() < 10 ? "0" + obj.getSeconds() : obj.getSeconds()
+
         ;
 
         if ( m < 10 )
         {
-            m = "0" + m;
+            m       = "0" + m;
         }
 
         if ( d < 10 )
@@ -774,8 +776,19 @@
             d = "0" + d;
         }
 
+        switch( type )
+        {
+            case 'datetime':
 
-        result += y + "-" + m + "-" + d + "T" + h + ":" + n + ":" + s + "Z" ;
+            result += d + " " + months[ origm ] + " " + y + "  " + h + ":" + n ;
+            break;
+
+            default:
+            result += y + "-" + m + "-" + d + "T" + h + ":" + n + ":" + s + "Z" ;
+
+        }
+
+
 
         return result;
     };
@@ -792,26 +805,6 @@
             y:      parseInt( str.substr( 0, 4 ), 10 )
         ,   m:      parseInt( str.substr( 5, 2 ), 10 )
         ,   d:      parseInt( str.substr( 8, 2 ), 10 )
-        };
-
-        return obj;
-    };
-
-    var parseISODateTimeObject = function( str )
-    {
-        if ( !str )
-        {
-            return;
-        }
-
-        var obj =
-        {
-            y:      parseInt( str.substr( 0, 4 ), 10 )
-        ,   m:      parseInt( str.substr( 5, 2 ), 10 )
-        ,   d:      parseInt( str.substr( 8, 2 ), 10 )
-        ,   h:      str.substr( 11,2 )
-        ,   n:      str.substr( 14,2 )
-        ,   s:      str.substr( 17,2 )
         };
 
         return obj;
