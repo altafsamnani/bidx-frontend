@@ -5872,6 +5872,13 @@ msgstr "هل تريد مرشد ليقدم لك النصح؟"
 msgid "In which areas of expertise do you seek support?"
 msgstr "بأي مجالات الخبرة تسعى لايجاد الدعم؟"
 
+# 1117) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -322
+# _e("Role of entrepreneur in this business (max. 30 characters)","bidxplugin");
+# Context  Textdomain bidxplugin
+#, fuzzy
+msgid "Please specify for your business (max. 300 characters)"
+msgstr "دور رائد الأعمال في هذا المشروع"
+
 # 1127) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -359
 # _e("Describe here the problem areas or challenges in your business in the areas of expertise you selected.","bidxplugin");
 # Context  Textdomain bidxplugin
@@ -6414,6 +6421,16 @@ msgstr "الموقع الالكتروني للشركة؟"
 # Context  Textdomain bidxplugin
 msgid "Remove this business"
 msgstr "قم بإزالة هذا المشروع"
+
+# 1421) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -79
+# _e("Connect","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1422) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -89
+# _e("Request mentoring","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Request mentoring"
+msgstr "اطلب ارشاد"
 
 # 1225) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -217
 # _e("Remove","bidxplugin");
@@ -7418,16 +7435,6 @@ msgstr "كن مرشد"
 # Context  Textdomain bidxplugin
 msgid "Edit Profile"
 msgstr "تعديل الملف الشخصي"
-
-# 1421) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -79
-# _e("Connect","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1422) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -89
-# _e("Request mentoring","bidxplugin");
-# Context  Textdomain bidxplugin
-msgid "Request mentoring"
-msgstr "اطلب ارشاد"
 
 # 1025) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/views.phtml -233
 # _e("Show more","bidxplugin");
