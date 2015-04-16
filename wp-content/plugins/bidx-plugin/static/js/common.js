@@ -352,7 +352,7 @@
             [
                 {
                     addClass:       "btn btn-primary"
-                ,   text:           "Ok"
+                ,   text:           bidx.i18n.i("btnOk")
                 ,   onClick: function( $noty )
                     {
 
@@ -386,7 +386,7 @@
                 }
             ,   {
                     addClass:       "btn btn-danger"
-                ,   text:           "Cancel"
+                ,   text:           bidx.i18n.i("btnCancel")
                 ,   onClick: function( $noty )
                     {
                         $noty.close();
@@ -823,6 +823,16 @@
                 //
             ,   tagsinputRequired:      bidx.i18n.i( "frmFieldRequired" )
             ,   tagsinputMinItems:      $.validator.format( bidx.i18n.i( "frmInvalidMinItems" ) )
+
+            ,   remote:         bidx.i18n.i( "frmInvalidRemote" ) //
+            ,   date:           bidx.i18n.i( "frmInvalidDate" )
+            ,   dateISO:        bidx.i18n.i( "frmInvalidDate" )
+            ,   number:         bidx.i18n.i( "frmInvalidNumber" ) //
+            ,   creditcard:     bidx.i18n.i( "frmInvalidCC" )
+            ,   equalTo:        bidx.i18n.i( "frmInvalidEqualTo" )
+            ,   rangelength:    $.validator.format(bidx.i18n.i( "frmInvalidRangeLength" ) )
+            ,   range:          $.validator.format(bidx.i18n.i( "frmInvalidRange" ) )
+
             } );
         } );
 

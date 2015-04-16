@@ -23,6 +23,7 @@
     <!-- Buttons -->
     <Item value="btnNext">Next</Item>
     <Item value="btnCancel">Cancel</Item>
+    <Item value="btnOk">Ok</Item>
     <Item value="btnSave">Save</Item>
     <Item value="btnSaveAndView">Save &amp; view</Item>
     <Item value="btnSaveProfile">Save Profile</Item>
@@ -66,6 +67,7 @@
         validation messages you want to add it to the default list of messages maintained
         in common.js. Just a friendly reminder!
     -->
+
     <Item value="frmFieldRequired">This field is required</Item>
     <Item value="frmSelectFieldRequired">Please select an item</Item>
     <Item value="frmInvalidDate">Please enter a valid date</Item>
@@ -83,6 +85,12 @@
     <Item value="frmInvalidMaxlength">Please provide no more than maximum {0} characters</Item>
     <Item value="frmInvalidMinlength">Please enter at least {0} characters</Item>
     <Item value="frmInvalidMsg">Please fill all the required fields</Item>
+     <Item value="frmInvalidRemote">Please fix this field.</Item>
+    <Item value="frmInvalidNumber">Please enter a valid number.</Item>
+    <Item value="frmInvalidCC">Please enter a valid credit card number.</Item>
+    <Item value="frmInvalidEqualTo">Please enter the same value againaaaa.</Item>
+    <Item value="frmInvalidRangeLength">Please enter a value between {0} and {1} characters long.</Item>
+    <Item value="frmInvalidRange">Please enter a value between {0} and {1}.</Item>
 
 
     <!-- This value is a error Code coming from API for username exists check -->
