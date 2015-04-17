@@ -154,7 +154,7 @@
         $legalFormBusiness.bidx_chosen(
         {
             dataKey:            "legalForm"
-        ,   emptyValue:         bidx.i18n.i( "legalForm", appName )
+        ,   emptyValue:         bidx.i18n.i( "selectLegalFormBusiness", appName )
         });
 
         $btnRemoveLogo.click( function( e )
@@ -166,13 +166,13 @@
 
 
 
-        bidx.data.getContext( "legalForm", function( err, legalForms )
+        /*bidx.data.getContext( "legalForm", function( err, legalForms )
         {
             var $noValue            = $( "<option value='' />" );
 
             $noValue.i18nText( "selectLegalFormBusiness", appName );
             $legalFormBusiness.append( $noValue );
-        } );
+        } ); */
 
         bidx.data.getContext( "permitsLicencesObtained", function( err, permitsOptained )
         {
