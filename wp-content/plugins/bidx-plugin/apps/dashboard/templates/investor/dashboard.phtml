@@ -102,7 +102,7 @@
 <?php
                                 // #msp: is it possible not to have an ID in the page?? what would the url be then..
                                 $id = $this->exst ( $this -> sessionData -> data -> id );
-                                $href = _l('member'). "#editInvestor/" . $id . "/" . http_build_query( array( "success"=> "/investor-dashboard/#dashboard/investor", "cancel"=> "/investor-dashboard/#dashboard/investor" ) );
+                                $href = _l('member'). "#editInvestor/" . $id . "/" . http_build_query( array( "success"=> _l('investor-dashboard')."#dashboard/investor", "cancel"=> _l('investor-dashboard')."#dashboard/investor" ) );
 ?>
                                 <a class="btn btn-primary" href="<?php echo $href; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
                             </div>
