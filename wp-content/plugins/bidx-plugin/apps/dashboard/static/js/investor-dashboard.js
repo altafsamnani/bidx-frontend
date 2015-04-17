@@ -223,8 +223,7 @@
                             countryLabel                    = _.map(    i18nItem.country_ss
                                                                     ,   function(label)
                                                                         {
-                                                                            label   =    bidx.data.i(label, 'country');
-                                                                            return  label;
+                                                                            return bidx.data.i(label, 'country');
                                                                         }
                                                                     );
                             i18nItem.countrylabel_ss        = countryLabel.join( ", " );
@@ -234,9 +233,7 @@
                             industryLabel                   = _.map(    i18nItem.industry_ss
                                                                     ,   function(label)
                                                                         {
-                                                                            //return bidx.data.i(label, 'industry');
-                                                                            label   =    bidx.data.i(label, 'industry');
-                                                                            return  label;
+                                                                            return bidx.data.i(label, 'industry');
                                                                         }
                                                                     );
                             i18nItem.industrylabel_ss       = industryLabel.join( ", " );
@@ -257,9 +254,7 @@
                             productServiceLabel                 = _.map(    i18nItem.envimpact_ss
                                                                     ,   function(label)
                                                                         {
-                                                                            label   =    bidx.data.i(label, 'industry');
-                                                                            return  label;
-                                                                            //return bidx.data.i(label, 'industry');
+                                                                            return bidx.data.i(label, 'industry');
                                                                         }
                                                                     );
                             i18nItem.productservicelabel_ss = productServiceLabel.join( ", " );
