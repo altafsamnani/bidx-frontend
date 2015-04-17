@@ -783,7 +783,7 @@ class TemplateLibrary
         //If comma and 2 values then make seperator And
         if (trim ($seperator) == ',')
         {
-            $seperatorAnd = ' ' + __('and', 'bidxplugin') + ' ';
+            $seperatorAnd = ' ' . __('and', 'bidxplugin') . ' ';
         }
 
         // exit;
