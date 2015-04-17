@@ -615,14 +615,18 @@
             ,   error: function( jqXhr, textStatus )
                 {
 
-                    var response = $.parseJSON( jqXhr.responseText);
+                    var errorText
+                    ,   response = $.parseJSON( jqXhr.responseText);
 
                     // 400 errors are Client errors
                     //
                     if ( jqXhr.status >= 400 && jqXhr.status < 500)
                     {
                         bidx.utils.error( "Client  error occured", response );
-                        _showError( "Something went wrong while deleting the email(s): " + response.text );
+
+                        errorText   =   (response.code === 'insufficientRights') ? bidx.i18n.i( response.code, appName ) : response.text;
+
+                        _showError( "Something went wrong while deleting the email(s): " + errorText );
                     }
                     // 500 erors are Server errors
                     //

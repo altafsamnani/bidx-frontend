@@ -41,6 +41,10 @@
     ,   $btnAddCountryOperationSpecifics    = $editForm.find( "[href$='#addCountryOperationSpecifics']"     )
     ,   $countryOperationSpecificsContainer = $editForm.find( ".countryOperationSpecificsContainer"         )
 
+
+    ,   icl_vars                    = window.icl_vars || {}
+    ,   iclLanguage                 = bidx.utils.getValue( icl_vars, "current_language" )
+    ,   currentLanguage             = (iclLanguage && iclLanguage !== 'en') ? '/' + iclLanguage : ''
         // Main object for holding the company
         //
     ,   company
@@ -48,7 +52,6 @@
     ,   companyProfileId
     ,   state
     ,   currentView
-    ,   icl_vars
 
     ,   snippets        = {}
 
@@ -762,7 +765,7 @@
         var logo = $logoContainer.data( "bidxData" )
         ,   logoImg = $logoContainer.find( "img" )
         ;
-        
+
         if ( logoImg.length === 0 )
         {
             bidx.utils.setValue( company, "logo", null );
@@ -787,9 +790,9 @@
         // currently only when not running as a slave app these button are actually put inside the dom.
         //
 
-        var cancelHref = companyId ? "/company/" + companyId : "/member";
-        $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save"    });
-        $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: cancelHref  });
+        var cancelHref  = currentLanguage + ( companyId ? "/company/" + companyId : "/member" );
+        $btnSave        = $( "<a />", { "class": "btn btn-primary disabled", href: "#save"    });
+        $btnCancel      = $( "<a />", { "class": "btn btn-primary disabled", href: cancelHref  });
 
         // Inject the save and button into the controls
         //
