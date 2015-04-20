@@ -3,7 +3,12 @@
 //
 function set_default_theme_widgets ( $old_theme, $WP_theme = null ) {
 
+    if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
+    {
+        $langArr            =   wpml_get_active_languages( );
 
+        unset($langArr['en']);
+    }
     ////////////////////////////
     // Query the posts to check if there is already one with the title "Welcome"
     //
@@ -133,6 +138,20 @@ With just a few adjustments, you will be ready to welcome your first members.</p
         'buttonstyle' => 'btn-primary',
         'buttonsize' => 'btn-xl',
     );
+
+    if ( isset($langArr) )
+    {
+
+        foreach($langArr as $lang => $langVal)
+        {
+            $buttonText =   'buttontext'.$lang;
+            $buttonLink =   'buttonlink'.$lang;
+
+            $widgets[$count][$buttonText]  =  __('Find out more','bidxplugin');
+            $widgets[$count][$buttonLink]  =  _l('welcome');
+        }
+    }
+
     $count++;
     update_option('widget_'.$widget_name,$widgets);
 
@@ -150,12 +169,8 @@ With just a few adjustments, you will be ready to welcome your first members.</p
         'promoalign' => 'text-center',
     );
 
-    if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
+    if ( isset($langArr) )
     {
-        $langArr            =   wpml_get_active_languages( );
-
-        unset($langArr['en']);
-
         foreach($langArr as $lang => $langVal)
         {
             $labelPromoText =   'promotext'.$lang;

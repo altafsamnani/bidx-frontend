@@ -1,4 +1,4 @@
-<?php 
+<?php
 // register widget
 add_action( 'widgets_init', function()
 {
@@ -9,28 +9,28 @@ add_action( 'widgets_init', function()
 /**
  * Creates a widget field with multiple columns.
  * Every column can contain a widget which is configurable separately.
- * 
- * 
+ *
+ *
  * TODO : Render out the data
- * TODO : add shortcodes for latest companies, mentors and active competitions 
- * 
+ * TODO : add shortcodes for latest companies, mentors and active competitions
+ *
  * @author Jaap Gorjup
  */
 class Bidx_MultiColumn_Widget extends WP_Widget {
 
     private $columns_list    = array( 1,2,3,4 );
 	private $items_list 	 = array( 2,3,4,5,6 );
-	
-	private $column_contents = array( 
+
+	private $column_contents = array(
     									'', 'Empty',
     									'[bidx app="group" view="widget-latest-members"]'=>'Latest Members',
     									'[bidx app="group" view="widget-latest-business-summaries"]'=>'Latest Business Summaries',
-    									'[bidx app="group" view="widget-latest-news"]'=>'Latest Posts',	
+    									'[bidx app="group" view="widget-latest-news"]'=>'Latest Posts',
     //                                  '[bidx app=\" \"]'=>'Latest Companies',
     //                                  '[bidx app=\" \"]'=>'Latest Mentors',
-    //                                  '[bidx app=\" \"]'=>'Active Competition(s)',    
+    //                                  '[bidx app=\" \"]'=>'Active Competition(s)',
                         			);
-	
+
     /**
      * Constructor
      * Initializes the WP_Widget base class
@@ -51,12 +51,12 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
     }
 
     /**
-     * 
+     *
      * The admin form for the widget
      * Setup the form fields
      */
     function form( $instance ) {
-    	
+
         if ( $instance && isset( $instance['columns'] ) )  {
             $columns = $instance['columns'];
             $latest_items   = $instance['items'];
@@ -66,7 +66,7 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
             $col2     = $instance['col2'];
             $col3     = $instance['col3'];
             $col4     = $instance['col4'];
-            
+
         } else {
             $columns = 2;
             $latest_items   = 3;
@@ -81,11 +81,11 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
 ?>
         <p>
             <label for="<?php echo $this->get_field_id( 'columns' ); ?>"><?php _e('Amount of columns', 'wp_widget_plugin'); ?></label>
-            <select name="<?php echo $this->get_field_name( 'columns' ) ?>" 
+            <select name="<?php echo $this->get_field_name( 'columns' ) ?>"
                     id="<?php echo $this->get_field_id( 'columns' ) ?>"
                     onchange="jQuery('.<?php echo $this->get_field_id( 'columns' ) ?>').show();jQuery('.<?php echo $this->get_field_id( 'columns' ) ?>.mc'+this.value).hide();"
             >
-<?php 
+<?php
             foreach ( $this->columns_list as $column_option ) {
                 printf(
                     '<option value="%s" %s >%s</option>',
@@ -100,11 +100,11 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
 
         <p>
             <label for="<?php echo $this->get_field_id( 'items' ); ?>"><?php _e('Amount of items', 'wp_widget_plugin'); ?></label>
-            <select name="<?php echo $this->get_field_name( 'items' ) ?>" 
+            <select name="<?php echo $this->get_field_name( 'items' ) ?>"
                     id="<?php echo $this->get_field_id( 'items' ) ?>"
                     onchange="jQuery('.<?php echo $this->get_field_id( 'items' ) ?>').show();jQuery('.<?php echo $this->get_field_id( 'items' ) ?>.mc'+this.value).hide();"
             >
-<?php 
+<?php
             foreach ( $this->items_list as $item_option ) {
                 printf(
                     '<option value="%s" %s >%s</option>',
@@ -159,22 +159,22 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
         {
 ?>
             <p>
-<?php  
+<?php
                 printf(
                     '<div class="%s%s%s%s">',
                     $this->get_field_id( 'columns' ),
                     $column_option == 3 ? ' mc2' : '',
-                    $column_option == 4 ? ' mc3 mc2' : '',              
+                    $column_option == 4 ? ' mc3 mc2' : '',
                     $columns < $column_option ? ' hidden' : ''
                 );
-?> 
+?>
                     <label for="<?php echo $this->get_field_id( 'col'.$column_option ); ?>"><?php _e('Column', 'wp_widget_plugin'); ?> <?php echo $column_option ?></label>
-                    <select name="<?php echo $this->get_field_name( 'col'.$column_option ) ?>" 
+                    <select name="<?php echo $this->get_field_name( 'col'.$column_option ) ?>"
                             id="<?php echo $this->get_field_id( 'col'.$column_option ) ?>"
                     >
-<?php 
+<?php
                     if ( empty( $column_data[$column_option] ) ) {
-                        $column_data[$column_option] = $this->column_contents[1];       
+                        $column_data[$column_option] = $this->column_contents[1];
                     }
 
                     foreach ( $this->column_contents as $column_content)
@@ -188,11 +188,11 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
                     }
 ?>
                     </select>
-                </div>          
+                </div>
             </p>
-<?php  
+<?php
         }
-    } 
+    }
 
    /**
     * The update function to insert the chosen values in to the db
@@ -213,8 +213,8 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
     }
 
     /**
-     * The front end display of the widget 
-     * 
+     * The front end display of the widget
+     *
      **/
     function widget($args, $instance) {
         extract( $args );
@@ -232,7 +232,7 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
         $col_class = '';
         $empty_cols = false;
         $all_cols = array( $col1, $col2, $col3, $col4 );
-        
+
         // Check if the text color needs to be white
         $text_color = '';
         if ( $bg_color === 'bg-primary-darker' || $bg_color === 'bg-secondary-darker' )
@@ -247,14 +247,14 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
         {
             $add_container = true;
         }
-        
+
         if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) !== true )
         {
             $add_container = true;
         }
-        
+
         echo $before_widget;
-        
+
         if ( $columns === "4" )
         {
             $col_class = 'col-sm-3';
@@ -298,31 +298,31 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
 
         if ( $has_bg ) :
     		echo '<div class="main-padding '. $bg_color . $text_color .'">';
-        endif; 
+        endif;
 
         if ( $add_container ) :
 ?>
             <div class="container">
-<?php                 
-        endif; 
+<?php
+        endif;
 
         if ( $empty_cols )
         {
 ?>
             <div class="alert alert-danger">
                 <blockquote>
-                    <p><?php _e('One or more columns are empty', 'bidxtheme') ?></p>
+                    <p><?php _e('One or more columns are empty', 'bidxplugin') ?></p>
                 </blockquote>
                 <p class="hide-overflow">
                     <span class="pull-left">
-                        <?php _e('Sidebar', 'bidxtheme') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
+                        <?php _e('Sidebar', 'bidxplugin') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
                     </span>
                     <span class="pull-right">
-                        <?php _e('Widget', 'bidxtheme') ?>: <strong><?php echo $args['widget_name']; ?></strong>
+                        <?php _e('Widget', 'bidxplugin') ?>: <strong><?php echo $args['widget_name']; ?></strong>
                     </span>
                 </p>
             </div>
-<?php             
+<?php
         }
         else
         {
@@ -334,21 +334,21 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
         			do_shortcode( $all_cols[$col-1] );
                 echo '</div>';
             }
-                       
+
             echo '</div>';
         }
 
         if ( $add_container ) :
 ?>
             </div>
-<?php                 
+<?php
         endif;
 
         if ( $has_bg ) :
             echo '</div>';
-        endif; 
+        endif;
 
     	echo $after_widget;
     }
 
-} 
+}

@@ -1,4 +1,4 @@
-<?php 
+<?php
 // register widget
 add_action( 'widgets_init', function()
 {
@@ -7,7 +7,7 @@ add_action( 'widgets_init', function()
 
 
 /**
- * Allows for selecting one post to be displayed in the widget 
+ * Allows for selecting one post to be displayed in the widget
  * @author Jaap Gorjup
  */
 class Bidx_Post_Widget extends WP_Widget {
@@ -32,7 +32,7 @@ class Bidx_Post_Widget extends WP_Widget {
     }
 
     /**
-     * 
+     *
      * The admin form for the widget
      * Setup the form fields
      */
@@ -40,15 +40,15 @@ class Bidx_Post_Widget extends WP_Widget {
     {
         if ( $instance )
         {
-            $title = $instance['title']; 
-            $post_id = $instance['post_id'];           
+            $title = $instance['title'];
+            $post_id = $instance['post_id'];
         }
         else
         {
             $title ='';
             $post_id = '';
         }
-        
+
         //get list of posts
         $args = array(
             		'numberposts' => 20,
@@ -60,7 +60,7 @@ class Bidx_Post_Widget extends WP_Widget {
             		'post_status' => 'draft, publish, future, pending, private',
             		'suppress_filters' => true
                 );
-        
+
         $recent_posts = wp_get_recent_posts( $args );
 
         //check if post_id exists in $recent post else add it to the $recent_posts
@@ -72,10 +72,10 @@ class Bidx_Post_Widget extends WP_Widget {
         </p>
         <p>
             <label for="<?php echo $this->get_field_id('post_id'); ?>"><?php _e('Post: (required)', 'wp_widget_plugin'); ?></label>
-            <select  name="<?php echo $this->get_field_name( 'post_id' ) ?>" 
+            <select  name="<?php echo $this->get_field_name( 'post_id' ) ?>"
 					id="<?php echo $this->get_field_id( 'post_id' ) ?>"
 			>
-<?php 
+<?php
 			foreach( $recent_posts as $recent )
             {
                 printf(
@@ -89,7 +89,7 @@ class Bidx_Post_Widget extends WP_Widget {
 			</select>
        </p>
 <?php
-    } 
+    }
 
    /**
     * The update function to insert the chosen values in to the db
@@ -104,8 +104,8 @@ class Bidx_Post_Widget extends WP_Widget {
     }
 
     /**
-     * The front end display of the widget 
-     * 
+     * The front end display of the widget
+     *
      **/
     function widget($args, $instance) {
 
@@ -121,7 +121,7 @@ class Bidx_Post_Widget extends WP_Widget {
         {
             $add_container = true;
         }
-        
+
         if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) === FALSE )
         {
             $add_container = true;
@@ -130,8 +130,8 @@ class Bidx_Post_Widget extends WP_Widget {
         if ( $add_container ) :
 ?>
             <div class="container">
-<?php                 
-        endif; 
+<?php
+        endif;
 
         //if wpml replace post_id by the one matching the language
         if( function_exists('icl_object_id' ) ) {
@@ -139,34 +139,34 @@ class Bidx_Post_Widget extends WP_Widget {
         }
 
         $the_query = new WP_Query( array( 'post_id' => $post_id, 'post_status' => 'publish' ) );
-        
+
         if ( $the_query->have_posts() )
         {
             $selected_post = get_post($post_id);
 ?>
             <h1><?php echo $selected_post->post_title; ?></h1>
-            <?php 
-            /* Note that 
-                 apply_filters('the_content', $selected_post->post_content) 
-               might reveal Social Sharing buttons and additional whitespace. 
-            */ 
+            <?php
+            /* Note that
+                 apply_filters('the_content', $selected_post->post_content)
+               might reveal Social Sharing buttons and additional whitespace.
+            */
             ?>
             <p><?php echo wpautop($selected_post->post_content, true); ?></p>
-<?php 
+<?php
         }
         else
         {
 ?>
             <div class="alert alert-danger">
                 <blockquote>
-                    <p><?php _e('No posts available, please create a post from Posts section ', 'bidxtheme') ?></p>
+                    <p><?php _e('No posts available, please create a post from Posts section ', 'bidxplugin') ?></p>
                 </blockquote>
                 <p class="hide-overflow">
                     <span class="pull-left">
-                        <?php _e('Sidebar', 'bidxtheme') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
+                        <?php _e('Sidebar', 'bidxplugin') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
                     </span>
                     <span class="pull-right">
-                        <?php _e('Widget', 'bidxtheme') ?>: <strong><?php echo $args['widget_name']; ?></strong>
+                        <?php _e('Widget', 'bidxplugin') ?>: <strong><?php echo $args['widget_name']; ?></strong>
                     </span>
                 </p>
             </div>
@@ -176,14 +176,14 @@ class Bidx_Post_Widget extends WP_Widget {
         if ( $add_container ) :
 ?>
             </div>
-<?php                 
+<?php
         endif;
 
         /* Restore original Post Data */
         wp_reset_postdata();
-        
+
 		echo $after_widget;
-		
+
     }
 
-} 
+}
