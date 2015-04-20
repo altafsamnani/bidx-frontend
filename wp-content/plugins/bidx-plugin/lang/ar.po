@@ -751,7 +751,7 @@ msgstr "لست عضو؟ انقر <a href=\"#auth/register\">هنا</a>  للتس
 # _e("Participants","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Participants"
-msgstr "المشتركين"
+msgstr "المشتركون"
 
 # 130) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition-anonymous.phtml -86
 # _e("Submitted","bidxplugin");
