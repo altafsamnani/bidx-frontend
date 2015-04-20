@@ -183,8 +183,6 @@
                                                 ,   text:           bidx.i18n.i("btnOk")
                                                 ,   onClick: function( $noty )
                                                     {
-
-                                                       bidx.utils.log(accessParams);
                                                         _doGrantRequest( accessParams, function( err )
                                                         {
                                                             if ( err )
@@ -194,16 +192,10 @@
                                                             else
                                                             {
                                                                 bidx.common.notifyRedirect();
-                                                                var statusMsg = (accessParams.action ==='accept') ? 6 : 7;
-                                                                var url = document.location.protocol
-                                                                    + "//"
-                                                                    + document.location.hostname
-                                                                    + ( document.location.port ? ":" + document.location.port : "" )
-                                                                    + '/entrepreneur-dashboard/'
-                                                                    + "?smsg=" + statusMsg
-                                                                ;
 
-                                                                document.location.href = url;
+                                                                var statusMsg = (accessParams.action ==='accept') ? 6 : 7;
+
+                                                                document.location.href = bidx.common.url( 'entrepreneur-dashboard') + "?smsg=" + statusMsg;
                                                             }
                                                         });
 

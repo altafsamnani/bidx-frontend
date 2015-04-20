@@ -274,17 +274,7 @@
             {
                 bidx.common.notifyRedirect();
 
-                urlLang =   ( currentLanguage && currentLanguage !== 'en'  ) ?   '/' + currentLanguage  : "";
-
-                var url = document.location.protocol
-                    + "//"
-                    + document.location.hostname
-                    + ( document.location.port ? ":" + document.location.port : "" )
-                    + urlLang
-                    + "?smsg=2&rs=true"
-                ;
-
-                document.location.href = url;
+                document.location.href = bidx.common.url() + "?smsg=2&rs=true" ;
             }
         });
     } );
@@ -367,17 +357,7 @@
                             {
                                 bidx.common.notifyRedirect();
 
-                                urlLang =   ( currentLanguage && currentLanguage !== 'en'  ) ?  '/' + currentLanguage  : "";
-
-                                var url = document.location.protocol
-                                    + "//"
-                                    + document.location.hostname
-                                    + ( document.location.port ? ":" + document.location.port : "" )
-                                    + urlLang
-                                    + "?smsg=3&rs=true"
-                                ;
-
-                                document.location.href = url;
+                                document.location.href = bidx.common.url() + "?smsg=3&rs=true" ;
                             }
                         });
 
@@ -481,14 +461,7 @@
             {
                 bidx.common.notifyRedirect();
 
-                var url = document.location.protocol
-                    + "//"
-                    + document.location.hostname
-                    + ( document.location.port ? ":" + document.location.port : "" )
-                    + "?smsg=5&rs=true"
-                ;
-
-                document.location.href = url;
+                document.location.href = bidx.common.url() + "?smsg=5&rs=true";
             }
         });
     } );
@@ -706,6 +679,23 @@
                 }
             ]
         } );
+    };
+
+    var url     =   function ( uri )
+    {
+        var buildUrl
+        ,   buildUri    =    ( uri ) ? '/' + uri  : ''
+        ,   urlLang     =   ( currentLanguage && currentLanguage !== 'en'  ) ?   '/' + currentLanguage  : "";
+
+        buildUrl        =   document.location.protocol
+                        +   "//"
+                        +   document.location.hostname
+                        +   ( document.location.port ? ":" + document.location.port : "" )
+                        +   urlLang
+                        +   buildUri + '/'
+                        ;
+
+        return buildUrl;
     };
 
     // Perform an API call to re-login
@@ -1208,6 +1198,7 @@
     ,   notifySuccess:                  notifySuccess
     ,   notifySuccessModal:             notifySuccessModal
     ,   notifyInformationModal:         notifyInformationModal
+    ,   url:                            url
 
     ,   closeNotifications:             closeNotifications
 
