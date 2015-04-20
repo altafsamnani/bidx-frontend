@@ -180,7 +180,7 @@
                                             [
                                                 {
                                                     addClass:       "btn btn-primary"
-                                                ,   text:           "Ok"
+                                                ,   text:           bidx.i18n.i("btnOk")
                                                 ,   onClick: function( $noty )
                                                     {
 
@@ -212,7 +212,7 @@
                                                 }
                                             ,   {
                                                     addClass:       "btn btn-danger"
-                                                ,   text:           "Cancel"
+                                                ,   text:           bidx.i18n.i("btnCancel")
                                                 ,   onClick: function( $noty )
                                                     {
                                                         $noty.close();
@@ -409,7 +409,7 @@
                                     ;
 
                                 $listItem = $(listItem);
-                                
+
                                 logo = bidx.utils.getValue( item, "logo");
                                 logoDocument = bidx.utils.getValue( item, "logo.document");
 
