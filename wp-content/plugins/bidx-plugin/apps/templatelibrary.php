@@ -1249,6 +1249,11 @@ class TemplateLibrary
         if ( $data )
         {
             $return = $prefix . $data . $suffix;
+
+            if(is_rtl())
+            {
+                $return = $suffix . $data . $prefix;
+            }
         }
 
         return $return;
