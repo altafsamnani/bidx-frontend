@@ -1171,7 +1171,7 @@ msgstr "استمارات تقديمي"
 # _e("My Recommendation","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "My Rating"
-msgstr "توصياتي"
+msgstr "تقديري"
 
 # 207) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition.phtml -374
 # _e("Business","bidxplugin");
