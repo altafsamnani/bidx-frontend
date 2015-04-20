@@ -113,7 +113,7 @@
                                             .replace( /%status%/g,                  i18nItem.summaryRequestStatus               ? i18nItem.summaryRequestStatus                 : emptyVal )
                                             .replace( /%countryOperation%/g,        i18nItem.countryOperation                   ? i18nItem.countryOperation                     : emptyVal )
                                             .replace( /%bidxCreationDateTime%/g,    item.businessSummary.bidxCreationDateTime   ? bidx.utils.parseISODateTime(item.businessSummary.bidxCreationDateTime, "date") : emptyVal )
-                                            .replace( /%bidxOwnerId%/g,             i18nItem.bidxOwnerId                        ? i18nItem.bidxOwnerId                          : emptyVal )
+                                            .replace( /%bidxOwnerId%/g,             i18nItem.bidxMeta.bidxOwnerId               ? i18nItem.bidxMeta.bidxOwnerId                 : emptyVal )
                                             .replace( /%creator%/g,                 i18nItem.bidxMeta.bidxOwnerDisplayName      ? i18nItem.bidxMeta.bidxOwnerDisplayName        : emptyVal )
                                             .replace( /%productService%/g,          i18nItem.productService                     ? i18nItem.productService                       : emptyVal)
                                             .replace( /%financingNeeded%/g,         i18nItem.financingNeeded                    ? i18nItem.financingNeeded + ' USD'             : emptyVal )
