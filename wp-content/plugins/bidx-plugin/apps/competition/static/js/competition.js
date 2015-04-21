@@ -581,7 +581,7 @@
                     name:
                     {
                         required:               true
-                    ,   maxlength:              30
+                    ,   maxlength:              60
                     }
                 ,   description:
                     {
