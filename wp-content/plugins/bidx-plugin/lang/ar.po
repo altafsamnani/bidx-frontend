@@ -1478,7 +1478,7 @@ msgstr "قم بتعديل خصائص المستندات"
 # _e("Select Assessor","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Assessor"
-msgstr "قم باختيار مُقَيِّم"
+msgstr "قم باختيار مقيّم"
 
 # 257) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition.phtml -735
 # _e("Assessor","bidxplugin");
@@ -1493,7 +1493,7 @@ msgstr "الحكم"
 # _e("Administrators","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Administrators"
-msgstr "المشرفون"
+msgstr "المديرون"
 
 # 260) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition.phtml -754
 # _e("Score","bidxplugin");
@@ -1538,13 +1538,13 @@ msgstr "اسحب"
 # Context  Textdomain bidxplugin
 #, fuzzy
 msgid "Assign Assessor:"
-msgstr "قم باختيار مُقَيِّم"
+msgstr "قم باختيار المقيّم"
 
 # 127) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition_original.phtml -10
 # _e("Select Assessor","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Select Assessor"
-msgstr "قم باختيار مُقَيِّم"
+msgstr "قم باختيار المقيّم"
 
 # 128) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition_original.phtml -14
 # _e("Assign","bidxplugin");
@@ -1587,13 +1587,13 @@ msgstr "التوصيات"
 # _e("Assessor Recommendations","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Assessor Recommendations"
-msgstr "توصيات المُقيّم"
+msgstr "توصيات المقيم"
 
 # 273) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition.phtml -843
 # _e("Judge Recommendations","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Judge Recommendations"
-msgstr "توصيات الحَكَم"
+msgstr "توصيات الحكم"
 
 # 274) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition.phtml -850
 # _e("Mark as","bidxplugin");
