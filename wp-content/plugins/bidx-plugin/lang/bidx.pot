@@ -12375,295 +12375,302 @@ msgid "Configure theme"
 msgstr ""
 
 
-#1912) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -162
+#1912) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -27
+# _e("Bidx Post","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Bidx Post"
+msgstr ""
+
+
+#1913) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -162
 # _e("No posts available, please create a post from Posts section ","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "No posts available, please create a post from Posts section "
 msgstr ""
 
 
-#1913) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -166
+#1914) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -166
 # _e("Sidebar","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1914) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -169
+#1915) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -169
 # _e("Widget","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1915) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/latest_businesses.php -101
+#1916) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/latest_businesses.php -101
 # _e("New Businesses","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1916) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/latest_businesses.php -103
+#1917) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/latest_businesses.php -103
 # _e("view all","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1917) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/latest_posts.php -101
+#1918) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/latest_posts.php -101
 # _e("News and Events","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1918) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/latest_posts.php -103
+#1919) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/latest_posts.php -103
 # _e("view all","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1919) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -81
+#1920) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -81
 # _e("Circle","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Circle"
 msgstr ""
 
 
-#1920) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -82
+#1921) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -82
 # _e("Flat","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Flat"
 msgstr ""
 
 
-#1921) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -77
+#1922) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -77
 # _e("Counter Style:","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Counter Style:"
 msgstr ""
 
 
-#1922) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -174
+#1923) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -174
 # _e("Fill in the \"End Date and Time\" field","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Fill in the \"End Date and Time\" field"
 msgstr ""
 
 
-#1923) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -203
+#1924) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -203
 # _e("This competition has expired","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1924) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -205
+#1925) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -205
 # _e("Visit our competition overview","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Visit our competition overview"
 msgstr ""
 
 
-#1925) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -215
+#1926) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -215
 # _e("DAYS","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1926) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -219
+#1927) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -219
 # _e("HOURS","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1927) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -223
+#1928) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -223
 # _e("MINUTES","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1928) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -227
+#1929) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -227
 # _e("SECONDS","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1929) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -233
+#1930) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/competitioncounter.php -233
 # _e("View Now","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "View Now"
 msgstr ""
 
 
-#1930) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/default.php -150
+#1931) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/default.php -150
 # _e("Find out more","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Find out more"
 msgstr ""
 
 
-#1931) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/default.php -179
+#1932) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/default.php -179
 # _e("Customize the layout","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Customize the layout"
 msgstr ""
 
 
-#1932) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/latest_members.php -101
+#1933) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/latest_members.php -101
 # _e("New members in the group","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1933) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/latest_members.php -103
+#1934) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/latest_members.php -103
 # _e("view all","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1934) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/monitoring.php -39
+#1935) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/monitoring.php -39
 # _e("Competition Monitoring","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Competition Monitoring"
 msgstr ""
 
 
-#1935) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -81
+#1936) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -81
 # _e("post_type","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "post_type"
 msgstr ""
 
 
-#1936) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -82
+#1937) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -82
 # _e("Competition definition","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Competition definition"
 msgstr ""
 
 
-#1937) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -86
+#1938) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -86
 # _e("Competitions","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Competitions"
 msgstr ""
 
 
-#1938) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -87
+#1939) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -87
 # _e("Parent Items:","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Parent Items:"
 msgstr ""
 
 
-#1939) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -88
+#1940) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -88
 # _e("All Competitions","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "All Competitions"
 msgstr ""
 
 
-#1940) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -89
+#1941) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -89
 # _e("View Competition","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "View Competition"
 msgstr ""
 
 
-#1941) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -90
+#1942) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -90
 # _e("Add New Competition","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Add New Competition"
 msgstr ""
 
 
-#1942) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -91
+#1943) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -91
 # _e("Add New","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Add New"
 msgstr ""
 
 
-#1943) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -92
+#1944) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -92
 # _e("Edit Competition","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Edit Competition"
 msgstr ""
 
 
-#1944) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -93
+#1945) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -93
 # _e("Update Competition","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Update Competition"
 msgstr ""
 
 
-#1945) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -94
+#1946) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -94
 # _e("Search Competition","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Search Competition"
 msgstr ""
 
 
-#1946) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -95
+#1947) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -95
 # _e("Competition not found","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Competition not found"
 msgstr ""
 
 
-#1947) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -96
+#1948) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -96
 # _e("Competition not found in Trash","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Competition not found in Trash"
 msgstr ""
 
 
-#1948) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -128
+#1949) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -128
 # _e("Startdate","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Startdate"
 msgstr ""
 
 
-#1949) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -129
+#1950) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -129
 # _e("Enddate","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Enddate"
 msgstr ""
 
 
-#1950) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -130
+#1951) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -130
 # _e("Monitoring","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Monitoring"
 msgstr ""
 
 
-#1951) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -197
+#1952) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -197
 # _e("Competition Settings","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Competition Settings"
 msgstr ""
 
 
-#1952) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -226
+#1953) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -226
 # _e("Competition Type","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Competition Type"
 msgstr ""
 
 
-#1953) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -240
+#1954) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -240
 # _e("Startdate (optional)","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Startdate (optional)"
 msgstr ""
 
 
-#1954) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -244
+#1955) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -244
 # _e("Enddate (mandatory)","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Enddate (mandatory)"
 msgstr ""
 
 
-#1955) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -84
+#1956) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -84
 # _x("Competitions", "Competitions","bidxplugin");
 # Context Competitions Textdomain bidxplugin
 msgctxt "Competitions"
@@ -12671,7 +12678,7 @@ msgid "Competitions"
 msgstr ""
 
 
-#1956) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -85
+#1957) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetition.php -85
 # _x("Competition", "Competition","bidxplugin");
 # Context Competition Textdomain bidxplugin
 msgctxt "Competition"
@@ -12679,90 +12686,90 @@ msgid "Competition"
 msgstr ""
 
 
-#1957) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -41
+#1958) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -41
 # _e("Judges","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Judges"
 msgstr ""
 
 
-#1958) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -42
+#1959) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -42
 # _e("Competitions:","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Competitions:"
 msgstr ""
 
 
-#1959) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -43
+#1960) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -43
 # _e("All Judges","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "All Judges"
 msgstr ""
 
 
-#1960) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -44
+#1961) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -44
 # _e("View Judge","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "View Judge"
 msgstr ""
 
 
-#1961) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -45
+#1962) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -45
 # _e("Add New Judge","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Add New Judge"
 msgstr ""
 
 
-#1962) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -46
+#1963) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -46
 # _e("Add New","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1963) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -47
+#1964) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -47
 # _e("Edit Judge","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Edit Judge"
 msgstr ""
 
 
-#1964) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -48
+#1965) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -48
 # _e("Update Judge","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Update Judge"
 msgstr ""
 
 
-#1965) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -49
+#1966) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -49
 # _e("Search Judges","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Search Judges"
 msgstr ""
 
 
-#1966) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -50
+#1967) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -50
 # _e("Judge not found","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Judge not found"
 msgstr ""
 
 
-#1967) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -51
+#1968) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -51
 # _e("Judge not found in Inactive","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Judge not found in Inactive"
 msgstr ""
 
 
-#1968) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -52
+#1969) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -52
 # _e("Inactive","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Inactive"
 msgstr ""
 
 
-#1969) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -39
+#1970) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -39
 # _x("Judges", "Judges","bidxplugin");
 # Context Judges Textdomain bidxplugin
 msgctxt "Judges"
@@ -12770,7 +12777,7 @@ msgid "Judges"
 msgstr ""
 
 
-#1970) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -40
+#1971) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/judges.php -40
 # _x("Judge", "Judge","bidxplugin");
 # Context Judge Textdomain bidxplugin
 msgctxt "Judge"
@@ -12778,140 +12785,140 @@ msgid "Judge"
 msgstr ""
 
 
-#1971) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -84
+#1972) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -84
 # _e("Flat","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1972) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -85
+#1973) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -85
 # _e("Circle","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1973) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -65
+#1974) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -65
 # _e("Select Competition:","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Select Competition:"
 msgstr ""
 
 
-#1974) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -80
+#1975) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -80
 # _e("Clock Style:","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Clock Style:"
 msgstr ""
 
 
-#1975) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -99
+#1976) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -99
 # _e("Alternative link to competition (optional):","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Alternative link to competition (optional):"
 msgstr ""
 
 
-#1976) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -175
+#1977) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -175
 # _e("No Competition Set","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "No Competition Set"
 msgstr ""
 
 
-#1977) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -179
+#1978) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -179
 # _e("Sidebar","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1978) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -182
+#1979) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -182
 # _e("Widget","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1979) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -202
+#1980) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -202
 # _e("Defined post is not a competition","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Defined post is not a competition"
 msgstr ""
 
 
-#1980) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -206
+#1981) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -206
 # _e("Sidebar","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1981) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -209
+#1982) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -209
 # _e("Widget","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1982) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -230
+#1983) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -230
 # _e("This competition has expired","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1983) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -232
+#1984) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -232
 # _e("Visit our competition overview","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1984) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -238
+#1985) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -238
 # _e("DAYS","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1985) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -242
+#1986) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -242
 # _e("HOURS","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1986) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -246
+#1987) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -246
 # _e("MINUTES","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1987) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -250
+#1988) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -250
 # _e("SECONDS","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1988) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -253
+#1989) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -253
 # _e("View Now","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1989) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -380
+#1990) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -380
 # _e("Select Competition:","bidxplugin");
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 
 
-#1990) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -435
+#1991) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -435
 # _e("You have been registered for this competition.","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "You have been registered for this competition."
 msgstr ""
 
 
-#1991) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -439
+#1992) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -439
 # _e("Thank you for registering for this competition.","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Thank you for registering for this competition."
 msgstr ""
 
 
-#1992) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -444
+#1993) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-competition-plugin/lib/bidxcompetitionwidget.php -444
 # _e("Register Now","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Register Now"
