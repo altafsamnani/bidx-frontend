@@ -10,6 +10,9 @@
 {
     var api
     ,   bidx
+    ,   iclVars             = window.icl_vars || {}
+    ,   currentLanguageVal
+    ,   currentLanguage
     ;
 
     if ( !window.bidx )
@@ -19,6 +22,8 @@
 
     bidx        = window.bidx;
     bidx.api    = bidx.api || {};
+    currentLanguageVal  = bidx.utils.getValue( iclVars, "current_language" );
+    currentLanguage     = ( currentLanguageVal ) ? currentLanguageVal : 'en';
 
     api = bidx.api;
 
@@ -240,6 +245,10 @@
                 ,   dataType:       "json"
                 ,   success:        options.success
                 ,   error:          options.error
+                ,   headers:        {
+                                        "X-Bidx-Language":    currentLanguage
+                                    }
+
                 }
             ;
 
