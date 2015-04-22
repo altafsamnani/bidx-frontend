@@ -58,16 +58,6 @@ class mentor
                         $deps[] = 'entrepreneur-mentor';
                     }
 
-                    if( $isGroupOwner && false  ) {
-
-                        $view->isGroupOwner = true;
-
-                        /* Groupowner mentoring functions & mentoring activities functions */
-                        wp_register_script ('groupowner-mentor', plugins_url ('static/js/groupowner-mentordashboard.js', __FILE__), array( ), '20140307', TRUE);
-
-                        $deps[] = 'groupowner-mentor';
-                    }
-
                     if( $isMentor ) {
 
                         $view->isMentor = true;
