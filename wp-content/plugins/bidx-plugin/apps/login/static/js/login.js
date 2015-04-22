@@ -23,12 +23,12 @@
              debug:  false
         ,    rules:
             {
-                "log":
+                log:
                 {
                     required:               true
                 ,   email:                  true
                 }
-            ,   "pwd":
+            ,   pwd:
                 {
                     required:               true
                 }
@@ -77,6 +77,8 @@
 
             ,   success: function( response, textStatus, jqXHR )
                 {
+                    var errorText
+                    ;
                     if ( response )
                     {
                         if ( response.status === 'OK' )
@@ -103,7 +105,6 @@
 
                                 if(!loginRedirect) // If there is no login redirect then use icl_home homepage variable
                                 {
-                                    bidx.utils.log(' iclVars',  iclVars);
                                     loginRedirect   =   ( $.isEmptyObject(  iclVars.icl_home ) ) ? '/'  : iclVars.icl_home ; // get the current language from sitepress if set
 
                                 }
@@ -115,7 +116,11 @@
                         }
                         else if ( response.status === "ERROR")
                         {
-                            $loginErrorMessage.text( response.text).show();
+                            errorText   =  bidx.i18n.i( response.code );
+
+                            errorText   =  ( errorText ) ? errorText : response.text;
+
+                            $loginErrorMessage.text( errorText ).show( );
 
                             params.error( jqXHR );
                         }
@@ -125,8 +130,11 @@
                     {
                         if( response === 0 )
                         {
-                            $loginErrorMessage.text( "Please log out of Wordpress administrator").show();
+                            errorText   =  bidx.i18n.i( 'wordpressLoggedInError' );
+
+                            $loginErrorMessage.text( errorText ).show();
                         }
+
                         params.error( jqXHR );
                     }
                 }

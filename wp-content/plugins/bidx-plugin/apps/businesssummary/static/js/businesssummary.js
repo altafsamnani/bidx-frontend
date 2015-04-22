@@ -51,6 +51,10 @@
     ,   rejectByEntrepreneur        = []
     ,   rejectByMentor              = []
 
+    ,   icl_vars                    = window.icl_vars || {}
+    ,   iclLanguage                 = bidx.utils.getValue( icl_vars, "current_language" )
+    ,   currentLanguage             = (iclLanguage && iclLanguage !== 'en') ? '/' + iclLanguage : ''
+
 
     ,   forms                       =
         {
@@ -644,7 +648,7 @@
                             bidx.utils.log( "[Cover Image] selected cover", file );
 
                             $coverImageContainer.data( "bidxData", file );
-                            
+
                             $coverImageModal.modal( "hide" );
 
                             if ( $coverImageContainer.find( "img" ).length )
@@ -1487,7 +1491,7 @@
                         }
 
                         $bsScore.addClass( "blink" );
-                        
+
                         setTimeout( function()
                         {
                             $bsScore.removeClass( "blink" );
@@ -1931,7 +1935,7 @@
             $logoContainer.append( "<img src='"+ logoImage.document +"' />" );
             $logoContainer.addClass( "logoPlaced" ).parent().find( "[href$='#removeLogo']" ).removeClass( "hide" );
         }
-        
+
 
         var coverImage = bidx.utils.getValue( businessSummary, "cover" );
 
@@ -2876,7 +2880,7 @@
                                                     ;
 
                                                 $listItem                = $( listItem );
-                                                
+
                                                 var roleLabel = $listItem.find( ".bidx-label" );
                                                 $.each( roleLabel, function( index, val )
                                                 {
@@ -3349,9 +3353,9 @@
                 //
                 bidx.common.notifyRedirect();
 
-                // @TODO: whereto in case of cancel of a businesssummary create?
-                //
-                document.location.href = "/";
+                // @TODO: whereto in case of cancel of a businesssummary create
+                document.location.href = currentLanguage + "/member";
+
             }
             else
             {
@@ -3650,10 +3654,8 @@
     //
     function _save( params )
     {
-        var currentLanguage
-        ,   icl_vars
+        var url
         ;
-
         if ( !businessSummary )
         {
             return;
@@ -3682,7 +3684,7 @@
         bidx.common.notifySave();
 
         bidx.utils.log( "About to save BusinessSummary::: ", businessSummary );
-        
+
         // Save the data to the API
         //
         bidx.api.call(
@@ -3709,10 +3711,8 @@
 
                     bidx.common.removeAppWithPendingChanges( appName );
 
-                    icl_vars                    = window.icl_vars || {};
-                    currentLanguage             = bidx.utils.getValue( icl_vars, "current_language" );
-                    currentLanguage             = (currentLanguage && currentLanguage !== 'en') ? '/' + currentLanguage : '';
-                    var url = currentLanguage + "/businesssummary/" + businessSummaryId + "?rs=true";
+
+                    url = currentLanguage + "/businesssummary/" + businessSummaryId + "?rs=true";
 
                     document.location.href = url;
 

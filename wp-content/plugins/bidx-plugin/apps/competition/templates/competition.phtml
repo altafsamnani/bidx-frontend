@@ -195,7 +195,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
             <div class="row view viewShow viewParticipate">
                 <div class="col-sm-4 col-sm-offset-2">
                     <h4 class="text-center"><?php echo _e( 'Apply before', 'bidxplugin' ); ?>:
-                        <strong><?php echo $endDateTime;?></strong>
+                        <strong class="endDateTimeDisplay"></strong>
                     </h4>
 <?php
                     if ( $this->exst($competitionBidxMeta->bidxEntityId) )
@@ -237,7 +237,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                     if ( $isParticipant ) :
 ?>
                         <button class="btn btn-primary btn-participate disabled hide"><i class="fa fa-file-text-o fa-big fa-above"></i><?php echo _e( 'Participate', 'bidxplugin' ); ?></button>
-                        <a href="/businesssummary/#createBusinessSummary" class="btn btn-primary btn-business hide"><i class="fa fa-suitcase fa-big fa-above"></i><?php echo _e( 'Create Business', 'bidxplugin' ); ?></a>
+                        <a href="<?php echo _l('businesssummary');?>/#createBusinessSummary" class="btn btn-primary btn-business hide"><i class="fa fa-suitcase fa-big fa-above"></i><?php echo _e( 'Create Business', 'bidxplugin' ); ?></a>
 <?php
                     endif;
 ?>
@@ -562,9 +562,9 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                             <table class="table table-compressed">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Roles</th>
-                                        <th class="text-right">Actions</th>
+                                        <th><?php _e('Name', 'bidxplugin');?></th>
+                                        <th><?php _e('Roles', 'bidxplugin');?></th>
+                                        <th class="text-right"><?php _e('Actions', 'bidxplugin');?></th>
                                     </tr>
                                 </thead>
                                 <tbody class="showActors">
@@ -711,8 +711,8 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
 <script type="text/html" id="finalist-snippet">
 <!--
     <tr>
-        <td><a href="/businesssummary/%entityId%" target="_blank">%bidxEntityDisplayName%</a></td>
-        <td> <a href="/member/%bidxOwnerId%">%bidxOwnerDisplayName%</a> </td>
+        <td><a href="<?php echo _l('businesssummary');?>/%entityId%" target="_blank">%bidxEntityDisplayName%</a></td>
+        <td> <a href="<?php echo _l('member');?>/%bidxOwnerId%">%bidxOwnerDisplayName%</a> </td>
         <td> %bidxRatingAverage% </td>
     </tr>
 -->
@@ -720,8 +720,8 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
 <script type="text/html" id="winner-snippet">
 <!--
 <tr>
-        <td><a href="/businesssummary/%entityId%" target="_blank">%bidxEntityDisplayName%</a></td>
-        <td> <a href="/member/%bidxOwnerId%">%bidxOwnerDisplayName%</a> </td>
+        <td><a href="<?php echo _l('businesssummary');?>/%entityId%" target="_blank">%bidxEntityDisplayName%</a></td>
+        <td> <a href="<?php echo _l('member');?>/%bidxOwnerId%">%bidxOwnerDisplayName%</a> </td>
         <td> %bidxRatingAverage% </td>
 </tr>
 -->
@@ -761,8 +761,8 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
             <div class="cardTop">
                 <div class="row">
                     <div class="col-sm-8">
-                        <h4><a href="/businesssummary/%entityId%" target="_blank">%bidxEntityDisplayName%</a>
-                        &nbsp;&nbsp;<small><?php _e('by','bidxplugin'); ?></small><a href="/member/%bidxOwnerId%">&nbsp;&nbsp;%bidxOwnerDisplayName%</a></h4>
+                        <h4><a href="<?php echo _l('businesssummary');?>/%entityId%" target="_blank">%bidxEntityDisplayName%</a>
+                        &nbsp;&nbsp;<small><?php _e('by','bidxplugin'); ?></small><a href="<?php echo _l('member');?>/%bidxOwnerId%">&nbsp;&nbsp;%bidxOwnerDisplayName%</a></h4>
 
                     </div>
                     <div class="col-sm-4 text-right">
@@ -798,7 +798,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                 <div class="assign-assessor hide">
                     <div class="row">
                         <div class="col-sm-12">
-                            <label class="inline">Assign Assessor:</label>
+                            <label class="inline"><?php _e('Assign Assessor:','bidxplugin');?></label>
                         </div>
                     </div>
                     <div class="row">
@@ -815,7 +815,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                 <div class="assign-judge hide">
                     <div class="row">
                         <div class="col-sm-12">
-                            <label class="inline">Assign Judge:</label>
+                            <label class="inline"><?php _e('Assign Judge:','bidxplugin');?></label>
                         </div>
                     </div>
                     <div class="row">
@@ -909,7 +909,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                 <div class="row">
                     <div class="col-sm-12 wrapper-qualification-%entityId% hide">
                         <div class="hide-overflow">
-                            <label class="inline">Qualification:</label>
+                            <label class="inline"><?php _e('Qualification:','bidxplugin');?></label>
                             <div class="radio inline-radio">
                                 <input type="radio" id="radio-accept-%entityId%"  value="SUBMITTED" name="isqualification%entityId%" data-toggle="radio" />
                                 <label for="radio-accept-%entityId%"><span></span><?php _e("Submit",'bidxplugin');?></label>
@@ -967,7 +967,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
         </div>
         <div class="cardFooter%entityId% hide">
             <div class="alert alert-info text-right">
-                <span class="cardInfoText">Add an explanatory text <strong>here</strong></span>
+                <span class="cardInfoText"><?php _e('Add an explanatory text <strong>here</strong>','bidxplugin');?></strong></span>
                 <a  data-entityid = "%entityId%" data-status = "" class="btn btn-success btn-xs btn-action set-submit-%entityId% hide">
                     <?php _e('Submit', 'bidxplugin');?>
                 </a>
@@ -981,8 +981,8 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
 <!--
     <div class="row %warningClass% review-%id%">
         <div class="col-sm-4">%userDisplayName%</div>
-        <div class="col-sm-2">Score: %reviewRating%</div>
-        <div class="col-sm-6">Recommendation: %competitionRecommendation%</div>
+        <div class="col-sm-2"><?php _e('Score:','bidxplugin');?> %reviewRating%</div>
+        <div class="col-sm-6"><?php _e('Recommendation:','bidxplugin');?> %competitionRecommendation%</div>
         <div class="col-sm-12"><p class="bottom-border"><i class="fa fa-pencil-square-o"></i> %comment%</p></div>
     </div>
 -->

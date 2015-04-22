@@ -62,6 +62,8 @@
 
     ,   $businessSummary            = $element.find( "[name='businessSummary']" )
 
+    ,   $competitionEndTimeDisplay  = $element.find( ".endDateTimeDisplay" )
+
     ,   listDropdownBp              = bidx.utils.getValue( bidxConfig, "session.wp.entities.bidxBusinessSummary" )
 
     ,   active                      = []
@@ -579,7 +581,7 @@
                     name:
                     {
                         required:               true
-                    ,   maxlength:              30
+                    ,   maxlength:              60
                     }
                 ,   description:
                     {
@@ -1698,14 +1700,6 @@ function _initApplicationsView( )
     ,   isCompetitionManager  = _.contains( competitionRoles, 'COMPETITION_ADMIN')
     ;
 
-
-    bidx.utils.log(applicationObj, 'applicationObj');
-
-  /*  $('.viewApplications tbody').empty();
-    table = $('.viewApplications').DataTable();
-    table.destroy();
-    $('.viewApplications tbody').empty();*/
-
     $.each( applicationObj, function( idx, response )
     {
         reviews             =   response.reviews;
@@ -1723,8 +1717,6 @@ function _initApplicationsView( )
                 entrepreneurData    = '<a href="/member/' + ownerId + '" target="_blank">' + entrepreneur + '</a>';
 
                 roleReview      =  currentUserRecommendationForCurrentPhase( response );
-
-                bidx.utils.log('roleReview', roleReview);
 
                 displayRows     =   {
                                         business:       businessData
@@ -1996,7 +1988,14 @@ function _updateAttachment( $attachment, attachment )
 
 function _competitionTimer (  )
 {
-    var countTime = $element.find('.counter' );
+    var countTime       =   $element.find('.counter' )
+    ,   endDateObj     =   new Date( competitionVars.endDateTime )
+    ,   endDateTime
+    ;
+
+    endDateTime     =   bidx.utils.getISODateTime( endDateObj, 'datetime' );
+    /* Display End Date Time for Apply Before */
+    $competitionEndTimeDisplay.text( endDateTime );
 
     countTime.each( function()
     {

@@ -75,7 +75,7 @@
                                     <th class="hidden-xs"><?php _e('Your last visit','bidxplugin');?></th>
                                     <th class="hidden-xs"><?php _e('Request status','bidxplugin');?></th>
                                     <th class="hidden-xs"><?php _e('Changes since last visit?','bidxplugin');?></th>
-                                    <th></th>
+                                    <th class="hide"></th>
                                 </tr>
                             </thead>
                             <tbody class="contact investor-contact ">
@@ -102,7 +102,7 @@
 <?php
                                 // #msp: is it possible not to have an ID in the page?? what would the url be then..
                                 $id = $this->exst ( $this -> sessionData -> data -> id );
-                                $href = "/member#editInvestor/" . $id . "/" . http_build_query( array( "success"=> "/investor-dashboard/#dashboard/investor", "cancel"=> "/investor-dashboard/#dashboard/investor" ) );
+                                $href = _l('member'). "#editInvestor/" . $id . "/" . http_build_query( array( "success"=> _l('investor-dashboard')."#dashboard/investor", "cancel"=> _l('investor-dashboard')."#dashboard/investor" ) );
 ?>
                                 <a class="btn btn-primary" href="<?php echo $href; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
                             </div>
@@ -143,7 +143,7 @@
     <td class="hidden-xs">
         <span class="placeholder bidxCreationDateTime">%bidxCreationDateTime%</span>
     </td>
-    <td>
+    <td class="hide">
         <span class="placeholder stopviewing"><a href="#"><?php _e( 'Stop viewing','bidxplugin');?></a></span>
     </td>
 </tr>

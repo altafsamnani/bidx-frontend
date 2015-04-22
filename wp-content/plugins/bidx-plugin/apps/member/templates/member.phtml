@@ -100,7 +100,7 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 <?php
         if ( $memberId != $loggedInMemberId && $authenticated && $inGroup ) :
 ?>
-            <a href="/mail/#mail/contacts/action=connect&id=<?php echo $memberId ?>" class="btn btn-sm btn-warning btn-contact hide pull-right">
+            <a href="<?php echo _l('mail');?>/#mail/contacts/action=connect&id=<?php echo $memberId ?>" class="btn btn-sm btn-warning btn-contact hide pull-right">
                 <div class="fa fa-user fa-above fa-big"></div>
                 <?php _e('Connect', 'bidxplugin')?>
             </a>
@@ -126,7 +126,7 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
             <div class="text-uppercase pull-right main-margin-horizontal accreditation accr-Pending">
                 <span class="fa fa-bookmark-o fa-big pull-left"></span>
                 <?php _e('Pending Accreditation', 'bidxplugin')?>
-                
+
             </div>
 
             <div class="text-uppercase pull-right main-margin-horizontal accreditation accr-Accepted">

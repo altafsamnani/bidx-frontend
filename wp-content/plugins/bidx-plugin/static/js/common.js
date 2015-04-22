@@ -274,17 +274,7 @@
             {
                 bidx.common.notifyRedirect();
 
-                urlLang =   ( currentLanguage && currentLanguage !== 'en'  ) ?   '/' + currentLanguage  : "";
-
-                var url = document.location.protocol
-                    + "//"
-                    + document.location.hostname
-                    + ( document.location.port ? ":" + document.location.port : "" )
-                    + urlLang
-                    + "?smsg=2&rs=true"
-                ;
-
-                document.location.href = url;
+                document.location.href = bidx.common.url() + "?smsg=2&rs=true" ;
             }
         });
     } );
@@ -352,7 +342,7 @@
             [
                 {
                     addClass:       "btn btn-primary"
-                ,   text:           "Ok"
+                ,   text:           bidx.i18n.i("btnOk")
                 ,   onClick: function( $noty )
                     {
 
@@ -367,17 +357,7 @@
                             {
                                 bidx.common.notifyRedirect();
 
-                                urlLang =   ( currentLanguage && currentLanguage !== 'en'  ) ?  '/' + currentLanguage  : "";
-
-                                var url = document.location.protocol
-                                    + "//"
-                                    + document.location.hostname
-                                    + ( document.location.port ? ":" + document.location.port : "" )
-                                    + urlLang
-                                    + "?smsg=3&rs=true"
-                                ;
-
-                                document.location.href = url;
+                                document.location.href = bidx.common.url() + "?smsg=3&rs=true" ;
                             }
                         });
 
@@ -386,7 +366,7 @@
                 }
             ,   {
                     addClass:       "btn btn-danger"
-                ,   text:           "Cancel"
+                ,   text:           bidx.i18n.i("btnCancel")
                 ,   onClick: function( $noty )
                     {
                         $noty.close();
@@ -481,14 +461,7 @@
             {
                 bidx.common.notifyRedirect();
 
-                var url = document.location.protocol
-                    + "//"
-                    + document.location.hostname
-                    + ( document.location.port ? ":" + document.location.port : "" )
-                    + "?smsg=5&rs=true"
-                ;
-
-                document.location.href = url;
+                document.location.href = bidx.common.url() + "?smsg=5&rs=true";
             }
         });
     } );
@@ -708,6 +681,23 @@
         } );
     };
 
+    var url     =   function ( uri )
+    {
+        var buildUrl
+        ,   buildUri    =    ( uri ) ? '/' + uri  : ''
+        ,   urlLang     =   ( currentLanguage && currentLanguage !== 'en'  ) ?   '/' + currentLanguage  : "";
+
+        buildUrl        =   document.location.protocol
+                        +   "//"
+                        +   document.location.hostname
+                        +   ( document.location.port ? ":" + document.location.port : "" )
+                        +   urlLang
+                        +   buildUri + '/'
+                        ;
+
+        return buildUrl;
+    };
+
     // Perform an API call to re-login
     //
     var modalLogin = function ( params )
@@ -804,7 +794,7 @@
             $.extend( $.validator.messages,
             {
                 required:               bidx.i18n.i( "frmFieldRequired" )
-            ,   email:                  bidx.i18n.i( "frmFieldEmail" )
+            ,   email:                  bidx.i18n.i( "frmInvalidEmail" )
             ,   dpDate:                 bidx.i18n.i( "frmInvalidDate" )
             ,   skypeUsername:          bidx.i18n.i( "frmInvalidSkypeUsername" )
             ,   linkedInUsername:       bidx.i18n.i( "frmInvalidLinkedInUsername" )
@@ -823,6 +813,16 @@
                 //
             ,   tagsinputRequired:      bidx.i18n.i( "frmFieldRequired" )
             ,   tagsinputMinItems:      $.validator.format( bidx.i18n.i( "frmInvalidMinItems" ) )
+
+            ,   remote:         bidx.i18n.i( "frmInvalidRemote" ) //
+            ,   date:           bidx.i18n.i( "frmInvalidDate" )
+            ,   dateISO:        bidx.i18n.i( "frmInvalidDate" )
+            ,   number:         bidx.i18n.i( "frmInvalidNumber" ) //
+            ,   creditcard:     bidx.i18n.i( "frmInvalidCC" )
+            ,   equalTo:        bidx.i18n.i( "frmInvalidEqualTo" )
+            ,   rangelength:    $.validator.format(bidx.i18n.i( "frmInvalidRangeLength" ) )
+            ,   range:          $.validator.format(bidx.i18n.i( "frmInvalidRange" ) )
+
             } );
         } );
 
@@ -1198,6 +1198,7 @@
     ,   notifySuccess:                  notifySuccess
     ,   notifySuccessModal:             notifySuccessModal
     ,   notifyInformationModal:         notifyInformationModal
+    ,   url:                            url
 
     ,   closeNotifications:             closeNotifications
 

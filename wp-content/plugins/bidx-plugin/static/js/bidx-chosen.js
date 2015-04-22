@@ -94,14 +94,17 @@
         //
     ,   populateItems: function()
         {
-            var plugin = this;
+            var sortItems
+            ,   plugin = this;
 
             if ( !plugin.items || $.type( plugin.items ) !== "array" )
             {
                 return;
             }
 
-            $.each( plugin.items, function( i, option )
+            sortItems = _.sortBy(plugin.items, 'value');
+
+            $.each( sortItems, function( i, option )
             {
                 var $option = $(
                     "<option />"

@@ -90,7 +90,7 @@
                                                   ,    'stageBusiness'    : 'stageBusiness'
                                                   ,    'productService'   : 'productService'
                                                   ,    'envImpact'        : 'envImpact'
-                                                  ,   'summaryRequestStatus' : 'summaryRequestStatus'
+                                                  ,    'summaryRequestStatus' : 'summaryRequestStatus'
                                                   };
 
                                        /* Setting data to get the final values */
@@ -113,7 +113,7 @@
                                             .replace( /%status%/g,                  i18nItem.summaryRequestStatus               ? i18nItem.summaryRequestStatus                 : emptyVal )
                                             .replace( /%countryOperation%/g,        i18nItem.countryOperation                   ? i18nItem.countryOperation                     : emptyVal )
                                             .replace( /%bidxCreationDateTime%/g,    item.businessSummary.bidxCreationDateTime   ? bidx.utils.parseISODateTime(item.businessSummary.bidxCreationDateTime, "date") : emptyVal )
-                                            .replace( /%bidxOwnerId%/g,             i18nItem.bidxOwnerId                        ? i18nItem.bidxOwnerId                          : emptyVal )
+                                            .replace( /%bidxOwnerId%/g,             i18nItem.bidxMeta.bidxOwnerId               ? i18nItem.bidxMeta.bidxOwnerId                 : emptyVal )
                                             .replace( /%creator%/g,                 i18nItem.bidxMeta.bidxOwnerDisplayName      ? i18nItem.bidxMeta.bidxOwnerDisplayName        : emptyVal )
                                             .replace( /%productService%/g,          i18nItem.productService                     ? i18nItem.productService                       : emptyVal)
                                             .replace( /%financingNeeded%/g,         i18nItem.financingNeeded                    ? i18nItem.financingNeeded + ' USD'             : emptyVal )
@@ -158,6 +158,7 @@
                 }
             );
         };
+
     // function that retrieves group members returned in an array of key/value objects
     // NOTE: @19-8-2013 currently the search function is used. This needs to be revised when API exposes new member functions
     //
@@ -196,7 +197,12 @@
                 var listItem
                 ,   $listItem
                 ,   externalVideoPitch
-                ,   $el;
+                ,   $el
+                ,   countryLabel            =   []
+                ,   industryLabel           =   []
+                ,   envImpactLabel          =   []
+                ,   productServiceLabel     =   []
+                ;
 
 
                 // now format it into array of objects with value and label
@@ -212,10 +218,47 @@
 
                     $.each(response.docs, function(idx, i18nItem)
                     {
-                        if ( $.isArray(i18nItem.countrylabel_ss) )        { i18nItem.countrylabel_ss        = i18nItem.countrylabel_ss.join( ", " );        }
-                        if ( $.isArray(i18nItem.industrylabel_ss) )       { i18nItem.industrylabel_ss       = i18nItem.industrylabel_ss.join( ", " );       }
-                        if ( $.isArray(i18nItem.envimpactlabel_ss) )      { i18nItem.envimpactlabel_ss      = i18nItem.envimpactlabel_ss.join( ", " );      }
-                        if ( $.isArray(i18nItem.productservicelabel_ss) ) { i18nItem.productservicelabel_ss = i18nItem.productservicelabel_ss.join( ", " ); }
+                        if ( $.isArray(i18nItem.countrylabel_ss) )
+                        {
+                            countryLabel                    = _.map(    i18nItem.country_ss
+                                                                    ,   function(label)
+                                                                        {
+                                                                            return bidx.data.i(label, 'country');
+                                                                        }
+                                                                    );
+                            i18nItem.countrylabel_ss        = countryLabel.join( ", " );
+                        }
+                        if ( $.isArray(i18nItem.industrylabel_ss) )
+                        {
+                            industryLabel                   = _.map(    i18nItem.industry_ss
+                                                                    ,   function(label)
+                                                                        {
+                                                                            return bidx.data.i(label, 'industry');
+                                                                        }
+                                                                    );
+                            i18nItem.industrylabel_ss       = industryLabel.join( ", " );
+                        }
+                        if ( $.isArray(i18nItem.envimpactlabel_ss) )
+                        {
+
+                            envImpactLabel                  = _.map(    i18nItem.envimpact_ss
+                                                                    ,   function(label)
+                                                                        {
+                                                                            return bidx.data.i(label, 'envImpact');
+                                                                        }
+                                                                    );
+                            i18nItem.envimpactlabel_ss      = envImpactLabel.join( ", " );
+                        }
+                        if ( $.isArray(i18nItem.productservicelabel_ss) )
+                        {
+                            productServiceLabel                 = _.map(    i18nItem.envimpact_ss
+                                                                    ,   function(label)
+                                                                        {
+                                                                            return bidx.data.i(label, 'industry');
+                                                                        }
+                                                                    );
+                            i18nItem.productservicelabel_ss = productServiceLabel.join( ", " );
+                        }
 
                         //search for placeholders in snippit
                         listItem = snippit

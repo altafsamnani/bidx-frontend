@@ -16,4 +16,6 @@
     <Item value="groupAdmin">Group admin</Item>
     <Item value="msgToGroup">Message to group owner</Item>
     <Item value="trashedFrom">Deleted from</Item>
+
+    <Item value="insufficientRights">You cannot trash a system mail this way</Item>
 </I18N>

@@ -783,7 +783,7 @@ class TemplateLibrary
         //If comma and 2 values then make seperator And
         if (trim ($seperator) == ',')
         {
-            $seperatorAnd = ' ' + __('and', 'bidxplugin') + ' ';
+            $seperatorAnd = ' ' . __('and', 'bidxplugin') . ' ';
         }
 
         // exit;
@@ -1249,6 +1249,11 @@ class TemplateLibrary
         if ( $data )
         {
             $return = $prefix . $data . $suffix;
+
+            if(is_rtl())
+            {
+                $return = $suffix . $data . $prefix;
+            }
         }
 
         return $return;

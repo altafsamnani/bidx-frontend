@@ -68,6 +68,35 @@ class Button_Widget extends WP_Widget {
             <label for="<?php echo $this->get_field_id('buttonlink'); ?>"><?php _e('Link: (required)', 'wp_widget_plugin'); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id('buttonlink'); ?>" name="<?php echo $this->get_field_name('buttonlink'); ?>" type="text" value="<?php echo $buttonlink; ?>" />
         </p>
+
+       <!-- Promot Text Activated Languages -->
+        <?php
+            if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
+            {
+                $langArr            =   wpml_get_active_languages( );
+
+                unset($langArr['en']);
+
+                foreach($langArr as $lang => $langVal)
+                {
+                    $labelButtonText =   'buttontext'.$lang;
+                    $labelButtonLink =   'buttonlink'.$lang;
+                    $buttontext      =   (isset($instance[$labelButtonText])) ?  $instance[$labelButtonText] : '';
+                    $buttonlink      =   (isset($instance[$labelButtonLink])) ?  $instance[$labelButtonLink] : '';
+        ?>
+                    <p>
+                        <label for="<?php echo $this->get_field_id($labelButtonText); ?>">Text: (<?php echo $lang;?>)</label>
+                        <input class="widefat" id="<?php echo $this->get_field_id($labelButtonText); ?>" name="<?php echo $this->get_field_name($labelButtonText); ?>" type="text" value="<?php echo $buttontext; ?>" />
+                    </p>
+                    <p>
+                        <label for="<?php echo $this->get_field_id($labelButtonLink); ?>">Link: (optional - <?php echo $lang;?>)</label>
+                        <input class="widefat" id="<?php echo $this->get_field_id($labelButtonLink); ?>" name="<?php echo $this->get_field_name($labelButtonLink); ?>" type="text" value="<?php echo $buttonlink; ?>" />
+                    </p>
+        <?php   }
+
+            }
+        ?>
+
         <p>
             <label><?php _e('Style', 'wp_widget_plugin'); ?></label><br>
             <label for="<?php echo $this->get_field_id('primary'); ?>">
@@ -196,6 +225,22 @@ class Button_Widget extends WP_Widget {
         $instance['buttonstyle'] = strip_tags( $new_instance['buttonstyle'] );
         $instance['buttonsize'] = strip_tags( $new_instance['buttonsize'] );
         $instance['buttonicon'] = esc_sql( $new_instance['buttonicon'] );
+
+        if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
+        {
+            $langArr            =   wpml_get_active_languages( );
+
+            unset($langArr['en']);
+
+            foreach($langArr as $lang => $langVal)
+            {
+                $labelButtonText             =   'buttontext'.$lang;
+                $labelButtonLink             =   'buttonlink'.$lang;
+                $instance[$labelButtonText]  =   esc_sql( $new_instance[$labelButtonText] );
+                $instance[$labelButtonLink]  =   esc_sql( $new_instance[$labelButtonLink] );
+            }
+        }
+
         return $instance;
     }
 
@@ -204,9 +249,14 @@ class Button_Widget extends WP_Widget {
     /////////////////////////////////////////
     function widget($args, $instance) {
         extract( $args );
+        $currentLanguage =  getLangPrefix( );
+        $currentLanguage = ( $currentLanguage !== 'en' ) ? $currentLanguage : '';
+
         // these are the widget options
-        $buttontext = $instance['buttontext'];
-        $buttonlink = $instance['buttonlink'];
+        $buttontext = $instance['buttontext'.$currentLanguage];
+        $buttonlink = $instance['buttonlink'.$currentLanguage];
+
+
         $buttonblock = $instance['buttonblock'] ? ' btn-block' : ' ';
         $buttonalign = $instance['buttonalign'];
         $buttonstyle = $instance['buttonstyle'];
