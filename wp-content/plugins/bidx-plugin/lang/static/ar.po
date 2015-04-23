@@ -1432,7 +1432,7 @@ msgstr "أنشطة داعمة للمنتجات الحيوانية"
 # Context A.01.63 Textdomain static
 msgctxt "A.01.63"
 msgid "Post-harvest crop activities"
-msgstr ""
+msgstr "أنشطة المحاصيل بعد الحصاد"
 
 #  _x("Seed processing for propagation", "A.01.64", "static");
 # Context A.01.64 Textdomain static
