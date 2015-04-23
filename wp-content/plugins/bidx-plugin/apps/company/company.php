@@ -10,9 +10,6 @@ class company
 
     public $scriptInject;
 
-    // Added by Tarek
-    public $company_name_for_title_tag = '';
-
     static $deps = array ('jquery', 'jquery-ui-widget','bootstrap', 'underscore', 'backbone', 'json2', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
                             'bidx-reflowrower',  'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-chosen', 'bidx-reflowrower','google-jsapi');
 
@@ -30,14 +27,6 @@ class company
     public function register_company_bidx_ui_libs ()
     {
         wp_register_script ('company', plugins_url ('static/js/company.js', __FILE__), self::$deps, '20130501', TRUE);
-    }
-
-    //Added by Tarek
-    function company_wp_title( $title, $sep ) {
-
-        $new_title = $title . $sep . $company_name_for_title_tag;
-
-        return $new_title;
     }
 
     /**
@@ -84,12 +73,7 @@ class company
                 if ($companyId) {
                     $view->company = $companySvc->getCompanyDetails ($companyId);
                     $view->companyTitle = true;
-                    // Added by Tarek
-                    $company_name_for_title_tag = $view->company->name;
                 }
-
-                // Added by Tarek
-                add_filter( 'wp_title', 'company_wp_title', 10, 2 );
 
                 $view->noheader = $atts['noheader'];
 
