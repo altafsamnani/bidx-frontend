@@ -1713,8 +1713,8 @@ function _initApplicationsView( )
                 ownerId             =   bidx.utils.getValue( bidxMeta, 'bidxOwnerId');
                 rating              =   bidx.utils.getValue( bidxMeta, 'bidxRatingAverage');
 
-                businessData        = '<a href="/businesssummary/' + entityId +  '" target="_blank">' + business + '</a>';
-                entrepreneurData    = '<a href="/member/' + ownerId + '" target="_blank">' + entrepreneur + '</a>';
+                businessData        = '<a href="' + bidx.common.url('businesssummary') + entityId +  '" target="_blank">' + business + '</a>';
+                entrepreneurData    = '<a href="' + bidx.common.url('member') + ownerId + '" target="_blank">' + entrepreneur + '</a>';
 
                 roleReview      =  currentUserRecommendationForCurrentPhase( response );
 
