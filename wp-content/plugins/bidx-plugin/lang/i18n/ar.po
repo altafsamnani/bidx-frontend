@@ -353,7 +353,7 @@ msgid ""
 "participants will receive a notification of this change in status. Are you "
 "sure you want to proceed?"
 msgstr ""
-"بإعلانك عن الفائز (الفائزين)، أنت تختم المسابقة. سيتقلى كل المشتركين تنبيه "
+"بإعلانك عن الفائز (الفائزين)، أنت تختم المسابقة. سيتلقى كل المشتركين تنبيه "
 "بتغيير حالة المسابقة. هل أنت متأكد أنك تريد المتابعة؟"
 
 # _x("You have successfully applied for this competition. Thank you for participating! Please note: Your application is now in draft status, you can still review and edit your business plan. If you are ready to have your application reviewed by the competition assessors, please submit your application by clicking on the Submit button", "competition","i18n");

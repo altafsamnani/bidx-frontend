@@ -564,6 +564,12 @@ msgctxt "mail"
 msgid "Deleted from"
 msgstr ""
 
+# _x("You cannot trash a system mail this way", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "You cannot trash a system mail this way"
+msgstr ""
+
 # _x("Select the outcome of this business", "member","i18n");
 # Context member TextDomain i18n
 msgctxt "member"
