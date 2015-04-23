@@ -404,8 +404,8 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
 
             $rowValues = array
             (
-                __('Gender') => $gender,
-                __('Industry') => $this->getMultiValues( $this->exst($competition->competitionIndustry), '<br> ','industry'),
+                __('Gender','bidxplugin') => $gender,
+                __('Industry','bidxplugin') => $this->getMultiValues( $this->exst($competition->competitionIndustry), '<br> ','industry'),
                 __('Country of business','bidxplugin') => $this->getMultiValues( $this->exst($competition->competitionCountry), ', ', 'country' ),
                 __('Social impact','bidxplugin') => $this->getMultiValues( $this->exst($competition->competitionSocialImpact), ', ', 'socialImpact' ),
                 __('Environmental impact','bidxplugin') => $this->getMultiValues( $this->exst($competition->competitionEnvImpact), ', ', 'envImpact' ),
