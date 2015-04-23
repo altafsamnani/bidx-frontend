@@ -443,7 +443,7 @@ msgstr "لقد قمت بتعيين مقيّمين لهذا الاشتراك بن
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "You have successfully assigned judges for this submission. "
-msgstr "لقد قمت بتعسين محكمين لهذا الاشتراك بنجاح."
+msgstr "لقد قمت بتعيين حكام لهذا الاشتراك بنجاح"
 
 # _x("You have recommended this plan as a finalist", "competition","i18n");
 # Context competition TextDomain i18n
