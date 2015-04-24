@@ -681,6 +681,13 @@
         } );
     };
 
+    // Convenience function for retrieving the id of the current group
+    //
+    function getCurrentLanguage()
+    {
+        return currentLanguage;
+    }
+
     var url     =   function ( uri )
     {
         var buildUrl
@@ -1225,6 +1232,7 @@
     ,   getCurrentUserId:               getCurrentUserId
     ,   getSessionValue:                getSessionValue
     ,   getNow:                         getNow
+    ,   getCurrentLanguage:             getCurrentLanguage
 
     ,   addAppWithPendingChanges:       addAppWithPendingChanges
     ,   removeAppWithPendingChanges:    removeAppWithPendingChanges
@@ -1244,6 +1252,7 @@
 
     ,   modalLogin:                     modalLogin
     };
+
 
     // Instantiate bidx tagsinputs
     // The ones with a class 'defer' on them are left alone in case there is a dependency

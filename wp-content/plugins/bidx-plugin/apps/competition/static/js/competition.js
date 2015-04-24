@@ -1716,19 +1716,19 @@ function _initApplicationsView( )
                 businessData        = '<a href="' + bidx.common.url('businesssummary') + entityId +  '" target="_blank">' + business + '</a>';
                 entrepreneurData    = '<a href="' + bidx.common.url('member') + ownerId + '" target="_blank">' + entrepreneur + '</a>';
 
-                roleReview      =  currentUserRecommendationForCurrentPhase( response );
+                roleReview          =  currentUserRecommendationForCurrentPhase( response );
 
-                displayRows     =   {
-                                        business:       businessData
-                                    ,   entrepreneur:   entrepreneurData
-                                    ,   rating:         (roleReview.reviewRating)? roleReview.reviewRating : 0
-                                    ,   recommendation: roleReview.recommendation
-                                    ,   state:          bidx.i18n.i(response.status, appName)
-                                    ,   status:         response.status
-                                    ,   entityId:       entityId
-                                    ,   reviews:        response.reviews
+                displayRows         =   {
+                                            business:       businessData
+                                        ,   entrepreneur:   entrepreneurData
+                                        ,   rating:         (roleReview.reviewRating)? roleReview.reviewRating : 0
+                                        ,   recommendation: roleReview.recommendation
+                                        ,   state:          bidx.i18n.i(response.status, appName)
+                                        ,   status:         response.status
+                                        ,   entityId:       entityId
+                                        ,   reviews:        response.reviews
 
-                                    };
+                                        };
 
                 data.push( displayRows );
         }
@@ -1748,34 +1748,36 @@ function _initApplicationsView( )
 
         table = $('.viewApplications').DataTable(
         {
-             destroy:            destroy
-        //,    "bDestroy": true
-        ,   "bPaginate":        true
+            destroy:            destroy  // "bDestroy": true
+        ,   bPaginate:          true
         ,   aLengthMenu:        [
-                                    [10, 25, 50, 100, -1],
-                                    [10, 25, 50, 100, "All"]
+                                    [2, 10, 25, 50, 100, -1],
+                                    [2, 10, 25, 50, 100, bidx.i18n.i("paginationAll") ]
                                 ]
-        ,   "data":             data
-        ,   "columns":          [
+        ,   data:               data
+        ,   columns:            [
                                     {
                                         "className":      'details-control',
                                         "orderable":      false,
                                         "data":           null,
                                         "defaultContent": '<i class="fa fa-plus-square-o"></i>'
                                     },
-                                    { "data": "business" },
-                                    { "data": "entrepreneur" },
-                                    { "data": "rating" },
-                                    { "data": "recommendation"},
-                                    { "data": "state" }
+                                    {   "data": "business"      },
+                                    {   "data": "entrepreneur"  },
+                                    {   "data": "rating"        },
+                                    {   "data": "recommendation"},
+                                    {   "data": "state"         }
                                 ]
-        ,   "order":            [
+        ,   order:              [
                                     [1, 'asc']
                                 ]
-        ,   "fnRowCallback":    function( nRow, aData, iDisplayIndex )
+        ,   fnRowCallback:      function( nRow, aData, iDisplayIndex )
                                 {
                                     nRow.classList.add( aData.status );
                                     return nRow;
+                                }
+        ,   language:           {
+                                    url: '/wp-content/plugins/bidx-plugin/lang/vendor/datatables/' + bidx.common.getCurrentLanguage() + '.json'
                                 }
         } );
 
@@ -4277,10 +4279,6 @@ function _competitionTimer (  )
     //
     function _save( params )
     {
-        var currentLanguage
-        ,   icl_vars
-        ;
-
         if ( !competitionSummary )
         {
             return;
@@ -4322,12 +4320,8 @@ function _competitionTimer (  )
 
                     bidx.common.removeAppWithPendingChanges( appName );
 
-                    icl_vars                    = window.icl_vars || {};
-                    currentLanguage             = bidx.utils.getValue( icl_vars, "current_language" );
-                    currentLanguage             = (currentLanguage && currentLanguage !== 'en') ? '/' + currentLanguage : '';
-                    var url = currentLanguage + "/competition/" + competitionSummaryId + "?rs=true";
+                    document.location.href = bidx.common.url('competition')  + competitionSummaryId + "?rs=true";
 
-                    document.location.href = url;
 
 //                    var url = document.location.href.split( "#" ).shift();
 //                    // Maybe rs=true was already added, or not 'true' add it before reloading

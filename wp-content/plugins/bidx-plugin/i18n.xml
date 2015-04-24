@@ -178,4 +178,8 @@
     <Item value="userNotFound">User not found.</Item>
     <Item value="userInvalid">Invalid username or password.</Item>
     <Item value="wordpressLoggedInError">Please log out of wordpress administrator.</Item>
+
+    <!-- Pagination -->
+    <Item value="paginationAll">All</Item>
+
 </I18N>
