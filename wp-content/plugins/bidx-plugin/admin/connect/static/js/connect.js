@@ -86,7 +86,7 @@
                 }
             ,   "connectBody":
                 {
-                    tinymceTextarea:   true
+                    required:   true
                 }
             }
         ,   messages:
@@ -109,10 +109,12 @@
                 {
                     callback: function()
                     {
-                        var ed          =   tinyMCE.get('connectBody')
+                        /*var ed          =   tinyMCE.get('connectBody')
                         ;
 
-                        ed.setContent(''); // Clear the tinymce after sending msg
+                        ed.setContent('');*/ // Clear the tinymce after sending msg
+
+                        $frmCompose.find( "[name=connectBody]" ).val('');
 
                         $frmCompose.find('.spinner').hide();
                     }
@@ -482,9 +484,12 @@
             ,   "content": "string"
             }
         */
-        var ed          =   tinyMCE.get('connectBody')
-        ,   editorHtml  =   ed.getContent();
+        var editorHtml
+        //,   ed          =   tinyMCE.get('connectBody')
+        ;
 
+        //editorHtml  =   ed.getContent()
+        editorHtml      =   $frmCompose.find( "[name=connectBody]" ).val( );
         message = {}; // clear message because it can still hold the reply content
 
         $currentView = $views.filter( bidx.utils.getViewName( "compose" ) );

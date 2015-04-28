@@ -1758,9 +1758,8 @@ msgstr ""
 # 144) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition-anonymous.phtml -203
 # _e("Score","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Score:"
-msgstr "النتيجة"
+msgstr "مجموع النقاط"
 
 # 270) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition.phtml -828
 # _e("Assign","bidxplugin");
@@ -1769,9 +1768,8 @@ msgstr "النتيجة"
 # 271) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition.phtml -835
 # _e("Recommendations","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Recommendation:"
-msgstr "التوصيات"
+msgstr "توصيات"
 
 # 290) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition.phtml -930
 # _e("Reject","bidxplugin");
@@ -9624,9 +9622,8 @@ msgstr "الجزء السفلى من صفحة الواجهة العامة"
 # 1811) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/button.php -269
 # _e("Sidebar","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Public Sidebar"
-msgstr "شريط جانبي"
+msgstr "العامود الجانبي لصفحة الواجهة العامة"
 
 # 1874) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets.php -65
 # _e("Private Front Top","bidxplugin");
@@ -9655,9 +9652,8 @@ msgstr "الجزء السفلى من صفحة الواجهة الخاصة"
 # 1811) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/button.php -269
 # _e("Sidebar","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Private Sidebar"
-msgstr "شريط جانبي"
+msgstr "العامود الجانبي لصفحة الواجهة الخاصة"
 
 # 1800) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/templates/header.php -129
 # _e("Choose a role","bidxplugin");
