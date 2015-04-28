@@ -256,6 +256,25 @@ class TemplateLibrary
         return $values;
     }
 
+    public function getLocaleDate( $mktime, $format = "%d %M %y" )
+    {
+        $language       =   get_locale();
+        $day            =   date('d', $mktime);
+        $month          =   date('n', $mkTime);
+        $localeMonth    =   $this->getStaticVal ('month', $month);
+        $year           =   date('Y', $mktime);
+
+
+        $displayDate = str_replace( '%d', $day, $format );
+
+        $displayDate = str_replace( '%M', $localeMonth, $displayDate);
+
+        $displayDate = str_replace( '%y', $year, $displayDate);
+
+        return $displayDate;
+
+    }
+
     /*
      *
      * Array

@@ -394,7 +394,6 @@ msgstr ""
 
 # _x("You have successfully rejected this submission. A notification has been sent out to the participant", "competition","i18n");
 # Context competition TextDomain i18n
-#, fuzzy
 msgctxt "competition"
 msgid ""
 "You have successfully submitted this application. A notification has been "
@@ -513,9 +512,9 @@ msgstr "يرجى انتظر أثناء تحديثنا لمرحلة المساب�
 
 # _x("Congrtatulations, you have succesfully updated phase of the competition.", "competition","i18n");
 # Context competition TextDomain i18n
-#, fuzzy
 msgctxt "competition"
-msgid "Congrtatulations, you have succesfully updated phase of this competition."
+msgid ""
+"Congrtatulations, you have succesfully updated phase of this competition."
 msgstr "مبروك، لقد قمت بتحديث مرحلة المسابقة بنجاح"
 
 # _x("Before moving to the next phase, all applications need a competition administrator review", "competition","i18n");
@@ -546,10 +545,9 @@ msgstr "ارسال الرسالة"
 
 # _x("Message sent", "connect","i18n");
 # Context connect TextDomain i18n
-#, fuzzy
 msgctxt "mail"
 msgid "Message sent"
-msgstr "تم ارسال الرسالة"
+msgstr "تم إرسال الرسالة"
 
 # _x("Message sent", "mail","i18n");
 # Context mail TextDomain i18n
@@ -855,7 +853,6 @@ msgstr "كل الأعضاء"
 
 # _x("Member only", "monitoring","i18n");
 # Context monitoring TextDomain i18n
-#, fuzzy
 msgctxt "connect"
 msgid "Member only"
 msgstr "عضو فقط"

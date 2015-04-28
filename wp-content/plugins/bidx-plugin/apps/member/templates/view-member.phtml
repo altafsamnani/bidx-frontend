@@ -18,7 +18,7 @@
     $lastName                   = $this->exst( $personalDetails->lastName );
     $professionalTitle          = $this->exst( $personalDetails->professionalTitle );
     $gender                     = $this->addExtraValuesToRows( 'gender', $this->exst( $personalDetails->gender ) );
-    $dateofBirth                = ( $authenticated && isset( $personalDetails->dateOfBirth ) ) ? date( 'd M Y', strtotime ( $this->addExtraValuesToRows( 'dateOfBirth', $this->exst( $personalDetails->dateOfBirth ) ) ) ): NULL;
+    $dateofBirth                = ( $authenticated && isset( $personalDetails->dateOfBirth ) ) ? $this->getLocaleDate( strtotime( $this->exst( $personalDetails->dateOfBirth ) ) ): NULL;
     $highestEducation           = $this->addExtraValuesToRows( 'highestEducation', $this->exst( $personalDetails->highestEducation ) );
     $emailAddress               = $this->exst( $personalDetails->emailAddress );
     $mobile                     = $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'mobile');

@@ -9127,7 +9127,81 @@ msgid "telephone"
 msgstr ""
 
 
-#26 languageRating
+#26 month
+#  _x("January", "1", "static");
+# Context 1 Textdomain static
+msgctxt "1"
+msgid "January"
+msgstr ""
+
+#  _x("February", "2", "static");
+# Context 2 Textdomain static
+msgctxt "2"
+msgid "February"
+msgstr ""
+
+#  _x("March", "3", "static");
+# Context 3 Textdomain static
+msgctxt "3"
+msgid "March"
+msgstr ""
+
+#  _x("April", "4", "static");
+# Context 4 Textdomain static
+msgctxt "4"
+msgid "April"
+msgstr ""
+
+#  _x("May", "5", "static");
+# Context 5 Textdomain static
+msgctxt "5"
+msgid "May"
+msgstr ""
+
+#  _x("June", "6", "static");
+# Context 6 Textdomain static
+msgctxt "6"
+msgid "June"
+msgstr ""
+
+#  _x("July", "7", "static");
+# Context 7 Textdomain static
+msgctxt "7"
+msgid "July"
+msgstr ""
+
+#  _x("August", "8", "static");
+# Context 8 Textdomain static
+msgctxt "8"
+msgid "August"
+msgstr ""
+
+#  _x("September", "9", "static");
+# Context 9 Textdomain static
+msgctxt "9"
+msgid "September"
+msgstr ""
+
+#  _x("October", "10", "static");
+# Context 10 Textdomain static
+msgctxt "10"
+msgid "October"
+msgstr ""
+
+#  _x("November", "11", "static");
+# Context 11 Textdomain static
+msgctxt "11"
+msgid "November"
+msgstr ""
+
+#  _x("December", "12", "static");
+# Context 12 Textdomain static
+msgctxt "12"
+msgid "December"
+msgstr ""
+
+
+#27 languageRating
 #  _x("fluent", "fluent", "static");
 # Context fluent Textdomain static
 msgctxt "fluent"
@@ -9147,7 +9221,7 @@ msgid "basic"
 msgstr ""
 
 
-#27 language
+#28 language
 #  _x("Malay", "ms", "static");
 # Context ms Textdomain static
 # Already exists, doesnt need translation.
