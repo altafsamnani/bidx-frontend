@@ -1545,7 +1545,6 @@ msgstr "اسحب"
 # 127) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition_original.phtml -10
 # _e("Select Assessor","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Assign Assessor:"
 msgstr "عين مقيم"
 
@@ -1564,7 +1563,6 @@ msgstr "عيّن"
 # 128) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition_original.phtml -14
 # _e("Assign","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Assign Judge:"
 msgstr "عين حكم"
 
@@ -1679,7 +1677,6 @@ msgstr "غير فائز"
 # 206) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition.phtml -364
 # _e("My applications","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Qualification:"
 msgstr "استمارات تقديمي"
 
