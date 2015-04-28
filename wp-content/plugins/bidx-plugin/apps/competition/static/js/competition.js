@@ -448,7 +448,7 @@
                 [
                     {
                         addClass:       "btn btn-primary"
-                    ,   text:           "Ok"
+                    ,   text:           bidx.i18n.i("btnOk")
                     ,   onClick: function( $noty )
                         {
                             $noty.close();
@@ -498,7 +498,7 @@
                     }
                 ,   {
                         addClass:       "btn btn-danger"
-                    ,   text:           "Cancel"
+                    ,   text:           bidx.i18n.i("btnCancel")
                     ,   onClick: function( $noty )
                         {
                             $noty.close();
