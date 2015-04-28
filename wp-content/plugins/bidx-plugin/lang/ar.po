@@ -1547,7 +1547,7 @@ msgstr "اسحب"
 # Context  Textdomain bidxplugin
 #, fuzzy
 msgid "Assign Assessor:"
-msgstr "قم باختيار المقيّم"
+msgstr "عين مقيم"
 
 # 127) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition_original.phtml -10
 # _e("Select Assessor","bidxplugin");
@@ -1566,7 +1566,7 @@ msgstr "عيّن"
 # Context  Textdomain bidxplugin
 #, fuzzy
 msgid "Assign Judge:"
-msgstr "عيّن"
+msgstr "عين حكم"
 
 # 267) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition.phtml -807
 # _e("Select Assessor","bidxplugin");
