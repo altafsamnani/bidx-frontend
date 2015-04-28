@@ -9601,25 +9601,25 @@ msgstr "قم باختيار دور"
 # _e("Public Front Top","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Public Front Top"
-msgstr ""
+msgstr "الجزء الأعلى من صفحة الواجهة العامة"
 
 # 1870) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets.php -29
 # _e("Public Front Body","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Public Front Body"
-msgstr ""
+msgstr "جسم صفحة الواجهة العامة"
 
 # 1871) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets.php -37
 # _e("Public Front Sidebar","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Public Front Sidebar"
-msgstr ""
+msgstr "العامود الجانبي لصفحة الواجهة العامة"
 
 # 1872) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets.php -45
 # _e("Public Front Bottom","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Public Front Bottom"
-msgstr ""
+msgstr "الجزء السفلى من صفحة الواجهة العامة"
 
 # 1811) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/button.php -269
 # _e("Sidebar","bidxplugin");
@@ -9632,25 +9632,25 @@ msgstr "شريط جانبي"
 # _e("Private Front Top","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Private Front Top"
-msgstr ""
+msgstr "الجزء الأعلى من صفحة الواجهة الخاصة"
 
 # 1875) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets.php -73
 # _e("Private Front Body","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Private Front Body"
-msgstr ""
+msgstr "جسم صفحة الواجهة الخاصة"
 
 # 1876) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets.php -81
 # _e("Private Front Sidebar","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Private Front Sidebar"
-msgstr ""
+msgstr "العامود الجانبي لصفحة الواجهة الخاصة"
 
 # 1877) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets.php -89
 # _e("Private Front Bottom","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Private Front Bottom"
-msgstr ""
+msgstr "الجزء السفلى من صفحة الواجهة الخاصة"
 
 # 1811) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/button.php -269
 # _e("Sidebar","bidxplugin");
@@ -9847,7 +9847,7 @@ msgstr "قم بضبط المظهر"
 # _e("Bidx Post","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Bidx Post"
-msgstr ""
+msgstr "مشاركة في منصة bidx"
 
 # 1902) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -162
 # _e("No posts available, please create a post from Posts section ","bidxplugin");
@@ -9931,7 +9931,7 @@ msgstr "عاين الآن"
 # _e("Find out more","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Find out more"
-msgstr ""
+msgstr "لمعرفة المزيد"
 
 # 1843) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/default.php -164
 # _e("Customize the layout","bidxplugin");

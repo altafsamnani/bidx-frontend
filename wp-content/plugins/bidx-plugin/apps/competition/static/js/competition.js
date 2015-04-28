@@ -1751,8 +1751,8 @@ function _initApplicationsView( )
             destroy:            destroy  // "bDestroy": true
         ,   bPaginate:          true
         ,   aLengthMenu:        [
-                                    [2, 10, 25, 50, 100, -1],
-                                    [2, 10, 25, 50, 100, bidx.i18n.i("paginationAll") ]
+                                    [10, 25, 50, 100, -1],
+                                    [10, 25, 50, 100, bidx.i18n.i("paginationAll") ]
                                 ]
         ,   data:               data
         ,   columns:            [
@@ -1779,67 +1779,67 @@ function _initApplicationsView( )
         ,   language:           {
                                     url: '/wp-content/plugins/bidx-plugin/lang/vendor/datatables/' + bidx.common.getCurrentLanguage() + '.json'
                                 }
+        ,   fnInitComplete:     function(oSettings, json)
+                                {
+                                    $( ".dataTables_length select" ).bidx_chosen();
+                                    $('.viewApplications').removeClass( 'hide' );
+                                }
         } );
 
         if ( !destroy )
         {
-        // Add event listener for opening and closing details
-        $('.viewApplications tbody').on('click', 'td.details-control', function ( )
-        {
-            var formatHtml
-            ,   tr          =   $(this).closest('tr')
-            ,   row         =   table.row( tr )
-            ;
-
-            if ( row.child.isShown() )
+            // Add event listener for opening and closing details
+            $('.viewApplications tbody').on('click', 'td.details-control', function ( )
             {
-                // This row is already open - close it
-                row.child.hide();
+                var formatHtml
+                ,   tr          =   $(this).closest('tr')
+                ,   row         =   table.row( tr )
+                ;
 
-                tr.removeClass('shown');
-
-                tr.next().removeClass('extrapanel');
-
-                $(this).find('.fa').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
-            }
-            else
-            {
-
-                if( tr.hasClass ("data-visible") )
+                if ( row.child.isShown() )
                 {
-                    row.child.show();
+                    // This row is already open - close it
+                    row.child.hide();
+
+                    tr.removeClass('shown');
+
+                    tr.next().removeClass('extrapanel');
+
+                    $(this).find('.fa').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
                 }
                 else
                 {
-                    formatHtml  =   format(row.data(), row );
 
-                    row.child(  formatHtml ).show( );
+                    if( tr.hasClass ("data-visible") )
+                    {
+                        row.child.show();
+                    }
+                    else
+                    {
+                        formatHtml  =   format(row.data(), row );
 
-                    tr.addClass("data-visible");
+                        row.child(  formatHtml ).show( );
+
+                        tr.addClass("data-visible");
+                    }
+
+                    tr.addClass('shown');
+
+                    if ( tr.hasClass( "withdrawn" ) )
+                    {
+                        tr.next().addClass('extrapanel withdrawn');
+                    }
+                    else
+                    {
+                        tr.next().addClass('extrapanel');
+                    }
+
+                    $(this).find('.fa').removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
+
+                    tr.next().find( ".selectAssessors" ).bidx_chosen();
                 }
-
-                tr.addClass('shown');
-
-                if ( tr.hasClass( "withdrawn" ) )
-                {
-                    tr.next().addClass('extrapanel withdrawn');
-                }
-                else
-                {
-                    tr.next().addClass('extrapanel');
-                }
-
-                $(this).find('.fa').removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
-
-                tr.next().find( ".selectAssessors" ).bidx_chosen();
-            }
-        } );
+            } );
         }
-
-        $( ".dataTables_length select" ).bidx_chosen();
-
-        $('.viewApplications').removeClass( 'hide' );
-
     }
 }
 
