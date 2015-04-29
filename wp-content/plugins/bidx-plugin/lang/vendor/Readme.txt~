@@ -1,0 +1,12 @@
+
+Translations from Vendors
+
+1 ************* Data Tables **********************
+
+Data tables already provides translations, so please use that, by default it having lang extension
+Rename it to json with the locale and remove comments part on the top of the file then it becomes valid json
+
+Example 
+
+Step 1 Arabic.lang should be renamed to ar.json or Dutch.lang to nl.json
+Step 2 Remove top comment from the file then and then only it becomes valid json
