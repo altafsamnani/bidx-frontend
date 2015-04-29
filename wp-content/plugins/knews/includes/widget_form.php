@@ -47,6 +47,14 @@
 			echo '<option value="1"' . (($val=="1" || $val=="") ? ' selected="selected"' : '') . '>' . __('Yes','knews') . '</option>';
 			echo '<option value="0"' . (($val=="0") ? ' selected="selected"' : '') . '>' . __('No','knews') . '</option>';
 			echo '</select></p>';
+
+			$val='select';
+			if (isset($instance[ 'multiple' ])) $val=$instance[ 'multiple' ];
+			echo '<p><label for="' . $this->get_field_id('multiple') . '">' . __('Allow multiple subscription?','knews') . '</label>';
+			echo '<select id="' . $this->get_field_id('multiple') . '" name="' . $this->get_field_name('multiple') . '" style="float:right;">';
+			echo '<option value="select"' . (($val=="select" || $val=="") ? ' selected="selected"' : '') . '>' . __('No (combo box)','knews') . '</option>';
+			echo '<option value="checkbox"' . (($val=="checkbox") ? ' selected="selected"' : '') . '>' . __('Yes (checkboxes)','knews') . '</option>';
+			echo '</select></p>';
 				
 			echo '<a href="#" onclick="knewsOpenCSS(\'' . $this->get_field_id('customCSS') . '\')">' . __('Customize widget CSS','knews') . '</a><br /><br />';
 			echo '<a href="#" onclick="knewsOpenIFRAME(\'' . $this->get_field_id('customCSS') . '\')">' . __('Get Iframe code (remote website subscription)','knews') . '</a><br /><br />';

@@ -4,6 +4,16 @@ require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
 global $wpdb, $knewsOptions, $Knews_plugin;
 
+if (version_compare(get_option('knews_version','0.0.0'), '1.7.0') < 0 || ( $this->im_pro() && version_compare(get_option('knews_version','0.0.0'), '2.3.3') < 0)) {
+	//Some oldie installs keep twicedaily schedule instead hourly
+	if (wp_next_scheduled('knews_wpcron_automate_hook')) wp_clear_scheduled_hook('knews_wpcron_automate_hook');
+	wp_schedule_event( time(), 'hourly', 'knews_wpcron_automate_hook');
+}
+
+if (version_compare(get_option('knews_version','0.0.0'), '1.7.0') < 0 || ( $this->im_pro() && version_compare(get_option('knews_version','0.0.0'), '2.3.1') < 0)) {
+	if (!knews_add_column(KNEWS_NEWSLETTERS, 'html_bodytag', "mediumtext NOT NULL DEFAULT ''")) return;
+}
+
 if (version_compare(get_option('knews_version','0.0.0'), '1.6.3') < 0 || ( $this->im_pro() && version_compare(get_option('knews_version','0.0.0'), '2.2.5') < 0)) {
 	if (!knews_add_column(KNEWS_AUTOMATED, 'include_cats', "varchar(255) NOT NULL DEFAULT ''")) return;
 	if (!knews_add_column(KNEWS_AUTOMATED, 'exclude_cats', "varchar(255) NOT NULL DEFAULT ''")) return;
@@ -220,6 +230,9 @@ if (version_compare(get_option('knews_version','0.0.0'), '1.6.0') < 0 || ( $this
 	dbDelta($sql);
 }
 
+if (version_compare(get_option('knews_version','0.0.0'), '1.6.4') < 0 || ( $this->im_pro() && version_compare(get_option('knews_version','0.0.0'), '2.2.6') < 0)) {
+	if (!knews_add_column(KNEWS_LISTS, 'auxiliary', "int(1) UNSIGNED NOT NULL DEFAULT '0'")) return;
+}
 update_option('knews_version', KNEWS_VERSION);
 update_option('knews_advice_time', 0);
 $this->knews_admin_messages = sprintf("Knews updated the database successfully. Welcome to %s version.", KNEWS_VERSION);
@@ -230,7 +243,7 @@ function knews_update_sql($sql) {
 	if (!$wpdb->query($sql)) {
 		echo '<div style="background-color:#FFEBE8; border:#CC0000 1px solid; color:#555555; border-radius:3px; padding:5px 10px; margin:20px 15px 10px 0; text-align:left">';
 		_e('Knews cant update. Please, check user database permisions. (You must allow ALTER TABLE).','knews');
-		echo ' (ver. ' . get_option('knews_version','0.0.0') . ')' . ' ' . $wpdb->last_error;
+		echo ' (ver. ' . get_option('knews_version','0.0.0') . ')' . ' ' . $wpdb->last_error . ' sql: ' . $sql;
 		echo '</div>';
 		return false;
 	}
@@ -247,7 +260,7 @@ function knews_add_column($table, $field, $typefield) {
 	if (!$wpdb->query($sql)) {
 		echo '<div style="background-color:#FFEBE8; border:#CC0000 1px solid; color:#555555; border-radius:3px; padding:5px 10px; margin:20px 15px 10px 0; text-align:left">';
 		_e('Knews cant update. Please, check user database permisions. (You must allow ALTER TABLE).','knews');
-		echo ' (ver. ' . get_option('knews_version','0.0.0') . ')' . ' ' . $wpdb->last_error;
+		echo ' (ver. ' . get_option('knews_version','0.0.0') . ')' . ' ' . $wpdb->last_error . ' sql: ' . $sql;
 		echo '</div>';
 		return false;
 	}

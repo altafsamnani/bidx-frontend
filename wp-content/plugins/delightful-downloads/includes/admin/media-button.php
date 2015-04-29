@@ -16,8 +16,14 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @since  1.0
  */
 function dedo_media_button( $context ) {
-	
-	return $context . '<a href="#" id="dedo-media-button" class="button add-download" data-editor="content" title="Add Download"><span class="wp-media-buttons-icon"></span>Add Download</a>';	
+	global $pagenow;
+
+	// Only run in post/page creation and edit screens
+	if ( in_array( $pagenow, array( 'post.php', 'page.php', 'post-new.php', 'post-edit.php' ) ) ) { 
+		$context .= '<a href="#dedo-shortcode-modal" id="dedo-media-button" class="button dedo-modal-action add-download" data-editor="content" title="Add Download"><span class="wp-media-buttons-icon"></span>Add Download</a>';	
+	}
+
+	return $context;
 }
 add_filter( 'media_buttons_context', 'dedo_media_button' );
 
@@ -27,97 +33,88 @@ add_filter( 'media_buttons_context', 'dedo_media_button' );
  * @since  1.0
  */
 function dedo_media_modal() {
-	global $dedo_options;
-	
-	$downloads = new WP_Query( 'post_type=dedo_download&nopaging=true&orderby=title&order=ASC' );
-	?>
-	<div id="dedo-download-modal" style="display: none">
-		<div class="media-modal">
-			<a id="dedo-download-modal-close" class="media-modal-close" href="#" title="Close"><span class="media-modal-icon"></span></a>
-			<div class="media-modal-content">
-				<div class="media-frame-title">
-					<h1><?php _e( 'Insert Download', 'delightful-downloads' ); ?></h1>
-				</div>
-				<div class="left-panel">
-					<div class="dedo-download-toolbar">
-						<input type="search" id="dedo-download-search" class="search" placeholder="<?php _e( 'Search', 'delightful-downloads' ); ?>" />
-					</div>
-					<div class="dedo-download-list">
-						<table class="wp-list-table widefat" cellspacing="0">
-							<thead>
-								<tr>
-									<th scope="col" class="title_column"><?php _e( 'Title', 'delightful-downloads' ); ?></th>
-									<th scope="col" class="size_column"><?php _e( 'Size', 'delightful-downloads' ); ?></th>
-									<th scope="col" class="count_column"><?php _e( 'Downloads', 'delightful-downloads' ); ?></th>
-								</tr>
-							</thead>
+	global $pagenow;
 
-							<tbody id="the-list">
-<?php
-	while ( $downloads->have_posts() ) {
-		$downloads->the_post();
-		$download_id = get_the_ID();
-		$download_size = size_format( get_post_meta( $download_id, '_dedo_file_size', true ), 1 );
-		$download_count = number_format_i18n( get_post_meta( $download_id, '_dedo_file_count', true ) );
+	// Only run in post/page creation and edit screens
+	if ( in_array( $pagenow, array( 'post.php', 'page.php', 'post-new.php', 'post-edit.php' ) ) ) { 
+		
+		// Get published downloads
+		$downloads = get_posts( array(
+			'post_type'		=> 'dedo_download',
+			'post_status'	=> 'publish',
+			'orderby'		=> 'title',
+			'order'			=> 'ASC',
+			'posts_per_page'=> -1	
+		) );
 
-?>
-								<tr id="dedo-download-<?php echo esc_attr( $download_id ); ?>" data-id="<?php echo esc_attr( $download_id ); ?>" data-size="<?php echo esc_attr( ( !$download_size ) ? __( 'Unknown', 'delightful-downloads' ) : $download_size ); ?>" data-count="<?php echo esc_attr( $download_count ); ?>">
-									<td class="title_column"><strong><?php the_title(); ?></strong></td>			
-									<td class="size_column"><?php echo esc_attr( ( !$download_size ) ? __( 'Unknown', 'delightful-downloads' ) : $download_size ); ?></td>
-									<td class="count_column"><?php echo esc_attr( $download_count ); ?></td>
-								</tr>
-<?php
-	}
-?>	
+		// Get registered styles
+		$styles = dedo_get_shortcode_styles();
+
+		// Get registered buttons
+		$buttons = dedo_get_shortcode_buttons();
+
+		?>
 			
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<div class="right-panel">
-					<div class="download-details" style="display: none">
-						<h3><?php _e( 'Download Details', 'delightful-downloads' ); ?></h3>
-						<div class="meta">
-							<div class="title"><strong></strong></div>
-							<div class="count"><?php _e( 'Downloads:', 'delightful-downloads' ); ?> <span></span></div>
-							<div class="size"></div>
-						</div>
-						<label for="dedo-download-text"><?php _e( 'Text', 'delightful-downloads' ); ?>:</label>
-						<input type="text" name="dedo-download-text" id="dedo-download-text" placeholder="Default" />
-						<label for="dedo-download-style"><?php _e( 'Style', 'delightful-downloads' ); ?>:</label>
-						<select name="dedo-download-style" id="dedo-download-style">
-							<option value="dedo_default"><?php _e( 'Default', 'delightful-downloads' ); ?></option>
-							<?php
-							$styles = dedo_get_shortcode_styles();
+			<div id="dedo-shortcode-modal" class="dedo-modal" style="display: none; width: 30%; left: 50%; margin-left: -15%;">
+				<a href="#" class="dedo-modal-close" title="<?php _e( 'Close', 'delightful-downloads' ); ?>"><span class="media-modal-icon"></span></a>
+				<div class="dedo-modal-content">
+					<h1><?php _e( 'Insert Download', 'delightful-downloads' ); ?></h1>
 							
-							foreach ( $styles as $key => $value ) {
-								echo '<option value="' . $key . '">' . $value['name'] . '</option>';	
-							}
-							?>
-						</select>
-						<div class="dedo-download-color-container" style="display: none">
-							<label for="dedo-download-color"><?php _e( 'Color', 'delightful-downloads' ); ?>:</label>
-							<select name="dedo-download-color" id="dedo-download-color">
-								<option value="dedo_default"><?php _e( 'Default', 'delightful-downloads' ); ?></option>
-								<?php
-								$colors = dedo_get_shortcode_buttons();
+					<?php if ( $downloads ) : ?>
+						<p>
+							<label><span><?php _e( 'Download', 'delightful-downloads' ); ?></span>
+								<select id="dedo-select-download-dropdown">
+									<?php foreach ( $downloads as $download ) : ?>
+										<option value="<?php echo $download->ID; ?>"><?php echo $download->post_title; ?></option>
+									<?php endforeach; ?>
+								</select>
+							</label>
+						</p>
+						<p class="clear">
+							<label id="dedo-style-dropdown-container" class="column-2"><span><?php _e( 'Style', 'delightful-downloads' ); ?></span>
+								<select id="dedo-select-style-dropdown">
+									<optgroup label="<?php _e( 'Global', 'delightful-downloads' ); ?>">
+										<option value=""><?php _e( 'Inherit', 'delightful-downloads' ); ?></option>
+									</optgroup>
+									<optgroup label="<?php _e( 'Styles', 'delightful-downloads' ); ?>">
+										<?php foreach ( $styles as $key => $value ) : ?>
+											<option value="<?php echo $key; ?>"><?php echo $value['name']; ?></option>
+										<?php endforeach; ?>
+									</optgroup>
+								</select>
+							</label>
 
-								foreach ( $colors as $key => $value ) {
-									echo '<option value="' . $key . '">' . $value['name'] . '</option>';	
-								}
-								?>
-							</select>
-						</div>
-						<a href="#" id="dedo-download-button" class="button-primary"><?php _e( 'Insert Download', 'delightful-downloads' ); ?></a>
-						<a href="#" id="dedo-filesize-button" class="button"><?php _e( 'Insert File Size', 'delightful-downloads' ); ?></a>
-						<a href="#" id="dedo-count-button" class="button"><?php _e( 'Insert Download Count', 'delightful-downloads' ); ?></a>
-					</div>
+							<label id="dedo-button-dropdown-container" class="column-2"><span><?php _e( 'Button', 'delightful-downloads' ); ?></span>
+								<select id="dedo-select-button-dropdown">
+									<optgroup label="<?php _e( 'Global', 'delightful-downloads' ); ?>">
+										<option value=""><?php _e( 'Inherit', 'delightful-downloads' ); ?></option>
+									</optgroup>
+									<optgroup label="<?php _e( 'Buttons', 'delightful-downloads' ); ?>">
+										<?php foreach ( $buttons as $key => $value ) : ?>
+											<option value="<?php echo $key; ?>"><?php echo $value['name']; ?></option>
+										<?php endforeach; ?>
+									</optgroup>
+								</select>
+							</label>
+						</p>
+						<p>
+							<label><span><?php _e( 'Text', 'delightful-downloads' ); ?></span>	
+								<input id="dedo-custom-text" type="text" placeholder="<?php _e( 'Inherit', 'delightful-downloads' ); ?>" />
+							</label>
+						</p>
+						<p class="buttons clear">
+							<a href="#" id="dedo-insert" class="button button-large button-primary"><?php _e( 'Insert', 'delightful-downloads' ); ?></a>
+							<a href="#" id="dedo-file-size" class="button button-large right"><?php _e( 'File Size', 'delightful-downloads' ); ?></a>
+							<a href="#" id="dedo-download-count" class="button button-large right"><?php _e( 'Download Count', 'delightful-downloads' ); ?></a>
+						</p>
+					<?php else: ?>
+						<p><?php echo sprintf( __( 'Please %sadd%s a new download.', 'delightful-downloads' ), '<a href="' . admin_url( 'post-new.php?post_type=dedo_download' ) . '" target="_blank">', '</a>' ); ?></p>
+					<?php endif; ?>
+
 				</div>
-						
 			</div>
-		</div>
-		<div class="media-modal-backdrop"></div>
-	</div>
-	<?php
+
+		<?php 
+	}
 }
 add_action( 'admin_footer', 'dedo_media_modal', 100 );

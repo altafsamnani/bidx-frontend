@@ -3,7 +3,7 @@
  *
  * @subpackage Admin Dashboard Javascript
  * @author Konstantin Kovshenin
- * @version 1.0
+ * @version 1.6.0
  *
  * http://zendesk.com
  *

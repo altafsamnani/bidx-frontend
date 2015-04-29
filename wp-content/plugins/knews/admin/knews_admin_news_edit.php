@@ -29,22 +29,26 @@ alert('<?php _e("Warning! IE 6/7 can't edit newsletters! The editor uses HTML5 p
 		$title=$results_news[0]->name;
 		$subject=$results_news[0]->subject;
 		$newstype=$results_news[0]->newstype;
+		$template_id=$results_news[0]->template;
 ?>
 <script type="text/javascript">
 	url_plugin = '<?php echo KNEWS_URL; ?>';
 	news_lang='<?php echo $results_news[0]->lang; ?>';
 	droppable_code='<?php echo $results_news[0]->html_container; ?>';
-	id_news='<?php echo $Knews_plugin->get_safe('idnews');?>';
+	id_news='<?php echo $Knews_plugin->get_safe('idnews',0,'int');?>';
 	newstype='<?php echo $newstype; ?>';
+	template_id='<?php echo $template_id; ?>';
+	
 	<?php
 	$one_post = get_posts(array('numberposts' => 1) );
 	if (count($one_post)!=1) $one_post = get_pages();
 	echo 'one_post_id=' . intval($one_post[0]->ID) . ';';
 	?>
-	submit_news='<?php echo get_admin_url(); ?>admin.php?page=knews_news&section=send&id=<?php echo (($parentid==0) ? $Knews_plugin->get_safe('idnews') : $parentid);?>';
-	autocreation_news='<?php echo get_admin_url(); ?>admin.php?page=knews_auto&id=<?php echo (($parentid==0) ? $Knews_plugin->get_safe('idnews') : $parentid);?>#newauto';
-	autoresponder_news='<?php echo get_admin_url(); ?>admin.php?page=knews_auto&tab=autoresponders&id=<?php echo (($parentid==0) ? $Knews_plugin->get_safe('idnews') : $parentid);?>#newauto';
-	reload_news='<?php echo get_admin_url(); ?>admin.php?page=knews_news&section=edit&idnews=<?php echo $Knews_plugin->get_safe('idnews') ;?>';
+	submit_news='<?php echo get_admin_url(); ?>admin.php?page=knews_news&section=send&id=<?php echo (($parentid==0) ? $Knews_plugin->get_safe('idnews',0,'int') : $parentid);?>';
+	autocreation_news='<?php echo get_admin_url(); ?>admin.php?page=knews_auto&id=<?php echo (($parentid==0) ? $Knews_plugin->get_safe('idnews',0,'int') : $parentid);?>#newauto';
+	autoresponder_news='<?php echo get_admin_url(); ?>admin.php?page=knews_auto&tab=autoresponders&id=<?php echo (($parentid==0) ? $Knews_plugin->get_safe('idnews',0,'int') : $parentid);?>#newauto';
+
+	reload_news='<?php echo get_admin_url(); ?>admin.php?page=knews_news&section=edit&idnews=<?php echo $Knews_plugin->get_safe('idnews',0,'int') ;?>';
 	
 	must_apply_undo = "<?php echo $Knews_plugin->escape_js(__('You are in image edition mode. You must press Apply or Undo image changes (or press ESC key) before doing anything.','knews')); ?>";
 	edit_image= "<?php echo $Knews_plugin->escape_js(__('Edit image','knews')); ?>";
@@ -207,6 +211,7 @@ alert('<?php _e("Warning! IE 6/7 can't edit newsletters! The editor uses HTML5 p
 						<ul>
 							<?php
 							$ef = $Knews_plugin->get_extra_fields();
+							echo '<li class="token off"><a href="#">%email%</a></li>';
 							foreach ($ef as $e) {
 								if ($e->token != '') echo '<li class="token off"><a href="#">' . $e->token . '</a></li>';
 							}

@@ -5,6 +5,11 @@ if (count($targets) > 0) {
 						
 	$start_time = mktime($batch_opts['hour'], $batch_opts['minute'], 0, $batch_opts['month'], $batch_opts['day'], $batch_opts['year']);
 	
+	if ($batch_opts['timezone'] == 'local') {
+		$difference = current_time('timestamp') - time();
+		$start_time = $start_time - $difference;
+	}
+	
 	$mysqldate = $Knews_plugin->get_mysql_date($start_time);
 	
 	$query = 'INSERT INTO ' . KNEWS_NEWSLETTERS_SUBMITS . ' (blog_id, newsletter, finished, paused, start_time, users_total, users_ok, users_error, priority, strict_control, emails_at_once, special, end_time, id_smtp) VALUES (' . get_current_blog_id() . ', ' . $id_newsletter . ', 0, ' . $batch_opts['paused'] . ', \'' . $mysqldate . '\', ' . count($targets) . ', 0, 0, ' . $batch_opts['priority'] . ', \'' . $batch_opts['strict_control'] . '\', ' . $batch_opts['emails_at_once'] . ', \'\', \'0000-00-00 00:00:00\', ' . ((isset($batch_opts['id_smtp'])) ? $batch_opts['id_smtp'] : 1) . ')';
@@ -27,9 +32,11 @@ if (count($targets) > 0) {
 	/*preg_match_all ("/a[\s]+[^>]*?href[\s]?=[\s\"\']+".
 		"(.*?)[\"\']+.*?>"."([^<]+|.*?)?<\/a>/", */
 
-	preg_match_all ("/(a|A)[\s]+[^>]*?href[\s]?=[\s\"\']+".
+/*	preg_match_all ("/(a|A)[\s]+[^>]*?href[\s]?=[\s\"\']+".
 		"(.*?)[\"\']+.*?>"."([^<]+|.*?)?<\/(a|A)>/", 
-		$theHtml, $matches);
+		$theHtml, $matches);*/
+		
+preg_match_all('/<a[^>]+href=([\'"])(.+?)\1[^>]*>/i', $theHtml, $matches);
 
 	$matches = $matches[2];
 
@@ -48,6 +55,8 @@ if (count($targets) > 0) {
 			if (knews_insert_unique_key(6, $submit_id, $img)) break;
 			//echo $img . ' ha fallat';
 		}
+	} else {
+		while (!knews_insert_unique_key(6, $submit_id, KNEWS_URL . '/images/unpix.gif')) {}
 	}
 	echo '<div class="updated"><p>' . __('Batch submit process has been properly scheduled.','knews') . '</p></div>';				
 	$submit_enqueued=true;

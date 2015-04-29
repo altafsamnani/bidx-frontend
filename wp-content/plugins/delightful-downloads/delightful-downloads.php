@@ -3,7 +3,7 @@
 Plugin Name: Delightful Downloads
 Plugin URI: http://delightfulwp.com/delightful-downloads/
 Description: A super-awesome downloads manager for WordPress.
-Version: 1.4
+Version: 1.5.2
 Author: Delightful WP
 Author URI: http://delightfulwp.com
 License: GPL2
@@ -94,7 +94,7 @@ class Delightful_Downloads {
 	private function setup_constants() {
 
 		if( !defined( 'DEDO_VERSION' ) ) {
-			define( 'DEDO_VERSION', '1.4' );
+			define( 'DEDO_VERSION', '1.5.2' );
 		}
 
 		if( !defined( 'DEDO_PLUGIN_URL' ) ) {
@@ -182,11 +182,14 @@ class Delightful_Downloads {
 		// Install database table
 		$dedo_statistics->setup_table();
 
-		// Add default options to database if no options exist
-		add_option( 'delightful-downloads', $dedo_default_options );
+		// Add version to database
+		update_option( 'delightful-downloads-version', DEDO_VERSION );
+
+		// Add default options to database
+		update_option( 'delightful-downloads', $dedo_default_options );
 
 		// Add option for admin notices
-		add_option( 'delightful-downloads-notices', array() );
+		update_option( 'delightful-downloads-notices', array() );
 
 		// Run folder protection
 		dedo_folder_protection();

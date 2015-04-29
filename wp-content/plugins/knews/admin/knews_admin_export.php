@@ -54,8 +54,12 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 	$knews_has_header = $Knews_plugin->post_safe('knews_has_header', 0, 'int');
 	
 	$query = "SELECT * FROM " . KNEWS_LISTS . " ORDER BY orderlist";
-	$lists = $wpdb->get_results( $query );
+	$unkey_lists = $wpdb->get_results( $query );
 	$languages = $Knews_plugin->getLangs();
+	
+	foreach ($unkey_lists as $list) {
+		$lists[$list->id] = $list;
+	}
 	
 	if ($step==2) {
 		$no_list=true; $no_lang=true; $all_langs=true; $all_lists=true; $indexed_list=array();
@@ -111,97 +115,78 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 			$lists = $wpdb->get_results( $query );
 			$languages = $Knews_plugin->getLangs();*/
 
-			$select_sql = 'FROM ' . KNEWS_USERS . ' ku';
+			$sql = 'SELECT ku.id, ku.email, ku.state, ku.joined, ku.lang, ku.ip, GROUP_CONCAT(kupl.id_list) AS lists FROM ' . KNEWS_USERS . ' ku INNER JOIN ' . KNEWS_USERS_PER_LISTS . ' kupl ON ku.id = kupl.id_user ';
 
-			$where_lang = '';
+			$on_lang = ''; $l = 0;
 			if (!$all_langs) {
 				foreach ($languages as $lang) {
 					if ($Knews_plugin->post_safe('lang_' . $lang['language_code']) == 1) {
-
-						if ($where_lang !='') $where_lang .= ' OR ';							
-						$where_lang .= "ku.lang='" . $lang['language_code'] . "'";
+						$l++;
+						if ($on_lang !='') $on_lang .= ' OR ';							
+						$on_lang .= "ku.lang='" . $lang['language_code'] . "'";
 					}
 				}
+				if ($l > 1) $on_lang = '(' . $on_lang . ')';
 			}
+			if ($on_lang != '') $sql = $sql . ' AND ' . $on_lang;
 
-			$where_list = ''; $l = 0;
+			$on_list = ''; $l = 0;
 			if (!$all_lists) {
-				$select_sql .= ', ' . KNEWS_USERS_PER_LISTS . ' kupl';
+				//$select_sql .= ', ' . KNEWS_USERS_PER_LISTS . ' kupl';
 				foreach ($lists as $list) {
 					if ($Knews_plugin->post_safe('list_' . $list->id) == 1) {
 						$l++;
-						if ($where_list !='') $where_list .= ' OR ';							
-						$where_list .= "kupl.id_list=" . $list->id;
+						if ($on_list !='') $on_list .= ' OR ';							
+						$on_list .= "kupl.id_list=" . $list->id;
 					}
+					}
+				if ($l > 1) $on_list = '(' . $on_list . ')';
 				}
+			if ($on_list != '') $sql = $sql . ' AND ' . $on_list;
 
-				$where_list = ' kupl.id_user = ku.id AND ' . (($l > 1) ? '(' : '') . $where_list . (($l > 1) ? ')' : '');
+			$sql .= ' GROUP BY kupl.id_user';			
+			$users = $wpdb->get_results( $sql );
+			
+			$sql = 'SELECT user_id, GROUP_CONCAT(CONCAT_WS(\'{:}\', field_id, value) SEPARATOR \'{;}\') AS fields FROM ' . KNEWS_USERS_EXTRA . ' GROUP BY user_id';
+			$all_extra_fields = $wpdb->get_results( $sql );
+
+			foreach ($all_extra_fields as $ef) {
+				$parells = explode('{;}', $ef->fields);
+				foreach ($parells as $p) {
+					list($clau, $valor) = explode('{:}', $p);
+					$processed_fields[$ef->user_id][$clau] = $valor;
+			}
 			}
 			
-			if ($where_lang != '' && $where_list != '') {
-				$where_lang = '(' . $where_lang . ')';
-				$where_list = '(' . $where_list . ')';
-			}
+			$all_extra_fields=array();
 			
-			if ($where_lang != '' || $where_list != '') $select_sql .= ' WHERE ' . $where_lang;
-			if ($where_lang != '' && $where_list != '') $select_sql .= ' AND ';
-			$select_sql .= $where_list;
 			
-			if ($l > 1) {
-				$select_sql = ' SELECT DISTINCT(ku.*) ' . $select_sql;
-			} else {
-				$select_sql = ' SELECT ku.* ' . $select_sql;
-			}
-			//echo  $select_sql;
-			
-			$users = $wpdb->get_results( $select_sql );
 			
 			foreach ($users as $user) {
-				$in_lists=false;
-				$lists_user='';
-				/*foreach ($lists as $list) {
-					if ($Knews_plugin->post_safe('list_' . $list->id) == 1) {*/
 						
-				$query = "SELECT * FROM " . KNEWS_USERS_PER_LISTS . " WHERE id_user=" . $user->id; // . " AND id_list=" . $list->id;
-						$subscription_found = $wpdb->get_results( $query );
-					
-				foreach ($subscription_found as $sf) {
-							if ($lists_user != '') $lists_user .=', ';
-					$lists_user .= $indexed_list[$sf->id_list];
-						}
-				//}*/
-				/*$in_langs=false;
-				if ($in_lists) {
-					foreach ($languages as $lang) {
-						 if ($Knews_plugin->post_safe('lang_' . $lang['language_code']) == 1) {
-							 if ($user->lang == $lang['language_code']) $in_langs=true;
-						 }
-					}
-				}*/
-				//if ($in_langs && $in_lists)  {
 					$exported_users++;
 					$csv_code .= $enclosure . $user->email . $enclosure . $delimiter;
 
-				$query = "SELECT * FROM " . KNEWS_USERS_EXTRA . " WHERE user_id=" . $user->id;
-				$results = $wpdb->get_results($query);
-
 					foreach ($extra_fields as $ef) {
 					$ef_val='';
-					foreach ($results as $efr) {
-						if ($efr->field_id == $ef->id) {
-							$ef_val = $efr->value;
-							break;
-						}
-					}		
+					if (isset($processed_fields[$user->id]) && isset($processed_fields[$user->id][$ef->id]))
+						$ef_val=$processed_fields[$user->id][$ef->id];
+				
 					$csv_code .= $enclosure . $ef_val . $enclosure . $delimiter;					
+						}
+				
+				$lists_user_name = array();
+				$lists_user = explode(',', $user->lists);
+				foreach ($lists_user as $list) {
+					if (isset($lists[$list])) $lists_user_name[] = $lists[$list]->name;
 					}
 
 					$csv_code .= $enclosure . $user->lang . $enclosure . $delimiter;
 					$csv_code .= $enclosure . $user->state . $enclosure . $delimiter;
-				$csv_code .= $enclosure . $lists_user . $enclosure . $delimiter;
+				$csv_code .= $enclosure . implode(',', $lists_user_name) . $enclosure . $delimiter;
 				$csv_code .= $enclosure . $user->joined . $enclosure . $delimiter;
 				$csv_code .= $enclosure . $user->ip . $enclosure . "\r\n";
-				//}
+				
 			}
 			
 			if ($exported_users != 0) {

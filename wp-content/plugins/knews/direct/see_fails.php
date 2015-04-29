@@ -6,7 +6,7 @@ if ($Knews_plugin) {
 
 	if (! $Knews_plugin->initialized) $Knews_plugin->init();
 
-	$query = "SELECT * FROM " . KNEWS_NEWSLETTERS_SUBMITS . " WHERE blog_id=" . get_current_blog_id() . " AND id=" . $Knews_plugin->get_safe('id');
+	$query = "SELECT * FROM " . KNEWS_NEWSLETTERS_SUBMITS . " WHERE blog_id=" . get_current_blog_id() . " AND id=" . $Knews_plugin->get_safe('id',0,'int');
 	$results = $wpdb->get_results( $query );
 	
 	$submit=$results[0];
@@ -36,7 +36,7 @@ Submits OK: <?php echo $submit->users_ok; ?><br />
 Submits ERROR: <?php echo $submit->users_error; ?></p>
 <p>List emails can't be submitted:</p>
 <?php
-$query = "SELECT * FROM " . KNEWS_NEWSLETTERS_SUBMITS_DETAILS . " WHERE submit=" . $Knews_plugin->get_safe('id') . " AND status=2";
+$query = "SELECT * FROM " . KNEWS_NEWSLETTERS_SUBMITS_DETAILS . " WHERE submit=" . $Knews_plugin->get_safe('id',0,'int') . " AND status=2";
 $results = $wpdb->get_results( $query );
 
 $user_count=0;

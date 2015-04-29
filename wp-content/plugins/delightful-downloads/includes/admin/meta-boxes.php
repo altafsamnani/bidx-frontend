@@ -16,8 +16,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @since  1.0
  */
 function dedo_register_meta_boxes() {
-	add_meta_box( 'dedo_file', __( 'File', 'delightful-downloads' ), 'dedo_meta_box_file', 'dedo_download', 'normal', 'high' );
-	add_meta_box( 'dedo_stats', __( 'Download Stats', 'delightful-downloads' ), 'dedo_meta_box_stats', 'dedo_download', 'side', 'core' );
+	add_meta_box( 'dedo_download', __( 'Download', 'delightful-downloads' ), 'dedo_meta_box_download', 'dedo_download', 'normal', 'high' );
 }
 add_action( 'add_meta_boxes', 'dedo_register_meta_boxes' );
 
@@ -61,20 +60,41 @@ function dedo_update_messages( $messages ) {
 add_action( 'post_updated_messages', 'dedo_update_messages' );
 
 /**
- * Render File Metabox
+ * Render Download Metabox
  *
- * @since  1.0
+ * @since  1.5
  */
-function dedo_meta_box_file( $post ) {
+function dedo_meta_box_download( $post ) {
+	global $post;
+
 	$file_url = get_post_meta( $post->ID, '_dedo_file_url', true );
-	$file_size = size_format( get_post_meta( $post->ID, '_dedo_file_size', true ), 1 );
+	$file_url = ( false != $file_url ) ? $file_url : '';
 	
-	global $post, $dedo_options;;
-	 
-	$plupload_init = array(
+	$file_size = get_post_meta( $post->ID, '_dedo_file_size', true );
+	$file_size = ( false != $file_size ) ? size_format( $file_size, 1 ) : '';
+	
+	$file_count = get_post_meta( $post->ID, '_dedo_file_count', true );
+	$file_count = ( false != $file_count ) ? $file_count : 0;
+
+	$file_options = get_post_meta( $post->ID, '_dedo_file_options', true );
+
+	// Update status args
+	$status_args = array(
+		'ajaxURL'		=> admin_url( 'admin-ajax.php', isset( $_SERVER['HTTPS'] ) ? 'https://' : 'http://' ),
+		'nonce' 		=> wp_create_nonce( 'dedo_download_update_status' ),
+		'action'    	=> 'dedo_download_update_status',
+		'default_icon'	=> dedo_get_file_icon( 'default' ),
+		'lang_local'	=> __( 'Local File', 'delightful-downloads' ),
+		'lang_remote'	=> __( 'Remote File', 'delightful-downloads' ),
+		'lang_warning'	=> __( 'Inaccessible File', 'delightful-downloads' )
+	);
+
+	// Plupload args
+	$plupload_args = array(
 		'runtimes'            => 'html5, silverlight, flash, html4',
 		'browse_button'       => 'dedo-upload-button',
-		'container'           => 'plupload-container',
+		'container'           => 'dedo-upload-container',
+		'drop_element'		  => 'dedo-drag-drop-area',
 		'file_data_name'      => 'async-upload',            
 		'multiple_queues'     => false,
 		'multi_selection'	  => false,
@@ -85,77 +105,222 @@ function dedo_meta_box_file( $post ) {
 		'filters'             => array( array( 'title' => __( 'Allowed Files' ), 'extensions' => '*' ) ),
 		'multipart'           => true,
 		'urlstream_upload'    => true,
-	
+
 		// additional post data to send to our ajax hook
 		'multipart_params'    => array(
 			'_ajax_nonce' 		=> wp_create_nonce( 'dedo_download_upload' ),
 			'action'      		=> 'dedo_download_upload',
 			'post_id'			=> $post->ID
-		),
+		)
 	);
-	
-	$filebrowser_init = array(
-		'root'		=> dedo_get_upload_dir( 'basedir' ) . '/',
-		'url'		=> dedo_get_upload_dir( 'baseurl' ) . '/',
-		'script'	=> DEDO_PLUGIN_URL . 'assets/js/jqueryFileTree/connectors/jqueryFileTree.php'
+
+	// File browser args
+	$file_browser_args = array(
+		'root'			=> dedo_get_upload_dir( 'basedir' ) . '/',
+		'url'			=> dedo_get_upload_dir( 'baseurl' ) . '/',
+		'script'		=> DEDO_PLUGIN_URL . 'assets/js/jqueryFileTree/connectors/jqueryFileTree.php'
 	);
-	
+
 	?>
-	
+
 	<script type="text/javascript">
-		var plupload_args = <?php echo json_encode( $plupload_init ); ?>;
-		var filebrowser_args = <?php echo json_encode( $filebrowser_init ); ?>;
+		var updateStatusArgs = <?php echo json_encode( $status_args ); ?>;
 	</script>
 	
-	<div id="plupload-container">	
-		<label for="dedo-file-url"><?php _e( 'File URL:', 'delightful-downloads' ); ?></label>
-		<div class="file-container">
-			<div class="file-url-container">
-				<input type="text" name="dedo-file-url" id="dedo-file-url" value="<?php echo esc_attr( $file_url ); ?>" class="large-text" placeholder="<?php _e( 'Upload or enter the file URL.', 'delightful-downloads' ); ?>" />
-				<span class="remove" style="display: none"><a href="#">Remove</a></span>
+	<div id="dedo-new-download" style="<?php echo ( !isset( $file_url ) || empty( $file_url ) ) ? 'display: block;' : 'display: none;'; ?>">		
+		<a href="#dedo-upload-modal" class="button dedo-modal-action"><?php _e( 'Upload File', 'delightful-downloads' ); ?></a>
+		<a href="#dedo-select-modal" class="button dedo-modal-action select-existing"><?php _e( 'Existing File', 'delightful-downloads' ); ?></a>
+	</div>
+	<div id="dedo-existing-download" style="<?php echo ( isset( $file_url ) && !empty( $file_url ) ) ? 'display: block;' : 'display: none;'; ?>">		
+		<div class="left-panel">
+			<div class="file-icon">	
+				<img src="<?php echo dedo_get_file_icon( $file_url ); ?>" />
 			</div>
-			<div class="file-size-container">
-				<p><?php echo ( !$file_size ) ? __( 'Unkown', 'delightful-downloads' ) : $file_size; ?></p>
+			<div class="file-name"><?php echo dedo_get_file_name( $file_url ); ?></div>
+			<div class="file-size"><?php echo $file_size; ?></div>
+			<div class="file-status">
+				<span class="status spinner"></span>
 			</div>
 		</div>
-		<?php wp_nonce_field( 'ddownload_file_save', 'ddownload_file_save_nonce' ); ?>
-		
-		<div id="plupload-file">
-			<input id="dedo-upload-button" type="button" value="<?php _e( 'Upload File', 'delightful-downloads' ); ?>" class="button" />
-			<input id="dedo-select-button" type="button" value="<?php _e( 'Select Existing File', 'delightful-downloads' ); ?>" class="button" />
-			<span class="description"><?php printf( __( 'Maximum upload file size: %s.', 'delightful-downloads' ), size_format( wp_max_upload_size(), 1 ) ); ?></span>
-			<div id="dedo-file-upload">
-				<p id="plupload-error" class="error" style="display: none"></p>
-				<div id="plupload-progress" style="display: none">
-					<div class="bar" style="width: 0"></div>
-					<div class="percent"><p>Uploading...</p></div>
+		<div class="right-panel">
+			<table class="form-table">
+				<tbody>
+					<tr>
+						<th scope="row">
+							<?php _e( 'Download Count', 'delightful-downloads' ); ?>
+						</th>
+						<td>
+							<input name="download_count" id="download_count" class="regular-text" type="number" min="0" value="<?php echo $file_count; ?>" />
+							<p class="description"><?php _e( 'The number of times this file has been downloaded.' ); ?></p>
+						</td>
+					</tr>
+					<?php $members_only = ( isset( $file_options['members_only'] ) ? $file_options['members_only'] : '' ); ?>
+					<?php $members_only_redirect = ( isset( $file_options['members_only_redirect'] ) ? $file_options['members_only_redirect'] : '' ); ?>
+					<tr>
+						<th scope="row">
+							<?php _e( 'Members Only', 'delightful-downloads' ); ?>
+						</th>
+						<td>
+							<label for="members_only_true"><input name="members_only" id="members_only_true" type="radio" value="1" <?php echo ( 1 === $members_only ) ? 'checked' : ''; ?> /> <?php _e( 'Yes', 'delightful-downloads' ); ?></label>
+							<label for="members_only_false"><input name="members_only" id="members_only_false" type="radio" value="0" <?php echo ( 0 === $members_only ) ? 'checked' : ''; ?> /> <?php _e( 'No', 'delightful-downloads' ); ?></label>
+							<label for="members_only_inherit"><input name="members_only" id="members_only_inherit" type="radio" value <?php echo ( '' === $members_only ) ? 'checked' : ''; ?> /> <?php _e( 'Inherit', 'delightful-downloads' ); ?></label>
+							<p class="description"><?php _e( 'Allow only logged in users to download this file.' ); ?></p>
+							<div id="members_only_sub" class="dedo-sub-option" style="<?php echo ( 0 === $members_only ) ? 'display: none;' : ''; ?>">
+								<?php 
+
+								$args = array(
+									'name'						=> 'members_only_redirect',
+									'depth'						=> 0,
+									'selected'					=> $members_only_redirect,
+									'show_option_none'			=> __( 'Inherit', 'delightful-downloads' ),
+									'option_none_value'			=> 	'',
+									'echo'						=> 0
+								);
+								
+								$list = wp_dropdown_pages( $args );
+
+								// Add option groups
+								$list = explode( '<option value="">' . __( 'Inherit', 'delightful-downloads' ) . '</option>', $list );
+								$list = implode( '<optgroup label="' . __( 'Global', 'delightful-downloads' ) . '"><option value="">' . __( 'Inherit', 'delightful-downloads' ) . '</option></optgroup><optgroup label="' . __( 'Pages', 'delightful-downloads' ) . '">', $list );
+								$list = explode( '</select>', $list );
+								$list = implode( '</optgroup></select>', $list );
+
+								echo $list; 
+								?>
+
+								<p class="description"><?php _e( 'The page to redirect non-members.' ); ?></p>
+							</div>
+						</td>
+					</tr>
+					<?php $open_browser = ( isset( $file_options['open_browser'] ) ? $file_options['open_browser'] : '' ); ?>
+					<tr>
+						<th scope="row">
+							<?php _e( 'Open In Browser', 'delightful-downloads' ); ?>
+						</th>
+						<td>
+							<label for="open_browser_true"><input name="open_browser" id="open_browser_true" type="radio" value="1" <?php echo ( 1 === $open_browser ) ? 'checked' : ''; ?> /> <?php _e( 'Yes', 'delightful-downloads' ); ?></label>
+							<label for="open_browser_false"><input name="open_browser" id="open_browser_false" type="radio" value="0" <?php echo ( 0 === $open_browser ) ? 'checked' : ''; ?> /> <?php _e( 'No', 'delightful-downloads' ); ?></label>
+							<label for="open_browser_inherit"><input name="open_browser" id="open_browser_inherit" type="radio" value <?php echo ( '' === $open_browser ) ? 'checked' : ''; ?> /> <?php _e( 'Inherit', 'delightful-downloads' ); ?></label>
+							<p class="description"><?php echo sprintf( __( 'This file will attempt to open in the browser window. If the file is located within the Delightful Downloads upload directory, you will need to set the %sfolder protection%s setting to \'No\'.', 'delightful-downloads' ), '<a href="' . admin_url( 'edit.php?post_type=dedo_download&page=dedo_settings&tab=advanced' ) . '" target="_blank">', '</a>' ); ?></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="footer">
+			<?php _e( 'Replace File:', 'delightful-downloads' ); ?>
+			<a href="#dedo-upload-modal" class="button dedo-modal-action"><?php _e( 'Upload', 'delightful-downloads' ); ?></a>
+			<a href="#dedo-select-modal" class="button dedo-modal-action select-existing"><?php _e( 'Select Existing', 'delightful-downloads' ); ?></a>
+			<a href="#dedo-delete-modal" class="delete dedo-delete-file"><?php _e( 'Delete File', 'delightful-downloads' ); ?></a>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var pluploadArgs = <?php echo json_encode( $plupload_args ); ?>;
+	</script>
+
+	<div id="dedo-upload-modal" class="dedo-modal" style="display: none; width: 40%; left: 50%; margin-left: -20%;">
+		<a href="#" class="dedo-modal-close" title="Close"><span class="media-modal-icon"></span></a>
+		<div id="dedo-upload-container" class="dedo-modal-content">
+			<h1><?php _e( 'Upload File', 'delightful-downloads' ); ?></h1>
+			<div id="dedo-drag-drop-area-container">
+				<div id="dedo-drag-drop-area">
+					<p class="drag-drop-info"><?php _e( 'Drop file here', 'delightful-downloads' ); ?></p>
+					<p><?php _e( 'or', 'delightful-downloads' ); ?></p>
+					<p class="drag-drop-button"><input id="dedo-upload-button" type="button" value="<?php _e( 'Select File', 'delightful-downloads' ); ?>" class="button" />
+					<div id="dedo-progress-percent" style="width: 0%;"></div>
+					<div id="dedo-progress-text">0%</div>
 				</div>
 			</div>
-			<div id="dedo-file-browser" style="display: none"></div>
+			<p><?php printf( __( 'Maximum upload file size: %s.', 'delightful-downloads' ), size_format( wp_max_upload_size(), 1 ) ); ?></p>
+			<div id="dedo-progress-error" style="display: none"></div>
 		</div>
 	</div>
-	<?php
-}
 
-/**
- * Render stats meta box
- *
- * @since  1.0
- */
-function dedo_meta_box_stats( $post ) {
-	$file_count = get_post_meta( $post->ID, '_dedo_file_count', true );
-	?>
-	<div id="dedo-file-stats-container">
-		<label for="dedo_file_count"><?php _e( 'Count' , 'delightful-downloads' ); ?>:</label>
-		<?php wp_nonce_field( 'ddownload_stats_save', 'ddownload_stats_save_nonce' ); ?>
-		<input type="text" name="dedo_file_count" class="large-text" value="<?php echo ($file_count !== '' ? esc_attr( $file_count ) : 0 ); ?>" />
+	<script type="text/javascript">
+		var fileBrowserArgs = <?php echo json_encode( $file_browser_args ); ?>;
+	</script>
+
+	<div id="dedo-select-modal" class="dedo-modal" style="display: none; width: 40%; left: 50%; margin-left: -20%;">
+		<a href="#" class="dedo-modal-close" title="Close"><span class="media-modal-icon"></span></a>
+		<div class="dedo-modal-content">
+			<h1><?php _e( 'Existing File', 'delightful-downloads' ); ?></h1>
+			<p><?php _e( 'Manually enter a file URL, or use the file browser.', 'delightful-downloads' ); ?></p>
+			<p>	
+				<?php wp_nonce_field( 'ddownload_file_save', 'ddownload_file_save_nonce' ); ?>
+				<input name="dedo-file-url" id="dedo-file-url" type="text" class="large-text" value="<?php echo $file_url; ?>" placeholder="<?php _e( 'File URL or path...', 'delightful-downloads' ); ?>" />
+			</p>
+			<p>
+				<div id="dedo-file-browser"><p><?php _e( 'Loading...', 'delightful-downloads' ); ?></p></div>
+			</p>
+			<p>
+				<a href="#" id="dedo-select-done" class="button button-primary"><?php _e( 'Confirm', 'delightful-downloads' ); ?></a>
+			</p>
+		</div>
 	</div>
-	
+
 	<?php
+	
 }
 
 /**
- * Save meta boxes
+ * Update Status Ajax
+ *
+ * @since  1.5
+*/
+function dedo_download_update_status_ajax() {
+
+	global $dedo_statistics;
+
+	// Check for nonce and permission
+	if ( !check_ajax_referer( 'dedo_download_update_status', 'nonce', false ) || !current_user_can( apply_filters( 'dedo_cap_add_new', 'edit_pages' ) ) ) {
+		echo json_encode( array(
+			'status'	=> 'error',
+			'content'	=> __( 'Failed security check!', 'delightful-downloads' )
+		) );
+
+		die();
+	}
+
+	$file_url = trim( $_REQUEST['url'] );
+
+	if( $result = dedo_get_file_status( $file_url ) ) {
+		// Cache remote file sizes, for 15 mins
+		if ( 'remote' === $result['type'] ) {
+			$cached_remotes = get_transient( 'dedo_remote_file_sizes' );
+
+			if ( false === $cached_remotes || !isset( $cached_remotes[esc_url_raw( $file_url )] ) ) {
+				$cached_remotes[esc_url_raw( $file_url )] = $result['size'];
+				set_transient( 'dedo_remote_file_sizes', $cached_remotes, 900 );
+			}
+		}
+
+		// Add extra data to result
+		$result['size'] = size_format( $result['size'], 1 );
+		$result['icon']	= dedo_get_file_icon( $file_url );
+		$result['filename'] = dedo_get_file_name( $file_url );
+
+		// Exists
+		echo json_encode( array (
+			'status'	=> 'success',
+			'content'	=> $result
+		) );
+	}
+	else {
+		$result['filename'] = dedo_get_file_name( $file_url );
+
+		echo json_encode( array (
+			'status'	=> 'error',
+			'content'	=> $result
+		) );
+	}
+
+	die();
+}
+add_action( 'wp_ajax_dedo_download_update_status', 'dedo_download_update_status_ajax' );
+
+/**
+ * Save Meta Boxes
  *
  * @since  1.0
  */
@@ -175,53 +340,60 @@ function dedo_meta_boxes_save( $post_id ) {
 		return;
 	}
 	
-	// Check for save stats nonce
+	// Check for file nonce
 	if ( isset( $_POST['ddownload_file_save_nonce'] ) && wp_verify_nonce( $_POST['ddownload_file_save_nonce'], 'ddownload_file_save' ) ) {	
+
+		$file_url = trim( $_POST['dedo-file-url'] );
+
+		/**
+		 * Get cached remote file sizes
+		 *
+		 * Ajax grabs the remote file size on each file update, it makes sense to cache
+		 * the value and use it here. Otherwise, the user has to wait for headers to return
+		 * when saving a file.
+		 */
+		$cached_remotes = get_transient( 'dedo_remote_file_sizes' );
 		
-		// Save file url
-		if ( isset( $_POST['dedo-file-url'] ) && !empty( $_POST['dedo-file-url'] ) ) {
-			
-			$file_url = trim( $_POST['dedo-file-url'] );
-			
-			if ( !$file_path = dedo_get_abs_path( $file_url ) ) {
-
-				// No file found locally, attempt to get file size from remote
-				$response = get_headers( $file_url, 1 );
-				
-				if ( 'HTTP/1.1 404 Not Found' !== $response[0] && isset( $response['Content-Length'] )  ) {
-					
-					$file_size = $response['Content-Length'];
-				}
-				else {
-
-					$file_size = 0;
-				}
-
-			}
-			else {
-				
-				$file_size = filesize( $file_path );
-			}
-
+		// Check for cached remote file size
+		if ( false === $cached_remotes || !isset( $cached_remotes[esc_url_raw( $file_url )] ) ) {
+			$file = dedo_get_file_status( $file_url );
+			$file_size = $file['size'];
 		}
 		else {
-			
-			$file_size = 0;
-			$file_url = '';
+			$file_size = $cached_remotes[esc_url_raw( $file_url )];
 		}
 
+		// Save file url and size
 		update_post_meta( $post_id, '_dedo_file_url', $file_url );
 		update_post_meta( $post_id, '_dedo_file_size', $file_size );
-	}
-	
-	// Check for save stats nonce
-	if ( isset( $_POST['ddownload_stats_save_nonce'] ) && wp_verify_nonce( $_POST['ddownload_stats_save_nonce'], 'ddownload_stats_save' ) ) {
-		
+
 		// Save download count
-		if ( isset( $_POST['dedo_file_count'] ) ) {
-			update_post_meta( $post_id, '_dedo_file_count', strip_tags( trim( $_POST['dedo_file_count'] ) ) );
+		if ( isset( $_POST['download_count'] ) && '' !== trim( $_POST['download_count'] ) ) {
+			update_post_meta( $post_id, '_dedo_file_count', trim( $_POST['download_count'] ) );
 		}
 
+		// Get current file options
+		$file_options = get_post_meta( $post_id, '_dedo_file_options', true );
+		$file_options = ( false == $file_options ) ? array() : $file_options;
+
+		// Set file options
+		$default_options = array(
+			'members_only',
+			'members_only_redirect',
+			'open_browser'
+		);
+
+		// Loop through and save to file array
+		foreach ( $default_options as $option ) {
+			if ( isset( $_POST[$option] ) && '' !== $_POST[$option] ) {
+				$file_options[$option] = absint( $_POST[$option] );
+			}
+			else {
+				unset( $file_options[$option] );
+			}
+		}
+
+		update_post_meta( $post_id, '_dedo_file_options', $file_options );
 	}
 }
 add_action( 'save_post', 'dedo_meta_boxes_save' );

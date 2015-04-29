@@ -11,7 +11,11 @@ if ($Knews_plugin) {
 	$results = $wpdb->get_results( $query );
 
 	$theSubject = $results[0]->subject;
-	$theHtml = $results[0]->html_head . '<body>' . $results[0]->html_mailing . '</body></html>';
+	$theHtml = $results[0]->html_head . '<body>' . $results[0]->html_mailing;
+
+	if (isset($knewsOptions['pixel_tracking']) && $knewsOptions['pixel_tracking']!=1) $theHtml .= '<img src="' . KNEWS_URL . '/images/unpix.gif" width="1" height="1" alt="" />';
+
+	$theHtml .= '</body></html>';
 
 	$title = knews_cut_code('<title>', '</title>', $theHtml, false);
 	$theHtml = str_replace($title, '<title>' . $theSubject . ' - ' . get_bloginfo('title') . '</title>', $theHtml);

@@ -229,18 +229,73 @@ if ($fp) {
 	
 	$selected_max_date_chart = mktime(23, 59, 59, date('n', $selected_max_date_chart), date('j', $selected_max_date_chart), date('Y', $selected_max_date_chart));
 
+		if ($selected_min_date_chart == $selected_max_date_chart) $selected_min_date_chart = $selected_min_date_chart - 24*60*60;
+		
+		
+		$timezone_format = strtolower (_x('Y-m-d G:i:s', 'timezone date format'));
+		$order_date = 'ymd';
+		if ($timezone_format=='d-m-y' || $timezone_format=='j-m-y' || $timezone_format=='d-f-y' || $timezone_format=='j-f-y' || $timezone_format=='d-n-y' || $timezone_format=='j-n-y') $order_date = 'dmy';
+		if ($timezone_format=='m-d-y' || $timezone_format=='m-j-y' || $timezone_format=='f-d-y' || $timezone_format=='f-j-y' || $timezone_format=='n-d-y' || $timezone_format=='n-j-y') $order_date = 'mdy';
+		if ($timezone_format=='y-d-m' || $timezone_format=='y-j-m' || $timezone_format=='y-d-f' || $timezone_format=='y-j-f' || $timezone_format=='y-d-n' || $timezone_format=='y-j-n') $order_date = 'ydm';
 	?>
 		<div class="stats_filter">
 		<form method="post" action="admin.php?page=knews_stats">
 			<p><?php _e('From date:','knews'); ?>
+
+			<?php if ($order_date == 'ymd') { ?>
+
+				<select name="year_1"><?php knews_print_options($select_min_year, $select_max_year, date("Y", $selected_min_date_chart)); ?></select>
+				<select name="month_1"><?php knews_print_options(1,12,date("m", $selected_min_date_chart)); ?></select>
+				<select name="day_1"><?php knews_print_options(1,31,date("d", $selected_min_date_chart)); ?></select>
+
+			<?php } elseif ($order_date == 'dmy') { ?>
+
 			<select name="day_1"><?php knews_print_options(1,31,date("d", $selected_min_date_chart)); ?></select>
 			<select name="month_1"><?php knews_print_options(1,12,date("m", $selected_min_date_chart)); ?></select>
 			<select name="year_1"><?php knews_print_options($select_min_year, $select_max_year, date("Y", $selected_min_date_chart)); ?></select>
 			
-			| <?php _e('to date:','knews'); ?> <select name="day_2"><?php knews_print_options(1,31,date("d", $selected_max_date_chart)); ?></select>
+			<?php } elseif ($order_date == 'mdy') { ?>
+
+				<select name="month_1"><?php knews_print_options(1,12,date("m", $selected_min_date_chart)); ?></select>
+				<select name="day_1"><?php knews_print_options(1,31,date("d", $selected_min_date_chart)); ?></select>
+				<select name="year_1"><?php knews_print_options($select_min_year, $select_max_year, date("Y", $selected_min_date_chart)); ?></select>
+
+			<?php } elseif ($order_date == 'ydm') { ?>
+
+				<select name="year_1"><?php knews_print_options($select_min_year, $select_max_year, date("Y", $selected_min_date_chart)); ?></select>
+				<select name="day_1"><?php knews_print_options(1,31,date("d", $selected_min_date_chart)); ?></select>
+				<select name="month_1"><?php knews_print_options(1,12,date("m", $selected_min_date_chart)); ?></select>
+
+			<?php } ?>
+			
+			| <?php _e('to date:','knews'); ?>
+			
+			<?php if ($order_date == 'ymd') { ?>
+
+				<select name="year_2"><?php knews_print_options($select_min_year, $select_max_year, date("Y", $selected_max_date_chart)); ?></select>
+				<select name="month_2"><?php knews_print_options(1,12,date("m", $selected_max_date_chart)); ?></select>
+				<select name="day_2"><?php knews_print_options(1,31,date("d", $selected_max_date_chart)); ?></select>
+
+			<?php } elseif ($order_date == 'dmy') { ?>
+
+				<select name="day_2"><?php knews_print_options(1,31,date("d", $selected_max_date_chart)); ?></select>
 			<select name="month_2"><?php knews_print_options(1,12,date("m", $selected_max_date_chart)); ?></select>
 			<select name="year_2"><?php knews_print_options($select_min_year, $select_max_year, date("Y", $selected_max_date_chart)); ?></select>
 
+			<?php } elseif ($order_date == 'mdy') { ?>
+
+				<select name="month_2"><?php knews_print_options(1,12,date("m", $selected_max_date_chart)); ?></select>
+				<select name="day_2"><?php knews_print_options(1,31,date("d", $selected_max_date_chart)); ?></select>
+				<select name="year_2"><?php knews_print_options($select_min_year, $select_max_year, date("Y", $selected_max_date_chart)); ?></select>
+
+			<?php } elseif ($order_date == 'ydm') { ?>
+
+				<select name="year_2"><?php knews_print_options($select_min_year, $select_max_year, date("Y", $selected_max_date_chart)); ?></select>
+				<select name="day_2"><?php knews_print_options(1,31,date("d", $selected_max_date_chart)); ?></select>
+				<select name="month_2"><?php knews_print_options(1,12,date("m", $selected_max_date_chart)); ?></select>
+
+			<?php } ?>
+	
 			<input type="submit" value="<?php _e('Filter','knews');?>" class="button-secondary" /></p>
 			<p class="selector"><?php _e('Fast selection:','knews'); if ($fast_select=='all') echo '<strong>';?><a href="admin.php?page=knews_stats&sel=all"><?php _e('All','knews'); ?></a><?php if ($fast_select=='all') echo '</strong>';?> | 
 			<?php if ($fast_select=='7') echo '<strong>';?><a href="admin.php?page=knews_stats&sel=7"><?php _e('last 7 days','knews'); ?></a><?php if ($fast_select=='7') echo '</strong>';?> | 
@@ -310,7 +365,7 @@ if ($fp) {
 
 		/////////////////////////// Subscriptions / Blocks
 		?>
-		<h3><span><?php _e('Accumulated sign ups and unsubscribes from date:','knews'); echo ' ' . date("d-m-Y", $selected_min_date_chart) . ' '; _e('to date:','knews'); echo ' ' . date("d-m-Y", $selected_max_date_chart); ?></span></h3>
+			<h3><span><?php _e('Accumulated sign ups and unsubscribes from date:','knews'); echo ' ' . $Knews_plugin->localize_date($selected_min_date_chart) . ' '; _e('to date:','knews'); echo ' ' . $Knews_plugin->localize_date($selected_max_date_chart); ?></span></h3>
 		<?php		
 
 		$cols=21;
@@ -472,7 +527,7 @@ if ($fp) {
 		}
 	?>
 		<p>&nbsp;</p>
-		<h3><span><?php _e('Newsletters & clicks from date:','knews'); echo ' ' . date("d-m-Y", $selected_min_date_chart) . ' '; _e('to date:','knews'); echo ' ' . date("d-m-Y", $selected_max_date_chart); ?></span></h3>
+			<h3><span><?php _e('Newsletters & clicks from date:','knews'); echo ' ' . $Knews_plugin->localize_date($selected_min_date_chart) . ' '; _e('to date:','knews'); echo ' ' . $Knews_plugin->localize_date($selected_max_date_chart); ?></span></h3>
  		<div class="pestanyes pestanyes_2">
 			<a onclick="view_graph(2,1); return false;" class="link_2_1 on" href="#"><?php _e('All','knews'); ?></a>
 			<a onclick="view_graph(2,2); return false;" class="link_2_2" href="#" title="<?php _e('Sendings OK','knews'); ?>"><img src="<?php echo KNEWS_URL; ?>/images/legend_blue.gif" width="13" height="13" alt="1" /> <?php echo knews_hardCut(__('Sendings OK','knews')); ?></a>

@@ -11,7 +11,7 @@ function duplicate_news($results) {
 	
 	if ($results) {
 		
-		$sql = "INSERT INTO " . KNEWS_NEWSLETTERS . "(name, subject, created, modified, template, html_mailing, html_head, html_modules, html_container, lang, automated, mobile, id_mobile, newstype) VALUES ('(copy)" . esc_sql($results[0]->name) . "', '" . esc_sql($results[0]->subject) . "', '" . $Knews_plugin->get_mysql_date() . "', '" . $Knews_plugin->get_mysql_date() . "','" . $results[0]->template . "','" . esc_sql($results[0]->html_mailing) . "','" . esc_sql($results[0]->html_head) . "','" . esc_sql($results[0]->html_modules) . "','" . esc_sql($results[0]->html_container) . "', '" . $results[0]->lang . "', 0, " . $results[0]->mobile . ", " . $results[0]->id_mobile . ", '" . $results[0]->newstype . "')";
+		$sql = "INSERT INTO " . KNEWS_NEWSLETTERS . "(name, subject, created, modified, template, html_mailing, html_head, html_bodytag, html_modules, html_container, lang, automated, mobile, id_mobile, newstype) VALUES ('(copy)" . esc_sql($results[0]->name) . "', '" . esc_sql($results[0]->subject) . "', '" . $Knews_plugin->get_mysql_date() . "', '" . $Knews_plugin->get_mysql_date() . "','" . $results[0]->template . "','" . esc_sql($results[0]->html_mailing) . "','" . esc_sql($results[0]->html_head) . "','" . esc_sql($results[0]->html_bodytag) . "','" . esc_sql($results[0]->html_modules) . "','" . esc_sql($results[0]->html_container) . "', '" . $results[0]->lang . "', 0, " . $results[0]->mobile . ", " . $results[0]->id_mobile . ", '" . $results[0]->newstype . "')";
 			
 		$results = $wpdb->query($sql);
 		
@@ -167,7 +167,7 @@ function duplicate_news($results) {
 								echo '<td>' . ($tab=='autocreated' ? 'autocreated' : $list->newstype) . '</td>';	
 								echo '<td>' . $Knews_plugin->humanize_dates($list->created, 'mysql') . '</td>';
 								echo '<td>' . $Knews_plugin->humanize_dates($list->modified, 'mysql') . '</td>';
-								echo '<td>' . $list->template . '</td>';
+								echo '<td>' . apply_filters('knews_nice_name_' . $list->template, $list->template) . '</td>';
 								echo '<td>' . (($list->lang == '') ? __('Multilanguage','knews') : $list->lang) . '</td>';
 								//echo '<td><a href="admin.php?page=knews_news&section=edit&idnews=' . $list->id . '">' . __('Edit', 'knews') . '</a></td>';
 								//echo '<td align="center"><input type="checkbox" value="1" name="' . $list->id . '_delete" id="' . $list->id . '_delete" /></td>';
@@ -260,7 +260,7 @@ function duplicate_news($results) {
 						knews_display_templates(); 
 						?>
 						<h3 style="clear:both">Type of newsletter</h3>
-						<p><input type="radio" name="newstype" value="manual" /> Manual newsletter</p>
+						<p><input type="radio" name="newstype" value="manual" checked="checked" /> Manual newsletter</p>
 						<p><input type="radio" name="newstype" value="autocreation" /> Newsletter for auto-creation <a href="<?php _e('http://www.knewsplugin.com/automated-newsletter-creation/','knews'); ?>" style="background:url(<?php echo KNEWS_URL; ?>/images/help.png) no-repeat 5px 0; padding:3px 0 3px 30px; color:#0646ff; font-size:13px;" target="_blank"><?php _e('Auto-create Newsletters Tutorial','knews'); ?></a></p>
 						<p><input type="radio" name="newstype" value="autoresponder" /> Newsletter for autoresponder <a href="http://www.knewsplugin.com/knews-have-autoresponders/" style="background:url(<?php echo KNEWS_URL; ?>/images/help.png) no-repeat 5px 0; padding:3px 0 3px 30px; color:#0646ff; font-size:13px;" target="_blank"><?php _e('Autoresponders Tutorial','knews'); ?></a></p>
 						<div style="clear:both;"></div>

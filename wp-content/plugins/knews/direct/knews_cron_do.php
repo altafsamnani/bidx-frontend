@@ -46,7 +46,14 @@ if ($Knews_plugin) {
 				@$filelock = fopen(KNEWS_DIR . '/tmp/lockfile.txt', 'r');
 				$timelock = intval(fread($filelock, filesize(KNEWS_DIR . '/tmp/lockfile.txt')));
 				fclose($filelock);
-				if (intval(time()) - $timelock > 3500) {
+
+				$timemax = 3500;
+				if( !@set_time_limit(25) ) $timemax = ini_get('max_execution_time') + 120;
+				if (intval(time()) - $timelock > $timemax) {
+
+					$query = "UPDATE " . KNEWS_NEWSLETTERS_SUBMITS_DETAILS . " SET status=0 WHERE status=3 AND submit=" . $submit_pend[0]->id;
+					$restart = $wpdb->query( $query );
+
 					//Posem la nova data
 					if ($fp) fwrite($fp, '* Previous submit process terminated suddenly, continuing...' . "<br>\r\n");
 					@$filelock = fopen(KNEWS_DIR . '/tmp/lockfile.txt', 'w');
@@ -61,6 +68,10 @@ if ($Knews_plugin) {
 					}
 					if ($js != 0) echo 'Submit process overlapped, wait some minutes and refresh...';
 					die();
+				}
+			} else {
+				if ($fp) {
+					fwrite($fp, '* Please, make writable the folder wp-content/plugins/knews/tmp. Otherwise double submits can occur.' . "<br>\r\n");				
 				}
 			}
 		} else {
@@ -80,13 +91,16 @@ if ($Knews_plugin) {
 		} else {
 			$img_track = KNEWS_TRACKPIXEL_URL;
 		}
+		
+		if ($knewsOptions['pixel_tracking']!=1) $img_track = KNEWS_URL . '/direct/track.php?img=%confkey%_';
+		
 		foreach ($urls_submit as $url_submit) {
 			
 			if ($url_submit->type==6) {
 				//Cut extension
 				$real_image = $url_submit->href;
 				$pos = strrpos($real_image, "."); 
-				if ($pos !== false) $real_image=substr($real_image, 0 , $pos);
+				if ($pos !== false && $knewsOptions['pixel_tracking']==1) $real_image=substr($real_image, 0 , $pos);
 
 				//Replace first
 				$pos = strpos($theHtml, $real_image);
@@ -101,7 +115,7 @@ if ($Knews_plugin) {
 		$query = "SELECT * FROM " . KNEWS_NEWSLETTERS_SUBMITS_DETAILS . " WHERE status=0 AND submit=" . $submit_pend[0]->id . " LIMIT " . $submit_pend[0]->emails_at_once;
 		$submits = $wpdb->get_results( $query );
 
-		$query = "UPDATE " . KNEWS_NEWSLETTERS_SUBMITS_DETAILS . " SET status=2 WHERE status=0 AND submit=" . $submit_pend[0]->id . " LIMIT " . $submit_pend[0]->emails_at_once;
+		$query = "UPDATE " . KNEWS_NEWSLETTERS_SUBMITS_DETAILS . " SET status=3 WHERE status=0 AND submit=" . $submit_pend[0]->id . " LIMIT " . $submit_pend[0]->emails_at_once;
 		$block = $wpdb->query( $query );
 		
 		$ok_count = $submit_pend[0]->users_ok;
@@ -110,7 +124,7 @@ if ($Knews_plugin) {
 		if (count($submits)>0) {
 			if ($fp) {
 				$hour = date('d/m/Y H:i:s', current_time('timestamp'));
-				fwrite($fp, '* ' . $hour . ' | ok: ' . $ok_count . ' | error: ' . $error_count . "<br>\r\n");
+				fwrite($fp, '* KNEWS ' . KNEWS_VERSION . ' ' . $hour . ' | ok: ' . $ok_count . ' | error: ' . $error_count . "<br>\r\n");
 			}
 		} else {
 			$query = "SELECT * FROM " . KNEWS_NEWSLETTERS_SUBMITS_DETAILS . " WHERE status=2 AND submit=" . $submit_pend[0]->id;
@@ -150,7 +164,12 @@ if ($Knews_plugin) {
 				}
 				$users[$users_index]->tokens = $aux_array;
 				$users[$users_index]->unsubscribe = $Knews_plugin->get_localized_home($users[$users_index]->lang, 'knews=unsubscribe&e=' . urlencode($users[$users_index]->email) . '&k=' . $users[$users_index]->confkey . '&n=' . $id_newsletter . '&id=' . $submit_pend[0]->id);
-				$users[$users_index]->cant_read = $Knews_plugin->get_localized_home($users[$users_index]->lang, 'knews=readEmail&id=' . $id_newsletter . '&e=' . urlencode($users[$users_index]->email) . '&k=' . $submit_pend[0]->id);
+				
+				$url_news = $Knews_plugin->get_localized_home($users[$users_index]->lang, 'knews=readEmail&id=' . $id_newsletter);
+				$users[$users_index]->cant_read = $url_news . '&e=' . urlencode($users[$users_index]->email) . '&k=' . $submit_pend[0]->id;				
+				$users[$users_index]->fb_like = 'https://www.facebook.com/sharer/sharer.php?u=' . urlencode($url_news . '&share=fb');
+				$users[$users_index]->tweet = 'http://twitter.com/share?text=#news_title_encoded#&url=' . urlencode($url_news . '&share=tw');
+
 				
 				//$result=$Knews_plugin->sendMail( array( array('email' => $user->email, 'unsubscribe'=>get_bloginfo('url') ) ), $theSubject, $theHtml );
 				//$result=$Knews_plugin->sendMail( array( $user ), $theSubject, $theHtml );
@@ -178,9 +197,14 @@ if ($Knews_plugin) {
 		
 		//print_r($users);
 
-		$result=$Knews_plugin->sendMail( $users, $theSubject, $theHtml, '', '', $fp, false, 0, $submit_pend[0]->id_smtp );
+		$result=$Knews_plugin->sendMail( $users, $theSubject, $theHtml, '', '', $fp, false, 0, $submit_pend[0]->id_smtp, $submit_pend[0]->id );
 		$ok_count += $result['ok'];
 		$error_count += $result['error'];
+
+		if ($result['break_to_avoid_timeout'] || $result['too_consecutive_emails_error']) {			
+			$query = "UPDATE " . KNEWS_NEWSLETTERS_SUBMITS_DETAILS . " SET status=0 WHERE status=3 AND submit=" . $submit_pend[0]->id;
+			$unlock = $wpdb->query( $query );
+		}
 
 		//print_r($result);
 	
@@ -194,13 +218,13 @@ if ($Knews_plugin) {
 		$recount = $wpdb->get_results( $query );
 		$error_count = count($recount);
 
-		if (count($submits)==0 && $submit_pend[0]->users_total > ($ok_count + $error_count)) {
+		if (count($submits)==0 && $submit_pend[0]->users_total > ($ok_count + $error_count) && !$result['break_to_avoid_timeout'] && !$result['too_consecutive_emails_error']) {
 			$end_sql=', finished=1, users_total=' . ($ok_count + $error_count) . ', end_time=\'' . $Knews_plugin->get_mysql_date() . '\'';
 			if ($fp) {
 				$hour = date('H:i:s', current_time('timestamp'));
 				fwrite($fp, '  ' . $hour . ' | ok: ' . $ok_count . ' | error: ' . $error_count . ' | FINISHED SUBMIT. BAD TOTAL USER COUNT.' . "<br>\r\n");
 			}
-		} elseif ($submit_pend[0]->users_total <= ($ok_count + $error_count)) {
+		} elseif ($submit_pend[0]->users_total <= ($ok_count + $error_count) && !$result['break_to_avoid_timeout'] && !$result['too_consecutive_emails_error']) {
 			$end_sql=', finished=1, end_time=\'' . $Knews_plugin->get_mysql_date() . '\'';
 			if ($fp) {
 				$hour = date('H:i:s', current_time('timestamp'));
@@ -217,7 +241,7 @@ if ($Knews_plugin) {
 
 		$result = $wpdb->query( $query );
 
-		unlink(KNEWS_DIR . '/tmp/lockfile.txt');
+		if (is_file(KNEWS_DIR . '/tmp/lockfile.txt')) unlink(KNEWS_DIR . '/tmp/lockfile.txt');
 		if ($fp) fclose($fp);
 		
 		$pend=true;

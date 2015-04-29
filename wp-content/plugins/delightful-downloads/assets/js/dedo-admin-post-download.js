@@ -1,83 +1,245 @@
 jQuery( document ).ready( function( $ ){
-	
-	// Show remove button if URL present
-	if( $( '#dedo-file-url' ).val().length > 0 ) {
-		$( '.file-url-container .remove' ).show();
+
+	// Main Add/Edit Download Screen
+	DEDO_Admin_Download = {
+
+		options: {},
+
+		init: function( options ) {
+			this.options = options;
+			this.eventListeners();
+			this.updateStatus();
+		},
+
+		eventListeners: function() {
+			var self = this;
+
+			// Delete file
+			$( '.dedo-delete-file' ).on( 'click', function( e ) {
+				self.deleteFile();
+				e.preventDefault();
+			} );
+
+			// Members redirect
+			$( document ).on( 'change', '[name="members_only"]', function( e ) {
+				if ( 1 == $( this ).val() || '' == $( this ).val() ) {
+					$( '#members_only_sub' ).show();
+				}
+				else {
+					$( '#members_only_sub' ).hide();
+				}
+			} );
+		},
+
+		addFile: function( url ) {
+			$( '#dedo-file-url' ).val( url );
+			
+			// Set default states
+			$( '.file-icon img' ).attr( 'src', this.options.default_icon );
+			$( '.file-name' ).html( '--' );
+			$( '.file-size' ).html( '--' );
+
+			this.updateStatus();
+			this.toggleViews();
+		},
+
+		deleteFile: function() {
+			$( '#dedo-file-url' ).val( '' );
+			this.updateStatus();
+			this.toggleViews();
+		},
+
+		toggleViews: function() {
+			if ( '' != $( '#dedo-file-url' ).val() ) {
+				// Fade add/existing view
+				$( '#dedo-new-download' ).hide( 0, function() {
+					// Show existing view
+					$( '#dedo-existing-download' ).show();
+				} );
+			}
+			else {
+				$( '#dedo-existing-download' ).hide( 0, function() {
+					// Show new view
+					$( '#dedo-new-download' ).show();
+				} );
+			}
+		},
+
+		updateStatus: function() {
+			var self = this;
+			var url = $( '#dedo-file-url' ).val();
+
+			// Show loading spinner
+			$( '.file-status .status' ).removeClass( 'local remote warning' ).addClass( 'spinner' );
+
+			$.ajax( {
+				
+				url: self.options.ajaxURL,
+				
+				data: {
+					action: self.options.action,
+					nonce: self.options.nonce,
+					url: url
+				},
+				
+				dataType: 'json',
+				
+				success: function( response ) {
+					$( '.file-name' ).html( response.content.filename );
+					
+					if ( 'success' == response.status ) {
+						// Update file details
+						$( '.file-icon img' ).attr( 'src', response.content.icon );
+						$( '.file-size' ).html( response.content.size );
+						$( '.file-status .status' ).removeClass( 'spinner' ).addClass( response.content.type );
+
+						// Add title
+						if ( 'local' == response.content.type ) {
+							$( '.file-status .status' ).attr( 'title', self.options.lang_local );
+						}
+
+						if ( 'remote' == response.content.type ) {
+							$( '.file-status .status' ).attr( 'title', self.options.lang_remote );
+						}
+					}
+					else {
+						// Change status icon
+						$( '.file-status .status' ).removeClass( 'spinner' ).addClass( 'warning' ).attr( 'title', self.options.lang_warning );
+					}
+				}
+
+			} );
+		}
+
+	};
+
+	// Upload File Modal
+	DEDO_Upload_Modal = {
+
+		$container: 		$( '#dedo-upload-modal #dedo-drag-drop-area' ),
+		$progressPercent: 	$( '#dedo-progress-percent' ),
+		$progressText: 		$( '#dedo-progress-text' ),
+		$progressError: 	$( '#dedo-progress-error' ),
+
+		uploader: {},
+
+		init: function( options ) {
+			this.options = options;
+
+			// Init pluploader
+			this.uploader = new plupload.Uploader( this.options );
+			this.uploader.init();
+
+			this.uploadListeners();
+		},
+
+		uploadListeners: function() {
+			var self = this;
+
+			// File added to queue
+			this.uploader.bind( 'FilesAdded', function( up, file ) {
+				self.$container.addClass( 'uploading' );
+				self.$progressError.hide();
+				
+				up.refresh();
+				up.start();
+			} );
+			
+			// Progress bar
+			this.uploader.bind( 'UploadProgress', function( up, file ) {
+				self.$progressPercent.css( 'width', file.percent + '%' );
+				self.$progressText.html( file.percent + '%' );
+			} );	
+			
+			// File uploaded
+			this.uploader.bind( 'FileUploaded', function( up, file, response ) {
+				var response = $.parseJSON( response.response );
+
+		 		if( response.error && response.error.code ) {
+		 			self.uploader.trigger('Error', {
+		            	code : response.error.code,
+		            	message : response.error.message,
+		            	file : file
+		        	});
+		 		}
+		 		else {
+			 		DEDO_Admin_Download.addFile( response.file.url );
+			 		
+			 		// Close modal and hide progress bar
+			 		setTimeout( function() {
+			 			$( 'body' ).trigger( 'closeModal' );
+			 				
+			 			setTimeout( function() {
+			 				self.$container.removeClass( 'uploading' );
+			 			}, 300 );
+			 
+			 		}, 1000 );
+		 		}
+			} );
+			
+			// Error
+			this.uploader.bind( 'Error', function( up, err ) {
+				self.$progressError. html( '<p>' + err.message + '</p>' ).show();
+			 	self.$container.removeClass( 'uploading' );
+
+				up.refresh();
+			} );
+		}
+
 	}
 
-	// Show/hide remove button
-	$( '#dedo-file-url' ).on( 'change', function() {
-		if( $( this ).val().length > 0 ) {
-			$( '.file-url-container .remove' ).show();
-		}
-		else {
-			$( '.file-url-container .remove' ).hide();
-		}
-	} );
-
-	// Clear URL
-	$( '.file-url-container .remove a' ).on( 'click', function( e ) {
-		$( '#dedo-file-url' ).val('');
-		$( '.file-size-container p' ).html( '' );
-		$(this).parent().hide();
-		e.preventDefault();
-	} );
-
-	// Init file browser
-	$( '#dedo-file-browser' ).fileTree( filebrowser_args, function( file ) {
-		var file_path = file.replace( filebrowser_args.root, filebrowser_args.url );
-		$( '#dedo-file-url' ).val( file_path ).trigger( 'change' );
-	} );
-	
-	// Toggle file browser
-	$( '#dedo-select-button' ).click( function() {
-		$( '#dedo-file-browser' ).slideToggle();
-	} );
-	
-	// Init pluploader
-	var uploader = new plupload.Uploader( plupload_args );
-    uploader.init();
-	
-	 // File added to queue
-	uploader.bind('FilesAdded', function( up, file ) {
-		$( '#plupload-error' ).hide();
-		$( '#plupload-progress' ).slideDown();
+	// Existing File Modal
+	DEDO_Existing_Modal = {
 		
-		up.refresh();
-		up.start();
-	} );
-	
-	// Progress bar
-	uploader.bind( 'UploadProgress', function( up, file ) {
-		$( '#plupload-progress .bar' ).css( 'width', file.percent + '%' );
-		$( '#plupload-progress .percent' ).html( '<p>' + file.percent + '%</p>' );
-	} );	
-	
-	// File uploaded
-	uploader.bind( 'FileUploaded', function( up, file, response ) {
-		response = $.parseJSON( response.response );
+		$file_url: 	$( '#dedo-file-url' ),
+		$confirm: 	$( '#dedo-select-done' ),
 
- 		if( response.error && response.error.code ) {
- 			uploader.trigger('Error', {
-            	code : response.error.code,
-            	message : response.error.message,
-            	details : response.details,
-            	file : file
-        	});
- 		}
- 		else {
- 			$( '#dedo-file-url' ).val( $.trim( response.file.url ) ).trigger( 'change' );
-			$( '.file-size-container p' ).html( plupload.formatSize( file['size'] ) );
-			$( '#plupload-progress' ).slideUp();
- 		}
-	} );
-	
-	// Error
-	uploader.bind( 'Error', function( up, err ) {
-		$( '#plupload-error' ).show().html( err.message );
-		$( '#plupload-progress' ).slideUp();
-		
-		up.refresh();
-	} );
+		options: {},
+
+		init: function( options ) {
+			this.options = options;
+			this.fileBrowser();
+			this.confirm();
+			this.focus();
+		},
+
+		fileBrowser: function() {
+			var self = this;
+
+			// Init file browser
+			$( '#dedo-file-browser' ).fileTree( this.options, function( file ) {
+				// User clicked file, update URL field
+				var file_path = file.replace( self.options.root, self.options.url );
+				self.$file_url.val( file_path );
+			} );
+		},
+
+		confirm: function() {
+			var self = this;
+
+			// Done with existing file modal
+			self.$confirm.on( 'click', function( e ) {
+				var url = self.$file_url.val();
+				DEDO_Admin_Download.addFile( url );
+
+				$( 'body' ).trigger( 'closeModal' );
+
+				e.preventDefault();
+			} );
+		},
+
+		focus: function() {
+			var self = this;
+
+			$( '.dedo-modal-action.select-existing' ).on( 'click', function() {
+				self.$file_url.focus();
+			} );
+		}
+
+	};
+
+	DEDO_Admin_Download.init( updateStatusArgs );
+	DEDO_Upload_Modal.init( pluploadArgs );
+	DEDO_Existing_Modal.init( fileBrowserArgs );
 
 } );

@@ -54,7 +54,7 @@
 							echo ' <a href="' . get_admin_url() . 'admin-ajax.php?action=knewsOffWarn&w=no_warn_cron_knews&b=' . urlencode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) . '" style="float:right">' . __("Don't show this message again [x]",'knews') . '</a></p></div>';
 						}
 					} else {
-						if ($knewsOptions['newsletter'] == 'no') {
+						if (strpos($_SERVER['REQUEST_URI'],'knews_news') !== false && $knewsOptions['newsletter'] == 'no') {
 							echo '<div class="updated"><p>';
 							printf( __('<strong>Knews:</strong> Do you want to stay-in-touch about latest Knews features, tips and tricks? Please, subscribe to our newsletter %s here','knews'), '<a href="http://www.knewsplugin.com/multi-language/" target="_blank">');
 							echo '</a>';

@@ -66,14 +66,9 @@ parent.jQuery(document).ready( function () {
 	});*/
 	//1.1.0 parent.jQuery('span.img_handler a.change_image', document).live('click', function(e) {
 	parent.jQuery('div.wysiwyg_toolbar a.change_image').click(function(e) {
-		parent.setCatcher();
 		//1.1.0 parent.referer_image=parent.jQuery(this).parent().next();
 
-		if(typeof(parent.wp) == "undefined" || typeof(parent.wp.media) != "function") {
-			parent.tb_show('', 'media-upload.php?type=image&amp;post_id=' + parent.one_post_id + '&amp;TB_iframe=true&amp;width=640&amp;height=' + (parseInt(parent.jQuery(parent.window).height(), 10)-100));
-		} else {
-			parent.wp.media.editor.open('nothing');
-		}
+		parent.setCatcher(false);
 
 		return false;
 	});
@@ -754,20 +749,28 @@ function b_link() {
 		update_editor();
 	}
 }
-function b_insert_image(img_url, align) {
+function b_insert_image(media) {
 	if (inside_editor) {
 		parent.jQuery('img', document).addClass('no_target');
 		restoreSelection(parent.saved_range);
-		if (document.execCommand('InsertImage', false, img_url)) {
+		if (typeof media.size !== 'undefined' && typeof media.sizes !== 'undefined')  {
+			if (typeof media.sizes[media.size] !== 'undefined')  {
+				media.url = media.sizes[media.size].url;
+				media.width = media.sizes[media.size].width;
+				media.height = media.sizes[media.size].height;
+			}
+		}
+		id_class=''; if (typeof media.id !== 'undefined' && media.id != '' && media.id != '0') id_class = ' wp-image-' + media.id;
+		if (document.execCommand('InsertImage', false, media.url)) {
 			restoreSelection(parent.saved_range);
 			parent.jQuery('img', document).not('.no_target').each(function() {
 				parent.jQuery(this)
 					.load(function() {
 						parent.jQuery(this)
-							.addClass('editable alignable')
+							.addClass('editable alignable' + id_class)
 							.attr('height',parent.jQuery(this).height())
 							.attr('width',parent.jQuery(this).width());
-							if (align != '') parent.jQuery(this).attr('align', align);
+							if (media.align != '') parent.jQuery(this).attr('align', media.align);
 					});
 					
 			});
