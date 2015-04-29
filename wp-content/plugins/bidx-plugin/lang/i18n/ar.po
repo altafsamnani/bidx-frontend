@@ -353,7 +353,7 @@ msgid ""
 "participants will receive a notification of this change in status. Are you "
 "sure you want to proceed?"
 msgstr ""
-"بإعلانك عن الفائز (الفائزين)، أنت تختم المسابقة. سيتقلى كل المشتركين تنبيه "
+"بإعلانك عن الفائز (الفائزين)، أنت تختم المسابقة. سيتلقى كل المشتركين تنبيه "
 "بتغيير حالة المسابقة. هل أنت متأكد أنك تريد المتابعة؟"
 
 # _x("You have successfully applied for this competition. Thank you for participating! Please note: Your application is now in draft status, you can still review and edit your business plan. If you are ready to have your application reviewed by the competition assessors, please submit your application by clicking on the Submit button", "competition","i18n");
@@ -394,7 +394,6 @@ msgstr ""
 
 # _x("You have successfully rejected this submission. A notification has been sent out to the participant", "competition","i18n");
 # Context competition TextDomain i18n
-#, fuzzy
 msgctxt "competition"
 msgid ""
 "You have successfully submitted this application. A notification has been "
@@ -443,7 +442,7 @@ msgstr "لقد قمت بتعيين مقيّمين لهذا الاشتراك بن
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "You have successfully assigned judges for this submission. "
-msgstr "لقد قمت بتعسين محكمين لهذا الاشتراك بنجاح."
+msgstr "لقد قمت بتعيين حكام لهذا الاشتراك بنجاح"
 
 # _x("You have recommended this plan as a finalist", "competition","i18n");
 # Context competition TextDomain i18n
@@ -513,7 +512,6 @@ msgstr "يرجى انتظر أثناء تحديثنا لمرحلة المساب�
 
 # _x("Congrtatulations, you have succesfully updated phase of the competition.", "competition","i18n");
 # Context competition TextDomain i18n
-#, fuzzy
 msgctxt "competition"
 msgid ""
 "Congrtatulations, you have succesfully updated phase of this competition."
@@ -547,10 +545,9 @@ msgstr "ارسال الرسالة"
 
 # _x("Message sent", "connect","i18n");
 # Context connect TextDomain i18n
-#, fuzzy
 msgctxt "mail"
 msgid "Message sent"
-msgstr "تم ارسال الرسالة"
+msgstr "تم إرسال الرسالة"
 
 # _x("Message sent", "mail","i18n");
 # Context mail TextDomain i18n
@@ -856,7 +853,6 @@ msgstr "كل الأعضاء"
 
 # _x("Member only", "monitoring","i18n");
 # Context monitoring TextDomain i18n
-#, fuzzy
 msgctxt "connect"
 msgid "Member only"
 msgstr "عضو فقط"

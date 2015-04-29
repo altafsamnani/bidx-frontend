@@ -177,14 +177,17 @@
 								</div>
 							</div>
 	                        <div class="form-group tinymce-wrapper">
+	                        	<p>
+			                        <strong><?php _e('Message','bidxplugin'); ?></strong>
+			                    </p>
 		                    <?php
 								$args = array(	'textarea_name' => 'connectBody'
 										, 		'editor_class' 	=> 'editor_connect'
 										,		'quicktags' 	=> false
-										//,       'tinymce'       => false
-										//,       'media_buttons' => false
+										,       'tinymce'       => false
+										,       'media_buttons' => false
 										);
-                            	wp_editor(__('','bidxplugin'), "connectBody", $args);
+                            	wp_editor('', "connectBody", $args);
                             ?>
 							</div>
 		                    <div id="major-publishing-actions">

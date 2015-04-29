@@ -194,7 +194,7 @@ class Competition_Counter_Widget extends WP_Widget {
                     <p><?php echo $competitiondesc ?></p>
 <?php
                 endif;
-?>                
+?>
 <?php
                 if ( $this->timestamp < time() )
                 {
@@ -229,7 +229,7 @@ class Competition_Counter_Widget extends WP_Widget {
                     </div>
 <?php
                     if ( $competitionlink ):
-?>                    
+?>
                         <a class="btn btn-secondary btn-block" href="<?php echo $competitionlink; ?>"><?php _e( 'View Now','bidxplugin' ); ?></a>
 <?php
                     endif;
@@ -250,7 +250,7 @@ class Competition_Counter_Widget extends WP_Widget {
         $( document ).ready(function() {
 
                 var countTime = $( '.competition .counter' );
-                
+
                 countTime.each( function()
                 {
                     var el = $(this)
@@ -260,7 +260,7 @@ class Competition_Counter_Widget extends WP_Widget {
                     countdown( datatime, el );
 
                     setInterval( function() { countdown( datatime, el ) }, 1000);
-                });             
+                });
 
                 function countdown ( datatime, el )
                 {
@@ -288,6 +288,6 @@ class Competition_Counter_Widget extends WP_Widget {
 
         </script>";
     }
-    
+
 
 } // END: class HotTopics

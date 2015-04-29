@@ -41,7 +41,7 @@
             <title>Search</title>
             <mapping>(.*)search/?</mapping>
             <content>[bidx app="search"]</content>
-        </post>
+        </post>  <!-- (.*[a-z]{2}\/)search/? -->
         <post>
             <post_id>4</post_id>
             <name>search_business</name>

@@ -131,14 +131,17 @@ function bidx_redirect_login ($groupDomain)
 
 function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = false)
 {
-    $logger          = Logger::getLogger ("Bidx Service Login");
-    $bidxMethod      = strtoupper ($method);
-    $bidxGetParams   = "";
-    $sendDomain      = DOMAIN_CURRENT_SITE;
-    $cookieArr       = array ();
-    $headers         = array ();
-    $cookieHeader    = '';
-    $cookieInfo      = $_COOKIE;
+    global $sitepress;
+
+    $logger             = Logger::getLogger ("Bidx Service Login");
+    $bidxMethod         = strtoupper ($method);
+    $bidxGetParams      = "";
+    $sendDomain         = DOMAIN_CURRENT_SITE;
+    $cookieArr          = array ();
+    $headers            = array ();
+    $cookieHeader       = '';
+    $cookieInfo         = $_COOKIE;
+    $currentLanguage    =   'en';
 
     /*****1. Retrieve Bidx Cookies and send back to api to check ******/
     foreach ($_COOKIE as $cookieKey => $cookieValue)
@@ -151,20 +154,25 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
         }
     }
 
-//    if(!empty( $cookieHeader))
-//    {
-//        $cookies_header     = substr( $cookies_header, 0, -2 );
-//        $headers['cookie']  = $cookies_header;
-//    }
-
     /***********2. Set Headers ********************/
     // 2.1 Set the group domain header
-    if (isset ($body['domain'])) {
+    if (isset ($body['domain']))
+    {
         $headers['X-Bidx-Group-Domain'] = $body['domain'];
     }
 
+    if ( isset( $sitepress) )
+    {
+        $currentLanguage    =   $sitepress->get_current_language();
+    }
+
+
+    $headers['X-Bidx-Language'] = $currentLanguage;
+
+
     // 2.2 Is Form Upload
-    switch ($formType) {
+    switch ($formType)
+    {
         case 'upload':
             $headers['Content-Type'] = 'multipart/form-data';
             break;
@@ -177,7 +185,8 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     }
 
     /*********** 3. Decide method to use************/
-    if ($bidxMethod == 'GET') {
+    if ($bidxMethod == 'GET')
+    {
         $bidxGetParams = ($body) ? '&' . http_build_query ($body) : '';
         $body = NULL;
     }
@@ -189,18 +198,21 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     $logger->trace (sprintf ('Calling API URL: %s Method: %s Body: %s Headers: %s Cookies: %s', $url, $bidxMethod, var_export ($body, true), var_export ($headers, true), var_export ($cookieArr, true)));
 
 
-    $request = new WP_Http;
-    $result = $request->request ($url, array ('method' => $bidxMethod,
-      'body' => $body,
-      'headers' => $headers,
-      'cookies' => $cookieArr,
-      'timeout' => apply_filters ('http_request_timeout', 60)
-    ));
+    $request    = new WP_Http;
+
+    $result     = $request->request ($url, array ('method'  => $bidxMethod,
+                                                  'body'    => $body,
+                                                  'headers' => $headers,
+                                                  'cookies' => $cookieArr,
+                                                  'timeout' => apply_filters ('http_request_timeout', 60)
+                                    ));
     $logger->trace (sprintf ('Response for API URL: %s Response: %s', $url, var_export ($result, true)));
 
     /************* 5. Set Cookies if Exist **************************/
-    if (is_array ($result)) {
-        if (isset ($result['cookies']) && count ($result['cookies'])) {
+    if (is_array ($result))
+    {
+        if (isset ($result['cookies']) && count ($result['cookies']))
+        {
             $cookies = $result['cookies'];
             foreach ($cookies as $bidxAuthCookie)
             {
@@ -216,11 +228,13 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
                 }
             }
 
-            if($urlservice == 'session' && $bidxMethod == 'POST') {
+            if($urlservice == 'session' && $bidxMethod == 'POST')
+            {
                 bidx_skipso_competition ( $competitionCookieVals );
             }
         }
-    } else { // Wp Request timeout
+    } else
+    { // Wp Request timeout
         $bidxWPerror = $result;
         $result = array ();
         $result['error'] = $bidxWPerror;

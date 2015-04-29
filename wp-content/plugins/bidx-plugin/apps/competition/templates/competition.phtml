@@ -404,8 +404,8 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
 
             $rowValues = array
             (
-                __('Gender') => $gender,
-                __('Industry') => $this->getMultiValues( $this->exst($competition->competitionIndustry), '<br> ','industry'),
+                __('Gender','bidxplugin') => $gender,
+                __('Industry','bidxplugin') => $this->getMultiValues( $this->exst($competition->competitionIndustry), '<br> ','industry'),
                 __('Country of business','bidxplugin') => $this->getMultiValues( $this->exst($competition->competitionCountry), ', ', 'country' ),
                 __('Social impact','bidxplugin') => $this->getMultiValues( $this->exst($competition->competitionSocialImpact), ', ', 'socialImpact' ),
                 __('Environmental impact','bidxplugin') => $this->getMultiValues( $this->exst($competition->competitionEnvImpact), ', ', 'envImpact' ),
@@ -798,7 +798,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                 <div class="assign-assessor hide">
                     <div class="row">
                         <div class="col-sm-12">
-                            <label class="inline"><?php _e('Assign Assessor:','bidxplugin');?></label>
+                            <label class="inline"><?php _e('Assign Assessor','bidxplugin');?>:</label>
                         </div>
                     </div>
                     <div class="row">
@@ -815,7 +815,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                 <div class="assign-judge hide">
                     <div class="row">
                         <div class="col-sm-12">
-                            <label class="inline"><?php _e('Assign Judge:','bidxplugin');?></label>
+                            <label class="inline"><?php _e('Assign Judge','bidxplugin');?>:</label>
                         </div>
                     </div>
                     <div class="row">

@@ -448,7 +448,7 @@
                 [
                     {
                         addClass:       "btn btn-primary"
-                    ,   text:           "Ok"
+                    ,   text:           bidx.i18n.i("btnOk")
                     ,   onClick: function( $noty )
                         {
                             $noty.close();
@@ -498,7 +498,7 @@
                     }
                 ,   {
                         addClass:       "btn btn-danger"
-                    ,   text:           "Cancel"
+                    ,   text:           bidx.i18n.i("btnCancel")
                     ,   onClick: function( $noty )
                         {
                             $noty.close();
@@ -1713,22 +1713,22 @@ function _initApplicationsView( )
                 ownerId             =   bidx.utils.getValue( bidxMeta, 'bidxOwnerId');
                 rating              =   bidx.utils.getValue( bidxMeta, 'bidxRatingAverage');
 
-                businessData        = '<a href="/businesssummary/' + entityId +  '" target="_blank">' + business + '</a>';
-                entrepreneurData    = '<a href="/member/' + ownerId + '" target="_blank">' + entrepreneur + '</a>';
+                businessData        = '<a href="' + bidx.common.url('businesssummary') + entityId +  '" target="_blank">' + business + '</a>';
+                entrepreneurData    = '<a href="' + bidx.common.url('member') + ownerId + '" target="_blank">' + entrepreneur + '</a>';
 
-                roleReview      =  currentUserRecommendationForCurrentPhase( response );
+                roleReview          =  currentUserRecommendationForCurrentPhase( response );
 
-                displayRows     =   {
-                                        business:       businessData
-                                    ,   entrepreneur:   entrepreneurData
-                                    ,   rating:         (roleReview.reviewRating)? roleReview.reviewRating : 0
-                                    ,   recommendation: roleReview.recommendation
-                                    ,   state:          bidx.i18n.i(response.status, appName)
-                                    ,   status:         response.status
-                                    ,   entityId:       entityId
-                                    ,   reviews:        response.reviews
+                displayRows         =   {
+                                            business:       businessData
+                                        ,   entrepreneur:   entrepreneurData
+                                        ,   rating:         (roleReview.reviewRating)? roleReview.reviewRating : 0
+                                        ,   recommendation: roleReview.recommendation
+                                        ,   state:          bidx.i18n.i(response.status, appName)
+                                        ,   status:         response.status
+                                        ,   entityId:       entityId
+                                        ,   reviews:        response.reviews
 
-                                    };
+                                        };
 
                 data.push( displayRows );
         }
@@ -1748,96 +1748,98 @@ function _initApplicationsView( )
 
         table = $('.viewApplications').DataTable(
         {
-             destroy:            destroy
-        //,    "bDestroy": true
-        ,   "bPaginate":        true
+            destroy:            destroy  // "bDestroy": true
+        ,   bPaginate:          true
         ,   aLengthMenu:        [
                                     [10, 25, 50, 100, -1],
-                                    [10, 25, 50, 100, "All"]
+                                    [10, 25, 50, 100, bidx.i18n.i("paginationAll") ]
                                 ]
-        ,   "data":             data
-        ,   "columns":          [
+        ,   data:               data
+        ,   columns:            [
                                     {
                                         "className":      'details-control',
                                         "orderable":      false,
                                         "data":           null,
                                         "defaultContent": '<i class="fa fa-plus-square-o"></i>'
                                     },
-                                    { "data": "business" },
-                                    { "data": "entrepreneur" },
-                                    { "data": "rating" },
-                                    { "data": "recommendation"},
-                                    { "data": "state" }
+                                    {   "data": "business"      },
+                                    {   "data": "entrepreneur"  },
+                                    {   "data": "rating"        },
+                                    {   "data": "recommendation"},
+                                    {   "data": "state"         }
                                 ]
-        ,   "order":            [
+        ,   order:              [
                                     [1, 'asc']
                                 ]
-        ,   "fnRowCallback":    function( nRow, aData, iDisplayIndex )
+        ,   fnRowCallback:      function( nRow, aData, iDisplayIndex )
                                 {
                                     nRow.classList.add( aData.status );
                                     return nRow;
+                                }
+        ,   language:           {
+                                    url: '/wp-content/plugins/bidx-plugin/lang/vendor/datatables/' + bidx.common.getCurrentLanguage() + '.json'
+                                }
+        ,   fnInitComplete:     function(oSettings, json)
+                                {
+                                    $( ".dataTables_length select" ).bidx_chosen();
+                                    $('.viewApplications').removeClass( 'hide' );
                                 }
         } );
 
         if ( !destroy )
         {
-        // Add event listener for opening and closing details
-        $('.viewApplications tbody').on('click', 'td.details-control', function ( )
-        {
-            var formatHtml
-            ,   tr          =   $(this).closest('tr')
-            ,   row         =   table.row( tr )
-            ;
-
-            if ( row.child.isShown() )
+            // Add event listener for opening and closing details
+            $('.viewApplications tbody').on('click', 'td.details-control', function ( )
             {
-                // This row is already open - close it
-                row.child.hide();
+                var formatHtml
+                ,   tr          =   $(this).closest('tr')
+                ,   row         =   table.row( tr )
+                ;
 
-                tr.removeClass('shown');
-
-                tr.next().removeClass('extrapanel');
-
-                $(this).find('.fa').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
-            }
-            else
-            {
-
-                if( tr.hasClass ("data-visible") )
+                if ( row.child.isShown() )
                 {
-                    row.child.show();
+                    // This row is already open - close it
+                    row.child.hide();
+
+                    tr.removeClass('shown');
+
+                    tr.next().removeClass('extrapanel');
+
+                    $(this).find('.fa').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
                 }
                 else
                 {
-                    formatHtml  =   format(row.data(), row );
 
-                    row.child(  formatHtml ).show( );
+                    if( tr.hasClass ("data-visible") )
+                    {
+                        row.child.show();
+                    }
+                    else
+                    {
+                        formatHtml  =   format(row.data(), row );
 
-                    tr.addClass("data-visible");
+                        row.child(  formatHtml ).show( );
+
+                        tr.addClass("data-visible");
+                    }
+
+                    tr.addClass('shown');
+
+                    if ( tr.hasClass( "withdrawn" ) )
+                    {
+                        tr.next().addClass('extrapanel withdrawn');
+                    }
+                    else
+                    {
+                        tr.next().addClass('extrapanel');
+                    }
+
+                    $(this).find('.fa').removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
+
+                    tr.next().find( ".selectAssessors" ).bidx_chosen();
                 }
-
-                tr.addClass('shown');
-
-                if ( tr.hasClass( "withdrawn" ) )
-                {
-                    tr.next().addClass('extrapanel withdrawn');
-                }
-                else
-                {
-                    tr.next().addClass('extrapanel');
-                }
-
-                $(this).find('.fa').removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
-
-                tr.next().find( ".selectAssessors" ).bidx_chosen();
-            }
-        } );
+            } );
         }
-
-        $( ".dataTables_length select" ).bidx_chosen();
-
-        $('.viewApplications').removeClass( 'hide' );
-
     }
 }
 
@@ -4277,10 +4279,6 @@ function _competitionTimer (  )
     //
     function _save( params )
     {
-        var currentLanguage
-        ,   icl_vars
-        ;
-
         if ( !competitionSummary )
         {
             return;
@@ -4322,12 +4320,8 @@ function _competitionTimer (  )
 
                     bidx.common.removeAppWithPendingChanges( appName );
 
-                    icl_vars                    = window.icl_vars || {};
-                    currentLanguage             = bidx.utils.getValue( icl_vars, "current_language" );
-                    currentLanguage             = (currentLanguage && currentLanguage !== 'en') ? '/' + currentLanguage : '';
-                    var url = currentLanguage + "/competition/" + competitionSummaryId + "?rs=true";
+                    document.location.href = bidx.common.url('competition')  + competitionSummaryId + "?rs=true";
 
-                    document.location.href = url;
 
 //                    var url = document.location.href.split( "#" ).shift();
 //                    // Maybe rs=true was already added, or not 'true' add it before reloading
@@ -4378,8 +4372,6 @@ function _competitionTimer (  )
                                     ,   entityId:           entityId
                                     ,   applicationObj:     applicationObj
                                     });
-
-                    bidx.utils.log('myApplicationsAny', myApplicationsAny);
                 }
                 else
                 {

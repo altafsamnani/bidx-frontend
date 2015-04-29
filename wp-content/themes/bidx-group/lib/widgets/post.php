@@ -24,7 +24,7 @@ class Bidx_Post_Widget extends WP_Widget {
             __('Post Widget'),
             array
             (
-                'name' => ': : Bidx Post ',
+                'name' => ': : '. __('Bidx Post', 'bidxplugin'),
                 'classname' => 'post',
                 'description' => __( "Allows you to select an existing post." )
             )
