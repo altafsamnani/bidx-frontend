@@ -18,7 +18,7 @@
 
 include ('apps/util.php' );
 
-require ABSPATH . 'wp-content/plugins/bidx-plugin/plugin-updates/plugin-update-checker.php';
+/*require ABSPATH . 'wp-content/plugins/bidx-plugin/plugin-updates/plugin-update-checker.php';
 
 //http://local.bidx.net/wp-content/metadata.json'
 $MyUpdateChecker = PucFactory::buildUpdateChecker(
@@ -26,7 +26,7 @@ $MyUpdateChecker = PucFactory::buildUpdateChecker(
     ,   __FILE__
     ,   'bidx-plugin'
     ,   1
-);
+);*/
 
 // Activation of frontend apps
 //
