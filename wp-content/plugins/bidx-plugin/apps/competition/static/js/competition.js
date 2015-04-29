@@ -4372,8 +4372,6 @@ function _competitionTimer (  )
                                     ,   entityId:           entityId
                                     ,   applicationObj:     applicationObj
                                     });
-
-                    bidx.utils.log('myApplicationsAny', myApplicationsAny);
                 }
                 else
                 {

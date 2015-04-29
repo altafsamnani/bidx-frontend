@@ -4,7 +4,7 @@
     var iclVars             = window.icl_vars || {}
     ,   currentLanguage     = ( iclVars.current_language ) ? iclVars.current_language : 'en' // get the current language from sitepress if set
     ,   monthsName          = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
-    ,   months              = (typeof datepicker === 'function' && $.fn.datepicker.dates[currentLanguage].months.length) ? $.fn.datepicker.dates[currentLanguage].months : monthsName  // Coming from bootstrap datepicker[ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+    ,   months              = ($.fn.datepicker && $.fn.datepicker.dates[currentLanguage].months.length) ? $.fn.datepicker.dates[currentLanguage].months : monthsName  // Coming from bootstrap datepicker[ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
     ;
     //months =
