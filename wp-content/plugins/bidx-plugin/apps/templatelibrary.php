@@ -256,7 +256,6 @@ class TemplateLibrary
         return $values;
     }
 
-
     public function getLocaleDate( $mktime, $format = "%d %M %y" )
     {
         $language       =   get_locale();
