@@ -392,7 +392,7 @@ msgstr "مهتم بـ"
 # _e("Business summaries","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Business summaries"
-msgstr "ملخصات المشروعات"
+msgstr "ملخصات المشاريع"
 
 # 65) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/admin/monitoring/static/templates/user-table.phtml -274
 # _e("Business proposal","bidxplugin");
@@ -2080,7 +2080,7 @@ msgid ""
 "interesting for you."
 msgstr ""
 "bidX تجد لك أفضل الخطط المناسبة فور نشرها. نلائم بيانات المستثمر الخاصة بك "
-"مع بيانات المشروعات الجديدة. هذا القسم يوصي بالخطط التي يمكن أن تستهويك "
+"مع بيانات المشاريع الجديدة. هذا القسم يوصي بالخطط التي يمكن أن تستهويك "
 "ويعلمك بها من خلال قوائم بلوحة اعداداتك"
 
 # 348) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/investor/help.phtml -23
@@ -2107,7 +2107,7 @@ msgid ""
 "can change that setting at your Account Settings"
 msgstr ""
 "سوف نرسل لك أيضا تحديثات أسبوعية بصندوق الوارد. هذه الرسائل تحتوي على قائمة "
-"المشروعات التي تم نشرها خلال الأيام السبعة الماضية. إذا قبلت خلال تسجيلك أن "
+"المشاريع التي تم نشرها خلال الأيام السبعة الماضية. إذا قبلت خلال تسجيلك أن "
 "نرسل لك رسائل البريد الإلكتروني إلى صندوق الوارد الخاص بك، سوف تتلقى تلك "
 "التنبيهات هناك أيضا. إذا لم تقبل ذلك أثناء التسجيل، ولكن ترغب في الحصول "
 "عليها الآن، يمكنك تغيير هذا الإعداد في إعدادات حسابك"
@@ -2145,7 +2145,7 @@ msgstr "اذهب الى قائمة المتصلين"
 # _e("Access to businesses full information","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Access to businesses full information"
-msgstr "الوصول الى معلومات كاملة عن المشروعات"
+msgstr "الوصول الى معلومات كاملة عن المشاريع"
 
 # 356) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/investor/help.phtml -48
 # _e("If you see a business that you are interested about, you can request the entrepreneur to grant you access to view full data of the business. This will enclose full business and financial plan as well as the CV of the entrepreneur.  Click the link Request access that you will see on the business page. A message will be sent to the entrepreneur with your request. Plans you have requested access to will be listed in the section Contacted businesses in your dashboard","bidxplugin");
@@ -2163,13 +2163,13 @@ msgstr ""
 "رائد الأعمال. وسيتضمن هذا مرفقات المشروع الكاملة والخطة المالية فضلاً عن "
 "السيرة الذاتية لرائد الأعمال. انقر على رابط طلب الوصول الموجود بصفحة "
 "المشروع. سيتم إرسال رسالة إلى رائد الأعمال بطلبك. سيتم ادراج الخطط التي طلبت "
-"الوصول اليها بقسم المشروعات التي تم مراسلتها بلوحة إعداداتك."
+"الوصول اليها بقسم المشاريع التي تم مراسلتها بلوحة إعداداتك."
 
 # 357) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/investor/help.phtml -49
 # _e("Go to contacted businesses","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Go to contacted businesses"
-msgstr "اذهب الى المشروعات التي تواصلت معها"
+msgstr "اذهب الى المشاريع التي تواصلت معها"
 
 # 358) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/investor/help.phtml -53
 # _e("Contact your group moderator","bidxplugin");
@@ -2216,7 +2216,7 @@ msgstr "تحميل الملائمين..."
 # _e("Loading businesses contacted...","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Loading businesses contacted..."
-msgstr "تحميل المشروعات التي تم التواصل معها..."
+msgstr "تحميل المشاريع التي تم التواصل معها..."
 
 # 365) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/investor/dashboard.phtml -21
 # _e("Loading preference...","bidxplugin");
@@ -2258,7 +2258,7 @@ msgstr "المنصب"
 # _e("Businesses contacted","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Businesses contacted"
-msgstr "المشروعات التي تم التواصل معها"
+msgstr "المشاريع التي تم التواصل معها"
 
 # 373) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/investor/dashboard.phtml -71
 # _e("Title","bidxplugin");
@@ -2637,7 +2637,7 @@ msgstr "لوحة الإعدادات الخاصة بي كرائد أعمال"
 # _e("Loading businesses ...","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Loading businesses ..."
-msgstr "تحميل المشروعات..."
+msgstr "تحميل المشاريع..."
 
 # 444) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/entrepreneur/dashboard.phtml -17
 # _e("Loading investors ...","bidxplugin");
@@ -2653,14 +2653,14 @@ msgstr "تحميل المستثمرين..."
 # _e("Businesses","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Businesses"
-msgstr "المشروعات"
+msgstr "المشاريع"
 
 # 447) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/entrepreneur/dashboard.phtml -37
 # _e("Here you can see the businesses you have created some details about them.","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid ""
 "Here you can see the businesses you have created some details about them."
-msgstr "يمكنك أن ترى هنا المشروعات التي قمت بإنشاء بعض بياناتها التفصيلية."
+msgstr "يمكنك أن ترى هنا المشاريع التي قمت بإنشاء بعض بياناتها التفصيلية."
 
 # 448) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/entrepreneur/dashboard.phtml -41
 # _e("Title","bidxplugin");
@@ -3422,7 +3422,7 @@ msgstr "عاين الكل"
 # _e("New Businesses","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "New Businesses"
-msgstr "مشروعات جديدة"
+msgstr "مشاريع جديدة"
 
 # 606) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/group/templates/group-home-private.phtml -65
 # _e("view all","bidxplugin");
@@ -3600,7 +3600,7 @@ msgstr "لوحة إعدادات الحكم"
 # _e("There are currently no new business summaries","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "There are currently no new business summaries"
-msgstr "لا توجد ملخصات للمشروعات حالياً"
+msgstr "لا توجد ملخصات للمشاريع حالياً"
 
 # 647) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/group/templates/widget-latest-members.phtml -32
 # _e("New members","bidxplugin");
@@ -4256,7 +4256,7 @@ msgid ""
 "interesting for you."
 msgstr ""
 " يجد bidX أفضل الخطط المناسبة لك بمجرد نشرهم. نلائم البيانات الشخصية الوارده "
-"بحسابك كمرشد مع بيانات المشروعات الجديدة. يوصي القسم بالخطط التي يمكن أن "
+"بحسابك كمرشد مع بيانات المشاريع الجديدة. يوصي القسم بالخطط التي يمكن أن "
 "تحظى على اهتمامك، من خلال قوائم  بلوحة الإعدادات الخاصة بك."
 
 # 762) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/help.phtml -18
@@ -6436,7 +6436,7 @@ msgstr "هل امتلكت مشروعاً من قبل؟"
 # _e("Previous businesses","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Previous businesses"
-msgstr "مشروعات سابقة"
+msgstr "مشاريع سابقة"
 
 # 1208) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -72
 # _e("Add","bidxplugin");
@@ -6554,7 +6554,7 @@ msgstr "اطلب ارشاد"
 # _e("For which of your businesses?","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "For which of your businesses?"
-msgstr "لأي مشروع من مشروعاتك؟"
+msgstr "لأي مشروع من مشاريعك؟"
 
 # 1227) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -5
 # _e("Retrieving member information...","bidxplugin");
@@ -6914,7 +6914,7 @@ msgid ""
 msgstr ""
 "استخدم هذا القسم لتعريف تفضيلات الاستثمار الخاصة بك، مثل الدول أو المنتجات "
 "أو الصناعات التي ترغب في الاستثمار فيها. سيتم استخدام هذه المعلومات لملائمة "
-"ملفك الشخصي بالمشروعات التي تناسب تلك المعايير"
+"ملفك الشخصي بالمشاريع التي تناسب تلك المعايير"
 
 # 1299) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -142
 # _e("Industry","bidxplugin");
@@ -7622,7 +7622,7 @@ msgstr "نتيجة المشروع"
 # _e("Previous Business(es)","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Previous Business(es)"
-msgstr "المشروعات السابقة"
+msgstr "المشاريع السابقة"
 
 # 1427) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -82
 # _e("Documents","bidxplugin");
@@ -9011,7 +9011,7 @@ msgid ""
 msgstr ""
 " نقدم لك هنا الأدوات اللازمة لمشاركة معلومات أكثر دقة عن مشروعك، مثل ما "
 "الصناعة التي تعمل بها، ماذا تنتج وأين تتم العمليات. وسوف تستخدم هذه "
-"المعلومات لملاءمة مبادرتك مع المشروعات الأخرى والمستثمرين."
+"المعلومات لملاءمة مبادرتك مع المشاريع الأخرى والمستثمرين."
 
 # 1694) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -905
 # _e("Select the industries that apply to your business","bidxplugin");
