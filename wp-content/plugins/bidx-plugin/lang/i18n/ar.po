@@ -1280,7 +1280,7 @@ msgstr "قم باختيار أحد الخيارات"
 # _e("This field is required", "i18n");
 # Context  TextDomain i18n
 msgid "This field is required"
-msgstr "هذا الحقل مطلوب ملأه"
+msgstr "هذه الخانة مطلوبه"
 
 # _e("Please select an item", "i18n");
 # Context  TextDomain i18n
