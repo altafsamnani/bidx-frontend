@@ -2216,7 +2216,7 @@ msgstr "تحميل الملائمين..."
 # _e("Loading businesses contacted...","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Loading businesses contacted..."
-msgstr "تحميل المشروعات التي تم الإتصال بها..."
+msgstr "تحميل المشروعات التي تم التواصل معها..."
 
 # 365) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/investor/dashboard.phtml -21
 # _e("Loading preference...","bidxplugin");
