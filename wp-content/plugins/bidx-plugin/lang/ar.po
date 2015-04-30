@@ -5183,25 +5183,25 @@ msgstr " انقر <a href=\"%s\">هنا</a> لتذهب للصفحة الرئيس
 # _e("First name","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "First name"
-msgstr "الاسم الأول"
+msgstr "الإسم"
 
 # 973) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/register/templates/register.phtml -24
 # _e("Enter your first name","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Enter your first name"
-msgstr "ادخل اسمك الأول"
+msgstr "أدخل إسمك"
 
 # 974) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/register/templates/register.phtml -28
 # _e("Last name","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Last name"
-msgstr "الإسم الأخير"
+msgstr "اللقب"
 
 # 975) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/register/templates/register.phtml -29
 # _e("Enter your last name","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Enter your last name"
-msgstr "ادخل الإسم الأخير"
+msgstr "ادخل لقبك"
 
 # 976) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/register/templates/register.phtml -33
 # _e("Email address","bidxplugin");
