@@ -245,12 +245,14 @@ class BidxShortcode
 
             wp_register_script ('bidx-reflowrower', $bidxJsDir . '/bidx-reflowrower.js', array ('jquery', 'jquery-ui-widget'), '20130501', TRUE);
             wp_register_script ('bidx-industries', $bidxJsDir . '/bidx-industries.js', array ('jquery', 'jquery-ui-widget'), '20141010', TRUE);
+            wp_register_script ('bidx-tagging',  $bidxJsDir . '/bidx-tagging.js', array ('jquery','jquery-ui-widget'),  '20150501', TRUE);
             wp_register_script ('bidx-cover', $bidxJsDir . '/bidx-cover.js', array ('jquery', 'jquery-ui-widget', 'jquery-ui-draggable'), '20141119', TRUE);
             wp_register_script ('bidx-data', $bidxJsDir . '/data.js', array ('jquery'), '20130626', TRUE);
             wp_register_script ('bidx-i18n', $bidxJsDir . '/i18n.js', array ('jquery'), '20130626', TRUE);
             wp_register_script ('bidx-delaykeyup', $bidxJsDir . '/bidx-delaykeyup.js', array ('jquery'), '20131103', TRUE);
             wp_register_script ('bidx-location', $bidxJsDir . '/bidx-location.js', array ('jquery', 'bidx-utils', 'jquery-ui-widget','google-jsapi'), '20130904', true);
             wp_register_script ('bidx-chosen',  $bidxJsDir . '/bidx-chosen.js', array ('jquery', 'chosen'),  '20131118', TRUE);
+
 
             wp_enqueue_script ('bidx-common');
             wp_enqueue_script ('bidx-controller');

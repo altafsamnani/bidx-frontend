@@ -1657,3 +1657,8 @@ msgstr ""
 msgid "Please log out of wordpress administrator."
 msgstr ""
 
+# _e("All", "i18n");
+# Context  TextDomain i18n
+msgid "All"
+msgstr ""
+

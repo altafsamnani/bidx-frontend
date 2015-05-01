@@ -3,14 +3,16 @@
 {
     "use strict";
 
-    var iclVars                     = window.icl_vars || {}
-    ,   $element                    = $( "#editMember" )
-    ,   $views                      = $element.find( ".view" )
-    ,   $editForm                   = $views.filter( ".viewEdit" ).find( "form" )
-    ,   $snippets                   = $element.find( ".snippets" )
+    var iclVars                             = window.icl_vars || {}
+    ,   $element                            = $( "#editMember" )
+    ,   $views                              = $element.find( ".view" )
+    ,   $editForm                           = $views.filter( ".viewEdit" ).find( "form" )
+    ,   $snippets                           = $element.find( ".snippets" )
 
-    ,   $languageList               = $editForm.find( ".languageList" )
-    ,   $inputAddLanguage           = $editForm.find( "input[name='addLanguage']" )
+    ,   $tagging                            = $( ".tagging")
+
+    ,   $languageList                       = $editForm.find( ".languageList" )
+    ,   $inputAddLanguage                   = $editForm.find( "input[name='addLanguage']" )
 
     ,   $personalDetailsNationality         = $editForm.find( "[name='personalDetails.nationality']" )
     ,   $personalDetailsHighestEducation    = $editForm.find( "[name='personalDetails.highestEducation']" )
@@ -53,19 +55,19 @@
     ,   state
     ,   currentView
 
-    ,   redirect                    = {}
-    ,   snippets                    = {}
+    ,   redirect                            = {}
+    ,   snippets                            = {}
 
-    ,   appName                     = "member"
+    ,   appName                             = "member"
 
         // Languages
         //
-    ,   $languageSelect             = $editForm.find( "[name='languages']"     )
+    ,   $languageSelect                     = $editForm.find( "[name='languages']"     )
     ,   languages
 
         // Object for maintaining a list of currently selected languages, for optimizations only
         //
-    ,   addedLanguages              = {}
+    ,   addedLanguages                      = {}
     ,   removedLanguages
     ;
 
@@ -126,6 +128,11 @@
         ]
     };
 
+    function _accreditation ()
+    {
+        $tagging.tagging( );
+    }
+
     // Setup function for doing work that should only be done once
     //
     function _oneTimeSetup()
@@ -134,6 +141,7 @@
         _languages();
         _attachments();
         _getActiveContacts();
+       // _accreditation();
 
         // On any changes, how little doesn't matter, notify that we have a pending change
         // But no need to track the changes when doing a member data load

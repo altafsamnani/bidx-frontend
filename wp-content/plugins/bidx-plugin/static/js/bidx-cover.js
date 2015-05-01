@@ -2,7 +2,7 @@
  * @description Reusable reflow plugin (jquery ui widget based)
  *
  * @namespace
- * @name bidx.industries
+ * @name bidx.cover
  * @version 1.0
  * @author
 */

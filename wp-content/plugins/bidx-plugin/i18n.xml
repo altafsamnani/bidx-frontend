@@ -182,4 +182,10 @@
     <!-- Pagination -->
     <Item value="paginationAll">All</Item>
 
+    <!-- Accreditation -->
+    <Item value="lblMark">Mark as:</Item>
+    <Item value="lblAccreditation">Accrediated</Item>
+    <Item value="lblNoAccreditation">Not Accrediated</Item>
+    <Item value="lblPendingAccreditation">Pending Accreditation</Item>
+
 </I18N>

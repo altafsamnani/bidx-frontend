@@ -10,7 +10,7 @@ class member {
 	static $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2'
 			,'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower','bidx-industries', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
 			'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
-			'bidx-location','bidx-chosen', 'jquery-event-ue', 'jquery-udraggable','google-jsapi'
+			'bidx-location','bidx-chosen', 'bidx-tagging', 'jquery-event-ue', 'jquery-udraggable','google-jsapi'
 	);
 
  	/**

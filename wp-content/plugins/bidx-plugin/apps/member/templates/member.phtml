@@ -12,6 +12,7 @@ $authenticated                  = isset( $this -> sessionData -> authenticated )
 $isLoggedinMemberIsMentor       = isset( $this -> sessionData -> data -> wp -> entities -> bidxMentorProfile ) ? $this -> sessionData -> data -> wp -> entities -> bidxMentorProfile : null;
 $isLoggedinMemberIsInvestor     = isset( $this -> sessionData -> data -> wp -> entities -> bidxInvestorProfile ) ? $this -> sessionData -> data -> wp -> entities -> bidxInvestorProfile : null;
 $isLoggedinMemberIsEntrepreneur = isset( $this -> sessionData -> data -> wp -> entities -> bidxEntrepreneurProfile ) ? true : false;
+
 $groupIds                       = array_keys ( (array)$this -> sessionData -> data -> groups );
 $inGroup                        = in_array( $this -> sessionData -> data -> currentGroup, $groupIds);
 $personalDetails                = isset( $data->bidxMemberProfile->personalDetails ) ? $data->bidxMemberProfile->personalDetails : NULL;
@@ -40,8 +41,10 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 
     <div class="actions hide-overflow main-margin">
         <div class="pull-left quick-action-links">
-
-            <div class="pull-left hide">
+           <?php
+           if(false && $this->isLoggedInGroupOwner && $memberId != $loggedInMemberId)
+            { ?>
+            <div class="pull-left">
                 <label class="markLabel"><?php _e('Mark as', 'bidxplugin')?>:</label>
                 <button class="btn btn-sm btn-success">
                     <div class="fa fa-bookmark fa-above fa-big"></div>
@@ -52,6 +55,13 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
                     <?php _e('Not Accrediated', 'bidxplugin')?>
                 </button>
            </div>
+           <?php } ?>
+
+
+            <div class="tagging pull-left">
+                <div class="taggingButton"></div>
+            </div>
+
 
 
 
@@ -85,6 +95,7 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
             endif;
 ?>
         </div>
+
 <?php
         if ( $canEdit ) :
 ?>
@@ -117,34 +128,31 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 <?php
         endif;
 ?>
+        <div class="tagging btn-group pull-right">
+            <div class="taggingLabel"></div>
+        </div>
+        <div class="taggingLabel btn-group pull-right hide">
+            <span class="accreditation-labels">
+                <div class="text-uppercase main-margin-horizontal accreditation accr-Pending">
+                    <span class="fa fa-bookmark-o fa-big pull-left"></span>
+                    <?php _e('Pending Accreditation', 'bidxplugin')?>
 
+                </div>
 
+                <div class="text-uppercase main-margin-horizontal accreditation accr-Accepted hide">
+                    <span class="fa fa-bookmark fa-big pull-left"></span>
+                    <?php _e('Accreditated', 'bidxplugin')?>
+                </div>
+
+                <div class="text-uppercase main-margin-horizontal accreditation accr-Refused hide">
+                    <span class="fa fa-ban fa-big pull-left"></span>
+                    <?php _e('Not Accreditated', 'bidxplugin')?>
+                </div>
+            </span>
+        </div>
 
         <div class="editControls btn-group pull-right"></div>
-
-        <span class="hide accreditation-labels">
-            <div class="text-uppercase pull-right main-margin-horizontal accreditation accr-Pending">
-                <span class="fa fa-bookmark-o fa-big pull-left"></span>
-                <?php _e('Pending Accreditation', 'bidxplugin')?>
-
-            </div>
-
-            <div class="text-uppercase pull-right main-margin-horizontal accreditation accr-Accepted">
-                <span class="fa fa-bookmark fa-big pull-left"></span>
-                <?php _e('Accreditated', 'bidxplugin')?>
-            </div>
-
-            <div class="text-uppercase pull-right main-margin-horizontal accreditation accr-Refused">
-                <span class="fa fa-ban fa-big pull-left"></span>
-                <?php _e('Not Accreditated', 'bidxplugin')?>
-            </div>
-        </span>
-
-
     </div>
-
-
-
 
     <div class="row mainState mainStateShow main-padding">
         <div class="col-sm-12">
