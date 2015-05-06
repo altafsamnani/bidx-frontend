@@ -89,7 +89,7 @@ class member {
 
 			    //Localize to js variables, currently to use focusexpertise for mentoring to display match
 			    $jsParams = array('member' => $view->data);
-			    wp_localize_script ('mentoringrequest', '__bidxMember', $jsParams);
+			    wp_localize_script ('bidx-data', '__bidxMember', $jsParams);
 
 			    $view->bidxGroupDomain = (isset($memberData->bidxGroupDomain)) ? $memberData->bidxGroupDomain : NULL;
 			    $view->sessionData = BidxCommon::$staticSession;

@@ -52,6 +52,7 @@
     ,   memberId
     ,   memberProfileId
     ,   visitingMemberPageId                = bidx.utils.getValue( bidxConfig, "context.memberId" )
+    ,   memberData                          = window.__bidxMember
     ,   state
     ,   currentView
 
@@ -130,7 +131,40 @@
 
     function _accreditation ()
     {
-        $tagging.tagging( );
+        var tagsArr                 =   []
+        ,   options                 =   {}
+        ,   investorProfile         =   bidx.utils.getValue(memberData, 'member.bidxInvestorProfile' )
+        ,   investorProfileEntityId =   bidx.utils.getValue(investorProfile, 'bidxMeta.bidxEntityId' )
+        ,   tagsData                =   bidx.utils.getValue(investorProfile, 'bidxMeta.tags' )
+        ;
+
+        /* Render Accreditation Button for Investor*/
+        if( investorProfileEntityId )
+        {
+            bidx.utils.log('Investor Profile EntityId: ', investorProfileEntityId);
+            tagsArr  =  [{
+                            label:      bidx.i18n.i('lblAccreditation')
+                        ,   attached:   'accredited'
+                        ,   detached:   'accreditation_refused'
+                        ,   class:      'btn-success'
+                        ,   visibility: 'ANYONE'
+                        },
+                        {
+                            label:      bidx.i18n.i('lblNoAccreditation')
+                        ,   attached:   'accreditation_refused'
+                        ,   detached:   'accredited'
+                        ,   class:      'btn-danger'
+                        }];
+
+            options =   {
+                            style:      'button'
+                        ,   tags:       tagsArr
+                        ,   entityId:   investorProfileEntityId
+                        ,   tagsData:   tagsData
+                        };
+
+            $tagging.tagging( options );
+        }
     }
 
     // Setup function for doing work that should only be done once
@@ -141,7 +175,7 @@
         _languages();
         _attachments();
         _getActiveContacts();
-       // _accreditation();
+        _accreditation();
 
         // On any changes, how little doesn't matter, notify that we have a pending change
         // But no need to track the changes when doing a member data load

@@ -13,23 +13,22 @@
     ,   params                  = []
     ;
 
-    accreditation.attach = function( params )
+    accreditation.getAssignedTags = function( params )
     {
         var url
-        ,   method  = "POST"
+        ,   method  = "GET"
         ;
 
-        baseUrl =   baseUrl + '/tag/%tag%';
+        url =   baseUrl + '/tags';
 
-        url     =   baseUrl.replace( "%id%", params.id )
-                           .replace( "%tag%", params.tag)
+        url     = url.replace( "%id%", params.id )
         ;
 
         api._call(
         {
-            method:         method
-        ,   groupDomain:    params.groupDomain
-        ,   baseUrl:        url
+            method:                 method
+        ,   groupDomain:            params.groupDomain
+        ,   baseUrl:                url
         ,   success:        function( data, textStatus, jqXhr )
             {
                 params.success( data, textStatus, jqXhr );
@@ -41,23 +40,23 @@
         } );
     };
 
-    accreditation.detach = function( params )
+    accreditation.assignTags = function( params )
     {
         var url
-        ,   method  = "DELETE"
+        ,   method  = "POST"
         ;
 
-        baseUrl =   baseUrl + '/tag/%tag%';
+        url =   baseUrl + '/tags';
 
-        url     =   baseUrl.replace( "%id%", params.id )
-                           .replace( "%tag%", params.tag)
+        url     = url.replace( "%id%", params.id )
         ;
 
         api._call(
         {
-            method:                     method
-        ,   groupDomain:                params.groupDomain
-        ,   baseUrl:                    url
+            method:                 method
+        ,   groupDomain:            params.groupDomain
+        ,   baseUrl:                url
+        ,   data:                   params.data
         ,   success:        function( data, textStatus, jqXhr )
             {
                 params.success( data, textStatus, jqXhr );
@@ -75,9 +74,9 @@
         ,   method  = "GET"
         ;
 
-        baseUrl =   baseUrl + '/tagoptions';
+        url =   baseUrl + '/tagoptions';
 
-        url     = baseUrl.replace( "%id%", params.id )
+        url     = url.replace( "%id%", params.id )
         ;
 
         api._call(

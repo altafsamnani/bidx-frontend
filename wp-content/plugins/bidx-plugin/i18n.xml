@@ -187,5 +187,7 @@
     <Item value="lblAccreditation">Accrediated</Item>
     <Item value="lblNoAccreditation">Not Accrediated</Item>
     <Item value="lblPendingAccreditation">Pending Accreditation</Item>
+    <Item value="lblNoTaggingExist">Assignment is not allowed for tags:</Item>
+    <Item value="errorNoTagEntityId">EntityId is not specified</Item>
 
 </I18N>
