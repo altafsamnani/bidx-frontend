@@ -209,6 +209,12 @@ msgctxt "competition"
 msgid "Please select the reason why you are participating"
 msgstr "Por favor seleccione la razón por la que participa"
 
+# _x("Pending", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Pending"
+msgstr "Pendiente"
+
 # _x("Current year", "businesssummary","i18n");
 # Context businesssummary TextDomain i18n
 msgctxt "competition"
@@ -365,11 +371,11 @@ msgid ""
 "application reviewed by the competition assessors, please submit your "
 "application by clicking on the Submit button"
 msgstr ""
-"Usted está participando en este concurso. ¡ Gracias por su participación !. "
+"úUsted está participando en este concurso. ¡ Gracias por su participación !. "
 "Tenga en cuenta que su aplicación está en estado de borrador, y puede "
 "revisarla y editar su plan de negocios. Si está preparado/a para que un "
-"asesor evalue su participación, por favor someta su aplicación pinchando en "
-"el botón 'Someter'"
+"asesor evalúe su participación, por favor presente su aplicación pinchando "
+"en el botón 'Someter'"
 
 # _x("You have successfully submitted your application. Thank you for participating! Your submission will now be reviewed by our competition assessors. Good luck!", "competition","i18n");
 # Context competition TextDomain i18n
@@ -379,7 +385,7 @@ msgid ""
 "participating! Your submission will now be reviewed by our competition "
 "assessors. Good luck!"
 msgstr ""
-"Su aplicación ha sido sometida. ¡ Gracias por su participación ! A "
+"Su aplicación ha sido presentada. ¡ Gracias por su participación ! A "
 "continuación nuestros asesores revisarán su participación. ¡ Buena suerte !"
 
 # _x("You have successfully withdrawn your application from this competition. Please feel free to join future competitions. We wish you the best of luck! ", "competition","i18n");
@@ -391,6 +397,16 @@ msgid ""
 msgstr ""
 "Usted ha retirado su aplicación de este concurso. No dude en participar en "
 "otros concursos en el futuro. ¡ Suerte !"
+
+# _x("You have successfully submitted this application. A notification has been sent out to the participant", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid ""
+"You have successfully submitted this application. A notification has been "
+"sent out to the participant"
+msgstr ""
+"Esta aplicación ha sido presentada correctamente. Se le ha enviado una "
+"notificación al participante"
 
 # _x("You have successfully rejected this submission. A notification has been sent out to the participant", "competition","i18n");
 # Context competition TextDomain i18n
@@ -479,6 +495,12 @@ msgctxt "competition"
 msgid "No comments"
 msgstr "Sin comentarios"
 
+# _x("Apply to the competition", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Apply to the competition"
+msgstr "Participe en este concurso"
+
 # _x("Submit your business plan", "competition","i18n");
 # Context competition TextDomain i18n
 msgctxt "competition"
@@ -490,6 +512,29 @@ msgstr "Presente su propuesta"
 msgctxt "competition"
 msgid "Withdraw your business plan"
 msgstr "Retire su propuesta"
+
+# _x("Please wait while we are updating phase of the competition", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Please wait while we are updating phase of the competition"
+msgstr "Por favor espere mientras actualizamos la fase del concurso"
+
+# _x("Congrtatulations, you have succesfully updated phase of this competition.", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid ""
+"Congrtatulations, you have succesfully updated phase of this competition."
+msgstr ""
+
+# _x("Before moving to the next phase, all applications need a competition administrator review", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid ""
+"Before moving to the next phase, all applications need a competition "
+"administrator review"
+msgstr ""
+"Antes de continuar a la siguiente fase, todas las aplicaciones necesitan la "
+"evaluación del administrador"
 
 # _x("On %date% at %time%, %sender% wrote:", "connect","i18n");
 # Context connect TextDomain i18n
@@ -568,6 +613,12 @@ msgstr "Mensaje al propietario del grupo"
 msgctxt "mail"
 msgid "Deleted from"
 msgstr "Eliminado de"
+
+# _x("You cannot trash a system mail this way", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "You cannot trash a system mail this way"
+msgstr "Usted no puede borrar un correo del sistema de esta forma"
 
 # _x("Select the outcome of this business", "member","i18n");
 # Context member TextDomain i18n
@@ -814,6 +865,12 @@ msgstr "Todos los mentores"
 msgctxt "connect"
 msgid "All Members"
 msgstr "Todos los miembros"
+
+# _x("Member only", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "Member only"
+msgstr "Solo miembro"
 
 # _x("Please select sender group", "connect","i18n");
 # Context connect TextDomain i18n
@@ -1113,6 +1170,11 @@ msgstr "Siguiente"
 msgid "Cancel"
 msgstr "Cancelar"
 
+# _e("Ok", "i18n");
+# Context  TextDomain i18n
+msgid "Ok"
+msgstr "Ok"
+
 # _e("Save", "i18n");
 # Context  TextDomain i18n
 msgid "Save"
@@ -1317,6 +1379,36 @@ msgstr "Debe introducir al menos {0} caracteres"
 # Context  TextDomain i18n
 msgid "Please fill all the required fields"
 msgstr "Complete todos los campos obligatorios"
+
+# _e("Please fix this field.", "i18n");
+# Context  TextDomain i18n
+msgid "Please fix this field."
+msgstr "Por favor, corrija este campo."
+
+# _e("Please enter a valid number.", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid number."
+msgstr "Por favor introduzca un número válido."
+
+# _e("Please enter a valid credit card number.", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid credit card number."
+msgstr "Por favor introduzca un número válido de tarjeta de crédito."
+
+# _e("Please enter the same value againaaaa.", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter the same value againaaaa."
+msgstr ""
+
+# _e("Please enter a value between {0} and {1} characters long.", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a value between {0} and {1} characters long."
+msgstr "Por favor introduzca un valor que contenga entre {0} y {1} caracteres."
+
+# _e("Please enter a value between {0} and {1}.", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a value between {0} and {1}."
+msgstr "Por favor introduzca un valor entre  {0} y {1}."
 
 # _e("This email address is already in use", "i18n");
 # Context  TextDomain i18n
@@ -1607,3 +1699,23 @@ msgstr "nuevo"
 # Context monitoring TextDomain i18n
 msgid "Loading"
 msgstr "Cargando..."
+
+# _e("User not found.", "i18n");
+# Context  TextDomain i18n
+msgid "User not found."
+msgstr "Usuario no encontrado."
+
+# _e("Invalid username or password.", "i18n");
+# Context  TextDomain i18n
+msgid "Invalid username or password."
+msgstr "Incorrecto nombre de usuario o clave."
+
+# _e("Please log out of wordpress administrator.", "i18n");
+# Context  TextDomain i18n
+msgid "Please log out of wordpress administrator."
+msgstr "Por favor cierre su sesión de administrador de wordpress"
+
+# _e("All", "i18n");
+# Context  TextDomain i18n
+msgid "All"
+msgstr "Todo"

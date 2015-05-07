@@ -1050,19 +1050,6 @@ msgctxt "universityPostgraduate"
 msgid "University - Postgraduate"
 msgstr "Universidad - Posgrado"
 
-# 6 emailTemplateType
-#  _x("Invite non Bidx-user to group", "email-invitedNonRegisteredUserGroup", "static");
-# Context email-invitedNonRegisteredUserGroup Textdomain static
-msgctxt "email-invitedNonRegisteredUserGroup"
-msgid "Invite non Bidx-user to group"
-msgstr "Invitar al grupo a un usuario que no es miembro de Bidx"
-
-#  _x("Invite Bidx member to group", "email-invitedRegisteredUserGroup", "static");
-# Context email-invitedRegisteredUserGroup Textdomain static
-msgctxt "email-invitedRegisteredUserGroup"
-msgid "Invite Bidx member to group"
-msgstr "Invitar al grupo a un usuario miembro de Bidx"
-
 # 7 legalForm
 #  _x("Sole trader", "soletrader", "static");
 # Context soletrader Textdomain static
@@ -9406,6 +9393,79 @@ msgstr "Email y mensajes"
 msgctxt "message"
 msgid "telephone"
 msgstr "teléfono"
+
+# 26 month
+#  _x("January", "1", "static");
+# Context 1 Textdomain static
+msgctxt "1"
+msgid "January"
+msgstr "Enero"
+
+#  _x("February", "2", "static");
+# Context 2 Textdomain static
+msgctxt "2"
+msgid "February"
+msgstr "Febrero"
+
+#  _x("March", "3", "static");
+# Context 3 Textdomain static
+msgctxt "3"
+msgid "March"
+msgstr "Marzo"
+
+#  _x("April", "4", "static");
+# Context 4 Textdomain static
+msgctxt "4"
+msgid "April"
+msgstr "Abril"
+
+#  _x("May", "5", "static");
+# Context 5 Textdomain static
+msgctxt "5"
+msgid "May"
+msgstr "Mayo"
+
+#  _x("June", "6", "static");
+# Context 6 Textdomain static
+msgctxt "6"
+msgid "June"
+msgstr "Junio"
+
+#  _x("July", "7", "static");
+# Context 7 Textdomain static
+msgctxt "7"
+msgid "July"
+msgstr "Julio"
+
+#  _x("August", "8", "static");
+# Context 8 Textdomain static
+msgctxt "8"
+msgid "August"
+msgstr "Agosto"
+
+#  _x("September", "9", "static");
+# Context 9 Textdomain static
+msgctxt "9"
+msgid "September"
+msgstr "Septiembre"
+
+#  _x("October", "10", "static");
+# Context 10 Textdomain static
+msgctxt "10"
+msgid "October"
+msgstr "Octubre"
+
+#  _x("November", "11", "static");
+# Context 11 Textdomain static
+msgctxt "11"
+msgid "November"
+msgstr "Noviembre"
+
+#  _x("December", "12", "static");
+# Context 12 Textdomain static
+msgctxt "12"
+msgid "December"
+msgstr "Diciembre"
 
 # 27 languageRating
 #  _x("fluent", "fluent", "static");
