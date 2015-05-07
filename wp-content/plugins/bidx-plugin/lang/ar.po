@@ -7501,15 +7501,15 @@ msgstr "انشاء ملفي الشخصي كمرشد"
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 # 1423) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -48
-# _e("Accrediated","bidxplugin");
+# _e("Accredited","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Accrediated"
+msgid "Accredited"
 msgstr ""
 
 # 1424) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -52
-# _e("Not Accrediated","bidxplugin");
+# _e("Not Accredited","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Not Accrediated"
+msgid "Not Accredited"
 msgstr ""
 
 # 1417) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -48
@@ -7531,7 +7531,7 @@ msgstr "أضف شركة"
 # 1371) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/create-grow.phtml -108
 # _e("Become a mentor","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Become mentor"
+msgid "Register as mentor"
 msgstr "كن مرشد"
 
 # 1420) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -68

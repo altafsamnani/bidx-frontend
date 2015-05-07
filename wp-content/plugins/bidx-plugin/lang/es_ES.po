@@ -6530,15 +6530,15 @@ msgstr "Crear mi perfil de mentor"
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 # 1180) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -48
-# _e("Accrediated","bidxplugin");
+# _e("Accredited","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Accrediated"
+msgid "Accredited"
 msgstr ""
 
 # 1181) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -52
-# _e("Not Accrediated","bidxplugin");
+# _e("Not Accredited","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Not Accrediated"
+msgid "Not Accredited"
 msgstr ""
 
 # 1251) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/group/templates/navbarshort.phtml -89
@@ -6554,9 +6554,9 @@ msgid "Add Company"
 msgstr "Agrege su empresa"
 
 # 1185) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -82
-# _e("Become mentor","bidxplugin");
+# _e("Register as mentor","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Become mentor"
+msgid "Register as mentor"
 msgstr ""
 
 # 1244) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/group/templates/profile-dropdown.phtml -11

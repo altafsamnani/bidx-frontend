@@ -88,7 +88,7 @@
      <Item value="frmInvalidRemote">Please fix this field.</Item>
     <Item value="frmInvalidNumber">Please enter a valid number.</Item>
     <Item value="frmInvalidCC">Please enter a valid credit card number.</Item>
-    <Item value="frmInvalidEqualTo">Please enter the same value againaaaa.</Item>
+    <Item value="frmInvalidEqualTo">Please enter the same value again</Item>
     <Item value="frmInvalidRangeLength">Please enter a value between {0} and {1} characters long.</Item>
     <Item value="frmInvalidRange">Please enter a value between {0} and {1}.</Item>
 
@@ -184,8 +184,8 @@
 
     <!-- Accreditation -->
     <Item value="lblMark">Mark as:</Item>
-    <Item value="lblAccreditation">Accrediated</Item>
-    <Item value="lblNoAccreditation">Not Accrediated</Item>
+    <Item value="lblAccreditation">Accredited</Item>
+    <Item value="lblNoAccreditation">Not Accredited</Item>
     <Item value="lblPendingAccreditation">Pending Accreditation</Item>
     <Item value="lblNoTaggingExist">Assignment is not allowed for tags:</Item>
     <Item value="errorNoTagEntityId">EntityId is not specified</Item>

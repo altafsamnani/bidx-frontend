@@ -474,10 +474,10 @@ msgctxt "competition"
 msgid "Please wait while we are updating phase of the competition"
 msgstr ""
 
-# _x("Congrtatulations, you have succesfully updated phase of this competition.", "competition","i18n");
+# _x("Congratulations, you have successfully updated the phase of this competition ", "competition","i18n");
 # Context competition TextDomain i18n
 msgctxt "competition"
-msgid "Congrtatulations, you have succesfully updated phase of this competition."
+msgid "Congratulations, you have successfully updated the phase of this competition "
 msgstr ""
 
 # _x("Before moving to the next phase, all applications need a competition administrator review", "competition","i18n");
@@ -1337,9 +1337,9 @@ msgstr ""
 msgid "Please enter a valid credit card number."
 msgstr ""
 
-# _e("Please enter the same value againaaaa.", "i18n");
+# _e("Please enter the same value again", "i18n");
 # Context  TextDomain i18n
-msgid "Please enter the same value againaaaa."
+msgid "Please enter the same value again"
 msgstr ""
 
 # _e("Please enter a value between {0} and {1} characters long.", "i18n");
