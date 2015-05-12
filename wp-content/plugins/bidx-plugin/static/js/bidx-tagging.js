@@ -46,54 +46,52 @@
 
                         bidx.utils.log( "accreditation.getOptions::response", response );
 
-                        if( options.style === 'button')
+                        assignable          =   response.data.assignable;
+
+                        $.each( options.tags, function( idx, tag )
                         {
-                            assignable          =   response.data.assignable;
+                            isAttached    =   _.findWhere( assignable, { id: tag.attached });
 
-                            $.each( options.tags, function( idx, tag )
+                            if( isAttached )
                             {
-                                isAttached    =   _.findWhere( assignable, { id: tag.attached });
-
-                                if( isAttached )
-                                {
-                                    attachedTags.push( tag );
-                                }
-                                else
-                                {
-                                    excludeAttachedTags.push ( tag );
-                                }
-
-                                isDetached    =   _.findWhere( assignable, { id: tag.detached });
-
-                                if( isDetached )
-                                {
-                                    detachedTags.push( tag );
-                                }
-                                else
-                                {
-                                    excludeDetachedTags.push ( tag );
-                                }
-
-                            });
-
-                            if( excludeAttachedTags.length || excludeDetachedTags.length )
+                                attachedTags.push( tag );
+                            }
+                            else
                             {
-                                errorTxt =  bidx.i18n.i('lblNoTaggingExist');
-                                errorTxt =+ ( excludeAttachedTags.length ) ? excludeAttachedTags.split(', ') : '';
-                                errorTxt =+ ( excludeDetachedTags.length ) ? excludeDetachedTags.split(', ') : '';
-
-                                bidx.common.notifyError( errorTxt );
+                                excludeAttachedTags.push ( tag );
                             }
 
-                            if( attachedTags.length && detachedTags.length )
+                            isDetached    =   _.findWhere( assignable, { id: tag.detached });
+
+                            if( isDetached )
                             {
-                                //  execute callback if provided
-                                if (params && params.callback)
-                                {
-                                    params.callback( attachedTags, detachedTags );
-                                }
+                                detachedTags.push( tag );
+                            }
+                            else
+                            {
+                                excludeDetachedTags.push ( tag );
+                            }
+
+                        });
+
+                        if( excludeAttachedTags.length || excludeDetachedTags.length )
+                        {
+                            errorTxt =  bidx.i18n.i('lblNoTaggingExist');
+                            errorTxt =+ ( excludeAttachedTags.length ) ? excludeAttachedTags.split(', ') : '';
+                            errorTxt =+ ( excludeDetachedTags.length ) ? excludeDetachedTags.split(', ') : '';
+
+                            bidx.common.notifyError( errorTxt );
+                        }
+
+                        if( attachedTags.length && detachedTags.length )
+                        {
+                            //  execute callback if provided
+                            if (params && params.callback)
+                            {
+                                params.callback( attachedTags, detachedTags );
                             }
                         }
+
                     }
                 ,   error: function(jqXhr, textStatus)
                     {
@@ -116,13 +114,21 @@
             var widget                  =   this
             ,   $btnHtml
             ,   options                 =   widget.options
+            //,   roles           = bidx.utils.getValue( bidxConfig.session, "roles" )
+            //,   isGroupAdmin    = ( $.inArray("GroupAdmin", roles) !== -1 || $.inArray("GroupOwner", roles) !== -1 ) ? true : false
+            ;
+
+        }
+    ,   constructButton: function ( btnOptions )
+        {
+            var widget                  =   this
+            ,   $btnHtml
+            ,   options                 =   widget.options
             ,   $el                     =   widget.element
-            ,   $button                 =   $el.find('.taggingButton')
+            ,   $button                 =   $el.find('.' + btnOptions.class)
             ,   entityId                =   bidx.utils.getValue( options, 'entityId' )
             ,   visitingMemberPageId    =   bidx.utils.getValue( bidxConfig, "context.memberId" )
             ,   loggedInMemberId        =   bidx.common.getCurrentUserId()
-            //,   roles           = bidx.utils.getValue( bidxConfig.session, "roles" )
-            //,   isGroupAdmin    = ( $.inArray("GroupAdmin", roles) !== -1 || $.inArray("GroupOwner", roles) !== -1 ) ? true : false
             ;
             if( entityId && $button.length)
             {
@@ -130,13 +136,13 @@
                 {
                     widget._hasAccess(
                     {
-                        options:    options
+                        options:    btnOptions
                     ,   id:         loggedInMemberId
                     ,   callback:   function( attachedTags, detachedTags )
                                     {
                                         if( options.style === 'button' && attachedTags.length )
                                         {
-                                            $btnHtml    =   widget._constructButton(
+                                            $btnHtml    =   widget._renderButton(
                                                             {
                                                                 attachedTags:   attachedTags
                                                             ,   options:        options
@@ -156,9 +162,8 @@
             {
                 bidx.common.notifyError( 'errorNoTagEntityId' );
             }
-           // widget._constructLabel( );
         }
-    ,   _constructButton: function ( params  )
+    ,   _renderButton: function ( params  )
         {
             var tagLabel
             ,   attachedTag

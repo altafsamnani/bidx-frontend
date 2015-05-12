@@ -92,7 +92,9 @@ function knews_resize_img_fn($url_img, $width, $height, $media_id=0) {
 	$filename = pathinfo($url_img, PATHINFO_BASENAME);
 
 	$blog_url = get_bloginfo('url');
-	if (function_exists( 'qtrans_init')) $blog_url = site_url();
+
+	if (KNEWS_MULTILANGUAGE && $knewsOptions['multilanguage_knews']=='qt') $blog_url = site_url();
+
 	if (substr($blog_url, -1, 1) == '/') $blog_url = substr($blog_url, 0, strlen($blog_url)-1);
 	
 	$blog_url_base = explode('/',$blog_url); 

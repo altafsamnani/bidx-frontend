@@ -1,7 +1,7 @@
 <?php
 	require_once( KNEWS_DIR . '/includes/knews_util.php');
 
-	global $wpdb, $Knews_plugin;
+	global $wpdb, $Knews_plugin, $knewsOptions;
 
 	$langs_code = array();
 	$langs_name = array();
@@ -34,7 +34,9 @@
 		$url_template = $Knews_plugin->post_safe('url_' . $Knews_plugin->post_safe('template'));
 
 		$blog_url = get_option('home');
-		if (function_exists( 'qtrans_init')) $blog_url = site_url();
+		
+		if (KNEWS_MULTILANGUAGE && $knewsOptions['multilanguage_knews']=='qt') $blog_url = site_url();
+		
 		//$blog_url = get_bloginfo('url');
 		if (substr($blog_url, -1, 1) == '/') $blog_url = substr($blog_url, 0, strlen($blog_url)-1);
 

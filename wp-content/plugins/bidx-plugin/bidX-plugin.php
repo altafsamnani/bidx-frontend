@@ -53,7 +53,7 @@ if (!BidxCommon :: isWPInternalFunction ()) {
       'media',
       'member',
       'dashboard',
-      'support',
+      //'support',
       'search',
       'login',
       'register',

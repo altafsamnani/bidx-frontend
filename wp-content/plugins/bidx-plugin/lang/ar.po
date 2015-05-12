@@ -6004,9 +6004,9 @@ msgid "In which areas of expertise do you seek support?"
 msgstr "بأي مجالات الخبرة تسعى لايجاد الدعم؟"
 
 # 1117) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -322
-# _e("Role of entrepreneur in this business (max. 30 characters)","bidxplugin");
+# _e("Please specify the areas in which you seek support (max. 300 characters)","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Please specify for your business (max. 300 characters)"
+msgid "Please specify the areas in which you seek support (max. 300 characters)"
 msgstr "لماذا لمشروعك؟ (بحد أقصى ٣٠٠ حرفا)"
 
 # 1127) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -359

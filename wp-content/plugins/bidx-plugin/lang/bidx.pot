@@ -7532,9 +7532,9 @@ msgstr ""
 
 
 #1160) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -358
-# _e("Please specify for your business (max. 300 characters)","bidxplugin");
+# _e("Please specify the areas in which you seek support (max. 300 characters)","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Please specify for your business (max. 300 characters)"
+msgid "Please specify the areas in which you seek support (max. 300 characters)"
 msgstr ""
 
 

@@ -982,9 +982,9 @@ msgid "In which areas of expertise do you seek support?"
 msgstr "¿En qué áreas de especialidad necesita apoyo?"
 
 # 162) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -358
-# _e("Please specify for your business (max. 300 characters)","bidxplugin");
+# _e("Please specify the areas in which you seek support (max. 300 characters)","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Please specify for your business (max. 300 characters)"
+msgid "Please specify the areas in which you seek support (max. 300 characters)"
 msgstr ""
 
 # 188) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -371

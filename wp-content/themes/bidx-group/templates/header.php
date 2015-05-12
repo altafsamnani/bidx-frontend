@@ -19,6 +19,9 @@
     {
         $hasRole = true;
     }
+
+    $option_logo_alignment  =   get_option( 'logo_alignment' );
+    $option_logo_alignment  =   ( $option_logo_alignment )  ? $option_logo_alignment : BIDX_LOGO_ALIGNMENT;
 ?>
 
     <div class="bg-primary-darker navbar navbar-fixed-top">
@@ -46,9 +49,9 @@
 <?php
                     // Default logo position
                     $logo_alignment = 'logo-left';
-                    $mobile_logo = false;
-                    if ( get_option( 'logo_alignment' ) === 'middle' ) { $logo_alignment = 'logo-centered'; }
-                    if ( get_option( 'logo_alignment' ) === 'right' )  { $logo_alignment = 'logo-right';    }
+                    $mobile_logo    = false;
+                    if ( $option_logo_alignment === 'middle' ) { $logo_alignment = 'logo-centered'; }
+                    if ( $option_logo_alignment === 'right' )  { $logo_alignment = 'logo-right';    }
 
                     // Check for mobile logo
                     if ( get_theme_mod( 'mobile_logo_selector' ) ) { $mobile_logo = true; }
@@ -93,9 +96,13 @@
                         }
 
                         // Add slogan and start here button if logo alignment is left or right
-                        if ( get_option( 'logo_alignment' ) === 'left' || get_option( 'logo_alignment' ) === 'right' )
+
+                        if ( $option_logo_alignment === 'left' || $option_logo_alignment === 'right' )
                         {
-                            $kickoff_alignment = get_option( 'logo_alignment' ) === 'left' ? 'pull-right' : 'pull-left';
+
+                            $kickoff_alignment = ($option_logo_alignment === 'left') ? 'pull-right' : 'pull-left';
+
+
 ?>
                             <div class="kickoff <?php echo $kickoff_alignment; ?>">
 <?php
@@ -121,7 +128,7 @@
 <?php
                         }
 
-                        if ( get_option( 'logo_alignment' ) === 'middle' )
+                        if ( $option_logo_alignment === 'middle' )
                         {
                             if( $authenticated && !$hasRole )
                             {

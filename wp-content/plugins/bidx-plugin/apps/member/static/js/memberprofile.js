@@ -131,8 +131,8 @@
 
     function _accreditation ()
     {
-        var tagsArr                 =   []
-        ,   options                 =   {}
+        var options                 =   {}
+        ,   btnOptions              =   {}
         ,   investorProfile         =   bidx.utils.getValue(memberData, 'member.bidxInvestorProfile' )
         ,   investorProfileEntityId =   bidx.utils.getValue(investorProfile, 'bidxMeta.bidxEntityId' )
         ,   tagsData                =   bidx.utils.getValue(investorProfile, 'bidxMeta.tags' )
@@ -142,28 +142,35 @@
         if( investorProfileEntityId )
         {
             bidx.utils.log('Investor Profile EntityId: ', investorProfileEntityId);
-            tagsArr  =  [{
-                            label:      bidx.i18n.i('lblAccreditation')
-                        ,   attached:   'accredited'
-                        ,   detached:   'accreditation_refused'
-                        ,   class:      'btn-success'
-                        ,   visibility: 'ANYONE'
-                        },
-                        {
-                            label:      bidx.i18n.i('lblNoAccreditation')
-                        ,   attached:   'accreditation_refused'
-                        ,   detached:   'accredited'
-                        ,   class:      'btn-danger'
-                        }];
 
             options =   {
-                            style:      'button'
-                        ,   tags:       tagsArr
-                        ,   entityId:   investorProfileEntityId
+                            entityId:   investorProfileEntityId
                         ,   tagsData:   tagsData
                         };
 
             $tagging.tagging( options );
+
+
+            btnOptions =    {
+                                tags:   [{
+                                            label:      bidx.i18n.i('lblAccreditation')
+                                        ,   attached:   'accredited'
+                                        ,   detached:   'accreditation_refused'
+                                        ,   class:      'btn-success'
+                                        ,   visibility: 'ANYONE'
+                                        },
+                                        {
+                                            label:      bidx.i18n.i('lblNoAccreditation')
+                                        ,   attached:   'accreditation_refused'
+                                        ,   detached:   'accredited'
+                                        ,   class:      'btn-danger'
+                                        }]
+                            ,   class:  'taggingButton'
+                            };
+
+            $tagging.tagging( "constructButton", btnOptions );
+
+
         }
     }
 
