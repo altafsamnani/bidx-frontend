@@ -132,7 +132,7 @@ class Bidx_Group_Customizer {
 				)
 		);
 		$wp_customize->add_setting( 'brand-primary', array(
- 		        'default'           => '#3498db', //brand-primary
+ 		        'default'           => BIDX_BRAND_PRIMARY, //brand-primary
 		        'sanitize_callback' => 'sanitzie_hex_color',
 		        'capability'        => 'edit_theme_options',
  		        'type'              => 'option',
@@ -147,7 +147,7 @@ class Bidx_Group_Customizer {
 				) )
 		);
 		$wp_customize->add_setting( 'brand-secondary', array(
-		        'default'           => '#1abc9c', //brand-secondary
+		        'default'           => BIDX_BRAND_SECONDARY, //brand-secondary
 		        'sanitize_callback' => 'sanitize_hex_color',
 		        'capability'        => 'edit_theme_options',
 		        'type'              => 'option',
@@ -162,7 +162,7 @@ class Bidx_Group_Customizer {
 				) )
 		);
 		$wp_customize->add_setting( 'brand-background-color', array(
-		        'default'           => '#FFF',
+		        'default'           => BIDX_BACKGROUND_COLOR,
 		        'sanitize_callback' => 'sanitize_hex_color',
 		        'capability'        => 'edit_theme_options',
 		        'type'              => 'option',
@@ -207,7 +207,7 @@ class Bidx_Group_Customizer {
 		);
 
 		$wp_customize->add_setting( 'brand-full-pattern', array(
-				        'default'     => 'full',
+				        'default'     => BIDX_BRAND_FULL_PATTERN,
 						'capability'  => 'edit_theme_options',
 						'type'        => 'option',
 		));
@@ -272,7 +272,7 @@ class Bidx_Group_Customizer {
 
 		$wp_customize->add_setting( 'font_size',
 							array(
-						        'default'        => 'medium',
+						        'default'        => BIDX_FONT_SIZE,
 								'capability'     => 'edit_theme_options',
 								'type'           => 'option',
 						    ));
@@ -300,7 +300,7 @@ class Bidx_Group_Customizer {
 		// Text
 		$wp_customize->add_setting( 'text_font',
 									array(
-								        'default'      => 'Lato',
+								        'default'      => BIDX_TEXT_FONT,
 								        'capability'   => 'edit_theme_options',
         								'type'         => 'option',
 								    ));
@@ -348,7 +348,7 @@ class Bidx_Group_Customizer {
 		// Headings
 		$wp_customize->add_setting( 'headings_font',
 									array(
-								        'default'      => 'PT Sans',
+								        'default'      => BIDX_HEADINGS_FONT,
 								        'capability'   => 'edit_theme_options',
         								'type'         => 'option',
 								    ));
@@ -439,7 +439,7 @@ class Bidx_Group_Customizer {
 		// Menu
 		$wp_customize->add_setting( 'menu_font',
 									array(
-								        'default'      => 'Ubuntu Condensed',
+								        'default'      => BIDX_MENU_FONT,
 								        'capability'   => 'edit_theme_options',
         								'type'         => 'option',
 								    ));
@@ -548,7 +548,7 @@ class Bidx_Group_Customizer {
 		);
 		$wp_customize->add_setting( 'page_width_selector',
 				array(
-						'default'      => 'full'
+						'default'      => BIDX_PAGE_WIDTH_SELECTOR
 				));
 		$wp_customize->add_control(
 				new WP_Customize_Control(
@@ -839,15 +839,36 @@ class Bidx_Group_Customizer {
 	public static function set_page_attributes_for_less( )
 	{
 		$WPLessPlugin = WPLessPlugin::getInstance( );
+
+		$option_brand_primary  	=   get_option( 'brand-primary' );
+    	$option_brand_primary  	=   ( $option_brand_primary )  ? $option_brand_primary : BIDX_BRAND_PRIMARY;
+
+		$option_brand_secondary =   get_option( 'brand-secondary' );
+    	$option_brand_secondary =   ( $option_brand_secondary )  ? $option_brand_secondary : BIDX_BRAND_SECONDARY;
+
+		$option_brand_bg  		=   get_option( 'brand-background-color' );
+    	$option_brand_bg  		=   ( $option_brand_bg )  ? $option_brand_bg : BIDX_BACKGROUND_COLOR;
+
+    	$option_brand_bgimage   =   "'".get_option( 'brand-background-color-image' )."'";
+
+    	$option_text_font  		=   get_option( 'text_font' );
+    	$option_text_font  		=   ( $option_text_font )  ? $option_text_font : BIDX_TEXT_FONT;
+
+    	$option_headings_font  	=   get_option( 'headings_font' );
+    	$option_headings_font  	=   ( $option_headings_font )  ? $option_headings_font : BIDX_HEADINGS_FONT;
+
+    	$option_menu_font  		=   get_option( 'menu_font' );
+    	$option_menu_font  		=   ( $option_menu_font )  ? $option_menu_font : BIDX_MENU_FONT;
+
 		$variables = array (
-			'color-main' => get_option( 'brand-primary' ) ? get_option( 'brand-primary' ) : '#222222',
-			'brand-primary' => get_option( 'brand-primary' ) ? get_option( 'brand-primary' ) : '#222222',
-			'color-secondary' => get_option( 'brand-secondary' ) ? get_option( 'brand-secondary' ) : '#aaaaaa',
-			'color-background' => get_option( 'brand-background-color' ) ? get_option( 'brand-background-color' ) : '#fff',
-			'bg-image' => "'".get_option( 'brand-background-color-image' )."'",
-			'text-font' => get_option( 'text_font' ) ? get_option( 'text_font' ) : BIDX_TEXT_FONT,
-			'headings-font' => get_option( 'headings_font' ) ? get_option( 'headings_font' ) : BIDX_HEADINGS_FONT,
-			'menu-font' => get_option( 'menu_font' ) ? get_option( 'menu_font' ) : BIDX_MENU_FONT,
+			'color-main' 		=> 	$option_brand_primary, // '#222222'
+			'brand-primary' 	=>  $option_brand_primary, // '#222222'
+			'color-secondary' 	=>  $option_brand_secondary,  //'#aaaaaa'
+			'color-background' 	=> 	$option_brand_bg, // #fff
+			'bg-image' 			=> 	$option_brand_bgimage,
+			'text-font' 		=> 	$option_text_font,
+			'headings-font' 	=> 	$option_headings_font,
+			'menu-font' 		=>  $option_menu_font
 		);
 
 		$WPLessPlugin -> setVariables( $variables );

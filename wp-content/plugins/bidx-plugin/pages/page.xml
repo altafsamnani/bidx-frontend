@@ -19,15 +19,14 @@
             <name>homepage</name>
             <title>Home</title>
             <content>
-				&lt;div class="row"&gt;
-					&lt;div class="col-sm-8"&gt;
-	                [bidx app="group" view="list-groups"]
-	                [bidx app="group" view="last-members"]
-					&lt;/div&gt;
-					&lt;div class="col-sm-4"&gt;
-	                [bidx app="group" view="group-details"]
-					&lt;/div&gt;
-				&lt;/div&gt;
+            	Welcome to bidx Portals. &lt;br&gt;
+            	How to customize portal ? &lt;br&gt;
+            	&lt;ul&gt;
+				&lt;li&gt;To Change the frontpage content, please login to wordpress and visit Pages -- Home &lt;/li&gt;
+				&lt;li&gt; You can change the appearance, alignment, color, sider images, background images, please visit Appearance -- Customize or &lt;a href='/wp-admin/customize.php'&gt;Click here!&lt;/a&gt; &lt;/li&gt;
+				&lt;li&gt; You can add widgets to frontpage, please visit Appearance -- Widgets or &lt;a href='/wp-admin/widgets.php'&gt;Click here!&lt;/a&gt; &lt;/li&gt;
+			&lt;/ul&gt;&lt;br/&gt;
+			If you have queries, please contact our customer support at info@bidx.net or call us at +31 202 181 060, For more information please &lt;a href= 'https://bidx.net/contact' &gt;visit this page&lt;/a&gt;, we will try to reply back your query within next 48 hours, Thank you!
             </content>
             <update>false</update>
             <template>page-intro.php</template>

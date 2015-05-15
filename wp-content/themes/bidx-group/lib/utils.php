@@ -1,23 +1,4 @@
 <?php
-/* Default Theme Variables */
-if ( !defined( 'BIDX_LOGO_ALIGNMENT' ) ) {
-  define( 'BIDX_LOGO_ALIGNMENT', 'left' );
-}
-if ( !defined( 'BIDX_SIDEBAR_ALIGNMENT' ) ) {
-  define( 'BIDX_SIDEBAR_ALIGNMENT', 'right' );
-}
-if ( !defined( 'BIDX_TEXT_FONT') ) {
-  define( 'BIDX_TEXT_FONT', 'Lato' );
-}
-if ( !defined( 'BIDX_HEADINGS_FONT') ) {
-  define( 'BIDX_HEADINGS_FONT', 'Lato' );
-}
-if ( !defined( 'BIDX_MENU_FONT') ) {
-  define( 'BIDX_MENU_FONT', 'Lato' );
-}
-
-
-
 /**
  * Show an admin notice if .htaccess isn't writable
  */

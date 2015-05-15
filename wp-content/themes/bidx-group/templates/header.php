@@ -22,6 +22,9 @@
 
     $option_logo_alignment  =   get_option( 'logo_alignment' );
     $option_logo_alignment  =   ( $option_logo_alignment )  ? $option_logo_alignment : BIDX_LOGO_ALIGNMENT;
+
+    $option_page_width_sel  =   get_option( 'page_width_selector' );
+    $option_page_width_sel  =   ( $option_page_width_sel )  ? $option_page_width_sel : BIDX_PAGE_WIDTH_SELECTOR;
 ?>
 
     <div class="bg-primary-darker navbar navbar-fixed-top">
@@ -155,7 +158,7 @@
 
     get_template_part('templates/header-top-navbar');
 
-        if ( get_theme_mod( 'page_width_selector' ) !== 'full' ) :
+        if ( $option_page_width_sel !== 'full' ) :
 ?>
             <div class="container">
 <?php
@@ -163,7 +166,7 @@
 ?>
         <nav class="hidden-xs nav-main<?php echo $invertedMenu; ?>" role="navigation">
 <?php
-            if ( get_theme_mod( 'page_width_selector' ) === 'full' ) :
+            if ( $option_page_width_sel === 'full' ) :
 ?>
                 <div class="container">
 <?php
@@ -195,7 +198,7 @@
 <?php
             }
 
-            if ( get_theme_mod( 'page_width_selector' ) === 'full' ) :
+            if ( $option_page_width_sel === 'full' ) :
 ?>
                 </div>
 <?php
@@ -204,7 +207,7 @@
 
         </nav>
 <?php
-        if ( get_theme_mod( 'page_width_selector' ) !== 'full' ) :
+        if ( $option_page_width_sel !== 'full' ) :
 ?>
             </div>
 <?php
