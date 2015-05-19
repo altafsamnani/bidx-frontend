@@ -9,8 +9,6 @@
     ,   $editForm                           = $views.filter( ".viewEdit" ).find( "form" )
     ,   $snippets                           = $element.find( ".snippets" )
 
-    ,   $tagging                            = $( ".tagging")
-
     ,   $languageList                       = $editForm.find( ".languageList" )
     ,   $inputAddLanguage                   = $editForm.find( "input[name='addLanguage']" )
 
@@ -133,23 +131,49 @@
     {
         var options                 =   {}
         ,   btnOptions              =   {}
+        ,   labelOptions            =   {}
         ,   investorProfile         =   bidx.utils.getValue(memberData, 'member.bidxInvestorProfile' )
         ,   investorProfileEntityId =   bidx.utils.getValue(investorProfile, 'bidxMeta.bidxEntityId' )
         ,   tagsData                =   bidx.utils.getValue(investorProfile, 'bidxMeta.tags' )
+        ,   $tagging                =   $( ".tagging")
         ;
 
         /* Render Accreditation Button for Investor*/
         if( investorProfileEntityId )
         {
-            bidx.utils.log('Investor Profile EntityId: ', investorProfileEntityId);
-
             options =   {
                             entityId:   investorProfileEntityId
                         ,   tagsData:   tagsData
                         };
 
+            bidx.utils.log('Investor Profile taggingOptions: ', options);
+
             $tagging.tagging( options );
 
+            labelOptions =  {
+                                tags:   [{
+                                            label:      bidx.i18n.i('lblPendingAccreditation')
+                                        ,   status:     'pending'
+                                        ,   iconClass:  'fa-bookmark-o'
+                                        ,   class:      'accr-Pending'
+                                        ,   default:    true
+                                        },
+                                        {
+                                            label:      bidx.i18n.i('lblAccreditation')
+                                        ,   status:     'accredited'
+                                        ,   iconClass:  'fa-bookmark'
+                                        ,   class:      'accr-Accepted'
+                                        },
+                                        {
+                                            label:      bidx.i18n.i('lblNoAccreditation')
+                                        ,   status:     'accreditation_refused'
+                                        ,   iconClass:   'fa-ban'
+                                        ,   class:      'accr-Refused'
+                                        }]
+                            ,   class:  'taggingLabel'
+                            };
+
+            $tagging.tagging( "constructLabel", labelOptions );
 
             btnOptions =    {
                                 tags:   [{
@@ -168,9 +192,9 @@
                             ,   class:  'taggingButton'
                             };
 
+            bidx.utils.log('Investor Profile constructButton: ', btnOptions);
+
             $tagging.tagging( "constructButton", btnOptions );
-
-
         }
     }
 
