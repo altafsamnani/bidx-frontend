@@ -6,22 +6,33 @@ if ($Knews_plugin) {
 
 	if (! $Knews_plugin->initialized) $Knews_plugin->init();
 
-	add_filter( 'excerpt_length', 'knews_excerpt_length', 999 );
-
 	require_once( KNEWS_DIR . '/includes/knews_util.php');
 
 	$ajaxid = $Knews_plugin->get_safe('ajaxid', 0, 'int');
 	$type = $Knews_plugin->get_safe('type', 'post');
 	$ajaxlang = $Knews_plugin->get_safe('lang', 'en');
+	$template_id = $Knews_plugin->get_safe('tempid', 'unknown');
 
-	function get_post_knews ($reply, $id, $type, $lang) {
+	function knews_custom_excerpt_length_fn ($length) {
+		
+		global $Knews_plugin, $knewsOptions;
+		
+		$length = $knewsOptions['excerpt_length'];
+		$length = apply_filters( 'knews_excerpt_length', $length);
+
+		$template_id = $Knews_plugin->get_safe('tempid', 'unknown');
+		return apply_filters( 'knews_excerpt_length_' . $template_id, $length );
+	}
+	add_filter( 'excerpt_length', 'knews_custom_excerpt_length_fn', 1, 999 );
+
+	function get_post_knews ($reply, $id, $type, $lang, $template_id = 'unknown') {
 		
 		if (is_array($reply) && isset($reply['skip'])) return $reply;
 		
 		global $post, $Knews_plugin, $knewsOptions;
 		
+		$template_id = $Knews_plugin->get_safe('tempid', $template_id);
 		$post = get_post($id);
-		
 		$permalink = get_permalink();
 
 		if (KNEWS_MULTILANGUAGE && $knewsOptions['multilanguage_knews']=='qt' && function_exists('qtrans_convertURL')) {
@@ -42,9 +53,9 @@ if ($Knews_plugin) {
 		$content = knews_iterative_extract_code('<script', '</script>', $content, true);
 		$content = knews_iterative_extract_code('<fb:like', '</fb:like>', $content, true);
 		$content = str_replace(']]>', ']]>', $content);
-		$content = strip_tags($content);
+			$content = strip_tags($content, $knewsOptions['allowed_content_tags']);
 
-		if ($excerpt=='') $excerpt = $content;
+			if ($excerpt=='') $excerpt = strip_tags($content);
 
 		$words = explode(' ', $content, $excerpt_length + 1);
 		if (count($words) > $excerpt_length) {
@@ -52,14 +63,17 @@ if ($Knews_plugin) {
 			//array_push($words, '[...]');
 			$excerpt = implode(' ', $words) . '...';
 		}
-		$content = nl2br($content);
+			//$content = nl2br($content);
 
+		/*
 		$words = explode(' ', $excerpt, $excerpt_length + 1);
 		if (count($words) > $excerpt_length) {
 			array_pop($words);
 			//array_push($words, '[...]');
 			$excerpt = implode(' ', $words) . '...';
 		}
+		*/
+		
 		$featimg = '';
 		if ($Knews_plugin->im_pro()) {
 			if (has_post_thumbnail( $post->ID ) ) {
@@ -67,13 +81,13 @@ if ($Knews_plugin) {
 			}
 		}
 
-		return array('title' => get_the_title(), 'excerpt' => $excerpt, 'content' => $content, 'permalink' => $permalink, 'image' => $featimg);
+		return apply_filters( 'knews_get_post_' . $template_id, array('the_title' => get_the_title(), 'the_excerpt' => $excerpt, 'the_content' => $content, 'the_permalink' => $permalink, 'image' => $featimg), $post->ID );
 
 	}
 
 	if ($ajaxid != 0) {
 
-		$jsondata = apply_filters('knews_get_post', array(), $ajaxid, $type, $ajaxlang);
+		$jsondata = apply_filters('knews_get_post', array(), $ajaxid, $type, $ajaxlang, $template_id);
  		echo json_encode($jsondata);
 		
 	} else {
@@ -232,7 +246,7 @@ function select_post(n, lang, type) {
 				if (!$first) echo ' | ';
 				$first=false;
 				if ($lang==$l['language_code']) echo '<strong>';
-				echo '<a href="' . $url_base . '?action=knewsSelPost&lang=' . $l['language_code'] . '&type=' . $type  . '&paged=' . $paged . '">' . $l['native_name'] . '</a>';
+				echo '<a href="' . $url_base . '?action=knewsSelPost&lang=' . $l['language_code'] . '&tempid=' . $template_id . '&type=' . $type  . '&paged=' . $paged . '">' . $l['native_name'] . '</a>';
 				if ($lang==$l['language_code']) echo '</strong>';
 			}
 			echo '</p>';
@@ -241,8 +255,24 @@ function select_post(n, lang, type) {
 		
 		//Posts / Pages
 		echo '<div class="pestanyes">';
-		echo (($type=='post') ? '<a class="on"' : '<a') . ' href="' . $url_base . '?action=knewsSelPost&type=post&lang=' . $lang . '">' . __('Posts','knews') . '</a>';
-		echo (($type=='page') ? '<a class="on"' : '<a') . ' href="' . $url_base . '?action=knewsSelPost&type=page&lang=' . $lang . '">' . __('Pages','knews') . '</a>';
+
+		$post_types = array('post'=>array('name'=>'post', 'caption'=>'Posts'),'page'=>array('name'=>'page', 'caption'=>'Pages'));
+		$post_types = apply_filters( 'knews_post_types_' . $template_id, $post_types );
+		if ($Knews_plugin->im_pro()) {
+			$all_types = apply_filters('knews_get_cpt', $post_types );
+		}
+		//print_r($all_types);
+		if (!in_array($type, array_keys($all_types))) $type = $post_types[0]['name'];
+
+		foreach (array_keys($post_types) as $pt) {
+			//print_r($post_types);
+			$tab_caption = $pt;
+			if (isset($post_types[$pt]['caption'])) $tab_caption = $post_types[$pt]['caption'];
+			echo (($type==$pt) ? '<a class="on"' : '<a') . ' href="' . $url_base . '?action=knewsSelPost&type=' . $pt . '&tempid=' . $template_id . '&lang=' . $lang . '">' . __($tab_caption, 'knews') . '</a>';
+		}
+		// echo (($type=='post') ? '<a class="on"' : '<a') . ' href="' . $url_base . '?action=knewsSelPost&type=post&lang=' . $lang . '">' . __('Posts','knews') . '</a>';
+		// echo (($type=='page') ? '<a class="on"' : '<a') . ' href="' . $url_base . '?action=knewsSelPost&type=page&lang=' . $lang . '">' . __('Pages','knews') . '</a>';
+
 		echo '</div>';
 		
 		echo '<div class="filters">';
@@ -261,6 +291,7 @@ function select_post(n, lang, type) {
 				echo '<form action="' . $url_base . '" method="get">';
 				echo '<input type="hidden" name="lang" value="' . $lang . '">';
 				echo '<input type="hidden" name="type" value="' . $type . '">';
+				echo '<input type="hidden" name="tempid" value="' . $template_id . '">';
 				echo '<input type="hidden" name="action" value="knewsSelPost">';
 				echo '<select name="cat" id="cat">';
 				echo '<option value="0">' . __('All categories','knews') . '</option>';
@@ -278,6 +309,7 @@ function select_post(n, lang, type) {
 		echo '<form action="' . $url_base . '" method="get">';
 		echo '<input type="hidden" name="lang" value="' . $lang . '">';
 		echo '<input type="hidden" name="type" value="' . $type . '">';
+		echo '<input type="hidden" name="tempid" value="' . $template_id . '">';
 		echo '<input type="hidden" name="action" value="knewsSelPost">';
 		echo '<input type="text" name="s" value="" class="texte">';
 		echo '<input type="submit" value="' . __('Search','knews') . '" class="button" />';
@@ -290,7 +322,7 @@ function select_post(n, lang, type) {
 		}
 		add_filter('excerpt_more', 'new_excerpt_more');*/
 	
-		$myposts = apply_filters ('knews_posts_preview', array(), $lang, $type, $cat, $s, $paged, 'published', 10);
+		$myposts = apply_filters ('knews_posts_preview', array(), $lang, $type, $cat, $s, $paged, 'publish', 10);
 	
 		foreach($myposts as $p) {
 			if (is_array($p) && isset($p['ID'])) {
@@ -301,7 +333,7 @@ function select_post(n, lang, type) {
 		//global $wp_query; 
 		if (isset($myposts['found_posts'])) {
 	echo '<div class="tablenav bottom">';
-			knews_pagination($paged, ceil($myposts['found_posts']/ 10), $myposts['found_posts'], $url_base . '?action=knewsSelPost&lang=' . $lang . '&type=' . $type  . '&cat=' . $cat . '&orderbt=' . $orderbt . '&order=' . $order);
+			knews_pagination($paged, ceil($myposts['found_posts']/ 10), $myposts['found_posts'], $url_base . '?action=knewsSelPost&lang=' . $lang . '&type=' . $type  . '&tempid=' . $template_id . '&cat=' . $cat . '&orderbt=' . $orderbt . '&order=' . $order);
 	echo '</div>';
 		}
 	?>

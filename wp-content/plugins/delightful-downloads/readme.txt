@@ -1,14 +1,14 @@
 === Delightful Downloads ===
 Contributors: A5hleyRich
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=95AQB5DP83XAU
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S6KBW2ZSVZ8RE
 Tags: download, manager, downloads, monitor, shortcode, delightful downloads, file, counter, tracking
-Requires at least: 3.9.1
-Tested up to: 3.9.1
-Stable tag: 1.4
+Requires at least: 4.1
+Tested up to: 4.1
+Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A super-awesome downloads manager for WordPress.
+A super-awesome downloads manager and statistics tracker for WordPress.
 
 == Description ==
 
@@ -16,15 +16,20 @@ Delightful Downloads is a super-awesome downloads manager for WordPress that all
 
 **Features**
 
-* File upload via the WordPress admin area.
+* File upload via the WordPress admin area. Absolute file paths and remote file URLs are supported via manual entry.
+* Categorise and tag downloads.
 * Shortcodes to display download links, buttons and download information within posts, pages and widget areas.
-* Shortcode to list downloads and customise output via attributes.
+* Shortcode to list downloads, optionally filtered by categories and tags. Order by download count, file size, date, title and random.
 * Editor button to automatically generate shortcodes.
-* Download statistics tracked within the WordPress dashboard.
+* Download statistics tracked within the WordPress dashboard area. Specify a grace period so that multiple log entries are not triggered by the same user (more accurate statistics).
+* Automatically delete logs older than a specified number of days.
 * Blocks users from accessing files directly.
 * Block bots from downloading files.
-* Member only downloads with page redirect for non-logged in users.
+* Members only downloads with page redirect for non-logged in users.
+* Password protected files.
+* Open in Browser - Allow files such as PDFs and movies to open directly within the browser window and still track download statistics.
 * Various button styles included with the ability to add custom buttons.
+* Built in caching for excellent performance.
 * Developer friendly.
 * Localisation support.
 
@@ -36,6 +41,7 @@ Thanks to all of the WP-Translations Team Members.
 * Deutsch (German) - [Connie Müller-Gödecke](http://www.webdeerns.de),
 * Italiano (Italian),
 * Русский (Russian) - dobrodukh,
+* Svenska (Swedish) - [Björn Granberg](http://maskinmedia.se/)
 
 Don't see yours yet? Join our community and make it happen! [WP-Translations.org](http://wp-translations.org)
 
@@ -46,6 +52,10 @@ The Delightful Downloads documentation can be found [here](http://delightfulwp.c
 **Requirements**
 
 To add and manage downloads via the WordPress Administration screens, you must have a [modern web browser](http://browsehappy.com/ "Browse Happy") with JavaScript enabled.
+
+**GitHub**
+
+If you would like to contribute to the plugin, you can do so on [GitHub](https://github.com/A5hleyRich/Delightful-Downloads).
 
 == Installation ==
 
@@ -62,14 +72,44 @@ Please refer to the [FAQ](http://delightfulwp.com/delightful-downloads/faq/ "Del
 
 == Screenshots ==
 
-1. Downloads overview screen.
-2. Add new download screen.
-3. Logs overview screen.
-4. Shortcode generator.
-5. Example shortcodes.
-6. Settings screen.
+1. Downloads overview screen
+2. Add new download screen - upload file
+3. Add new download screen - existing file
+4. Edit download screen
+5. Logs overview screen
+6. Shortcode generator
+7. Example shortcodes
+8. Settings screen
 
 == Changelog ==
+
+= 1.5.2 =
+
+* Enhancement: New shortcode generator window.
+* Enhancement: The front-end CSS is now only loaded when the [ddownload] shortcode is detected.
+* Enhancement: Langauges updated.
+* Bug Fix: Dramatic performance increase within the WordPress admin area.
+* Bug Fix: Upgrades no longer fire on plugin activation.
+
+= 1.5.1 =
+
+* Bug Fix: Missing closing tag on the _Add/Edit Download_ Screen.
+* Bug Fix: Display of popular downloads on some browsers.
+* Bug Fix: Modal windows not closing in Opera.
+
+= 1.5 =
+
+* New: Password protected downloads.
+* New: Export logs to CSV file.
+* New: Import/Export plugin settings.
+* New: The _Open in Browser_ option has been added, which allows files to open directly in the browser window.
+* New: The _Folder Protection_ option has been added, which allow you to turn on/off the direct access of upload files.
+* New: Swedish translation.
+* Enhancement: The _Members Only_ option can now be set on a per-download basis.
+* Enhancement: Improved the _Add/Edit Download_ screen.
+* Enhancement: Improved the _Download Settings_ screen.
+* Enhancement: Improved the _All Downloads_ screen to show the _Members Only_ and _Open in Browser_ columns.
+* Bug Fix: The dashboard widget no longer breaks the widget layout, when a download has been removed.
 
 = 1.4 =
 
@@ -234,6 +274,20 @@ Please refer to the [FAQ](http://delightfulwp.com/delightful-downloads/faq/ "Del
 * Initial stable plugin release.
 
 == Upgrade Notice ==
+
+= 1.5.2 =
+
+* Bug fixes.
+* Compatibility with WordPress 4.0.
+
+= 1.5.1 =
+
+* Bug fixes.
+
+= 1.5 =
+
+* Bug fixes.
+* General improvements.
 
 = 1.4 =
 

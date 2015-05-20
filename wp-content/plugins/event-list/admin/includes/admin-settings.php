@@ -28,19 +28,26 @@ class EL_Admin_Settings {
 
 	public function show_settings () {
 		if(!current_user_can('manage_options')) {
-			wp_die(__('You do not have sufficient permissions to access this page.'));
+			wp_die(__('You do not have sufficient permissions to access this page.','event-list'));
 		}
 		$out = '';
+		// check for changed settings
 		if(isset($_GET['settings-updated'])) {
+			// show "settings saved" message
 			$out .= '<div id="message" class="updated">
-				<p><strong>'.__('Settings saved.').'</strong></p>
+				<p><strong>'.__('Settings saved.','event-list').'</strong></p>
 			</div>';
+			// check feed rewrite status and update it if required
+			if('feed' == $_GET['tab']) {
+				require_once(EL_PATH.'includes/feed.php');
+				EL_Feed::get_instance()->update_feed_rewrite_status();
+			}
 		}
 
 		// normal output
 		$out.= '
 				<div class="wrap">
-				<div id="icon-edit-pages" class="icon32"><br /></div><h2>Event List Settings</h2>';
+				<div id="icon-edit-pages" class="icon32"><br /></div><h2>'.__('Event List Settings','event-list').'</h2>';
 		if(!isset($_GET['tab'])) {
 			$_GET['tab'] = 'general';
 		}

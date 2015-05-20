@@ -19,6 +19,12 @@
     {
         $hasRole = true;
     }
+
+    $option_logo_alignment  =   get_option( 'logo_alignment' );
+    $option_logo_alignment  =   ( $option_logo_alignment )  ? $option_logo_alignment : BIDX_LOGO_ALIGNMENT;
+
+    $option_page_width_sel  =   get_option( 'page_width_selector' );
+    $option_page_width_sel  =   ( $option_page_width_sel )  ? $option_page_width_sel : BIDX_PAGE_WIDTH_SELECTOR;
 ?>
 
     <div class="bg-primary-darker navbar navbar-fixed-top">
@@ -46,9 +52,9 @@
 <?php
                     // Default logo position
                     $logo_alignment = 'logo-left';
-                    $mobile_logo = false;
-                    if ( get_option( 'logo_alignment' ) === 'middle' ) { $logo_alignment = 'logo-centered'; }
-                    if ( get_option( 'logo_alignment' ) === 'right' )  { $logo_alignment = 'logo-right';    }
+                    $mobile_logo    = false;
+                    if ( $option_logo_alignment === 'middle' ) { $logo_alignment = 'logo-centered'; }
+                    if ( $option_logo_alignment === 'right' )  { $logo_alignment = 'logo-right';    }
 
                     // Check for mobile logo
                     if ( get_theme_mod( 'mobile_logo_selector' ) ) { $mobile_logo = true; }
@@ -93,9 +99,13 @@
                         }
 
                         // Add slogan and start here button if logo alignment is left or right
-                        if ( get_option( 'logo_alignment' ) === 'left' || get_option( 'logo_alignment' ) === 'right' )
+
+                        if ( $option_logo_alignment === 'left' || $option_logo_alignment === 'right' )
                         {
-                            $kickoff_alignment = get_option( 'logo_alignment' ) === 'left' ? 'pull-right' : 'pull-left';
+
+                            $kickoff_alignment = ($option_logo_alignment === 'left') ? 'pull-right' : 'pull-left';
+
+
 ?>
                             <div class="kickoff <?php echo $kickoff_alignment; ?>">
 <?php
@@ -121,7 +131,7 @@
 <?php
                         }
 
-                        if ( get_option( 'logo_alignment' ) === 'middle' )
+                        if ( $option_logo_alignment === 'middle' )
                         {
                             if( $authenticated && !$hasRole )
                             {
@@ -148,7 +158,7 @@
 
     get_template_part('templates/header-top-navbar');
 
-        if ( get_theme_mod( 'page_width_selector' ) !== 'full' ) :
+        if ( $option_page_width_sel !== 'full' ) :
 ?>
             <div class="container">
 <?php
@@ -156,7 +166,7 @@
 ?>
         <nav class="hidden-xs nav-main<?php echo $invertedMenu; ?>" role="navigation">
 <?php
-            if ( get_theme_mod( 'page_width_selector' ) === 'full' ) :
+            if ( $option_page_width_sel === 'full' ) :
 ?>
                 <div class="container">
 <?php
@@ -188,7 +198,7 @@
 <?php
             }
 
-            if ( get_theme_mod( 'page_width_selector' ) === 'full' ) :
+            if ( $option_page_width_sel === 'full' ) :
 ?>
                 </div>
 <?php
@@ -197,7 +207,7 @@
 
         </nav>
 <?php
-        if ( get_theme_mod( 'page_width_selector' ) !== 'full' ) :
+        if ( $option_page_width_sel !== 'full' ) :
 ?>
             </div>
 <?php

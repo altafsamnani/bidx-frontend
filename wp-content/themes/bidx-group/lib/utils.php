@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Show an admin notice if .htaccess isn't writable
  */

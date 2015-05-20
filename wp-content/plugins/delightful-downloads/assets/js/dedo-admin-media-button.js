@@ -1,131 +1,117 @@
-jQuery( document ).ready( function( $ ){
+jQuery( document ).ready( function( $ ) {
 
-	// Modal window functionality	
-	(function() {
-		// Display download modal
-		$( '#dedo-media-button' ).on( 'click', function( e ) {
-			$( '#dedo-download-modal' ).show();
-			
-			e.preventDefault();
-		} );
-		
-		// Close download modal
-		$( '#dedo-download-modal-close' ).on( 'click', function( e ) {
-			$( '#dedo-download-modal' ).hide();
-			
-			e.preventDefault();
-		} );
-		
-		$( '.media-modal-backdrop' ).on( 'click', function( e ) {
-			$( '#dedo-download-modal' ).hide();
+	DEDO_Admin_Shortcode_Generator = {
 
-			e.preventDefault();
-		} );
-	})();
+		// Cache jQuery objects
+		$cached: {
+			download_dropdown: 	$( '#dedo-select-download-dropdown' ),
+			style_dropdown: 	$( '#dedo-select-style-dropdown' ),
+			button_dropdown: 	$( '#dedo-select-button-dropdown' ),
+			button_container: 	$( '#dedo-button-dropdown-container' ),
+			count_button: 		$( '#dedo-download-count' ),
+			file_size_button: 	$( '#dedo-file-size' )
+		},
 
-	// Search functionality
-	(function() {
-		// Search list
-		$( '#dedo-download-search' ).on( 'keyup', function() {
-			var searchField = $( this ).val();
+		// Store current download id
+		download: 0,
 
-			// Loop through download items
-			$( '.dedo-download-list tbody tr' ).each( function() {
-				if( $( this ).children( '.title_column' ).text().search( new RegExp( searchField, 'i' ) ) < 0 ) {
-					$( this ).fadeOut( 'fast' );
+		// Init object
+		init: function() {
+			// Set download
+			this.download = this.$cached.download_dropdown.val();
+
+			// Chosen dropdowns
+			this.$cached.download_dropdown.chosen( { disable_search_threshold: 10, width: "100%" } );
+			this.$cached.style_dropdown.chosen( { disable_search_threshold: 10, width: "100%" } );
+			this.$cached.button_dropdown.chosen( { disable_search_threshold: 10, width: "100%" } );
+
+			// Modules
+			this.updateDownload();
+			this.hideButtons();
+			this.insert();
+			this.download_count();
+			this.file_size();	
+		},
+
+		// Update download on dropdown change
+		updateDownload: function() {
+			var self = this;
+
+			this.$cached.download_dropdown.on( 'change', function() {
+				self.download = $( this ).val();
+			} );
+		},
+
+		// Hide buttons dropdown
+		hideButtons: function() {
+			var self = this;
+
+			this.$cached.style_dropdown.on( 'change', function() {
+				if ( 'link' == $( this ).val() || 'plain_text' == $( this ).val() ) {
+					self.$cached.button_container.hide();
+					self.$cached.button_dropdown.val( '' ).trigger( 'chosen:updated' );
 				}
 				else {
-					$( this ).fadeIn( 'fast' );
+					self.$cached.button_container.show();
 				}
 			} );
-		} );
+		},
 
-		// Show downloads if clear button is pressed
-		$( '#dedo-download-search' ).on( 'search', function() {
-			$( '.dedo-download-list tbody' ).children().fadeIn( 'fast' );
-		} );
-	})();
+		// Insert button
+		insert: function() {
+			var self = this;			
 
-	// Selectable table rows and details pane
-	(function() {
-		var download_id, download_title, download_count, download_size;
+			$( '#dedo-insert' ).on( 'click', function( e ) {
+				
+				var attrs = '';
 
-		var selectableOpts = {
-				selected: function( e, ui ) {
-					var selected = $( ui.selected );
-						
-						download_title = selected.children( '.title_column' ).text();
-						download_size = selected.data( 'size' );
-						download_count = selected.data( 'count' );
-						download_id = selected.data( 'id' );
-
-					$( '.download-details .meta .title strong' ).html( download_title );
-					$( '.download-details .meta .size' ).html( download_size );
-					$( '.download-details .meta .count span' ).html( download_count );					
-					
-					$( '.download-details' ).fadeIn( 300 );
+				// Add style
+				if ( '' !== self.$cached.style_dropdown.val() ) {
+					attrs += ' style="' + self.$cached.style_dropdown.val() + '"';
 				}
-			};
 
-		$( '.dedo-download-list tbody' ).selectable( selectableOpts );
+				// Add button
+				if ( '' !== self.$cached.button_dropdown.val() ) {
+					attrs += ' button="' + self.$cached.button_dropdown.val() + '"';
+				}
 
-		// Download insert button
-		$( '#dedo-download-button' ).on( 'click', function( e ) {
-			var download_text = $( '#dedo-download-text' ).val(),
-				download_style = $( '#dedo-download-style' ).val(),
-				download_button = $( '#dedo-download-color' ).val();
+				// Add text
+				if ( $( '#dedo-custom-text' ).val().length > 0 ) {
+					attrs += ' text="' + $( '#dedo-custom-text' ).val() + '"';
+				}
 
-			var attrs = '';
+				window.send_to_editor( '[ddownload id="' + self.download + '"' + attrs + ']' );
+				$( 'body' ).trigger( 'closeModal' );
 
-			// Add title
-			if( download_text.length > 0  ) {
-				attrs = ' text="' + download_text + '"';
-			}
-			
-			// Add style
-			if( download_style != 'dedo_default' ) {
-				attrs = attrs + ' style="' + download_style + '"';
-			}
+				e.preventDefault();
+			} );
+		},
 
-			// Add button style
-			if( download_button != 'dedo_default' ) {
-				attrs = attrs + ' button="' + download_button + '"';
-			}
-			
-			// Send to editor
-			window.send_to_editor( '[ddownload id="' + download_id + '"' + attrs +']' );
-			e.preventDefault();
-			
-			// Hide modal
-			$( '#dedo-download-modal' ).hide();
-		} );
+		// Download count button
+		download_count: function() {
+			var self = this;			
 
-		// Filesize button
-		$( '#dedo-filesize-button' ).on( 'click', function( e ) {
-			window.send_to_editor( '[ddownload_size id="' + download_id + '"]' );
-			e.preventDefault();
-			
-			$( '#dedo-download-modal' ).hide();
-		} );
+			this.$cached.count_button.on( 'click', function( e ) {
+				window.send_to_editor( '[ddownload_count id="' + self.download + '"]' );
+				$( 'body' ).trigger( 'closeModal' );
 
-		// File count button
-		$( '#dedo-count-button' ).on( 'click', function( e ) {
-			window.send_to_editor( '[ddownload_count id="' + download_id + '"]' );
-			e.preventDefault();
-			
-			$( '#dedo-download-modal' ).hide();
-		} );
+				e.preventDefault();
+			} );
+		},
 
-		// Hide/show color select on change
-		$( '#dedo-download-style' ).on( 'change', function() {
-			if( $( '#dedo-download-style' ).val() == 'button' ) {
-				$( '.dedo-download-color-container' ).slideDown();
-			}
-			else {
-				$( '.dedo-download-color-container' ).slideUp();	
-			}
-		} );
+		// File size button
+		file_size: function() {
+			var self = this;			
 
-	})();
+			this.$cached.file_size_button.on( 'click', function( e ) {
+				window.send_to_editor( '[ddownload_filesize id="' + self.download + '"]' );
+				$( 'body' ).trigger( 'closeModal' );
+
+				e.preventDefault();
+			} );
+		}
+	}
+
+	DEDO_Admin_Shortcode_Generator.init();
 
 } );

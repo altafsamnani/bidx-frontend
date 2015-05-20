@@ -154,9 +154,11 @@ body.doing_drag tr.droppable:hover {
 img.editable:hover {
 	outline:1px dashed #000000;
 }
+html {
+	background:#fff;
+}
 body {
 	margin-bottom:100px;
-	background:#fff;
 }
 
 /* preview without css*/

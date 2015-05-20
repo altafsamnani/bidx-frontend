@@ -5,9 +5,9 @@ if ($Knews_plugin) {
 
 	if (! $Knews_plugin->initialized) $Knews_plugin->init();
 	
-	//burakali patch #1
-	ob_clean();
-	ob_start();
+	//burakali patch inspired
+	if (ob_get_contents()) ob_clean();
+	//ob_start();
 
 	$filename = $Knews_plugin->get_safe('file');
 	
@@ -26,8 +26,8 @@ if ($Knews_plugin) {
 			}
 			echo $file;
 
-			//burakali patch #2
-			echo ob_get_clean();
+			/*burakali patch #2
+			echo ob_get_clean();*/
 			
 			die();
 		}

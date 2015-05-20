@@ -106,7 +106,39 @@ jQuery(document).ready(function() {
 function enfocar_knews(que) {
 	setTimeout("jQuery('" + que + "').focus();", 100);
 }
+/* new newsletter */
+jQuery(document).ready(function() {
+	jQuery('form.new_newsletter').submit(function() {
+		if (jQuery('#new_news').val()=='') {
+			jQuery('#new_news').focus();
+			jQuery('html, body').animate({scrollTop: parseInt(jQuery('#new_news').offset().top)-100}, 1000);
+			return false;
+		}
+	});
+	jQuery('form.new_newsletter div.template a').click( function() {
+		jQuery('html, body').animate({scrollTop: parseInt(jQuery('input[name="newstype"]').offset().top, 10)-200}, 1000);
+	});
 
+	jQuery('form.new_newsletter input[name="template"]').change( function() {
+		//alert(jQuery('input[name="newstype"]')[0].offset().top);
+		jQuery('html, body').animate({scrollTop: parseInt(jQuery('input[name="newstype"]').offset().top, 10)-200}, 1000);
+	});
+	
+});
+
+/* manual news submit */
+jQuery(document).ready(function() {
+	jQuery('form#knewsFormSendManually').submit(function() {
+		if (!knews_checkmail ( jQuery('input[name="email"]', this).val() ) ) {
+			jQuery('input[name="email"]', this).focus();
+			return false;
+		}
+	});
+});
+
+function knews_checkmail(email) {
+	return /^[A-Za-z][A-Za-z0-9_\.-]*@[A-Za-z0-9_\.-]+\.[A-Za-z0-9_\.-]+[A-za-z]$/.test(email);
+}
 /* automation creation */
 jQuery(document).ready(function() {
 	jQuery('input[name="knews_get_cpt"]').click(function () {
@@ -150,6 +182,10 @@ jQuery(document).ready(function() {
 	});
 	jQuery('a.knews_alert_click').click(function() {
 		alert(jQuery(this).attr('title'));
+		return false;
+	});
+	jQuery('a.knews_blacklist').click(function() {
+		jQuery('div.knews_blacklist').toggle();
 		return false;
 	});
 });

@@ -10,11 +10,14 @@
     }
 
     $pagewidth = '';
-    if ( get_theme_mod( 'page_width_selector' ) === '1040' )
+    $option_page_width_sel  =   get_option( 'page_width_selector' );
+    $option_page_width_sel  =   ( $option_page_width_sel )  ? $option_page_width_sel : BIDX_PAGE_WIDTH_SELECTOR;
+
+    if ( $option_page_width_sel === '1040' )
     {
         $pagewidth = ' width-medium';
     }
-    if ( get_theme_mod( 'page_width_selector' ) === '940' )
+    if ( $option_page_width_sel === '940' )
     {
         $pagewidth = ' width-small';
     }
@@ -22,7 +25,10 @@
     if ( get_option( 'brand-background-color-image' ) )
     {
         // $addbgimage = 'style="background-image:url('. $bgimage .'); background-size: cover; background-position: center center; background-attachment:fixed; "';
-        if ( get_option( 'brand-full-pattern' ) === 'full' )
+        $option_brand_full_pattern  =   get_option( 'brand-full-pattern' );
+        $option_brand_full_pattern  =   ( $option_brand_full_pattern )  ? $option_brand_full_pattern : BIDX_BRAND_FULL_PATTERN;
+
+        if ( $option_brand_full_pattern === 'full' )
         {
             $custombg = ' bg-full';
         }

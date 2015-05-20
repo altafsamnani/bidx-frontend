@@ -11,13 +11,13 @@ function knews_list_items($element, $all_elements) {
 	return $reply;
 }
 
-function knews_print_mailinglists() {
+function knews_print_mailinglists($new_way=false) {
 	global $Knews_plugin, $wpdb;
 	
-	$order_by = $Knews_plugin->get_safe('orderby', 'orderlist');
-	$order = $Knews_plugin->get_safe('order', 'asc');
+	$order_by = $Knews_plugin->get_safe('orderby', 'orderlist'); if ($order_by != 'name') $order_by = "orderlist";
+	$order = $Knews_plugin->get_safe('order', 'asc'); if ($order != 'asc') $order = "desc";
 
-	$query = "SELECT id, name FROM " . KNEWS_LISTS . " ORDER BY " . $order_by . " " . $order;
+	$query = "SELECT id, name, auxiliary FROM " . KNEWS_LISTS . " ORDER BY " . $order_by . " " . $order;
 	$lists_name = $wpdb->get_results( $query );
 
 	//$col=count($lists_name)+1; 
@@ -34,7 +34,7 @@ function knews_print_mailinglists() {
 	} else {
 		echo '<table class="widefat" style="width:480px"><thead><tr><th class="manage-column column-cb check-column"><input type="checkbox"></th>';
 		knews_th_orderable(__('Name list','knews'),'name','asc','padding-right:60px');
-		echo '<th>&nbsp;</th></tr></thead><tbody><tr class="alt">';
+		echo '<th>&nbsp;</th></tr></thead><tbody>';
 	}
 	$alt=false;
 	foreach ($lists_name as $ln) {
@@ -46,16 +46,23 @@ function knews_print_mailinglists() {
 		$count2 = $wpdb->get_results( $query );
 
 		if (count($lists_name) < 9) {
-			if ($n != 0) {
-				echo '</tr><tr' . (($alt) ? ' class="alt"' : '') . '>';
+			if ($n != 0) echo '</tr>';
+			echo '<tr' . (($alt) ? ' class="alt"' : '') . '>';
 				if ($alt) {$alt=false;} else {$alt=true;}
-			}
 		} elseif ($n%3 == 0 ) {
-			echo '</tr><tr' . (($alt) ? ' class="alt"' : '') . '>';
+			if ($n != 0) echo '</tr>';
+			echo '<tr' . (($alt) ? ' class="alt"' : '') . '>';
 			if ($alt) {$alt=false;} else {$alt=true;}
 		}
 		$n++;
-		echo '<th class="check-column" style="padding:9px 0 4px 0;"><input type="checkbox" value="1" name="list_' . $ln->id . '" id="list_' . $ln->id . '" class="checklist"></td><td style="padding:7px 60px 0px 7px;">' . $ln->name . '</td><td><strong style="color:#25c500">' . $count[0]->HOW_MANY . '</strong> / ' . $count2[0]->HOW_MANY . '</td>';
+		
+		echo '<th class="check-column" style="padding:9px 0 4px 0;">';
+		if ($new_way) {
+			echo '<input type="checkbox" value="' . $ln->id . '" name="list[]" id="list_' . $ln->id . '" class="checklist">';
+		} else {
+			echo '<input type="checkbox" value="1" name="list_' . $ln->id . '" id="list_' . $ln->id . '" class="checklist">';
+		}
+		echo '</th><td style="padding:7px 60px 0px 7px;">' . (($ln->auxiliary==0) ? '<strong>' : '') . $ln->name . (($ln->auxiliary==0) ? '</strong>' : '') . '</td><td><strong style="color:#25c500">' . $count[0]->HOW_MANY . '</strong> / ' . ($count[0]->HOW_MANY + $count2[0]->HOW_MANY) . '</td>';
 	}
 
 	if (count($lists_name) > 8) {
@@ -71,7 +78,7 @@ function knews_print_mailinglists() {
 		knews_th_orderable(__('Name list','knews'),'name','asc','padding-right:60px');
 		echo '<th>&nbsp;</th><th>&nbsp;</th>';
 		knews_th_orderable(__('Name list','knews'),'name','asc','padding-right:60px');
-		echo '<th>&nbsp;</th></tr></tfoot><table>';
+		echo '<th>&nbsp;</th></tr></tfoot></table>';
 		//$col = ceil($col / 3);
 	} else {
 		echo '</tr>';
@@ -230,9 +237,10 @@ function knews_rgb2hex($code) {
 	}
 	return $code;
 }
-function knews_examine_template($folder, $templates_path, $templates_url, $popup=false) {
+function knews_examine_template($templateID, $template_path, $template_url, $popup=false, $mode='selection') {
+	global $Knews_plugin;
 	$xml_info = array (
-		'shortname' => $folder,
+		'shortname' => $templateID,
 		'fullname' => 'Not defined',
 		'version' => '1.0',
 		'url' => '',
@@ -240,6 +248,7 @@ function knews_examine_template($folder, $templates_path, $templates_url, $popup
 		'author' => 'Unknown',
 		'urlauthor' => '',
 		'minver' => '1.0.0',
+		'minverpro' => '1.0.0',
 		'onlypro' => 'no',
 		'description' => 'Not defined',
 		'desktop' => 'no',
@@ -247,7 +256,7 @@ function knews_examine_template($folder, $templates_path, $templates_url, $popup
 		'responsive' => 'no'
 	);
 
-	$xml = simplexml_load_file($templates_path . $folder . '/info.xml');
+	if (!$xml = @simplexml_load_file($template_path . '/info.xml')) return false;
 
 	foreach($xml->children() as $child) {
 		$xml_info[$child->getName()] = $child;
@@ -255,32 +264,48 @@ function knews_examine_template($folder, $templates_path, $templates_url, $popup
 	
 	if (!$popup || ($xml_info['responsive'] == 'yes' || $xml_info['mobile'] == 'yes')) { 
 ?>
-		<div style="padding:10px 10px 0 10px; float:left; width:250px; height:350px;" class="template">
+		<div style="padding:10px 10px 0 10px; float:left; width:250px; height:370px;" class="template">
 <?php
 		$selectable=false;
-		if (version_compare( KNEWS_VERSION, $xml_info['minver'] ) >= 0) {
+		if ($Knews_plugin->im_pro()) $xml_info['minver'] = $xml_info['minverpro'];
+		
+		echo '<div style="text-align:center">';
+		
+		if (version_compare( KNEWS_VERSION, $xml_info['minver'] ) >= 0 && $mode=='selection') {
 			if ($xml_info['onlypro'] != 'yes' || $Knews_plugin->im_pro()==true) {
 				$selectable=true;
 				
-				echo '<div style="text-align:center"><a href="#" onclick="'. (($popup) ? 'parent.parent.' : '') . 'jQuery(\'input\', '. (($popup) ? 'parent.parent.' : '') . 'jQuery(this).parent().parent()).attr(\'checked\', true); return false;" title="' . __('Select this template','knews') . '">';
+				echo '<a href="#" onclick="'. (($popup) ? 'parent.parent.' : '') . 'jQuery(\'input\', '. (($popup) ? 'parent.parent.' : '') . 'jQuery(this).parent().parent()).attr(\'checked\', true); return false;" title="' . __('Select this template','knews') . '">';
 			}
 		}
+		
+		if (is_file($template_path . '/thumbnail.png')) {
 ?>
-		<img src="<?php echo $templates_url . $folder; ?>/thumbnail.jpg" style="padding-right:20px;" />
-		<?php if ($selectable) echo '</a>'; ?></div>
+		<img src="<?php echo $template_url; ?>/thumbnail.png" style="padding-right:20px;" />
+<?php
+		} elseif (is_file($template_path . '/thumbnail.jpg')) {
+?>
+		<img src="<?php echo $template_url; ?>/thumbnail.jpg" style="padding-right:20px;" />
+<?php
+		} else {
+?>
+		<img src="<?php echo KNEWS_URL; ?>/images/thumbnail.png" style="padding-right:20px;" />
+<?php
+		}
+		if ($selectable) echo '</a>'; ?></div>
 		<div>
 			<h1 style="font-size:20px; padding:0 0 10px 0; margin:0">
 			<?php
-			if ($selectable) echo '<input type="radio" name="template" value="' . $folder . '" />';
+			if ($selectable) echo '<input type="radio" name="template" value="' . $templateID . '" />';
 
 			echo $xml_info['shortname'] . ' <span style="font-weight:normal">v' . $xml_info['version'] . '</span></h1>';
 			if (version_compare( KNEWS_VERSION, $xml_info['minver'] ) < 0) {
-				echo '<p style="color:#e00; font-weight:bold;">';
+				echo '<p style="color:#e00; font-weight:bold; margin:0;">';
 				echo sprintf(__('This template requires Knews version %s you must update Knews before use this template','knews'), $xml_info['minver'] . (($xml_info['onlypro'] == 'yes') ? ' Pro' : ''));
 				echo '</p>';
 			} else {
 				if ($xml_info['onlypro'] == 'yes' && !$Knews_plugin->im_pro()) {
-					echo '<p style="color:#e00; font-weight:bold;">';
+					echo '<p style="color:#e00; font-weight:bold; margin:0">';
 					echo sprintf( __('This template requires the professional version of Knews. You can get it %s here','knews'),'<a href="http://www.knewsplugin.com" target="_blank">');
 					echo '</a></p>';
 				}
@@ -297,12 +322,22 @@ function knews_examine_template($folder, $templates_path, $templates_url, $popup
 			$v=$xml_info['version'];
 			$v=substr($v, 0, strpos($v, '.'));
 			if ($v=='1') $v='';
+			if ($mode=='selection') {
 			?>
-			<input type="hidden" name="vp_<?php echo $folder; ?>" id="vp_<?php echo $folder; ?>" value="<?php echo $v; ?>" />
-			<input type="hidden" name="path_<?php echo $folder; ?>" id="path_<?php echo $folder; ?>" value="<?php echo $templates_path; ?>" />
-			<input type="hidden" name="url_<?php echo $folder; ?>" id="url_<?php echo $folder; ?>" value="<?php echo $templates_url; ?>" />
-			<input type="hidden" name="ver_<?php echo $folder; ?>" id="ver_<?php echo $folder; ?>" value="<?php echo $xml_info['version']; ?>" />
+			<input type="hidden" name="vp_<?php echo $templateID; ?>" id="vp_<?php echo $templateID; ?>" value="<?php echo $v; ?>" />
+			<input type="hidden" name="path_<?php echo $templateID; ?>" id="path_<?php echo $templateID; ?>" value="<?php echo $template_path; ?>" />
+			<input type="hidden" name="url_<?php echo $templateID; ?>" id="url_<?php echo $templateID; ?>" value="<?php echo $template_url; ?>" />
+			<input type="hidden" name="ver_<?php echo $templateID; ?>" id="ver_<?php echo $templateID; ?>" value="<?php echo $xml_info['version']; ?>" />
 			<p style="margin:0; padding:0; font-size:11px; color:#333"><?php echo $xml_info['description']; ?></p>
+			<?php
+			} elseif ($mode=='registration') {
+				$registration = get_option('knews_template_' . $templateID);
+			?>
+			<p style="margin:0.5em 0;">Email: <input type="text" name="registered_email_<?php echo $templateID; ?>" id="registered_email_<?php echo $templateID; ?>" value="<?php if (is_array($registration) && isset($registration['email'])) echo $registration['email'];?>" /></p>
+			<p style="margin:0.5em 0;">Serial: <input type="text" name="registered_serial_<?php echo $templateID; ?>" id="registered_email_<?php echo $templateID; ?>" value="<?php if (is_array($registration) && isset($registration['serial'])) echo $registration['serial'];?>" /></p>
+			<?php
+			}
+			?>
 		</div>
 	</div>
 <?php
@@ -314,33 +349,53 @@ function knews_examine_template($folder, $templates_path, $templates_url, $popup
 
 function knews_display_templates($popup=false) {
 	
-	global $knewsOptions;
-	
-	$wp_dirs = wp_upload_dir();
-	//$absolute_dir = substr($_SERVER['SCRIPT_FILENAME'], 0, strpos($_SERVER['SCRIPT_FILENAME'], 'wp-content'));
-	//$wp_dirs['basedir'] = substr($wp_dirs['basedir'], strpos($wp_dirs['basedir'], $absolute_dir));
 	$anytemplate=false;
+	$templates = knews_get_all_templates();
+
+	while ($template = current($templates) ){
+		if (knews_examine_template(key($templates), $template['folder'], $template['url'], $popup)) $anytemplate=true;
+		next($templates);
+	}
+	reset ($templates);
+	
+	if (!$anytemplate && $popup) echo '<p>' . _e('You dont have any mobile template!','knews') . '</p>';
+}
+
+function knews_get_all_templates() {
+
+	//Load the new plugin templates
+	$templates = apply_filters('knews_get_templates', array());
+
+	//Load the old custom /knewstemplates folder
+	$wp_dirs = wp_upload_dir();
 	if (is_dir($wp_dirs['basedir'] . '/knewstemplates')) {
 		chdir ($wp_dirs['basedir'] . '/knewstemplates');
 		$folders = scandir( '.' );
 		foreach ($folders as $folder) {
-			if ($folder != '..' && $folder != '.' && is_dir($folder) && is_file($wp_dirs['basedir'] . '/knewstemplates/' . $folder . '/info.xml') && is_file($wp_dirs['basedir'] . '/knewstemplates/' . $folder . '/template.html')) {
-				if (knews_examine_template($folder, $wp_dirs['basedir'] . '/knewstemplates/', $wp_dirs['baseurl'] . '/knewstemplates/', $popup)) $anytemplate=true;
+			if ($folder != '..' && $folder != '.' && is_dir($folder) && is_file($wp_dirs['basedir'] . '/knewstemplates/' . $folder . '/info.xml') && (is_file($wp_dirs['basedir'] . '/knewstemplates/' . $folder . '/template.html') || is_file($wp_dirs['basedir'] . '/knewstemplates/' . $folder . '/template.php')) ) {
+				
+				if (!isset($templates[$folder])) $templates[$folder] = array('folder' => $wp_dirs['basedir'] . '/knewstemplates/' . $folder, 'url' => $wp_dirs['baseurl'] . '/knewstemplates/' . $folder, 'type' => 'old-template');
 			}
 		}
 	}
 	
-	if (isset($knewsOptions['hide_templates']) && $anytemplate && $knewsOptions['hide_templates']=='1') return;
+	global $knewsOptions;
 	
+	if (isset($knewsOptions['hide_templates']) && count($templates) > 0 && $knewsOptions['hide_templates']=='1') 
+		return $templates;
+	
+	//Load the default knews templates
 	chdir (KNEWS_DIR . '/templates');
 	$folders = scandir( '.' );
 	foreach ($folders as $folder) {
-		if ($folder != '..' && $folder != '.' && is_dir($folder) && is_file(KNEWS_DIR . '/templates/' . $folder . '/info.xml') && is_file(KNEWS_DIR . '/templates/' . $folder . '/template.html')) {
-			if (knews_examine_template($folder, KNEWS_DIR . '/templates/', KNEWS_URL . '/templates/', $popup)) $anytemplate=true;
+		if ($folder != '..' && $folder != '.' && is_dir($folder) && is_file(KNEWS_DIR . '/templates/' . $folder . '/info.xml') && (is_file(KNEWS_DIR . '/templates/' . $folder . '/template.html') || is_file(KNEWS_DIR . '/templates/' . $folder . '/template.php')) ) {
+
+			if (!isset($templates[$folder])) $templates[$folder] = array('folder' => KNEWS_DIR . '/templates/' . $folder, 'url' => KNEWS_URL . '/templates/' . $folder, 'type' => 'builtin-template');
+
 		}
 	}
 	
-	if (!$anytemplate && $popup) echo '<p>' . _e('You dont have any mobile template!','knews') . '</p>';
+	return $templates;
 }
 
 function knews_pagination($paged, $maxPage, $items='', $link_params='') {

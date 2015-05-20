@@ -39,9 +39,9 @@ function dedo_cron_daily() {
 	global $dedo_options, $dedo_statistics;
 
 	// Delete old logs
-	if ( $dedo_options['auto_delete'] > 0 ) {
+	if ( $dedo_options['auto_delete'] == 1 ) {
 
-		$date = $dedo_statistics->convert_days_date( $dedo_options['auto_delete'] );
+		$date = $dedo_statistics->convert_days_date( $dedo_options['auto_delete_duration'] );
 		$limit = apply_filters( 'dedo_cron_delete_limit', 1000 );
 
 		$dedo_statistics->delete_logs( array( 'end_date' => $date, 'limit' => $limit ) );
@@ -56,7 +56,6 @@ add_action( 'dedo_cron_daily', 'dedo_cron_daily' );
  * @since  1.3
  */
 function dedo_cron_weekly() {
-	
 	// Run folder protection
 	dedo_folder_protection();
 }

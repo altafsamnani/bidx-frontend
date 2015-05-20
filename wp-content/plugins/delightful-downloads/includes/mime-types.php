@@ -19,6 +19,9 @@ if ( !defined( 'ABSPATH' ) ) exit;
  */
 function dedo_mime_types( $existing_mimes ) {
 
+	// Developer
+	$existing_mimes['php']	= 'php';
+
 	// Image editors
 	$existing_mimes['psd']  = 'image/photoshop';
 	$existing_mimes['ai']  	= 'application/postscript';
@@ -30,6 +33,7 @@ function dedo_mime_types( $existing_mimes ) {
 	$existing_mimes['epub'] = 'application/epub+zip';
 
 	// Misc
+	$existing_mimes['json']	= 'application/json';
 	$existing_mimes['exe']	= 'application/octet-stream';
 	$existing_mimes['dmg']	= 'application/x-apple-diskimage';
 

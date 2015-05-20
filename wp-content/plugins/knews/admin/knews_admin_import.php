@@ -493,7 +493,11 @@ function print_state($step, $where) {
 				$knews_import_errors = array();
 				$knews_import_errors_count = $Knews_plugin->post_safe('knews_import_errors_count', 0, 'int');
 				for ($x=0; $x<$knews_import_errors_count; $x++) {
-					$knews_import_errors[$Knews_plugin->post_safe('knews_import_errors_index_'.$x)] = $Knews_plugin->post_safe('knews_import_errors_val_'.$x);
+
+					$err_index = $Knews_plugin->post_safe('knews_import_errors_index_'.$x);
+					$err_index = stripslashes($err_index);
+
+					$knews_import_errors[$err_index] = $Knews_plugin->post_safe('knews_import_errors_val_'.$x);
 				}
 				
 				$import_users_total = $Knews_plugin->post_safe('import_users_total', 0, 'int');
@@ -519,7 +523,7 @@ function print_state($step, $where) {
 				$lists_name = $wpdb->get_results( $query );
 				$extra_fields = $Knews_plugin->get_extra_fields();
 				
-				$user_import_pagination=500; if (defined('KNEWS_IMPORT_PAGINATION')) $user_import_pagination = KNEWS_IMPORT_PAGINATION;
+				$user_import_pagination=700; if (defined('KNEWS_IMPORT_PAGINATION')) $user_import_pagination = KNEWS_IMPORT_PAGINATION;
 
 				while (($csv_data = fgetcsv($handle, 10000, $knews_delimiters[$_POST['knews_delimiters']], $knews_enclosure[$_POST['knews_enclosure']])) !== FALSE) {
 					
@@ -543,7 +547,7 @@ function print_state($step, $where) {
 							}
 	
 							$confkey = $Knews_plugin->get_unique_id();
-							$email=$user_csv[$Knews_plugin->post_safe('email_col', 0, 'int')-1];
+							$email=trim($user_csv[$Knews_plugin->post_safe('email_col', 0, 'int')-1]);
 	
 							if (substr($_POST['state_col_val'],0,4)=='val_') {
 								$state=intval(substr($_POST['state_col_val'],4));
@@ -655,7 +659,7 @@ function print_state($step, $where) {
 															$insert_into_list = $results->id;
 														} else {
 															//Add new mailing list
-															$query = "INSERT INTO " . KNEWS_LISTS . " (name, open, open_registered, langs, orderlist) VALUES ('" . $name . "', 0, 0, '', 99);";
+															$query = "INSERT INTO " . KNEWS_LISTS . " (name, open, open_registered, langs, orderlist, auxiliary) VALUES ('" . $name . "', 0, 0, '', 99, 0);";
 															$results = $wpdb->query( $query );
 															$insert_into_list = $Knews_plugin->real_insert_id();
 														}

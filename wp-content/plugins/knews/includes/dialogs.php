@@ -11,7 +11,7 @@ $popup_styles ='<style type="text/css">
 		a.knews_pop_x {
 			position:absolute;
 			top:10px;
-			z-index:1000;
+			z-index:10000;
 			display:none;
 			color:#fff;
 			left:50%;
@@ -31,7 +31,7 @@ $popup_styles ='<style type="text/css">
 		div.knews_pop_news,
 		iframe.knews_pop_news {
 			position:absolute;
-			z-index:1000;
+			z-index:10000;
 			top:25px;
 			left:50%;
 			width:730px;
@@ -147,6 +147,10 @@ if (defined('KNEWS_POP_NEWS')) {
 			jQuery("div.knews_pop_bg").fadeIn();
 			jQuery("iframe.knews_pop_news").load(function (){
 				y = this.contentWindow.document.body.offsetHeight;
+				if (y==0) {
+					jQuery("iframe.knews_pop_news").css('display','block');
+					y = this.contentWindow.document.body.offsetHeight;
+				}
 				//x = this.contentWindow.document.body.offsetWidth + 20;
 				max_width=0;
 				parent.jQuery('body', this.contentWindow.document).css('padding','0').css('margin','0');
@@ -155,7 +159,7 @@ if (defined('KNEWS_POP_NEWS')) {
 					if (m > max_width) max_width=m;
 				});
 				max_width=max_width+20;
-				parent.jQuery("iframe.knews_pop_news").animate({opacity:1}).css("height", y).css("width", max_width).css("marginLeft", -1 * Math.floor(max_width/2));
+				parent.jQuery("iframe.knews_pop_news").animate({opacity:1}).css({height: y, width: max_width, marginLeft: -1 * Math.floor(max_width/2), display:'block', border:0});
 				parent.jQuery("a.knews_pop_x").css("marginLeft", Math.floor(max_width/2)-15).css("display","block");
 				parent.jQuery("a.knews_pop_x, div.knews_pop_bg").click(function() {close_popup()});
 				parent.jQuery("a", this.contentWindow.document).each(function() {parent.jQuery(this).attr("target","_parent")});

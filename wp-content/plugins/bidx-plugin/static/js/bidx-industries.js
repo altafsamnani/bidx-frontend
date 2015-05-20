@@ -71,7 +71,7 @@
         ,   endSectorArr:       endSectorArr
         ,   state:              ""
         }
-        
+
     ,   _create: function()
         {
             var widget  = this
@@ -89,7 +89,7 @@
             // Add row to DOM
             $el.append( $row );
 
-            // Add new row 
+            // Add new row
             //
             $el.delegate( ".industryAdd", "click", function( e )
             {
@@ -114,7 +114,7 @@
                 var opt
                 ,   key = $(this).find(":selected" ).val()
                 ;
-            
+
                 // Populate the array of matched options
                 opt = widget._filterSelected( key );
 
@@ -199,7 +199,7 @@
 
             // Select the according level by checking the key from the selected option
             arr = ( key.match(/[A-Z]{1}\./) ) ? options.endSectorArr : options.subSectorArr;
-            
+
             // Filter that level by checking the key
             results = $.grep( arr, function( obj, i )
             {
@@ -334,7 +334,7 @@
                         ,   currentMain     = currentSplitted[0]
                         ,   currentSub      = currentSplitted[1]
                         ;
-                        
+
                         if ( prevMain === currentMain )
                         {
                             if ( prevSub === currentSub )
@@ -449,11 +449,11 @@
                     opt = widget._filterSelected( main );
                     bidx.utils.populateDropdown( $subSectorSelect, opt );
                     bidx.utils.setElementValue(  $subSectorSelect, main+"."+sub );
-                    
+
                     opt = widget._filterSelected( main+"."+sub );
                     bidx.utils.populateDropdown( $endSectorSelect, opt );
                     bidx.utils.setElementValue(  $endSectorSelect, row );
-                    
+
                     $mainSectorSelect.bidx_chosen();
                     $subSectorSelect.bidx_chosen();
                     $endSectorSelect.bidx_chosen();

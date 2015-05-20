@@ -3,14 +3,14 @@
 {
     "use strict";
 
-    var iclVars                     = window.icl_vars || {}
-    ,   $element                    = $( "#editMember" )
-    ,   $views                      = $element.find( ".view" )
-    ,   $editForm                   = $views.filter( ".viewEdit" ).find( "form" )
-    ,   $snippets                   = $element.find( ".snippets" )
+    var iclVars                             = window.icl_vars || {}
+    ,   $element                            = $( "#editMember" )
+    ,   $views                              = $element.find( ".view" )
+    ,   $editForm                           = $views.filter( ".viewEdit" ).find( "form" )
+    ,   $snippets                           = $element.find( ".snippets" )
 
-    ,   $languageList               = $editForm.find( ".languageList" )
-    ,   $inputAddLanguage           = $editForm.find( "input[name='addLanguage']" )
+    ,   $languageList                       = $editForm.find( ".languageList" )
+    ,   $inputAddLanguage                   = $editForm.find( "input[name='addLanguage']" )
 
     ,   $personalDetailsNationality         = $editForm.find( "[name='personalDetails.nationality']" )
     ,   $personalDetailsHighestEducation    = $editForm.find( "[name='personalDetails.highestEducation']" )
@@ -50,22 +50,23 @@
     ,   memberId
     ,   memberProfileId
     ,   visitingMemberPageId                = bidx.utils.getValue( bidxConfig, "context.memberId" )
+    ,   memberData                          = window.__bidxMember
     ,   state
     ,   currentView
 
-    ,   redirect                    = {}
-    ,   snippets                    = {}
+    ,   redirect                            = {}
+    ,   snippets                            = {}
 
-    ,   appName                     = "member"
+    ,   appName                             = "member"
 
         // Languages
         //
-    ,   $languageSelect             = $editForm.find( "[name='languages']"     )
+    ,   $languageSelect                     = $editForm.find( "[name='languages']"     )
     ,   languages
 
         // Object for maintaining a list of currently selected languages, for optimizations only
         //
-    ,   addedLanguages              = {}
+    ,   addedLanguages                      = {}
     ,   removedLanguages
     ;
 
@@ -126,6 +127,77 @@
         ]
     };
 
+    function _accreditation ()
+    {
+        var options                 =   {}
+        ,   btnOptions              =   {}
+        ,   labelOptions            =   {}
+        ,   investorProfile         =   bidx.utils.getValue(memberData, 'member.bidxInvestorProfile' )
+        ,   investorProfileEntityId =   bidx.utils.getValue(investorProfile, 'bidxMeta.bidxEntityId' )
+        ,   tagsData                =   bidx.utils.getValue(investorProfile, 'bidxMeta.tags' )
+        ,   $tagging                =   $( ".tagging")
+        ;
+
+        /* Render Accreditation Button for Investor*/
+        if( investorProfileEntityId )
+        {
+            options =   {
+                            entityId:   investorProfileEntityId
+                        ,   tagsData:   tagsData
+                        };
+
+            bidx.utils.log('Investor Profile taggingOptions: ', options);
+
+            $tagging.tagging( options );
+
+            labelOptions =  {
+                                tags:   [{
+                                            label:      bidx.i18n.i('lblPendingAccreditation')
+                                        ,   status:     'pending'
+                                        ,   iconClass:  'fa-bookmark-o'
+                                        ,   class:      'accr-Pending'
+                                        ,   default:    true
+                                        },
+                                        {
+                                            label:      bidx.i18n.i('lblAccreditation')
+                                        ,   status:     'accredited'
+                                        ,   iconClass:  'fa-bookmark'
+                                        ,   class:      'accr-Accepted'
+                                        },
+                                        {
+                                            label:      bidx.i18n.i('lblNoAccreditation')
+                                        ,   status:     'accreditation_refused'
+                                        ,   iconClass:   'fa-ban'
+                                        ,   class:      'accr-Refused'
+                                        }]
+                            ,   class:  'taggingLabel'
+                            };
+
+            $tagging.tagging( "constructLabel", labelOptions );
+
+            btnOptions =    {
+                                tags:   [{
+                                            label:      bidx.i18n.i('lblAccreditation')
+                                        ,   attached:   'accredited'
+                                        ,   detached:   'accreditation_refused'
+                                        ,   class:      'btn-success'
+                                        ,   visibility: 'ANYONE'
+                                        },
+                                        {
+                                            label:      bidx.i18n.i('lblNoAccreditation')
+                                        ,   attached:   'accreditation_refused'
+                                        ,   detached:   'accredited'
+                                        ,   class:      'btn-danger'
+                                        }]
+                            ,   class:  'taggingButton'
+                            };
+
+            bidx.utils.log('Investor Profile constructButton: ', btnOptions);
+
+            $tagging.tagging( "constructButton", btnOptions );
+        }
+    }
+
     // Setup function for doing work that should only be done once
     //
     function _oneTimeSetup()
@@ -134,6 +206,7 @@
         _languages();
         _attachments();
         _getActiveContacts();
+        _accreditation();
 
         // On any changes, how little doesn't matter, notify that we have a pending change
         // But no need to track the changes when doing a member data load

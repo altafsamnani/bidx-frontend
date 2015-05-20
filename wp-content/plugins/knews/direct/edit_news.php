@@ -22,7 +22,7 @@ if ($Knews_plugin) {
 	<script type="text/javascript" src="<?php echo KNEWS_URL; ?>/wysiwyg/editor.js?ver=<?php echo KNEWS_VERSION; ?>"></script>
 	<link href="<?php echo KNEWS_URL; ?>/wysiwyg/editor.css?ver=<?php echo KNEWS_VERSION; ?>" rel="stylesheet" type="text/css" />
 	</head>
-	<body>
+	<?php echo ($results_news[0]->html_bodytag != '' ? $results_news[0]->html_bodytag : '<body>'); ?>
 		<noscript>
 		<h1><?php _e('Warning! You should activate JavaScript to edit newsletters!','knews');?></h1>
 		</noscript>

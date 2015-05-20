@@ -5,8 +5,7 @@ $knews_nonce_name='_admusr';
 if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_name);
 //End Security for CSRF attacks
 
-	global $wpdb;
-	global $Knews_plugin;
+	global $wpdb, $Knews_plugin, $knewsOptions;
 	
 	require_once( KNEWS_DIR . '/includes/knews_util.php');
 
@@ -77,7 +76,7 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 		if ($Knews_plugin->get_safe('orderby') != '') {
 				
 			if ($Knews_plugin->get_safe('orderby') == 'email') {
-				$filtered_query .= ' ORDER BY ku.email ' . $Knews_plugin->get_safe('order', 'asc');
+				$filtered_query .= ' ORDER BY ku.email ' . ($Knews_plugin->get_safe('order', 'asc') == 'asc' ? 'asc' : 'desc');
 				
 			} elseif ($ef_order != 0) {
 				
@@ -90,7 +89,7 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 					$filtered_query .= " WHERE ";
 				}
 				$filtered_query .= "ku.id = kue.user_id AND kue.field_id=" . $ef_order ;
-				$filtered_query .= " ORDER BY kue.value " . $Knews_plugin->get_safe('order', 'asc');
+				$filtered_query .= " ORDER BY kue.value " . ($Knews_plugin->get_safe('order', 'asc') == 'asc' ? 'asc' : 'desc');
 			}
 		}
 	}
@@ -130,6 +129,42 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 
 		echo '<div class="updated"><p>' . __('User deleted','knews') . '</p></div>';
 	}
+
+	if ($Knews_plugin->get_safe('da')=='cleanBlackList') {
+
+		global $email_blacklist; $this->load_blacklist(true);
+
+		$query = 'SELECT id, email FROM ' . KNEWS_USERS . ' WHERE state = 1 OR state = 2';
+		$results = $wpdb->get_results( $query );
+		
+		$blacklisted=0;
+		foreach ($results as $u) {
+			if ($u->email != trim($u->email)) {
+				$u->email = trim($u->email);
+				$query = "UPDATE ".KNEWS_USERS." SET email='" . $u->email . "' WHERE id=" . $u->id;
+				$results = $wpdb->query( $query );
+			}
+			$domain = explode('@',$u->email);
+			if (is_array($domain) && isset($domain[1])) {
+				if (in_array(strtolower($domain[1]), $email_blacklist)) {
+					$query = "UPDATE ".KNEWS_USERS." SET state='3' WHERE id=" . $u->id;
+					$results = $wpdb->query( $query );
+					$blacklisted++;
+				}
+			}
+		}
+		if ($blacklisted==0) {
+			
+			echo '<div class="updated"><p>' . sprintf(__('Your subscribers lists are clean, no subscribers found on the %s blacklisted domains.','knews'), count($email_blacklist)) . '</p></div>';
+		} else  {
+			
+			echo '<div class="updated"><p>' . sprintf(__('Your subscribers lists are cleaned, <strong>%s</strong> subscribers found and blocked from the %s blacklisted domains.','knews'), $blacklisted, count($email_blacklist)) . '</p></div>';
+		}
+		
+		$knewsOptions['blacklist_scan'] = count($email_blacklist);
+		update_option($Knews_plugin->adminOptionsName, $knewsOptions);
+	}
+
 	if ($Knews_plugin->get_safe('da')=='bounce') {
 		$query = "UPDATE ".KNEWS_USERS." SET state='4' WHERE id=" . $Knews_plugin->get_safe('uid', 0, 'int');
 		$result=$wpdb->query( $query );
@@ -139,7 +174,7 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 	if (isset($_POST['action'])) {
 		if ($Knews_plugin->post_safe('action')=='update_user') {
 			
-			$email = $Knews_plugin->post_safe('email');
+			$email = trim($Knews_plugin->post_safe('email'));
 			$state = $Knews_plugin->post_safe('state');
 			$lang = $Knews_plugin->post_safe('lang');
 			$id=$Knews_plugin->post_safe('id_user', 0, 'int');
@@ -188,7 +223,7 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 		} else if ($_POST['action']=='add_user') {
 		
 			$lang = $Knews_plugin->post_safe('lang');
-			$email = $Knews_plugin->post_safe('email');
+			$email = trim($Knews_plugin->post_safe('email'));
 			$date = $Knews_plugin->get_mysql_date();
 			$confkey = $Knews_plugin->get_unique_id();
 			$id_list_news = $Knews_plugin->post_safe('id_list_news', 0, 'int');
@@ -512,6 +547,14 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 				<?php knews_pagination($paged, ceil($filtered_users/ $results_per_page), $filtered_users); ?>
 					</div>
 				</form>
+				<?php
+				global $email_blacklist; $this->load_blacklist(true);
+				?>
+				<a name="blacklists" id="blacklists"><br /></a>
+				<div class="updated below-h2">
+					<p><?php echo sprintf(__('Knews includes now a %s domains blacklist. It includes temporary email domains, used widely by spammers.','knews'), '<strong>' . count($email_blacklist) . '</strong>' ); ?> <a href="#" class="knews_blacklist"><?php _e('Look list','knews'); ?></a></p><p><a href="admin.php?page=knews_users&da=cleanBlackList" class="button"><?php _e('Run Mailing lists clean now','knews'); ?></a></p>
+				</div>
+				<div class="knews_blacklist" style="display:none;"><textarea style="width:100%; height:200px"><?php echo implode(', ', $email_blacklist); ?></textarea></div>
 				<?php
 				} else {
 					echo '<p>&nbsp;</p>';

@@ -20,7 +20,7 @@ if ($Knews_plugin->get_safe('da')=='startnow') {
 }
 
 if ($Knews_plugin->get_safe('da')=='retry') {
-	$query = "UPDATE ".KNEWS_NEWSLETTERS_SUBMITS_DETAILS." SET status=0 WHERE status=2 AND submit=" . $Knews_plugin->get_safe('rid', 0, 'int');
+	$query = "UPDATE ".KNEWS_NEWSLETTERS_SUBMITS_DETAILS." SET status=0 WHERE (status=2 OR status=3) AND submit=" . $Knews_plugin->get_safe('rid', 0, 'int');
 	$result=$wpdb->query( $query );
 	
 	if ($result > 0) {
@@ -123,9 +123,10 @@ if ($Knews_plugin->get_safe('da')=='delete') {
 				$pending=false;
 				$alt=false;
 				$results_per_page=20;
-				$query = "FROM " . KNEWS_NEWSLETTERS_SUBMITS . " WHERE blog_id=" . get_current_blog_id() . " ORDER BY finished, paused, start_time DESC LIMIT " . $results_per_page . " OFFSET " . $results_per_page * ($paged - 1);
+				$query = "FROM " . KNEWS_NEWSLETTERS_SUBMITS . " WHERE blog_id=" . get_current_blog_id();
+				$order_paged = " ORDER BY finished, paused, start_time DESC LIMIT " . $results_per_page . " OFFSET " . $results_per_page * ($paged - 1);
 
-				$results = $wpdb->get_results( 'SELECT * ' . $query );
+				$results = $wpdb->get_results( 'SELECT * ' . $query . $order_paged );
 				$query_count = $wpdb->get_results( 'SELECT COUNT(id) AS n ' . $query );
 				$query_count = $query_count[0]->n;
 

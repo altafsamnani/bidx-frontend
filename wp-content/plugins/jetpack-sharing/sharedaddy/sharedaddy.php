@@ -23,6 +23,13 @@ function sharing_email_send_post( $data ) {
 
 function sharing_add_meta_box() {
 	$post_types = get_post_types( array( 'public' => true ) );
+	/**
+	 * Filter the Sharing Meta Box title.
+	 *
+	 * @since 2.2.0
+	 *
+	 * @param string $var Sharing Meta Box title. Default is "Sharing".
+	 */
 	$title = apply_filters( 'sharing_meta_box_title', __( 'Sharing', 'jetpack' ) );
 	foreach( $post_types as $post_type ) {
 		add_meta_box( 'sharing_meta', $title, 'sharing_meta_box_content', $post_type, 'advanced', 'high' );
@@ -30,6 +37,13 @@ function sharing_add_meta_box() {
 }
 
 function sharing_meta_box_content( $post ) {
+	/**
+	 * Fires before the sharing meta box content.
+	 *
+	 * @since 2.2.0
+	 *
+	 * @param WP_Post $post The post to share.
+	 */
 	do_action( 'start_sharing_meta_box_content', $post );
 
 	$disabled = get_post_meta( $post->ID, 'sharing_disabled', true ); ?>
@@ -43,6 +57,13 @@ function sharing_meta_box_content( $post ) {
 	</p>
 
 	<?php
+	/**
+	 * Fires after the sharing meta box content.
+	 *
+	 * @since 2.2.0
+	 *
+	 * @param WP_Post $post The post to share.
+	*/
 	do_action( 'end_sharing_meta_box_content', $post );
 }
 
@@ -51,7 +72,7 @@ function sharing_meta_box_save( $post_id ) {
 		return $post_id;
 
 	// Record sharing disable
-	if ( isset( $_POST['post_type'] ) && ( 'post' == $_POST['post_type'] || 'page' == $_POST['post_type'] ) ) {
+	if ( isset( $_POST['post_type'] ) && ( $post_type_object = get_post_type_object( $_POST['post_type'] ) ) && $post_type_object->public ) {
 		if ( current_user_can( 'edit_post', $post_id ) ) {
 			if ( isset( $_POST['sharing_status_hidden'] ) ) {
 				if ( !isset( $_POST['enable_post_sharing'] ) ) {

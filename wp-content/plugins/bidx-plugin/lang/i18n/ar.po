@@ -514,7 +514,7 @@ msgstr "يرجى انتظر أثناء تحديثنا لمرحلة المساب�
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid ""
-"Congrtatulations, you have succesfully updated phase of this competition."
+"Congratulations, you have successfully updated the phase of this competition "
 msgstr "مبروك، لقد قمت بتحديث مرحلة المسابقة بنجاح"
 
 # _x("Before moving to the next phase, all applications need a competition administrator review", "competition","i18n");
@@ -1280,7 +1280,7 @@ msgstr "قم باختيار أحد الخيارات"
 # _e("This field is required", "i18n");
 # Context  TextDomain i18n
 msgid "This field is required"
-msgstr "هذا الحقل مطلوب ملأه"
+msgstr "هذه الخانة مطلوبه"
 
 # _e("Please select an item", "i18n");
 # Context  TextDomain i18n
@@ -1379,7 +1379,7 @@ msgstr "يرجى إدخال رقم بطاقة إئتمان صحيح"
 
 # _e("Please enter a valid amount", "i18n");
 # Context  TextDomain i18n
-msgid "Please enter the same value againaaaa."
+msgid "Please enter the same value again"
 msgstr "يرجى إدخال نفس القيمة مرة أخرى"
 
 # _e("Please enter at least {0} characters", "i18n");

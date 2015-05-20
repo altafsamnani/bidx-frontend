@@ -3,8 +3,8 @@ Contributors: creverter
 Donate link: http://www.knewsplugin.com/multi-language/
 Tags: newsletter, newsletters, automated newsletter, newsletter multilingual, wysiwyg newsletter editor, batch sending, newsletter signup, email subscribe, email capture, subscription, subscribers
 Requires at least: 3.1
-Tested up to: 3.9.1
-Stable tag: 1.6.3
+Tested up to: 4.2.1
+Stable tag: 1.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,8 +17,12 @@ Knews is a powerful multilingual plug-in that allows you to **build professional
 Includes a custom, unique **modular WYSIWYG** (What You See Is What You Get) editor. Based on templates, with no need to know HTML.
 
 = Features =
-
-* **Finally! AUTORESPONDERS!!** please, take a look [here](http://www.knewsplugin.com/knews-have-autoresponders/)
+* **Multilingual**: it recognizes the languages of the blog or website automatically; compatible with Polylang, WPML and qTranslate / qTranslate X.
+* **Contact Form 7** support added through [Knews + CF7 Glue](http://www.wordpress.org/plugins/knews-contact-form-7-glue) free plugin: add easily a subscription checkbox to your CF7 forms
+* Multiple mailing list subscription at once 
+* Partial support(1) for WooCommerce templates: [Lets Sharp](http://knewsplugin.com/shop/es/14-lets-sharp-template.html) & [Cool Shop](http://knewsplugin.com/shop/15-cool-shop-template.html)
+* 591 domain blacklist added (keep mailing lists clean)
+* Autoresponders** please, take a look [here](http://www.knewsplugin.com/knews-have-autoresponders/)
 * REMOTE SUBSCRIPTION ADDED: Now Knews give you an iframe HTML code for remote subscription in external websites.
 * **Tracking pixel**: Now Knews uses an image to track opened newsletters, not only user clicks.
 * Support for **Polylang**: Now Knews support [Polylang](http://wordpress.org/plugins/polylang/), a high quality free multilingual plugin.
@@ -28,7 +32,6 @@ Includes a custom, unique **modular WYSIWYG** (What You See Is What You Get) edi
 * **Widget** for subscriber and surfing language capture, with Name and Surname optional fields.
 * **Newsletter customization**: Name and Surname token replacement in submit time.
 * Possibility of creating **your own templates** [(tutorial here)](http://www.knewsplugin.com/tutorial/).
-* **Multilingual**: it recognizes the languages of the blog or website automatically; compatible with Polylang, WPML and qTranslate.
 * **Segmentation** of subscribers by language and in different mailing lists
 * Support for **SMTP** sending [(tutorial here)](http://www.knewsplugin.com/configure-smtp-submits/).
 * **Total control** of deferred sending, pause, start, end, logs, error reports and re-sending.
@@ -39,6 +42,8 @@ Includes a custom, unique **modular WYSIWYG** (What You See Is What You Get) edi
 * Flexible, simple and intuitive **import wizard**: any order of columns and encoding will be correctly interpreted in a .CSV file.
 * **Statistics**: Sign ups, unsubscriptions, newsletter submits, user clicks, user can't read click, etc.
 * **Free and without limitations**.
+
+(1) Knews Free can't automate the use of the featured post image, you should also add the Product image manually. Knews Free can't automate the e-commerce newsletter creation.
 
 **Premium features:**
 
@@ -97,7 +102,7 @@ Do you want to translate Knews to your language? We will give you Knews Pro for 
 
 4. **You can also optionally configure:**
 
-5. a) **Multilingual**: Knews works as monolingual by default, but it can recognise the languages defined in Polylang, WPML or qTranslate if you choose. 
+5. a) **Multilingual**: Knews works as monolingual by default, but it can recognise the languages defined in Polylang, WPML or qTranslate / qTranslate X if you choose. 
 
 6. b) **CRON**: By default Knews works with wp_cron, but it can be changed (highly recommendable for websites with low traffic). [(tutorial here)](http://www.knewsplugin.com/configure-webserver-cron/).
 
@@ -148,7 +153,7 @@ Knews allows you to easily modify all the interactive texts for the website visi
 
 **How do I install additional languages in Knews?**
 
-You don't have to. If you have configured Knews to work with Polylang, WPML or qTranslate, when you configure a new language in these plug-ins, Knews will already be ready. 
+You don't have to. If you have configured Knews to work with Polylang, WPML or qTranslate / qTranslate X, when you configure a new language in these plug-ins, Knews will already be ready. 
 
 **Why do you recommend configuring CRON, when wp_cron already works in wordpress without doing anything?**
 
@@ -170,9 +175,9 @@ If sending is done by SMTP, the amount of e-mails reported as SPAM will drop. Kn
 
 No problem. Simply choose the option to use Cron emulation in JavaScript and send normally. You will have to keep a window open until the sending ends that's all.
 
-**Does Knews only have 5 templates?**
+**How many templates Knews has?**
 
-At the moment Knews only has 3 free templates. Just we launched our second premium template "Officina", in our [(new shop)](http://www.knewsplugin.com/ps/en/).
+At the moment Knews only has 3 free templates. We have 6 premium templates also. Just we launched a pair of WooCommerce compatible templates in our [(new shop)](http://www.knewsplugin.com/ps/en/).
 In any case, the degree of personalisation of our templates is immense, with thousands of different combinations available. You can also follow our tutorial to modify a template or create a new custom one for yourself.
 
 == Screenshots ==
@@ -189,6 +194,72 @@ In any case, the degree of personalisation of our templates is immense, with tho
 10. The Officina Template.
 
 == Changelog ==
+
+= 1.7.3 =
+- Support added for [qTranslateX](https://wordpress.org/plugins/qtranslate-x/) (a qTranslate branch)
+
+= 1.7.2 =
+- Contact Form 7 support added through [Knews + CF7 Glue](http://www.wordpress.org/plugins/knews-contact-form-7-glue) free plugin: add easily a subscription checkbox to your CF7 forms
+- Multiple mailing list subscription at once option added (chekboxes instead select on subscription widget as option)
+- Consistent local time info instead of GMT time on admin side
+
+= 1.7.1 =
+- Crop image (on/off) on resize added as option
+- Support for polylang different domain per language
+- Localised time format on Knews admin pages
+- Added https support for CRONJOB url
+- Support for background styles on body tag on newsletter templates
+- Saffety bug solved on SQL injection attack
+- Bug solved into automated newsletter creation: a second newsletter somethimes was created with fewer posts
+- Some old installs can't create autometed newsletters. Now solved.
+- Solved bug on email testing: newsletters can't be sent manually to emails with hypens on domain
+- Bug solved in URL on newsletter can't read link
+
+= 1.7.0 =
+* Partial support for the new e-commenrce templates (for WooCommerce)
+* Add support for body inline styles on templates
+
+= 1.6.9 =
+* The excerpt length can be set in Knews preferences
+* Solve the broken URLs in newsletter editor for some installations
+
+= 1.6.8 =
+* Export subscribers tool now works like a charm
+* Solved bug: some installations haven't confirmation message / PHP error message on subscription form submision
+* Solved: Some newsletter links wasn't traced on stats
+* Solved automation newsletter bug: now you can set again the every amount of time value on admin side
+* Solved: PHP Error on SMTP test while test fails
+
+= 1.6.7 =
+* Improvements on submit script:
+- solved double submit bug after submit error
+- PHP timeout error proof (really)
+- reset smtp after email send error
+- wait after 5 consecutive email send error
+
+= 1.6.6 =
+* Solved an stupid bug: the Knews preferences was deleted when you do an scanning blacklist (Now safe). 
+- This bug was introduced on 1.6.5. Sorry guys!!!
+
+= 1.6.5 =
+* 591 domain blacklist added (keep mailing lists clean) from: https://github.com/martenson/disposable-email-domains
+* Clean scanning blacklist tool added for current subscribers
+* Automated newsletter creation timeout error proof
+* Open newsletter detection for users without tracking pixel configured
+* Reliable email submit script (it will restart at the same point if some error like PHP timeout break the script)
+* Spaces in emails bug solved (on import, subscription and manual creation and edition)
+* Solved newsletter display over home page in some WP installations
+
+= 1.6.4 =
+* Added a quick status check pane on submit newsletter screen
+* Support for %the_content_1% ... %the_content_n% in custom newsletter 
+* You can add your custom speed in wp-config.php file: define ('KNEWS_CUSTOM_SPEED', x); //where x is emails sent every 10 minutes
+* Solved bug on multistep import: some users experienced fail in large files
+* Solved bug on admin submits screen pagination
+* Solved: In manual post insertion, it shows ALL articles, even those which are in trash.
+* In mailing lists, now count the total users well
+* Solved PHP warnings about temporary text file deletion (lockfile.txt and lockfile2.txt)
+* Minor bugs solved
 
 = 1.6.3 =
 * AUTOMATED NEWSLETTERS & AUTORESPONDERS NEW FEATURES
@@ -610,32 +681,26 @@ Solved a Cross-Site Scripting Vulnerability (XSS) in the file: knews/wysiwyg/fon
 
 == Upgrade Notice ==
 
-= 1.6.3 =
-* AUTOMATED NEWSLETTERS & AUTORESPONDERS NEW FEATURES
-- Autoresponders can be filtered by user language
-- Extra info added in the list
-- Emails at once added on manual submision
-* Bug solved: some autoresponders never was sent to some users
-* Support for new Polylang versions
-* Solved a qTranslate issue in automated newsletters
+= 1.7.3 =
+- Support added for [qTranslateX](https://wordpress.org/plugins/qtranslate-x/) (a qTranslate branch)
 
-= 1.6.2 =
-* Complaint with the new WP 3.9 WPDB extra layer for PHP 5.5+ (Warning: mysql_real_escape_string()... messages)
-* Solved bug in autoresponders: never was created when used with one list filter.
-* Solved issue with qTranslate on manual post insertion
+= 1.7.2 =
+- Contact Form 7 support added through [Knews + CF7 Glue](http://www.wordpress.org/plugins/knews-contact-form-7-glue) free plugin: add easily a subscription checkbox to your CF7 forms
+- Multiple mailing list subscription at once option added (chekboxes instead select on subscription widget as option)
+- Consistent local time info instead of GMT time on admin side
 
-= 1.6.1 =
-* Solved bug in autoresponders: never was sent in some installations
-* Solved issue with qTranslate on image insertion
+= 1.7.1 =
+- Crop image (on/off) on resize added as option
+- Support for polylang different domain per language
+- Localised time format on Knews admin pages
+- Added https support for CRONJOB url
+- Support for background styles on body tag on newsletter templates
+- Saffety bug solved on SQL injection attack
+- Bug solved into automated newsletter creation: a second newsletter somethimes was created with fewer posts
+- Some old installs can't create autometed newsletters. Now solved.
+- Solved bug on email testing: newsletters can't be sent manually to emails with hypens on domain
+- Bug solved in URL on newsletter can't read link
 
-= 1.6.0 =
-* Finally! Autoresponders!! please, take a look [here](http://www.knewsplugin.com/knews-have-autoresponders/)
-* Emails at once in autocreation
-* Newsletters classified by type: manual, autocreated, and autocreation + autoresponders
-* Assistant inside WYSIWYG Editor for tokens and shortcodes insertion
-* More stable newsletter autocreation
-* Emails per hour preview
-* Support in WYSIWYG Editor for HTTPS administration
-
-
-
+= 1.7.0 =
+* Partial support for the new e-commenrce templates (for WooCommerce)
+* Add support for body inline styles on templates

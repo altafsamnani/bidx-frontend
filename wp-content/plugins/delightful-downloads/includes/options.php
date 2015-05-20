@@ -37,19 +37,22 @@ function dedo_get_options() {
 		'enable_taxonomies'	=> array(
 			'name'		=> __( 'Categories and Tags', 'delightful-downloads' ),
 			'tab'		=> 'general',
-			'type'		=> 'check',
+			'type'		=> 'radio',
 			'default'	=> 1
 		),
 		'members_only'		=> array(
-			'name'		=> __( 'Members Download', 'delightful-downloads' ),
+			'name'		=> __( 'Members Only', 'delightful-downloads' ),
 			'tab'		=> 'general',
-			'type'		=> 'check',
-			'default'	=> 0
+			'type'		=> 'radio',
+			'default'	=> 0,
+			'sub_option'=> array(
+				'redirect'	=> 0,
+			)
 		),
-		'members_redirect'	=> array(
-			'name'		=> __( 'Non-Members Redirect', 'delightful-downloads' ),
+		'open_browser'		=> array(
+			'name'		=> __( 'Open in Browser', 'delightful-downloads' ),
 			'tab'		=> 'general',
-			'type'		=> 'dropdown',
+			'type'		=> 'radio',
 			'default'	=> 0
 		),
 		'block_agents'	=> array(
@@ -83,34 +86,43 @@ function dedo_get_options() {
 			'default'	=> 'title'
 		),
 		'log_admin_downloads'	=> array(
-			'name'		=> __( 'Admin Downloads', 'delightful-downloads' ),
+			'name'		=> __( 'Admin Events', 'delightful-downloads' ),
 			'tab'		=> 'statistics',
-			'type'		=> 'check',
+			'type'		=> 'radio',
 			'default'	=> 0
 		),
-		'grace_period'	=> array(
+		'grace_period'		=> array(
 			'name'		=> __( 'Grace Period', 'delightful-downloads' ),
 			'tab'		=> 'statistics',
 			'type'		=> 'text',
-			'default'	=> 3
+			'default'	=> 1,
+			'sub_option'=> array(
+				'duration'	=> 3
+			)
 		),
-		'auto_delete'	=> array(
+		'auto_delete'		=> array(
 			'name'		=> __( 'Auto Delete', 'delightful-downloads' ),
 			'tab'		=> 'statistics',
 			'type'		=> 'text',
-			'default'	=> 0
+			'default'	=> 0,
+			'sub_option'=> array(
+				'duration'	=> 90
+			)
 		),
 		'enable_css'		=> array(
-			'name'		=> __( 'Default CSS Styles', 'delightful-downloads' ),
+			'name'		=> __( 'Output CSS', 'delightful-downloads' ),
 			'tab'		=> 'advanced',
-			'type'		=> 'check',
+			'type'		=> 'radio',
 			'default'	=> 1,
 		),
-		'cache_duration'	=> array(
-			'name'		=> __( 'Cache Duration', 'delightful-downloads' ),
+		'cache'				=> array(
+			'name'		=> __( 'Cache', 'delightful-downloads' ),
 			'tab'		=> 'advanced',
 			'type'		=> 'text',
-			'default'	=> 15,
+			'default'	=> 1,
+			'sub_option'=> array(
+				'duration'	=> 15
+			)
 		),
 		'download_url'		=> array(
 			'name'		=> __( 'Download Address', 'delightful-downloads' ),
@@ -118,11 +130,17 @@ function dedo_get_options() {
 			'type'		=> 'text',
 			'default'	=> 'ddownload',
 		),
+		'folder_protection'	=> array(
+			'name'		=> __( 'Folder Protection', 'delightful-downloads' ),
+			'tab'		=> 'advanced',
+			'type'		=> 'radio',
+			'default'	=> 1
+		),
 		'uninstall'		=> array(
 			'name'		=> __( 'Complete Uninstall', 'delightful-downloads' ),
 			'tab'		=> 'advanced',
-			'type'		=> 'check',
-			'default'	=> '0',
+			'type'		=> 'radio',
+			'default'	=> 0
 		)
 	);
 
@@ -142,6 +160,13 @@ function dedo_get_default_options() {
 	// Loop through and find default value
 	foreach ( $options as $key => $value ) {
 		$default_options[$key] = $value['default'];
+
+		// Add sub options
+		if ( isset( $value['sub_option'] ) ) {
+			foreach ( $value['sub_option'] as $key2 => $value2 ) {
+				$default_options[$key . '_' . $key2] = $value2;
+			}
+		}
 	}
 
 	return $default_options;

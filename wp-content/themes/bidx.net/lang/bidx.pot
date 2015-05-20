@@ -13,577 +13,518 @@ msgstr ""
 
 # Language Original
 
-#1) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/video.php -105
-# _e("The embed code field is empty. Please insert an <code>iframe</code> from Youtube, Dailymotion, Vimeo, Vevo, Veoh or Metacafe","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "The embed code field is empty. Please insert an <code>iframe</code> from Youtube, Dailymotion, Vimeo, Vevo, Veoh or Metacafe"
-msgstr ""
-
-
-#2) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/video.php -109
-# _e("Sidebar","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Sidebar"
-msgstr ""
-
-
-#3) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/video.php -112
-# _e("Widget","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Widget"
-msgstr ""
-
-
-#4) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/multicolumn.php -314
-# _e("One or more columns are empty","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "One or more columns are empty"
-msgstr ""
-
-
-#5) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/multicolumn.php -318
-# _e("Sidebar","bidxtheme");
-# Context  Textdomain bidxtheme
-# Already exists, doesnt need translation.
-
-
-#6) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/multicolumn.php -321
-# _e("Widget","bidxtheme");
-# Context  Textdomain bidxtheme
-# Already exists, doesnt need translation.
-
-
-#7) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -162
-# _e("No posts available, please create a post from Posts section ","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "No posts available, please create a post from Posts section "
-msgstr ""
-
-
-#8) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -166
-# _e("Sidebar","bidxtheme");
-# Context  Textdomain bidxtheme
-# Already exists, doesnt need translation.
-
-
-#9) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/widgets/post.php -169
-# _e("Widget","bidxtheme");
-# Context  Textdomain bidxtheme
-# Already exists, doesnt need translation.
-
-
-#10) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -498
+#1) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -498
 # _e("Favicon","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Favicon"
 msgstr ""
 
 
-#11) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -505
+#2) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -505
 # _e("Favicon","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#12) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-clients.php -36
+#3) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-clients.php -36
 # _e("Contact us to get started","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Contact us to get started"
 msgstr ""
 
 
-#13) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-clients.php -38
+#4) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-clients.php -38
 # _e("Contact Us","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Contact Us"
 msgstr ""
 
 
-#14) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-clients.php -39
+#5) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-clients.php -39
 # _e("Pricing","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Pricing"
 msgstr ""
 
 
-#15) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-get-started.php -37
+#6) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-get-started.php -37
 # _e("Contact us to get started","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#16) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-get-started.php -39
+#7) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-get-started.php -39
 # _e("Contact Us","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#17) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -6
+#8) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -6
 # _e("<span>bidx</span>.net","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "<span>bidx</span>.net"
 msgstr ""
 
 
-#18) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -7
+#9) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -7
 # _e("With multiple bidx portals in one country you can create an entrepreneurial ecosystem","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "With multiple bidx portals in one country you can create an entrepreneurial ecosystem"
 msgstr ""
 
 
-#19) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -12
+#10) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -12
 # _e("Stay Connected","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Stay Connected"
 msgstr ""
 
 
-#20) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -26
+#11) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -26
 # _e("Recent Articles","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Recent Articles"
 msgstr ""
 
 
-#21) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -68
+#12) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -68
 # _e("Testimonials","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Testimonials"
 msgstr ""
 
 
-#22) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -130
+#13) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -130
 # _e("bidx.net © 2015. All Rights Reserved.","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "bidx.net © 2015. All Rights Reserved."
 msgstr ""
 
 
-#23) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -135
+#14) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -135
 # _e("Privacy","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Privacy"
 msgstr ""
 
 
-#24) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -136
+#15) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -136
 # _e("Terms and Conditions","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Terms and Conditions"
 msgstr ""
 
 
-#25) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -20
+#16) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -20
 # _e("Get a 6 month free trial","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Get a 6 month free trial"
 msgstr ""
 
 
-#26) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -21
+#17) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -21
 # _e("Annual subscription starting at $1.999","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Annual subscription starting at $1.999"
 msgstr ""
 
 
-#27) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -23
+#18) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -23
 # _e("I want to try","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "I want to try"
 msgstr ""
 
 
-#28) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -24
+#19) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -24
 # _e("All Packages","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "All Packages"
 msgstr ""
 
 
-#29) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -325
+#20) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -325
 # _e("Contact us to get started","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#30) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -327
+#21) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -327
 # _e("Get Started","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Get Started"
 msgstr ""
 
 
-#31) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -328
+#22) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -328
 # _e("All Packages","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#32) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -16
+#23) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -16
 # _e("Requires a Portal Package","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Requires a Portal Package"
 msgstr ""
 
 
-#33) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -23
+#24) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -23
 # _e("Easy and Simple","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Easy and Simple"
 msgstr ""
 
 
-#34) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -24
+#25) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -24
 # _e("Monthly $299 - Annually $1.999","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Monthly $299 - Annually $1.999"
 msgstr ""
 
 
-#35) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -29
+#26) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -29
 # _e("Extensive and Detailed","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Extensive and Detailed"
 msgstr ""
 
 
-#36) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -30
+#27) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -30
 # _e("Annually $9.999","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Annually $9.999"
 msgstr ""
 
 
-#37) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -37
+#28) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -37
 # _e("I want to try","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#38) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -38
+#29) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -38
 # _e("All Packages","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#39) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -68
+#30) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -68
 # _e("Contact us to get started","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#40) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -70
+#31) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -70
 # _e("Get Started","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#41) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -71
+#32) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -71
 # _e("All Packages","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#42) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -16
+#33) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -16
 # _e("Grow your community of","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Grow your community of"
 msgstr ""
 
 
-#43) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -22
+#34) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -22
 # _e("ENTREPRENEURS<br>ONLINE","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "ENTREPRENEURS<br>ONLINE"
 msgstr ""
 
 
-#44) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -29
+#35) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -29
 # _e("Match your entrepreneurs<br>\n                    with banks, investors and mentors.","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Match your entrepreneurs<br>\n                    with banks, investors and mentors."
 msgstr ""
 
 
-#45) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -47
+#36) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -47
 # _e("Grow your community of","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#46) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -49
+#37) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -49
 # _e("ENTREPRENEURS ONLINE","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "ENTREPRENEURS ONLINE"
 msgstr ""
 
 
-#47) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -50
+#38) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -50
 # _e("Get started","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Get started"
 msgstr ""
 
 
-#48) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -59
+#39) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -59
 # _e("Portals","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Portals"
 msgstr ""
 
 
-#49) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -60
+#40) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -60
 # _e("Match your entrepreneurs with financiers and mentors. A portal in your brand and language","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Match your entrepreneurs with financiers and mentors. A portal in your brand and language"
 msgstr ""
 
 
-#50) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -62
+#41) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -62
 # _e("6 month free trial","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "6 month free trial"
 msgstr ""
 
 
-#51) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -68
+#42) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -68
 # _e("Hotline","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Hotline"
 msgstr ""
 
 
-#52) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -69
+#43) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -69
 # _e("Efficient lead generation for banks. Attract loan applications by phone.","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Efficient lead generation for banks. Attract loan applications by phone."
 msgstr ""
 
 
-#53) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -71
+#44) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -71
 # _e("First campaign free","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "First campaign free"
 msgstr ""
 
 
-#54) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -91
+#45) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -91
 # _e("Do your entrepreneurs grow 5x faster than the national economy? At bidx they do. Take your businesses to the next level.","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Do your entrepreneurs grow 5x faster than the national economy? At bidx they do. Take your businesses to the next level."
 msgstr ""
 
 
-#55) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -103
+#46) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -103
 # _e("Try a Demo","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Try a Demo"
 msgstr ""
 
 
-#56) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -111
+#47) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -111
 # _e("Demo Portal","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Demo Portal"
 msgstr ""
 
 
-#57) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -119
+#48) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -119
 # _e("Portal Videos","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Portal Videos"
 msgstr ""
 
 
-#58) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -127
+#49) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -127
 # _e("Call Hotline","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Call Hotline"
 msgstr ""
 
 
-#59) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -135
+#50) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -135
 # _e("Hotline call list","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Hotline call list"
 msgstr ""
 
 
-#60) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -147
+#51) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -147
 # _e("We Offer Solutions to","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "We Offer Solutions to"
 msgstr ""
 
 
-#61) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -155
+#52) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -155
 # _e("BANKS","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "BANKS"
 msgstr ""
 
 
-#62) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -171
+#53) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -171
 # _e("INCUBATORS & ACCELERATORS","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "INCUBATORS & ACCELERATORS"
 msgstr ""
 
 
-#63) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -187
+#54) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -187
 # _e("NGOs IN DEVELOPMENT","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "NGOs IN DEVELOPMENT"
 msgstr ""
 
 
-#64) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -203
+#55) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -203
 # _e("Our Founders","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Our Founders"
 msgstr ""
 
 
-#65) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-hotline.php -19
+#56) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-hotline.php -19
 # _e("First campaign 1 month free","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "First campaign 1 month free"
 msgstr ""
 
 
-#66) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-hotline.php -20
+#57) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-hotline.php -20
 # _e("Annual subscription starting at $1.999","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#67) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-hotline.php -22
+#58) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-hotline.php -22
 # _e("I want to try","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#68) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-hotline.php -23
+#59) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-hotline.php -23
 # _e("All Packages","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#69) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-hotline.php -53
+#60) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-hotline.php -53
 # _e("Contact us to get started","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#70) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-hotline.php -55
+#61) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-hotline.php -55
 # _e("Get Started","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#71) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-hotline.php -56
+#62) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-hotline.php -56
 # _e("All Packages","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#72) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-pricing.php -144
+#63) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-pricing.php -144
 # _e("Find Out More About Add-Ons","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Find Out More About Add-Ons"
 msgstr ""
 
 
-#73) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-pricing.php -146
+#64) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-pricing.php -146
 # _e("Support","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Support"
 msgstr ""
 
 
-#74) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-pricing.php -147
+#65) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-pricing.php -147
 # _e("Training","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Training"
 msgstr ""
 
 
-#75) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-pricing.php -155
+#66) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-pricing.php -155
 # _e("Contact us to get started","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#76) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-pricing.php -157
+#67) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-pricing.php -157
 # _e("Get started","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#77) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-ecosystems.php -37
+#68) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-ecosystems.php -37
 # _e("Contact us to get started","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#78) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-ecosystems.php -39
+#69) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-ecosystems.php -39
 # _e("Contact Us","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#79) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-ecosystems.php -40
+#70) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-ecosystems.php -40
 # _e("Pricing","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#80) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-team.php -81
+#71) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-team.php -81
 # _e("Contact us to get started","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#81) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-team.php -83
+#72) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-team.php -83
 # _e("Contact Us","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#82) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-support.php -19
+#73) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-support.php -19
 # _e("Choose a suitable add-on","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Choose a suitable add-on"
 msgstr ""
 
 
-#83) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-support.php -21
+#74) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-support.php -21
 # _e("I want to try","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#84) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-support.php -22
+#75) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-support.php -22
 # _e("All Packages","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#85) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-support.php -52
+#76) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-support.php -52
 # _e("Contact us to get started","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#86) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-support.php -54
+#77) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-support.php -54
 # _e("Get Started","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#87) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-support.php -55
+#78) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-support.php -55
 # _e("All Packages","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.

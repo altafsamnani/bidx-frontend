@@ -10,10 +10,12 @@ jQuery( document ).ready( function( $ ) {
 	var DEDO_Admin = {
 
 		init: function() {
+			
 			this.confirmAction();
 		},
 
 		confirmAction: function() {
+			
 			var $confirmAction = $( '.dedo_confirm_action' );
 
 			$confirmAction.on( 'click', function( e ) {
@@ -29,9 +31,92 @@ jQuery( document ).ready( function( $ ) {
 	DEDO_Admin.init();
 
 	/**
+	 * Modal
+	 *
+	 * Handle modals.
+	 *
+	 * @since  1.5
+	 */
+	var DEDO_Modal = {
+
+		// Store current modal
+		modal: null,
+
+		init: function() {
+			// Check for modals and init
+			if ( $( '.dedo-modal' )[0] ) {
+				this.eventListeners();
+				this.showModal();
+				this.closeModal();
+			}
+		},
+
+		eventListeners: function() {
+			self = this;
+
+			// Show modal
+			$( '.dedo-modal-action' ).on( 'click', function( e ) {
+
+				self.modal = $( this ).attr( 'href' );
+
+				$( 'body' ).trigger( 'openModal' );
+				e.preventDefault();
+			} );
+
+			// Close modal
+			$( 'body' ).on( 'click', '.dedo-modal-close, #dedo-modal-background', function( e ) {
+
+				self.modal = null;
+
+				$( 'body' ).trigger( 'closeModal' );
+				e.preventDefault();
+			} );
+
+			// Escape key
+			$( 'body' ).on( 'keyup', function( e ) {
+
+				if ( 27 == e.keyCode ) {
+					$( 'body' ).trigger( 'closeModal' );
+				}
+			} );
+		},
+
+		showModal: function( modal ) {
+
+			self = this;
+
+			$( 'body' ).on( 'openModal', function() {
+				
+				// Add background
+				$( 'body' ).append( $( '<div id="dedo-modal-background" style="display: none"></div>' ).fadeTo( 300, .7 ) );
+
+				// Display modal
+				$( self.modal ).fadeIn( 300 );
+			} );
+		},
+
+		closeModal: function() {
+
+			$( 'body' ).on( 'closeModal', function() {
+
+				// Fade and remove background
+				$( '#dedo-modal-background' ).fadeOut( 300, function() {
+
+					$( this ).remove();
+				} );
+
+				// Hide modal window
+				$( '.dedo-modal' ).fadeOut( 300 );
+			} );
+		}
+	};
+
+	DEDO_Modal.init();
+
+	/**
 	 * Dashboard
 	 *
-	 * Updates dashboard popular downloads.
+	 * Updates dashboard widget.
 	 *
 	 * @since  1.4
 	 */
@@ -152,7 +237,7 @@ jQuery( document ).ready( function( $ ) {
 					$.each( response.content, function( key, value) {
 					
 						output += '<li>';
-						output += '<a href="' + value.url + '">' + value.title + ' <span class="count">' + value.downloads + '</span></a>';
+						output += '<a href="' + value.url + '"><span class="position">' + ( key + 1 ) + '.</span>' + value.title + ' <span class="count">' + value.downloads + '</span></a>';
 						output += '</li>';
 					} );
 
@@ -192,5 +277,60 @@ jQuery( document ).ready( function( $ ) {
 	if ( 'undefined' !== typeof DEDODashboardOptions ) {
 		DEDO_Dashboard.init( DEDODashboardOptions );
 	}
+
+	/**
+	 * Settings
+	 *
+	 * Settings tabs.
+	 *
+	 * @since  1.5
+	 */
+	var DEDO_Settings = {
+
+		init: function() {
+			this.settingsTabs();
+			this.toggleOptions();
+		},
+
+		settingsTabs: function() {
+			// Show tabs on click
+			$( '#dedo-settings-tabs a' ).on( 'click', function( e ) {
+				var $cachedTab = $( this );
+
+				// Update tab state
+				$( $cachedTab ).addClass( 'nav-tab-active' ).siblings( '.nav-tab' ).removeClass( 'nav-tab-active' );
+
+				// Show/hide form section
+				$( $cachedTab.attr( 'href' ) ).siblings( '.dedo-settings-tab:visible' ).hide( 0, function() {
+					$( $cachedTab.attr( 'href' ) ).show();
+				} );
+
+				// Add tab to refer, so page redirects to tab on save
+				$( 'input[name="_wp_http_referer"]' ).val( function( i, value ) {
+					return value.replace( /&tab=[a-zA-z]+/g, '' ) + '&tab=' + $cachedTab.attr( 'href' ).replace( '#dedo-settings-tab-', '' );
+				} )
+
+				e.preventDefault();
+			} );
+		},
+
+		toggleOptions: function() {
+			var toggles = [ 'grace_period', 'auto_delete', 'cache' ];
+
+			$( toggles ).each( function( index, value ) {
+				$( document ).on( 'change', '[name="delightful-downloads[' + value + ']"]', function( e ) {
+					// Toggle sub menu
+					if ( 1 == $( this ).val() ) {
+						$( '#' + value + '_sub' ).show();
+					}
+					else {
+						$( '#' + value + '_sub' ).hide();
+					}
+				} );
+			} )
+		}
+	};
+
+	DEDO_Settings.init();
 
 } );

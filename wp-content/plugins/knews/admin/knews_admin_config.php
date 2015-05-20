@@ -1,4 +1,6 @@
 <?php
+global $Knews_plugin;
+
 //Security for CSRF attacks
 $knews_nonce_action='kn-config-page';
 $knews_nonce_name='_config';
@@ -12,16 +14,20 @@ function knews_save_prefs() {
 	if (isset($_POST['update_KnewsAdminSettings'])) {
 		
 		$knewsOptions['multilanguage_knews'] = $Knews_plugin->post_safe('multilanguage_knews');
-		$knewsOptions['from_mail_knews'] = $Knews_plugin->post_safe('from_mail_knews');
-		$knewsOptions['from_name_knews'] = $Knews_plugin->post_safe('from_name_knews');
+		$knewsOptions['from_mail_knews'] = trim($Knews_plugin->post_safe('from_mail_knews'));
+		$knewsOptions['from_name_knews'] = trim($Knews_plugin->post_safe('from_name_knews'));
 		$knewsOptions['double_optin'] = $Knews_plugin->post_safe('double_optin_knews', '0');
-		$knewsOptions['notify_signups_email'] = $Knews_plugin->post_safe('notify_signups_knews', '');
+		$knewsOptions['notify_signups_email'] = trim($Knews_plugin->post_safe('notify_signups_knews', ''));
 		$knewsOptions['write_logs'] = $Knews_plugin->post_safe('write_logs_knews', 'no');
 		$knewsOptions['def_autom_post'] = $Knews_plugin->post_safe('def_autom_post_knews', '0');
 		$knewsOptions['edited_autom_post'] = $Knews_plugin->post_safe('edited_autom_post_knews', '0');
 		$knewsOptions['check_bot'] = $Knews_plugin->post_safe('check_bot_knews', '0');
+		$knewsOptions['email_blacklist'] = $Knews_plugin->post_safe('email_blacklist_knews', '0');
 		$knewsOptions['apply_filters_on'] = $Knews_plugin->post_safe('apply_filters_on_knews', '0');
 		$knewsOptions['config_knews'] = 'yes';
+		$knewsOptions['allowed_content_tags'] = $Knews_plugin->post_safe('allowed_content_tags_knews', '');
+		$knewsOptions['excerpt_length'] = $Knews_plugin->post_safe('excerpt_length_knews', '');
+		$knewsOptions['crop_knews'] = $Knews_plugin->post_safe('crop_knews', '');
 		
 		if ($Knews_plugin->post_safe('reset_alerts_knews')=='1') {
 			$knewsOptions['no_warn_cron_knews'] = 'no';
@@ -35,22 +41,22 @@ function knews_save_prefs() {
 
 	} elseif (isset($_POST['update_KnewsAdminSettingsAdv'])) {
 		
-		$knewsOptions['from_mail_knews'] = $Knews_plugin->post_safe('from_mail_knews');
-		$knewsOptions['from_name_knews'] = $Knews_plugin->post_safe('from_name_knews');
+		$knewsOptions['from_mail_knews'] = trim($Knews_plugin->post_safe('from_mail_knews'));
+		$knewsOptions['from_name_knews'] = trim($Knews_plugin->post_safe('from_name_knews'));
 		$knewsOptions['knews_cron'] = $Knews_plugin->post_safe('knews_cron');
 		$knewsOptions['smtp_knews'] = $Knews_plugin->post_safe('smtp_knews');
-		$knewsOptions['smtp_host_knews'] = $Knews_plugin->post_safe('smtp_host_knews');
-		$knewsOptions['smtp_port_knews'] = $Knews_plugin->post_safe('smtp_port_knews');
-		$knewsOptions['smtp_user_knews'] = $Knews_plugin->post_safe('smtp_user_knews');
-		$knewsOptions['smtp_pass_knews'] = $Knews_plugin->post_safe('smtp_pass_knews');
+		$knewsOptions['smtp_host_knews'] = trim($Knews_plugin->post_safe('smtp_host_knews'));
+		$knewsOptions['smtp_port_knews'] = trim($Knews_plugin->post_safe('smtp_port_knews'));
+		$knewsOptions['smtp_user_knews'] = trim($Knews_plugin->post_safe('smtp_user_knews'));
+		$knewsOptions['smtp_pass_knews'] = trim($Knews_plugin->post_safe('smtp_pass_knews'));
 		$knewsOptions['smtp_secure_knews'] = $Knews_plugin->post_safe('smtp_secure_knews');
 		$knewsOptions['is_sendmail'] = $Knews_plugin->post_safe('is_sendmail_knews');
 		$knewsOptions['pixel_tracking'] = $Knews_plugin->post_safe('knews_pixel_tracking', 0, 'int');
 
 	} elseif (isset($_POST['update_KnewsAdminRegister'])) {
 
-		$knewsOptions['registration_email'] = $Knews_plugin->post_safe('registration_email_knews');
-		$knewsOptions['registration_serial'] = $Knews_plugin->post_safe('registration_serial_knews');
+		$knewsOptions['registration_email'] = trim($Knews_plugin->post_safe('registration_email_knews'));
+		$knewsOptions['registration_serial'] = trim($Knews_plugin->post_safe('registration_serial_knews'));
 
 	}
 
@@ -201,7 +207,7 @@ if ($Knews_plugin->get_safe('tab')=='custom') {
 <?php if (!$Knews_plugin->im_pro()) { ?>
 				<p style="font-size:13px; line-height:20px;"><a href="admin.php?page=knews_config&tab=pro" class="knews_on_off knews_on_off_left" style="background-position: -50px 0px;">&nbsp;</a><label class="knews_processed knews_on_off_left"><?php _e('Use Knews CRON <strong>without configuration</strong> (We will trigger your script remotely)','knews'); ?><br /><strong>This is a Knews Pro feature</strong></label></p>
 <?php } else { ?>
-				<p style="font-size:13px; line-height:20px;"><a href="#" onclick="knews_cron_callme(); return false;"><img src="http://www.knewsplugin.com/look_cron.php?email=<?php echo $knewsOptions['registration_email']; ?>&serial=<?php echo $knewsOptions['registration_serial']; ?>&url=<?php echo urlencode($cron_main_url); ?>" style="vertical-align:middle; margin-right:10px;" /></a><label><?php _e('Use Knews CRON <strong>without configuration</strong> (We will trigger your script remotely)','knews'); ?></label></p>
+				<p style="font-size:13px; line-height:20px;"><a href="#" onclick="knews_cron_callme(); return false;"><img src="<?php echo (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on' ? 'https://' : 'http://www.'); ?>knewsplugin.com/look_cron.php?email=<?php echo $knewsOptions['registration_email']; ?>&serial=<?php echo $knewsOptions['registration_serial']; ?>&url=<?php echo urlencode($cron_main_url); ?>" style="vertical-align:middle; margin-right:10px;" /></a><label><?php _e('Use Knews CRON <strong>without configuration</strong> (We will trigger your script remotely)','knews'); ?></label></p>
 <?php } ?>
 				<div id="knews_cron_callme_status"></div>
 			</div>
@@ -298,9 +304,9 @@ if ($Knews_plugin->get_safe('tab')=='custom') {
 							echo '<td><img src="' . KNEWS_URL . '/images/pencil.png" width="16" height="16"></td>';
 							echo '<td><strong>' . $knews_smtp_once['from_name_knews'] . '</strong><div class="row-actions"><span>&nbsp;';
 						} else {
-							echo '<td>&nbsp;</td><td>' . $knews_smtp_once['from_name_knews'] . '<div class="row-actions"><span><a href="admin.php?page=knews_config&tab=advanced&editsmtp=' . key($knews_smtp_multiple) . '#submitmethod">Edit</a>';
+							echo '<td>&nbsp;</td><td>' . $knews_smtp_once['from_name_knews'] . '<div class="row-actions"><span><a href="admin.php?page=knews_config&tab=advanced&subtab=2&editsmtp=' . key($knews_smtp_multiple) . '#submitmethod">Edit</a>';
 						}
-						echo ((key($knews_smtp_multiple)==1) ? '' : ' | <a href="admin.php?page=knews_config&tab=advanced&delsmtp=' . key($knews_smtp_multiple) . '#submitmethod">Delete</a>') . '</span></div></td>';
+						echo ((key($knews_smtp_multiple)==1) ? '' : ' | <a href="admin.php?page=knews_config&tab=advanced&subtab=2&delsmtp=' . key($knews_smtp_multiple) . '#submitmethod">Delete</a>') . '</span></div></td>';
 						echo '<td>' . $knews_smtp_once['smtp_host_knews'] . '</td>';
 						echo '<td><input type="radio" name="knews_smtp_default"' . ((key($knews_smtp_multiple)==$knews_smtp_default) ? ' checked="checked"' : '') . ' autocomplete="off" value="' . key($knews_smtp_multiple) . '" /></td></tr>';
 					}
@@ -313,7 +319,7 @@ if ($Knews_plugin->get_safe('tab')=='custom') {
 				</tbody>
 			</table>
 
-				<div style="width:420px; float:left; padding-left:30px;">
+				<div style="width:440px; float:left; padding-left:30px;">
 					<table cellpadding="0" cellspacing="0" border="0" style="font-size:12px">
 					<tr><td><?php _e('Sender name','knews');?>:</td><td><input type="text" name="from_name_knews" id="from_name_knews" class="regular-text" autocomplete="off" value="<?php echo $knews_smtp_multiple[$knews_smtp_editing]['from_name_knews']; ?>" /></td></tr>
 					<tr><td><?php _e('Sender e-mail','knews');?>:</td><td><input type="text" name="from_mail_knews" id="from_mail_knews" class="regular-text" autocomplete="off" value="<?php echo $knews_smtp_multiple[$knews_smtp_editing]['from_mail_knews']; ?>" /></td></tr>
@@ -403,19 +409,19 @@ if ($Knews_plugin->get_safe('tab')=='custom') {
 			echo '<h3>' . __('Knews Pro is currently installed.','knews') . '</h3>';	
 		} else {
 			echo '<h3>' . __('Registration','knews') . '</h3>';
-			$look = wp_remote_get( 'http://www.knewsplugin.com/shop/be_pro.php' );
+			$look = wp_remote_get( (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on' ? 'https://' : 'http://www.') . 'knewsplugin.com/shop/be_pro.php' );
 			if (!is_wp_error($look)) {
 				if (isset($look['body'])) echo $look['body'];
 			} else {
 			?>
 			<script type="text/javascript">
-				if ('https:' == document.location.protocol) {
+				/*if ('https:' == document.location.protocol) {
 					starturl = 'https://';
 				} else {
 					starturl = 'http://www' + '.';
-				}
+				}*/
 				var knewsscript = document.createElement('script'); knewsscript.type = 'text/javascript'; knewsscript.async = true;
-				knewsscript.src = starturl + 'knewsplugin.com/shop/look.js?w=<?php echo urlencode(get_bloginfo('version'));?>&v=<?php echo urlencode(KNEWS_VERSION); ?>&l=<?php echo WPLANG; ?>';
+				knewsscript.src = '<?php echo (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on' ? 'https://' : 'http://www.'); ?>knewsplugin.com/shop/look.js?w=<?php echo urlencode(get_bloginfo('version'));?>&v=<?php echo urlencode(KNEWS_VERSION); ?>&l=<?php echo WPLANG; ?>';
 				var knewsscript_s = document.getElementsByTagName('script')[0]; knewsscript_s.parentNode.insertBefore(knewsscript, knewsscript_s);
 				
 			</script>
@@ -488,6 +494,17 @@ if ($Knews_plugin->get_safe('tab')=='custom') {
 			<p><input type="checkbox" name="write_logs_knews" value="yes" id="write_logs_knews"<?php if ($knewsOptions['write_logs']=='yes') echo ' checked="checked"'; ?> class="knews_on_off align_left" /><label><?php _e('Write logs (in /wp-content/plugins/knews/tmp directory) in submits','knews'); ?></label></p>
 			<hr />
 
+			<h3><?php _e('Image Insertion crop','knews'); ?></h3>
+			<p><input type="checkbox" name="crop_knews" value="yes" id="crop_knews"<?php if ($knewsOptions['crop_knews']=='yes') echo ' checked="checked"'; ?> class="knews_on_off align_left" /><label><?php _e('Image crop? (Some templates can override this preference)','knews'); ?></label></p>
+
+			<h3><?php _e('Post insertion options','knews'); ?></h3>
+			<p><label><strong><?php _e('Allow this tags in %the_content% post insertion (manual & automated):','knews'); echo '</strong><br />'; _e('Warning: some tags can break the newsletter design, add it at your own risk!','knews'); ?></label>
+			<textarea name="allowed_content_tags_knews" id="allowed_content_tags_knews" style="width:100%"><?php echo $knewsOptions['allowed_content_tags']; ?></textarea></p>
+			<p><label><strong><?php _e('Length of the excerpt:','knews'); ?>
+			<input type="text" name="excerpt_length_knews" id="excerpt_length_knews" style="width:40px" value="<?php echo $knewsOptions['excerpt_length']; ?>" /> <?php _e('words','knews'); ?></p>
+
+			<hr />
+			
 			<h3><?php _e('Automated options','knews'); ?></h3>
 			<p><input type="checkbox" name="def_autom_post_knews" value="1" id="def_autom_post_knews"<?php if ($knewsOptions['def_autom_post']=='1') echo ' checked="checked"'; ?> class="knews_on_off align_left" /><label><?php _e('Include the posts in the automated newsletters (default value for the new created posts)','knews'); ?></label></p>
 
@@ -497,8 +514,19 @@ if ($Knews_plugin->get_safe('tab')=='custom') {
 
 			<h3><?php _e('Compatibility options','knews'); ?></h3>
 			<p><input type="checkbox" name="apply_filters_on_knews" value="1" id="apply_filters_on_knews"<?php if ($knewsOptions['apply_filters_on']=='1') echo ' checked="checked"'; ?> class="knews_on_off align_left" /><label><?php _e('Apply filter the_content in the newsletter post insertion (Deactivate for compatibility issues with some plugins like NextGen Gallery)','knews'); ?><br /><?php _e('<strong>Note</strong>: if you are using <strong>qTranslate</strong> you cant deactivate this option, because it uses this filter to divide the post contents into different languages.','knews'); ?></label></p>
-			<p style="padding-top:15px;"><input type="checkbox" name="check_bot_knews" value="1" id="check_bot_knews"<?php if ($knewsOptions['check_bot']=='1') echo ' checked="checked"'; ?> class="knews_on_off align_left" /><label><?php _e('Prevent bot registrations. Some Cache Plugins can need deactivate this option (Subscribe always fails "wrong e-mail adress" message).','knews'); ?></label></p>
 
+			<hr />
+
+			<h3><a name="blacklists" id="blacklists"></a><?php _e('Clean lists','knews'); ?></h3>
+			<p style="padding-bottom:15px;"><input type="checkbox" name="check_bot_knews" value="1" id="check_bot_knews"<?php if ($knewsOptions['check_bot']=='1') echo ' checked="checked"'; ?> class="knews_on_off align_left" /><label><?php _e('Prevent bot registrations. Some Cache Plugins can need deactivate this option (Subscribe always fails "wrong e-mail adress" message).','knews'); ?></label></p>
+			<?php
+			global $email_blacklist; $this->load_blacklist(true);
+			?>
+			<div class="updated below-h2">
+				<p><?php echo sprintf(__('Knews includes now a %s domains blacklist. It includes temporary email domains, used widely by spammers.','knews'), '<strong>' . count($email_blacklist) . '</strong>' ); ?> <a href="#" class="knews_blacklist"><?php _e('Look list','knews'); ?></a></p><p><a href="admin.php?page=knews_users&da=cleanBlackList" class="button" target="_blank"><?php _e('Run Mailing lists clean now','knews'); ?></a></p>
+			</div>
+			<p><input type="checkbox" name="email_blacklist_knews" value="1" id="email_blacklist_knews"<?php if ($knewsOptions['email_blacklist']=='1') echo ' checked="checked"'; ?> class="knews_on_off align_left" /><label><?php echo __('Block registrations from blacklist domains.','knews'); ?></label></p>
+			<div class="knews_blacklist" style="display:none;"><textarea style="width:100%; height:200px"><?php echo implode(', ', $email_blacklist); ?></textarea></div>
 			<div class="submit">
 				<input type="submit" name="update_KnewsAdminSettings" id="update_KnewsAdminSettings" value="<?php _e('Save','knews');?>" class="button-primary" />
 			</div>

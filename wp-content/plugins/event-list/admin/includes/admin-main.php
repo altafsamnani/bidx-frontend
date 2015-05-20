@@ -66,7 +66,7 @@ class EL_Admin_Main {
 	public function show_main() {
 		// check permissions
 		if(!current_user_can('edit_posts')) {
-			wp_die(__('You do not have sufficient permissions to access this page.'));
+			wp_die(__('You do not have sufficient permissions to access this page.','event-list'));
 		}
 		// TODO: add check_admin_referer to improve security (see /wp-admin/edit.php)
 		// is there POST data an event was edited must be updated
@@ -101,14 +101,15 @@ class EL_Admin_Main {
 
 	private function show_page_header($action, $editview=false) {
 		if($editview) {
-			$header = 'Edit Event';
+			$duplicate_link = add_query_arg(array('id'=>$_GET['id'], 'action'=>'copy'), '?page=el_admin_new');
+			$header = __('Edit Event','event-list').' <a href="'.$duplicate_link.'" class="add-new-h2">'.__('Duplicate','event-list').'</a>';
 		}
 		else {
-			$header = 'Events <a href="?page=el_admin_new" class="add-new-h2">Add New</a>';
+			$header = __('Events', 'event-list');
 		}
 		echo '
 			<div class="wrap">
-				<div id="icon-edit-pages" class="icon32"><br /></div><h2>'.$header.'</h2>';
+				<div id="icon-edit-pages" class="icon32"><br /></div><h2>'.$header.' <a href="?page=el_admin_new" class="add-new-h2">'.__('Add New','event-list').'</a></h2>';
 		$this->show_message($action);
 	}
 
@@ -197,7 +198,7 @@ class EL_Admin_Main {
 		if(isset($eventdata['sql_end_date']) && '' != $eventdata['sql_end_date']) {
 			$eventdata['end_date'] = $eventdata['sql_end_date'];
 		}
-		return $this->db->update_event($eventdata);
+		return $this->db->update_event($eventdata, true);
 	}
 
 	private function redirect($action=false, $error=false, $query_args=array()) {

@@ -25,7 +25,7 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 	}
 
 	if ($Knews_plugin->get_safe('auto')==1 || $Knews_plugin->get_safe('auto',2)==0) {
-		$query = "UPDATE ".KNEWS_AUTOMATED." SET auto=" . $Knews_plugin->get_safe('auto') . " WHERE id=" . $Knews_plugin->get_safe('idauto', 0, 'int');
+		$query = "UPDATE ".KNEWS_AUTOMATED." SET auto=" . $Knews_plugin->get_safe('auto', 0, 'int') . " WHERE id=" . $Knews_plugin->get_safe('idauto', 0, 'int');
 		$result=$wpdb->query( $query );
 		echo '<div class="updated"><p>' . (($Knews_plugin->get_safe('auto')==1) ? __('Automated submit activated','knews') : __('Manual submit activated','knews')) . '</p></div>';
 	}
@@ -36,17 +36,17 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 		$lang = $Knews_plugin->post_safe('auto_lang');
 		$news = $Knews_plugin->post_safe('auto_newsletter');
 		$target = $Knews_plugin->post_safe('auto_target');
-		$paused = $Knews_plugin->post_safe('auto_paused', 0);
-		$auto = $Knews_plugin->post_safe('auto_auto', 0);
-		$mode = $Knews_plugin->post_safe('auto_mode', 0);
-		$posts = $Knews_plugin->post_safe('auto_posts', 0);
-		$time = $Knews_plugin->post_safe('auto_time', 0);
-		$day = $Knews_plugin->post_safe('auto_dayweek', 0);
-		$at_once = $Knews_plugin->post_safe('emails_at_once', 50);
-		$id_smtp = $Knews_plugin->post_safe('knews_select_smtp', 1);
+		$paused = $Knews_plugin->post_safe('auto_paused', 0, 'int');
+		$auto = $Knews_plugin->post_safe('auto_auto', 0, 'int');
+		$mode = $Knews_plugin->post_safe('auto_mode', 0, 'int');
+		$posts = $Knews_plugin->post_safe('auto_posts', 0, 'int');
+		$time = $Knews_plugin->post_safe('auto_time', 0, 'int');
+		$day = $Knews_plugin->post_safe('auto_dayweek', 0, 'int');
+		$at_once = $Knews_plugin->post_safe('emails_at_once', 50, 'int');
+		$id_smtp = $Knews_plugin->post_safe('knews_select_smtp', 1, 'int');
 		
 		$event = $Knews_plugin->post_safe('auto_event');
-		$delay = $Knews_plugin->post_safe('auto_delay', 0);
+		$delay = $Knews_plugin->post_safe('auto_delay', 0, 'int');
 		$delay_unit = $Knews_plugin->post_safe('auto_delay_unit');	
 
 		$type = 'autocreate'; if ($Knews_plugin->post_safe('action')=='add_autoresponder') $type = 'autoresponder';
@@ -100,7 +100,7 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 	$frequency = array ('daily','weekly','every 15 days','monthly','every 2 months','every 3 months');
 	$dayname = array ('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday');
 	
-	$query = "SELECT id, name FROM " . KNEWS_LISTS . " ORDER BY orderlist";
+	$query = "SELECT id, name FROM " . KNEWS_LISTS . " WHERE auxiliary=0 ORDER BY orderlist";
 	$lists_name = $wpdb->get_results( $query );
 
 	if (!$Knews_plugin->im_pro()) {
@@ -112,7 +112,7 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 				location.href='admin.php?page=knews_config&tab=pro';
 				return false;
 			})
-			.onchange(function() {
+			.change(function() {
 				return false;
 			});
 		});
@@ -313,7 +313,9 @@ if ($Knews_plugin->get_safe('tab')!='autoresponders') {
 					}
 					echo '</select></p>';
 				} else {
+					echo '<span style="color:#f00">';
 					echo __('You must first create a newsletter with insertable info (leave the %the_content%, %the_title% etc.)','knews') . '</p>';
+					echo '</span>';
 				}
 				?>
 				<p><input type="radio" name="auto_mode" autocomplete="off" value="1" checked="checked" /><?php printf(__('Create a newsletter every %s posts','knews'), '<input type="text" name="auto_posts" id="auto_posts" value="5" style="text-align:right; width:30px;" />');?></p>
@@ -629,7 +631,9 @@ if ($selector = $Knews_plugin->get_smtp_selector()) {
 				}
 				?>
 				</p>
-<div id="at_once"><p><?php _e('E-mails sent at once','knews');?>: <select name="emails_at_once"><option value="2">2 <?php _e('test mode','knews');?></option><option value="10">10</option><option value="25">25</option><option value="50" selected="selected">50 <?php _e('(normal)','knews');?></option><option value="100">100</option><option value="250">250 <?php _e('(high performance SMTP)','knews');?></option><option value="500">500 <?php _e('(high performance SMTP)','knews');?></option></select> <span class="at_once_preview">300</span> per hour.</p>
+<div id="at_once"><p><?php _e('E-mails sent at once','knews');?>: <select name="emails_at_once"><option value="2">2 <?php _e('test mode','knews');?></option><option value="10">10</option><option value="25">25</option><option value="50" <?php if (!defined('KNEWS_CUSTOM_SPEED')) echo 'selected="selected"'; ?>>50 <?php _e('(normal)','knews');?></option><option value="100">100</option><option value="250">250 <?php _e('(high performance SMTP)','knews');?></option><option value="500">500 <?php _e('(high performance SMTP)','knews');?></option>
+<?php if (defined('KNEWS_CUSTOM_SPEED')) echo '<option value="' . KNEWS_CUSTOM_SPEED . '" selected="selected">' . KNEWS_CUSTOM_SPEED . '</option>'; ?>
+</select> <span class="at_once_preview"><?php if (defined('KNEWS_CUSTOM_SPEED')) echo KNEWS_CUSTOM_SPEED; else echo '300'; ?></span> per hour.</p>
 </div>
 <?php if ($Knews_plugin->im_pro()) {
 if ($selector = $Knews_plugin->get_smtp_selector()) {

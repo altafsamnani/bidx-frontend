@@ -1,4 +1,6 @@
 <?php
+			$break_to_avoid_timeout=false;
+			$consecutive_emails_error=0;
 			$test_smtp=is_array($test_array);
 			
 			if (!is_array($recipients)) {
@@ -17,11 +19,19 @@
 
 			} else {
 				
-				//include_once (KNEWS_DIR . '/includes/class-phpmailer.php');
-				//include_once (KNEWS_DIR . '/includes/class-smtp.php');
 				if ( !class_exists("PHPMailer") ) require_once ABSPATH . WPINC . '/class-phpmailer.php';
 				if ( !class_exists("SMTP") ) require_once ABSPATH . WPINC . '/class-smtp.php';
 				
+				if ( !class_exists("KnewsPHPMailer")) {
+					class KnewsPHPMailer extends PHPMailer {
+						public function KnewsSmtpReset() {
+							if ($this->smtp !== null and $this->smtp->connected()) {
+								return $this->smtp->reset();
+							}
+						}
+					};
+				}
+
 				if (!$test_smtp) {
 
 					if (!$smtpdata = $this->get_smtp_multiple($id_smtp)) {
@@ -29,7 +39,7 @@
 						//$smtpdata = $smtpdata[1];
 					}
 					
-					$mail=new PHPMailer();
+					$mail=new KnewsPHPMailer();
 					if ($smtpdata['is_sendmail']=='1') {
 						$mail->IsSendmail();
 					} else {
@@ -37,7 +47,7 @@
 					}
 					$mail->CharSet='UTF-8';
 
-					if (isset ($knewsOptions['bounce_on']) && $knewsOptions['bounce_on'] == '1') $mail->Sender=$knewsOptions['bounce_email'];
+
 					
 					$mail->From = $smtpdata['from_mail_knews'];
 					$mail->FromName = $smtpdata['from_name_knews'];
@@ -56,7 +66,7 @@
 
 				} else {
 
-					$mail=new PHPMailer();
+					$mail=new KnewsPHPMailer();
 					if ($test_array['is_sendmail']=='1') {
 						$mail->IsSendmail();
 					} else {
@@ -92,6 +102,7 @@
 			$partial_submit_error=0;
 			$partial_submit_ok=0;
 			$timer = time();
+			$aux_timer = $timer;
 			$error_info=array();
 
 			foreach ($recipients as $recipient) {
@@ -114,6 +125,16 @@
 					$customText=str_replace('%mobile_version_href%', $recipient->cant_read . (($mobile) ? '&m=dsk' : '&m=mbl'), $customText);
 				}
 
+				if (isset($recipient->fb_like)) {
+					$customHtml=str_replace('%fb_like_href%', $recipient->fb_like, $customHtml);
+					$customText=str_replace('%fb_like_href%', $recipient->fb_like, $customText);
+				}
+
+				if (isset($recipient->tweet)) {
+					$customHtml=str_replace('%tweet_href%', $recipient->tweet, $customHtml);
+					$customText=str_replace('%tweet_href%', $recipient->tweet, $customText);
+				}
+
 				$customSubject=$theSubject;
 				if (isset($recipient->tokens)) {
 					foreach ($recipient->tokens as $token) {
@@ -126,12 +147,20 @@
 				$customHtml = str_replace('#blog_name#', get_bloginfo('name'), $customHtml);
 				$customText = str_replace('#blog_name#', get_bloginfo('name'), $customText);
 
+				$customHtml = str_replace('#news_title_encoded#', urlencode($customSubject), $customHtml);
+				$customText = str_replace('#news_title_encoded#', urlencode($customSubject), $customText);
+
+				$customHtml = str_replace('#news_title#', $customSubject, $customHtml);
+				$customText = str_replace('#news_title#', $customSubject, $customText);
+
 				if (isset($recipient->confkey)) {
 					$customHtml = str_replace('%confkey%', $recipient->confkey, $customHtml);
 					$customText = str_replace('%confkey%', $recipient->confkey, $customText);
 				}
 
 				$customHtml = $this->htmlentities_corrected($customHtml); $customText = $this->htmlentities_corrected($customText);
+
+				$do_smtp_reset = false;
 
 				if ($knewsOptions['smtp_knews']=='0' && !$test_smtp) {
 
@@ -148,11 +177,13 @@
 						$partial_submit_ok++;
 						$error_info[]='submit ok [wp_mail()]';
 						$status_submit=1;
+						$consecutive_emails_error=0;
 					} else {
 						$submit_error++;
 						$partial_submit_error++;
 						$error_info[]='wp_mail() error';
 						$status_submit=2;
+						$consecutive_emails_error++;
 					}
 
 				} else {
@@ -178,11 +209,17 @@
 						$partial_submit_ok++;
 						$error_info[]='submit ok [smtp]';
 						$status_submit=1;
+						$consecutive_emails_error=0;
 					} else {
 						$submit_error++;
 						$partial_submit_error++;
 						$error_info[]=$mail->ErrorInfo . ' [smtp]';
 						$status_submit=2;
+						$consecutive_emails_error++;
+
+						$reset_result = $mail->KnewsSmtpReset();	
+
+						$do_smtp_reset = true;
 					}
 						
 					$mail->ClearAddresses();
@@ -192,16 +229,17 @@
 				}
 
 				if (count($recipients) > 1) {
-					if( !ini_get('safe_mode') ) set_time_limit(25);
+					if( !@set_time_limit(25) ) {
+						if ($timer + ini_get('max_execution_time') - 4 <= time()) $break_to_avoid_timeout=true;
+					}
 					echo ' ';
 					
-					if ($timer + 8 <= time()) {
-						$query = "UPDATE " . KNEWS_NEWSLETTERS_SUBMITS . " SET users_ok = users_ok + " . $partial_submit_ok . ", users_error = users_error + " . $partial_submit_error . " WHERE id=" . $idNewsletter;
+					if ($aux_timer + 8 >= time() || $break_to_avoid_timeout) {
+						$aux_timer = time();
+						$query = "UPDATE " . KNEWS_NEWSLETTERS_SUBMITS . " SET users_ok = users_ok + " . $partial_submit_ok . ", users_error = users_error + " . $partial_submit_error . " WHERE id=" . $idSubmit;
 						$result = $wpdb->query( $query );
 						$partial_submit_error = 0;
 						$partial_submit_ok = 0;
-						
-						$timer = time();
 					}
 
 				}
@@ -214,13 +252,31 @@
 				if ($fp) {
 					$hour = date('H:i:s', current_time('timestamp'));
 					fwrite($fp, '  ' . $hour . ' | ' . $recipient->email . ' | ' . $error_info[count($error_info)-1] . "<br>\r\n");
+
+					if ($do_smtp_reset) fwrite($fp, '* Reset SMTP after fail, result: ' . ($reset_result ? '1' : '0') . "<br>\r\n");
 				}
 				
+				/*
 				if ($submit_error != 0) {
 					for ($i = $submit_ok+1; $i < count($recipients); $i++) {
 						if (isset($recipients[$i]->unique_submit)) {
 							$query = "UPDATE " . KNEWS_NEWSLETTERS_SUBMITS_DETAILS . " SET status=0 WHERE id=" .$recipients[$i]->unique_submit;
 							$unlock = $wpdb->query( $query );
+						}
+					}
+					//break;
+				}
+				*/
+				if ($break_to_avoid_timeout || $consecutive_emails_error > 4) {
+
+					$query = "UPDATE " . KNEWS_NEWSLETTERS_SUBMITS_DETAILS . " SET status=0 WHERE status=3 AND submit=" . $idSubmit;
+					$restart = $wpdb->query( $query );
+
+					if ($fp) {
+						if ($break_to_avoid_timeout) {
+							fwrite($fp, '* Your webserver are run under safe mode, terminating the script to avoid the PHP timeout error... (' . $hour . ') ' . "<br>\r\n");
+						} else {
+							fwrite($fp, '* Too much consecutive submissions error. Let\'s stop & wait next cycle... (' . $hour . ') ' . "<br>\r\n");							
 						}
 					}
 					break;
@@ -229,4 +285,4 @@
 		
 			if (count($recipients) > 1 && ($knewsOptions['smtp_knews']!='0') || $test_smtp) $mail->SmtpClose();
 			
-			$reply = array('ok'=>$submit_ok, 'error'=>$submit_error, 'error_info'=>$error_info);
+			$reply = array('ok'=>$submit_ok, 'error'=>$submit_error, 'error_info'=>$error_info, 'break_to_avoid_timeout' => $break_to_avoid_timeout, 'too_consecutive_emails_error'=> $consecutive_emails_error > 4);

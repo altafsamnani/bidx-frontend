@@ -1,12 +1,27 @@
 <?php
-global $knewsOptions, $Knews_plugin, $wpdb, $knews_aj_look_date;
+global $knewsOptions, $Knews_plugin, $wpdb, $knews_aj_look_date, $knews_timer, $break_to_avoid_timeout;
+
+$break_to_avoid_timeout=false;
+$knews_timer = time();
+knews_prevent_timeout();
 
 if ($Knews_plugin) {
 
-	add_filter( 'excerpt_length', 'knews_excerpt_length', 999 );
 	add_filter('posts_where', 'knews_aj_posts_where' );
 	
 	if (! $Knews_plugin->initialized) $Knews_plugin->init();
+
+	function knews_custom_excerpt_length_fn ($length) {
+		
+		global $Knews_plugin, $knewsOptions;
+		
+		$length = $knewsOptions['excerpt_length'];
+		$length = apply_filters( 'knews_excerpt_length', $length);
+
+		$template_id = $Knews_plugin->get_safe('tempid', 'unknown');
+		return apply_filters( 'knews_excerpt_length_' . $template_id, $length );
+	}
+	add_filter( 'excerpt_length', 'knews_custom_excerpt_length_fn', 1, 999 );
 
 	if ($knewsOptions['write_logs']=='yes') {
 		$hour = date('d-m-Y_H-i', current_time('timestamp'));
@@ -25,7 +40,9 @@ if ($Knews_plugin) {
 			@$filelock = fopen(KNEWS_DIR . '/tmp/lockfile2.txt', 'r');
 			$timelock = intval(fread($filelock, filesize(KNEWS_DIR . '/tmp/lockfile2.txt')));
 			fclose($filelock);
-			if (intval(time()) - $timelock > 3500) {
+			$timemax = 3500;
+			if( !@set_time_limit(25) ) $timemax = ini_get('max_execution_time') + 120;
+			if (intval(time()) - $timelock > $timemax) {
 				//Posem la nova data
 				knews_debug ('* Previous submit process terminated suddenly, continuing...' . "\r\n");
 				@$filelock = fopen(KNEWS_DIR . '/tmp/lockfile2.txt', 'w');
@@ -42,6 +59,8 @@ if ($Knews_plugin) {
 				if ($fp) fclose($fp);
 				die();
 			}
+		} else {
+			knews_debug("\r\n" . '* Please, make writable the folder wp-content/plugins/knews/tmp. Otherwise overlapped process can occur.' . "\r\n");				
 		}
 	} else {
 		//Escribim fitxer
@@ -119,14 +138,13 @@ if ($Knews_plugin) {
 		} elseif ($aj->what_is=='autocreate') {
 		
 			if ((KNEWS_MULTILANGUAGE) && $knewsOptions['multilanguage_knews']=='wpml') $sitepress->switch_lang($aj->lang);
-	
-			while (true) :
+			while (!$break_to_avoid_timeout) :
+				$doit = false;
 				if ($aj->every_mode ==1) {
 					$knews_aj_look_date = $aj->last_run;
 					$pend_posts = knews_search_posts($aj, $aj->every_posts);
 					if (count($pend_posts) == $aj->every_posts) $doit = true;
 					knews_debug('- posts to send: ' .count($pend_posts) . "\r\n");
-			
 				} else {
 					$time_lapsus = time();
 					if ($aj->every_time == 1) $time_lapsus = $time_lapsus - 24 * 60 * 60; //Daily
@@ -153,7 +171,6 @@ if ($Knews_plugin) {
 						knews_debug('- posts to send: ' .count($pend_posts) . "\r\n");
 					}
 				}
-			
 				if ($doit && count($pend_posts) != 0) {
 					
 					$query="SELECT * FROM " . KNEWS_NEWSLETTERS . " WHERE id=" . $aj->newsletter_id;
@@ -162,6 +179,8 @@ if ($Knews_plugin) {
 					$rightnews = false;
 					if (count($news) != 0) $rightnews=true;
 			
+					$Knews_plugin->template_id = $news[0]->template;
+
 					if ($rightnews) {
 						knews_debug('- there is a newsletter to build: ' . $news[0]->name . "\r\n");
 						require_once (KNEWS_DIR . '/includes/knews_util.php');
@@ -176,18 +195,34 @@ if ($Knews_plugin) {
 				}
 				if ($aj->every_mode !=1 || !$rightnews) break;
 				knews_debug('let\'s iterate, maybe more posts wait for news build' . "\r\n");
+				
+				knews_prevent_timeout();
 			endwhile;
 		}
+		
+		knews_prevent_timeout();
+		if ($break_to_avoid_timeout) break;
 	}
 	remove_filter('posts_where', 'knews_aj_posts_where' );
-	remove_filter('excerpt_length', 'knews_excerpt_length' );
+	remove_filter('excerpt_length', 'knews_custom_excerpt_length_fn' );
 
-	unlink(KNEWS_DIR . '/tmp/lockfile2.txt');
+	if (is_file(KNEWS_DIR . '/tmp/lockfile2.txt')) unlink(KNEWS_DIR . '/tmp/lockfile2.txt');
 	if ($fp) fclose($fp);
 
 	if ((KNEWS_MULTILANGUAGE) && $knewsOptions['multilanguage_knews']=='wpml') $sitepress->switch_lang($save_lang);
 }
 
+function knews_prevent_timeout() {
+	global $break_to_avoid_timeout, $knews_timer;
+
+	if( !@set_time_limit(25) ) {
+		if ($knews_timer + ini_get('max_execution_time') - 4 <= time()) {
+			$break_to_avoid_timeout=true;
+			knews_debug('* Your webserver are run under safe mode, terminating the script to avoid the PHP timeout error...' . "\r\n");
+		}
+	}
+	echo ' ';
+}
 function knews_debug($message) {
 	
 	global $fp, $Knews_plugin;
@@ -288,13 +323,6 @@ function knews_create_news($aj, $pend_posts, $news, $fp, $mobile, $mobile_news_i
 		$total_posts=$total_posts+$n-1;
 	}
 	
-	/*for ($a=1; $a<10; $a++) {
-		$news_mod = str_replace('%the_permalink_' . $a . '%', '%the_permalink%', $news_mod);
-		$news_mod = str_replace('%the_title_' . $a . '%', '%the_title%', $news_mod);
-		$news_mod = str_replace('%the_excerpt_' . $a . '%', '%the_excerpt%', $news_mod);
-		$news_mod = str_replace('%the_content_' . $a . '%', '%the_content%', $news_mod);
-	}*/
-	
 	$s=0;
 	while ($total_posts < count($pend_posts) && $total_posts !=0) {
 
@@ -342,9 +370,9 @@ function knews_create_news($aj, $pend_posts, $news, $fp, $mobile, $mobile_news_i
 			$content = knews_iterative_extract_code('<script', '</script>', $content, true);
 			$content = knews_iterative_extract_code('<fb:like', '</fb:like>', $content, true);
 			$content = str_replace(']]>', ']]>', $content);
-			$content = strip_tags($content);
+			$content = strip_tags($content, $knewsOptions['allowed_content_tags']);
 	
-			if ($excerpt=='') $excerpt = $content;
+			if ($excerpt=='') $excerpt = strip_tags($content);
 	
 			$words = explode(' ', $content, $excerpt_length + 1);
 			if (count($words) > $excerpt_length) {
@@ -352,36 +380,18 @@ function knews_create_news($aj, $pend_posts, $news, $fp, $mobile, $mobile_news_i
 				//array_push($words, '[...]');
 				$excerpt = implode(' ', $words) . '...';
 			}
-			$content = nl2br($content);
+			//$content = nl2br($content);
 	
+			/*
 			$words = explode(' ', $excerpt, $excerpt_length + 1);
 			if (count($words) > $excerpt_length) {
 				array_pop($words);
 				//array_push($words, '[...]');
 				$excerpt = implode(' ', $words) . '...';
 			}
-
-			/*$content = $pp->post_content;
-
-			$excerpt = strip_shortcodes( $content );
-			if ($knewsOptions['apply_filters_on']=='1') $excerpt = apply_filters('the_content', $excerpt);
-			$excerpt = knews_iterative_extract_code('<script', '</script>', $excerpt, true);
-			$excerpt = knews_iterative_extract_code('<fb:like', '</fb:like>', $excerpt, true);
-			$excerpt = str_replace(']]>', ']]>', $excerpt);
-			$excerpt = strip_tags($excerpt);
-			$excerpt_length = apply_filters('excerpt_length', 55);
-			$words = explode(' ', $excerpt, $excerpt_length + 1);
-			if (count($words) > $excerpt_length) {
-				array_pop($words);
-				//array_push($words, '[...]');
-				$excerpt = implode(' ', $words);
-			}
-			//$excerpt = nl2br($excerpt);
-			if ($knewsOptions['apply_filters_on']=='1') $content = apply_filters('the_content', $content);
 			*/
-			
-			//$title = $pp->post_title;
-			//$permalink = get_permalink($pp->ID);
+
+			$data2replace = apply_filters( 'knews_get_post_' . $Knews_plugin->template_id, array('the_title' => $title, 'the_excerpt' => $excerpt, 'the_content' => $content, 'the_permalink' => $permalink), $post->ID );
 			
 			$s=0;
 			while ($news_mod_map[$s]==0 && $s < count($news_mod_map)) { $s++; }
@@ -389,7 +399,7 @@ function knews_create_news($aj, $pend_posts, $news, $fp, $mobile, $mobile_news_i
 			$n=1;
 			$found=false;
 			while (!$found && $n<20) {
-				if (strpos($news_mod2[$s], '%the_title_' . $n . '%') !== false || strpos($news_mod2[$s], '%the_excerpt_' . $n . '%') !== false || strpos($news_mod2[$s], '%the_permalink_' . $n . '%') !== false) {
+				if (strpos($news_mod2[$s], '%the_title_' . $n . '%') !== false || strpos($news_mod2[$s], '%the_excerpt_' . $n . '%') !== false || strpos($news_mod2[$s], '%the_permalink_' . $n . '%') !== false || strpos($news_mod2[$s], '%the_content_' . $n . '%') !== false) {
 					$found=true;
 				} else {
 					$n++;
@@ -398,11 +408,20 @@ function knews_create_news($aj, $pend_posts, $news, $fp, $mobile, $mobile_news_i
 			
 			if ($found) {
 				$news_mod_map[$s]--;
+				
+				while ($singledata = current($data2replace)) {
+					$news_mod2[$s] = str_replace('%' . key($data2replace) . '_' . $n . '%', $singledata, $news_mod2[$s]);
+					next($data2replace);
+				}
+				reset($data2replace);
+
+				/*
 				$news_mod2[$s] = str_replace('%the_permalink_' . $n . '%', $permalink, $news_mod2[$s]);
 				$news_mod2[$s] = str_replace('%the_title_' . $n . '%', $title, $news_mod2[$s]);
 				$news_mod2[$s] = str_replace('%the_excerpt_' . $n . '%', $excerpt, $news_mod2[$s]);
 				$news_mod2[$s] = str_replace('%the_content_' . $n . '%', $content, $news_mod2[$s]);
-				$subject = str_replace('%the_title_1%', $title, $subject);
+				*/
+				if (isset($data2replace['the_title'])) $subject = str_replace('%the_title_1%', $data2replace['the_title'], $subject);
 				
 				knews_debug('- included: ' . $pp->post_title . "\r\n");
 				
@@ -433,7 +452,7 @@ function knews_create_news($aj, $pend_posts, $news, $fp, $mobile, $mobile_news_i
 			}
 			
 			knews_debug('- saving the created newsletter' . "\r\n");
-			$sql = "INSERT INTO " . KNEWS_NEWSLETTERS . "(name, subject, created, modified, template, html_mailing, html_head, html_modules, html_container, lang, automated, mobile, id_mobile, newstype) VALUES ('" . esc_sql($news[0]->name) . " (" . date('d/m/Y') . ")', '" . esc_sql($subject) . "', '" . $Knews_plugin->get_mysql_date() . "', '" . $Knews_plugin->get_mysql_date() . "','" . $news[0]->template . "','" . esc_sql($news_mod) . "','" . esc_sql($news[0]->html_head) . "','" . esc_sql($news[0]->html_modules) . "','" . esc_sql($news[0]->html_container) . "', '" . $news[0]->lang . "', 1, " . (($mobile) ? '1' : '0') . ", " . $mobile_news_id . ", 'automated')";
+			$sql = "INSERT INTO " . KNEWS_NEWSLETTERS . "(name, subject, created, modified, template, html_mailing, html_head, html_bodytag, html_modules, html_container, lang, automated, mobile, id_mobile, newstype) VALUES ('" . esc_sql($news[0]->name) . " (" . $Knews_plugin->localize_date(current_time('timestamp') ) . ")', '" . esc_sql($subject) . "', '" . $Knews_plugin->get_mysql_date() . "', '" . $Knews_plugin->get_mysql_date() . "','" . $news[0]->template . "','" . esc_sql($news_mod) . "','" . esc_sql($news[0]->html_head) . "','" . esc_sql($news[0]->html_bodytag) . "','" . esc_sql($news[0]->html_modules) . "','" . esc_sql($news[0]->html_container) . "', '" . $news[0]->lang . "', 1, " . (($mobile) ? '1' : '0') . ", " . $mobile_news_id . ", 'automated')";
 			$results = $wpdb->query($sql);				
 			$id_newsletter = $Knews_plugin->real_insert_id();
 
@@ -456,16 +475,17 @@ function knews_create_news($aj, $pend_posts, $news, $fp, $mobile, $mobile_news_i
 			$query = "SELECT DISTINCT(" . KNEWS_USERS . ".id) FROM " . KNEWS_USERS . ", " . KNEWS_USERS_PER_LISTS . " WHERE " . KNEWS_USERS . ".id=" . KNEWS_USERS_PER_LISTS . ".id_user AND " . KNEWS_USERS . ".state='2' AND " . KNEWS_USERS_PER_LISTS . ".id_list=" . $aj->target_id;
 
 			$batch_opts = array (
-				'minute' => date("i"),
-				'hour' => date("H"),
-				'day' => date("d"),
-				'month' => date("m"),
-				'year' => date("Y"),
+				'minute' => date("i", time()),
+				'hour' => date("H", time()),
+				'day' => date("d", time()),
+				'month' => date("m", time()),
+				'year' => date("Y", time()),
 				'paused' => (($aj->auto==1) ? 0 : 1),
 				'priority' => 4,
 				'strict_control' => '',
 				'emails_at_once' => $aj->emails_at_once,
-				'id_smtp' => $aj->id_smtp
+				'id_smtp' => $aj->id_smtp,
+				'timezone' => 'utc'
 			);
 								
 			require( KNEWS_DIR . "/includes/submit_batch.php");

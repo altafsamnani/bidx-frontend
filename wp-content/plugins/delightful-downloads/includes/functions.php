@@ -86,23 +86,23 @@ function dedo_get_shortcode_lists() {
 	$lists = array(
 	 	'title'				=> array(
 	 		'name'				=> __( 'Title', 'delightful-downloads' ),
-	 		'format'			=> '<a href="%url%" title="%title%" rel="nofollow">%title%</a>'
+	 		'format'			=> '<a href="%url%" title="%title%" rel="nofollow" class="%class%">%title%</a>'
 	 	),
 	 	'title_date'		=> array(
 	 		'name'				=> __( 'Title (Date)', 'delightful-downloads' ),
-	 		'format'			=> '<a href="%url%" title="%title% (%date%)" rel="nofollow">%title% (%date%)</a>'
+	 		'format'			=> '<a href="%url%" title="%title% (%date%)" rel="nofollow" class="%class%">%title% (%date%)</a>'
 	 	),
 	 	'title_count'		=> array(
 	 		'name'				=> __( 'Title (Count)', 'delightful-downloads' ),
-	 		'format'			=> '<a href="%url%" title="%title% (Downloads: %count%)" rel="nofollow">%title% (Downloads: %count%)</a>'
+	 		'format'			=> '<a href="%url%" title="%title% (Downloads: %count%)" rel="nofollow" class="%class%">%title% (Downloads: %count%)</a>'
 	 	),
 	 	'title_filesize'	=> array(
 	 		'name'				=> __( 'Title (File size)', 'delightful-downloads' ),
-	 		'format'			=> '<a href="%url%" title="%title% (%filesize%)" rel="nofollow">%title% (%filesize%)</a>'
+	 		'format'			=> '<a href="%url%" title="%title% (%filesize%)" rel="nofollow" class="%class%">%title% (%filesize%)</a>'
 	 	),
 	 	'title_ext_filesize'=> array(
 	 		'name'				=> __( 'Title (Extension, File size)', 'delightful-downloads' ),
-	 		'format'			=> '<a href="%url%" title="%title% (%ext%, %filesize%)" rel="nofollow">%title% (%ext%, %filesize%)</a>'
+	 		'format'			=> '<a href="%url%" title="%title% (%ext%, %filesize%)" rel="nofollow" class="%class%">%title% (%ext%, %filesize%)</a>'
 	 	)
 	);
 
@@ -208,13 +208,13 @@ function dedo_download_valid( $download_id ) {
  *
  * @since  1.0
  */
-function dedo_download_permission() {
+function dedo_download_permission( $options ) {
 	global $dedo_options;
-	
-	$members_only = $dedo_options['members_only'];
-	
+
+	// First check per-download settings, else revert to global setting
+	$members_only = ( isset( $options['members_only'] ) ) ? $options['members_only'] : $dedo_options['members_only'];
+
 	if ( $members_only ) {
-		
 		// Check user is logged in
 		if ( is_user_logged_in() ) {
 			return true;
@@ -222,7 +222,6 @@ function dedo_download_permission() {
 		else {
 			return false;
 		}
-
 	}
 
 	return true;
@@ -354,38 +353,47 @@ function dedo_set_upload_dir( $upload_dir ) {
  *
  * @since  1.3
  */
-function dedo_folder_protection() {
+function dedo_folder_protection( $folder_protection = '' ) {
+	global $dedo_options;
+
+	// Allow custom options to be passed, set to save options if not
+	$folder_protection = ( '' === $folder_protection ) ? $dedo_options['folder_protection'] : $folder_protection;
+
 	// Get delightful downloads upload base path
 	$upload_dir = dedo_get_upload_dir( 'dedo_basedir' );
-
-	// Default files
-	$index = DEDO_PLUGIN_DIR . 'assets/default_files/index.php';
-	$htaccess = DEDO_PLUGIN_DIR . 'assets/default_files/.htaccess';
 
 	// Create upload dir if needed, return on fail. Causes fatal error on activation otherwise
 	if ( !wp_mkdir_p( $upload_dir ) ) {
 		return;
 	}
 
-	// Check for root index.php
-	if ( !file_exists( $upload_dir . '/index.php' ) ) {
-		@copy( $index, $upload_dir . '/index.php' );
+	// Add htaccess protection if enabled, else delete it
+	if ( 1 == $folder_protection ) {
+		if ( !file_exists( $upload_dir . '/.htaccess' ) && wp_is_writable( $upload_dir ) ) {
+			$content = "Options -Indexes\n";
+			$content .= "deny from all";
+
+			@file_put_contents( $upload_dir . '/.htaccess', $content );
+		}
+	}
+	else {
+		if ( file_exists( $upload_dir . '/.htaccess' ) && wp_is_writable( $upload_dir ) ) {
+			@unlink( $upload_dir . '/.htaccess' );
+		}
 	}
 
-	// Check for root .htaccess
-	if ( !file_exists( $upload_dir . '/.htaccess' ) ) {
-		@copy( $htaccess, $upload_dir . '/.htaccess' );
+	// Check for root index.php
+	if ( !file_exists( $upload_dir . '/index.php' ) && wp_is_writable( $upload_dir ) ) {
+		@file_put_contents( $upload_dir . '/index.php', '<?php' . PHP_EOL . '// You shall not pass!' );
 	}
 
 	// Check subdirs for index.php
 	$subdirs = dedo_folder_scan( $upload_dir );
 
 	foreach ( $subdirs as $subdir ) {
-		
-		if ( !file_exists( $subdir . '/index.php' ) ) {
-			@copy( $index, $subdir . '/index.php' );
+		if ( !file_exists( $subdir . '/index.php' ) && wp_is_writable( $subdir ) ) {
+			@file_put_contents( $subdir . '/index.php', '<?php' . PHP_EOL . '// You shall not pass!' );
 		}
-
 	}
 }
 
@@ -463,8 +471,8 @@ function dedo_delete_all_transients() {
 		", 
 		'\_transient\_delightful-downloads%%', 
 		'\_transient\_timeout\_delightful-downloads%%',
-		'\_transient\_dedo%%',
-		'\_transient\_timeout\_dedo%%' );
+		'\_transient\_dedo_%%',
+		'\_transient\_timeout\_dedo_%%' );
 
 	$wpdb->query( $sql );
 }
@@ -488,14 +496,14 @@ function dedo_get_abs_path( $requested_file ) {
 	// Check for absolute path
 	if ( ( !isset( $parsed_file['scheme'] ) || !in_array( $parsed_file['scheme'], array( 'http', 'https' ) ) ) && isset( $parsed_file['path'] ) && file_exists( $requested_file ) ) {
 		
-		return $requested_file;
+		$file = $requested_file;
 	}
 
 	// Falls within wp_content
 	else if ( strpos( $requested_file, WP_CONTENT_URL ) !== false ) {
 		$file_path = str_replace( WP_CONTENT_URL, WP_CONTENT_DIR, $requested_file );
 		
-		return realpath( $file_path );
+		$file = realpath( $file_path );
 	}
 
 	// Falls in multisite
@@ -506,7 +514,7 @@ function dedo_get_abs_path( $requested_file ) {
 		$site_url = trailingslashit( network_site_url() );
 		$file_path = str_replace( $site_url, ABSPATH, $file_path );
 
-		return realpath( $file_path );
+		$file = realpath( $file_path );
 	}
 
 	// Falls within WordPress directory structure
@@ -514,18 +522,21 @@ function dedo_get_abs_path( $requested_file ) {
 		$site_url = trailingslashit( site_url() );
 		$file_path = str_replace( $site_url, ABSPATH, $requested_file );
 
-		return realpath( $file_path );
+		$file = realpath( $file_path );
 	}
 
 	// Falls outside WordPress structure but within document root.
-	else if ( file_exists( $_SERVER['DOCUMENT_ROOT'] . $parsed_file['path'] ) ) {
+	else if ( strpos( $requested_file, site_url() ) && file_exists( $_SERVER['DOCUMENT_ROOT'] . $parsed_file['path'] ) ) {
 		$file_path = $_SERVER['DOCUMENT_ROOT'] . $parsed_file['path'];
 		
-		return realpath( $file_path );
+		$file = realpath( $file_path );
 	}
 
+	// Checks file exists
+	if ( isset( $file ) && is_file( $file ) ) {
+		return $file;
+	}
 	else {
-
 		return false;
 	}
 }
@@ -579,4 +590,125 @@ function dedo_get_file_ext( $path ) {
 	$file = wp_check_filetype( $path );
 	
 	return $file['ext'];
+}
+
+/**
+ * Get File Status
+ *
+ * Checks whether a file is accessible, either locally or remotely.
+ *
+ * @since   1.5
+ *
+ * @param string $url File path/url of filename.
+ * @return boolean/array.
+ */
+function dedo_get_file_status( $url ) {
+	// Check locally
+	if( $file = dedo_get_abs_path( $url ) ) {
+		$type = 'local';
+		$size = @filesize( $file );
+	}
+	else {
+		$response = @get_headers( $url, 1 );
+
+		if ( ( false === $response || 'HTTP/1.1 404 Not Found' == $response[0] || 'HTTP/1.1 403 Forbidden' == $response[0] ) || !isset( $response['Content-Length'] ) ) {		
+			return false;
+		}
+		else {
+			$type = 'remote';
+			$size = $response['Content-Length'];
+		}
+	}
+
+	return array(
+		'type'	=> $type,
+		'size'	=> $size
+	);
+}
+
+/**
+ * Get File Icon
+ *
+ * Return the correct file icon for a file type.
+ *
+ * @since   1.5
+ *
+ * @param string $file url/path.
+ * @param boolen $url return full icon url.
+ * @return string.
+ */
+function dedo_get_file_icon( $file, $url = true ) {
+	$ext = dedo_get_file_ext( $file );
+	
+	switch( $ext ) {
+		case 'aac': 	$icon = 'aac.png'; break;
+		case 'ai': 		$icon = 'ai.png'; break;
+		case 'aiff':	$icon = 'aiff.png'; break;
+		case 'avi':		$icon = 'avi.png'; break;
+		case 'bmp':		$icon = 'bmp.png'; break;
+		case 'c':		$icon = 'c.png'; break;
+		case 'cpp':		$icon = 'cpp.png'; break;
+		case 'css':		$icon = 'css.png'; break;
+		case 'dat':		$icon = 'dat.png'; break;
+		case 'dmg':		$icon = 'dmg.png'; break;
+		case 'doc':		$icon = 'doc.png'; break;
+		case 'dotx':	$icon = 'dotx.png'; break;
+		case 'dwg':		$icon = 'dwg.png'; break;
+		case 'dxf':		$icon = 'dxf.png'; break;
+		case 'eps':		$icon = 'eps.png'; break;
+		case 'exe':		$icon = 'exe.png'; break;
+		case 'flv':		$icon = 'flv.png'; break;
+		case 'gif':		$icon = 'gif.png'; break;
+		case 'h':		$icon = 'h.png'; break;
+		case 'hpp':		$icon = 'hpp.png'; break;
+		case 'html':	$icon = 'html.png'; break;
+		case 'ics':		$icon = 'ics.png'; break;
+		case 'iso':		$icon = 'iso.png'; break;
+		case 'java':	$icon = 'java.png'; break;
+		case 'jpg':		$icon = 'jpg.png'; break;
+		case 'js':		$icon = 'js.png'; break;
+		case 'key':		$icon = 'key.png'; break;
+		case 'less':	$icon = 'less.png'; break;
+		case 'mid':		$icon = 'mid.png'; break;
+		case 'mp3':		$icon = 'mp3.png'; break;
+		case 'mp4':		$icon = 'mp4.png'; break;
+		case 'mpg':		$icon = 'mpg.png'; break;
+		case 'odf':		$icon = 'odf.png'; break;
+		case 'ods':		$icon = 'ods.png'; break;
+		case 'odt':		$icon = 'odt.png'; break;
+		case 'otp':		$icon = 'otp.png'; break;
+		case 'ots':		$icon = 'ots.png'; break;
+		case 'ott':		$icon = 'ott.png'; break;
+		case 'pdf':		$icon = 'pdf.png'; break;
+		case 'php':		$icon = 'php.png'; break;
+		case 'png':		$icon = 'png.png'; break;
+		case 'ppt':		$icon = 'ppt.png'; break;
+		case 'psd':		$icon = 'psd.png'; break;
+		case 'py':		$icon = 'py.png'; break;
+		case 'qt':		$icon = 'qt.png'; break;
+		case 'rar':		$icon = 'rar.png'; break;
+		case 'rb':		$icon = 'rb.png'; break;
+		case 'rtf':		$icon = 'rtf.png'; break;
+		case 'sass':	$icon = 'sass.png'; break;
+		case 'scss':	$icon = 'scss.png'; break;
+		case 'sql':		$icon = 'sql.png'; break;
+		case 'tga':		$icon = 'tga.png'; break;
+		case 'tgz':		$icon = 'tgz.png'; break;
+		case 'tiff':	$icon = 'tiff.png'; break;
+		case 'txt':		$icon = 'txt.png'; break;
+		case 'wav':		$icon = 'wav.png'; break;
+		case 'xls':		$icon = 'xls.png'; break;
+		case 'xlsx':	$icon = 'xlsx.png'; break;
+		case 'xml':		$icon = 'xml.png'; break;
+		case 'yml':		$icon = 'yml.png'; break;
+		case 'zip':		$icon = 'zip.png'; break;
+		default:		$icon = '_blank.png'; break;
+	}
+
+	if ( $url ) {
+		return DEDO_PLUGIN_URL . 'assets/icons/' . $icon;
+	}
+	else {
+		return $icon;
+	}
 }
