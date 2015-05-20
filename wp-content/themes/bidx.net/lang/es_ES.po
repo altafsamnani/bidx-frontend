@@ -1,4 +1,4 @@
-# _e("","bidxplugin");
+# _e("","bidxtheme");
 # Context  Textdomain bidxplugin
 msgid ""
 msgstr ""
