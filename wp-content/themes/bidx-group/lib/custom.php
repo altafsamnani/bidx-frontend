@@ -360,9 +360,10 @@ function _l( $url = NULL )
 
   if( $sitepress )
   {
-    $currentLanguage = $sitepress->get_current_language();
+    $defaultLanguage = $sitepress->get_default_language( );
+    $currentLanguage = $sitepress->get_current_language( );
 
-    if( $currentLanguage && $currentLanguage != 'en')
+    if( $currentLanguage && ($defaultLanguage !== $currentLanguage))
     {
       $sep = '';
     }
