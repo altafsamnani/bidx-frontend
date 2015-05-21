@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Development package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2015-04-28 16:15:15+0000\n"
+"PO-Revision-Date: 2015-05-18 10:50:06+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -124,7 +124,7 @@ msgid_plural "%1$s Responses to %2$s"
 msgstr[0] "%1$s respuesta a  %2$s"
 msgstr[1] "%1$s respuestas a %2$s"
 
-#: wp-includes/taxonomy.php:4173
+#: wp-includes/taxonomy.php:4169
 msgid "Could not split shared term."
 msgstr "No se pudo dividir el término compartido"
 
@@ -736,7 +736,7 @@ msgstr "(sin etiqueta)"
 
 #. translators: %s: taxonomy label, %l: list of terms formatted as per
 #. $term_template
-#: wp-includes/taxonomy.php:4483
+#: wp-includes/taxonomy.php:4479
 msgid "%s: %l."
 msgstr "%s: %l."
 
@@ -2659,7 +2659,7 @@ msgstr "El rol especificado no es válido"
 
 #: wp-includes/class-wp-xmlrpc-server.php:238
 msgid "Incorrect username or password."
-msgstr "Nombre de suario o contraseña incorrecta."
+msgstr "Nombre de usuario o contraseña incorrecta."
 
 #: wp-includes/class-wp-xmlrpc-server.php:2247
 msgid "Invalid user ID"
@@ -5273,7 +5273,7 @@ msgid "Saving Draft&#8230;"
 msgstr "Guardando borrador&#8230;"
 
 #: wp-includes/taxonomy.php:1318 wp-includes/taxonomy.php:3382
-#: wp-includes/taxonomy.php:4351
+#: wp-includes/taxonomy.php:4347
 msgid "Empty Term"
 msgstr "Término vacío"
 
@@ -5381,7 +5381,7 @@ msgstr "<strong>Título publicado:</strong> %s"
 msgid "Duplicate comment detected; it looks as though you&#8217;ve already said that!"
 msgstr "Comentario duplicado: ¡parece que ya había sido enviado antes!"
 
-#: wp-includes/comment.php:2368
+#: wp-includes/comment.php:2375
 msgid "Could not update comment status"
 msgstr "No ha sido posible actualizar el estado del comentario"
 
@@ -5867,7 +5867,7 @@ msgstr "Guardando..."
 msgid "Could not set that as the thumbnail image. Try a different attachment."
 msgstr "No se pudo establecer como imagen de miniatura. Prueba con otro adjunto."
 
-#: wp-includes/taxonomy.php:4554
+#: wp-includes/taxonomy.php:4550
 msgid "Invalid object ID"
 msgstr "El ID del objeto no es válido"
 
@@ -5879,7 +5879,7 @@ msgstr "<strong>ERROR</strong>: El campo Nombre de usuario está vacío."
 msgid "<strong>ERROR</strong>: The password field is empty."
 msgstr "<strong>ERROR</strong>: El campo contraseña está vacío."
 
-#: wp-includes/wp-db.php:2949
+#: wp-includes/wp-db.php:2991
 msgid "<strong>ERROR</strong>: WordPress %1$s requires MySQL %2$s or higher"
 msgstr "<strong>ERROR</strong>: WordPress %1$s necesita MySQL %2$s o superior."
 

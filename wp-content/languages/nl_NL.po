@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Development package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2015-05-06 07:48:09+0000\n"
+"PO-Revision-Date: 2015-05-11 07:21:46+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -65,12 +65,12 @@ msgstr "Het bijwerken van plugins wordt wellicht niet afgerond wanneer je weg na
 #. translators: Plugin name and version
 #: wp-includes/script-loader.php:534
 msgid "%s updated!"
-msgstr "Plugin %s is succesvol bijgewerkt!"
+msgstr "%s is met succes bijgewerkt."
 
 #. translators: Plugin name and version
 #: wp-includes/script-loader.php:532
 msgid "Updating %s..."
-msgstr "Plugin %s wordt bijgewerkt..."
+msgstr "%s wordt bijgewerkt..."
 
 #: wp-includes/script-loader.php:530
 msgid "Update Failed"
