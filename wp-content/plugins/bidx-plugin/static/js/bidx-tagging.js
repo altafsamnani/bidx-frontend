@@ -171,15 +171,16 @@
             ,   options             =   widget.options
             ,   tagsData            =   options.tagsData
             ,   newTagsData         =   tagsData
-            ,   responseCode        =   response.code
-            ,   responseData        =   response.data
-            ,   responseAttached    =   responseData.attached
-            ,   responseDetached    =   responseData.detached
+            ,   responseCode        =   bidx.utils.getValue(response, 'code' )
+            ,   responseData        =   bidx.utils.getValue(response, 'data' )
+            ,   responseAttached    =   bidx.utils.getValue(response, 'data.attached')
+            ,   responseDetached    =   bidx.utils.getValue(response, 'data.detached')
+            ,   responseTagData     =   bidx.utils.getValue(response, 'data.tagAssignmentSummary')
             ;
 
             if(responseCode === 'tagsAssigned' )
             {
-                $.each( responseAttached, function( idx, attachedTag )
+                /*$.each( responseAttached, function( idx, attachedTag )
                 {
                     tagExist        =   _.findWhere( newTagsData, { tagId: attachedTag.tagId });
 
@@ -235,10 +236,10 @@
                                         });
                         }
                     }
-                });
+                }); */
 
                 bidx.utils.log( 'newTagsData', newTagsData);
-                widget.options.tagsData     =   newTagsData;
+                widget.options.tagsData     =   responseTagData;
 
                 widget._setGroupTagsData( );
             }
@@ -270,48 +271,50 @@
 
             widget.options.label        =   labelOptions;
 
-            $labelHtml  =   $( "<span />", { "class": "accreditation-labels" } );
-
-            $.each( tags, function( idx, tag )
+            if( loggedInMemberId !== visitingMemberPageId )
             {
-                tagLabel        = tag.label;
+                $labelHtml  =   $( "<span />", { "class": "accreditation-labels" } );
 
-                iconClass       = bidx.utils.getValue( tag, 'iconClass' );
-
-                tagClass        = bidx.utils.getValue( tag, 'class' );
-
-                tagExist        = (_.indexOf( existingTags, tag.status ) !== -1) ? true : false;
-
-                anyTagExist     = ( tagExist )  ? true : anyTagExist;
-
-                if( tag.default )
+                $.each( tags, function( idx, tag )
                 {
-                    defaultTagClass =   tagClass;
+                    tagLabel        = tag.label;
+
+                    iconClass       = bidx.utils.getValue( tag, 'iconClass' );
+
+                    tagClass        = bidx.utils.getValue( tag, 'class' );
+
+                    tagExist        = (_.indexOf( existingTags, tag.status ) !== -1) ? true : false;
+
+                    anyTagExist     = ( tagExist )  ? true : anyTagExist;
+
+                    if( tag.default )
+                    {
+                        defaultTagClass =   tagClass;
+                    }
+
+                    tagClass        += ( !tagExist ) ? ' hide' : ''; //Add hide class if its not assigned
+
+                    $labelHtml.append
+                    (
+                        $( "<div />", { "class": "text-uppercase main-margin-horizontal accreditation " + tagClass } )
+                        .append
+                        (
+                            $( "<span />", { "class": "fa fa-big pull-left " + iconClass })
+                        )
+                        .append
+                        (
+                            tagLabel
+                        )
+                    );
+                });
+
+                if( !anyTagExist && defaultTagClass ) //Remove class if no tag exist, specified in default class params
+                {
+                    $labelHtml.find( '.' + defaultTagClass ).removeClass('hide');
                 }
 
-                tagClass        += ( !tagExist ) ? ' hide' : ''; //Add hide class if its not assigned
-
-                $labelHtml.append
-                (
-                    $( "<div />", { "class": "text-uppercase main-margin-horizontal accreditation " + tagClass } )
-                    .append
-                    (
-                        $( "<span />", { "class": "fa fa-big pull-left " + iconClass })
-                    )
-                    .append
-                    (
-                        tagLabel
-                    )
-                );
-            });
-
-            if( !anyTagExist && defaultTagClass ) //Remove class if no tag exist, specified in default class params
-            {
-                $labelHtml.find( '.' + defaultTagClass ).removeClass('hide');
+                $label.append( $labelHtml );
             }
-
-            $label.append( $labelHtml );
-
         }
     ,   constructButton: function ( btnOptions )
         {
@@ -438,11 +441,12 @@
                 $el.find('.accreditation').addClass('hide');
 
                 data    =   {
-                                autoCreate: true
-                            ,   attach:     [{
-                                                "id":           attached
-                                        ,       "visibility":   $this.data('visibility')
-                                            }]
+                                autoCreate:                 true
+                            ,   showTagAssignmentSummary:   true
+                            ,   attach:                     [{
+                                                                "id":           attached
+                                                        ,       "visibility":   $this.data('visibility')
+                                                            }]
                             };
                 bidx.utils.log('detached',detached );
                 if( detached )

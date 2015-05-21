@@ -134,7 +134,7 @@
         ,   labelOptions            =   {}
         ,   investorProfile         =   bidx.utils.getValue(memberData, 'member.bidxInvestorProfile' )
         ,   investorProfileEntityId =   bidx.utils.getValue(investorProfile, 'bidxMeta.bidxEntityId' )
-        ,   tagsData                =   bidx.utils.getValue(investorProfile, 'bidxMeta.tags' )
+        ,   tagsData                =   bidx.utils.getValue(investorProfile, 'bidxMeta.tagAssignmentSummary' )
         ,   $tagging                =   $( ".tagging")
         ;
 
