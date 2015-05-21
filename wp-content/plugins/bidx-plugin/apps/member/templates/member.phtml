@@ -41,26 +41,8 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 
     <div class="actions hide-overflow main-margin tagging">
         <div class="pull-left quick-action-links">
-           <?php
-           if(false && $this->isLoggedInGroupOwner && $memberId != $loggedInMemberId)
-            { ?>
-            <div class="pull-left">
-                <label class="markLabel"><?php _e('Mark as', 'bidxplugin')?>:</label>
-                <button class="btn btn-sm btn-success">
-                    <div class="fa fa-bookmark fa-above fa-big"></div>
-                    <?php _e('Accredited', 'bidxplugin')?>
-                </button>
-                <button class="btn btn-sm btn-danger">
-                    <div class="fa fa-ban fa-above fa-big"></div>
-                    <?php _e('Not Accredited', 'bidxplugin')?>
-                </button>
-           </div>
-           <?php } ?>
-
-
-            <div class="pull-left">
                 <div class="taggingButton"></div>
-            </div>
+
 
 
 

@@ -292,7 +292,8 @@
                         defaultTagClass =   tagClass;
                     }
 
-                    tagClass        += ( !tagExist ) ? ' hide' : ''; //Add hide class if its not assigned
+                    //tagClass        += ( !tagExist ) ? ' hide' : ''; //Add hide class if its not assigned
+                    tagClass        += ' hide' ; //Hide all the classes only dispaly pending through defaultTagClass below condition
 
                     $labelHtml.append
                     (
@@ -370,6 +371,7 @@
             ,   tagClass
             ,   tagVisibility
             ,   tagExist
+            ,   iconClass
             ,   tagExistClass   =  ''
             ,   $btnHtml
             ,   options         =   params.options
@@ -377,7 +379,7 @@
             ,   groupTagsData   =   options.groupTagsData
             ;
 
-            $btnHtml    =   $( "<div />", { "class": "tagging pull-left" } )
+            $btnHtml    =   $( "<div />", { "class": "tagging" } )
                                 .append
                                 (
                                     $( "<label class='markLabel'>" + bidx.i18n.i('lblMark') + "</label>" )
@@ -389,6 +391,7 @@
                 attachedTag     = bidx.utils.getValue( tag, 'attached' );
                 detachedTag     = bidx.utils.getValue( tag, 'detached' );
                 tagClass        = bidx.utils.getValue( tag, 'class' );
+                iconClass       = bidx.utils.getValue( tag, 'iconClass' );
                 tagVisibility   = bidx.utils.getValue( tag, 'visibility' );
                 tagExist        = _.findWhere( groupTagsData, { tagId: tag.attached });
                 tagExistClass   = (tagExist) ? ' disabled' : '';
@@ -402,7 +405,7 @@
                                        .data('visibility', (tagVisibility) ? tagVisibility : 'PRIVATE')
                             .append
                             (
-                                $( "<div />", { "class": "fa fa-bookmark fa-above fa-big" })
+                                $( "<div />", { "class": "fa fa-above fa-big " + iconClass })
                             )
                             .append
                             (
@@ -478,13 +481,19 @@
                 ,   success:        function( response )
                     {
                         var assignable
-                        ,   isAttached    =   false
-                        ,   labelTag      = _.findWhere( labelTags, { status: attached }  )
+                        ,   isAttached    =     false
+                        ,   labelTag      =     _.findWhere( labelTags, { status: attached }  )
+                        ,   $label        =     $el.find( "." + labelTag.class )
                         ;
 
-                        $el.find( "." + labelTag.class ).removeClass( 'hide' );
+                        $label.removeClass( 'hide' ).addClass( 'textBlink' );
+                        setTimeout( function()
+                        {
+                            $label.removeClass( "textBlink" ).addClass( "hide" );
+                        }, 5000);
 
                         $tagLabel.text( origTagText );
+
 
                         widget._resetTagsData( response  );
 
