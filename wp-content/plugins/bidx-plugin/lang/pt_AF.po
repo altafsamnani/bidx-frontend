@@ -4841,7 +4841,7 @@ msgstr "Carregando Propostas de negócios que querem mentoring ..."
 # _e("%count% matches found","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "%count% matches found"
-msgstr "%contagem% coincidências encontradas"
+msgstr "%count% coincidências encontradas"
 
 # 930) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -50
 # _e("Mentor's mentoring activities","bidxplugin");
