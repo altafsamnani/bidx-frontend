@@ -703,7 +703,7 @@ msgstr "Em andamento"
 # Context mentor TextDomain i18n
 msgctxt "mentor"
 msgid "%count% matches found"
-msgstr "%contagem% coincidências encontradas"
+msgstr "%count% coincidências encontradas"
 
 # _x("Please select a location from the dropdown", "register","i18n");
 # Context register TextDomain i18n
