@@ -127,28 +127,30 @@
         ]
     };
 
-    function _accreditation ()
+    function _tagging( options )
     {
-        var options                 =   {}
-        ,   btnOptions              =   {}
-        ,   labelOptions            =   {}
-        ,   investorProfile         =   bidx.utils.getValue(memberData, 'member.bidxInvestorProfile' )
-        ,   investorProfileEntityId =   bidx.utils.getValue(investorProfile, 'bidxMeta.bidxEntityId' )
-        ,   tagsData                =   bidx.utils.getValue(investorProfile, 'bidxMeta.tagAssignmentSummary' )
-        ,   $tagging                =   $( ".tagging")
+        var btnOptions      =   {}
+        ,   labelOptions    =   {}
+        ,   taggingOptions  =   {}
+        ,   $tagging        =   options.$tagging
+        ,   entityId        =   options.entityId
+        ,   tagsData        =   options.tagsData
+        ,   labelClass      =   options.labelClass
+        ,   buttonClass     =   options.buttonClass
         ;
 
-        /* Render Accreditation Button for Investor*/
-        if( investorProfileEntityId )
+        if( entityId )
         {
-            options =   {
-                            entityId:   investorProfileEntityId
+            taggingOptions =   {
+                            entityId:   entityId
                         ,   tagsData:   tagsData
                         };
 
-            bidx.utils.log('Investor Profile taggingOptions: ', options);
+            bidx.utils.log('Investor Profile taggingOptions: ', taggingOptions);
 
-            $tagging.tagging( options );
+            $tagging.tagging( taggingOptions );
+
+           // $tagging.tagging( "constructCustomTags", labelOptions );
 
             labelOptions =  {
                                 tags:   [{
@@ -170,7 +172,7 @@
                                         ,   iconClass:   'fa-ban'
                                         ,   class:      'accr-Refused'
                                         }]
-                            ,   class:  'taggingLabel'
+                            ,   class:  labelClass
                             };
 
             $tagging.tagging( "constructLabel", labelOptions );
@@ -191,14 +193,75 @@
                                         ,   detached:   'accredited'
                                         ,   class:      'btn-danger'
                                         }]
-                            ,   class:  'taggingButton'
+                            ,   class:  buttonClass
                             };
 
             bidx.utils.log('Investor Profile constructButton: ', btnOptions);
 
             $tagging.tagging( "constructButton", btnOptions );
+
+            return true;
         }
     }
+
+    function _memberAccreditation ()
+    {
+        var memberProfile           =   bidx.utils.getValue(memberData, 'member.bidxMemberProfile' )
+        ,   investorProfile         =   bidx.utils.getValue(memberData, 'member.bidxInvestorProfile' )
+        ,   mentorProfile           =   bidx.utils.getValue(memberData, 'member.bidxMentorProfile' )
+        ,   memberProfileEntityId   =   bidx.utils.getValue(memberProfile, 'bidxMeta.bidxEntityId' )
+        ,   tagsData                =   bidx.utils.getValue(memberProfile, 'bidxMeta.tagAssignmentSummary' )
+        ,   $tagging                =   $( ".investorTagging")
+        ;
+
+        /* Render Accreditation Button for Investor*/
+        if( investorProfile && mentorProfile )
+        {
+            _tagging({
+                        entityId:       memberProfileEntityId
+                    ,   $tagging:       $tagging
+                    ,   tagsData:       tagsData
+                    ,   labelClass:     'investorTaggingLabel'
+                    ,   buttonClass:    'investorTaggingButton'
+                    } );
+        }
+    }
+
+    /*function _investorAccreditation ()
+    {
+        var investorProfile         =   bidx.utils.getValue(memberData, 'member.bidxInvestorProfile' )
+        ,   investorProfileEntityId =   bidx.utils.getValue(investorProfile, 'bidxMeta.bidxEntityId' )
+        ,   tagsData                =   bidx.utils.getValue(investorProfile, 'bidxMeta.tagAssignmentSummary' )
+        ,   $tagging                =   $( ".investorTagging")
+        ;
+
+        // Render Accreditation Button for Investor
+        _tagging({
+                    entityId:       investorProfileEntityId
+                ,   $tagging:       $tagging
+                ,   tagsData:       tagsData
+                ,   labelClass:     'investorTaggingLabel'
+                ,   buttonClass:    'investorTaggingButton'
+                } );
+    }
+
+    function _mentorAccreditation ()
+    {
+        var mentorProfile         =   bidx.utils.getValue(memberData, 'member.bidxMentorProfile' )
+        ,   mentorProfileEntityId =   bidx.utils.getValue(mentorProfile, 'bidxMeta.bidxEntityId' )
+        ,   tagsData                =   bidx.utils.getValue(mentorProfile, 'bidxMeta.tagAssignmentSummary' )
+        ,   $tagging                =   $( ".mentorTagging")
+        ;
+
+        //Render Accreditation Button for Investor
+        _tagging({
+                    entityId:       mentorProfileEntityId
+                ,   $tagging:       $tagging
+                ,   tagsData:       tagsData
+                ,   labelClass:     'mentorTaggingLabel'
+                ,   buttonClass:    'mentorTaggingButton'
+                } );
+    }*/
 
     // Setup function for doing work that should only be done once
     //
@@ -208,7 +271,7 @@
         _languages();
         _attachments();
         _getActiveContacts();
-        _accreditation();
+        _memberAccreditation();
 
         // On any changes, how little doesn't matter, notify that we have a pending change
         // But no need to track the changes when doing a member data load
