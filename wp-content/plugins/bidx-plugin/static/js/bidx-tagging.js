@@ -19,11 +19,6 @@
         ,   label:      ""
         ,   button:     ""
         }
-
-/*    ,   _getCreateOptions: function()
-        {
-            return { id: this.element.attr( "id" ) };
-        }*/
     ,   _hasAccess: function ( params )
         {
             var errorTxt
@@ -59,8 +54,6 @@
                         {
                             isAttached          =   _.findWhere( assignable, { id: tag.attached });
 
-                            bidx.utils.log('isAttached', isAttached);
-                            bidx.utils.log('isGroupAdmin', isGroupAdmin);
                             canAttachedAssign   =   ( isAttached && ( isAttached.assignability === 'ADMINS' || isAttached.assignability === 'GROUP_ADMINS') && isGroupAdmin );
 
                             if( (isAttached && canAttachedAssign)|| canGlobalAssign )
@@ -73,6 +66,7 @@
                             }
 
                             isDetached          =   _.findWhere( assignable, { id: tag.detached });
+
                             canDetachedAssign   =   ( isDetached && ( isDetached.assignability === 'ADMINS' || isDetached.assignability === 'GROUP_ADMINS') && isGroupAdmin );
 
                             if( (isDetached && canDetachedAssign)|| canGlobalAssign )
@@ -317,6 +311,60 @@
                 $label.append( $labelHtml );
             }
         }
+    ,   constructCustomTagsOk : function ( params  )
+        {
+            var tagLabel
+            ,   attachedTag
+            ,   detachedTag
+            ,   tagClass
+            ,   tagVisibility
+            ,   tagExist
+            ,   iconClass
+            ,   tagExistClass   =  ''
+            ,   $btnHtml
+            ,   options         =   params.options
+            ,   attachedTags    =   params.attachedTags
+            ,   groupTagsData   =   options.groupTagsData
+            ;
+
+            $btnHtml    =   $( "<div />", { "class": "tagging" } )
+                                .append
+                                (
+                                    $( "<label class='markLabel'>" + bidx.i18n.i('lblMark') + "</label>" )
+                            );
+
+            $.each( attachedTags, function( idx, tag )
+            {
+                tagLabel        = tag.label;
+                attachedTag     = bidx.utils.getValue( tag, 'attached' );
+                detachedTag     = bidx.utils.getValue( tag, 'detached' );
+                tagClass        = bidx.utils.getValue( tag, 'class' );
+                iconClass       = bidx.utils.getValue( tag, 'iconClass' );
+                tagVisibility   = bidx.utils.getValue( tag, 'visibility' );
+                tagExist        = _.findWhere( groupTagsData, { tagId: tag.attached });
+                tagExistClass   = (tagExist) ? ' disabled' : '';
+
+                $btnHtml.append
+                        (
+                            $( "<button />", { "class": "btn btn-sm " + tagClass +  " btn-tagging" + tagExistClass
+
+                                    } ).data('attached', attachedTag)
+                                       .data('detached', detachedTag)
+                                       .data('visibility', (tagVisibility) ? tagVisibility : 'PRIVATE')
+                            .append
+                            (
+                                $( "<div />", { "class": "fa fa-above fa-big " + iconClass })
+                            )
+                            .append
+                            (
+                                $( "<span class='tagLabel'>" +  tagLabel + "</span>")
+                            )
+                        );
+            });
+
+            return $btnHtml;
+
+        }
     ,   constructButton: function ( btnOptions )
         {
             var widget                  =   this
@@ -451,11 +499,11 @@
                                                         ,       "visibility":   $this.data('visibility')
                                                             }]
                             };
-                bidx.utils.log('detached',detached );
+
                 if( detached )
                 {
                     $btnTagging.removeClass( 'disabled');
-                    bidx.utils.log('tagExist', tagExist );
+
                     if( tagExist )
                     {
                         data['detach']  =   [{
@@ -469,8 +517,6 @@
                 origTagText =   $tagLabel.text();
 
                 $tagLabel.i18nText( 'btnPleaseWait' );
-
-                bidx.utils.log('tag-data', data);
 
                 bidx.api.call(
                 "accreditation.assignTags"
@@ -486,10 +532,12 @@
                         ,   $label        =     $el.find( "." + labelTag.class )
                         ;
 
-                        $label.removeClass( 'hide' ).addClass( 'textBlink' );
+                        $label.removeClass( 'hide' );
+                        $label.addClass( 'textBlink' );
                         setTimeout( function()
                         {
-                            $label.removeClass( "textBlink" ).addClass( "hide" );
+                            $label.removeClass( "textBlink" );
+                            $label.addClass( "hide" );
                         }, 5000);
 
                         $tagLabel.text( origTagText );

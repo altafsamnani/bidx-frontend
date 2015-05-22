@@ -39,14 +39,10 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
         </h1>
     </div>
 
-    <div class="actions hide-overflow main-margin tagging">
+    <div class="actions hide-overflow main-margin investorTagging mentorTagging">
         <div class="pull-left quick-action-links">
-                <div class="taggingButton"></div>
-
-
-
-
-
+                <div class="investorTaggingButton"></div>
+                <div class="mentorTaggingButton"></div>
 
 <?php
             if ( $canEdit && $isLoggedinMemberIsEntrepreneur ) :
@@ -111,7 +107,10 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
         endif;
 ?>
         <div class="btn-group pull-right">
-            <div class="taggingLabel"></div>
+            <div class="investorTaggingLabel"></div>
+        </div>
+        <div class="btn-group pull-right">
+            <div class="mentorTaggingLabel"></div>
         </div>
 
         <div class="editControls btn-group pull-right"></div>
