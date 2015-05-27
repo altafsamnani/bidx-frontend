@@ -184,7 +184,8 @@
                                         ,   detached:   'accreditation_refused'
                                         ,   iconClass:  'fa-bookmark'
                                         ,   class:      'btn-success'
-                                        ,   visibility: 'ANYONE'
+                                        ,   type:       'accredited'
+                                        ,   visibility: 'CONTACTS'
                                         },
                                         {
                                             label:      bidx.i18n.i('lblNoAccreditation')
@@ -192,6 +193,8 @@
                                         ,   iconClass:  'fa-ban'
                                         ,   detached:   'accredited'
                                         ,   class:      'btn-danger'
+                                        ,   type:       'nonaccredited'
+                                        ,   visibility: 'CONTACTS'
                                         }]
                             ,   class:  buttonClass
                             };
@@ -204,7 +207,7 @@
         }
     }
 
-    function _memberAccreditation ()
+    /*function _memberAccreditation ()
     {
         var memberProfile           =   bidx.utils.getValue(memberData, 'member.bidxMemberProfile' )
         ,   investorProfile         =   bidx.utils.getValue(memberData, 'member.bidxInvestorProfile' )
@@ -214,7 +217,7 @@
         ,   $tagging                =   $( ".investorTagging")
         ;
 
-        /* Render Accreditation Button for Investor*/
+        /* Render Accreditation Button for Investor
         if( investorProfile && mentorProfile )
         {
             _tagging({
@@ -225,9 +228,9 @@
                     ,   buttonClass:    'investorTaggingButton'
                     } );
         }
-    }
+    }*/
 
-    /*function _investorAccreditation ()
+    function _investorAccreditation ()
     {
         var investorProfile         =   bidx.utils.getValue(memberData, 'member.bidxInvestorProfile' )
         ,   investorProfileEntityId =   bidx.utils.getValue(investorProfile, 'bidxMeta.bidxEntityId' )
@@ -236,15 +239,19 @@
         ;
 
         // Render Accreditation Button for Investor
-        _tagging({
-                    entityId:       investorProfileEntityId
-                ,   $tagging:       $tagging
-                ,   tagsData:       tagsData
-                ,   labelClass:     'investorTaggingLabel'
-                ,   buttonClass:    'investorTaggingButton'
-                } );
+        if( investorProfileEntityId )
+        {
+            _tagging({
+                        entityId:       investorProfileEntityId
+                    ,   $tagging:       $tagging
+                    ,   tagsData:       tagsData
+                    ,   labelClass:     'investorTaggingLabel'
+                    ,   buttonClass:    'investorTaggingButton'
+                    } );
+        }
     }
 
+    /*
     function _mentorAccreditation ()
     {
         var mentorProfile         =   bidx.utils.getValue(memberData, 'member.bidxMentorProfile' )
@@ -261,7 +268,8 @@
                 ,   labelClass:     'mentorTaggingLabel'
                 ,   buttonClass:    'mentorTaggingButton'
                 } );
-    }*/
+    }
+    */
 
     // Setup function for doing work that should only be done once
     //
@@ -271,7 +279,7 @@
         _languages();
         _attachments();
         _getActiveContacts();
-        _memberAccreditation();
+        _investorAccreditation();
 
         // On any changes, how little doesn't matter, notify that we have a pending change
         // But no need to track the changes when doing a member data load
