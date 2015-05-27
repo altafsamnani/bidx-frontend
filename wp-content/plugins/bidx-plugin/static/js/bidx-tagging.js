@@ -87,14 +87,14 @@
                         bidx.utils.log('excludeDetachedTags', excludeDetachedTags );
 
 
-                        if( excludeAttachedTags.length || excludeDetachedTags.length )
+                        /*if( excludeAttachedTags.length || excludeDetachedTags.length )
                         {
                             errorTxt =  bidx.i18n.i('lblNoTaggingExist');
                             errorTxt =+ ( excludeAttachedTags.length ) ? excludeAttachedTags.split(', ') : '';
                             errorTxt =+ ( excludeDetachedTags.length ) ? excludeDetachedTags.split(', ') : '';
 
                             bidx.common.notifyError( errorTxt );
-                        }
+                        }*/
 
 
 
@@ -260,14 +260,18 @@
             ,   tags                    =   labelOptions.tags
             ,   groupTagsData           =   options.groupTagsData
             ,   existingTags            =   _.pluck(groupTagsData, 'tagId')
-            ,   anyTagExist             =  false
+            ,   roles                   =   bidx.utils.getValue( bidxConfig.session, "roles" )
+            ,   isGroupAdmin            =   ( $.inArray("GroupAdmin", roles) !== -1 || $.inArray("GroupOwner", roles) !== -1 ) ? true : false
+            ,   anyTagExist             =   false
             ;
 
             widget.options.label        =   labelOptions;
 
-            if( loggedInMemberId !== visitingMemberPageId )
+            bidx.utils.log('constructLabel', $label);
+
+            if( true || loggedInMemberId !== visitingMemberPageId )
             {
-                $labelHtml  =   $( "<span />", { "class": "accreditation-labels" } );
+                $labelHtml  =   $( "<span />", { "class": "accreditation-labels iconbar" } );
 
                 $.each( tags, function( idx, tag )
                 {
@@ -286,8 +290,8 @@
                         defaultTagClass =   tagClass;
                     }
 
-                    //tagClass        += ( !tagExist ) ? ' hide' : ''; //Add hide class if its not assigned
-                    tagClass        += ' hide' ; //Hide all the classes only dispaly pending through defaultTagClass below condition
+                    tagClass        += ( !tagExist || isGroupAdmin) ? ' hide' : ''; //Add hide class if its not assigned
+                    //tagClass        += ' hide' ; //Hide all the classes only dispaly pending through defaultTagClass below condition
 
                     $labelHtml.append
                     (
@@ -303,7 +307,9 @@
                     );
                 });
 
-                if( !anyTagExist && defaultTagClass ) //Remove class if no tag exist, specified in default class params
+                bidx.utils.log('labelHtml', $labelHtml );
+
+                if( !anyTagExist && isGroupAdmin && defaultTagClass ) //Remove class if no tag exist, specified in default class params
                 {
                     $labelHtml.find( '.' + defaultTagClass ).removeClass('hide');
                 }
@@ -414,16 +420,21 @@
     ,   _renderButton: function ( params  )
         {
             var tagLabel
+            ,   tagCount
             ,   attachedTag
             ,   detachedTag
             ,   tagClass
             ,   tagVisibility
             ,   tagExist
+            ,   tagDataExist
             ,   iconClass
+            ,   countClass
+            ,   tagType
             ,   tagExistClass   =  ''
             ,   $btnHtml
             ,   options         =   params.options
             ,   attachedTags    =   params.attachedTags
+            ,   tagsData        =   options.tagsData
             ,   groupTagsData   =   options.groupTagsData
             ;
 
@@ -435,14 +446,27 @@
 
             $.each( attachedTags, function( idx, tag )
             {
-                tagLabel        = tag.label;
-                attachedTag     = bidx.utils.getValue( tag, 'attached' );
-                detachedTag     = bidx.utils.getValue( tag, 'detached' );
-                tagClass        = bidx.utils.getValue( tag, 'class' );
-                iconClass       = bidx.utils.getValue( tag, 'iconClass' );
-                tagVisibility   = bidx.utils.getValue( tag, 'visibility' );
-                tagExist        = _.findWhere( groupTagsData, { tagId: tag.attached });
-                tagExistClass   = (tagExist) ? ' disabled' : '';
+                tagLabel        =   tag.label;
+                attachedTag     =   bidx.utils.getValue( tag, 'attached' );
+                detachedTag     =   bidx.utils.getValue( tag, 'detached' );
+                tagClass        =   bidx.utils.getValue( tag, 'class' );
+                iconClass       =   bidx.utils.getValue( tag, 'iconClass' );
+                tagVisibility   =   bidx.utils.getValue( tag, 'visibility' );
+                tagType         =   bidx.utils.getValue( tag, 'type' );
+
+                tagExist        =   _.findWhere( groupTagsData, { tagId: tag.attached });
+                tagExistClass   =   (tagExist) ? ' disabled' : '';
+
+                tagDataExist    =   _.findWhere( tagsData, { tagId: tag.attached });
+                tagCount        =   bidx.utils.getValue(tagDataExist,'groupCount');
+                countClass      =   '';
+
+                bidx.utils.log('tagCount', tagCount);
+                if( _.isUndefined(tagCount) )
+                {
+                    tagCount    =   0;
+                    countClass  =   ' hide';
+                }
 
                 $btnHtml.append
                         (
@@ -450,6 +474,8 @@
 
                                     } ).data('attached', attachedTag)
                                        .data('detached', detachedTag)
+                                       .data('count',    tagCount)
+                                       .data('type',     tagType)
                                        .data('visibility', (tagVisibility) ? tagVisibility : 'PRIVATE')
                             .append
                             (
@@ -457,13 +483,58 @@
                             )
                             .append
                             (
-                                $( "<span class='tagLabel'>" +  tagLabel + "</span>")
+                                $("<span />", { "class": "labelWrapper"})
+                                .append
+                                (
+                                    $( "<span class='tagLabel'>" +  tagLabel + "</span>")
+                                )
+                                .append
+                                (
+                                    $( "<span class='iconbar-unread" + countClass + "'>:" +  tagCount + "</span>")
+                                )
                             )
                         );
             });
 
             return $btnHtml;
 
+        }
+    ,   _displayCount: function ( response )
+        {
+            var $this
+            ,   $countSpan
+            ,   countText
+            ,   itemType
+            ,   tagCount
+            ,   tagExist
+            ,   tagAttached
+            ,   $btnTagging         =   $('.btn-tagging')
+            ,   responseTagData     =   bidx.utils.getValue(response, 'data.tagAssignmentSummary')
+            ;
+
+            $btnTagging.each( function(index, item)
+            {
+                $this           =   $(item);
+                $countSpan      =   $this.find('.iconbar-unread');
+                tagAttached     =   $this.data('attached');
+                tagExist        =   _.findWhere( responseTagData, { tagId: tagAttached });
+                tagCount        =   bidx.utils.getValue(tagExist,'groupCount');
+
+                $countSpan.data('count', tagCount);
+
+                if( tagCount )
+                {
+                    countText   =  ':'  +    tagCount;
+                    $countSpan.removeClass('hide');
+                }
+                else
+                {
+                    countText   =   '';
+                    $countSpan.addClass('hide');
+                }
+
+                $countSpan.text( countText );
+            });
         }
     ,   _onTagButtonClick: function( params )
         {
@@ -541,6 +612,8 @@
                         }, 5000);
 
                         $tagLabel.text( origTagText );
+
+                        widget._displayCount( response );
 
 
                         widget._resetTagsData( response  );
