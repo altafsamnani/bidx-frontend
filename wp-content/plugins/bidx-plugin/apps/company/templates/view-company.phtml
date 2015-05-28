@@ -17,8 +17,9 @@
         if ( $companyBidxMeta->bidxCanEdit )
         {
 ?>
-            <div class="btn-group controls pull-right top-margin-lineheight">
+            <div class="controls pull-right top-margin-lineheight">
                 <a class="btn btn-primary" href="#editCompany/<?php echo $companyBidxMeta->bidxEntityId; ?>"><i class="fa fa-big fa-above fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                <button id="deleteCompany" class="btn btn-danger"><i class="fa fa-big fa-above fa-eraser"></i> <?php _e( 'Delete', 'bidxplugin' ); ?></button>
             </div>
 <?php
         }

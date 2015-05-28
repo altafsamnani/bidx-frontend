@@ -252,7 +252,18 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 
     <div class="main-padding bg-info info-bar">
         <div class="row">
-            <div class="col-sm-4 col-sm-offset-4">
+            <div class="col-sm-4">
+<?php
+                    if ( $canEdit )
+                    {
+?>                        
+                        <button id="deleteBS" class="btn btn-danger"><i class="fa fa-eraser fa-big fa-above"></i> <?php _e( 'Delete', 'bidxplugin' ); ?></button>    
+<?php
+                    }
+?>
+            </div>
+
+            <div class="col-sm-4">
 
                 <!-- sucess msg, used as a placeholder for showing msgs -->
 
@@ -318,6 +329,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                     {
 ?>
                         <a class="btn btn-primary editBS" href="#editBusinessSummary/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                        
 <?php
                     }
 ?>
