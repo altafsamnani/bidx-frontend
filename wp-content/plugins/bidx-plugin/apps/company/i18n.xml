@@ -2,6 +2,8 @@
     <Item value="selectCountry">Select country</Item>
     <Item value="selectPermitsObtained">Select licenses obtained</Item>
     <Item value="selectLegalFormBusiness">Select the legal form of your company</Item>
+    <Item value="companyDeletion">You are about to delete this company and lose all its content. This action is irreversible. Are you sure?</Item>
+
 
     <!-- Buttons -->
     <Item value="btnAddCompany">Add company</Item>

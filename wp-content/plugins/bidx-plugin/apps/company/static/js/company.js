@@ -20,6 +20,7 @@
 
     ,   $btnSave
     ,   $btnCancel
+    ,   $btnDeleteCompany                    = $( "#deleteCompany" )
 
         // Profile picture
         //
@@ -162,6 +163,14 @@
             e.preventDefault();
 
             $logoContainer.find( "img" ).remove();
+        } );
+
+
+        $btnDeleteCompany.bind( "click", function( e )
+        {
+            e.preventDefault();
+
+            bidx.common.notifyConfirm( bidx.i18n.i( "companyDeletion", appName ), bidxConfig.context.companyId );
         } );
 
 

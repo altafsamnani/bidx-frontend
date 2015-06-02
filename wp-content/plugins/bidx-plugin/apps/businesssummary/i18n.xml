@@ -8,4 +8,5 @@
     <Item value="ratingAverageLabelPlural">Rating (%d votes)</Item>
     <Item value="ratingUserLabel">Your rating</Item>
     <Item value="ratingUserLabelNone">Rate this plan</Item>
+    <Item value="summaryDeletion">You are about to delete this business and lose all its content. This action is irreversible. Are you sure?</Item>
 </I18N>
