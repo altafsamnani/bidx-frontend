@@ -45,8 +45,10 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
             <?php
             if ( !empty($this->data->bidxInvestorProfile )  || !empty($this->data->bidxMentorProfile ))
             { ?>
-                <label class='markLabel'><?php _e("Mark for","bidxplugin");?>:</label>
-                <input type="checkbox" name="tag-checkbox" checked data-off-color="warning" data-size="small" data-on-text="<?php _e('Investor', 'bidxplugin');?>" data-off-text="<?php _e('Mentor', 'bidxplugin');?>">
+
+                    <label class='markLabel'><?php _e("Mark for","bidxplugin");?>:</label>
+                    <input type="checkbox" name="tag-checkbox" checked data-off-color="warning" data-size="small" data-on-text="<?php _e('Investor', 'bidxplugin');?>" data-off-text="<?php _e('Mentor', 'bidxplugin');?>">
+
 <?php       }
             if ( $canEdit && $isLoggedinMemberIsEntrepreneur ) :
 ?>
@@ -80,15 +82,15 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
             <?php
             if( !empty($this->data->bidxInvestorProfile ) )
             { ?>
-                <div class="investorTagging hide">
+                <div class="investorTagging tagginbBtn hide">
                     <div class="investorTaggingButton"></div>
                 </div>
             <?php }
             if( !empty($this->data->bidxMentorProfile ))
             { ?>
-            <div class="mentorTagging hide">
-                <div class="mentorTaggingButton"></div>
-            </div>
+                <div class="mentorTagging tagginbBtn hide">
+                    <div class="mentorTaggingButton"></div>
+                </div>
             <?php
             } ?>
         </div>
