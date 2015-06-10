@@ -210,9 +210,6 @@ class BidxShortcode
 
                 wp_register_script ('bootstrap-datetimepicker-main', $vendorDir . "/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js", array ('bootstrap', 'jquery'), '1', TRUE);
                 wp_register_script ('bootstrap-datetimepicker', $vendorDir . "/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.{$langLocale}.js", array ('bootstrap-datetimepicker-main'), '1.3.0-rc.2', TRUE);
-
-
-
             } else
             {
                 wp_register_script ('bootstrap-datepicker', $vendorDir . "/bootstrap-datepicker-1.3.0-rc.2/js/bootstrap-datepicker.js", array ('bootstrap', 'jquery'), '1.3.0-rc.2', TRUE);
@@ -220,6 +217,8 @@ class BidxShortcode
                 wp_register_script ('bootstrap-datetimepicker', $vendorDir . "/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js", array ('bootstrap', 'jquery'), '1', TRUE);
 
             }
+
+            wp_register_script ('bootstrap-switch', $vendorDir . "/bootstrap-switch-master/dist/js/bootstrap-switch.min.js", array ('bootstrap', 'jquery'), '3.3.2', TRUE);
 
             wp_register_script ('jquery-fitvids', $bidxJsDir . '/vendor/jquery.fitvids.js', array ('jquery'), '20140321', TRUE);
             wp_register_script ('jquery-event-ue', $bidxJsDir . '/vendor/jquery.event.ue.js', array ('jquery'), '20140325', TRUE);
@@ -233,7 +232,7 @@ class BidxShortcode
             //bidX scripts
             wp_register_script ('bidx-api-core', $bidxJsDir . '/bidxAPI/api-core.js', array ('jquery'), '20130501', TRUE);
 
-            $sitepressArr = array_merge( array ('jquery', 'bootstrap-datepicker', 'bootstrap-datetimepicker'), $sitepressDepArr  );
+            $sitepressArr = array_merge( array ('jquery', 'bootstrap-datepicker', 'bootstrap-datetimepicker','bootstrap-switch'), $sitepressDepArr  );
             wp_register_script ('bidx-utils', $bidxJsDir . '/utils.js', $sitepressArr, '20130501', TRUE);
 
             wp_register_script ('bidx-tagsinput', $bidxJsDir . '/bidx-tagsinput.js', array ('bidx-bootstrap-tagmanager', 'bidx-utils', 'bidx-data'), '20130703', TRUE);

@@ -21,6 +21,7 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
 ?>
 
             <div class="profile-block">
+                <div class="mentorSectionTaggingLabel"></div>
 <?php
                 if ($mentorDetailsBidxMeta->bidxCanEdit)
                 {
@@ -43,8 +44,8 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
 
                 if ( $this->checkEmpty( $rowValues ) ) :
 ?>
-                    <h4><?php _e('About', 'bidxplugin')?></h4>
-<?php               
+                    <h4 class="memberTitle"><?php _e('About', 'bidxplugin')?></h4>
+<?php
                     echo $this->tableRow ( $rowValues );
                 endif;
 
@@ -67,7 +68,7 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
                 if ( $this->checkEmpty( $rowValues ) ) :
 ?>
                     <h4><?php _e('Mentoring Preferences', 'bidxplugin')?></h4>
-<?php               
+<?php
                     echo $this->tableRow ( $rowValues );
                 endif;
 

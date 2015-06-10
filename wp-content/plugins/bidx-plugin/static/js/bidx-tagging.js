@@ -80,12 +80,6 @@
 
                         });
 
-                        bidx.utils.log('attachedTags', attachedTags );
-                        bidx.utils.log('detachedTags', detachedTags );
-
-                        bidx.utils.log('excludeAttachedTags', excludeAttachedTags );
-                        bidx.utils.log('excludeDetachedTags', excludeDetachedTags );
-
 
                         /*if( excludeAttachedTags.length || excludeDetachedTags.length )
                         {
@@ -126,16 +120,15 @@
     ,   _create: function(  )
         {
 
-            var widget                  =   this
+            var widget              =   this
             ,   $btnHtml
             ,   existingGroupTags
-
             ;
 
-            widget._setGroupTagsData(  );
+            //widget._setGroupTagsData(  );
 
         }
-    ,   _setGroupTagsData: function( )
+    ,   setGroupTagsData: function( )
         {
             var widget                  =   this
             ,   existingGroupTags
@@ -151,7 +144,7 @@
 
             widget.options.groupTagsData    =   existingGroupTags;
 
-            bidx.utils.log('_setGroupTagsData', existingGroupTags);
+            bidx.utils.log('groupTagsData', existingGroupTags);
 
         }
 
@@ -174,70 +167,90 @@
 
             if(responseCode === 'tagsAssigned' )
             {
-                /*$.each( responseAttached, function( idx, attachedTag )
-                {
-                    tagExist        =   _.findWhere( newTagsData, { tagId: attachedTag.tagId });
-
-                    if( tagExist )
-                    {
-                        newTagsData =   _.map( newTagsData, function(tag)
-                                        {
-                                            if( tag.tagId === attachedTag.tagId )
-                                            {
-                                                tag.groupCount = parseInt(tag.groupCount) + 1 ;
-                                                tag.groups.push( currentGroup );
-                                            }
-
-                                            return tag;
-                                        });
-                    }
-                    else
-                    {
-                        newData     =   {
-                                            'groupCount':   1
-                                        ,   'groups':       [ currentGroup ]
-                                        ,   'tagId':        attachedTag.tagId
-                                        };
-
-                        newTagsData.push( newData );
-                    }
-                });
-
-                $.each( responseDetached, function( idx, detachedTag )
-                {
-                    tagExist        = _.findWhere( newTagsData, { tagId: detachedTag.tagId });
-
-                    if( tagExist )
-                    {
-                        if( tagExist.groupCount === 1)
-                        {
-                            newTagsData =   _.reject( newTagsData,  function(tag)
-                                            {
-                                                return (tag.tagId === detachedTag.tagId && tagExist.groupCount === 1 );
-                                            });
-                        }
-                        else
-                        {
-                            newTagsData =   _.map( newTagsData, function(tag)
-                                        {
-                                            if( tag.tagId === detachedTag.tagId )
-                                            {
-                                                tag.groupCount = parseInt(tag.groupCount) - 1 ;
-                                                tag.groups     = _.without( tag.groups, currentGroup );
-                                            }
-
-                                            return tag;
-                                        });
-                        }
-                    }
-                }); */
-
                 bidx.utils.log( 'newTagsData', newTagsData);
                 widget.options.tagsData     =   responseTagData;
 
-                widget._setGroupTagsData( );
+                widget.setGroupTagsData( );
             }
 
+
+        }
+    ,   constructSectionLabel: function( labelOptions )
+        {
+            var tagLabel
+            ,   tagClass
+            ,   tagExistClass
+            ,   iconClass
+            ,   tagExist
+            ,   $labelHtml
+            ,   $tagging
+            ,   tagCount
+            ,   tagDataExist
+            ,   defaultTagClass         =   false
+            ,   widget                  =   this
+            ,   options                 =   widget.options
+            ,   $el                     =   widget.element
+            ,   $label                  =   $('.' + labelOptions.sectionClass)
+            ,   entityId                =   bidx.utils.getValue( options, 'entityId' )
+            ,   visitingMemberPageId    =   bidx.utils.getValue( bidxConfig, "context.memberId" )
+            ,   loggedInMemberId        =   bidx.common.getCurrentUserId()
+            ,   tags                    =   labelOptions.tags
+            ,   tagsData                =   options.tagsData
+            ,   existingTags            =   _.pluck(tagsData, 'tagId')
+            ,   roles                   =   bidx.utils.getValue( bidxConfig.session, "roles" )
+            ,   isGroupAdmin            =   ( $.inArray("GroupAdmin", roles) !== -1 || $.inArray("GroupOwner", roles) !== -1 ) ? true : false
+            ,   anyTagExist             =   false
+            ;
+
+            widget.options.label        =   labelOptions;
+
+            if( true || loggedInMemberId !== visitingMemberPageId )
+            {
+                $labelHtml  =   $( "<span />", { "class": "accreditation-labels iconbar" } );
+
+                $.each( tags, function( idx, tag )
+                {
+                    if( !tag.default )
+                    {
+                        tagLabel        = tag.label;
+
+                        iconClass       = bidx.utils.getValue( tag, 'iconClass' );
+
+                        tagClass        = bidx.utils.getValue( tag, 'class' );
+
+                        tagExist        = (_.indexOf( existingTags, tag.status ) !== -1) ? true : false;
+
+                        anyTagExist     = ( tagExist )  ? true : anyTagExist;
+
+                        tagDataExist    =   _.findWhere( tagsData, { tagId: tag.status });
+
+                        tagCount        =   bidx.utils.getValue(tagDataExist,'groupCount');
+
+                        tagClass        += ( !tagExist ) ? ' hide' : ''; //Add hide class if its not assigned
+                        //tagClass        += ' hide' ; //Hide all the classes only dispaly pending through defaultTagClass below condition
+
+                        $labelHtml.append
+                        (
+                            $( "<div />", { "class": "text-uppercase accreditation labelTagging " + tagClass  } )
+                            .append
+                            (
+                                $( "<span />", { "class": "fa fa-big pull-left " + iconClass })
+                            )
+                            .append
+                            (
+                                tagLabel
+                            )
+                            .append
+                            (
+                                $( "<span class='tag-count'>:" +  tagCount + "</span>")
+                            )
+
+                        );
+                    }
+                });
+
+                $label.append( $labelHtml );
+            }
 
         }
     ,   constructLabel: function ( labelOptions )
@@ -253,7 +266,7 @@
             ,   widget                  =   this
             ,   options                 =   widget.options
             ,   $el                     =   widget.element
-            ,   $label                  =   $el.find('.' + labelOptions.class)
+            ,   $label                  =   $('.' + labelOptions.class)
             ,   entityId                =   bidx.utils.getValue( options, 'entityId' )
             ,   visitingMemberPageId    =   bidx.utils.getValue( bidxConfig, "context.memberId" )
             ,   loggedInMemberId        =   bidx.common.getCurrentUserId()
@@ -266,8 +279,6 @@
             ;
 
             widget.options.label        =   labelOptions;
-
-            bidx.utils.log('constructLabel', $label);
 
             if( true || loggedInMemberId !== visitingMemberPageId )
             {
@@ -290,7 +301,7 @@
                         defaultTagClass =   tagClass;
                     }
 
-                    tagClass        += ( !tagExist || isGroupAdmin) ? ' hide' : ''; //Add hide class if its not assigned
+                    tagClass        += ( !tagExist || isGroupAdmin) ? ' hide' : 'hide'; //Add hide class if its not assigned
                     //tagClass        += ' hide' ; //Hide all the classes only dispaly pending through defaultTagClass below condition
 
                     $labelHtml.append
@@ -306,12 +317,14 @@
                         )
                     );
                 });
-
-                bidx.utils.log('labelHtml', $labelHtml );
+                bidx.utils.log('anyTagExist', anyTagExist);
+                bidx.utils.log('isGroupAdmin', isGroupAdmin);
+                bidx.utils.log('defaultTagClass',defaultTagClass);
 
                 if( !anyTagExist && isGroupAdmin && defaultTagClass ) //Remove class if no tag exist, specified in default class params
                 {
                     $labelHtml.find( '.' + defaultTagClass ).removeClass('hide');
+                    bidx.utils.log('I am here', $labelHtml);
                 }
 
                 $label.append( $labelHtml );
@@ -383,6 +396,8 @@
             ,   loggedInMemberId        =   bidx.common.getCurrentUserId()
             ;
 
+            bidx.utils.log('optionssss', options);
+
             if( entityId && $button.length)
             {
                 if( loggedInMemberId !== visitingMemberPageId )
@@ -406,6 +421,7 @@
 
                                             widget._onTagButtonClick({
                                                                         entityId:     entityId
+                                                                    ,   btnOptions:   btnOptions
                                                                     });
                                         }
                                     }
@@ -438,10 +454,7 @@
             ,   groupTagsData   =   options.groupTagsData
             ;
 
-            $btnHtml    =   $( "<div />", { "class": "tagging" } )
-                                .append
-                                (
-                                    $( "<label class='markLabel'>" + bidx.i18n.i('lblMark') + "</label>" )
+            $btnHtml    =   $( "<div />", { "class": "tagging" }
                             );
 
             $.each( attachedTags, function( idx, tag )
@@ -461,7 +474,6 @@
                 tagCount        =   bidx.utils.getValue(tagDataExist,'groupCount');
                 countClass      =   '';
 
-                bidx.utils.log('tagCount', tagCount);
                 if( _.isUndefined(tagCount) )
                 {
                     tagCount    =   0;
@@ -490,7 +502,7 @@
                                 )
                                 .append
                                 (
-                                    $( "<span class='iconbar-unread" + countClass + "'>:" +  tagCount + "</span>")
+                                    $( "<span class='tag-count" + countClass + "'>:" +  tagCount + "</span>")
                                 )
                             )
                         );
@@ -499,7 +511,7 @@
             return $btnHtml;
 
         }
-    ,   _displayCount: function ( response )
+    ,   _displayLabelCount: function ( params )
         {
             var $this
             ,   $countSpan
@@ -508,14 +520,63 @@
             ,   tagCount
             ,   tagExist
             ,   tagAttached
-            ,   $btnTagging         =   $('.btn-tagging')
+            ,   response        =   params.response
+            ,   labelOptions    =   params.labelOptions
+            ,   tags            =   labelOptions.tags
+            ,   $labelElement   =   $('.' + labelOptions.sectionClass)
+            ,   $labelTagging
+            ,   responseTagData =   bidx.utils.getValue(response, 'data.tagAssignmentSummary')
+            ;
+
+            $.each( tags, function( idx, tag )
+            {
+                if( !tag.default )
+                {
+                    $labelTagging   =   $labelElement.find('.' + tag.class);
+                    $countSpan      =   $labelTagging.find('.tag-count');
+
+                    bidx.utils.log('labelTagginggg', $labelTagging);
+                    bidx.utils.log('countSpan', $countSpan);
+
+                    tagExist        =   _.findWhere( responseTagData, { tagId: tag.status });
+                    tagCount        =   bidx.utils.getValue(tagExist,'groupCount');
+
+                    if( tagCount )
+                    {
+                        countText   =  ':'  +    tagCount;
+                        $labelTagging.removeClass('hide');
+                    }
+                    else
+                    {
+                        countText   =   '';
+                        $labelTagging.addClass('hide');
+                    }
+
+                    $countSpan.text( countText );
+
+                }
+            });
+        }
+    ,   _displayButtonCount: function ( params )
+        {
+            var $this
+            ,   $countSpan
+            ,   countText
+            ,   itemType
+            ,   tagCount
+            ,   tagExist
+            ,   tagAttached
+            ,   response            =   params.response
+            ,   btnOptions          =   params.btnOptions
+            ,   $buttonElement      =   $('.' + btnOptions.class)
+            ,   $btnTagging         =   $buttonElement.find('.btn-tagging')
             ,   responseTagData     =   bidx.utils.getValue(response, 'data.tagAssignmentSummary')
             ;
 
             $btnTagging.each( function(index, item)
             {
                 $this           =   $(item);
-                $countSpan      =   $this.find('.iconbar-unread');
+                $countSpan      =   $this.find('.tag-count');
                 tagAttached     =   $this.data('attached');
                 tagExist        =   _.findWhere( responseTagData, { tagId: tagAttached });
                 tagCount        =   bidx.utils.getValue(tagExist,'groupCount');
@@ -543,15 +604,18 @@
             ,   options         =   widget.options
             ,   labelOptions    =   options.label
             ,   labelTags       =   labelOptions.tags
+            ,   btnOptions      =   params.btnOptions
+            ,   $labelElement   =   $('.' + labelOptions.class)
+            ,   $buttonElement  =   $el.find('.' + btnOptions.class)
             ;
 
             // Set Accreditation / No Accreditation status
-            $el.delegate( ".btn-tagging", "click", function( e )
+            $buttonElement.delegate( ".btn-tagging", "click", function( e )
             {
                 var errorTxt
                 ,   origTagText
                 ,   $this           =   $(this)
-                ,   $btnTagging     =   $('.btn-tagging')
+                ,   $btnTagging     =   $buttonElement.find('.btn-tagging')
                 ,   $tagLabel       =   $this.find('.tagLabel')
                 ,   attached        =   $this.data("attached")
                 ,   detached        =   $this.data("detached")
@@ -600,9 +664,9 @@
                         var assignable
                         ,   isAttached    =     false
                         ,   labelTag      =     _.findWhere( labelTags, { status: attached }  )
-                        ,   $label        =     $el.find( "." + labelTag.class )
+                        ,   $label        =     $labelElement.find( "." + labelTag.class )
                         ;
-
+                        $labelElement.find(".accreditation").addClass( 'hide' );
                         $label.removeClass( 'hide' );
                         $label.addClass( 'textBlink' );
                         setTimeout( function()
@@ -613,8 +677,15 @@
 
                         $tagLabel.text( origTagText );
 
-                        widget._displayCount( response );
+                        widget._displayButtonCount({
+                                                response:       response
+                                            ,   btnOptions:     btnOptions
+                                            });
 
+                        widget._displayLabelCount({
+                                                response:       response
+                                            ,   labelOptions:   labelOptions
+                                            });
 
                         widget._resetTagsData( response  );
 
@@ -644,9 +715,6 @@
                     }
                 });
             });
-
         }
-
-
     } );
 } )( jQuery );

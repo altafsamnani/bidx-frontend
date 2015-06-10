@@ -39,11 +39,17 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
         </h1>
     </div>
 
-    <div class="actions hide-overflow main-margin investorTagging mentorTagging">
-        <div class="pull-left quick-action-links">
-                <div class="investorTaggingButton"></div>
+    <div class="actions hide-overflow main-margin">
 
-<?php
+        <div class="pull-left quick-action-links">
+            <?php
+            if ( !empty($this->data->bidxInvestorProfile )  || !empty($this->data->bidxMentorProfile ))
+            { ?>
+
+                    <label class='markLabel'><?php _e("Mark for","bidxplugin");?>:</label>
+                    <input type="checkbox" name="tag-checkbox" checked data-off-color="warning" data-size="small" data-on-text="<?php _e('Investor', 'bidxplugin');?>" data-off-text="<?php _e('Mentor', 'bidxplugin');?>">
+
+<?php       }
             if ( $canEdit && $isLoggedinMemberIsEntrepreneur ) :
 ?>
                 <!-- <a href="#" class="btn btn-sm btn-primary">
@@ -58,6 +64,7 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
                     <div class="fa fa-building fa-above fa-big"></div>
                     <?php _e('Add Company', 'bidxplugin')?>
                 </a>
+
 <?php
             endif;
 ?>
@@ -71,8 +78,23 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 <?php
             endif;
 ?>
+        <div class="btn-group pull-right">
+            <?php
+            if( !empty($this->data->bidxInvestorProfile ) )
+            { ?>
+                <div class="investorTagging tagginbBtn hide">
+                    <div class="investorTaggingButton"></div>
+                </div>
+            <?php }
+            if( !empty($this->data->bidxMentorProfile ))
+            { ?>
+                <div class="mentorTagging tagginbBtn hide">
+                    <div class="mentorTaggingButton"></div>
+                </div>
+            <?php
+            } ?>
         </div>
-
+    </div>
 <?php
         if ( $canEdit ) :
 ?>
@@ -106,10 +128,10 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
         endif;
 ?>
         <div class="btn-group pull-right">
-            <div class="investorTaggingLabel"></div>
+            <div class="investorTaggingLabel hide"></div>
         </div>
         <div class="btn-group pull-right">
-            <div class="mentorTaggingLabel"></div>
+            <div class="mentorTaggingLabel hide"></div>
         </div>
 
         <div class="editControls btn-group pull-right"></div>
