@@ -21,6 +21,7 @@
 
     ,   $btnSave
     ,   $btnCancel
+    ,   $btnDeleteBs                = $( "#deleteBS" )
     ,   $btnFullAccessRequest       = $element.find( ".bidxRequestFullAccess")
     ,   $bidxAccessRequestPending   = $element.find( ".bidxAccessRequestPending")
 
@@ -317,6 +318,15 @@
                 bidx.common.addAppWithPendingChanges( appName );
             }
         } );
+
+
+        $btnDeleteBs.bind( "click", function( e )
+        {
+            e.preventDefault();
+            
+            bidx.common.notifyConfirm( bidx.i18n.i( "summaryDeletion", appName ), bidxConfig.context.businessSummaryId );
+        } );
+
 
         // Populate the dropdowns with the values
         //
@@ -3330,7 +3340,7 @@
         // Inject the save and button into the controls
         //
         $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save"    });
-        $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: "#loadMentors"  });
+        $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled"});
 
 
         if( state === 'edit')
@@ -3361,7 +3371,7 @@
             {
                 bidx.common.removeAppWithPendingChanges( appName );
                 $managementTeamContainer.empty();
-                bidx.controller.updateHash( "#loadMentors", true );
+                bidx.controller.updateHash( "#viewBusinessSummary", true );
                 $coverImageContainer.find( "img" ).show();
 
                 reset();

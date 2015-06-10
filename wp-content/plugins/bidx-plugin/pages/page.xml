@@ -54,92 +54,12 @@
 			<setTranslate>true</setTranslate>
 		</post>
 		<post>
-			<post_id>3</post_id>
-			<name>Register as investor</name>
-			<title>Register as investor</title>
-			<update>false</update>
-			<template>template-full.php</template>
-			<htmlTemplate>register-as-investor</htmlTemplate>
-			<content></content>
-			<setTranslate>true</setTranslate>
-		</post>
-		<post>
-			<post_id>4</post_id>
-			<name>Register as entrepreneur</name>
-			<title>Register as entrepreneur</title>
-			<update>false</update>
-			<template>template-full.php</template>
-			<htmlTemplate>register-as-entrepreneur</htmlTemplate>
-			<content></content>
-			<setTranslate>true</setTranslate>
-		</post>
-		<post>
-			<post_id>5</post_id>
-			<name>Register as member</name>
-			<title>Register as member</title>
-			<update>false</update>
-			<template>template-full.php</template>
-			<htmlTemplate>register-as-member</htmlTemplate>
-			<content></content>
-			<setTranslate>true</setTranslate>
-		</post>
-		<post>
-			<post_id>6</post_id>
-			<name>Getting started investor</name>
-			<title>Getting started investor</title>
-			<update>false</update>
-			<template>template-full.php</template>
-			<htmlTemplate>getting-started-investor</htmlTemplate>
-			<content></content>
-			<setTranslate>true</setTranslate>
-		</post>
-		<post>
-			<post_id>7</post_id>
-			<name>Getting started entrepreneur</name>
-			<title>Getting started entrepreneur</title>
-			<update>false</update>
-			<template>template-full.php</template>
-			<htmlTemplate>getting-started-entrepreneur</htmlTemplate>
-			<content></content>
-			<setTranslate>true</setTranslate>
-		</post>
-		<post>
 			<post_id>8</post_id>
 			<name>Download business plan templates</name>
 			<title>Download business plan templates</title>
 			<update>false</update>
 			<template>template-full.php</template>
 			<htmlTemplate>business-plan-templates</htmlTemplate>
-			<content></content>
-			<setTranslate>true</setTranslate>
-		</post>
-		<post>
-			<post_id>9</post_id>
-			<name>Getting started member</name>
-			<title>Getting started member</title>
-			<update>false</update>
-			<template>template-full.php</template>
-			<htmlTemplate>getting-started-member</htmlTemplate>
-			<content></content>
-			<setTranslate>true</setTranslate>
-		</post>
-		<post>
-			<post_id>10</post_id>
-			<name>Getting started mentor</name>
-			<title>Getting started mentor</title>
-			<update>false</update>
-			<template>template-full.php</template>
-			<htmlTemplate>getting-started-mentor</htmlTemplate>
-			<content></content>
-			<setTranslate>true</setTranslate>
-		</post>
-		<post>
-			<post_id>11</post_id>
-			<name>Register as mentor</name>
-			<title>Register as mentor</title>
-			<update>false</update>
-			<template>template-full.php</template>
-			<htmlTemplate>register-as-mentor</htmlTemplate>
 			<content></content>
 			<setTranslate>true</setTranslate>
 		</post>

@@ -11,7 +11,7 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
 ?>
 
         <div class="profile-block">
-
+            <div class="investorSectionTaggingLabel"></div>
             <div class="btn-group show hide-overflow">
     <?php
                 if ($investorDetailsBidxMeta->bidxCanEdit) {
@@ -56,7 +56,7 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
 
             if ( $this->checkEmpty( $rowValues ) ) :
 ?>
-                <h4><?php _e('General Information', 'bidxplugin')?></h4>
+                <h4 class="memberTitle"><?php _e('General Information', 'bidxplugin')?></h4>
 <?php
                 echo $this->tableRow ( $rowValues );
             endif;

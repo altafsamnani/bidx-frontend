@@ -209,7 +209,8 @@ button:hover
 .bidx-edit
 {
     .editProfile,
-    .editBS
+    .editBS,
+    #deleteBS
     {
         display: none;
     }
@@ -869,6 +870,18 @@ header
     a
     {
         white-space: pre-wrap;
+    }
+}
+
+.member .dropdown-toggle
+{
+    font-size: 1.8em;
+    background-color: transparent;
+    line-height: 0.5;
+    color: lighten(@gray-light, 22.5%);
+    &:hover
+    {
+        color: @gray-light;
     }
 }
 
@@ -2055,6 +2068,11 @@ a.btn-mentor
 {
     background-color: @entrepreneur;
 }
+
+.btn-tagging
+{
+    margin: 0 2px;
+}
 // carousel.less
 // -------------------------
 .carousel-empty
@@ -2772,6 +2790,11 @@ tbody tr.extrapanel td
 {
     font-weight: 100;
 }
+.no-radius
+{
+    .border-radius(0);
+}
+
 // Skinning
 // -------------------------
 .box-border

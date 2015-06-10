@@ -10,6 +10,7 @@
 
     ,   $btnSave
     ,   $btnCancel
+    ,   $btnDeleteItem              = $( ".deleteEntityItem" )
 
     ,   $hideOnCreate               = $element.find( ".hideOnCreate" )
 
@@ -101,6 +102,19 @@
         $element.delegate( "a.disabled", "click", function( e )
         {
             e.preventDefault();
+        } );
+
+        $btnDeleteItem.bind( "click", function( e )
+        {
+            e.preventDefault();
+
+            var el          = $(this)
+            ,   item        = el.parents( ".list-group-item" )
+            ,   entityId    = item.data( "entityid" )
+            ;
+            
+            bidx.common.notifyConfirm( bidx.i18n.i( "itemDeletion", appName ), entityId );
+
         } );
 
         // Populate the dropdowns with the values

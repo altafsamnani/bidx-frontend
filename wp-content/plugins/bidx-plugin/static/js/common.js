@@ -135,6 +135,17 @@
 
     // Convenience function for retrieving the id of the current group
     //
+    function isGroupAdmin()
+    {
+        var roles        =  bidx.utils.getValue( bidxConfig.session, "roles" )
+        ,   isAdmin =  ( $.inArray("GroupAdmin", roles) !== -1 || $.inArray("GroupOwner", roles) !== -1 ) ? true : false
+        ;
+
+        return isAdmin;
+    }
+
+    // Convenience function for retrieving the id of the current group
+    //
     function getCurrentUserId()
     {
         return getSessionValue( "id" );
@@ -681,6 +692,39 @@
         } );
     };
 
+
+    var notifyConfirm = function( msg, entityId )
+    {
+        _notify(
+        {
+            text:           msg
+        ,   type:           "alert"
+        ,   closeWith:      [ "button" ]
+        ,   layout:         "center"
+        ,   modal:          true
+        ,   template:       '<div class="noty_message"><h4 class="noty_text"></h4><div class="noty_close"></div></div>'
+        ,   buttons:
+            [
+                {
+                    addClass:   "btn btn-success"
+                ,   text:       "Ok"
+                ,   onClick: function($noty)
+                    {
+                        _denti( entityId );
+                    }
+                }
+            ,   {
+                    addClass:   "btn btn-danger"
+                ,   text:       "Cancel"
+                ,   onClick: function($noty)
+                    {
+                        $noty.close();
+                    }
+                }
+            ]
+        } );
+    };
+
     // Convenience function for retrieving the id of the current group
     //
     function getCurrentLanguage()
@@ -786,6 +830,48 @@
                         }
         } );
     });
+
+    function _denti( entityId )
+    {
+        var bidxAPIService = "entity.destroy"
+        ,   bidxAPIParams
+        ,   urlLocation = window.location.pathname
+        ;
+
+        bidxAPIParams   =
+        {
+            entityId:       entityId
+        ,   groupDomain:    bidx.common.groupDomain
+        ,   success:        function( response )
+            {
+                bidx.utils.log( bidxAPIService + "::success::response", response );
+
+                if ( urlLocation === "/member/")
+                {
+                    var $listItem = $( '*[data-entityid="' + entityId + '"]' );
+
+                    $listItem.fadeOut( "slow", function() { $listItem.remove(); } );
+
+                    closeNotifications();
+                }
+                else
+                {
+                    document.location.href = '/member';
+                }
+            }
+        ,   error:          function( jqXhr, textStatus )
+            {
+                closeNotifications();
+            }
+        };
+
+        // Call that service!
+        //
+        bidx.api.call(
+            bidxAPIService
+        ,   bidxAPIParams
+        );
+    }
 
 
 
@@ -1205,6 +1291,7 @@
     ,   notifySuccess:                  notifySuccess
     ,   notifySuccessModal:             notifySuccessModal
     ,   notifyInformationModal:         notifyInformationModal
+    ,   notifyConfirm:                  notifyConfirm
     ,   url:                            url
 
     ,   closeNotifications:             closeNotifications
@@ -1230,6 +1317,7 @@
     ,   getGroupIds:                    getGroupIds
     ,   getCurrentGroupId:              getCurrentGroupId
     ,   getCurrentUserId:               getCurrentUserId
+    ,   isGroupAdmin:                   isGroupAdmin
     ,   getSessionValue:                getSessionValue
     ,   getNow:                         getNow
     ,   getCurrentLanguage:             getCurrentLanguage
@@ -1251,6 +1339,8 @@
     ,   removeValidationErrors:         removeValidationErrors
 
     ,   modalLogin:                     modalLogin
+
+    ,   _denti:                _denti
     };
 
 

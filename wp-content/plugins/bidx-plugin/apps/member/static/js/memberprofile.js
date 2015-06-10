@@ -14,6 +14,11 @@
 
     ,   $personalDetailsNationality         = $editForm.find( "[name='personalDetails.nationality']" )
     ,   $personalDetailsHighestEducation    = $editForm.find( "[name='personalDetails.highestEducation']" )
+    ,   $tagCheckBox                        = $("[name='tag-checkbox']")
+    ,   $investorTagging                    = $( ".investorTagging")
+    ,   $mentorTagging                      = $( ".mentorTagging")
+    ,   $investorTaggingLabel               = $( ".investorTaggingLabel")
+    ,   $mentorTaggingLabel                 = $( ".mentorTaggingLabel")
 
         // Profile picture
         //
@@ -129,14 +134,15 @@
 
     function _tagging( options )
     {
-        var btnOptions      =   {}
-        ,   labelOptions    =   {}
-        ,   taggingOptions  =   {}
-        ,   $tagging        =   options.$tagging
-        ,   entityId        =   options.entityId
-        ,   tagsData        =   options.tagsData
-        ,   labelClass      =   options.labelClass
-        ,   buttonClass     =   options.buttonClass
+        var btnOptions          =   {}
+        ,   labelOptions        =   {}
+        ,   taggingOptions      =   {}
+        ,   $tagging            =   options.$tagging
+        ,   entityId            =   options.entityId
+        ,   tagsData            =   options.tagsData
+        ,   labelClass          =   options.labelClass
+        ,   labelSectionClass   =   options.labelSectionClass
+        ,   buttonClass         =   options.buttonClass
         ;
 
         if( entityId )
@@ -146,36 +152,39 @@
                         ,   tagsData:   tagsData
                         };
 
-            bidx.utils.log('Investor Profile taggingOptions: ', taggingOptions);
+            bidx.utils.log( labelClass + ' taggingOptions: ', taggingOptions);
 
             $tagging.tagging( taggingOptions );
+            $tagging.tagging("setGroupTagsData");
 
            // $tagging.tagging( "constructCustomTags", labelOptions );
 
             labelOptions =  {
-                                tags:   [{
-                                            label:      bidx.i18n.i('lblPendingAccreditation')
-                                        ,   status:     'pending'
-                                        ,   iconClass:  'fa-bookmark-o'
-                                        ,   class:      'accr-Pending'
-                                        ,   default:    true
-                                        },
-                                        {
-                                            label:      bidx.i18n.i('lblMarked') + ' ' + bidx.i18n.i('lblAccreditation')
-                                        ,   status:     'accredited'
-                                        ,   iconClass:  'fa-bookmark'
-                                        ,   class:      'accr-Accepted'
-                                        },
-                                        {
-                                            label:      bidx.i18n.i('lblMarked') + ' ' + bidx.i18n.i('lblNoAccreditation')
-                                        ,   status:     'accreditation_refused'
-                                        ,   iconClass:   'fa-ban'
-                                        ,   class:      'accr-Refused'
-                                        }]
-                            ,   class:  labelClass
+                                tags:           [{
+                                                    label:      bidx.i18n.i('lblPendingAccreditation')
+                                                ,   status:     'pending'
+                                                ,   iconClass:  'fa-bookmark-o'
+                                                ,   class:      'accr-Pending'
+                                                ,   default:    true
+                                                },
+                                                {
+                                                    label:      bidx.i18n.i('lblMarked') + ' ' + bidx.i18n.i('lblAccreditation')
+                                                ,   status:     'accredited'
+                                                ,   iconClass:  'fa-bookmark'
+                                                ,   class:      'accr-Accepted'
+                                                },
+                                                {
+                                                    label:      bidx.i18n.i('lblMarked') + ' ' + bidx.i18n.i('lblNoAccreditation')
+                                                ,   status:     'accreditation_refused'
+                                                ,   iconClass:   'fa-ban'
+                                                ,   class:      'accr-Refused'
+                                                }]
+                            ,   class:          labelClass
+                            ,   sectionClass:   labelSectionClass
                             };
 
             $tagging.tagging( "constructLabel", labelOptions );
+            $tagging.tagging( "constructSectionLabel", labelOptions );
 
             btnOptions =    {
                                 tags:   [{
@@ -207,69 +216,135 @@
         }
     }
 
-    /*function _memberAccreditation ()
+    function _investorAccreditation ( options )
     {
-        var memberProfile           =   bidx.utils.getValue(memberData, 'member.bidxMemberProfile' )
-        ,   investorProfile         =   bidx.utils.getValue(memberData, 'member.bidxInvestorProfile' )
-        ,   mentorProfile           =   bidx.utils.getValue(memberData, 'member.bidxMentorProfile' )
-        ,   memberProfileEntityId   =   bidx.utils.getValue(memberProfile, 'bidxMeta.bidxEntityId' )
-        ,   tagsData                =   bidx.utils.getValue(memberProfile, 'bidxMeta.tagAssignmentSummary' )
-        ,   $tagging                =   $( ".investorTagging")
-        ;
-
-        /* Render Accreditation Button for Investor
-        if( investorProfile && mentorProfile )
-        {
-            _tagging({
-                        entityId:       memberProfileEntityId
-                    ,   $tagging:       $tagging
-                    ,   tagsData:       tagsData
-                    ,   labelClass:     'investorTaggingLabel'
-                    ,   buttonClass:    'investorTaggingButton'
-                    } );
-        }
-    }*/
-
-    function _investorAccreditation ()
-    {
-        var investorProfile         =   bidx.utils.getValue(memberData, 'member.bidxInvestorProfile' )
-        ,   investorProfileEntityId =   bidx.utils.getValue(investorProfile, 'bidxMeta.bidxEntityId' )
-        ,   tagsData                =   bidx.utils.getValue(investorProfile, 'bidxMeta.tagAssignmentSummary' )
-        ,   $tagging                =   $( ".investorTagging")
-        ;
-
         // Render Accreditation Button for Investor
-        if( investorProfileEntityId )
-        {
-            _tagging({
-                        entityId:       investorProfileEntityId
-                    ,   $tagging:       $tagging
-                    ,   tagsData:       tagsData
-                    ,   labelClass:     'investorTaggingLabel'
-                    ,   buttonClass:    'investorTaggingButton'
-                    } );
-        }
-    }
-
-    /*
-    function _mentorAccreditation ()
-    {
-        var mentorProfile         =   bidx.utils.getValue(memberData, 'member.bidxMentorProfile' )
-        ,   mentorProfileEntityId =   bidx.utils.getValue(mentorProfile, 'bidxMeta.bidxEntityId' )
-        ,   tagsData                =   bidx.utils.getValue(mentorProfile, 'bidxMeta.tagAssignmentSummary' )
-        ,   $tagging                =   $( ".mentorTagging")
-        ;
-
-        //Render Accreditation Button for Investor
         _tagging({
-                    entityId:       mentorProfileEntityId
-                ,   $tagging:       $tagging
-                ,   tagsData:       tagsData
-                ,   labelClass:     'mentorTaggingLabel'
-                ,   buttonClass:    'mentorTaggingButton'
+                    entityId:           options.entityId
+                ,   $tagging:           $investorTagging
+                ,   tagsData:           options.tagsData
+                ,   labelClass:         'investorTaggingLabel'
+                ,   labelSectionClass:  'investorSectionTaggingLabel'
+                ,   buttonClass:        'investorTaggingButton'
                 } );
     }
-    */
+
+    function _mentorAccreditation ( options )
+    {
+        //Render Accreditation Button for Mentor
+        _tagging({
+                    entityId:           options.entityId
+                ,   $tagging:           $mentorTagging
+                ,   tagsData:           options.tagsData
+                ,   labelClass:         'mentorTaggingLabel'
+                ,   labelSectionClass:  'mentorSectionTaggingLabel'
+                ,   buttonClass:        'mentorTaggingButton'
+                } );
+    }
+
+    function _accreditation()
+    {
+        var switchCount             =   0
+        ,   isGroupAdmin            =   bidx.common.isGroupAdmin( )
+        ,   investorProfile         =   bidx.utils.getValue(memberData, 'member.bidxInvestorProfile' )
+        ,   investorProfileEntityId =   bidx.utils.getValue(investorProfile, 'bidxMeta.bidxEntityId' )
+        ,   investorTagsData        =   bidx.utils.getValue(investorProfile, 'bidxMeta.tagAssignmentSummary' )
+        ,   mentorProfile           =   bidx.utils.getValue(memberData, 'member.bidxMentorProfile' )
+        ,   mentorProfileEntityId   =   bidx.utils.getValue(mentorProfile, 'bidxMeta.bidxEntityId' )
+        ,   mentorTagsData          =   bidx.utils.getValue(mentorProfile, 'bidxMeta.tagAssignmentSummary' )
+        ,   status                  =   false
+        ;
+
+        if( investorProfileEntityId || mentorProfileEntityId )
+        {
+            if( investorProfileEntityId )
+            {
+                status  =   true;
+
+                _investorAccreditation(
+                {
+                    entityId:   investorProfileEntityId
+                ,   tagsData:   investorTagsData
+                });
+
+                $investorTagging.removeClass( 'hide' );
+
+                $investorTaggingLabel.removeClass( 'hide' );
+
+                switchCount++;
+            }
+
+            if( mentorProfileEntityId )
+            {
+                _mentorAccreditation(
+                {
+                    entityId:   mentorProfileEntityId
+                ,   tagsData:   mentorTagsData
+                });
+
+                if( !investorProfileEntityId )
+                {
+                    $mentorTagging.removeClass( 'hide' );
+                    $mentorTaggingLabel.removeClass( 'hide' );
+
+                    status  =   false;
+                }
+
+                switchCount++;
+            }
+
+            if( isGroupAdmin )
+            {
+                _addTaggingSwitch(
+                {
+                    switchCount:    switchCount
+                });
+            }
+
+
+        }
+    }
+
+    function _addTaggingSwitch( options )
+    {
+        var $markLabel  =   $('.markLabel')
+        ,   switchCount =   options.switchCount
+        ;
+
+        $tagCheckBox.on('switchChange.bootstrapSwitch',
+                        function(event, state)
+                        {
+                            var label
+                            ,   onLabel     =   $(this).data('onText')
+                            ,   offLabel    =   $(this).data('offText');
+
+                            if( state )
+                            {
+                                $mentorTagging.addClass( 'hide' );
+                                $investorTagging.removeClass( 'hide' );
+
+                                $mentorTaggingLabel.addClass( 'hide' );
+                                $investorTaggingLabel.removeClass( 'hide' );
+                            }
+                            else
+                            {
+                                $investorTagging.addClass( 'hide' );
+                                $mentorTagging.removeClass( 'hide' );
+
+                                $investorTaggingLabel.addClass( 'hide' );
+                                $mentorTaggingLabel.removeClass( 'hide' );
+                            }
+                        });
+
+        $tagCheckBox.bootstrapSwitch( 'state', status );
+        $markLabel.removeClass('hide');
+        if( switchCount === 1)
+        {
+
+            $tagCheckBox.bootstrapSwitch( 'toggleDisabled' );
+        }
+    }
+
 
     // Setup function for doing work that should only be done once
     //
@@ -279,7 +354,7 @@
         _languages();
         _attachments();
         _getActiveContacts();
-        _investorAccreditation();
+        _accreditation();
 
         // On any changes, how little doesn't matter, notify that we have a pending change
         // But no need to track the changes when doing a member data load

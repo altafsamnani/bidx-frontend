@@ -71,8 +71,8 @@ class businesssummary
 
             $view->competitionData  = $competitionData;
 
-            if ( isset( $businessSummaryData -> data -> completeness ) ) {
-                $completeness = $businessSummaryData -> data -> completeness;
+            if ( isset( $businessSummaryData -> data -> bidxMeta -> bidxCompletionMesh) ) {
+                $completeness = $businessSummaryData -> data -> bidxMeta -> bidxCompletionMesh;
 
                 //TODO : structurally fix this using the scoring service
                 $view->completenessScore = round($completeness);
