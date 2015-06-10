@@ -245,6 +245,7 @@
     function _accreditation()
     {
         var switchCount             =   0
+        ,   isGroupAdmin            =   bidx.common.isGroupAdmin( )
         ,   investorProfile         =   bidx.utils.getValue(memberData, 'member.bidxInvestorProfile' )
         ,   investorProfileEntityId =   bidx.utils.getValue(investorProfile, 'bidxMeta.bidxEntityId' )
         ,   investorTagsData        =   bidx.utils.getValue(investorProfile, 'bidxMeta.tagAssignmentSummary' )
@@ -292,40 +293,55 @@
                 switchCount++;
             }
 
-            $tagCheckBox.on('switchChange.bootstrapSwitch'
-                        ,   function(event, state)
-                            {
-                                var label
-                                ,   onLabel     =   $(this).data('onText')
-                                ,   offLabel    =   $(this).data('offText');
-
-                                if( state )
-                                {
-                                    $mentorTagging.addClass( 'hide' );
-                                    $investorTagging.removeClass( 'hide' );
-
-                                    $mentorTaggingLabel.addClass( 'hide' );
-                                    $investorTaggingLabel.removeClass( 'hide' );
-                                }
-                                else
-                                {
-                                    $investorTagging.addClass( 'hide' );
-                                    $mentorTagging.removeClass( 'hide' );
-
-                                    $investorTaggingLabel.addClass( 'hide' );
-                                    $mentorTaggingLabel.removeClass( 'hide' );
-                                }
-
-                                bidx.utils.log('labellabel', label);
-
-                            });
-
-            $tagCheckBox.bootstrapSwitch( 'state', status );
-
-            if( switchCount === 1)
+            if( isGroupAdmin )
             {
-                $tagCheckBox.bootstrapSwitch( 'toggleDisabled' );
+                _addTaggingSwitch(
+                {
+                    switchCount:    switchCount
+                });
             }
+
+
+        }
+    }
+
+    function _addTaggingSwitch( options )
+    {
+        var $markLabel  =   $('.markLabel')
+        ,   switchCount =   options.switchCount
+        ;
+
+        $tagCheckBox.on('switchChange.bootstrapSwitch',
+                        function(event, state)
+                        {
+                            var label
+                            ,   onLabel     =   $(this).data('onText')
+                            ,   offLabel    =   $(this).data('offText');
+
+                            if( state )
+                            {
+                                $mentorTagging.addClass( 'hide' );
+                                $investorTagging.removeClass( 'hide' );
+
+                                $mentorTaggingLabel.addClass( 'hide' );
+                                $investorTaggingLabel.removeClass( 'hide' );
+                            }
+                            else
+                            {
+                                $investorTagging.addClass( 'hide' );
+                                $mentorTagging.removeClass( 'hide' );
+
+                                $investorTaggingLabel.addClass( 'hide' );
+                                $mentorTaggingLabel.removeClass( 'hide' );
+                            }
+                        });
+
+        $tagCheckBox.bootstrapSwitch( 'state', status );
+        $markLabel.removeClass('hide');
+        if( switchCount === 1)
+        {
+
+            $tagCheckBox.bootstrapSwitch( 'toggleDisabled' );
         }
     }
 

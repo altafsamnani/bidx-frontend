@@ -46,7 +46,7 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
             if ( !empty($this->data->bidxInvestorProfile )  || !empty($this->data->bidxMentorProfile ))
             { ?>
 
-                    <label class='markLabel'><?php _e("Mark for","bidxplugin");?>:</label>
+                    <label class='markLabel hide'><?php _e("Mark for","bidxplugin");?>:</label>
                     <input type="checkbox" name="tag-checkbox" checked data-off-color="warning" data-size="small" data-on-text="<?php _e('Investor', 'bidxplugin');?>" data-off-text="<?php _e('Mentor', 'bidxplugin');?>">
 
 <?php       }
@@ -165,15 +165,25 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 <?php
             if ( !empty($this->data->bidxInvestorProfile ) ) :
 ?>
-                <li><a href="#tab-investor" data-toggle="tab"><i class="pull-left fa fa-bank"></i> <?php _e('Investor','bidxplugin');?></a></li>
+                <li><a href="#tab-investor" data-toggle="tab">
+                        <i class="pull-left fa fa-bank"></i>
+                        <?php _e('Investor','bidxplugin');?>
+                        <i class="pull-right fa fa-investor"></i>
+                    </a>
+                </li>
 <?php
             endif;
 ?>
 <?php
             if ( !empty($this->data->bidxMentorProfile ) ):
 ?>
-
-            <li><a href="#tab-mentor" data-toggle="tab"><i class="pull-left fa fa-compass"></i> <?php _e('Mentor','bidxplugin');?></a></li>
+                <li>
+                    <a href="#tab-mentor" data-toggle="tab">
+                        <i class="pull-left fa fa-compass"></i>
+                        <?php _e('Mentor','bidxplugin');?>
+                        <i class="pull-right fa fa-mentor"></i>
+                    </a>
+                </li>
 <?php
             endif;
 ?>

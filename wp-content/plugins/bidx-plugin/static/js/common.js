@@ -135,6 +135,17 @@
 
     // Convenience function for retrieving the id of the current group
     //
+    function isGroupAdmin()
+    {
+        var roles        =  bidx.utils.getValue( bidxConfig.session, "roles" )
+        ,   isAdmin =  ( $.inArray("GroupAdmin", roles) !== -1 || $.inArray("GroupOwner", roles) !== -1 ) ? true : false
+        ;
+
+        return isAdmin;
+    }
+
+    // Convenience function for retrieving the id of the current group
+    //
     function getCurrentUserId()
     {
         return getSessionValue( "id" );
@@ -840,7 +851,7 @@
                     var $listItem = $( '*[data-entityid="' + entityId + '"]' );
 
                     $listItem.fadeOut( "slow", function() { $listItem.remove(); } );
-                    
+
                     closeNotifications();
                 }
                 else
@@ -1306,6 +1317,7 @@
     ,   getGroupIds:                    getGroupIds
     ,   getCurrentGroupId:              getCurrentGroupId
     ,   getCurrentUserId:               getCurrentUserId
+    ,   isGroupAdmin:                   isGroupAdmin
     ,   getSessionValue:                getSessionValue
     ,   getNow:                         getNow
     ,   getCurrentLanguage:             getCurrentLanguage
