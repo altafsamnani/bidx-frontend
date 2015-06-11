@@ -298,6 +298,7 @@
                 _addTaggingSwitch(
                 {
                     switchCount:    switchCount
+                ,   status:         status
                 });
             }
 
@@ -309,6 +310,7 @@
     {
         var $markLabel  =   $('.markLabel')
         ,   switchCount =   options.switchCount
+        ,   status      =   options.status
         ;
 
         $tagCheckBox.on('switchChange.bootstrapSwitch',
