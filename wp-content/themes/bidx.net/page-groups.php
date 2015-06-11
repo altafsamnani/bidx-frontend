@@ -53,268 +53,54 @@ get_header();
                             <h5>Online Portals</h5>
                         </div>
                         <!-- /.portfolio-filter -->
+
+
                         <div class="row">
                             <div id="isotope-portfolio-container">
+<?php
+                            // WP_Query arguments
+                            $args = array (
+                                'post_type'         => 'portal',
+                                'post_status'       => 'publish',
+                                'posts_per_page'    => '-1',
+                                'meta_key'          => 'order_weight',
+                                'orderby'           => 'meta_value_num',
+                                'order'             => 'DESC'
+                            );
 
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo17.jpg" class="img-responsive" alt="Shape & Lead">
-                                            <div class="image-overlay"></div>
-                                            <a href="https://shapeandlead.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>Shape &amp; Lead</p>
-                                            <p><small>Rwanda</small></p>
+                            // The Query
+                            $portals = new WP_Query( $args );
+
+                            // The Loop
+                            if ( $portals->have_posts() ) {
+                                while ( $portals->have_posts() ) {
+                                    $portals->the_post();
+?>
+                                    <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
+                                        <div class="portfolio-item">
+                                            <div class="portfolio-thumb">
+                                                <?php echo the_post_thumbnail( array( 'class' => ' img-responsive' ) ); ?>
+                                                <div class="image-overlay"></div>
+                                                <a href="<?php the_field('portal_link'); ?>" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
+                                            </div>
+                                            <div class="portfolio-details">
+                                                <p><?php echo the_title(); ?></p>
+                                                <p><small><?php the_field('country'); ?></small></p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
+<?php
+                                }
+                            } else {
+                                // no posts found
+                            }
 
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo16.png" class="img-responsive" alt="1st Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="https://ifdc-catalist-uganda.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>IFDC Catalist Uganda</p>
-                                            <p><small>Uganda</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
-
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo7.png" class="img-responsive" alt="6th Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="https://cleancookstoves.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>Clean Cookstoves</p>
-                                            <p><small>International</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
-
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo13.png" class="img-responsive" alt="1st Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="https://somalia-agrifood.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>Somalia Afrifood</p>
-                                            <p><small>Somalia</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
-
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo11.png" class="img-responsive" alt="1st Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="https://somaliland-agrifood.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>Somaliland Afrifood</p>
-                                            <p><small>Somalia</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
-
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo12.png" class="img-responsive" alt="1st Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="https://puntland-agrifood.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>Puntland Afrifood</p>
-                                            <p><small>Somalia</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
-
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo14.png" class="img-responsive" alt="2nd Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="https://ozg.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>Ondernemen Zonder Grenzen</p>
-                                            <p><small>The Netherlands</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
-
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo18.png" class="img-responsive" alt="1st Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="https://bti.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>BTI Palestine</p>
-                                            <p><small>Palestine</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
-
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo1.png" class="img-responsive" alt="5th Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="https://poslovnicentarzvecan.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>BC Zvecan</p>
-                                            <p><small>North-Kosovo</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
-
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo10.png" class="img-responsive" alt="1st Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="https://bscmonrovia.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>BSC Monrovia</p>
-                                            <p><small>Liberia</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
-
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo8.png" class="img-responsive" alt="3rd Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="https://jcirwanda.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>JCI Rwanda</p>
-                                            <p><small>Rwanda</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
-
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo15.png" class="img-responsive" alt="4th Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="http://demogroup.demo.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>Demo Group</p>
-                                            <p><small>Demonstration</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
-
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo19.png" class="img-responsive" alt="4th Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="https://tza-portal.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>Seed</p>
-                                            <p><small>Tanzania</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
-
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo20.png" class="img-responsive" alt="4th Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="https://portal.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>Bidx Gateway Portal</p>
-                                            <p><small>International</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
-
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo21.png" class="img-responsive" alt="4th Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="https://kenya-portal.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>Kenya Business Development</p>
-                                            <p><small>Kenya</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
-
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo22.png" class="img-responsive" alt="4th Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="https://women.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>Female Entrepreneurship</p>
-                                            <p><small>International</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
-
-                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-thumb">
-                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo23.png" class="img-responsive" alt="4th Portfolio Thumb">
-                                            <div class="image-overlay"></div>
-                                            <a href="https://ind-portal.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
-                                        </div>
-                                        <div class="portfolio-details">
-                                            <p>India Business</p>
-                                            <p><small>India</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.portfolio-item-wrapper -->
-
+                            // Restore original Post Data
+                            wp_reset_postdata();
+?>
                             </div>
-                            <!-- /.isotope-portfolio-container -->
                         </div>
-                        <!-- /.row -->
+
                     </div>
                     <!-- /.container -->
                 </section>
