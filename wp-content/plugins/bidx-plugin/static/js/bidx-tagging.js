@@ -344,8 +344,6 @@
             ,   loggedInMemberId        =   bidx.common.getCurrentUserId()
             ;
 
-            bidx.utils.log('optionssss', options);
-
             if( entityId && $button.length)
             {
                 if( loggedInMemberId !== visitingMemberPageId )
@@ -559,10 +557,6 @@
             ,   attachedIconClass   =   bidx.utils.getValue(attachedTag,'iconClass')
             ,   detachedIconClass   =   bidx.utils.getValue(detachedTag,'iconClass')
             ;
-
-            bidx.utils.log('attached', attached);
-            bidx.utils.log('detached', detached);
-            bidx.utils.log('labelClass', labelClass);
 
             if( labelClass === 'investorTaggingLabel' )
             {
