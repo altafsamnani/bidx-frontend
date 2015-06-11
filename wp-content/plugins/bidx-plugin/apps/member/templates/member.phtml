@@ -56,11 +56,11 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
                     <div class="fa fa-dashboard fa-above fa-big"></div>
                     <?php _e('Dashboard', 'bidxplugin')?>
                 </a> -->
-                <a href="<?php echo _l('businesssummary');?>/#createBusinessSummary" class="btn btn-sm btn-primary">
+                <a href="#tab-entrepreneur" data-toggle="tab" id="createBusiness" class="btn btn-sm btn-primary">
                     <div class="fa fa-suitcase fa-above fa-big"></div>
                     <?php _e('Create Business', 'bidxplugin')?>
                 </a>
-                <a href="<?php echo _l('company');?>/#createCompany" class="btn btn-sm btn-primary">
+                <a href="#tab-entrepreneur" data-toggle="tab" id="createCompany" class="btn btn-sm btn-primary">
                     <div class="fa fa-building fa-above fa-big"></div>
                     <?php _e('Add Company', 'bidxplugin')?>
                 </a>
@@ -158,7 +158,7 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 <?php
             if ( !empty($this->data->bidxEntrepreneurProfile ) ):
 ?>
-            <li><a href="#tab-entreprenuer" data-toggle="tab"><i class="pull-left fa fa-lightbulb-o"></i> <?php _e('Entrepreneur','bidxplugin');?></a></li>
+            <li><a href="#tab-entrepreneur" data-toggle="tab"><i class="pull-left fa fa-lightbulb-o"></i> <?php _e('Entrepreneur','bidxplugin');?></a></li>
 <?php
             endif;
 ?>
@@ -201,7 +201,7 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 <?php
             if ( !empty($this->data->bidxEntrepreneurProfile ) ):
 ?>
-            <div class="tab-pane" id="tab-entreprenuer">
+            <div class="tab-pane" id="tab-entrepreneur">
                 <?php $this->render('view-entrepreneur.phtml'); ?>
             </div>
 <?php

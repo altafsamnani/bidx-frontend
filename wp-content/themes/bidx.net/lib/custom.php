@@ -15,6 +15,7 @@ function bidx_create_post_types ()
     create_post_type ('competition');
     create_post_type ('testimonial');
     create_post_type ('team');
+    create_post_type ('portal');
 }
 
 function create_post_type ($post_type = 'staff')
