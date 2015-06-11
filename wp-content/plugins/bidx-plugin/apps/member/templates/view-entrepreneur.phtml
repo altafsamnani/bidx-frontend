@@ -78,7 +78,13 @@ if ($entrepreneurDetails &&
                 <div class="col-sm-12">
                     <h4>
                         <?php echo $labelBusiness; ?>
+<?php
+                        if ( $entrepreneurDetails->bidxCanEdit ):
+?>                        
                         <a href="/businesssummary/#createBusinessSummary" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e( 'Add new Business', 'bidxplugin' ); ?> </a>
+<?php
+                        endif;
+?>                        
                     </h4>
 
 
@@ -186,7 +192,13 @@ if ($entrepreneurDetails &&
                 <div class="col-sm-12">
                     <h4>
                         <?php echo $labelCompany; ?>
+<?php
+                        if ( $entrepreneurDetails->bidxCanEdit ):
+?>                        
                         <a href="/company/#createCompany" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e( 'Add new Company', 'bidxplugin' ); ?> </a>
+<?php
+                        endif;
+?>                        
                     </h4>
 
 
