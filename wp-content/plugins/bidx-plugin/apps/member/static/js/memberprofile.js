@@ -252,10 +252,12 @@
         ,   mentorProfile           =   bidx.utils.getValue(memberData, 'member.bidxMentorProfile' )
         ,   mentorProfileEntityId   =   bidx.utils.getValue(mentorProfile, 'bidxMeta.bidxEntityId' )
         ,   mentorTagsData          =   bidx.utils.getValue(mentorProfile, 'bidxMeta.tagAssignmentSummary' )
+        ,   visitingMemberPageId    =   bidx.utils.getValue( bidxConfig, "context.memberId" )
+        ,   loggedInMemberId        =   bidx.common.getCurrentUserId()
         ,   status                  =   false
         ;
 
-        if( investorProfileEntityId || mentorProfileEntityId )
+        if( (loggedInMemberId !== visitingMemberPageId) && (investorProfileEntityId || mentorProfileEntityId ) )
         {
             if( investorProfileEntityId )
             {
@@ -298,6 +300,7 @@
                 _addTaggingSwitch(
                 {
                     switchCount:    switchCount
+                ,   status:         status
                 });
             }
 
@@ -309,6 +312,7 @@
     {
         var $markLabel  =   $('.markLabel')
         ,   switchCount =   options.switchCount
+        ,   status      =   options.status
         ;
 
         $tagCheckBox.on('switchChange.bootstrapSwitch',
