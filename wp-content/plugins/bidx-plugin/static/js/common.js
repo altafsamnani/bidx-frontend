@@ -126,6 +126,37 @@
         return confirmationRequested;
     }
 
+    function getAccreditation( memberData )
+    {
+        var investorTagsData
+        ,   mentorTagsData
+        ,   mentorGroups
+        ,   existingTags            =   {}
+        ,   investorProfile         =   bidx.utils.getValue(memberData, 'bidxInvestorProfile' )
+        ,   mentorProfile           =   bidx.utils.getValue(memberData, 'bidxMentorProfile' )
+        ,   currentGroup            =   bidxConfig.groupName;
+
+        if( investorProfile )
+        {
+            investorTagsData            =   bidx.utils.getValue(investorProfile, 'bidxMeta.tagAssignmentSummary' );
+            existingTags['investor']    =   _.find(investorTagsData,  function(tag)
+                                        {
+                                            return _.indexOf(tag.groups, currentGroup) !== -1;
+                                        });
+        }
+
+        if( mentorProfile )
+        {
+            mentorTagsData          =   bidx.utils.getValue(mentorProfile, 'bidxMeta.tagAssignmentSummary' );
+            existingTags['mentor']  =   _.find(mentorTagsData,  function(tag)
+                                    {
+                                        return _.indexOf(tag.groups, currentGroup) !== -1;
+                                    });
+        }
+        bidx.utils.log('existingTags', existingTags);
+        return existingTags;
+    }
+
     // Convenience function for retrieving the id of the current group
     //
     function getCurrentGroupId()
@@ -1317,6 +1348,7 @@
     ,   getGroupIds:                    getGroupIds
     ,   getCurrentGroupId:              getCurrentGroupId
     ,   getCurrentUserId:               getCurrentUserId
+    ,   getAccreditation:               getAccreditation
     ,   isGroupAdmin:                   isGroupAdmin
     ,   getSessionValue:                getSessionValue
     ,   getNow:                         getNow

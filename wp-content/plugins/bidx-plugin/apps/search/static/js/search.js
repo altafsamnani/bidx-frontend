@@ -406,9 +406,7 @@
                         if ( facetItems.name !== 'facet_entityType' )
                         {
                             dataKey      = facetItems.name.replace(/facet_/g, '');
-                            bidx.utils.log('facetItems.name', facetItems.name);
-                            bidx.utils.log('facetLabel', facetLabel);
-                            bidx.utils.log('dataKey', dataKey);
+
                             item.name    = bidx.data.i( item.name, dataKey );  // ict.services in industry
                         }
                         else
@@ -1301,6 +1299,7 @@
                 ,   country          = ''
                 ,   industry         = ''
                 ,   reason           = ''
+                ,   isGroupAdmin     = bidx.common.isGroupAdmin()
                 ,   image
                 ,   imageWidth
                 ,   imageLeft
@@ -1315,6 +1314,11 @@
                 ,   sepCountry
                 ,   memberCountry
                 ,   entrpreneurFocusIndustry
+                ,   tagging
+                ,   taggingMentor
+                ,   taggingInvestor
+                ,   mentorTaggingId
+                ,   investorTaggingId
                 ;
 
                 $entityElement   = $("#member-profile-listitem");
@@ -1327,6 +1331,7 @@
                 personalDetails  = i18nItem.bidxMemberProfile.personalDetails;
                 cityTown         = bidx.utils.getValue( personalDetails, "address.0.cityTown");
                 memberCountry    = bidx.utils.getValue( personalDetails, "address.0.country");
+                tagging          = bidx.common.getAccreditation( i18nItem );
 
                 // Member Role
                 //
@@ -1412,7 +1417,6 @@
                     .replace( /%city%/g,                ( cityTown ) ? cityTown : emptyVal )
                     .replace( /%country%/g,             ( country )  ? country : emptyVal )
                     .replace( /%interest%/g,             industry )
-
                     .replace( /%emailAddress%/g,        personalDetails.emailAddress   ? personalDetails.emailAddress  : emptyVal )
                     .replace( /%mobile%/g,              (!$.isEmptyObject(personalDetails.contactDetail))   ? bidx.utils.getValue( personalDetails, "contactDetail.0.mobile")    : emptyVal )
                     .replace( /%landLine%/g,            (!$.isEmptyObject(personalDetails.contactDetail))   ? bidx.utils.getValue( personalDetails, "contactDetail.0.landLine")     : emptyVal )
@@ -1431,6 +1435,32 @@
                         $(this).remove();
                     }
                 });
+
+                /* tagging */
+                if(isMentor)
+                {
+                    mentorTaggingId     =   'hide';
+                    taggingMentor       =   bidx.utils.getValue(tagging, 'mentor' );
+
+                    if( !_.isUndefined(taggingMentor) )
+                    {
+                        mentorTaggingId     =   (taggingMentor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
+                    }
+
+                    $listItem.find('.fa-mentor').addClass( mentorTaggingId );
+                }
+                if(isInvestor && isGroupAdmin)
+                {
+                    investorTaggingId   =   'hide';
+                    taggingInvestor     =   bidx.utils.getValue(tagging, 'investor' );
+
+                    if( !_.isUndefined(taggingInvestor) )
+                    {
+                        investorTaggingId   =   (taggingInvestor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
+                    }
+
+                    $listItem.find('.fa-investor').addClass( investorTaggingId );
+                }
 
                 // Member Image
                 //
