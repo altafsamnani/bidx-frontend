@@ -18,10 +18,10 @@ class GroupService extends APIbridge {
 	/**
 	 * Acceptable cache timeout (seconds) used when getting latest business summaries
 	 * and latest group members.
-	 * 
+	 *
 	 * (Arjan, 2014-01-19: other group API results are cached for an hour, and it seems
 	 * that the latest business summaries and latest group members results are based on
-	 * the very same JSON results from the backend group API, hence could be shared?) 
+	 * the very same JSON results from the backend group API, hence could be shared?)
 	 */
 	private $cache = 600;
 
@@ -84,13 +84,27 @@ class GroupService extends APIbridge {
    */
   public function getGroupDetails( $group_id = null, $transient = 'localgroup', $cached = 3600 ) {
 
-	if ($group_id == null) {
+	if ($group_id == null)
+  {
+    $body   =  array( 'showLatestMembers'           =>  false
+                    , 'showLatestBusinessSummaries' =>  false
+                    , 'showGroupAdmins'             =>  false);
 
-    	$result = get_transient( $transient );
-		if ( empty($result) || $result === false) {
+    //$result = get_transient( $transient );
 
+		if ( empty($result) || $result === false )
+    {
+      if( $transient === 'latest_members' )
+      {
+        $body['showLatestMembers']  =   true;
+      }
+
+      if( $transient === 'latest_groups' )
+      {
+        $body['showLatestBusinessSummaries']  = true;
+      }
 			// It wasn't there, so regenerate the data and save the transient
-			$result = $this->callBidxAPI( 'groups/' . $this -> getBidxSubdomain(), array(), 'GET', false, true );
+			$result = $this->callBidxAPI( 'groups/' . $this -> getBidxSubdomain(), $body, 'GET', false, true );
 
 			//check if error response : else skip
 			// method added for robustness
