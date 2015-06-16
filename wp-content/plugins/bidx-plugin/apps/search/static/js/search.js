@@ -218,7 +218,7 @@
 
     var showElements = function( options ) {
 
-        var elementArr      = options.elementArr
+        var elementArr      = options.elementArr // elementArr is used for conditional element display ex. Linkedin exist then only display
         ,   item            = options.item
         ,   $listItem       = options.listItem
         ,   $listViews      = $listItem.find(".view")
@@ -230,7 +230,7 @@
             itemRow = bidx.utils.getValue( item, clsVal );
             if ( itemRow )
             {
-                _showElement(clsKey, $listViews);
+                _showElement(clsKey, $listViews); // elementArr is used for conditional element display ex. Linkedin exist then only display
             }
         });
 
@@ -262,7 +262,7 @@
         ,   newSortOrder
         ,   origSortOrder
         ,   criteriaSort
-        ,   sortEntityId
+        ,   sortDate
         ,   sortCountry
         ,   sortIndustry
         ,   sortRelevance
@@ -275,15 +275,22 @@
         // Adjusting Sort asc/desc values
         //
         sortRelevance   =   bidx.utils.getValue( originalSort, 'relevance' );
+        sortRelevance   =   ( sortRelevance && sortRelevance === 'asc')   ? 'desc'     : 'asc';
+
         sortIndustry    =   bidx.utils.getValue( originalSort, 'industry' );
+        sortIndustry    =   ( sortIndustry  && sortIndustry === 'asc')    ? 'desc'     : 'asc';
+
         sortCountry     =   bidx.utils.getValue( originalSort, 'country' );
-        sortEntityId    =   bidx.utils.getValue( originalSort, 'entityId' );
+        sortCountry     =   ( sortCountry   && sortCountry === 'asc')     ? 'desc'     : 'asc';
+
+        sortDate        =   bidx.utils.getValue( originalSort, 'created' );
+        sortDate        =   ( sortDate      && sortDate === 'asc')    ? 'desc'     : 'asc' ;
 
         listSortItem    =   snippit
-                                .replace( /%relevance%/g,   ( sortRelevance && sortRelevance === 'asc')   ? 'desc'     : 'asc' )
-                                .replace( /%industry%/g,    ( sortIndustry  && sortIndustry === 'asc')    ? 'desc'     : 'asc' )
-                                .replace( /%country%/g,     ( sortCountry   && sortCountry === 'asc')     ? 'desc'     : 'asc' )
-                                .replace( /%entityId%/g,    ( sortEntityId  && sortEntityId === 'asc')    ? 'desc'     : 'asc' )
+                                .replace( /%relevance%/g,   sortRelevance)
+                                .replace( /%industry%/g,    sortIndustry )
+                                .replace( /%country%/g,     sortCountry )
+                                .replace( /%created%/g,      sortDate )
                             ;
 
         $listSortItem   = $( listSortItem );
@@ -317,6 +324,8 @@
             tempLimit = CONSTANTS.SEARCH_LIMIT;
 
             bidx.utils.log('After sort criteria=', sort);
+
+
 
             navigate(
             {
@@ -397,9 +406,7 @@
                         if ( facetItems.name !== 'facet_entityType' )
                         {
                             dataKey      = facetItems.name.replace(/facet_/g, '');
-                            bidx.utils.log('facetItems.name', facetItems.name);
-                            bidx.utils.log('facetLabel', facetLabel);
-                            bidx.utils.log('dataKey', dataKey);
+
                             item.name    = bidx.data.i( item.name, dataKey );  // ict.services in industry
                         }
                         else
@@ -644,17 +651,20 @@
 
         if( sort )
         {
-
             $.each( sort, function( sortField, sortOrder )
             {
                 criteriaSort.push( {
                                             "field" : sortField
                                         ,   "order":  sortOrder
                                     });
-
-
             } );
-
+        }
+        else
+        {
+            criteriaSort.push( {
+                                            "field" : "created"
+                                        ,   "order":  "desc"
+                                    });
         }
 
         // 3. Filter
@@ -1145,7 +1155,7 @@
                     .replace( /%entityId%/g,                    bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : emptyVal )
                     .replace( /%name%/g,                        i18nItem.name   ? i18nItem.name     : emptyVal )
                     .replace( /%summary%/g,                     i18nItem.summary   ? i18nItem.summary     : emptyVal )
-                    .replace( /%bidxLastUpdateDateTime%/g,      bidxMeta.bidxLastUpdateDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxLastUpdateDateTime) : emptyVal )
+                    .replace( /%bidxCreationDateTime%/g,      bidxMeta.bidxCreationDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxCreationDateTime) : emptyVal )
                     .replace( /%countryOperation%/g,            country )
                     .replace( /%industry%/g,                    industry )
                     .replace( /%reasonForSubmission%/g,         reason )
@@ -1179,7 +1189,7 @@
 
                 conditionalElementArr =
                 {
-                    'lastupdate'    :'bidxMeta.bidxLastUpdateDateTime'
+                    'lastupdate'    :'bidxMeta.bidxCreationDateTime'
                 ,   'industry'      :"industry"
                 ,   'finance'       :"financingNeeded"
                 ,   'reason'        :'reasonForSubmission'
@@ -1255,7 +1265,7 @@
                     .replace( /%bidxWebsiteName%/g,             response.domains )
                     .replace( /%website%/g,                     i18nItem.website   ? i18nItem.website     : emptyVal )
                     .replace( /%summary%/g,                     i18nItem.summary   ? i18nItem.summary     : emptyVal )
-                    .replace( /%bidxLastUpdateDateTime%/g,      bidxMeta.bidxLastUpdateDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxLastUpdateDateTime) : emptyVal )
+                    .replace( /%bidxCreationDateTime%/g,      bidxMeta.bidxCreationDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxCreationDateTime) : emptyVal )
                     .replace( /%focusCountry%/g,                country )
                     .replace( /%focusIndustry%/g,               industry )
                     .replace( /%focusSocialImpact%/g,           socialImpact )
@@ -1266,7 +1276,7 @@
 
                 conditionalElementArr =
                 {
-                    'lastupdate'        :'bidxMeta.bidxLastUpdateDateTime'
+                    'lastupdate'        :'bidxMeta.bidxCreationDateTime'
                 ,   'focusCountry'      :'focusCountry'
                 ,   'focusIndustry'     :'focusIndustry'
                 ,   'focusSocialImpact' :'focusSocialImpact'
@@ -1289,6 +1299,7 @@
                 ,   country          = ''
                 ,   industry         = ''
                 ,   reason           = ''
+                ,   isGroupAdmin     = bidx.common.isGroupAdmin()
                 ,   image
                 ,   imageWidth
                 ,   imageLeft
@@ -1303,6 +1314,11 @@
                 ,   sepCountry
                 ,   memberCountry
                 ,   entrpreneurFocusIndustry
+                ,   tagging
+                ,   taggingMentor
+                ,   taggingInvestor
+                ,   mentorTaggingId
+                ,   investorTaggingId
                 ;
 
                 $entityElement   = $("#member-profile-listitem");
@@ -1315,6 +1331,7 @@
                 personalDetails  = i18nItem.bidxMemberProfile.personalDetails;
                 cityTown         = bidx.utils.getValue( personalDetails, "address.0.cityTown");
                 memberCountry    = bidx.utils.getValue( personalDetails, "address.0.country");
+                tagging          = bidx.common.getAccreditation( i18nItem );
 
                 // Member Role
                 //
@@ -1387,6 +1404,7 @@
                     .replace( /%memberId%/g,            bidxMeta.bidxOwnerId   ? bidxMeta.bidxOwnerId     : emptyVal )
                     .replace( /%firstName%/g,           personalDetails.firstName   ? personalDetails.firstName     : emptyVal )
                     .replace( /%lastName%/g,            personalDetails.lastName   ? personalDetails.lastName    : emptyVal )
+                    .replace( /%bidxCreationDateTime%/g, bidxMeta.bidxCreationDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxCreationDateTime) : emptyVal )
                     .replace( /%professionalTitle%/g,   personalDetails.professionalTitle   ? personalDetails.professionalTitle     : emptyVal )
                     .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
                     .replace( /%role_investor%/g,       ( isInvestor && displayInvestorProfile )      ? bidx.i18n.i( 'investor' )   : '' )
@@ -1399,7 +1417,6 @@
                     .replace( /%city%/g,                ( cityTown ) ? cityTown : emptyVal )
                     .replace( /%country%/g,             ( country )  ? country : emptyVal )
                     .replace( /%interest%/g,             industry )
-
                     .replace( /%emailAddress%/g,        personalDetails.emailAddress   ? personalDetails.emailAddress  : emptyVal )
                     .replace( /%mobile%/g,              (!$.isEmptyObject(personalDetails.contactDetail))   ? bidx.utils.getValue( personalDetails, "contactDetail.0.mobile")    : emptyVal )
                     .replace( /%landLine%/g,            (!$.isEmptyObject(personalDetails.contactDetail))   ? bidx.utils.getValue( personalDetails, "contactDetail.0.landLine")     : emptyVal )
@@ -1418,6 +1435,32 @@
                         $(this).remove();
                     }
                 });
+
+                /* tagging */
+                if(isMentor)
+                {
+                    mentorTaggingId     =   'hide';
+                    taggingMentor       =   bidx.utils.getValue(tagging, 'mentor' );
+
+                    if( !_.isUndefined(taggingMentor) )
+                    {
+                        mentorTaggingId     =   (taggingMentor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
+                    }
+
+                    $listItem.find('.fa-mentor').addClass( mentorTaggingId );
+                }
+                if(isInvestor && isGroupAdmin)
+                {
+                    investorTaggingId   =   'hide';
+                    taggingInvestor     =   bidx.utils.getValue(tagging, 'investor' );
+
+                    if( !_.isUndefined(taggingInvestor) )
+                    {
+                        investorTaggingId   =   (taggingInvestor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
+                    }
+
+                    $listItem.find('.fa-investor').addClass( investorTaggingId );
+                }
 
                 // Member Image
                 //

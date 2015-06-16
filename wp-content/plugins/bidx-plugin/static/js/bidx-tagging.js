@@ -351,7 +351,7 @@
                     widget._hasAccess(
                     {
                         options:    btnOptions
-                    ,   id:         loggedInMemberId
+                    ,   id:         entityId
                     ,   callback:   function( attachedTags, detachedTags )
                                     {
 

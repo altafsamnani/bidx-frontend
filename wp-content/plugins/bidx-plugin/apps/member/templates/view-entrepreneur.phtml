@@ -21,8 +21,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
 
 if ($entrepreneurDetails &&
     ( $entrepreneurBidxMeta->bidxEntityStatus == 'PUBLISHED' || $entrepreneurBidxMeta->bidxCanEdit  ) ) {
-    ?>
-
+?>
 
 
 
@@ -79,7 +78,7 @@ if ($entrepreneurDetails &&
                     <h4>
                         <?php echo $labelBusiness; ?>
 <?php
-                        if ( $entrepreneurDetails->bidxCanEdit ):
+                        if ( $entrepreneurDetails->bidxMeta->bidxCanEdit ):
 ?>                        
                         <a href="/businesssummary/#createBusinessSummary" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e( 'Add new Business', 'bidxplugin' ); ?> </a>
 <?php
@@ -193,7 +192,7 @@ if ($entrepreneurDetails &&
                     <h4>
                         <?php echo $labelCompany; ?>
 <?php
-                        if ( $entrepreneurDetails->bidxCanEdit ):
+                        if ( $entrepreneurDetails->bidxMeta->bidxCanEdit ):
 ?>                        
                         <a href="/company/#createCompany" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e( 'Add new Company', 'bidxplugin' ); ?> </a>
 <?php

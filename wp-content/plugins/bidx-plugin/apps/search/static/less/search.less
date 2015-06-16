@@ -27,9 +27,48 @@
             border: none;
         }
     }
-    a.list-group-item:hover, a.list-group-item:focus
+    a.list-group-item:hover, a.list-group-item:focus,
+    a.sort
     {
        cursor:pointer;
+    }
+
+    a.sort h6
+    {
+        float:left;
+    }
+
+    .sorting_desc:after
+    {
+        content: "\f0dd";
+        top:            3px;
+    }
+    .sorting_asc:after
+    {
+        content: "\f0de";
+        top:            8px;
+    }
+
+    .sort:after
+    {
+        font-family:    FontAwesome;
+        left:           12px;
+
+        position:       relative;
+    }
+
+    .fa-ban
+    {
+        color:#d9534f;
+    }
+    .fa-bookmark
+    {
+        color:#5cb85c;
+    }
+
+    .fa-bookmark-o
+    {
+        color:#dddddd;
     }
 }
 

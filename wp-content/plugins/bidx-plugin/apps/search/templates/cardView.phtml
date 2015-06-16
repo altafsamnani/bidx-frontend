@@ -103,6 +103,9 @@
                 <div class="col-sm-2">
                     <h5><?php _e('Sort by:', 'bidxplugin');?></h5>
                 </div>
+                <div class="col-sm-2">
+                    <a data-type='created' data-order = '%created%' class="sort sorting_%created% created btn-link"><h6><?php _e('Created', 'bidxplugin');?></h6></a>
+                </div>
                 <div class="col-sm-2 hide">
                     <h6><a data-type='relevance' data-order = '%relevance%' class="sort relevance btn-link"><?php _e('Relevance', 'bidxplugin');?></a></h6>
                 </div>
@@ -112,9 +115,7 @@
                 <div class="col-sm-2 hide">
                     <h6><a data-type='industry' data-order = '%industry%' class="sort industry btn-link"><?php _e('Industry', 'bidxplugin');?></a></h6>
                 </div>
-                <div class="col-sm-4">
-                    <h6><a data-type='entityId' data-order = '%entityId%' class="sort entityId btn-link"><?php _e('Date', 'bidxplugin');?></a></h6>
-                </div>
+
             </div>
         </script>
 
@@ -138,7 +139,7 @@
                             </a>
                         </div>
                         <div class="col-sm-4">
-                            <div "row view viewLastupdate pull-right">%bidxLastUpdateDateTime%</div>
+                            <div "row view viewLastupdate pull-right">%bidxCreationDateTime%</div>
                         </div>
 
                         <div class="col-sm-2">
@@ -246,12 +247,15 @@
                 </div>
                 <div class="col-sm-9">
                     <div class="row">
-                        <div class="col-sm-7">
+                        <div class="col-sm-6">
                             <a href="<?php echo _l('member');?>/%memberId%">
                                 <h4>%firstName% %lastName%</h4>
                             </a>
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-sm-4">
+                            <div "row view viewLastupdate pull-right">%bidxCreationDateTime%</div>
+                        </div>
+                        <div class="col-sm-2">
                                 <a href="<?php echo _l('mail');?>/#mail/contacts/action=connect&amp;id=%memberId%" class="btn btn-xs btn-warning pull-right"><?php _e('Connect','bidxplugin')?></a>
                         </div>
                     </div>
@@ -259,8 +263,8 @@
                         <div class="col-sm-12">
                          %professionalTitle%
                              <span class="label bidx-label bidx-entrepreneur">%role_entrepreneur%</span>
-                             <span class="label bidx-label bidx-mentor">%role_mentor%</span>
-                             <span class="label bidx-label bidx-investor">%role_investor%</span>
+                             <span class="label bidx-label bidx-mentor">%role_mentor%</span><i class="fa fa-mentor"></i>
+                             <span class="label bidx-label bidx-investor">%role_investor%</span><i class="fa fa-investor"></i>
                          </div>
                     </div>
                     <div class="row">
@@ -351,7 +355,7 @@
                             </a>
                         </div>
                         <div class="col-sm-4">
-                            <div "row view viewLastupdate pull-right">%bidxLastUpdateDateTime%</div>
+                            <div "row view viewLastupdate pull-right">%bidxCreationDateTime%</div>
                         </div>
 
                         <div class="col-sm-2">
