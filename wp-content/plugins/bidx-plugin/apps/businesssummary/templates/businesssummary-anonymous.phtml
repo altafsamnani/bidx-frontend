@@ -30,7 +30,7 @@ $currentYear = date("Y");
 
 ?>
 <div class="businessSummary anonymous">
-<?php             
+<?php
             if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
             {
 ?>
@@ -38,7 +38,7 @@ $currentYear = date("Y");
         <div class="coverImageContainer">
 <?php
             if ( $businessSummary->cover && $businessSummary->cover->document ):
-?>            
+?>
             <div class="coverImage">
                 <img src="<?php echo $businessSummary->cover->document ?>" alt="Cover Image" style="position: relative; top: <?php echo $businessSummary->cover->top?>px">
             </div>
@@ -48,7 +48,7 @@ $currentYear = date("Y");
         </div>
 <?php
             if ( $businessSummary->logo && $businessSummary->logo->document ):
-?>            
+?>
             <div class="logoImage">
                 <img src="<?php echo $businessSummary->logo->document ?>" class="center-img" alt="Logo Image">
             </div>
@@ -67,14 +67,14 @@ $currentYear = date("Y");
 
 
         <div class="bs-info hide-overflow">
-            <div class="bs-cell main-padding pull-left"><i class="fa fa-line-chart"></i> <span class="hidden-xs"><?php echo _e('Completed', 'bidxplugin')?>:</span> <?php echo $progress; ?><span>%</span></div>
+            <div class="bs-cell main-padding pull-left hide"><i class="fa fa-line-chart"></i> <span class="hidden-xs"><?php echo _e('Completed', 'bidxplugin')?>:</span> <?php echo $progress; ?><span>%</span></div>
             <div class="bs-cell main-padding pull-left hidden-xs">
                 <div class="rating-wrapper">
                     <div class="rating-no-score <?php echo !$ratingAverage ? '' : 'hide' ?>">
                         <span class="rating-score-text"><?php echo _e('No Score', 'bidxplugin'); ?></span>
                     </div>
                     <div class="rating-score <?php echo $ratingAverage ? '' : 'hide' ?>">
-                        <i class="fa fa-star"></i> 
+                        <i class="fa fa-star"></i>
                         <?php echo _e('Score', 'bidxplugin')?>: <span class="rating-average"><?php echo $ratingAverage ? $ratingAverage : "?"; ?></span>
                     </div>
                 </div>
@@ -86,10 +86,10 @@ $currentYear = date("Y");
                 if ( $key === $currentYear ) :
             ?>
                     <div class="bs-cell main-padding pull-left"><i class="fa fa-dollar"></i> <span class="hidden-xs"><?php echo _e('Finance Needed', 'bidxplugin')?>:</span> <?php echo $year->financeNeeded; ?></div>
-            <?php 
+            <?php
                 endif;
             }
-?>            
+?>
         </div>
 
 
@@ -157,7 +157,7 @@ $currentYear = date("Y");
             {
 ?>
                 <h4>Has attachment</h4>
-<?php                
+<?php
             }
 ?>
         </div>
