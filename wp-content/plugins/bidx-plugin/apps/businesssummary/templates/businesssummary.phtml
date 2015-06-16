@@ -169,7 +169,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
     <div class="bg-gray control-bar">
 
         <div class="bs-info hide-overflow">
-            <div class="bs-cell main-padding pull-left"><i class="fa fa-line-chart"></i> <span class="hidden-xs"><?php echo _e('Completed', 'bidxplugin')?>:</span> <?php echo $progress; ?><span>%</span></div>
+            <div class="bs-cell main-padding pull-left hide"><i class="fa fa-line-chart"></i> <span class="hidden-xs"><?php echo _e('Completed', 'bidxplugin')?>:</span> <?php echo $progress; ?><span>%</span></div>
             <div class="bs-cell main-padding pull-left hidden-xs bs-score">
                 <div class="rating-wrapper">
                     <div class="rating-no-score <?php echo !$ratingAverage ? '' : 'hide' ?>">
@@ -256,8 +256,8 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 <?php
                     if ( $canEdit )
                     {
-?>                        
-                        <button id="deleteBS" class="btn btn-danger"><i class="fa fa-eraser fa-big fa-above"></i> <?php _e( 'Delete', 'bidxplugin' ); ?></button>    
+?>
+                        <button id="deleteBS" class="btn btn-danger"><i class="fa fa-eraser fa-big fa-above"></i> <?php _e( 'Delete', 'bidxplugin' ); ?></button>
 <?php
                     }
 ?>
@@ -329,7 +329,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                     {
 ?>
                         <a class="btn btn-primary editBS" href="#editBusinessSummary/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
-                        
+
 <?php
                     }
 ?>
