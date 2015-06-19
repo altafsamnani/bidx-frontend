@@ -261,10 +261,9 @@ class TemplateLibrary
     {
         $language       =   get_locale();
         $day            =   date('d', $mktime);
-        $month          =   date('n', $mkTime);
+        $month          =   date('n', $mktime);
         $localeMonth    =   $this->getStaticVal ('month', $month);
         $year           =   date('Y', $mktime);
-
 
         $displayDate = str_replace( '%d', $day, $format );
 

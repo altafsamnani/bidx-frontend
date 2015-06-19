@@ -197,7 +197,7 @@
                 dateObj = parseISODate( value );
                 date    = new Date( dateObj.y, dateObj.m - 1, dateObj.d );
 
-                $el.datepicker( "setUTCDate", date );
+                $el.datepicker( "setDate", date );
             }
         }
         else if ( dataType === "datetime" )
