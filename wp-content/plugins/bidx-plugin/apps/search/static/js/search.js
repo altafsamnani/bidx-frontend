@@ -812,8 +812,6 @@
             //
             $list.empty();
 
-
-
             pagerOptions  =
             {
                 currentPage:            ( paging.search.offset / tempLimit  + 1 ) // correct for api value which starts with 0
@@ -889,10 +887,11 @@
                         } );
 
                     break;
-                    /* Initial load exclude investor,entrprneur and mentor profile so profile display is not duplicated , ex Altaf is member , entrprenneur and mentor too so dont need to display mentor/entrepreneur profile */
+                    /* Initial load exclude investor,entrprneur and mentor profile so profile display is not duplicated , ex Altaf is member , entrprenneur and mentor too so dont need to display mentor/entrepreneur profile
+                       Or first time only it returned one result of entrprneeur, Ex search on summary thats written in entrpreneur profile so it returns entpreneur profile and it should be displyaed*/
                     case 'bidxInvestorProfile':
                         //response.entityType = 'bidxMemberProfile';
-                        if ( options.criteria.facetFilters.length !== 0 )
+                        if ( options.criteria.facetFilters.length !== 0 || data.numFound === 1 )
                         {
                             showMemberProfile(
                             {
@@ -909,8 +908,9 @@
                     break;
 
                     case 'bidxEntrepreneurProfile':
+
                         //response.entityType = 'bidxMemberProfile';
-                        if ( options.criteria.facetFilters.length !== 0 )
+                        if ( options.criteria.facetFilters.length !== 0 || data.numFound === 1)
                         {
                             showMemberProfile(
                             {
@@ -929,7 +929,7 @@
 
                     case 'bidxMentorProfile':
                         //response.entityType = 'bidxMemberProfile';
-                        if ( options.criteria.facetFilters.length !== 0 )
+                        if ( options.criteria.facetFilters.length !== 0 || data.numFound === 1 )
                         {
                             showMemberProfile(
                             {
