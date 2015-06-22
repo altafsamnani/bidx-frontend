@@ -63,6 +63,7 @@
 
     ,   tempLimit               = CONSTANTS.SEARCH_LIMIT
     ,   currentInvestorId       = bidx.common.getInvestorProfileId()
+    ,   currentUserId           = bidx.common.getCurrentUserId( )
     ,   roles                   = bidx.utils.getValue( bidxConfig.session, "roles" )
     // If current user is not investor or group admin then don't allow access to investor profiles
     ,   displayInvestorProfile  = ( $.inArray("GroupOwner", roles) !== -1 || $.inArray("GroupAdmin", roles) !== -1 || currentInvestorId ) ? true : false
@@ -1435,6 +1436,11 @@
                         $(this).remove();
                     }
                 });
+
+                if( currentUserId === bidxMeta.bidxOwnerId )
+                {
+                    $listItem.find('.btn-connect').addClass('hide');
+                }
 
                 /* tagging */
                 if(isMentor)
