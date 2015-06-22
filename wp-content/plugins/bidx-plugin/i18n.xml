@@ -33,6 +33,7 @@
     <Item value="btnTryAgain">Try again</Item>
     <Item value="btnRequestSent">Request sent</Item>
     <Item value="btnRequestReceived">Request received</Item>
+    <Item value="btnRequestOngoing">Request ongoing</Item>
     <Item value="btnRequestRejected">Request rejected</Item>
     <Item value="btnRequestRejectedByMentor">Rejected by mentor</Item>
     <Item value="btnRequestRejectedByEntrepreneur">Rejected by entrepreneur</Item>
