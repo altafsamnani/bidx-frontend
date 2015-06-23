@@ -325,7 +325,7 @@
         ,   'login':                                            'login'
         ,   'register(/*splat)':                                'register'
         ,   'account(/*splat)':                                 'account'
-        ,   'resetpassword':                                    'resetpassword'
+        ,   'resetpassword(/*splat)':                           'resetpassword'
         ,   'setpassword(/:state)':                             'setpassword'
 
         ,   'join(/:state)':                                    'join'
@@ -892,7 +892,7 @@
                 }
             );
         }
-    ,   resetpassword:             function()
+    ,   resetpassword:             function( splat )
         {
             bidx.utils.log( "AppRouter::resetpassword" );
 
@@ -901,7 +901,9 @@
             _navigateToApp
             (
                 "resetpassword"
-            ,   {}
+            ,   {
+                   params:   _deparamSplat( splat )
+                }
             );
         }
     ,   setpassword:             function( state )
