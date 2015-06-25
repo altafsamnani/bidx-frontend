@@ -1541,6 +1541,12 @@
             ,   $mailBody
             ,   $htmlParser
             ,   subject
+            ,   senderReceiverName
+            ,   dateSent
+            ,   timeSent
+            ,   prefixFrom  = bidx.i18n.i( "From" ) + ": "
+            ,   prefixTo    = bidx.i18n.i( "To" ) + ": "
+            ,   recipients  = []
           //  ,   snippet         = $( "#contactRequest-email-snippet" ).html().replace( /(<!--)*(-->)*/g, "" )
             ;
             $currentView = $views.filter( bidx.utils.getViewName( action ) );
@@ -1564,6 +1570,36 @@
             // insert mail body in to placeholder of the view
             //
             $currentView.find( ".mail-message").html( $mailBody );
+
+            if( _isSenderOfMessage( message ) )
+            {
+                // The current user/group is the Sender (for items in mbx-sent, mbx-trash, archives):
+                // show the recipient(s).
+                //
+                $.each( message.recipients, function( idx, recipient )
+                {
+                    recipients.push( recipient.displayName );
+                } );
+
+                // For most folders (such as Trash and any archive), prefix with "To:"
+                //
+                senderReceiverName = ( !message.trashed && message.folderName === "Sent" ? "" : prefixTo ) + recipients.toString().replace( /,/g, ", " );
+            }
+            else
+            {
+                // The current user/group is (one of) the recipient(s): show the Sender. For most folders
+                // prefix with "From:" (after moving a Sent item from Trash to Inbox, this will not show
+                // such prefix, which may be confusing).
+                //
+                senderReceiverName = ( !message.trashed && message.folderName === "Inbox" ? "" : prefixFrom ) +  message.sender.displayName;
+            }
+
+             $currentView.find( ".mail-sender").html( senderReceiverName );
+
+             dateSent   =   bidx.utils.parseTimestampToDateTime( message.dateSent, "date" );
+             timeSent   =   bidx.utils.parseTimestampToDateTime( message.dateSent, "time" );
+             $currentView.find( ".mail-datasent").html( dateSent );
+             $currentView.find( ".mail-timesent").html( timeSent );
         }
 
         // populate the folder and bulk action dropdowns in the toolbar. Required view name and current emailId or a comma separated list of emailIds

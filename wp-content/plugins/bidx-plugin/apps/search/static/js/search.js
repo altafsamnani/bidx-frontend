@@ -63,6 +63,7 @@
 
     ,   tempLimit               = CONSTANTS.SEARCH_LIMIT
     ,   currentInvestorId       = bidx.common.getInvestorProfileId()
+    ,   currentUserId           = bidx.common.getCurrentUserId( )
     ,   roles                   = bidx.utils.getValue( bidxConfig.session, "roles" )
     // If current user is not investor or group admin then don't allow access to investor profiles
     ,   displayInvestorProfile  = ( $.inArray("GroupOwner", roles) !== -1 || $.inArray("GroupAdmin", roles) !== -1 || currentInvestorId ) ? true : false
@@ -812,8 +813,6 @@
             //
             $list.empty();
 
-
-
             pagerOptions  =
             {
                 currentPage:            ( paging.search.offset / tempLimit  + 1 ) // correct for api value which starts with 0
@@ -889,10 +888,11 @@
                         } );
 
                     break;
-                    /* Initial load exclude investor,entrprneur and mentor profile so profile display is not duplicated , ex Altaf is member , entrprenneur and mentor too so dont need to display mentor/entrepreneur profile */
+                    /* Initial load exclude investor,entrprneur and mentor profile so profile display is not duplicated , ex Altaf is member , entrprenneur and mentor too so dont need to display mentor/entrepreneur profile
+                       Or first time only it returned one result of entrprneeur, Ex search on summary thats written in entrpreneur profile so it returns entpreneur profile and it should be displyaed*/
                     case 'bidxInvestorProfile':
                         //response.entityType = 'bidxMemberProfile';
-                        if ( options.criteria.facetFilters.length !== 0 )
+                        if ( options.criteria.facetFilters.length !== 0 || data.numFound === 1 )
                         {
                             showMemberProfile(
                             {
@@ -909,8 +909,9 @@
                     break;
 
                     case 'bidxEntrepreneurProfile':
+
                         //response.entityType = 'bidxMemberProfile';
-                        if ( options.criteria.facetFilters.length !== 0 )
+                        if ( options.criteria.facetFilters.length !== 0 || data.numFound === 1)
                         {
                             showMemberProfile(
                             {
@@ -929,7 +930,7 @@
 
                     case 'bidxMentorProfile':
                         //response.entityType = 'bidxMemberProfile';
-                        if ( options.criteria.facetFilters.length !== 0 )
+                        if ( options.criteria.facetFilters.length !== 0 || data.numFound === 1 )
                         {
                             showMemberProfile(
                             {
@@ -1435,6 +1436,11 @@
                         $(this).remove();
                     }
                 });
+
+                if( currentUserId === bidxMeta.bidxOwnerId )
+                {
+                    $listItem.find('.btn-connect').addClass('hide');
+                }
 
                 /* tagging */
                 if(isMentor)

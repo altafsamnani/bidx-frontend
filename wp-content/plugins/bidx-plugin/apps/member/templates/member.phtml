@@ -118,11 +118,11 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
         endif;
 
         // If current profile is not loggedin user, is  mentor, loggedin is not mentor, in a group
-        if ( $memberId != $loggedInMemberId && $authenticated && $inGroup && $isMentor && !$isLoggedinMemberIsMentor) :
+        if ( $memberId != $loggedInMemberId && $authenticated && $inGroup && $isMentor && !$isLoggedinMemberIsMentor && $isLoggedinMemberIsEntrepreneur) :
 ?>
             <a href="#mentoringRequest/confirmMentoringRequest/mentorId=<?php echo $memberId ?>" class="btn btn-sm btn-mentor btn-mentoring mentor-cl hide pull-right">
                 <div class="fa fa-compass fa-above fa-big"></div>
-                <?php _e('Request mentoring', 'bidxplugin')?>
+                <span class="request-text"> <?php _e('Request mentoring', 'bidxplugin')?> </span>
             </a>
 <?php
         endif;

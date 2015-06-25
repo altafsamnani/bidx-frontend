@@ -103,9 +103,25 @@
 					<div class="postbox">
 			            <div class="panel panel-default">
 			                <div class="panel-heading">
-			                	<h3 class="hndle title mail-subject"></h3>
+			                	<div class="">
+			                		<h3><?php _e('From', 'bidxplugin');?>:
+			                			<span class="hndle title mail-sender"></span>
+			                		</h3>
+			                	</div>
+			                	<div class="pull-right">
+			                		<h3> <span class="mail-datasent"></span>
+			                			  <span class="mail-timesent"></span>
+			                		</h3>
+			                	</div>
+			                	<div class="">
+			                		<h3><?php _e('Subject', 'bidxplugin');?>:
+			                			<span class="hndle title mail-subject"></span>
+			                		</h3>
+			                	</div>
+
 			                </div>
 			                <div class="panel-body inside mail-toolbar">
+			                	<strong><?php _e('Body', 'bidxplugin');?>:</strong>
 			                    <div class="mail-message">
 			                        <div class="alert alert-info text-center">
 			                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">

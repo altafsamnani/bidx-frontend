@@ -556,6 +556,7 @@
             ,   newBpLength
             ,   btnText
             ,   isAnyOnePlanRequested
+            ,   isAnyOnePlanAccepted
             ,   origBpLength = _.size(listDropdownBp)
             ;
 
@@ -563,12 +564,14 @@
                 "mentorRelationships.get"
             ,   {
                     id:              loggedInMemberId
-                ,   groupDomain:              bidx.common.groupDomain
+                ,   groupDomain:     bidx.common.groupDomain
                 ,   success: function( response )
                     {
                         // now format it into array of objects with value and label
                         //
                         isAnyOnePlanRequested = false;
+
+                        isAnyOnePlanAccepted  = false;
 
                         $.each( response , function ( idx, item)
                         {
@@ -626,8 +629,14 @@
 
                                 }
 
-                                if(item.status === 'requested') {
+                                if(item.status === 'requested')
+                                {
                                     isAnyOnePlanRequested = true;
+                                }
+
+                                if(item.status === 'accepted')
+                                {
+                                    isAnyOnePlanAccepted = true;
                                 }
                             }
 
@@ -635,9 +644,19 @@
 
                         newBpLength    = _.size(listDropdownBp); // After iteration new length
 
-                        if( origBpLength && newBpLength === 0 && isAnyOnePlanRequested)
+                        if( origBpLength && newBpLength === 0 )
                         {
-                            $requestMentoringBtn.addClass('disabled').i18nText("btnRequestSent");
+                            if( isAnyOnePlanRequested )
+                            {
+                                $requestMentoringBtn.find( '.request-text' ).i18nText("btnRequestSent");
+                                $requestMentoringBtn.addClass('disabled');
+
+                            }
+                            if( isAnyOnePlanAccepted )
+                            {
+                                $requestMentoringBtn.find( '.request-text' ).i18nText("btnRequestOngoing");
+                                $requestMentoringBtn.addClass('disabled');
+                            }
                         }
 
                         $requestMentoringBtn.removeClass('hide');
