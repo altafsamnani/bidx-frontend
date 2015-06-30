@@ -275,6 +275,8 @@ class BidxCommon
         return (!empty ($this::$scriptJs)) ? $this::$scriptJs[$this->subDomain] : '';
     }
 
+
+
     /**
      * Injects Bidx Api response as JS variables
      *
@@ -283,6 +285,8 @@ class BidxCommon
      */
     public function injectJsVariables ($subDomain)
     {
+        global $sitepress;
+        $iclLang            = '';
         $jsSessionData      = (isset($this::$bidxSession[$subDomain])) ?  $this::$bidxSession[$subDomain] : NULL;
         $jsSessionVars      = (isset ($jsSessionData->data)) ? json_encode ($jsSessionData->data) : '{}';
         $jsAuthenticated    = (isset ($jsSessionData->authenticated)) ? $jsSessionData->authenticated : 'false';
@@ -294,7 +298,7 @@ class BidxCommon
         // milliseconds from 1 jan 1970 GMT
         $now                = time () * 1000;
 
-        /*global $sitepress;
+        /*
 
         $currentLanguage = $sitepress->get_current_language();
 
@@ -303,6 +307,22 @@ class BidxCommon
         echo "</pre>";exit;
         Script bidxConfig.currentLanguage  = '{$langCountry[0]}';
         */
+        include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+        if ( !is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') && !isset( $sitepress) )
+        {
+            $locale                             =   '"' . get_locale().'"';
+            $staticDataObj                      =   new StaticDataService();
+            $customLanguages                    =   $staticDataObj->getLanguageCodes( );
+
+            $iclVarsLang['current_language']    =   substr(get_locale(),0,2);
+            $iclLang                            =   'var icl_single    = '.json_encode( $iclVarsLang ).';';
+
+            if( count($customLanguages[$locale]))
+            {
+                $iclLang                        =   'var icl_single   = { "current_language":' .$customLanguages[$locale]['code']. '}';
+            }
+        }
 
         $scriptJs           = "<script>
                                     var bidxConfig              = bidxConfig || {};
@@ -315,6 +335,7 @@ class BidxCommon
                                     bidxConfig.now              = $now;
                                     bidxConfig.groupName        = '{$subDomain}';
                                     bidxConfig.authenticated    = {$jsAuthenticated};
+                                    $iclLang
                                 </script>
                             ";
         return $scriptJs;

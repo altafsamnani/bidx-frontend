@@ -328,7 +328,7 @@
         ,   'resetpassword(/*splat)':                           'resetpassword'
         ,   'setpassword(/:state)':                             'setpassword'
 
-        ,   'join(/:state)':                                    'join'
+        ,   'join(/:state)(*splat)':                            'join'
 
         ,   'mail(/:state)(*splat)':                            'mail'
         ,   'connect(/:state)(*splat)':                         'connect'
@@ -864,9 +864,9 @@
             ,   {}
             );
         }
-    ,   join:                       function( state )
+    ,   join:                       function( state, splat )
         {
-            bidx.utils.log( "AppRouter::join" );
+            bidx.utils.log( "AppRouter::join State", state, splat );
 
             mainState = "join";
 
@@ -875,6 +875,7 @@
                 "join"
             ,   {
                     state:    state
+                ,   params:   _deparamSplat( splat )
                 }
             );
         }

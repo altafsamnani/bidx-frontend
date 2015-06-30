@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./pages.xsd">
+	<description>List of custom languages or dialect</description>
+	<version>1.0</version>
+	<languages>
+		 <lang>
+		 	<name>African Lusophone</name>
+		 	<locale>pt_AF</locale>
+            <code>mz</code>
+        </lang>
+	</languages>
+</data>

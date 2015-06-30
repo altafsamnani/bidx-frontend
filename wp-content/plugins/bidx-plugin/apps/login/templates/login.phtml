@@ -43,7 +43,9 @@
 
         ?><br/>
         <?php
-                _e('Not a member? Click <a href="#auth/register">here</a> to register.','bidxplugin');
+                $registerUrl = _l('join'.'/#join/register');
+                printf( __('Not a member? Click <a href="%s">here</a> to register.','bidxplugin'), $registerUrl);
+
             }
         ?>
         </p>
