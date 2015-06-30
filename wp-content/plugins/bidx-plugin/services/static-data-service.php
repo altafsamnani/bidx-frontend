@@ -62,6 +62,42 @@ class StaticDataService extends APIbridge {
         return $resultStaticData;
     }
 
+    public function getLanguageCodes ( )
+    {
+        $transientKey               = 'customlanguage' ; // Transient key for Static Data
+       // $transientCustomLanguage    = get_transient ($transientKey);
+
+        /* If no value then set the site local transient */
+        if ($transientCustomLanguage == false)
+        {
+            /* Messages */
+            $filename = BIDX_PLUGIN_DIR . '/../lang/customlanguage.xml';
+            $countMessage = 0;
+            //try /catch / log ignore
+            $document = simplexml_load_file ($filename);
+            $langauges = $document->xpath ('//lang');
+
+            foreach ($langauges as $lang)
+            {
+                $code   =   (string) $lang->code;
+                $code   =   '"'. $code . '"';
+
+                $name   =   (string) $lang->name;
+                $name   =   '"'. $name . '"';
+
+                $locale =   (string) $lang->locale;
+                $locale =   '"'. $locale . '"';
+
+                $transientCustomLanguage [$locale ]  = array( 'code' =>  $code
+                                                            , 'name'  => $name
+                                                            );
+            }
+
+            set_transient ($transientKey, $transientCustomLanguage, 60 * 5); //Second*Min*Hour
+        }
+
+        return $transientCustomLanguage;
+    }
 }
 
 ?>

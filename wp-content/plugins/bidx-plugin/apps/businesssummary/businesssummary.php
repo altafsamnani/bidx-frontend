@@ -57,7 +57,8 @@ class businesssummary
             $businessSummaryId = $sessionData->requestedBusinessSummaryId;
         }
 
-        if ( !is_null( $businessSummaryId )) {
+        if ( !is_null( $businessSummaryId )) 
+        {
             /* 2. Service Business Summary (entity)*/
             require_once( BIDX_PLUGIN_DIR .'/../services/businesssummary-service.php' );
             $businessSummaryObj = new BusinessSummaryService( );

@@ -11,6 +11,7 @@
     var api
     ,   bidx
     ,   iclVars             = window.icl_vars || {}
+    ,   iclSingle           = window.icl_single || {}
     ,   currentLanguageVal
     ,   currentLanguage
     ;
@@ -24,6 +25,15 @@
     bidx.api    = bidx.api || {};
     currentLanguageVal  = bidx.utils.getValue( iclVars, "current_language" );
     currentLanguage     = ( currentLanguageVal ) ? currentLanguageVal : 'en';
+    if(currentLanguageVal)
+    {
+        currentLanguage     = currentLanguage
+    }
+    else
+    {
+
+        currentLanguage     =   bidx.utils.getValue( iclSingle, "current_language" );
+    }
 
     api = bidx.api;
 

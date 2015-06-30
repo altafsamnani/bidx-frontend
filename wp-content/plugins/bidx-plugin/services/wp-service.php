@@ -161,12 +161,9 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
         $headers['X-Bidx-Group-Domain'] = $body['domain'];
     }
 
-    if ( isset( $sitepress) )
-    {
-        $currentLanguage    =   $sitepress->get_current_language();
-    }
+    $currentLanguage    =   ( isset( $sitepress) ) ? $sitepress->get_current_language() :   substr(get_locale(),0,2);
 
-
+   // echo $currentLanguage;exit;
     $headers['X-Bidx-Language'] = $currentLanguage;
 
 
