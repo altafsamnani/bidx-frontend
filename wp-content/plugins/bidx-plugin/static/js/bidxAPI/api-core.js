@@ -27,7 +27,7 @@
     currentLanguage     = ( currentLanguageVal ) ? currentLanguageVal : 'en';
     if(currentLanguageVal)
     {
-        currentLanguage     = currentLanguage
+        currentLanguage     = currentLanguage;
     }
     else
     {
