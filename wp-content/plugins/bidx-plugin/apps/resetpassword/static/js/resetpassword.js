@@ -136,13 +136,15 @@
 
     var navigate = function( options )
     {
+        /*******Temporary Linkedin notice on remove password page,
+        will be removed once backend is fixed ****************/
         var $linkedinNotice =   $element.find( '.info-linkedin')
         ,   params          =   options.params
         ,   isLinkedin      =   bidx.utils.getValue(params, 'linkedin')
         ;
 
         bidx.utils.log("routing options of resetpassword", options );
-        //Temporary Linkedin notice on remove password page, will be removed once backend is fixed
+
         if( isLinkedin === "true")
         {
             $linkedinNotice     =   $linkedinNotice.removeClass('hide');
@@ -151,7 +153,7 @@
         {
             $linkedinNotice     =   $linkedinNotice.addClass('hide');
         }
-
+        /****************** Temporary Linkedin message ****************/
 
      //   _showView( "login" );
 

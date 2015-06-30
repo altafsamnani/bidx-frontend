@@ -68,11 +68,11 @@
     ,   $toggleExpertiseNeeded      = $frmBecomeEntrepreneur.find( "[name='mentorAdvisory']" )
 
     ,   role
-    
+
     // member object serves also the businessSummary object
     ,   member                      = {}
     ,   bidxProfile
-    
+
     ,   mentorProfileId
 
     ,   businessSummaryId           = null
@@ -283,12 +283,12 @@
 
             $frmRegisterMember.submit();
         } );
-    
+
         // Show Role Form
         $registerRoleBtns.click( function( e )
         {
             var formView = $(this).attr('name');
-            
+
             _showView( formView );
             _showParentView();
         } );
@@ -367,7 +367,7 @@
             bidx.utils.setValue( businessSummary, "financialSummaries." + year + ".operationalCosts", 0 );
             bidx.utils.setValue( businessSummary, "financialSummaries." + year + ".salesRevenue", 0 );
             bidx.utils.setValue( businessSummary, "financialSummaries." + year + ".totalIncome", 0 );
-            
+
             $.each( fields, function( i, f )
             {
                 var $input = $form.find( "[name^='" + f + "']" )
@@ -489,7 +489,7 @@
             }
         } );
 
-      
+
         // Validate Investor form
         //
         $frmBecomeInvestor.validate(
@@ -840,7 +840,7 @@
                             var response
                             ,   $btnSave = $btnSaveEntrepreneur // Not sure if needed
                             ;
-                            
+
                             try
                             {
                                 // Not really needed for now, but just have it on the screen, k thx bye
@@ -921,7 +921,7 @@
         ,   error:          function( jqXhr, textStatus )
             {
                 params.error( jqXhr );
-                
+
                 bidx.common.closeNotifications();
             }
         };
@@ -992,6 +992,22 @@
                     bidx.controller.updateHash("#join/auth", true, false);
                     options.state = "auth";
                     _showView( options.state );
+
+                    /****************** Temporary Linkedin message ****************/
+                    var $linkedinNotice =   $element.find( '.info-linkedin')
+                    ,   params          =   options.params
+                    ,   isLinkedin      =   bidx.utils.getValue(params, 'linkedin')
+                    ;
+                    //Temporary Linkedin notice on remove password page, will be removed once backend is fixed
+                    if( isLinkedin === "true")
+                    {
+                        $linkedinNotice     =   $linkedinNotice.removeClass('hide');
+                    }
+                    else
+                    {
+                        $linkedinNotice     =   $linkedinNotice.addClass('hide');
+                    }
+                    /****************** Temporary Linkedin message ****************/
                 }
             break;
 
@@ -1008,7 +1024,7 @@
                 {
                     _showParentView( options.state );
                 }
-           
+
             break;
 
             default:
