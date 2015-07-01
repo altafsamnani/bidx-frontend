@@ -4,7 +4,7 @@ $data                           = $this->data;
 $member                         = isset($this->data->member->displayName) ?  $this->data->member->displayName: NULL ;
 $ownProfile                     = $this->data->isMyProfile;
 $entities                       = $this->sessionData->data->wp->entities;
-$isSuperAdmin                   = is_super_admin();
+//$isSuperAdmin                   = is_super_admin();
 $canEdit                        = $this->data->bidxMemberProfile->bidxMeta->bidxCanEdit;
 $memberId                       = isset( $this->data->member->bidxMeta->bidxMemberId ) ? $this->data->member->bidxMeta->bidxMemberId : null ;
 $loggedInMemberId               = isset( $this -> sessionData -> data -> id ) ? $this -> sessionData -> data -> id : null;
@@ -163,7 +163,8 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
             endif;
 ?>
 <?php
-            if ( !empty($this->data->bidxInvestorProfile ) ) :
+            /* Temparary fix for invesor visibility */
+            if ( $this->isLoggedInGroupOwner && !empty($this->data->bidxInvestorProfile ) ) :
 ?>
                 <li><a href="#tab-investor" data-toggle="tab">
                         <i class="pull-left fa fa-bank"></i>
@@ -208,7 +209,8 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
             endif;
 ?>
 <?php
-            if ( !empty($this->data->bidxInvestorProfile ) ) :
+            /* Temparary fix for invesor visibility */
+            if ( $this->isLoggedInGroupOwner && !empty($this->data->bidxInvestorProfile ) ) :
 ?>
             <div class="tab-pane" id="tab-investor">
                 <?php $this->render('view-investor.phtml'); ?>
