@@ -346,7 +346,7 @@
 
             if( entityId && $button.length)
             {
-                if( loggedInMemberId !== visitingMemberPageId )
+                if( loggedInMemberId && loggedInMemberId !== visitingMemberPageId )
                 {
                     widget._hasAccess(
                     {
