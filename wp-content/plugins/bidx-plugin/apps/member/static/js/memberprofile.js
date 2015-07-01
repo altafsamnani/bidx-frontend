@@ -63,6 +63,7 @@
     ,   snippets                            = {}
 
     ,   appName                             = "member"
+    ,   loggedInMemberId                    = bidx.common.getCurrentUserId()
 
         // Languages
         //
@@ -253,7 +254,6 @@
         ,   mentorProfileEntityId   =   bidx.utils.getValue(mentorProfile, 'bidxMeta.bidxEntityId' )
         ,   mentorTagsData          =   bidx.utils.getValue(mentorProfile, 'bidxMeta.tagAssignmentSummary' )
         ,   visitingMemberPageId    =   bidx.utils.getValue( bidxConfig, "context.memberId" )
-        ,   loggedInMemberId        =   bidx.common.getCurrentUserId()
         ,   status                  =   false
         ;
 
@@ -357,7 +357,12 @@
         _snippets();
         _languages();
         _attachments();
-        _getActiveContacts();
+
+        if(loggedInMemberId)
+        {
+            _getActiveContacts();
+        }
+
         _accreditation();
 
         // On any changes, how little doesn't matter, notify that we have a pending change
@@ -687,7 +692,7 @@
                             value:      offset
                         }*/
                     ]
-                ,   requesterId:              bidx.common.getCurrentUserId( "id" )
+                ,   requesterId:              loggedInMemberId
                 ,   groupDomain:              bidx.common.groupDomain
 
                 ,   success: function( response )
