@@ -738,7 +738,7 @@
             [
                 {
                     addClass:   "btn btn-success"
-                ,   text:       "Ok"
+                ,   text:       bidx.i18n.i("btnOk")
                 ,   onClick: function($noty)
                     {
                         _denti( entityId );
@@ -746,7 +746,7 @@
                 }
             ,   {
                     addClass:   "btn btn-danger"
-                ,   text:       "Cancel"
+                ,   text:       bidx.i18n.i("btnCancel")
                 ,   onClick: function($noty)
                     {
                         $noty.close();
