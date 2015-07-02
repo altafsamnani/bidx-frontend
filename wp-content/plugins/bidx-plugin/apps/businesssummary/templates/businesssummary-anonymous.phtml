@@ -59,8 +59,7 @@ $currentYear = date("Y");
     </div>
 
 <?php
-
-        $updatedDate = date( 'd M Y', $businessSummaryBidxMeta->bidxLastUpdateDateTime );
+        $updatedDate    =   $this->getLocaleDate( $businessSummaryBidxMeta->bidxLastUpdateDateTime  );
 
 ?>
     <div class="bg-gray control-bar">
