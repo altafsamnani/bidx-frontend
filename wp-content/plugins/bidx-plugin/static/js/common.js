@@ -811,7 +811,7 @@
                         }
                         else if ( response.status === "ERROR")
                         {
-                            $frmLoginModal.find( ".error-separate" ).text( response.text).show();
+                            $frmLoginModal.find( ".error-separate" ).text( response.text ).show();
 
                             params.error( jqXHR );
                         }
@@ -829,9 +829,9 @@
                     params.callback( );
                 }
 
-            ,   error:  function( jqXhr )
+            ,   error:  function( jqXhr, textStatus, errorThrown )
                 {
-                    $frmLoginModal.find(".error-separate").text( jqXhr.statusText ).show();
+                    $frmLoginModal.find(".error-separate").i18nText( 'passwordIncorrect' ).show();
 
                     params.error( "Error", jqXhr );
 
@@ -845,21 +845,29 @@
     {
         var $this       =   $(this)
         ,   orgText     =   $this.text()
+        ,   passText    =   $frmLoginModal.find( "[name='password']" ).val(  )
         ;
         bidx.utils.log('this', $this);
         bidx.utils.log('orgText', orgText);
-        $this.i18nText( "btnPleaseWait" ).addClass('disabled');
-        modalLogin(
+        if( passText )
         {
-            callback:   function()
-                        {
-                            $this.text( orgText ).removeClass('disabled');
-                        }
-        ,   error:      function( jqXhr )
-                        {
-                            bidx.utils.log('jqXhr', jqXhr);
-                        }
-        } );
+            $this.i18nText( "btnPleaseWait" ).addClass('disabled');
+            modalLogin(
+            {
+                callback:   function()
+                            {
+                                $this.text( orgText ).removeClass('disabled');
+                            }
+            ,   error:      function( jqXhr )
+                            {
+                                bidx.utils.log('jqXhr', jqXhr);
+                            }
+            } );
+        }
+        else
+        {
+            $frmLoginModal.find(".error-separate").i18nText( 'frmEmptyPassword' ).show();
+        }
     });
 
     function _denti( entityId )

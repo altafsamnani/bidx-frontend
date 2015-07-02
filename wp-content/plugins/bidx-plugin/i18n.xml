@@ -73,6 +73,7 @@
     <Item value="frmSelectFieldRequired">Please select an item</Item>
     <Item value="frmInvalidDate">Please enter a valid date</Item>
     <Item value="frmInvalidEmail">Please enter a valid e-mail address</Item>
+    <Item value="frmEmptyPassword">Please enter a valid password</Item>
     <Item value="frmInvalidSkypeUsername">Please enter a valid Skype username</Item>
     <Item value="frmInvalidLinkedInUsername">Please enter a valid LinkedIn username</Item>
     <Item value="frmInvalidFacebookUsername">Please enter a valid Facebook username</Item>
@@ -98,6 +99,7 @@
     <Item value="usernameExists">This email address is already in use</Item>
     <Item value="usernameInvalid">This is not a valid email address</Item>
     <Item value="passwordIncorrect">The password is incorrect</Item>
+
 
     <!-- Frequent used strings -->
     <Item value="entrepreneur">Entrepreneur</Item>
