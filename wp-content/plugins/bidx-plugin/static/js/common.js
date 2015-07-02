@@ -847,8 +847,7 @@
         ,   orgText     =   $this.text()
         ,   passText    =   $frmLoginModal.find( "[name='password']" ).val(  )
         ;
-        bidx.utils.log('this', $this);
-        bidx.utils.log('orgText', orgText);
+
         if( passText )
         {
             $this.i18nText( "btnPleaseWait" ).addClass('disabled');
@@ -1500,6 +1499,8 @@
             $( 'a[href='+ tabHash +']' ).click();
         }
     }
+
+
 
     // Temporary solution for public home page, find a better place for this
     //
