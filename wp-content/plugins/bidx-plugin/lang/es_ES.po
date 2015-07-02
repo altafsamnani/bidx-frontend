@@ -9246,9 +9246,9 @@ msgstr "Introduzca la contraseña"
 # 1650) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/login/templates/login.phtml -46
 # _e("Not a member? Click <a href=\"#auth/register\">here</a> to register.","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Not a member? Click <a href=\"#auth/register\">here</a> to register."
+msgid "Not a member? Click <a href=\"%s\">here</a> to register."
 msgstr ""
-"¿No es miembro? Haga clic <a href=\"#auth/register\">aquí</a> para "
+"¿No es miembro? Haga clic <a href=\"%s\">aquí</a> para "
 "registrarse."
 
 # 1651) File -/var/www/html/wp-content/plugins/bidx-plugin/services/wp-service.php -2391

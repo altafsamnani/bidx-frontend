@@ -865,7 +865,7 @@
 
             if( data.numFound ) {
 
-                $searchPagerContainer.find('.pagerTotal').empty().append('<h5>' + data.numFound + ' results:</h5>');
+                $searchPagerContainer.find('.pagerTotal').empty().append('<h5>' + data.numFound + ' ' + bidx.i18n.i( 'resultsLabel', appName ) + ':</h5>');
             }
 
             $searchPager.bootstrapPaginator( pagerOptions );

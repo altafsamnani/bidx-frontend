@@ -84,6 +84,12 @@ msgctxt "businesssummary"
 msgid "Rate this plan"
 msgstr ""
 
+# _x("You are about to delete this business and lose all its content. This action is irreversible. Are you sure?", "businesssummary","i18n");
+# Context businesssummary TextDomain i18n
+msgctxt "businesssummary"
+msgid "You are about to delete this business and lose all its content. This action is irreversible. Are you sure?"
+msgstr ""
+
 # _x("Comment saved", "commenting","i18n");
 # Context commenting TextDomain i18n
 msgctxt "commenting"
@@ -184,6 +190,12 @@ msgstr ""
 # Context company TextDomain i18n
 msgctxt "company"
 msgid "Select the legal form of your company"
+msgstr ""
+
+# _x("You are about to delete this company and lose all its content. This action is irreversible. Are you sure?", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "You are about to delete this company and lose all its content. This action is irreversible. Are you sure?"
 msgstr ""
 
 # _x("Add company", "company","i18n");
@@ -474,10 +486,10 @@ msgctxt "competition"
 msgid "Please wait while we are updating phase of the competition"
 msgstr ""
 
-# _x("Congratulations, you have successfully updated the phase of this competition ", "competition","i18n");
+# _x("Congratulations, you have successfully updated the phase of this competition", "competition","i18n");
 # Context competition TextDomain i18n
 msgctxt "competition"
-msgid "Congratulations, you have successfully updated the phase of this competition "
+msgid "Congratulations, you have successfully updated the phase of this competition"
 msgstr ""
 
 # _x("Before moving to the next phase, all applications need a competition administrator review", "competition","i18n");
@@ -630,6 +642,12 @@ msgctxt "member"
 msgid "Please upload at least one document"
 msgstr ""
 
+# _x("You are about to delete this item and lose all its content. This action is irreversible. Are you sure?", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "You are about to delete this item and lose all its content. This action is irreversible. Are you sure?"
+msgstr ""
+
 # _x("Mentoring request pending", "mentor","i18n");
 # Context mentor TextDomain i18n
 msgctxt "mentor"
@@ -688,6 +706,12 @@ msgstr ""
 # Context search TextDomain i18n
 msgctxt "search"
 msgid "Less"
+msgstr ""
+
+# _x("results", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "results"
 msgstr ""
 
 # _x("Member profile", "search","i18n");
@@ -1162,6 +1186,11 @@ msgstr ""
 msgid "Request received"
 msgstr ""
 
+# _e("Request ongoing", "i18n");
+# Context  TextDomain i18n
+msgid "Request ongoing"
+msgstr ""
+
 # _e("Request rejected", "i18n");
 # Context  TextDomain i18n
 msgid "Request rejected"
@@ -1255,6 +1284,11 @@ msgstr ""
 # _e("Please enter a valid e-mail address", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter a valid e-mail address"
+msgstr ""
+
+# _e("Please enter a valid password", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid password"
 msgstr ""
 
 # _e("Please enter a valid Skype username", "i18n");
@@ -1660,5 +1694,40 @@ msgstr ""
 # _e("All", "i18n");
 # Context  TextDomain i18n
 msgid "All"
+msgstr ""
+
+# _e("Mark as:", "i18n");
+# Context  TextDomain i18n
+msgid "Mark as:"
+msgstr ""
+
+# _e("Marked as ", "i18n");
+# Context  TextDomain i18n
+msgid "Marked as "
+msgstr ""
+
+# _e("Accredited", "i18n");
+# Context  TextDomain i18n
+msgid "Accredited"
+msgstr ""
+
+# _e("Not Accredited", "i18n");
+# Context  TextDomain i18n
+msgid "Not Accredited"
+msgstr ""
+
+# _e("Pending Accreditation", "i18n");
+# Context  TextDomain i18n
+msgid "Pending Accreditation"
+msgstr ""
+
+# _e("Assignment is not allowed for tags:", "i18n");
+# Context  TextDomain i18n
+msgid "Assignment is not allowed for tags:"
+msgstr ""
+
+# _e("EntityId is not specified", "i18n");
+# Context  TextDomain i18n
+msgid "EntityId is not specified"
 msgstr ""
 
