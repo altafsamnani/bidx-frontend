@@ -7667,7 +7667,6 @@ msgstr "السيرة الذاتية"
 # 605) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/group/templates/group-home-private.phtml -63
 # _e("New Businesses","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Add new Business"
 msgstr "مشاريع جديدة"
 
@@ -7702,7 +7701,6 @@ msgstr "ارشد هذه الخطة"
 # 1419) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -56
 # _e("Add Company","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Add new Company"
 msgstr "أضف شركة"
 
