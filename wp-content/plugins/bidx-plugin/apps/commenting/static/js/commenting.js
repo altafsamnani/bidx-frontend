@@ -31,7 +31,7 @@
     function _showHideFeedbackPanel( element )
     {
         var $btnFeedback = $( element );
-        
+
         $btnFeedback.on('click', function()
         {
             var $el = $(this)
@@ -127,7 +127,7 @@
         });
     }
 
-    // Create the wrappers and insert the feedback in each panel that has the "panel-feedback" class 
+    // Create the wrappers and insert the feedback in each panel that has the "panel-feedback" class
     //
     function _createFeedbackPanelStructure()
     {
@@ -231,11 +231,15 @@
                                 $("<small/>")
                                 .append
                                 (
-                                    $("<a/>", { "class": "feedback-commentor-name", href: "/member/" + feedback.commentorId, text: feedback.commentorDisplayName })
+                                    $( "<span/>", { "class": "pull-left" })
+                                    .append
+                                    (
+                                        $("<a/>", { "class": "feedback-commentor-name", href: "/member/" + feedback.commentorId, text: feedback.commentorDisplayName })
+                                    )
                                 )
                                 .append
                                 (
-                                    $("<span/>", { "class": "feedback-date", text: " " + bidx.utils.parseTimestampToDateTime( feedback.created, "date" ) })
+                                    $("<span/>", { "style": "display:block;", "class": "feedback-date", html: "&nbsp;&nbsp;" + bidx.utils.parseTimestampToDateTime( feedback.created, "date" ) })
                                 )
                             )
                         )
@@ -391,7 +395,7 @@
         if ( $elem )
         {
             $elem.$notifications.find( ".alert" ).removeClass( "hide" ).addClass( "hide" );
-    
+
             if ( state )
             {
                 switch ( state )
