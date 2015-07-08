@@ -44,7 +44,8 @@ class auth {
 	 * Dynamic action needs to be added here
 	 * @param $atts
 	 */
-	function load($atts) {
+	function load($atts)
+    {
 
         // This "auth" app also handles views for /join and /activate. Beware that /join behaves
         // differently when authenticated (choose a role, or join the group, or show the homepage)
@@ -66,87 +67,100 @@ class auth {
         // So, the solution is to add the expected fragment, #join/role, to the bidx-soca URL (or
         // configure bidx-soca to add the fragment in its redirect).
 
-        $authenticated = ( BidxCommon::$staticSession->authenticated === 'true' );
-        $siteUrl = get_site_url();
-        $subdomain = BidxCommon::get_bidx_subdomain( false, $siteUrl );
+        $authenticated  =   ( BidxCommon::$staticSession->authenticated === 'true' );
+        $siteUrl        =   get_site_url();
+        $subdomain      =   BidxCommon::get_bidx_subdomain( false, $siteUrl );
 
-	if ( get_option( 'bidx-ssoredirect-url' ) ) {
-    		header( "Location: " . $siteUrl . get_option( 'bidx-ssoredirect-url' ) );
-    		return;
-	}
+    	if ( get_option( 'bidx-ssoredirect-url' ) )
+        {
+        		header( "Location: " . $siteUrl . get_option( 'bidx-ssoredirect-url' ) );
+
+        		return;
+    	}
 
 		// 1. Template Rendering
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
-		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/auth/templates/' );
-		// 2. Determine the view needed
 
-		$command = $atts['view'];
-        $type    = array_key_exists( 'type', $atts ) ? $atts['type'] : null;
+		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/auth/templates/' );
+
+		// 2. Determine the view needed
+		$command                = $atts['view'];
+
+        $type                   = array_key_exists( 'type', $atts ) ? $atts['type'] : null;
 
         $view->showRegisterLink = true;
-        $view->showLoginLink = true;
-        $render = $command;
+
+        $view->showLoginLink    = true;
+
+        $render                 = $command;
 
         // we need to activate a new account and check the token provided
         //
-        if ( $command === "activate" ) {
-
+        if ( $command === "activate" )
+        {
             // check if code has been provided
             //
             $activationCode = isset( $_GET[ "code" ] ) ? $_GET["code"]  : "";
 
 
-            if ( $activationCode !== "" ) {
+            if ( $activationCode !== "" )
+            {
+                global $sitepress;
 
+                $currentLanguage    =   ( isset( $sitepress) ) ? $sitepress->get_current_language() :   substr(get_locale(),0,2);
+
+                $langUrl            =    ( $currentLanguage ) ?  '/' . $currentLanguage : '';
+;
                 // do the session call
                 //
                 require_once( BIDX_PLUGIN_DIR .'/../services/session-service.php' );
+
                 $sessionObj = new SessionService( );
 
                 $result = $sessionObj -> getActivationSession( $activationCode );
 
-
                 // if sessionState is pending, redirect to setpassword
                 //
-                if ( isset ( $result -> data -> SessionState ) && ( $result -> data -> SessionState === "PendingInitialPasswordSet" || $result -> data -> SessionState === "PendingPasswordReset"  ) ) {
+                if ( isset ( $result -> data -> SessionState ) && ( $result -> data -> SessionState === "PendingInitialPasswordSet" || $result -> data -> SessionState === "PendingPasswordReset"  ) )
+                {
 
-                    $redirect_url = '/setpassword/';
+                    $redirect_url = $langUrl.'/setpassword/';
 
-                } elseif ( isset ( $result -> code ) && $result -> code === "activationTokenExpired" ) {
+                } elseif ( isset ( $result -> code ) && $result -> code === "activationTokenExpired" )
+                {
 
-                    $redirect_url = '/setpassword/#setpassword/expired';
+                    $redirect_url = $langUrl.'/setpassword/#setpassword/expired';
 
-                } else {
+                } else
+                {
                     // THIS NEEDS TO GET SOME DECENT ERROR HANDLING
                     //
                     echo "<H1>Ooops, something went wrong</H1>";
                     echo $result -> text;
                     die();
                 }
+
                 // do the redirect
-                //
                 header ("Location: $redirect_url");
 
-            } else {
+            }
+            else
+            {
                 // catchall kinda page...
                 //
                 echo "<H1>Ooops, something went wrong</H1>";
                 echo "No activation token received.";
                 die();
             }
-
-
-
-        } else {
+        }
+        else
+        {
             require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
             $groupSvc = new GroupService( );
             $view->groupNotification = (!empty($atts['name'])) ? $atts['name']: 'we';
             $view->group = $groupSvc->getGroupDetails();
             $view->render( $render . '.phtml' );
         }
-
-
-
 	}
 }
 
