@@ -1,10 +1,10 @@
 <?php
     global $sitepress;
-    
+
     $session = BidxCommon::$staticSession;
 
     $footerContent = 'footer';
-    
+
     if( $sitepress )
     {
         $currentLanguage = $sitepress->get_current_language();
@@ -80,14 +80,14 @@
                         <input type="password" class="form-control" name="password" placeholder="<?php _e('Enter your password','bidxplugin');?>" />
                     </div>
                     <input type="email" class="hide" name="username" value="<?php echo $session->data->username ?>" />
-                    
+
                     <div class="error-separate alert alert-danger"></div>
                     <button type="submit" class="btn btn-primary js-relogin"><?php _e('Login','bidxplugin');?></button>
                 </div>
             </div>
         </div>
     </div>
-</div>        
+</div>
 
 <?php wp_footer(); ?>
 

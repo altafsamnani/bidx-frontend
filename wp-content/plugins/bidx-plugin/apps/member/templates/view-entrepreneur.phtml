@@ -41,7 +41,7 @@ if ($entrepreneurDetails &&
 ?>
             <h4><?php _e( 'Summary', 'bidxplugin' ); ?></h4>
             <div><?php echo $this->exst ($entrepreneurDetails->summary); ?></div>
-<?php                         
+<?php
         }
 
         if ( $this->exst ($entrepreneurDetails->focusIndustry) )
@@ -49,7 +49,7 @@ if ($entrepreneurDetails &&
 ?>
             <h4><?php _e( 'Focus Industry', 'bidxplugin' ); ?></h4>
             <div><?php echo $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustry), '<br> ','industry'); ?></div>
-<?php                         
+<?php
         }
 
             /* Cv Display */
@@ -79,11 +79,11 @@ if ($entrepreneurDetails &&
                         <?php echo $labelBusiness; ?>
 <?php
                         if ( $entrepreneurDetails->bidxMeta->bidxCanEdit ):
-?>                        
-                        <a href="/businesssummary/#createBusinessSummary" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e( 'Add new Business', 'bidxplugin' ); ?> </a>
+?>
+                        <a href="<?php echo _l("businesssummary");?>#createBusinessSummary" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e( 'Add new Business', 'bidxplugin' ); ?> </a>
 <?php
                         endif;
-?>                        
+?>
                     </h4>
 
 
@@ -166,7 +166,7 @@ if ($entrepreneurDetails &&
                                                         <a class="btn btn-sm btn-danger pull-right bp-<?php echo $business->bidxMeta->bidxEntityId;?>" href="#mentoringRequest/confirmRequest/entityId=<?php echo $business->bidxMeta->bidxEntityId;?>"><?php _e('Mentor this plan', 'bidxplugin')?></a>
 <?php
                                                     }
-?>                                                    
+?>
 
                                                 </div>
                                             </div>
@@ -193,11 +193,11 @@ if ($entrepreneurDetails &&
                         <?php echo $labelCompany; ?>
 <?php
                         if ( $entrepreneurDetails->bidxMeta->bidxCanEdit ):
-?>                        
-                        <a href="/company/#createCompany" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e( 'Add new Company', 'bidxplugin' ); ?> </a>
+?>
+                        <a href="<?php echo _l("company");?>#createCompany" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e( 'Add new Company', 'bidxplugin' ); ?> </a>
 <?php
                         endif;
-?>                        
+?>
                     </h4>
 
 

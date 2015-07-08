@@ -164,7 +164,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 <?php
     if ( $businessSummaryId )
     {
-        $updatedDate = date( 'd M Y', $businessSummaryBidxMeta->bidxLastUpdateDateTime );
+        $updatedDate    =   $this->getLocaleDate( $businessSummaryBidxMeta->bidxLastUpdateDateTime  );
 ?>
     <div class="bg-gray control-bar">
 

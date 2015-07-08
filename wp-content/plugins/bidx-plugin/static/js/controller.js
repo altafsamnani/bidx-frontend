@@ -34,6 +34,52 @@
         } );
     }
 
+    function _addHashToLanguageSwitcher()
+    {
+        var hash = window.location.hash
+        ;
+
+        Backbone.history.on("all", function (route, router)
+        {
+            var backBoneHash    =   window.location.hash;
+
+            _addHash( backBoneHash );
+        });
+
+        if( hash )
+        {
+            _addHash( hash );
+        }
+
+        function _addHash( hash )
+        {
+            var $el
+            ,   hrefUrl
+            ,   newHref
+            ,   withoutHash
+            ,   hashIndex
+            ,   $langaugeSwitcher   =   $('.language-switcher')
+            ,   $iclSelClass        =   $langaugeSwitcher.find('.lang_sel')
+            ;
+
+            $iclSelClass.each( function( idx, el )
+            {
+                $el         =   $( el );
+
+                hrefUrl     =   $el.attr('href');
+
+                hashIndex   =   hrefUrl.indexOf('#');
+
+                withoutHash =   ( hashIndex !== -1 ) ? hrefUrl.substr( 0, hashIndex ) : hrefUrl;
+
+                newHref     =   withoutHash + hash;
+
+                $el.attr('href', newHref);
+
+            } );
+        }
+    }
+
     // Start checking the state of the mailbox of this user
     //
     function _startCheckMailboxState()
@@ -1069,5 +1115,7 @@
         //
         _startCheckMailboxState();
     }
+
+    _addHashToLanguageSwitcher();
 
 } ( jQuery ));

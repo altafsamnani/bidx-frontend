@@ -143,20 +143,20 @@ msgid "All Packages"
 msgstr ""
 
 
-#20) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -325
+#20) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -111
 # _e("Contact us to get started","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
 
 
-#21) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -327
+#21) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -113
 # _e("Get Started","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Get Started"
 msgstr ""
 
 
-#22) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -328
+#22) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -114
 # _e("All Packages","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.

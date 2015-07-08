@@ -925,9 +925,9 @@ msgstr ""
 # 8) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/login/templates/login.phtml -25
 # _e("Not a member? Click <a href=\\"#auth/register\\">here</a> to register.","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Not a member? Click <a href=\"#auth/register\">here</a> to register."
+msgid "Not a member? Click <a href=\"%s\">here</a> to register."
 msgstr ""
-"Pas encore membre? Cliquez <a href=\"#auth/register\">ici</a> pour vous "
+"Pas encore membre? Cliquez <a href=\"%s\">ici</a> pour vous "
 "inscrire."
 
 # 757) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/search/templates/cardView.phtml -87

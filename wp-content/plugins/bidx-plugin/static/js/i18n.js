@@ -177,6 +177,7 @@
         var item
         ,   myItem
         ,   keyLen
+        ,   label
         ,   labels
         ,   ticks
         ;
@@ -250,7 +251,9 @@
             {
                 myItem = item.byKey[ key ] || {};
 
-                cb( null, myItem.label || key );
+                label           =   ( $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent(escape(myItem.label)) : myItem.label;
+
+                cb( null, label || key );
             }
         }
     }

@@ -518,6 +518,25 @@ msgstr "صندوق الصادر"
 msgid "Trash"
 msgstr "صندوق المهملات"
 
+# 13) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/admin/monitoring/static/templates/criteria.phtml -3
+# _e("From date","bidxplugin");
+# Context  Textdomain bidxplugin
+#, fuzzy
+msgid "From"
+msgstr "من تاريخ"
+
+# 102) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/admin/connect/static/templates/connect.phtml -171
+# _e("Subject","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Subject"
+msgstr "الموضوع"
+
+# 91) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/admin/connect/static/templates/connect.phtml -124
+# _e("Body","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Body"
+msgstr ""
+
 # 89) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/admin/connect/static/templates/connect.phtml -92
 # _e("Loading...","bidxplugin");
 # Context  Textdomain bidxplugin
@@ -592,11 +611,23 @@ msgstr "مستلم"
 msgid "Select a recipient"
 msgstr "قم باختيار المستلم"
 
-# 102) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/admin/connect/static/templates/connect.phtml -171
+# 567) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/groupowner/monitoring.phtml -233
+# _e("Recipient","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 568) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/groupowner/monitoring.phtml -242
 # _e("Subject","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Subject"
-msgstr "الموضوع"
+# Already exists, doesnt need translation.
+# 569) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/groupowner/monitoring.phtml -244
+# _e("Your subject goes here","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 570) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/groupowner/monitoring.phtml -250
+# _e("Message","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Message"
+msgstr "الرسالة"
 
 # 103) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/admin/connect/static/templates/connect.phtml -187
 # _e("Discard message","bidxplugin");
@@ -676,6 +707,12 @@ msgstr "افرغ المهملات"
 msgid "No messages available"
 msgstr "لا توجد رسائل"
 
+# 126) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/login/templates/login.phtml -45
+# _e("Not a member? Click <a href=\"#auth/register\">here</a> to register.","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Not a member? Click <a href=\"%s\">here</a> to register."
+msgstr "لست عضو؟ انقر <a href=\"%s\">هنا</a>  للتسجيل."
+
 # 117) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/login/templates/login.phtml -3
 # _e("Login","bidxplugin");
 # Context  Textdomain bidxplugin
@@ -749,12 +786,6 @@ msgid ""
 msgstr ""
 "نسيت كلمة المرور؟ انقر   <a href=\"#auth/resetpassword\">هنا</a>         "
 "لاستعادةها"
-
-# 126) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/login/templates/login.phtml -45
-# _e("Not a member? Click <a href=\"#auth/register\">here</a> to register.","bidxplugin");
-# Context  Textdomain bidxplugin
-msgid "Not a member? Click <a href=\"#auth/register\">here</a> to register."
-msgstr "لست عضو؟ انقر <a href=\"#auth/register\">هنا</a>  للتسجيل."
 
 # 129) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition-anonymous.phtml -82
 # _e("Participants","bidxplugin");
@@ -1545,7 +1576,8 @@ msgstr "اسحب"
 # 127) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition_original.phtml -10
 # _e("Select Assessor","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Assign Assessor:"
+#, fuzzy
+msgid "Assign Assessor"
 msgstr "عين مقيم"
 
 # 127) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition_original.phtml -10
@@ -1563,7 +1595,8 @@ msgstr "عيّن"
 # 128) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition_original.phtml -14
 # _e("Assign","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Assign Judge:"
+#, fuzzy
+msgid "Assign Judge"
 msgstr "عين حكم"
 
 # 267) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition.phtml -807
@@ -1889,6 +1922,16 @@ msgstr "انقر <a href=\"%s\">هنا</a>       لتذهب للصفحة الر�
 # Context  Textdomain bidxplugin
 msgid "Reset password"
 msgstr "استعادة كلمة المرور"
+
+# 333) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/resetpassword/templates/resetpassword.phtml -5
+# _e("Currently we are unable to authenticate bidx users using LinkedIn. We will solve this as soon as possible. In the mean time you may login using a password which you can request by submitting your primary LinkedIn email address below. We are sorry for the inconvenience.","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid ""
+"Currently we are unable to authenticate bidx users using LinkedIn. We will "
+"solve this as soon as possible. In the mean time you may login using a "
+"password which you can request by submitting your primary LinkedIn email "
+"address below. We are sorry for the inconvenience."
+msgstr ""
 
 # 316) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/resetpassword/templates/resetpassword.phtml -7
 # _e("Email address","bidxplugin");
@@ -3209,24 +3252,6 @@ msgstr ""
 msgid "Compose message"
 msgstr "قم باعداد الرسالة"
 
-# 567) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/groupowner/monitoring.phtml -233
-# _e("Recipient","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 568) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/groupowner/monitoring.phtml -242
-# _e("Subject","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 569) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/groupowner/monitoring.phtml -244
-# _e("Your subject goes here","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 570) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/groupowner/monitoring.phtml -250
-# _e("Message","bidxplugin");
-# Context  Textdomain bidxplugin
-msgid "Message"
-msgstr "الرسالة"
-
 # 571) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/groupowner/monitoring.phtml -252
 # _e("Please type your message here","bidxplugin");
 # Context  Textdomain bidxplugin
@@ -4256,8 +4281,8 @@ msgid ""
 "interesting for you."
 msgstr ""
 " يجد bidX أفضل الخطط المناسبة لك بمجرد نشرهم. نلائم البيانات الشخصية الوارده "
-"بحسابك كمرشد مع بيانات المشاريع الجديدة. يوصي القسم بالخطط التي يمكن أن "
-"تحظى على اهتمامك، من خلال قوائم  بلوحة الإعدادات الخاصة بك."
+"بحسابك كمرشد مع بيانات المشاريع الجديدة. يوصي القسم بالخطط التي يمكن أن تحظى "
+"على اهتمامك، من خلال قوائم  بلوحة الإعدادات الخاصة بك."
 
 # 762) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/help.phtml -18
 # _e("Go to recommended plans","bidxplugin");
@@ -5582,6 +5607,18 @@ msgstr "انضم"
 msgid "To get started, create your member account here."
 msgstr "للبدء، انشئ حساب العضوية هنا."
 
+# 1088) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -15
+# _e("Authentication using LinkedIn is currently not possible. If you are a returning LinkedIn user please request a password using the form below. This will allow you to log into your existing account using your LinkedIn email address. If you are a new user please register here as a new user using any email address you like. We are working on a solution to re-enable authentication using LinkedIn and are sorry for the inconvenience.","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid ""
+"Authentication using LinkedIn is currently not possible. If you are a "
+"returning LinkedIn user please request a password using the form below. This "
+"will allow you to log into your existing account using your LinkedIn email "
+"address. If you are a new user please register here as a new user using any "
+"email address you like. We are working on a solution to re-enable "
+"authentication using LinkedIn and are sorry for the inconvenience."
+msgstr ""
+
 # 1054) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -14
 # _e("Choose a social network","bidxplugin");
 # Context  Textdomain bidxplugin
@@ -6006,7 +6043,8 @@ msgstr "بأي مجالات الخبرة تسعى لايجاد الدعم؟"
 # 1117) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -322
 # _e("Please specify the areas in which you seek support (max. 300 characters)","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Please specify the areas in which you seek support (max. 300 characters)"
+msgid ""
+"Please specify the areas in which you seek support (max. 300 characters)"
 msgstr "لماذا لمشروعك؟ (بحد أقصى ٣٠٠ حرفا)"
 
 # 1127) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -359
@@ -7496,21 +7534,12 @@ msgstr "تعديل ملفي الشخصي كمرشد"
 msgid "Create my mentor profile"
 msgstr "انشاء ملفي الشخصي كمرشد"
 
-# 1422) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -45
+# 274) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition.phtml -850
 # _e("Mark as","bidxplugin");
 # Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1423) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -48
-# _e("Accredited","bidxplugin");
-# Context  Textdomain bidxplugin
-msgid "Accredited"
-msgstr ""
-
-# 1424) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -52
-# _e("Not Accredited","bidxplugin");
-# Context  Textdomain bidxplugin
-msgid "Not Accredited"
-msgstr ""
+#, fuzzy
+msgid "Mark for"
+msgstr "علم أنها"
 
 # 1417) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -48
 # _e("Dashboard","bidxplugin");
@@ -7539,36 +7568,6 @@ msgstr "كن مرشد"
 # Context  Textdomain bidxplugin
 msgid "Edit Profile"
 msgstr "تعديل الملف الشخصي"
-
-# 1025) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/views.phtml -233
-# _e("Show more","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1026) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/views.phtml -251
-# _e("Show more","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1027) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/views.phtml -270
-# _e("Show more","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1028) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/views.phtml -284
-# _e("Pending relationship","bidxplugin");
-# Context  Textdomain bidxplugin
-msgid "Pending Accreditation"
-msgstr "صلة معلقة"
-
-# 1433) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -134
-# _e("Accreditated","bidxplugin");
-# Context  Textdomain bidxplugin
-msgid "Accreditated"
-msgstr ""
-
-# 1434) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -139
-# _e("Not Accreditated","bidxplugin");
-# Context  Textdomain bidxplugin
-msgid "Not Accreditated"
-msgstr ""
 
 # 1488) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-member.phtml -177
 # _e("Twitter","bidxplugin");
@@ -7604,26 +7603,6 @@ msgstr ""
 msgid "Member"
 msgstr "عضو"
 
-# 1423) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -58
-# _e("Name of Company","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1424) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -59
-# _e("Outcome of business","bidxplugin");
-# Context  Textdomain bidxplugin
-msgid "Outcome of business"
-msgstr "نتيجة المشروع"
-
-# 1425) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -60
-# _e("Company website","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1426) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -63
-# _e("Previous Business(es)","bidxplugin");
-# Context  Textdomain bidxplugin
-msgid "Previous Business(es)"
-msgstr "المشاريع السابقة"
-
 # 1427) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -82
 # _e("Documents","bidxplugin");
 # Context  Textdomain bidxplugin
@@ -7641,6 +7620,27 @@ msgstr "المشاريع السابقة"
 # Context  Textdomain bidxplugin
 msgid "Companies"
 msgstr "الشركات"
+
+# 1423) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -58
+# _e("Name of Company","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1424) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -59
+# _e("Outcome of business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Outcome of business"
+msgstr "نتيجة المشروع"
+
+# 1425) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -60
+# _e("Company website","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1426) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -63
+# _e("Previous Business(es)","bidxplugin");
+# Context  Textdomain bidxplugin
+#, fuzzy
+msgid "Previous Businesses"
+msgstr "المشاريع السابقة"
 
 # 1431) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -182
 # _e("Company","bidxplugin");
@@ -7664,11 +7664,45 @@ msgstr "الشركات"
 msgid "CV"
 msgstr "السيرة الذاتية"
 
+# 605) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/group/templates/group-home-private.phtml -63
+# _e("New Businesses","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Add new Business"
+msgstr "مشاريع جديدة"
+
+# 1561) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/search/templates/cardView.phtml -110
+# _e("Country","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1562) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/search/templates/cardView.phtml -113
+# _e("Industry","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1563) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/search/templates/cardView.phtml -116
+# _e("Date","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1564) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/search/templates/cardView.phtml -145
+# _e("View","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "View"
+msgstr "عاين"
+
 # 1436) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -155
 # _e("Mentor this plan","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Mentor this plan"
 msgstr "ارشد هذه الخطة"
+
+# 1418) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -52
+# _e("Create Business","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+# 1419) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -56
+# _e("Add Company","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Add new Company"
+msgstr "أضف شركة"
 
 # 1437) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -161
 # _e("Edit","bidxplugin");
@@ -8197,29 +8231,18 @@ msgstr " تحميل نتائج البحث، يرجى الانتظار..."
 msgid "Sort by:"
 msgstr "صَنّف حسب:"
 
+# 1361) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/create-grow.phtml -32
+# _e("Create","bidxplugin");
+# Context  Textdomain bidxplugin
+#, fuzzy
+msgid "Created"
+msgstr "انشاء"
+
 # 1560) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/search/templates/cardView.phtml -107
 # _e("Relevance","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Relevance"
 msgstr "العلاقة"
-
-# 1561) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/search/templates/cardView.phtml -110
-# _e("Country","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1562) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/search/templates/cardView.phtml -113
-# _e("Industry","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1563) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/search/templates/cardView.phtml -116
-# _e("Date","bidxplugin");
-# Context  Textdomain bidxplugin
-# Already exists, doesnt need translation.
-# 1564) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/search/templates/cardView.phtml -145
-# _e("View","bidxplugin");
-# Context  Textdomain bidxplugin
-msgid "View"
-msgstr "عاين"
 
 # 1565) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/search/templates/cardView.phtml -159
 # _e("Industry","bidxplugin");
