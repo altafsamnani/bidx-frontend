@@ -1379,7 +1379,7 @@ msgstr "يرجى إدخال رقم بطاقة إئتمان صحيح"
 
 # _e("Please enter a valid amount", "i18n");
 # Context  TextDomain i18n
-msgid "Please enter the same value again"
+msgid "Please enter the same value again."
 msgstr "يرجى إدخال نفس القيمة مرة أخرى"
 
 # _e("Please enter at least {0} characters", "i18n");

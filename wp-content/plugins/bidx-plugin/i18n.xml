@@ -90,7 +90,7 @@
      <Item value="frmInvalidRemote">Please fix this field.</Item>
     <Item value="frmInvalidNumber">Please enter a valid number.</Item>
     <Item value="frmInvalidCC">Please enter a valid credit card number.</Item>
-    <Item value="frmInvalidEqualTo">Please enter the same value again</Item>
+    <Item value="frmInvalidEqualTo">Please enter the same value again.</Item>
     <Item value="frmInvalidRangeLength">Please enter a value between {0} and {1} characters long.</Item>
     <Item value="frmInvalidRange">Please enter a value between {0} and {1}.</Item>
 

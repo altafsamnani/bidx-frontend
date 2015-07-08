@@ -922,6 +922,7 @@
     bidx.i18n.load( [ "__global" ] )
         .done( function()
         {
+
             $.extend( $.validator.messages,
             {
                 required:               bidx.i18n.i( "frmFieldRequired" )

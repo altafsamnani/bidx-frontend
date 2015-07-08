@@ -1371,9 +1371,9 @@ msgstr ""
 msgid "Please enter a valid credit card number."
 msgstr ""
 
-# _e("Please enter the same value again", "i18n");
+# _e("Please enter the same value again.", "i18n");
 # Context  TextDomain i18n
-msgid "Please enter the same value again"
+msgid "Please enter the same value again."
 msgstr ""
 
 # _e("Please enter a value between {0} and {1} characters long.", "i18n");
