@@ -142,6 +142,7 @@ class auth {
 
                 // do the redirect
                 header ("Location: $redirect_url");
+                die();
 
             }
             else
