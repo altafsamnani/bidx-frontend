@@ -1,0 +1,8 @@
+database:        
+    db_name: bidx_warehouse
+    db_host: dwh-final.cxe8in1cjedh.eu-west-1.rds.amazonaws.com
+    db_port: 3306
+    db_user: sysadmin
+    db_passwd: 1234Hoedje!
+sql: SELECT groupdomain, url FROM bizplans order by groupdomain;
+path: '/var/www/html/wp-content/plugins/bidx-plugin/assets'
