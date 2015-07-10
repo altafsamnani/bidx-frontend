@@ -375,7 +375,7 @@ function bidx_signout ()
     clear_wp_bidx_session ();
 
     if ($provider || isset ($_COOKIE['bidx-skipso-competition'])) {
-        callProviderLogoutURL ();
+       // callProviderLogoutURL (); // Use it for skipso logout in future if needed
     }
 }
 

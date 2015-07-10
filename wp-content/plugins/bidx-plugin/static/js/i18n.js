@@ -53,7 +53,7 @@
                 //result[ idx ] = bidx.utils.getValue( items, context + ".byKey." + k  + ".label" );
                 label           =   ( items[ context ].byKey[ k ] || {} ).label;
 
-                result[ idx ]   =   ( $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent( escape( label ) ) : label;
+                result[ idx ]   =   ( currentLanguage === 'mz' || $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent( escape( label ) ) : label;
 
             } );
         }
@@ -62,7 +62,7 @@
             //result = bidx.utils.getValue( items, context + ".byKey." + key  + ".label" );
             label           =   ( items[ context ].byKey[ key ] || {} ).label;
 
-            result          =   ( $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent( escape( label ) ) : label;
+            result          =   ( currentLanguage === 'mz' || $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent( escape( label ) ) : label;
 
         }
 
