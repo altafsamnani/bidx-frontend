@@ -1,8 +1,6 @@
-# _e("","i18n");
-# Context  Textdomain bidxplugin
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: p3\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Altaf <altaf@bidx.net>\n"
@@ -12,6 +10,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
 # Language Original
 # _x("Select what best matches your reason for submission", "auth","i18n");
