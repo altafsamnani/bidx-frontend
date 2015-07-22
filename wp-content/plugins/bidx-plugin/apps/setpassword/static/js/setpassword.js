@@ -20,7 +20,7 @@
     {
 
 
-       // set validation and submitHandler
+        // set validation and submitHandler
         //
         $frmCredentials.validate(
         {
@@ -97,8 +97,12 @@
         var extraUrlParameters =
         [
             {
-                label :     "newPassword",
+                label :     "password",
                 value :     $frmCredentials.find( "[name='newPassword']" ).val()
+            },
+            {
+                label :     "activationToken",
+                value :     window.location.href.split( "=" )[1].split("/")[0] // get the activationCode from Address Bar
             }
         ];
 
