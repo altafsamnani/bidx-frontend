@@ -443,7 +443,7 @@
                                                                         .replace( /%financingNeeded%/g,         i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : emptyVal )
                                                                         .replace( /%stageBusiness%/g,           i18nItem.stageBusiness  ? i18nItem.stageBusiness    : emptyVal )
                                                                         .replace( /%envImpact%/g,               i18nItem.envImpact   ? i18nItem.envImpact     : emptyVal )
-                                                                        .replace( /%completeness%/g,            i18nItem.completeness   ? i18nItem.completeness     : emptyVal )
+                                                                        .replace( /%completeness%/g,            itemSummary.bidxMeta.bidxCompletionMesh   ? itemSummary.bidxMeta.bidxCompletionMesh     : emptyVal )
                                                                         .replace( /%expertiseNeeded%/g,         i18nItem.expertiseNeeded   ? i18nItem.expertiseNeeded     : emptyVal )
                                                                         .replace( /%expertiseNeededDetail%/g,   i18nItem.expertiseNeededDetail   ? i18nItem.expertiseNeededDetail     : emptyVal )
                                                                         .replace( /%action%/g,                  actionData )
