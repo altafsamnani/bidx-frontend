@@ -8,7 +8,7 @@
     var bidx    = window.bidx
     ,   api     = bidx.api
     ,   memberSetpassword  = {}
-    ,   baseUrl = "/api/v1/members/setpassword"
+    ,   baseUrl = "/api/v1/session/init"
     ,   params  = []
     ;
 
