@@ -35,6 +35,13 @@
                     data-speed="1000"
                     data-start="2000"
                     data-easing="easeOutExpo"><iframe src="//player.vimeo.com/video/83490916?title=0&amp;byline=0&amp;portrait=0" width="460" height="259"></iframe></div>
+                <a href="/active-portals" class="caption btn btn-flat flat-warning sfb stb"
+                    data-x="105"
+                    data-y="295"
+                    data-speed="1000"
+                    data-start="2000"
+                    data-easing="easeOutExpo"><?php _e('View Active Portals','bidxtheme');?></a>
+
             </li>
         </ul>
         <div class="tp-bannertimer tp-bottom"></div>
@@ -48,6 +55,7 @@
             <iframe src="//player.vimeo.com/video/83490916?title=0&amp;byline=0&amp;portrait=0" width="270" height="152"></iframe>
             <h3 class="text-center"><?php _e('ENTREPRENEURS ONLINE','bidxtheme');?></h3>
             <a href="/get-started" class="btn btn-flat btn-block flat-warning navbar-btn"><?php _e('Get started','bidxtheme');?></a>
+            <a href="/active-portals" class="btn btn-flat btn-block flat-warning navbar-btn"><?php _e('View Active Portals','bidxtheme');?></a>
         </div>
     </div>
 </section>

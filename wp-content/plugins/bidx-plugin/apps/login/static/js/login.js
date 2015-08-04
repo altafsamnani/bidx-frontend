@@ -49,7 +49,7 @@
                 //
                 $btnLogin.addClass( "disabled" );
                 submitBtnLabel = $btnLogin.text();
-                $btnLogin.i18nText("btnPleaseWait");
+                // $btnLogin.i18nText("btnPleaseWait");
 
                 $loginErrorMessage.text( "" ).hide();
 
