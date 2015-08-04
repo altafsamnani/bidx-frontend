@@ -19,6 +19,7 @@ $personalDetails                = isset( $data->bidxMemberProfile->personalDetai
 $isEntrepreneur                 = isset( $data->bidxEntrepreneurProfile ) ? $data->bidxEntrepreneurProfile : NULL ;
 $isInvestor                     = isset( $data->bidxInvestorProfile ) ? $data->bidxInvestorProfile : NULL;
 $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bidxMentorProfile : NULL;
+$hasAccessToInvestorProfile     = ( $isInvestor && $isLoggedinMemberIsInvestor && $ownProfile ) || ( $isInvestor && $this->isLoggedInGroupOwner ) ? true : false;
 
 ?>
 <div class="member box-border top-margin-lineheight">
@@ -42,14 +43,19 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
     <div class="actions hide-overflow main-margin">
 
         <div class="pull-left quick-action-links">
-            <?php
-            if ( !empty($this->data->bidxInvestorProfile )  || !empty($this->data->bidxMentorProfile ))
-            { ?>
+            <div class="pull-left hide">
+                <label class="markLabel"><?php _e('Mark as', 'bidxplugin')?>:</label>
+                <button class="btn btn-sm btn-success">
+                    <div class="fa fa-bookmark fa-above fa-big"></div>
+                    <?php _e('Accrediated', 'bidxplugin')?>
+                </button>
+                <button class="btn btn-sm btn-danger">
+                    <div class="fa fa-ban fa-above fa-big"></div>
+                    <?php _e('Not Accrediated', 'bidxplugin')?>
+                </button>
+           </div>
 
-                    <label class='markLabel hide'><?php _e("Mark for","bidxplugin");?>:</label>
-                    <input type="checkbox" name="tag-checkbox" checked data-off-color="warning" data-size="small" data-on-text="<?php _e('Investor', 'bidxplugin');?>" data-off-text="<?php _e('Mentor', 'bidxplugin');?>">
-
-<?php       }
+<?php
             if ( $canEdit && $isLoggedinMemberIsEntrepreneur ) :
 ?>
                 <!-- <a href="#" class="btn btn-sm btn-primary">
@@ -135,7 +141,30 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
         </div>
 
         <div class="editControls btn-group pull-right"></div>
+
+        <span class="hide accreditation-labels">
+            <div class="text-uppercase pull-right main-margin-horizontal accreditation accr-Pending">
+                <span class="fa fa-bookmark-o fa-big pull-left"></span>
+                <?php _e('Pending Accreditation', 'bidxplugin')?>
+                
+            </div>
+
+            <div class="text-uppercase pull-right main-margin-horizontal accreditation accr-Accepted">
+                <span class="fa fa-bookmark fa-big pull-left"></span>
+                <?php _e('Accreditated', 'bidxplugin')?>
+            </div>
+
+            <div class="text-uppercase pull-right main-margin-horizontal accreditation accr-Refused">
+                <span class="fa fa-ban fa-big pull-left"></span>
+                <?php _e('Not Accreditated', 'bidxplugin')?>
+            </div>
+        </span>
+
+
     </div>
+
+
+
 
     <div class="row mainState mainStateShow main-padding">
         <div class="col-sm-12">
@@ -164,7 +193,7 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 ?>
 <?php
             /* Temparary fix for invesor visibility */
-            if ( $this->isLoggedInGroupOwner && !empty($this->data->bidxInvestorProfile ) ) :
+            if ( $hasAccessToInvestorProfile ) :
 ?>
                 <li><a href="#tab-investor" data-toggle="tab">
                         <i class="pull-left fa fa-bank"></i>
@@ -210,7 +239,7 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 ?>
 <?php
             /* Temparary fix for invesor visibility */
-            if ( $this->isLoggedInGroupOwner && !empty($this->data->bidxInvestorProfile ) ) :
+            if ( $hasAccessToInvestorProfile ) :
 ?>
             <div class="tab-pane" id="tab-investor">
                 <?php $this->render('view-investor.phtml'); ?>
