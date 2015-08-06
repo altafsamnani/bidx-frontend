@@ -183,6 +183,50 @@
     }
 
 
+    // Return basic info of a member
+    //
+    function getMemberInfo( options )
+    {
+        var bidxMeta;
+
+        bidx.api.call(
+            "member.fetch"
+        ,   {
+                id:          options.id
+            ,   requesteeId: options.id
+            ,   groupDomain: bidx.common.groupDomain
+            ,   success:        function( item )
+                {
+
+                    // now format it into array of objects with value and label
+                    if ( !$.isEmptyObject(item.member) )
+                    {
+                        bidxMeta       = bidx.utils.getValue( item, "member" );
+
+                        if ( bidxMeta  )
+                        {
+                            //  execute callback if provided
+                            if (options && options.callback)
+                            {
+                                options.callback( bidxMeta );
+                            }
+                        }
+                    }
+                }
+            ,   error: function(jqXhr, textStatus)
+                {
+                     bidx.utils.log('jqXhr', jqXhr, textStatus);
+                     // execute callback if provided
+                    if (options && options.error)
+                    {
+                        options.error( );
+                    }
+                    return false;
+                }
+            }
+        );
+    }
+
     // retrieve a value from the session object
     //
     function getSessionValue( key )
@@ -1351,11 +1395,15 @@
         {
             return getEntityId( "bidxMentorProfile" );
         }
-
+    ,   capitalizeFirstLetter: function ( string )
+        {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
 
     ,   getGroupIds:                    getGroupIds
     ,   getCurrentGroupId:              getCurrentGroupId
     ,   getCurrentUserId:               getCurrentUserId
+    ,   getMemberInfo:                  getMemberInfo
     ,   getAccreditation:               getAccreditation
     ,   isGroupAdmin:                   isGroupAdmin
     ,   getSessionValue:                getSessionValue

@@ -302,7 +302,7 @@
     function respondRequest( options )
     {
         var snippit          = $("#entrepreneur-activities").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listEmpty       = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
+        // ,   $listEmpty       = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
         ,   actionData       = $("#entrepreneur-respond-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response         = options.response
         ,   incomingResponse = response.respond
@@ -316,7 +316,6 @@
         ,   mentorId
         ,   mentorUserId
         ,   i18nItem
-        ,   externalVideoPitch
         ,   $el
         ,   $d              =  $.Deferred()
         ,   incomingLength      = incomingResponse.length
@@ -404,13 +403,6 @@
                                                                         placeBusinessThumb( $listItem, coverDocument );
                                                                     }
 
-                                                                    // externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
-                                                                    // if ( externalVideoPitch )
-                                                                    // {
-                                                                    //     $el         = $listItem.find("[data-role='businessImage']");
-                                                                    //     _addVideoThumb( externalVideoPitch, $el );
-                                                                    // }
-
                                                                     if( $.isFunction( options.cb ) )
                                                                     {
                                                                         // call Callback with current contact item as this scope and pass the current $listitem
@@ -445,7 +437,7 @@
         }
         else
         {
-            $list.append($listEmpty);
+            // $list.append($listEmpty);
 
             $d.resolve( );
         }
@@ -456,12 +448,12 @@
     function waitingRequest( options )
     {
         var snippit         = $("#entrepreneur-activities").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
+        // ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
         ,   actionData      = $("#entrepreneur-wait-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response        = options.response
         ,   waitingResponse = response.wait
         ,   $list           = $element.find("." + options.list)
-        ,   emptyVal        = '-'
+        ,   emptyVal        = '*'
         ,   $listItem
         ,   listItem
         ,   itemSummary
@@ -469,7 +461,6 @@
         ,   mentorId
         ,   mentorUserId
         ,   i18nItem
-        ,   externalVideoPitch
         ,   $el
         ,   $d              =  $.Deferred()
         ,   counter         = 1
@@ -492,6 +483,7 @@
                 ,   logoDocument
                 ,   cover
                 ,   coverDocument
+                ,   toRemove
                 ;
 
                 showEntity(
@@ -526,9 +518,12 @@
                                                                     .replace( /%accordion-id%/g,            itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
                                                                     .replace( /%entityId%/g,                itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
                                                                     .replace( /%name%/g,                    itemSummary.name                     ? itemSummary.name      : emptyVal )
+                                                                    .replace( /%slogan%/g,                  itemSummary.slogan                   ? itemSummary.slogan      : emptyVal )
+                                                                    .replace( /%yearSalesStarted%/g,        itemSummary.yearSalesStarted         ? itemSummary.yearSalesStarted      : emptyVal )
                                                                     .replace( /%creator%/g,                 itemMember.member.displayName        ? itemMember.member.displayName      : emptyVal )
                                                                     .replace( /%creatorId%/g,               mentorUserId                         ? mentorUserId      : emptyVal )
                                                                     .replace( /%status%/g,                  bidx.i18n.i( "mentoringRequestPending", appName )  )
+                                                                    .replace( /%statusMessage%/g,           bidx.i18n.i( "pendingRequestTo", appName )  )
                                                                     .replace( /%industry%/g,                i18nItem.industry    ? i18nItem.industry      : emptyVal )
                                                                     .replace( /%countryOperation%/g,        i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
                                                                     .replace( /%bidxCreationDateTime%/g,    itemSummary.bidxCreationDateTime    ? bidx.utils.parseISODateTime(itemSummary.bidxCreationDateTime, "date") : emptyVal )
@@ -544,6 +539,12 @@
                                                                     // execute cb function                //
                                                                     $listItem = $( listItem );
 
+                                                                    toRemove = $listItem.find( "td:contains("+emptyVal+"), .bs-slogan:contains("+emptyVal+")" );
+                                                                    toRemove.each( function( index, el)
+                                                                    {
+                                                                        $(el).parent().remove();
+                                                                    });
+
                                                                     logo = bidx.utils.getValue( i18nItem, "logo");
                                                                     logoDocument = bidx.utils.getValue( i18nItem, "logo.document");
 
@@ -558,13 +559,6 @@
                                                                     {
                                                                         placeBusinessThumb( $listItem, coverDocument );
                                                                     }
-
-                                                                    // externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
-                                                                    // if ( externalVideoPitch )
-                                                                    // {
-                                                                    //     $el         = $listItem.find("[data-role='businessImage']");
-                                                                    //     _addVideoThumb( externalVideoPitch, $el );
-                                                                    // }
 
                                                                     if( $.isFunction( options.cb ) )
                                                                     {
@@ -600,7 +594,7 @@
         }
         else
         {
-            $list.append($listEmpty);
+            // $list.append($listEmpty);
 
             $d.resolve( );
         }
@@ -611,10 +605,10 @@
     function ongoingRequest( options )
     {
         var snippit         = $("#entrepreneur-activities").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
+        // ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
         ,   actionData      = $("#entrepreneur-ongoing-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response        = options.response
-         ,   ongoingResponse = response.ongoing
+        ,   ongoingResponse = response.ongoing
         ,   $list           = $element.find("." + options.list)
         ,   emptyVal        = '-'
         ,   $listItem
@@ -624,7 +618,6 @@
         ,   mentorId
         ,   mentorUserId
         ,   i18nItem
-        ,   externalVideoPitch
         ,   $el
         ,   $d              =  $.Deferred()
         ,   counter         = 1
@@ -715,13 +708,6 @@
                                                                         placeBusinessThumb( $listItem, coverDocument );
                                                                     }
 
-                                                                    // externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
-                                                                    // if ( externalVideoPitch )
-                                                                    // {
-                                                                    //     $el         = $listItem.find("[data-role='businessImage']");
-                                                                    //     _addVideoThumb( externalVideoPitch, $el );
-                                                                    // }
-
                                                                     if( $.isFunction( options.cb ) )
                                                                     {
                                                                         // call Callback with current contact item as this scope and pass the current $listitem
@@ -756,7 +742,7 @@
         }
         else
         {
-            $list.append($listEmpty);
+            // $list.append($listEmpty);
 
             $d.resolve( );
         }
@@ -769,7 +755,7 @@
     function renewRequest( options )
     {
         var snippit         = $("#entrepreneur-activities").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
+        // ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
         ,   actionData      = $("#entrepreneur-renew-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response        = options.response
         ,   renewResponse   = response.relationshipType.mentor.types.active
@@ -822,14 +808,14 @@
         }
         else
         {
-            $list.append($listEmpty);
+            // $list.append($listEmpty);
         }
     }
 
     function endedRequest( options )
     {
         var snippit         = $("#entrepreneur-activities").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
+        // ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
         ,   actionData      = $("#entrepreneur-ended-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response        = options.response
         ,   endedResponse   = response.relationshipType.mentor.types.active
@@ -882,7 +868,7 @@
         }
         else
         {
-            $list.append($listEmpty);
+            // $list.append($listEmpty);
         }
     }
 
@@ -1215,45 +1201,7 @@
         _showMainView( "error" , true);
     }
 
-    function _addVideoThumb( url, element )
-    {
-        // This may fail if the URL is not actually a URL, or an unsupported video URL.
-        var matches     = url.match(/(http|https):\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be))\/(video\/|embed\/|watch\?v=)?([A-Za-z0-9._%-]*)(\&\S+)?/)
-        ,   provider    = bidx.utils.getValue(matches, "3")
-        ,   id          = bidx.utils.getValue(matches, "6")
-        ,   $el         = element
-        ;
-
-        if ( provider === "vimeo.com" )
-        {
-            var videoUrl = "http://vimeo.com/api/v2/video/" + id + ".json?callback=?";
-            $.getJSON( videoUrl, function(data)
-                {
-                    if ( data )
-                    {
-                        $el.find( ".icons-rounded" ).remove();
-                        $el.append( $( "<div />", { "class": "img-cropper" } ) );
-                        $el.find( ".img-cropper" ).append( $( "<img />", { "src": data[0].thumbnail_large } ) );
-                        $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
-                    }
-                }
-            );
-        }
-        else if ( provider === "youtube.com" )
-        {
-            $el.find( ".icons-rounded" ).remove();
-            $el.append( $( "<div />", { "class": "img-cropper" } ) );
-            $el.find( ".img-cropper" ).append( $( "<img />", { "src": "http://img.youtube.com/vi/"+ id +"/0.jpg" } ) );
-            $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
-        }
-        else
-        {
-            bidx.utils.log('_addVideoThumb:: ', 'No matches' + matches );
-        }
-    }
     // ROUTER
-
-
     //var navigate = function( requestedState, section, id )
     var navigate = function(options)
     {

@@ -14,6 +14,7 @@
     ,   focusExpertise
     ,   currentGroupId       = bidx.common.getCurrentGroupId( "currentGroup ")
     ,   currentUserId        = bidx.common.getCurrentUserId( "id" )
+    ,   currentMentorId      = bidx.common.getMentorProfileId()
     ,   memberData           = {}
     ,   appName              = 'mentor'
 
@@ -301,11 +302,11 @@
         ,   criteria        = options.criteria
         ,   snippit          = $("#mentor-bp-matches").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty       = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
-        ,   actionData       = $("#mentor-match-action").html().replace(/(<!--)*(-->)*/g, "")
+        // ,   actionData       = $("#mentor-match-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response         = options.response
         ,   $list            = $element.find("." + options.list)
         ,   matchLength
-        ,   emptyVal         = '-'
+        ,   emptyVal         = '*'
         ,   counter          = 1
         ,   $listItem
         ,   listItem
@@ -393,6 +394,7 @@
                 ,   logoDocument
                 ,   cover
                 ,   coverDocument
+                ,   toRemove
                 ;
 
                 showEntity(
@@ -432,6 +434,8 @@
                                                                         .replace( /%accordion-id%/g,            itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
                                                                         .replace( /%entityId%/g,                itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
                                                                         .replace( /%name%/g,                    itemSummary.name                     ? itemSummary.name      : emptyVal )
+                                                                        .replace( /%slogan%/g,                  itemSummary.slogan                   ? itemSummary.slogan      : emptyVal )
+                                                                        .replace( /%yearSalesStarted%/g,        itemSummary.yearSalesStarted         ? itemSummary.yearSalesStarted      : emptyVal )
                                                                         .replace( /%creator%/g,                 itemMember.member.displayName        ? itemMember.member.displayName      : emptyVal )
                                                                         .replace( /%creatorId%/g,               itemMember.member.bidxMeta.bidxMemberId        ? itemMember.member.bidxMeta.bidxMemberId      : emptyVal )
                                                                         .replace( /%status%/g,                  bidx.i18n.i( "receivedRequest", appName )  )
@@ -446,12 +450,18 @@
                                                                         .replace( /%completeness%/g,            itemSummary.bidxMeta.bidxCompletionMesh   ? itemSummary.bidxMeta.bidxCompletionMesh     : emptyVal )
                                                                         .replace( /%expertiseNeeded%/g,         i18nItem.expertiseNeeded   ? i18nItem.expertiseNeeded     : emptyVal )
                                                                         .replace( /%expertiseNeededDetail%/g,   i18nItem.expertiseNeededDetail   ? i18nItem.expertiseNeededDetail     : emptyVal )
-                                                                        .replace( /%action%/g,                  actionData )
+                                                                        // .replace( /%action%/g,                  actionData )
                                                                         .replace( /%document%/g,                ( !$.isEmptyObject( itemSummary.company ) && !$.isEmptyObject( itemSummary.company.logo ) && !$.isEmptyObject( itemSummary.company.logo.document ) )   ? itemSummary.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
                                                                         ;
 
                                                                         // execute cb function                //
                                                                         $listItem = $( listItem );
+
+                                                                        toRemove = $listItem.find( "td:contains("+emptyVal+"), .bs-slogan:contains("+emptyVal+")" );
+                                                                        toRemove.each( function( index, el)
+                                                                        {
+                                                                            $(el).parent().remove();
+                                                                        });
 
                                                                         logo = bidx.utils.getValue( i18nItem, "logo");
                                                                         logoDocument = bidx.utils.getValue( i18nItem, "logo.document");
@@ -512,7 +522,7 @@
         else
         {
             $list.empty();
-            $list.append($listEmpty);
+            // $list.append($listEmpty);
 
             _hideView( "pager" );
             _hideView( "loadmatch" );
@@ -731,7 +741,7 @@
         ,   response         = options.response
         ,   incomingResponse = response.respond
         ,   $list            = $element.find("." + options.list)
-        ,   emptyVal         = '-'
+        ,   emptyVal         = '*'
         ,   counter          = 1
         ,   $listItem
         ,   listItem
@@ -757,6 +767,7 @@
                 ,   logoDocument
                 ,   cover
                 ,   coverDocument
+                ,   toRemove
                 ;
 
                 showEntity(
@@ -765,7 +776,7 @@
                 ,   entityType  :   'bidxBusinessSummary'
                 ,   callback    :   function ( itemSummary )
                                     {
-
+bidx.utils.log('itemSummary respondRequest', itemSummary);
                                         if( itemSummary )
                                         {
                                             ownerId    = bidx.utils.getValue( itemSummary, "bidxMeta.bidxOwnerId" );
@@ -791,26 +802,35 @@
                                                                         });
 
                                                                         listItem = snippit
-                                                                        .replace( /%accordion-id%/g,            itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
-                                                                        .replace( /%entityId%/g,                itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
-                                                                        .replace( /%name%/g,                    itemSummary.name                     ? itemSummary.name      : emptyVal )
-                                                                        .replace( /%creator%/g,                 itemMember.member.displayName       ? itemMember.member.displayName      : emptyVal )
-                                                                        .replace( /%creatorId%/g,               entityOwnerId        ? entityOwnerId      : emptyVal )
+                                                                        .replace( /%accordion-id%/g,            itemSummary.bidxMeta.bidxEntityId   ? itemSummary.bidxMeta.bidxEntityId     : emptyVal )
+                                                                        .replace( /%entityId%/g,                itemSummary.bidxMeta.bidxEntityId   ? itemSummary.bidxMeta.bidxEntityId     : emptyVal )
+                                                                        .replace( /%name%/g,                    itemSummary.name                    ? itemSummary.name                      : emptyVal )
+                                                                        .replace( /%slogan%/g,                  itemSummary.slogan                  ? itemSummary.slogan                    : emptyVal )
+                                                                        .replace( /%yearSalesStarted%/g,        itemSummary.yearSalesStarted         ? itemSummary.yearSalesStarted         : emptyVal )
+                                                                        .replace( /%creator%/g,                 itemMember.member.displayName       ? itemMember.member.displayName         : emptyVal )
+                                                                        .replace( /%creatorId%/g,               entityOwnerId                       ? entityOwnerId                         : emptyVal )
                                                                         .replace( /%status%/g,                  bidx.i18n.i( "receivedRequest", appName )  )
-                                                                        .replace( /%industry%/g,                i18nItem.industry    ? i18nItem.industry      : emptyVal )
-                                                                        .replace( /%countryOperation%/g,        i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
+                                                                        .replace( /%statusMessage%/g,           bidx.i18n.i( "receivedRequestFrom", appName )  )
+                                                                        .replace( /%industry%/g,                i18nItem.industry                   ? i18nItem.industry                     : emptyVal )
+                                                                        .replace( /%countryOperation%/g,        i18nItem.countryOperation           ? i18nItem.countryOperation             : emptyVal )
                                                                         .replace( /%bidxCreationDateTime%/g,    itemSummary.bidxCreationDateTime    ? bidx.utils.parseISODateTime(itemSummary.bidxCreationDateTime, "date") : emptyVal )
-                                                                        .replace( /%creator%/g,                 i18nItem.creator    ? i18nItem.creator      : emptyVal )
-                                                                        .replace( /%productService%/g,          i18nItem.productService    ? i18nItem.productService      : emptyVal)
-                                                                        .replace( /%financingNeeded%/g,         i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : emptyVal )
-                                                                        .replace( /%stageBusiness%/g,           i18nItem.stageBusiness  ? i18nItem.stageBusiness    : emptyVal )
-                                                                        .replace( /%envImpact%/g,               i18nItem.envImpact   ? i18nItem.envImpact     : emptyVal )
-                                                                        .replace( /%action%/g,              actionData )
-                                                                        .replace( /%document%/g,            ( !$.isEmptyObject( itemSummary.company ) && !$.isEmptyObject( itemSummary.company.logo ) && !$.isEmptyObject( itemSummary.company.logo.document ) )   ? itemSummary.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
+                                                                        .replace( /%creator%/g,                 i18nItem.creator                    ? i18nItem.creator                      : emptyVal )
+                                                                        .replace( /%productService%/g,          i18nItem.productService             ? i18nItem.productService               : emptyVal)
+                                                                        .replace( /%financingNeeded%/g,         i18nItem.financingNeeded            ? i18nItem.financingNeeded + ' USD'     : emptyVal )
+                                                                        .replace( /%stageBusiness%/g,           i18nItem.stageBusiness              ? i18nItem.stageBusiness                : emptyVal )
+                                                                        .replace( /%envImpact%/g,               i18nItem.envImpact                  ? i18nItem.envImpact                    : emptyVal )
+                                                                        .replace( /%action%/g,                  actionData )
+                                                                        .replace( /%document%/g,                ( !$.isEmptyObject( itemSummary.company ) && !$.isEmptyObject( itemSummary.company.logo ) && !$.isEmptyObject( itemSummary.company.logo.document ) ) ? itemSummary.company.logo.document : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
                                                                         ;
 
                                                                         // execute cb function                //
                                                                         $listItem = $( listItem );
+
+                                                                        toRemove = $listItem.find( "td:contains("+emptyVal+"), .bs-slogan:contains("+emptyVal+")" );
+                                                                        toRemove.each( function( index, el)
+                                                                        {
+                                                                            $(el).parent().remove();
+                                                                        });
 
                                                                         logo = bidx.utils.getValue( i18nItem, "logo");
                                                                         logoDocument = bidx.utils.getValue( i18nItem, "logo.document");
@@ -870,7 +890,7 @@
         }
         else
         {
-            $list.append($listEmpty);
+            // $list.append($listEmpty);
 
             $d.resolve( );
         }
@@ -888,7 +908,7 @@
         ,   response        = options.response
         ,   waitingResponse = response.wait
         ,   $list           = $element.find("." + options.list)
-        ,   emptyVal        = '-'
+        ,   emptyVal        = '*'
         ,   $listItem
         ,   listItem
         ,   itemSummary
@@ -914,6 +934,7 @@
                 ,   logoDocument
                 ,   cover
                 ,   coverDocument
+                ,   toRemove
                 ;
 
                 showEntity(
@@ -922,8 +943,7 @@
                 ,   entityType  :   'bidxBusinessSummary'
                 ,   callback    :   function ( itemSummary )
                                     {
-
-
+bidx.utils.log('itemSummary waitingRequest', itemSummary);
 
                                         if( itemSummary )
                                         {
@@ -952,9 +972,12 @@
                                                                         .replace( /%accordion-id%/g,            itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
                                                                         .replace( /%entityId%/g,                itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
                                                                         .replace( /%name%/g,                    itemSummary.name                     ? itemSummary.name      : emptyVal )
+                                                                        .replace( /%slogan%/g,                  itemSummary.slogan                   ? itemSummary.slogan      : emptyVal )
+                                                                        .replace( /%yearSalesStarted%/g,        itemSummary.yearSalesStarted         ? itemSummary.yearSalesStarted      : emptyVal )
                                                                         .replace( /%creator%/g,                 itemMember.member.displayName       ? itemMember.member.displayName      : emptyVal )
                                                                         .replace( /%creatorId%/g,               itemMember.member.bidxMeta.bidxMemberId        ? itemMember.member.bidxMeta.bidxMemberId      : emptyVal )
                                                                         .replace( /%status%/g,                  bidx.i18n.i( "mentoringRequestPending", appName )  )
+                                                                        .replace( /%statusMessage%/g,           bidx.i18n.i( "pendingRequestTo", appName )  )
                                                                         .replace( /%industry%/g,                i18nItem.industry    ? i18nItem.industry      : emptyVal )
                                                                         .replace( /%countryOperation%/g,        i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
                                                                         .replace( /%bidxCreationDateTime%/g,    itemSummary.bidxCreationDateTime    ? bidx.utils.parseISODateTime(itemSummary.bidxCreationDateTime, "date") : emptyVal )
@@ -969,6 +992,12 @@
 
                                                                         // execute cb function                //
                                                                         $listItem = $( listItem );
+
+                                                                        toRemove = $listItem.find( "td:contains("+emptyVal+"), .bs-slogan:contains("+emptyVal+")" );
+                                                                        toRemove.each( function( index, el)
+                                                                        {
+                                                                            $(el).parent().remove();
+                                                                        });
 
                                                                         logo = bidx.utils.getValue( i18nItem, "logo");
                                                                         logoDocument = bidx.utils.getValue( i18nItem, "logo.document");
@@ -1027,7 +1056,7 @@
         }
         else
         {
-            $list.append($listEmpty);
+            // $list.append($listEmpty);
 
             $d.resolve( );
         }
@@ -1043,7 +1072,7 @@
         ,   response        = options.response
         ,   ongoingResponse = response.ongoing
         ,   $list           = $element.find("." + options.list)
-        ,   emptyVal        = '-'
+        ,   emptyVal        = '*'
         ,   $listItem
         ,   listItem
         ,   itemSummary
@@ -1069,6 +1098,7 @@
                 ,   logoDocument
                 ,   cover
                 ,   coverDocument
+                ,   toRemove
                 ;
 
                 showEntity(
@@ -1077,8 +1107,7 @@
                 ,   entityType  :   'bidxBusinessSummary'
                 ,   callback    :   function ( itemSummary )
                                     {
-
-
+bidx.utils.log('itemSummary ongoingRequest', itemSummary);
 
                                         if( itemSummary )
                                         {
@@ -1107,9 +1136,12 @@
                                                                         .replace( /%accordion-id%/g,            itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
                                                                         .replace( /%entityId%/g,                itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
                                                                         .replace( /%name%/g,                    itemSummary.name                     ? itemSummary.name      : emptyVal )
+                                                                        .replace( /%slogan%/g,                  itemSummary.slogan                   ? itemSummary.slogan      : emptyVal )
+                                                                        .replace( /%yearSalesStarted%/g,        itemSummary.yearSalesStarted         ? itemSummary.yearSalesStarted      : emptyVal )
                                                                         .replace( /%creator%/g,                 itemMember.member.displayName       ? itemMember.member.displayName      : emptyVal )
                                                                         .replace( /%creatorId%/g,               itemMember.member.bidxMeta.bidxMemberId        ? itemMember.member.bidxMeta.bidxMemberId      : emptyVal )
                                                                         .replace( /%status%/g,                  bidx.i18n.i( "ongoing", appName )  )
+                                                                        .replace( /%statusMessage%/g,           bidx.i18n.i( "mentoringActive", appName )  )
                                                                         .replace( /%industry%/g,                i18nItem.industry    ? i18nItem.industry      : emptyVal )
                                                                         .replace( /%countryOperation%/g,        i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
                                                                         .replace( /%bidxCreationDateTime%/g,    itemSummary.bidxCreationDateTime    ? bidx.utils.parseISODateTime(itemSummary.bidxCreationDateTime, "date") : emptyVal )
@@ -1126,6 +1158,12 @@
                                                                         // execute cb function
                                                                         //
                                                                         $listItem = $( listItem );
+
+                                                                        toRemove = $listItem.find( "td:contains("+emptyVal+"), .bs-slogan:contains("+emptyVal+")" );
+                                                                        toRemove.each( function( index, el)
+                                                                        {
+                                                                            $(el).parent().remove();
+                                                                        });
 
                                                                         logo = bidx.utils.getValue( i18nItem, "logo");
                                                                         logoDocument = bidx.utils.getValue( i18nItem, "logo.document");
@@ -1185,7 +1223,7 @@
         }
         else
         {
-            $list.append($listEmpty);
+            // $list.append($listEmpty);
 
             $d.resolve( );
         }
@@ -1193,6 +1231,104 @@
         return $d.promise( );
 
     }
+
+
+    // function that retrieves group members returned in an array of key/value objects
+    // NOTE: @19-8-2013 currently the search function is used. This needs to be revised when API exposes new member functions
+    //
+    var getPreference = function(options)
+    {
+        var snippit       = $("#mentor-preferenceitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   emptySnippet  = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $list         = $("." + options.list)
+        ,   listItem
+        ,   i18nItem
+        ,   emptyVal      = '*'
+        ,   toRemove
+        ;
+
+        bidx.api.call(
+            "entity.fetch"
+          , {
+            entityId          : currentMentorId
+          , groupDomain       : bidx.common.groupDomain
+          , async             : false
+          , success           : function(item)
+            {
+
+                //clear listing
+                $list.empty();
+
+                // now format it into array of objects with value and label
+                if (item)
+                {
+
+                    var dataArr = {
+                                        'focusLanguage':        'language',
+                                        'focusCountry':         'country',
+                                        'focusIndustry':        'industry',
+                                        'focusExpertise':       'mentorExpertise',
+                                        'focusGender':          'gender',
+                                        'focusStageBusiness':   'stageBusiness',
+                                        'focusSocialImpact':    'socialImpact',
+                                        'focusEnvImpact':       'envImpact',
+                                  };
+
+                    bidx.data.getStaticDataVal(
+                     {
+                         dataArr    : dataArr
+                       , item       : item
+                       , callback   : function (label) {
+                                         i18nItem = label;
+                                      }
+                     });
+
+                     //search for placeholders in snippit
+                     listItem = snippit
+                         .replace( /%focusLanguage%/g,          i18nItem.focusLanguage          ? i18nItem.focusLanguage            : emptyVal )
+                         .replace( /%focusCountry%/g,           i18nItem.focusCountry           ? i18nItem.focusCountry             : emptyVal )
+                         .replace( /%focusCity%/g,              i18nItem.focusCity              ? i18nItem.focusCity                : emptyVal )
+                         .replace( /%focusIndustry%/g,          i18nItem.focusIndustry          ? i18nItem.focusIndustry            : emptyVal )
+                         .replace( /%focusExpertise%/g,         i18nItem.focusExpertise         ? i18nItem.focusExpertise           : emptyVal )
+                         .replace( /%focusGender%/g,            i18nItem.focusGender            ? i18nItem.focusGender              : emptyVal )
+                         .replace( /%focusStageBusiness%/g,     i18nItem.focusStageBusiness     ? i18nItem.focusStageBusiness       : emptyVal )
+                         .replace( /%focusSocialImpact%/g,      i18nItem.focusSocialImpact      ? i18nItem.focusSocialImpact        : emptyVal )
+                         .replace( /%focusEnvImpact%/g,         i18nItem.focusEnvImpact         ? i18nItem.focusEnvImpact           : emptyVal )
+                         .replace( /%focusPreferences%/g,       i18nItem.focusPreferences       ? i18nItem.focusPreferences         : emptyVal )
+                      ;
+
+                    $list.append( listItem );
+
+                    toRemove = $list.find( "td:contains("+emptyVal+"), .bs-slogan:contains("+emptyVal+")" );
+                    toRemove.each( function( index, el)
+                    {
+                        $(el).parent().remove();
+                    });
+                }
+                else
+                {
+                    $list.append(emptySnippet);
+                }
+
+                //  execute callback if provided
+                if (options && options.callback)
+                {
+                    options.callback();
+                }
+            }
+
+            , error: function(jqXhr, textStatus)
+            {
+                var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                _showError("Something went wrong while retrieving contactlist of the member: " + status);
+            }
+        }
+        );
+    };
+
+
+
 
     function renewRequest( options )
     {
@@ -1245,7 +1381,7 @@
         }
         else
         {
-            $list.append($listEmpty);
+            // $list.append($listEmpty);
         }
     }
 
@@ -1302,7 +1438,7 @@
         }
         else
         {
-            $list.append($listEmpty);
+            // $list.append($listEmpty);
         }
     }
 
@@ -1750,6 +1886,16 @@
                             }) ;
                     })
                 ;
+
+                getPreference(
+                {
+                list: "preference"
+                ,   view: "preference"
+                ,   callback: function()
+                    {
+                        _showView("preference", true);
+                    }
+                } );
 
                 break;
 

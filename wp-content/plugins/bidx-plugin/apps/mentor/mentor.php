@@ -40,17 +40,17 @@ class mentor
                 $sessionSvc = new SessionService( );
 
                 /*************** Entrpreneur *****************/
-                $isEntrpreneur = $sessionSvc->isHavingProfile ('bidxEntrepreneurProfile');
+                $isEntrepreneur = $sessionSvc->isHavingProfile ('bidxEntrepreneurProfile');
                 $isMentor      = $sessionSvc->isHavingProfile ('bidxMentorProfile');
                 $isGroupOwner  = $sessionSvc->isAdmin ( );
 
-                if ( $isEntrpreneur || $isMentor || $isGroupowner ) {
+                if ( $isEntrepreneur || $isMentor || $isGroupowner ) {
 
                     $deps = self::$deps;
 
-                    if( $isEntrpreneur  ) {
+                    if( $isEntrepreneur  ) {
 
-                        $view->isEntrpreneur = true;
+                        $view->isEntrepreneur = true;
 
                         /* Entrpreneur mentoring functions & mentoring activities functions */
                         wp_register_script ('entrepreneur-mentor', plugins_url ('static/js/entrepreneur-mentordashboard.js', __FILE__), array( ), '20140307', TRUE);

@@ -10,7 +10,7 @@ class dashboard
 {
 
     static $deps = array ('bidx-tagsinput', 'bidx-common', 'bidx-i18n', 'jquery-validation',
-      'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
+      'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-mentor');
 
     /**
      * Constructor

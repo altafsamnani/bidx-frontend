@@ -51,6 +51,23 @@
         return $el;
     }
 
+    var placeBusinessThumb = function( $listItem, imageSource )
+    {
+        var $el = $listItem.find("[data-role='businessImage']");
+
+        $el.empty();
+        $el.append
+            (
+                $( "<div />", { "class": "img-cropper" })
+                .append
+                (
+                    $( "<img />", { "src": imageSource, "class": "center-img" })
+                )
+            );
+        $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+    };
+
+
 
     var getContact = function(options)
     {
@@ -60,8 +77,12 @@
         ,   listItem
         ,   $listItem
         ,   i18nItem
-        ,   emptyVal    = "-"
-        ,   externalVideoPitch
+        ,   emptyVal    = "*"
+        ,   logo
+        ,   logoDocument
+        ,   cover
+        ,   coverDocument
+        ,   toRemove
         ,   $el
         ,   contactedBusinesses =   []
         ;
@@ -74,7 +95,7 @@
                 ,   success: function( response )
                     {
 
-
+bidx.utils.log('Text', response);
                     //clear listing
                     $list.empty();
 
@@ -85,58 +106,69 @@
 
                             $.each(response.data.requested, function(id, item)
                             {
+                                    var dataArr = {    'industry'             : 'industry'
+                                                  ,    'countryOperation'     : 'country'
+                                                  ,    'stageBusiness'        : 'stageBusiness'
+                                                  ,    'productService'       : 'productService'
+                                                  ,    'envImpact'            : 'envImpact'
+                                                  ,    'summaryRequestStatus' : 'summaryRequestStatus'
+                                                  };
 
-                                var dataArr = {    'industry'         : 'industry'
-                                              ,    'countryOperation' : 'country'
-                                              ,    'stageBusiness'    : 'stageBusiness'
-                                              ,    'productService'   : 'productService'
-                                              ,    'envImpact'        : 'envImpact'
-                                              ,    'summaryRequestStatus' : 'summaryRequestStatus'
-                                              };
+                                       /* Setting data to get the final values */
+                                      item.businessSummary.summaryRequestStatus = item.status;
+                                       bidx.data.getStaticDataVal(
+                                        {
+                                            dataArr    : dataArr
+                                          , item       : item.businessSummary
+                                          , callback   : function (label) {
+                                                            i18nItem = label;
+                                                         }
+                                        });
 
+                                        //search for placeholders in snippit
+                                        listItem = snippit
+                                            .replace( /%accordion-id%/g,            item.businessSummary.bidxMeta.bidxEntityId  ? item.businessSummary.bidxMeta.bidxEntityId    : emptyVal )
+                                            .replace( /%bidxEntityId%/g,            item.businessSummary.bidxMeta.bidxEntityId  ? item.businessSummary.bidxMeta.bidxEntityId    : emptyVal )
+                                            .replace( /%name%/g,                    i18nItem.name                               ? i18nItem.name                                 : emptyVal )
+                                            .replace( /%industry%/g,                i18nItem.industry                           ? i18nItem.industry                             : emptyVal )
+                                            .replace( /%slogan%/g,                  i18nItem.slogan                             ? i18nItem.slogan                               : emptyVal )
+                                            .replace( /%status%/g,                  i18nItem.summaryRequestStatus               ? i18nItem.summaryRequestStatus                 : emptyVal )
+                                            .replace( /%countryOperation%/g,        i18nItem.countryOperation                   ? i18nItem.countryOperation                     : emptyVal )
+                                            .replace( /%bidxCreationDateTime%/g,    item.businessSummary.bidxCreationDateTime   ? bidx.utils.parseISODateTime(item.businessSummary.bidxCreationDateTime, "date") : emptyVal )
+                                            .replace( /%bidxOwnerId%/g,             i18nItem.bidxOwnerId                        ? i18nItem.bidxOwnerId                          : emptyVal )
+                                            .replace( /%creator%/g,                 i18nItem.bidxMeta.bidxOwnerDisplayName      ? i18nItem.bidxMeta.bidxOwnerDisplayName        : emptyVal )
+                                            .replace( /%creatorId%/g,               i18nItem.bidxMeta.bidxOwnerId               ? i18nItem.bidxMeta.bidxOwnerId                 : emptyVal )
+                                            .replace( /%productService%/g,          i18nItem.productService                     ? i18nItem.productService                       : emptyVal)
+                                            .replace( /%financingNeeded%/g,         i18nItem.financingNeeded                    ? i18nItem.financingNeeded + ' USD'             : emptyVal )
+                                            .replace( /%stageBusiness%/g,           i18nItem.stageBusiness                      ? i18nItem.stageBusiness                        : emptyVal )
+                                            .replace( /%yearSalesStarted%/g,        i18nItem.yearSalesStarted                   ? i18nItem.yearSalesStarted                     : emptyVal )
+                                            .replace( /%envImpact%/g,               i18nItem.envImpact                          ? i18nItem.envImpact                            : emptyVal )
+                                            ;
+                                    $listItem = $(listItem);
 
-                                /* Setting data to get the final values */
-                                item.businessSummary.summaryRequestStatus = item.status;
-                                bidx.data.getStaticDataVal(
-                                {
-                                    dataArr    : dataArr
-                                  , item       : item.businessSummary
-                                  , callback   : function (label) {
-                                                    i18nItem = label;
-                                                 }
-                                });
+                                    toRemove = $listItem.find( "td:contains("+emptyVal+"), .bs-slogan:contains("+emptyVal+")" );
+                                    toRemove.each( function( index, el)
+                                    {
+                                        $(el).parent().remove();
+                                    });
 
-                                //search for placeholders in snippit
-                                listItem = snippit
-                                    .replace( /%accordion-id%/g,            item.businessSummary.bidxMeta.bidxEntityId  ? item.businessSummary.bidxMeta.bidxEntityId    : emptyVal )
-                                    .replace( /%bidxEntityId%/g,            item.businessSummary.bidxMeta.bidxEntityId  ? item.businessSummary.bidxMeta.bidxEntityId    : emptyVal )
-                                    .replace( /%name%/g,                    i18nItem.name                               ? i18nItem.name                                 : emptyVal )
-                                    .replace( /%industry%/g,                i18nItem.industry                           ? i18nItem.industry                             : emptyVal )
-                                    .replace( /%status%/g,                  i18nItem.summaryRequestStatus               ? i18nItem.summaryRequestStatus                 : emptyVal )
-                                    .replace( /%countryOperation%/g,        i18nItem.countryOperation                   ? i18nItem.countryOperation                     : emptyVal )
-                                    .replace( /%bidxCreationDateTime%/g,    item.businessSummary.bidxCreationDateTime   ? bidx.utils.parseISODateTime(item.businessSummary.bidxCreationDateTime, "date") : emptyVal )
-                                    .replace( /%bidxOwnerId%/g,             i18nItem.bidxMeta.bidxOwnerId               ? i18nItem.bidxMeta.bidxOwnerId                 : emptyVal )
-                                    .replace( /%creator%/g,                 i18nItem.bidxMeta.bidxOwnerDisplayName      ? i18nItem.bidxMeta.bidxOwnerDisplayName        : emptyVal )
-                                    .replace( /%productService%/g,          i18nItem.productService                     ? i18nItem.productService                       : emptyVal)
-                                    .replace( /%financingNeeded%/g,         i18nItem.financingNeeded                    ? i18nItem.financingNeeded + ' USD'             : emptyVal )
-                                    .replace( /%stageBusiness%/g,           i18nItem.stageBusiness                      ? i18nItem.stageBusiness                        : emptyVal )
-                                    .replace( /%envImpact%/g,               i18nItem.envImpact                          ? i18nItem.envImpact                            : emptyVal )
-                                    ;
-                                $listItem = $(listItem);
+                                    logo = bidx.utils.getValue( i18nItem, "logo");
+                                    logoDocument = bidx.utils.getValue( i18nItem, "logo.document");
 
-                                externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
+                                    cover = bidx.utils.getValue( i18nItem, "cover");
+                                    coverDocument = bidx.utils.getValue( i18nItem, "cover.document");
 
-                                if ( externalVideoPitch )
-                                {
-                                    $el         = $listItem.find("[data-role='businessImage']");
-                                    _addVideoThumb( externalVideoPitch, $el );
-                                }
+                                    if ( logo && logoDocument )
+                                    {
+                                        placeBusinessThumb( $listItem, logoDocument );
+                                    }
+                                    else if ( cover && coverDocument )
+                                    {
+                                        placeBusinessThumb( $listItem, coverDocument );
+                                    }
 
-                                //  add mail element to list
-                                $list.append( $listItem );
-
-                                contactedBusinesses.push( item.businessSummary.bidxMeta.bidxEntityId );
-
+                                    //  add mail element to list
+                                    $list.append( $listItem );
                             } );
 
                         }
@@ -167,11 +199,11 @@
     //
     var getMatch = function(options)
     {
-        var snippit             = $("#investor-matchitem").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listEmpty          = $($("#investor-empty").html().replace(/(<!--)*(-->)*/g, ""))
-        ,   $list               = $("." + options.list)
-        ,   contactedBusinesses = options.contactedBusinesses
-        ,   emptyVal    = '-'
+        var snippit     = $("#investor-matchitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $listEmpty  = $($("#investor-empty").html().replace(/(<!--)*(-->)*/g, ""))
+        ,   $list       = $("." + options.list)
+        ,   emptyVal    = '*'
+        ,   toRemove
         ;
         var extraUrlParameters =
                 [
@@ -197,6 +229,9 @@
                 //clear listing
                 $list.empty();
 
+bidx.utils.log('match.fetch', response);
+
+
                 // Register var
                 var listItem
                 ,   $listItem
@@ -207,7 +242,6 @@
                 ,   envImpactLabel          =   []
                 ,   productServiceLabel     =   []
                 ;
-
 
                 // now format it into array of objects with value and label
                 //
@@ -222,84 +256,42 @@
 
                     $.each(response.docs, function(idx, i18nItem)
                     {
-                        if( _.indexOf(contactedBusinesses, i18nItem.entityid_l ) === -1 )
+                        if ( $.isArray(i18nItem.countrylabel_ss) )        { i18nItem.countrylabel_ss        = i18nItem.countrylabel_ss.join( ", " );        }
+                        if ( $.isArray(i18nItem.industrylabel_ss) )       { i18nItem.industrylabel_ss       = i18nItem.industrylabel_ss.join( ", " );       }
+                        if ( $.isArray(i18nItem.envimpactlabel_ss) )      { i18nItem.envimpactlabel_ss      = i18nItem.envimpactlabel_ss.join( ", " );      }
+                        if ( $.isArray(i18nItem.productservicelabel_ss) ) { i18nItem.productservicelabel_ss = i18nItem.productservicelabel_ss.join( ", " ); }
+
+                        //search for placeholders in snippit
+                        listItem = snippit
+                            .replace( /%accordion-id%/g,           i18nItem.id                     ? i18nItem.id                     : emptyVal )
+                            .replace( /%name_s%/g,                 i18nItem.name_s                 ? i18nItem.name_s                 : emptyVal )
+                            .replace( /%slogan_s%/g,               i18nItem.slogan_s               ? i18nItem.slogan_s               : emptyVal )
+                            .replace( /%creator%/g,                i18nItem.creator                ? i18nItem.creator                : emptyVal )
+                            .replace( /%creatorId%/g,              i18nItem.creatorId              ? i18nItem.creatorId              : emptyVal )
+                            .replace( /%countrylabel_ss%/g,        i18nItem.countrylabel_ss        ? i18nItem.countrylabel_ss        : emptyVal )
+                            .replace( /%industrylabel_ss%/g,       i18nItem.industrylabel_ss       ? i18nItem.industrylabel_ss       : emptyVal )
+                            .replace( /%productservicelabel_ss%/g, i18nItem.productservicelabel_ss ? i18nItem.productservicelabel_ss : emptyVal )
+                            .replace( /%financingneeded_d%/g,      i18nItem.financingneeded_d      ? i18nItem.financingneeded_d      : emptyVal )
+                            .replace( /%stagebusinesslabel_s%/g,   i18nItem.stagebusinesslabel_s   ? i18nItem.stagebusinesslabel_s   : emptyVal )
+                            .replace( /%envimpactlabel_ss%/g,      i18nItem.envimpactlabel_ss      ? i18nItem.envimpactlabel_ss      : emptyVal )
+                            .replace( /%productservicelabel_ss%/g, i18nItem.productservicelabel_ss ? i18nItem.productservicelabel_ss : emptyVal)
+                            //.replace( /%companylogodoc_url%/g,     i18nItem.companylogodoc_url     ? i18nItem.companylogodoc_url     : addDefaultImage('js-companylogo') )
+                            .replace( /%entityid_l%/g,             i18nItem.entityid_l             ? i18nItem.entityid_l             : emptyVal )
+                            ;
+
+                        // Remove the js selector
+
+                        $listItem = $(listItem);
+
+                        toRemove = $listItem.find( "td:contains("+emptyVal+"), .bs-slogan:contains("+emptyVal+")" );
+                        toRemove.each( function( index, el)
                         {
-                            if ( $.isArray(i18nItem.countrylabel_ss) )
-                            {
-                                countryLabel                    = _.map(    i18nItem.country_ss
-                                                                        ,   function(label)
-                                                                            {
-                                                                                return bidx.data.i(label, 'country');
-                                                                            }
-                                                                        );
-                                i18nItem.countrylabel_ss        = countryLabel.join( ", " );
-                            }
-                            if ( $.isArray(i18nItem.industrylabel_ss) )
-                            {
-                                industryLabel                   = _.map(    i18nItem.industry_ss
-                                                                        ,   function(label)
-                                                                            {
-                                                                                return bidx.data.i(label, 'industry');
-                                                                            }
-                                                                        );
-                                i18nItem.industrylabel_ss       = industryLabel.join( ", " );
-                            }
-                            if ( $.isArray(i18nItem.envimpactlabel_ss) )
-                            {
-
-                                envImpactLabel                  = _.map(    i18nItem.envimpact_ss
-                                                                        ,   function(label)
-                                                                            {
-                                                                                return bidx.data.i(label, 'envImpact');
-                                                                            }
-                                                                        );
-                                i18nItem.envimpactlabel_ss      = envImpactLabel.join( ", " );
-                            }
-                            if ( $.isArray(i18nItem.productservicelabel_ss) )
-                            {
-                                productServiceLabel                 = _.map(    i18nItem.envimpact_ss
-                                                                        ,   function(label)
-                                                                            {
-                                                                                return bidx.data.i(label, 'industry');
-                                                                            }
-                                                                        );
-                                i18nItem.productservicelabel_ss = productServiceLabel.join( ", " );
-                            }
-
-                            //search for placeholders in snippit
-                            listItem = snippit
-                                .replace( /%accordion-id%/g,           i18nItem.id                     ? i18nItem.id                     : emptyVal )
-                                .replace( /%name_s%/g,                 i18nItem.name_s                 ? i18nItem.name_s                 : emptyVal )
-                                .replace( /%creator%/g,                i18nItem.creator                ? i18nItem.creator                : emptyVal )
-                                .replace( /%creatorId%/g,              i18nItem.creatorId              ? i18nItem.creatorId              : emptyVal )
-                                .replace( /%countrylabel_ss%/g,        i18nItem.countrylabel_ss        ? i18nItem.countrylabel_ss        : emptyVal )
-                                .replace( /%industrylabel_ss%/g,       i18nItem.industrylabel_ss       ? i18nItem.industrylabel_ss       : emptyVal )
-                                .replace( /%productservicelabel_ss%/g, i18nItem.productservicelabel_ss ? i18nItem.productservicelabel_ss : emptyVal )
-                                .replace( /%financingneeded_d%/g,      i18nItem.financingneeded_d      ? i18nItem.financingneeded_d      : emptyVal )
-                                .replace( /%stagebusinesslabel_s%/g,   i18nItem.stagebusinesslabel_s   ? i18nItem.stagebusinesslabel_s   : emptyVal )
-                                .replace( /%envimpactlabel_ss%/g,      i18nItem.envimpactlabel_ss      ? i18nItem.envimpactlabel_ss      : emptyVal )
-                                .replace( /%productservicelabel_ss%/g, i18nItem.productservicelabel_ss ? i18nItem.productservicelabel_ss : emptyVal)
-                                //.replace( /%companylogodoc_url%/g,     i18nItem.companylogodoc_url     ? i18nItem.companylogodoc_url     : addDefaultImage('js-companylogo') )
-                                .replace( /%entityid_l%/g,             i18nItem.entityid_l             ? i18nItem.entityid_l             : emptyVal )
-                                ;
-
-                            // Remove the js selector
-
-                            $listItem = $(listItem);
-
-                            externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch"); // TBD currently match service doesnt add externalVideo
-
-                            if ( externalVideoPitch )
-                            {
-                                $el         = $listItem.find("[data-role='businessImage']");
-                                _addVideoThumb( externalVideoPitch, $el );
-                            }
+                            $(el).parent().remove();
+                        });
 
                             //  add element to list
                             $list.append( $listItem );
-                        }
-
-                    });
+                        });
 
                 } else
                 {

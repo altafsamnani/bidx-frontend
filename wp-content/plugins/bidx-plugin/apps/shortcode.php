@@ -183,8 +183,9 @@ class BidxShortcode
      */
     function register_script ()
     {
-        $bidxJsDir          =   sprintf ('%s/../static/js',    BIDX_PLUGIN_URI);
+        $bidxJsDir          =   sprintf ('%s/../static/js',     BIDX_PLUGIN_URI);
         $vendorDir          =   sprintf ('%s/../static/vendor', BIDX_PLUGIN_URI);
+        $plugins_url        =   sprintf ('%s/',                 BIDX_PLUGIN_URI);
         $serverReferer      =   ( isset ( $_SERVER[ "HTTP_REFERER" ] )) ? $_SERVER[ "HTTP_REFERER" ] : NULL ; // To avoid in theme customization (iframe is detect here), dont load scripts and everything.
 
         if (BidxCommon :: isWPInternalFunction () || is_super_admin() || preg_match ( '/customize.php/i', $serverReferer ) ) {
@@ -251,7 +252,7 @@ class BidxShortcode
             wp_register_script ('bidx-delaykeyup', $bidxJsDir . '/bidx-delaykeyup.js', array ('jquery'), '20131103', TRUE);
             wp_register_script ('bidx-location', $bidxJsDir . '/bidx-location.js', array ('jquery', 'bidx-utils', 'jquery-ui-widget','google-jsapi'), '20130904', true);
             wp_register_script ('bidx-chosen',  $bidxJsDir . '/bidx-chosen.js', array ('jquery', 'chosen'),  '20131118', TRUE);
-
+            wp_register_script ('bidx-mentor',  $plugins_url . '/mentor/static/js/common-mentordashboard.js', array ('jquery'), '20150713', TRUE);
 
             wp_enqueue_script ('bidx-common');
             wp_enqueue_script ('bidx-controller');

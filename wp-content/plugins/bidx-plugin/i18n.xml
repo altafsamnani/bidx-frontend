@@ -106,6 +106,24 @@
     <Item value="investor">Investor</Item>
     <Item value="mentor">Mentor</Item>
 
+    <!-- Common Mentor strings -->
+    <Item value="receivedRequestFrom">You have a request from</Item>
+    <Item value="pendingRequestTo">Your request is pending from</Item>
+    <Item value="mentoringActive">You are the mentor of</Item>
+    <Item value="wantsToMentor">wants to mentor your business</Item>
+    <Item value="isMentoring">is mentoring your business</Item>
+    <Item value="youAreMentoring">You are mentoring this business</Item>
+    <Item value="youAskedMentor">You asked mentoring for this business from</Item>
+    
+    <Item value="btnStopMentor">Stop Mentoring</Item>
+    <Item value="btnRemove">Remove</Item>
+    <Item value="btnReject">Reject</Item>
+    <Item value="btnAccept">Accept</Item>
+    <Item value="btnRemind">Send a Reminder</Item>
+    <Item value="btnCancelRequest">Cancel Request</Item>
+
+    <Item value="wantsFullAccess">requests full access</Item>
+    <Item value="hasFullAccess">has full access</Item>
 
     <!-- Modal dialogs status messages -->
      <Item value="modalSend">You are about to send request. Are you sure?</Item>

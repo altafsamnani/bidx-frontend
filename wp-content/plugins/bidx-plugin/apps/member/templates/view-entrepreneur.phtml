@@ -73,7 +73,7 @@ if ($entrepreneurDetails &&
         if ($businessSummary) {
             $labelBusiness = ( count( $businessSummary ) > 1 ) ? __('Businesses','bidxplugin') : __('Business','bidxplugin');
 ?>
-            <div class="row" id="existingBusinesses">
+            <div class="row" id="existingBusinesses" data-ownerid= <?php echo $memberId; ?>>
                 <div class="col-sm-12">
                     <h4>
                         <?php echo $labelBusiness; ?>
@@ -91,7 +91,7 @@ if ($entrepreneurDetails &&
 <?php
                         foreach ($businessSummary as $index => $business) {
 ?>
-                                    <div class="list-group-item" data-entityid="<?php echo $business->bidxMeta->bidxEntityId; ?>">
+                                    <div class="list-group-item" data-bsid="<?php echo $business->bidxMeta->bidxEntityId; ?>">
                                         <div class="list-group-item-text">
                                             <div class="row">
                                                 <div class="col-sm-2">

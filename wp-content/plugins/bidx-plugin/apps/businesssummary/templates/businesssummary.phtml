@@ -26,6 +26,7 @@ $competitionData    = $this->competitionData;
 // if a user has an investorProfile, he is allowed to request access to a business summary
 //
 $canRequestAccess = isset( $entities->bidxInvestorProfile );
+$canRequestToMentor = isset( $entities->bidxMentorProfile );
 
 $businessSummaryId = $businessSummaryBidxMeta->bidxEntityId;
 
@@ -102,7 +103,7 @@ if ( $businessSummary->mentorAdvisory === TRUE && ( $this->exst ($businessSummar
 $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class_label' => 'bidx-label', 'class_value' => 'bidx-value', 'class_row' => '' );
 
 ?>
-<div class="businessSummary box-border top-margin-lineheight" id="businessSummary" data-bsid=<?php echo $businessSummaryId; ?>>
+<div class="businessSummary box-border top-margin-lineheight" id="businessSummary" data-bsid=<?php echo $businessSummaryId; ?> data-ownerid=<?php echo $ownerId; ?> >
     <div class="businessCover">
         <div class="coverImageContainer">
 <?php
@@ -316,13 +317,12 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                                 break;
                             default:
                                 $accessRequestSend = 'hide';
-                    }
+                        }
 ?>
                         <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><i class="fa fa-eye fa-big fa-above"></i><?php echo _e( 'Request full access', 'bidxplugin' ); ?></a>
 <?php
                     }
-?>
-<?php
+
                     // does a user have rights to edit ( is the owner )
                     //
                     if ( $canEdit )
@@ -353,10 +353,12 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 <!-- SHOW -->
 <div class="view viewShow">
 <div class="mainBusiness hide-overflow">
-    <div class="row">
-    <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-
-    </div>
+    <div class="row js-mentor-activities hide">
+        <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+            <div class="cardView top-margin-lineheight">
+                <div class="cardFooter"></div>
+            </div>
+        </div>
     </div>
 <div class="row">
 <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
@@ -1420,8 +1422,8 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 
 </div><!-- /businesssummary -->
 <?php
-$this->isBuisnessSummary = true;
-$this->render('../../mentor/templates/dashboard/main.phtml'); ?>
+// $this->isBusinessSummary = true;
+// $this->render('../../mentor/templates/dashboard/main.phtml'); ?>
 
 <script type="text/html" id="mentor-snippet">
 <!--

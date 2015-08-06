@@ -72,8 +72,8 @@
                 groupDomain :   bidx.common.groupDomain
             ,   entityid    :   params.entityId
             ,   data        :   {
-                                    "initiatorId" :   parseInt(initiatorId)
-                                ,   "mentorId"    :   parseInt(mentorId)
+                                    "initiatorId" :   parseInt(initiatorId, 10)
+                                ,   "mentorId"    :   parseInt(mentorId, 10)
                                 }
             ,   success: function( response )
                 {
