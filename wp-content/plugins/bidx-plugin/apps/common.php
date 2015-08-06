@@ -124,19 +124,21 @@ class BidxCommon
         $this->clearSessionFromParam ($session_id);
 
         //Set Cookie Timeout
+        // If commenting doamin bidx.net below plz refer BIDX-3580 first, its needed because of switching portals
         session_set_cookie_params (
         		$time
         		,'/'
-  //      		,'bidx.net'
+        		,'bidx.net'
         );
 //        if ($session_id) {
 //            session_id ($session_id);
 //        }
         session_start (); //or session_start();
 
-        //if (!$session_id) {
-        //setcookie ('session_id', session_id (), time () + $time, '/', 'bidx.net' );
-        //}
+       /* if (!$session_id)
+        {
+            setcookie ('session_id', session_id (), time () + $time, '/', '.bidx.net' );
+        }*/
     }
 
     /**
