@@ -22,7 +22,7 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 $hasAccessToInvestorProfile     = ( $isInvestor && $isLoggedinMemberIsInvestor && $ownProfile ) || ( $isInvestor && $this->isLoggedInGroupOwner ) ? true : false;
 
 ?>
-<div class="member box-border top-margin-lineheight">
+<div class="member box-border top-margin-lineheight" data-ownerid="<?php echo $memberId; ?>" >
     <div class="clearfix bg-primary-light main-padding">
         <h1 class="text-center bidx-page-heading">
             <span class="default"><?php echo (isset($this->data->isMyProfile) && $this->data->isMyProfile) ? __('My Profile','bidxplugin') : $member; ?></span>
