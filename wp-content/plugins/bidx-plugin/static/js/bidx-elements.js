@@ -323,6 +323,133 @@
         return card;
     };
 
+    var connectActionBox = function (  request )
+    {
+        bidx.utils.log( " request ", request);
+
+        var $mentorItem
+        ,   $memberLink
+        ,   $actions
+        ,   $bsElement
+        //,   canInteract             = relChecks.isThereRelationship ? true : false
+        ,   $bpElement              = $("div.container #myProfile")
+        ,   $mentorActivities       = $( ".js-connect" )
+        ,   currentUserId           = bidx.common.getCurrentUserId()
+        ,   isTheInitiator          = ( request.initiatorId === currentUserId ) ? true : false
+        ,   statusText
+        ;
+
+
+        request.status = 'accepted';
+        if ( $bpElement.length )
+        {
+            $bsElement = $bpElement.find( "#tab-member" );
+        }
+
+        //Pending on Business Summary page
+        /*if ( $mpElement.length )
+        {
+            $bsElement = $mpElement.find( '*[data-bsid="'+ relChecks.businessId +'"]' );
+        }*/
+
+        $memberLink = $( "<a />", { "href": "/member/" + request.id, "html": request.name } );
+
+        $mentorItem =
+            $( "<div />", { "class": "alert alert-sm hide-overflow bg-" + bidx.common.capitalizeFirstLetter( request.status ), "data-requestId": request.id } )
+                .append
+                (
+                    $( "<div />", { "class": "pull-left" } )
+                )
+                .append
+                (
+                    $( "<div />", { "class": "pull-right mentor-actions" } )
+                )
+            ;
+
+        $bsElement.last().append( $mentorItem );
+
+
+        // Construct message and action buttons
+        switch ( request.status )
+        {
+            case "accepted":
+
+                    $actions = $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "stop", "html": bidx.i18n.i( "btnStopConnect" ) } );
+
+                    $bsElement.find( ".pull-left" ).last()
+                        .append
+                        (
+                            $( "<span />", { "html": " " + bidx.i18n.i( "youAreInContact" )  } )
+                        )
+                    ;
+            break;
+
+            case "requested":
+
+                if ( isTheInitiator )
+                {
+                    $actions =
+                        $( "<span />" )
+                            .append
+                            (
+                                $( "<button />", { "class": "btn btn-xs btn-success", "data-btn": "cancel", "html": bidx.i18n.i( "btnCancelRequest" ) } )
+                            )
+                            .append( "&nbsp;" )
+                            .append
+                            (
+                                $( "<button />", { "class": "btn btn-xs btn-warning", "data-btn": "remind", "html": bidx.i18n.i( "btnRemind" ) } )
+                            )
+                    ;
+
+                    $bsElement.find( ".pull-left" ).last()
+                        .append
+                        (
+                            $( "<span />", { "html": bidx.i18n.i( "youAskedMentor" ) + " " } )
+                        )
+                        .append
+                        (
+                            $memberLink
+                        )
+                    ;
+                }
+                else
+                {
+                    $actions =
+                        $( "<span />" )
+                            .append
+                            (
+                                $( "<button />", { "class": "btn btn-xs btn-success", "data-btn": "accept", "html": bidx.i18n.i( "btnAccept" ) } )
+                            )
+                            .append( "&nbsp;" )
+                            .append
+                            (
+                                $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "reject", "html": bidx.i18n.i( "btnReject" ) } )
+                            )
+                    ;
+                    $bsElement.find( ".pull-left" ).last()
+                        .append
+                        (
+                            $memberLink
+                        )
+                        .append
+                        (
+                            $( "<span />", { "html":  " " + bidx.i18n.i( "wantsToMentor" ) } )
+                        )
+                    ;
+                }
+
+            break;
+
+            case "rejected":
+
+            break;
+        }
+
+        $bsElement.find( ".mentor-actions" ).last().append( $actions );
+
+    };
+
+
     var constructActionBox = function ( data, item )
     {
         var box
@@ -395,7 +522,7 @@
         constructBusinessCardView:          constructBusinessCardView
     ,   constructCompanyCardView:           constructCompanyCardView
     ,   constructActionBox:                 constructActionBox
-
+    ,   connectActionBox:                   connectActionBox
     };
 
 } ( jQuery ));

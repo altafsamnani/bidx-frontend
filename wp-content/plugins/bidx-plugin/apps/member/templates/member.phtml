@@ -114,7 +114,14 @@ $hasAccessToInvestorProfile     = ( $isInvestor && $isLoggedinMemberIsInvestor &
         endif;
 ?>
 <?php
-        if ( $memberId != $loggedInMemberId && $authenticated && $inGroup ) :
+        if ( $memberId != $loggedInMemberId && $authenticated )
+        { ?>
+            <div class="connect connectBtn hide pull-right">
+                <div class="connectUserButton"></div>
+            </div>
+<?php   } ?>
+<?php
+        if ( false && $memberId != $loggedInMemberId && $authenticated && $inGroup ) :
 ?>
             <a href="<?php echo _l('mail');?>/#mail/contacts/action=connect&id=<?php echo $memberId ?>" class="btn btn-sm btn-warning btn-contact hide pull-right">
                 <div class="fa fa-user fa-above fa-big"></div>
@@ -146,7 +153,7 @@ $hasAccessToInvestorProfile     = ( $isInvestor && $isLoggedinMemberIsInvestor &
             <div class="text-uppercase pull-right main-margin-horizontal accreditation accr-Pending">
                 <span class="fa fa-bookmark-o fa-big pull-left"></span>
                 <?php _e('Pending Accreditation', 'bidxplugin')?>
-                
+
             </div>
 
             <div class="text-uppercase pull-right main-margin-horizontal accreditation accr-Accepted">
@@ -227,6 +234,7 @@ $hasAccessToInvestorProfile     = ( $isInvestor && $isLoggedinMemberIsInvestor &
         <div id="myProfile" class="tab-content">
             <div class="tab-pane active" id="tab-member">
                 <?php $this->render('view-member.phtml');  ?>
+
             </div>
 <?php
             if ( !empty($this->data->bidxEntrepreneurProfile ) ):

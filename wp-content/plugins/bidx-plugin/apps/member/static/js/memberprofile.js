@@ -20,6 +20,8 @@
     ,   $investorTaggingLabel               = $( ".investorTaggingLabel")
     ,   $mentorTaggingLabel                 = $( ".mentorTaggingLabel")
 
+    ,   $connect                            = $('.connect')
+
         // Profile picture
         //
     ,   $profilePictureControl              = $editForm.find( ".profilePictureControl" )
@@ -133,6 +135,30 @@
         ]
     };
 
+    function _inContacts( )
+    {
+        var connectOptions
+        ,   btnOptions      =   { }
+        ;
+
+        connectOptions =    {
+                                currentUserId:          loggedInMemberId
+                            ,   visitingMemberPageId:   visitingMemberPageId
+                            };
+
+        bidx.utils.log( 'connectOptions: ', connectOptions);
+
+        $connect.connect( connectOptions );
+
+        btnOptions =    {
+                            label:      bidx.i18n.i('lblConnect')
+                        ,   iconClass:  'fa-user-plus fa-above fa-big'
+                        ,   class:      'connectUserButton'
+                        };
+
+        $connect.connect( "constructButton", btnOptions );
+    }
+
     function _tagging( options )
     {
         var btnOptions          =   {}
@@ -148,10 +174,10 @@
 
         if( entityId )
         {
-            taggingOptions =   {
-                            entityId:   entityId
-                        ,   tagsData:   tagsData
-                        };
+            taggingOptions =    {
+                                    entityId:   entityId
+                                ,   tagsData:   tagsData
+                                };
 
             bidx.utils.log( labelClass + ' taggingOptions: ', taggingOptions);
 
@@ -354,6 +380,7 @@
     //
     function _oneTimeSetup()
     {
+
         _snippets();
         _languages();
         _attachments();
@@ -362,6 +389,8 @@
         {
             _getActiveContacts();
         }
+
+        //_inContacts();
 
         _accreditation();
 
@@ -763,8 +792,8 @@
                 }
             );
         }
-
     }
+
 
     // Try to gecode the address (array)
     // On failure, pop one item from the address array and retry untill there is no
@@ -1762,7 +1791,6 @@
 
         $(".type-bidx").find( ".total-error-message" ).hide();
     }
-
     // Engage!
     //
     _oneTimeSetup();

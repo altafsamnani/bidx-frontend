@@ -114,8 +114,9 @@
     <Item value="isMentoring">is mentoring your business</Item>
     <Item value="youAreMentoring">You are mentoring this business</Item>
     <Item value="youAskedMentor">You asked mentoring for this business from</Item>
-    
+
     <Item value="btnStopMentor">Stop Mentoring</Item>
+
     <Item value="btnRemove">Remove</Item>
     <Item value="btnReject">Reject</Item>
     <Item value="btnAccept">Accept</Item>
@@ -124,6 +125,10 @@
 
     <Item value="wantsFullAccess">requests full access</Item>
     <Item value="hasFullAccess">has full access</Item>
+
+    <!-- Connection details -->
+    <Item value="youAreInContact">You have active connection with this contact.</Item>
+    <Item value="btnStopConnect">Stop connection</Item>
 
     <!-- Modal dialogs status messages -->
      <Item value="modalSend">You are about to send request. Are you sure?</Item>
@@ -211,5 +216,8 @@
     <Item value="lblPendingAccreditation">Pending Accreditation</Item>
     <Item value="lblNoTaggingExist">Assignment is not allowed for tags:</Item>
     <Item value="errorNoTagEntityId">EntityId is not specified</Item>
+
+    <!-- Connect -->
+    <Item value="lblConnect">Connect</Item>
 
 </I18N>
