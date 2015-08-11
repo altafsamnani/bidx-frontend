@@ -11,26 +11,37 @@
 
     var isOwnBusiness = function ()
     {
-        if ( bidx.businesssummary && bidx.businesssummary.$element.data( "ownerid" ) === bidx.common.getCurrentUserId() )
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return bidx.businesssummary && bidx.businesssummary.$element.data( "ownerid" ) === bidx.common.getCurrentUserId() ? true : false;
     };
 
     var isOwnProfile = function ()
     {
-        if ( bidx.member && parseInt( $( "div.member" ).attr( "data-ownerid" ), 10) === bidx.common.getCurrentUserId() )
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return bidx.member && parseInt( $( "div.member" ).attr( "data-ownerid" ), 10) === bidx.common.getCurrentUserId() ? true : false;
+    };
+
+    var isProfilePage = function ()
+    {
+        return bidx.member ? true : false;
+    };
+
+    var isBusinessPage = function ()
+    {
+        return bidx.businesssummary ? true : false;
+    };
+
+    var isMentorDashboard = function ()
+    {
+        return bidx.mentorDashboard ? true : false;
+    };
+
+    var isInvestorDashboard = function ()
+    {
+        return bidx.investorDashboard ? true : false;
+    };
+
+    var isEntrepreneurDashboard = function ()
+    {
+        return bidx.entrepreneurDashboard ? true : false;
     };
 
     // Expose
@@ -40,10 +51,15 @@
         window.bidx = bidx;
     }
 
-    bidx.globalchecks =
+    bidx.globalChecks =
     {
-        isOwnBusiness:          isOwnBusiness
-    ,   isOwnProfile:           isOwnProfile
+        isOwnBusiness:              isOwnBusiness
+    ,   isOwnProfile:               isOwnProfile
+    ,   isProfilePage:              isProfilePage
+    ,   isBusinessPage:             isBusinessPage
+    ,   isMentorDashboard:          isMentorDashboard
+    ,   isInvestorDashboard:        isInvestorDashboard
+    ,   isEntrepreneurDashboard:    isEntrepreneurDashboard
 
     };
 
