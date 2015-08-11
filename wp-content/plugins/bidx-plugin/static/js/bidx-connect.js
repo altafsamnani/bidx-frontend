@@ -134,73 +134,51 @@
             var status
             ,   limit
             ,   offset
+            ,   extraUrlParameters      =   []
             ,   loggedInMemberId        =   params.currentUserId
             ,   visitingMemberPageId    =   params.visitingMemberPageId
             ;
 
+            extraUrlParameters =
+            [
+                {
+                    label :     "contactIdOrName"
+                ,   value :     visitingMemberPageId
+                }
+            ];
+
             bidx.api.call(
-                "connect.fetch"
+                "contact.fetch"
             ,   {
-                    extraUrlParameters:
-                    [
-                        {
-                            label:      "type",
-                            value:      "contact"
-                        }
-                    ,   {
-                            label:      "status",
-                            value:      "active"
-                        }
-                    ]
-                ,   requesterId:    loggedInMemberId
-                ,   groupDomain:    bidx.common.groupDomain
+                    groupDomain:            bidx.common.groupDomain
+                ,   extraUrlParameters:     extraUrlParameters
                 ,   success:        function( response )
                     {
                         var sortIndex                   = []
-                        ,   contacts                    = {}
+                        ,   contacts                    = bidx.utils.getValue( response, 'contacts')
+                        ,   contact                     = bidx.utils.getValue( contacts, 'contact')
                         ,   result                      = {}
                         ,   visitingMemberConnection    = false
                         ,   currentUserId               = bidx.utils.getValue( bidxConfig, "session.id" )
                         ;
 
-                        bidx.utils.log("[connect] retrieved following active contacts ", response );
-                        if ( response && response.relationshipType && response.relationshipType.contact && response.relationshipType.contact.types )
+                        bidx.utils.log("[connect] retrieved following contact ", contact );
+
+                        if( !contact )
                         {
-                            if ( response.relationshipType.contact.types.active )
+                            bidx.utils.log("[connect] if retrieved following contact ", contact );
+
+                            if (params && params.callback)
                             {
-                                // then add the active contactsm but we first check if we are not adding a duplicate member id (member who already acts as an admin or groupowner )
-                                //
-                                $.each( response.relationshipType.contact.types.active , function ( idx, item)
-                                {
-                                    // if active contact id is matched with visiting member id then hide the button
-                                    if ( !visitingMemberConnection && ( item.id === parseInt( visitingMemberPageId, 10 ) ) )
-                                    {
-                                        visitingMemberConnection    =  item;
-
-                                        return false; //break; no more need to iterate the loop break
-                                    }
-                                });
-
-                                //If no connection then display button else display active alert box
-                                if( !visitingMemberConnection )
-                                {
-                                    if (params && params.callback)
-                                    {
-                                        params.callback( response.relationshipType.contact.types.active );
-                                    }
-                                }
-                                else
-                                {
-                                    bidx.construct.connectActionBox( visitingMemberConnection );
-                                }
+                                params.callback(  );
                             }
-                            else
-                            {
-                                bidx.utils.warn( "No active contacts available ");
-                            }
-
                         }
+                        else
+                        {
+                            bidx.utils.log("[connect] else retrieved following contact ", contact );
 
+                            bidx.construct.connectActionBox( contact );
+                        }
                     }
                 ,   error: function(jqXhr, textStatus)
                     {
@@ -300,15 +278,24 @@
         }
     ,   _doCreateConnectRequest: function( options )
         {
-            var  params      = options.params
+            var extraUrlParameters
+            ,   params      = options.params
             ,   requesteeId = bidx.utils.getValue(params, 'requesteeId')
             ;
 
+            extraUrlParameters =
+            [
+                {
+                    label :     "inviteeName"
+                ,   value :     requesteeId
+                }
+            ];
+
             bidx.api.call(
-                 "connect.create"
+                 "contact.connect"
             ,   {
                     groupDomain:            bidx.common.groupDomain
-                ,   requesteeId:            requesteeId
+                ,   extraUrlParameters:     extraUrlParameters
                 ,   data:
                     {
                         "type":             "contact"
@@ -471,7 +458,9 @@
             // Set Accreditation / No Accreditation status
             $buttonElement.delegate( ".btn-connect", "click", function( e )
             {
-                var $el = $(this)
+                var contacts
+                ,   request
+                ,   $el = $(this)
                 ,   params = {}
                 ,   $tagLabel       =   $el.find('.tagLabel')
                 ,   requesteeId     =   $el.data('requesteeid')
@@ -488,7 +477,11 @@
                             $el.remove();
                         });
 
-                        bidx.construct.connectActionBox( data );
+                        contacts    = data.contacts;
+
+                        request     = _.findWhere(contacts, { id: requesteeId });
+
+                        bidx.construct.connectActionBox( request );
                         /*getMentoringRequest(
                         {
                             callback: function( result )

@@ -7,24 +7,23 @@
 {
     var bidx    = window.bidx
     ,   api     = bidx.api
-    ,   connect  = {}
-    ,   baseUrl = "/api/v1/members/relationships/%id%"
+    ,   contact  = {}
+    ,   baseUrl = "/api/v1/contact"
     ,   params  = []
     ;
 
-    connect.fetch = function( params )
+    contact.fetch = function( params )
     {
         var method = "GET"
-        ,   url    = baseUrl.replace( "/%id%", "" )
+        ,   url     =   baseUrl + '/mycontacts'
         ;
-
 
         api._call(
         {
             method:                     method
         ,   groupDomain:                params.groupDomain
-        ,   baseUrl:                    url
         ,   extraUrlParameters:         params.extraUrlParameters
+        ,   baseUrl:                    url
         ,   success:        function( response, textStatus, jqXhr )
             {
                 if ( response && response.data )
@@ -41,18 +40,18 @@
         } );
     };
 
-    connect.mutate = function( params )
+    contact.disconnect = function( params )
     {
         var method  = "PUT"
-        ,   url     = baseUrl.replace( "%id%", params.requesterId )
+        ,   url     =   baseUrl + '/disconnect'
         ;
 
         api._call(
         {
-            method:                 method
-        ,   groupDomain:            params.groupDomain
-        ,   extraUrlParameters:     params.extraUrlParameters
-        ,   baseUrl:                url
+            method:             method
+        ,   groupDomain:        params.groupDomain
+        ,   extraUrlParameters: params.extraUrlParameters
+        ,   baseUrl:            url
 
         ,   success:        function( data, textStatus, jqXhr )
             {
@@ -65,20 +64,18 @@
         } );
     };
 
-    connect.create = function( params )
+    contact.connect = function( params )
     {
-        var method  = "POST"
-        ,   url     = baseUrl
-                        .replace( "%id%", params.requesteeId )
+        var method  =   "POST"
+        ,   url     =   baseUrl + '/connect'
         ;
 
         api._call(
         {
-            method:         method
-        ,   form:           true
-        ,   groupDomain:    params.groupDomain
-        ,   baseUrl:        url
-        ,   data:           params.data
+            method:             method
+        ,   groupDomain:        params.groupDomain
+        ,   extraUrlParameters: params.extraUrlParameters
+        ,   baseUrl:            url
         ,   success:        function( data, textStatus, jqXhr )
             {
                 params.success( data, textStatus, jqXhr );
@@ -91,5 +88,5 @@
     };
 
 
-    api.connect = connect;
+    api.contact = contact;
 } )( jQuery );

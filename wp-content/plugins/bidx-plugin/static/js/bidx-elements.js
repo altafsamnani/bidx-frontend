@@ -323,7 +323,7 @@
         return card;
     };
 
-    var connectActionBox = function (  request )
+    var connectActionBox = function ( request )
     {
         bidx.utils.log( " request ", request);
 
@@ -331,31 +331,25 @@
         ,   $memberLink
         ,   $actions
         ,   $bsElement
+        ,   contact                 = bidx.utils.getValue(request, "contact")
         //,   canInteract             = relChecks.isThereRelationship ? true : false
         ,   $bpElement              = $("div.container #myProfile")
         ,   $mentorActivities       = $( ".js-connect" )
         ,   currentUserId           = bidx.common.getCurrentUserId()
-        ,   isTheInitiator          = ( request.initiatorId === currentUserId ) ? true : false
+        ,   isTheInitiator          = !bidx.utils.getValue(contact, "isInitiator")
+        ,   status                  = bidx.utils.getValue(contact, "status")
         ,   statusText
         ;
 
-
-        request.status = 'accepted';
         if ( $bpElement.length )
         {
             $bsElement = $bpElement.find( "#tab-member" );
         }
 
-        //Pending on Business Summary page
-        /*if ( $mpElement.length )
-        {
-            $bsElement = $mpElement.find( '*[data-bsid="'+ relChecks.businessId +'"]' );
-        }*/
-
         $memberLink = $( "<a />", { "href": "/member/" + request.id, "html": request.name } );
 
         $mentorItem =
-            $( "<div />", { "class": "alert alert-sm hide-overflow bg-" + bidx.common.capitalizeFirstLetter( request.status ), "data-requestId": request.id } )
+            $( "<div />", { "class": "alert alert-sm hide-overflow bg-" + bidx.common.capitalizeFirstLetter( status ), "data-requestId": request.id } )
                 .append
                 (
                     $( "<div />", { "class": "pull-left" } )
@@ -368,9 +362,8 @@
 
         $bsElement.last().append( $mentorItem );
 
-
         // Construct message and action buttons
-        switch ( request.status )
+        switch ( status )
         {
             case "accepted":
 

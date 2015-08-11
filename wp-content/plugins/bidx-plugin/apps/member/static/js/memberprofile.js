@@ -390,7 +390,7 @@
             _getActiveContacts();
         }
 
-        //_inContacts();
+        _inContacts();
 
         _accreditation();
 
