@@ -6,42 +6,48 @@
 
     var bidx                = window.bidx || {}
     ,   bidxConfig          = window.bidxConfig || {}
+    ,   currentUserId       = bidx.common.getCurrentUserId()
+    ,   $bs                 = $( "div#businessSummary" )
+    ,   $mb                 = $( "div.member" )
+    ,   $ed                 = $( "div#entrepreneur-dashboard" )
+    ,   $md                 = $( "div#mentor-dashboard" )
+    ,   $id                 = $( "div#investor-dashboard" )
     ;
 
 
     var isOwnBusiness = function ()
     {
-        return bidx.businesssummary && bidx.businesssummary.$element.data( "ownerid" ) === bidx.common.getCurrentUserId() ? true : false;
+        return $bs.length && $bs.data( "ownerid" ) === currentUserId ? true : false;
     };
 
     var isOwnProfile = function ()
     {
-        return bidx.member && parseInt( $( "div.member" ).attr( "data-ownerid" ), 10) === bidx.common.getCurrentUserId() ? true : false;
+        return $mb.length && $mb.data( "ownerid" ) === currentUserId ? true : false;
     };
 
     var isProfilePage = function ()
     {
-        return bidx.member ? true : false;
+        return $mb.length ? true : false;
     };
 
     var isBusinessPage = function ()
     {
-        return bidx.businesssummary ? true : false;
+        return $bs.length ? true : false;
     };
 
     var isMentorDashboard = function ()
     {
-        return bidx.mentorDashboard ? true : false;
+        return $md.length ? true : false;
     };
 
     var isInvestorDashboard = function ()
     {
-        return bidx.investorDashboard ? true : false;
+        return $id.length ? true : false;
     };
 
     var isEntrepreneurDashboard = function ()
     {
-        return bidx.entrepreneurDashboard ? true : false;
+        return $ed.length ? true : false;
     };
 
     // Expose
