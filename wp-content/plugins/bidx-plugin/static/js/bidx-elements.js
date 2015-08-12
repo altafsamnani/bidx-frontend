@@ -333,7 +333,7 @@
         ,   $bsElement
         ,   contact                 = bidx.utils.getValue(request, "contact")
         //,   canInteract             = relChecks.isThereRelationship ? true : false
-        ,   $bpElement              = $("div.container #myProfile")
+        ,   $bpElement              = $("div.container .member")
         ,   $mentorActivities       = $( ".js-connect" )
         ,   currentUserId           = bidx.common.getCurrentUserId()
         ,   isTheInitiator          = !bidx.utils.getValue(contact, "isInitiator")
@@ -341,9 +341,18 @@
         ,   statusText
         ;
 
+        if( status === 'PENDING')
+        {
+            status = 'requested';
+        }
+        else if( status === 'CONNECTED')
+        {
+            status = 'accepted';
+        }
+
         if ( $bpElement.length )
         {
-            $bsElement = $bpElement.find( "#tab-member" );
+            $bsElement = $bpElement.find( ".alert-connect" );
         }
 
         $memberLink = $( "<a />", { "href": "/member/" + request.id, "html": request.name } );
@@ -367,7 +376,7 @@
         {
             case "accepted":
 
-                    $actions = $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "stop", "html": bidx.i18n.i( "btnStopConnect" ) } );
+                    $actions = $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "connectstop", "html": bidx.i18n.i( "btnStopConnect" ) } );
 
                     $bsElement.find( ".pull-left" ).last()
                         .append
@@ -385,24 +394,24 @@
                         $( "<span />" )
                             .append
                             (
-                                $( "<button />", { "class": "btn btn-xs btn-success", "data-btn": "cancel", "html": bidx.i18n.i( "btnCancelRequest" ) } )
+                                $( "<button />", { "class": "btn btn-xs btn-success", "data-btn": "connectcancel", "html": bidx.i18n.i( "btnCancelRequest" ) } )
                             )
                             .append( "&nbsp;" )
                             .append
                             (
-                                $( "<button />", { "class": "btn btn-xs btn-warning", "data-btn": "remind", "html": bidx.i18n.i( "btnRemind" ) } )
+                                $( "<button />", { "class": "btn btn-xs btn-warning", "data-btn": "connectremind", "html": bidx.i18n.i( "btnRemind" ) } )
                             )
                     ;
 
                     $bsElement.find( ".pull-left" ).last()
                         .append
                         (
-                            $( "<span />", { "html": bidx.i18n.i( "youAskedMentor" ) + " " } )
+                            $( "<span />", { "html": bidx.i18n.i( "youAskedConnection" ) + " " } )
                         )
-                        .append
+                       /* .append
                         (
                             $memberLink
-                        )
+                        )*/
                     ;
                 }
                 else
@@ -411,12 +420,12 @@
                         $( "<span />" )
                             .append
                             (
-                                $( "<button />", { "class": "btn btn-xs btn-success", "data-btn": "accept", "html": bidx.i18n.i( "btnAccept" ) } )
+                                $( "<button />", { "class": "btn btn-xs btn-success", "data-btn": "connectaccept", "html": bidx.i18n.i( "btnAccept" ) } )
                             )
                             .append( "&nbsp;" )
                             .append
                             (
-                                $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "reject", "html": bidx.i18n.i( "btnReject" ) } )
+                                $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "connectreject", "html": bidx.i18n.i( "btnReject" ) } )
                             )
                     ;
                     $bsElement.find( ".pull-left" ).last()
@@ -426,7 +435,7 @@
                         )
                         .append
                         (
-                            $( "<span />", { "html":  " " + bidx.i18n.i( "wantsToMentor" ) } )
+                            $( "<span />", { "html":  " " + bidx.i18n.i( "wantsToConnect" ) } )
                         )
                     ;
                 }
