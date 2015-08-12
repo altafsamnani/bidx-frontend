@@ -807,31 +807,31 @@
     // ROUTER
 
     //var navigate = function( requestedState, section, id )
-    var navigate = function(options)
-    {
-        var state;
+    // var navigate = function(options)
+    // {
+    //     var state;
 
-        state = options.state;
+    //     state = options.state;
 
-        switch (state)
-        {
-            case "load" :
+    //     switch (state)
+    //     {
+    //         case "load" :
 
-                _showView("load");
+    //             _showView("load");
 
-                break;
+    //             break;
 
-            case "help" :
-                _menuActivateWithTitle(".Help","My entrepreneur helppage");
-                _showView("help");
-                break;
+    //         case "help" :
+    //             _menuActivateWithTitle(".Help","My entrepreneur helppage");
+    //             _showView("help");
+    //             break;
 
-            case "entrepreneur":
+    //         case "entrepreneur":
 
-                _menuActivateWithTitle(".Dashboard","My entrepreneur dashboard");
-                _showView("load");
-                _showView("loadinvestors",true);
-                _showView("loadmentors",true);
+    //             _menuActivateWithTitle(".Dashboard","My entrepreneur dashboard");
+    //             _showView("load");
+    //             _showView("loadinvestors",true);
+    //             _showView("loadmentors",true);
 
                 // getBusinessesAndCompanies(
                 // {
@@ -869,9 +869,9 @@
                 //     }
                 // });
 
-                break;
-        }
-    };
+    //             break;
+    //     }
+    // };
 
                 //  getInvestors(
                 // {
@@ -887,8 +887,8 @@
     //expose
     var dashboard =
             {
-                navigate: navigate
-              , $element: $element
+                // navigate: navigate
+               $element: $element
             };
 
 
@@ -897,7 +897,7 @@
         window.bidx = {};
     }
 
-    window.bidx.dashboard = dashboard;
+    window.bidx.entrepreneurDashboard = dashboard;
 
     //Initialize Handlers
     //_initHandlers();

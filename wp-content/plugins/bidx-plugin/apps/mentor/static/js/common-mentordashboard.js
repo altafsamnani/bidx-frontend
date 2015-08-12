@@ -67,27 +67,59 @@
 
         if ( authenticated )
         {
-            if ( $bpElement.length )
+            if ( bidx.globalChecks.isBusinessPage() )
             {
                 businessSummaryMentorActions();
             }
 
-            if ( $mpElement.length )
+            if ( bidx.globalChecks.isProfilePage() )
             {
                 entrepreneurProfileMentorActions();
+                if ( !bidx.globalChecks.isOwnProfile() )
+                {
+                    doOfferMentoringMultipleBusinesses();
+                }
             }
         }
     }
 
-    var renderOfferBtn = function ()
+    var doOfferMentoringMultipleBusinesses = function ()
+    {
+        $.each( $businessElements, function ( index, bs )
+        {
+            getEntityMentoringRequests(
+            {
+                id: $(bs).data( "bsid" )
+            ,   callback: function( result )
+                {
+                    if ( $.isEmptyObject( result ) && isMentor && $(bs).find( ".actions button" ).length === 0 )
+                    {
+                        $(bs).find( ".actions" ).prepend( renderOfferBtn() );
+                    }
+                }
+            } );
+        });
+
+    };
+
+
+    var renderOfferBtn = function ( options )
     {
         var btn;
 
-        btn = $( "<button />", { "class": "btn btn-mentor bidxRequestToMentor", "data-btn": "offerMentoring", "html": "Offer Mentoring" } )
-                .prepend
-                (
-                    $( "<i />", { "class": "fa fa-compass fa-big fa-above" } )
-                );
+        if ( options === "large" )
+        {
+            btn = $( "<button />", { "class": "btn btn-mentor bidxRequestToMentor", "data-btn": "offerMentoring", "html": "Offer Mentoring" } )
+                    .prepend
+                    (
+                        $( "<i />", { "class": "fa fa-compass fa-big fa-above" } )
+                    );
+        }
+        else
+        {
+            btn = $( "<button />", { "class": "btn btn-sm btn-mentor pull-right bidxRequestToMentor", "data-btn": "offerMentoring", "html": "Offer Mentoring" } )
+        }
+
 
         return btn;
     };
@@ -103,8 +135,7 @@
     // Various checks for the mentor relationship
     var checkMentoringRelationship = function ( result, databsids )
     {
-        var relatedMembers = []
-        ,   mentorInfo = {}
+        var mentorInfo = {}
         ,   bsids = []
         ;
 
@@ -115,7 +146,7 @@
 
         // Check if we are in the Business Summary Page and set the var bsid
         // else iterate through all the data-bsid and create an array
-        if ( bidxConfig.context.businessSummaryId !== undefined )
+        if ( bidx.globalChecks.isBusinessPage() )
         {
             bsid = parseInt( bidxConfig.context.businessSummaryId, 10);
         }
@@ -168,8 +199,7 @@
             {
                 var relChecks = {};
 
-                bidx.utils.log("::::: Request ::::: ->", request);
-
+                // bidx.utils.log("::::: Request ::::: ->", request);
 
                 if ( request.status !== "rejected" )
                 {
@@ -228,11 +258,9 @@
             id          :   mentorId
         ,   callback    :   function ( memberInfo )
             {
-                bidx.utils.log("memberInfo::", memberInfo);
                 if ( request.status !== "rejected" )
                 {
                     constructMentorBox( memberInfo, request, relChecks );
-                    // delegateActions();
                 }
             }
         ,   error:  function(jqXhr, textStatus)
@@ -276,6 +304,11 @@
         {
             $bsElement = $mentorDash.find( '*[data-bsid="'+ relChecks.businessId +'"]' );
         }
+
+        // If do not continue if there is already an mentor box with the same requestId
+        //
+        var $elAlert = $bsElement.find( ".alert" );
+        if ( $elAlert.length && $elAlert.data( "requestid" ) === request.requestId ) { return; }
 
         $memberLink = $( "<a />", { "href": "/member/" + memberInfo.bidxMeta.bidxMemberId, "html": memberInfo.displayName } );
 
@@ -466,8 +499,15 @@
                     $alert.fadeOut( "slow", function()
                     {
                         $alert.remove();
-                        checkForActivities();
-                        checkOfferMentoring();
+                        if ( bidx.globalChecks.isBusinessPage() )
+                        {
+                            checkForActivities();
+                            checkOfferMentoring();
+                        }
+                        else
+                        {
+                            doOfferMentoringMultipleBusinesses();
+                        }
                     });
                 }
             } );
@@ -557,13 +597,13 @@
 
     var checkOfferMentoring = function ()
     {
-        getEntityMentoringRequests(
+        getMentoringRequestsForCurrentUser(
         {
             callback: function( result )
             {
-                if ( $.isEmptyObject( result ) && isMentor && !isOwnBusiness )
+                if ( $.isEmptyObject( result ) && isMentor && !isOwnBusiness && $bpElement.length )
                 {
-                    $bpElement.find( ".info-bar .text-right" ).prepend( renderOfferBtn() );
+                    $bpElement.find( ".info-bar .text-right" ).prepend( renderOfferBtn( "large" ) );
                 }
             }
         } );
@@ -583,6 +623,33 @@
 
     var getEntityMentoringRequests = function( options )
     {
+        bidx.api.call(
+            "mentorRelationships.getEntity"
+        ,   {
+                id:                     options.id
+            ,   groupDomain:            bidx.common.groupDomain
+            ,   success: function( result )
+                {
+                    //  execute callback if provided
+                    if (options && options.callback)
+                    {
+                        options.callback( result );
+                    }
+                }
+            ,   error: function( jqXhr, textStatus )
+                {
+                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                    _showMainError("Something went wrong while retrieving contactlist of the member: " + status);
+                }
+            }
+        );
+
+        return ;
+    };
+
+    var getMentoringRequestsForCurrentUser = function( options )
+    {
         var extraUrlParameters =
         [
             {
@@ -592,7 +659,7 @@
         ];
 
         bidx.api.call(
-            "mentorRelationships.getEntity"
+            "mentorRelationships.getEntityForUser"
         ,   {
                 id:                     parseInt( bidxConfig.context.businessSummaryId, 10 )
             ,   groupDomain:            bidx.common.groupDomain

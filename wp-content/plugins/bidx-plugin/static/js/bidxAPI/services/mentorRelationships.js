@@ -39,8 +39,7 @@
         } );
     };
 
-
-    mentorRelationships.getEntity = function( params )
+    mentorRelationships.getEntityForUser = function( params )
     {
         var method  = "GET"
         ,   url     = baseUrl.replace( "%id%", params.id )
@@ -68,7 +67,32 @@
         } );
     };
 
+    mentorRelationships.getEntity = function( params )
+    {
+        var method  = "GET"
+        ,   url     = baseUrl.replace( "%id%", params.id )
+        ;
 
+        api._call(
+        {
+            method:             method
+        ,   groupDomain:        params.groupDomain
+        ,   baseUrl:            url
+        ,   success:        function( response, textStatus, jqXhr )
+            {
+                if ( response && response.data )
+                {
+                    response = response.data;
+                }
+
+                params.success( response, textStatus, jqXhr );
+            }
+        ,   error:          function( jqXhr, textStatus, errorThrown )
+            {
+                params.error( jqXhr, textStatus, errorThrown );
+            }
+        } );
+    };
 
     mentorRelationships.get = function( params )
     {
@@ -175,7 +199,6 @@
         } );
     };
 
-
-
     api.mentorRelationships = mentorRelationships;
+
 } )( jQuery );

@@ -1906,7 +1906,7 @@ bidx.utils.log('itemSummary ongoingRequest', itemSummary);
     var dashboard =
             {
                 navigate:       navigate
-              , $element:       $element
+              , $element:       $mainElement
               , memberData:     memberData
             };
 
@@ -1916,7 +1916,7 @@ bidx.utils.log('itemSummary ongoingRequest', itemSummary);
         window.bidx = {};
     }
 
-    window.bidx.mentormentordashboard = dashboard;
+    window.bidx.mentorDashboard = dashboard;
 
     //Initialize Handlers
     //_initHandlers();

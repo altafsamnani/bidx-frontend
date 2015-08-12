@@ -529,7 +529,7 @@ bidx.utils.log('match.fetch', response);
         window.bidx = {};
     }
 
-    window.bidx.dashboard = dashboard;
+    window.bidx.investorDashboard = dashboard;
 
     //Initialize Handlers
     //_initHandlers();
