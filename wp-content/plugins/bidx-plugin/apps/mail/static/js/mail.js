@@ -29,6 +29,7 @@
     ,   groupownerDrpDownDefaultVal = 'groupowner'
     ,   state
     ,   section
+    ,   loggedInMemberId            = bidx.common.getCurrentUserId()
     ;
 
     // Constants
@@ -1591,11 +1592,11 @@
         {
             bidx.utils.log("[mail initialing contactlisting", contacts );
 
-
-            var $listEmpty      = $( $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" ) )
+            var $contacts       = $('.contacts')
             ,   appendToList    = append ? true : false
             ,   showMore
             ,   totals
+            ,   connectOptions
             ;
 
             // loop through all contact statuses and populate the associated lists
@@ -1637,18 +1638,115 @@
             //      this         = current API contact
             //      $listItem    = jQuery object of the contact category listItem
             //
+            bidx.utils.log('contactCategory', contactCategory);
+            function _delegateActionDisconnect( $listItem, category )
+            {
+                $listItem.on('click', '*[data-btn="connectcancel"]', function ( e )
+                {
+                    var item = this
+                    ,   $list           =   $(this).parents( "*[data-requestId]" )
+                    ,   $badge          =   $('.trigger-' + category + '-contacts .badge')
+                    ,   badgeValue      =   parseInt( $badge.text() )
+                    ,   contactId       =   $list.attr( "data-requestId" )
+                    ,   contact         =   parseInt( contactId, 10)
+                    ;
+
+                    bidx.common.doCancelConnectRequest(
+                    {
+                        contact: contact
+                    ,   callback: function()
+                        {
+                            $list.fadeOut( "slow", function()
+                            {
+                                $list.remove();
+                                badgeValue  =   badgeValue - 1;
+                                $badge.text(badgeValue);
+
+                            });
+                        }
+                    } );
+                });
+            }
+
+            function _delegateActionConnect( $listItem, category )
+            {
+                $listItem.on('click', '*[data-btn="connectaccept"]', function ( e )
+                {
+                    var item = this
+                    ,   $delegateActiveList
+                    ,   $list           =   $(this).parents( "*[data-requestId]" )
+                    ,   $badge          =   $('.trigger-' + category + '-contacts .badge')
+                    ,   badgeValue      =   parseInt( $badge.text() )
+                    ,   $activeList     =   $('#activeRequests .contact-request-list')
+                    ,   $badgeActive    =   $('.trigger-active-contacts .badge')
+                    ,   badgeActiveVal  =   parseInt( $badgeActive.text() )
+                    ,   contactId       =   $list.attr( "data-requestId" )
+                    ,   contact         =   parseInt( contactId, 10)
+                    ,   $activeHtml     =   $($list.prop('outerHTML'));
+                    ;
+
+                    bidx.common.doCreateConnectRequest(
+                    {
+                        contact: contact
+                    ,   callback: function()
+                        {
+                            $list.fadeOut( "slow", function()
+                            {
+
+                                badgeValue  =   badgeValue - 1;
+                                $badge.text(badgeValue);
+
+                                if(!badgeActiveVal) // If no active contact then need to remove empty message first
+                                {
+                                    $activeList.html('');
+                                }
+
+                                //Adding To the Active Category Listing
+                                $activeHtml.find('.contact-request-buttons').remove(); // Remove Accept/Deny buttons inorder to add to active list
+
+                                $activeHtml.find('.blockProfile').remove();
+
+                                //_getContactsCallback.call( 'active', 'active', $activeHtml );
+
+                                $activeList.append( $activeHtml );
+
+                                $delegateActiveList     =   $activeList.find('[data-requestId=' + contactId + ']');
+
+                                bidx.utils.log( 'delegateList', $delegateActiveList);
+
+                                _delegateActionDisconnect($delegateActiveList, 'active');
+
+                                badgeActiveVal =    badgeActiveVal + 1;
+
+                                $badgeActive.text(badgeActiveVal);
+
+                                $list.remove();
+
+                            });
+                        }
+                    } );
+                });
+            }
+
+
             var callbacks =
             {
-                active:     function()
+                active:     function( $listItem )
                 {
+                    _delegateActionDisconnect( $listItem, contactCategory );
                 }
-            ,   pending:    function()
+            ,   pending:    function( $listItem )
                 {
+                    _delegateActionDisconnect( $listItem, contactCategory );
                 }
-            ,   ignored:    function()
+            ,   incoming:   function( $listItem )
                 {
+                     _delegateActionConnect( $listItem, contactCategory );
+
+                    _delegateActionDisconnect( $listItem, contactCategory );
+
                 }
-            ,   incoming:   function(  $listItem )
+            /*,   incoming:   function(  $listItem )
                 {
                     // this holds the current contact item (coming from API)
                     //
@@ -1663,7 +1761,7 @@
                     ,   action:          "accept"
                     };
 
-                    $listItem.find( ".btn-bidx-accept ")
+                    $listItem.find( '*[data-btn="connectstop"]' )
                         .attr( "href", "/" + $.param( params ) )
                         .click( _doMutateContactRequest )
                     ;
@@ -1672,15 +1770,14 @@
                     //
                     params.action = "ignore";
 
-                    $listItem.find( ".btn-bidx-ignore ")
+                    $listItem.find( '*[data-btn="connectaccept"]')
                         .attr( "href", "/" +$.param( params ) )
                         .click( _doMutateContactRequest )
                     ;
-                }
+                }*/
 
             };
-
-            return callbacks[ contactCategory ];
+                return callbacks[ contactCategory ];
         }
 
         // Generic function to create itemList based a snipped

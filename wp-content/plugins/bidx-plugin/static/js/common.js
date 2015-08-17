@@ -462,6 +462,98 @@
         } );
     } );
 
+    function doCreateConnectRequest( options )
+    {
+        var extraUrlParameters
+        ,   contact   =   options.contact
+        ;
+
+        extraUrlParameters =
+        [
+            {
+                label :     "contact"
+            ,   value :     contact
+            }
+        ];
+
+        bidx.api.call(
+             "contact.connect"
+        ,   {
+                groupDomain:            bidx.common.groupDomain
+            ,   extraUrlParameters:     extraUrlParameters
+            ,   success: function( response )
+                {
+                    bidx.utils.log("[connect] created a connect relationship",  response );
+                    if ( response && response.status === "OK" )
+                    {
+                        //  execute callback if provided
+                        if (options && options.callback)
+                        {
+                            options.callback( response.data );
+                        }
+                    }
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+                    if (options && options.error)
+                    {
+                        options.error( jqXhr );
+                    }
+
+                }
+            }
+        );
+    }
+
+    function doCancelConnectRequest( options )
+    {
+
+        var uriStatus
+        ,   statusMsg
+        ,   extraUrlParameters  =   []
+        ,   contact              = options.contact
+        ;
+
+        extraUrlParameters =
+        [
+            {
+                label :     "contact"
+            ,   value :     contact
+            }
+        ];
+
+        bidx.api.call(
+            "contact.disconnect"
+        ,   {
+                groupDomain:        bidx.common.groupDomain
+            ,   extraUrlParameters: extraUrlParameters
+            ,   success:            function( response )
+                                    {
+                                        bidx.utils.log("[connect] mutated a contact",  response );
+                                        if ( response && response.status === "OK" )
+                                        {
+                                            if (options && options.callback)
+                                            {
+                                                options.callback();
+                                            }
+                                             // window.bidx.controller.updateHash( params.updateHash, true );
+                                        }
+
+                                    }
+
+            ,   error:          function( jqXhr, textStatus )
+                                {
+                                    if (options && options.error)
+                                    {
+                                        options.error( jqXhr );
+                                    }
+
+                                }
+            }
+        );
+    }
+
     // Perform an API call to join the group
     //
     function leaveGroup( groupId, cb )
@@ -1382,6 +1474,10 @@
     ,   joinGroup:                      joinGroup
     ,   leaveGroup:                     leaveGroup
     ,   rate:							rate
+
+    ,   doCreateConnectRequest:         doCreateConnectRequest
+    ,   doCancelConnectRequest:         doCancelConnectRequest
+
 
     ,   getInvestorProfileId: function()
         {

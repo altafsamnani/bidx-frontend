@@ -342,7 +342,7 @@
                               </li>
                               <li class="list-group-item list-contact-menu">
                                 <a class="btn-block trigger-ignored-contacts" data-toggle="collapse" data-parent="#contacts" href="#ignoredRequests">
-                                        <?php _e('Ignored contact requests (0)')?>
+                                        <?php _e('Blocked contact requests (0)')?>
                                 </a>
                                 <div id="ignoredRequests" class="panel-collapse collapse">
                                     <div class="panel-body">
@@ -425,44 +425,35 @@
 -->
 </script>
 
-
 <script type="text/html" id="contact-request-incoming">
 <!--
-<div class="list-group js-fakecrop">
-    <div class="list-group-item-text">
-        <div class="row">
-            <div class="col-sm-10">
-                <h4 class="list-group-item-heading"><a href="/member/%contactId%">%contactName%</a></h4>
-                <div class="row contact-request-buttons">
-                    <div class="col-sm-6">
-                        <a href="#" class="btn btn-block btn-success btn-bidx-accept"><?php _e('Accept','bidxplugin')?></a>
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="#" class="btn btn-block btn-danger btn-bidx-ignore"><?php _e('Ignore','bidxplugin')?></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-2 actions">
-                <div class="btn-group pull-right">
-                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-chevron-down"></i>
-                    </button>
-                    <ul class="dropdown-menu box-border" role="menu">
-                        <li><a href="/member/%contactId%">View</a></li>
-                        <li><a class="deleteEntityItem" href="#">Block</a></li>
-                    </ul>
-                </div>
-            </div>
+  <li class="list-group-item" data-requestId = "%contactId%">
+    <a href="/member/%contactId%">%contactName%</a>
+    <div class="btn-group pull-right">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-chevron-down"></i>
+        </button>
+        <ul class="dropdown-menu box-border" role="menu">
+            <li><a href="/member/%contactId%">View</a></li>
+            <li><a data-btn="connectcancel">Cancel request</a></li>
+            <li><a class="blockProfile" href="#">Block</a></li>
+        </ul>
+    </div>
+    <div class="row contact-request-buttons">
+        <div class="col-sm-6">
+            <a class="btn btn-block btn-success btn-bidx-accept" data-btn="connectaccept"><?php _e('Accept','bidxplugin')?></a>
+        </div>
+        <div class="col-sm-6">
+            <a class="btn btn-block btn-danger btn-bidx-ignore" data-btn="connectcancel"><?php _e('Ignore','bidxplugin')?></a>
         </div>
     </div>
- </div>
+  </li>
 -->
 </script>
 
 <script type="text/html" id="contact-request-pending">
 <!--
- <ul class="list-group">
-  <li class="list-group-item">
+  <li class="list-group-item" data-requestId = "%contactId%">
     <a href="/member/%contactId%">%contactName%</a>
     <div class="btn-group pull-right">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -470,18 +461,16 @@
         </button>
         <ul class="dropdown-menu box-border" role="menu">
             <li><a href="/member/%contactId%">View</a></li>
-            <li><a class="deleteEntityItem" href="#">Block</a></li>
+            <li><a data-btn="connectcancel">Cancel request</a></li>
         </ul>
     </div>
   </li>
-</ul>
 -->
 </script>
 
 <script type="text/html" id="contact-request-active">
 <!--
-<ul class="list-group">
-  <li class="list-group-item">
+  <li class="list-group-item" data-requestId = "%contactId%">
     <a href="/member/%contactId%">%contactName%</a>
     <div class="btn-group pull-right">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -489,18 +478,16 @@
         </button>
         <ul class="dropdown-menu box-border" role="menu">
             <li><a href="/member/%contactId%">View</a></li>
-            <li><a class="deleteEntityItem" href="#">Disconnect</a></li>
+            <li><a data-btn="connectcancel">Disconnect</a></li>
         </ul>
     </div>
   </li>
-</ul>
 -->
 </script>
 
 <script type="text/html" id="contact-request-ignored">
 <!--
-<ul class="list-group">
-  <li class="list-group-item">
+  <li class="list-group-item" data-requestId = "%contactId%">
     <a href="/member/%contactId%">%contactName%</a>
     <div class="btn-group pull-right">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -508,11 +495,9 @@
         </button>
         <ul class="dropdown-menu box-border" role="menu">
             <li><a href="/member/%contactId%">View</a></li>
-            <li><a class="deleteEntityItem" href="#">Block</a></li>
         </ul>
     </div>
   </li>
-</ul>
 -->
 </script>
 
