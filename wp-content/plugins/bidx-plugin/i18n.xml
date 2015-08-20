@@ -107,13 +107,14 @@
     <Item value="mentor">Mentor</Item>
 
     <!-- Common Mentor strings -->
+    <Item value="offerMentoring">Offer Mentoring</Item>
     <Item value="receivedRequestFrom">You have a request from</Item>
     <Item value="pendingRequestTo">Your request is pending from</Item>
-    <Item value="mentoringActive">You are the mentor of</Item>
-    <Item value="wantsToMentor">wants to mentor your business</Item>
+    <Item value="mentoringActive">You are the mentor of this business</Item>
+    <Item value="wantsToMentor">wants to be your mentor</Item>
     <Item value="isMentoring">is mentoring your business</Item>
     <Item value="youAreMentoring">You are mentoring this business</Item>
-    <Item value="youAskedMentor">You asked mentoring for this business from</Item>
+    <Item value="youAskedMentor">You asked to mentor this business</Item>
 
     <Item value="btnStopMentor">Stop Mentoring</Item>
 
@@ -126,6 +127,21 @@
     <Item value="wantsFullAccess">requests full access</Item>
     <Item value="hasFullAccess">has full access</Item>
 
+    <!-- Cards -->
+    <Item value="bsCompleted">Completed</Item>
+    <Item value="bsFinanceNeeded">Finance Needed</Item>
+    <Item value="bsBusinessStage">Business stage</Item>
+    <Item value="bsYearSalesStarted">Year sales started</Item>
+    <Item value="bsIndustry">Industry</Item>
+    <Item value="bsCountryBusiness">Country of business</Item>
+    <Item value="bsViewBusiness">View Business</Item>
+
+    <Item value="cmDateRegistration">Date of registration</Item>
+    <Item value="cmRegistrationNumber">Registration number</Item>
+    <Item value="cmFiscalNumber">Fiscal number</Item>
+    <Item value="cmFLegalFormBusiness">Legal form of business</Item>
+    <Item value="cmCompany">View Company</Item>
+    
     <!-- Connection details -->
     <Item value="youAreInContact">You have active connection with this contact.</Item>
     <Item value="btnStopConnect">Stop connection</Item>

@@ -201,7 +201,7 @@
                     // now format it into array of objects with value and label
                     if ( !$.isEmptyObject(item.member) )
                     {
-                        bidxMeta       = bidx.utils.getValue( item, "member" );
+                        bidxMeta       = bidx.utils.getValue( item, "bidxMemberProfile" );
 
                         if ( bidxMeta  )
                         {

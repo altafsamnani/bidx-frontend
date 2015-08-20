@@ -8,9 +8,6 @@
     ,   bidxConfig          = window.bidxConfig || {}
     ;
 
-
-
-
     var placeBusinessThumb = function( item )
     {
         var thumb
@@ -57,6 +54,33 @@
         return thumb;
     };
 
+    var placeProfileThumbSmall = function( memberInfo )
+    {
+        var thumb
+        ,   profilePicture = bidx.utils.getValue( memberInfo.personalDetails.profilePicture, "document")
+        ;
+
+        if ( profilePicture )
+        {
+            thumb = $( "<div />", { "class": "img-cropper-sm pull-left" } )
+                        .append
+                        (
+                            $( "<img />", { "src": profilePicture, "class": "center-img" })
+                        );
+
+        }
+        else
+        {
+            thumb = $( "<div />", { "class": "icons-rounded-sm pull-left" } )
+                        .append
+                        (
+                            $( "<i />", { "class": "fa fa-user text-primary-light" })
+                        );
+        }
+
+        return thumb;
+    };
+
     var _getStaticDataVal = function ( data )
     {
         var dataArr
@@ -98,15 +122,15 @@
                     $( "<div />", { "class": "cardHeader hide-overflow" } )
                     .append
                     (
-                        $( "<div />", { "class": "info-cell pull-left" + (item.bidxMeta.bidxCompletionMesh ? "" : " hide"), "html": "Completed" + ": " + item.bidxMeta.bidxCompletionMesh + "%" } )
+                        $( "<div />", { "class": "info-cell pull-left" + (item.bidxMeta.bidxCompletionMesh ? "" : " hide"), "html": bidx.i18n.i( "bsCompleted" ) + ": " + item.bidxMeta.bidxCompletionMesh + "%" } )
                     )
                     .append
                     (
-                        $( "<div />", { "class": "info-cell pull-left", "html": "Finance Needed" + ": " + item.financingNeeded + " USD" } )
+                        $( "<div />", { "class": "info-cell pull-left", "html": bidx.i18n.i( "bsFinanceNeeded" ) + ": " + item.financingNeeded + " USD" } )
                     )
                     .append
                     (
-                        $( "<a />", { "href": "/businesssummary/" + item.bidxMeta.bidxEntityId, "class": "btn btn-primary btn-xs pull-right info-action main-margin-half", "html": "View Business" } )
+                        $( "<a />", { "href": "/businesssummary/" + item.bidxMeta.bidxEntityId, "class": "btn btn-primary btn-xs pull-right info-action main-margin-half", "html": bidx.i18n.i( "bsViewBusiness" ) } )
                     )
                 )
                 .append
@@ -156,7 +180,7 @@
                                             $( "<tr />" )
                                             .append
                                             (
-                                                $( "<td />", { "html": "Business stage" })
+                                                $( "<td />", { "html": bidx.i18n.i( "bsBusinessStage" ) })
                                             )
                                             .append
                                             (
@@ -168,7 +192,7 @@
                                             $( "<tr />" )
                                             .append
                                             (
-                                                $( "<td />", { "html": "Year sales started" })
+                                                $( "<td />", { "html": bidx.i18n.i( "bsYearSalesStarted" ) })
                                             )
                                             .append
                                             (
@@ -180,7 +204,7 @@
                                             $( "<tr />", { "class": (item.industry ? "" : " hide") })
                                             .append
                                             (
-                                                $( "<td />", { "html": "Industry" })
+                                                $( "<td />", { "html": bidx.i18n.i( "bsIndustry" ) })
                                             )
                                             .append
                                             (
@@ -192,7 +216,7 @@
                                             $( "<tr />", { "class": (item.countryOperation ? "" : " hide") })
                                             .append
                                             (
-                                                $( "<td />", { "html": "Country of business" })
+                                                $( "<td />", { "html": bidx.i18n.i( "bsCountryBusiness" ) })
                                             )
                                             .append
                                             (
@@ -227,11 +251,11 @@
                     $( "<div />", { "class": "cardHeader hide-overflow" } )
                     .append
                     (
-                        $( "<div />", { "class": "info-cell pull-left" + (item.dateCompanyEstab ? "" : " hide"), "html": "Date of registration" + ": " + item.dateCompanyEstab } )
+                        $( "<div />", { "class": "info-cell pull-left" + (item.dateCompanyEstab ? "" : " hide"), "html": bidx.i18n.i( "cmDateRegistration" ) + ": " + item.dateCompanyEstab } )
                     )
                     .append
                     (
-                        $( "<a />", { "href": "/company/" + item.bidxMeta.bidxEntityId, "class": "btn btn-primary btn-xs pull-right info-action main-margin-half", "html": "View Company" } )
+                        $( "<a />", { "href": "/company/" + item.bidxMeta.bidxEntityId, "class": "btn btn-primary btn-xs pull-right info-action main-margin-half", "html": bidx.i18n.i( "cmCompany" ) } )
                     )
                 )
                 .append
@@ -281,7 +305,7 @@
                                             $( "<tr />", { "class": (item.registrationNumber ? "" : " hide") })
                                             .append
                                             (
-                                                $( "<td />", { "html": "Registration number" })
+                                                $( "<td />", { "html": bidx.i18n.i( "cmRegistrationNumber" ) })
                                             )
                                             .append
                                             (
@@ -293,7 +317,7 @@
                                             $( "<tr />", { "class": (item.fiscalNumber ? "" : " hide") })
                                             .append
                                             (
-                                                $( "<td />", { "html": "Fiscal number" })
+                                                $( "<td />", { "html": bidx.i18n.i( "cmFiscalNumber" ) })
                                             )
                                             .append
                                             (
@@ -305,7 +329,7 @@
                                             $( "<tr />", { "class": (item.legalFormBusiness ? "" : " hide") })
                                             .append
                                             (
-                                                $( "<td />", { "html": "Legal form of business" })
+                                                $( "<td />", { "html": bidx.i18n.i( "cmFLegalFormBusiness" ) })
                                             )
                                             .append
                                             (
@@ -516,6 +540,7 @@
     ,   constructCompanyCardView:           constructCompanyCardView
     ,   constructActionBox:                 constructActionBox
     ,   connectActionBox:                   connectActionBox
+    ,   placeProfileThumbSmall:             placeProfileThumbSmall
     };
 
 } ( jQuery ));
