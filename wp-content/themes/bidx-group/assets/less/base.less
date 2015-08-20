@@ -275,6 +275,25 @@ h1, h2, h3, h4, h5, h6,
         vertical-align: middle;
     }
 }
+.icons-rounded-sm
+{
+    padding: ceil(@font-size-base * 0.7);
+    background-color: lighten(#000, 90%);
+    font-size: floor(@font-size-base * 2.2);
+    width: 50px;
+    height: 45px;
+    display: table;
+    text-align: center;
+    margin: -10px;
+    margin-right: 10px;
+    .rounded(1px);
+    .fa
+    {
+        color: lighten(#000, 60%);
+        display: table-cell;
+        vertical-align: middle;
+    }
+}
 
 .img-logo
 {
@@ -583,6 +602,7 @@ table.table-bottom-border
     top: 0;
     left: 0;
 }
+
 .img-cropper
 {
     .rounded(6px);
@@ -594,6 +614,23 @@ table.table-bottom-border
     img
     {
         .rounded(6px);
+        position: absolute;
+    }
+}
+
+.img-cropper-sm
+{
+    .rounded(2px);
+    position: relative;
+    overflow: hidden;
+    width: 45px;
+    height: 45px;
+    z-index: 1;
+    margin: -10px;
+    margin-right: 10px;
+    img
+    {
+        .rounded(2px);
         position: absolute;
     }
 }
@@ -1999,6 +2036,7 @@ select
     padding: ceil(@font-size-base * 0.7);
     margin: 10px 0;
     border-radius: 0;
+    line-height: 2.2;
 }
 
 // badges.less

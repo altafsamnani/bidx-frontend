@@ -1,22 +1,12 @@
 ;( function ( $ )
 {
     "use strict";
-    var $mainElement            = $("#mentor-dashboard")
-    ,   $mainViews              = $mainElement.find(".view")
-    ,   $mainModals             = $mainElement.find(".modalView")
-    ,   $mainModal
-
-    ,   $bpElement              = $("div.container #businessSummary")
+    var $bpElement              = $("div.container #businessSummary")
     ,   $mpElement              = $(".bidx-member_profile")
     ,   $entreDash              = $("#entrepreneur-dashboard")
     ,   $mentorDash             = $("#mentor-dashboard")
-    ,   $mainBpViews            = $bpElement.find(".view")
 
-    ,   $element                = $mainElement.find(".mentor-mentordashboard")
-    ,   $views                  = $element.find(".view")
     ,   bidx                    = window.bidx
-    ,   $modals                 = $element.find(".modalView")
-    ,   $modal
     ,   currentGroupId          = bidx.common.getCurrentGroupId( "currentGroup ")
     ,   currentUserId           = bidx.common.getCurrentUserId( "id" )
     ,   appName                 = "mentor"
@@ -39,32 +29,18 @@
     ,   requestStatus           // "accepted", "rejected" or "requested"
     ,   isTheMentor
     ,   isTheInitiator
-    ,   isOwnProfile
     ,   relChecks
 
     ;
 
-    if ( bidxConfig.context.businessSummaryId !== undefined && ownerId === currentUserId)
-    {
-        isOwnBusiness = true;
-    }
-
     function _oneTimeSetup()
     {
-        var option
-        ,   listArrItems = []
-        ,   $options
-        ;
-
-        //  disabled links
-        //
-        $element.delegate( "a.disabled", "click", function( e )
-        {
-            e.preventDefault();
-        } );
-
+        start();
         delegateActions();
+    }
 
+    var start = function ()
+    {
         if ( authenticated )
         {
             if ( bidx.globalChecks.isBusinessPage() )
@@ -81,27 +57,7 @@
                 }
             }
         }
-    }
-
-    var doOfferMentoringMultipleBusinesses = function ()
-    {
-        $.each( $businessElements, function ( index, bs )
-        {
-            getEntityMentoringRequests(
-            {
-                id: $(bs).data( "bsid" )
-            ,   callback: function( result )
-                {
-                    if ( $.isEmptyObject( result ) && isMentor && $(bs).find( ".actions button" ).length === 0 )
-                    {
-                        $(bs).find( ".actions" ).prepend( renderOfferBtn() );
-                    }
-                }
-            } );
-        });
-
     };
-
 
     var renderOfferBtn = function ( options )
     {
@@ -109,7 +65,7 @@
 
         if ( options === "large" )
         {
-            btn = $( "<button />", { "class": "btn btn-mentor bidxRequestToMentor", "data-btn": "offerMentoring", "html": "Offer Mentoring" } )
+            btn = $( "<button />", { "class": "btn btn-mentor bidxRequestToMentor", "data-btn": "offerMentoring", "html": bidx.i18n.i( "offerMentoring" ) } )
                     .prepend
                     (
                         $( "<i />", { "class": "fa fa-compass fa-big fa-above" } )
@@ -117,9 +73,8 @@
         }
         else
         {
-            btn = $( "<button />", { "class": "btn btn-sm btn-mentor pull-right bidxRequestToMentor", "data-btn": "offerMentoring", "html": "Offer Mentoring" } )
+            btn = $( "<button />", { "class": "btn btn-sm btn-mentor pull-right bidxRequestToMentor", "data-btn": "offerMentoring", "html": bidx.i18n.i( "offerMentoring" ) } );
         }
-
 
         return btn;
     };
@@ -139,7 +94,7 @@
         ,   bsids = []
         ;
 
-        if ( $mentorActivities.length )
+        if ( bidx.globalChecks.isBusinessPage() && $mentorActivities.length )
         {
             $mentorActivities.fadeIn();
         }
@@ -148,29 +103,10 @@
         // else iterate through all the data-bsid and create an array
         if ( bidx.globalChecks.isBusinessPage() )
         {
-            bsid = parseInt( bidxConfig.context.businessSummaryId, 10);
-        }
-        else if ( $businessElements.length )
-        {
-            $.each( $businessElements, function ( i, b )
-            {
-                 bsids.push( $(this).attr( "data-bsid") );
-            });
-        }
-        else if ( databsids )
-        {
-            bsids = databsids;
-        }
-        else
-        {
-            bidx.utils.log("BSID elements not present", bsids);
-        }
-
-        // Check if the current business is own entity
-        if ( bsid )
-        {
             var ownBusinesses;
-
+            
+            bsid = parseInt( bidxConfig.context.businessSummaryId, 10);
+            
             if ( bidxConfig.session && bidxConfig.session.wp.entities.bidxBusinessSummary )
             {
                 ownBusinesses = bidxConfig.session.wp.entities.bidxBusinessSummary;
@@ -184,12 +120,25 @@
                 } );
             }
         }
-        else if ( bsids.length )
+        else if ( bidx.globalChecks.isProfilePage() )
         {
+            $.each( $businessElements, function ( i, b )
+            {
+                 bsids.push( $(this).attr( "data-bsid") );
+            });
+
+            isOwnBusiness = bidx.globalChecks.isOwnProfile() ? true : false;
+        }
+        else if ( databsids )
+        {
+            bsids = databsids;
+
+            // in Dashboards is always an owned business
             isOwnBusiness = true;
         }
         else
         {
+            bidx.utils.log("BSID elements not present", bsids);
             bidx.utils.log( "checkMentoringRelationship::: no BSIDs found" );
         }
 
@@ -215,7 +164,6 @@
 
                     if ( isThereRelationship )
                     {
-
                         isTheMentor     = ( request.mentorId    === currentUserId ) ? true : false;
                         isTheInitiator  = ( request.initiatorId === currentUserId ) ? true : false;
 
@@ -226,30 +174,14 @@
                         relChecks.isTheInitiator        = isTheInitiator;
                         relChecks.requestStatus         = requestStatus;
                         relChecks.isOwnBusiness         = isOwnBusiness;
-                        relChecks.isOwnProfile          = isOwnProfile;
                         relChecks.businessId            = request.entityId;
 
-                        // Call the servise only if the mentorId is not matching currentUserId...
-                        // ...otherwise get the data from the session
-                        if ( currentUserId !== request.mentorId )
-                        {
-                            getMentorInfo( request.mentorId, request, relChecks );
-                        }
-                        else
-                        {
-                            mentorInfo.bidxMeta = {};
-                            mentorInfo.bidxMeta.bidxMemberId = bidxConfig.session.id;
-                            mentorInfo.displayName = bidxConfig.session.displayName;
-
-                            constructMentorBox( mentorInfo, request, relChecks );
-                        }
+                        getMentorInfo( request.mentorId, request, relChecks );
                     }
-
                 }
             } );
         }
     };
-
 
     var getMentorInfo = function ( mentorId, request, relChecks )
     {
@@ -270,18 +202,20 @@
                 bidx.utils.log("status", status);
             }
         });
-
     };
 
     var constructMentorBox = function ( memberInfo, request, relChecks )
     {
-        // bidx.utils.log( " name:: ", memberInfo.displayName," ::::: relChecks:: ", relChecks);
-        
+        // bidx.utils.log("=================================================================");
+        // bidx.utils.log( " name:: ", memberInfo.displayName," ::::: relChecks:: ", relChecks, " ::::: request:: ", request);
+        // bidx.utils.log("=================================================================");
+
         var $mentorItem
         ,   $memberLink
+        ,   $memberThumb
         ,   $actions
         ,   $bsElement
-        ,   canInteract = relChecks.isThereRelationship ? true : false
+        ,   isThereRelationship = relChecks.isThereRelationship
         ,   statusText
         ;
 
@@ -305,12 +239,14 @@
             $bsElement = $mentorDash.find( '*[data-bsid="'+ relChecks.businessId +'"]' );
         }
 
-        // If do not continue if there is already an mentor box with the same requestId
+        // Do not continue if there is already an mentor box with the same requestId
         //
         var $elAlert = $bsElement.find( ".alert" );
         if ( $elAlert.length && $elAlert.data( "requestid" ) === request.requestId ) { return; }
 
-        $memberLink = $( "<a />", { "href": "/member/" + memberInfo.bidxMeta.bidxMemberId, "html": memberInfo.displayName } );
+        $memberThumb = bidx.construct.placeProfileThumbSmall( memberInfo );
+
+        $memberLink = $( "<a />", { "href": "/member/" + memberInfo.bidxMeta.bidxOwnerId, "html": memberInfo.bidxMeta.bidxOwnerDisplayName } );
 
         $mentorItem =
             $( "<div />", { "class": "alert alert-sm hide-overflow bg-" + bidx.common.capitalizeFirstLetter( request.status ), "data-requestId": request.requestId } )
@@ -332,15 +268,15 @@
         {
             case "accepted":
 
-                // <a href="/mail#mail/compose/recipients=1533" class="btn btn-xs btn-info" title="Send a message" target="_blank">Contact</a>
-                // <button type="button" data-btn="accept" class="grantAccess btn btn-xs btn-success" data-summaryid="9785" data-investorid="1351">Accept</button>
-                // <button type="button" data-btn="reject" class="grantAccess btn btn-xs btn-danger" data-summaryid="9785" data-investorid="1351">Reject</button>
-
-                if ( canInteract && relChecks.isOwnBusiness )
+                if ( isThereRelationship && relChecks.isOwnBusiness )
                 {
                     $actions = $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "stop", "html": bidx.i18n.i( "btnRemove" ) } );
                     
                     $bsElement.find( ".pull-left" ).last()
+                        .append
+                        (
+                            $memberThumb
+                        )
                         .append
                         (
                             $memberLink
@@ -351,6 +287,10 @@
                         )
                     ;
                 }
+                // else if ( isThereRelationship )
+                // {
+
+                // }
                 else
                 {
                     $actions = $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "stop", "html": bidx.i18n.i( "btnStopMentor" ) } );
@@ -368,7 +308,7 @@
             
             case "requested":
 
-                if ( canInteract && relChecks.isTheInitiator )
+                if ( isThereRelationship && relChecks.isTheInitiator )
                 {
                     $actions =
                         $( "<span />" )
@@ -376,21 +316,21 @@
                             (
                                 $( "<button />", { "class": "btn btn-xs btn-success", "data-btn": "cancel", "html": bidx.i18n.i( "btnCancelRequest" ) } )
                             )
-                            .append( "&nbsp;" )
-                            .append
-                            (
-                                $( "<button />", { "class": "btn btn-xs btn-warning", "data-btn": "remind", "html": bidx.i18n.i( "btnRemind" ) } )
-                            )
+                            // .append( "&nbsp;" )
+                            // .append
+                            // (
+                            //     $( "<button />", { "class": "btn btn-xs btn-warning", "data-btn": "remind", "html": bidx.i18n.i( "btnRemind" ) } )
+                            // )
                     ;
 
                     $bsElement.find( ".pull-left" ).last()
                         .append
                         (
-                            $( "<span />", { "html": bidx.i18n.i( "youAskedMentor" ) + " " } )
+                            $memberThumb
                         )
                         .append
                         (
-                            $memberLink
+                            $( "<span />", { "html": bidx.i18n.i( "youAskedMentor" ) + " " } )
                         )
                     ;
                 }
@@ -411,6 +351,10 @@
                     $bsElement.find( ".pull-left" ).last()
                         .append
                         (
+                            $memberThumb
+                        )
+                        .append
+                        (
                             $memberLink
                         )
                         .append
@@ -428,7 +372,7 @@
             break;
         }
 
-        if ( canInteract )
+        if ( isThereRelationship )
         {
             if ( $bpElement.length )
             {
@@ -438,6 +382,8 @@
             $bsElement.find( ".mentor-actions" ).last().append( $actions );
         }
 
+        $( ".img-cropper-sm img" ).fakecrop( {fill: true, wrapperWidth: 50, wrapperHeight: 50} );
+
     };
 
     var delegateActions = function ()
@@ -446,6 +392,11 @@
 
         $(document).on('click', '*[data-btn="accept"]', function ( e )
         {
+            var $el = $(this)
+            ,   $alert = $el.parents( ".alert" );
+
+            $el.addClass( "disabled" );
+
             options.requestId = getRequestId(this);
             options.action = "accepted";
             options.type = "mentor";
@@ -455,11 +406,18 @@
                 params: options
             ,   callback: function()
                 {
-                    // Remove the facet
+                    $alert.fadeOut( "slow", function()
+                    {
+                        $alert.remove();
+                        start();
+                    });
                 }
-            ,   error: function(jqXhr)
+            ,   error: function( jqXhr )
                 {
                     var response = $.parseJSON( jqXhr.responseText);
+
+                    $el.removeClass( "disabled" );
+
                     bidx.utils.error( "Client  error occured", response );
                 }
             } );
@@ -467,6 +425,11 @@
 
         $(document).on('click', '*[data-btn="reject"]', function ( e )
         {
+            var $el = $(this)
+            ,   $alert = $el.parents( ".alert" );
+
+            $el.addClass( "disabled" );
+
             options.requestId = getRequestId(this);
             options.action = "rejected";
             options.type = "mentor";
@@ -476,11 +439,18 @@
                 params: options
             ,   callback: function()
                 {
-                    // Remove the facet
+                    $alert.fadeOut( "slow", function()
+                    {
+                        $alert.remove();
+                        start();
+                    });
                 }
-            ,   error: function(jqXhr)
+            ,   error: function( jqXhr )
                 {
                     var response = $.parseJSON( jqXhr.responseText);
+
+                    $el.removeClass( "disabled" );
+
                     bidx.utils.error( "Client  error occured", response );
                 }
             } );
@@ -488,7 +458,11 @@
 
         $(document).on('click', '*[data-btn="cancel"]', function ( e )
         {
-            var $alert = $(this).parents( ".alert" );
+            var $el = $(this)
+            ,   $alert = $el.parents( ".alert" );
+
+            $el.addClass( "disabled" );
+
             options.requestId = getRequestId(this);
 
            _doCancelMentoringRequest(
@@ -510,11 +484,24 @@
                         }
                     });
                 }
+            ,   error: function( jqXhr )
+                {
+                    var response = $.parseJSON( jqXhr.responseText);
+
+                    $el.removeClass( "disabled" );
+
+                    bidx.utils.error( "Client  error occured", response );
+                }
             } );
         });
 
         $(document).on('click', '*[data-btn="stop"]', function ( e )
         {
+            var $el = $(this)
+            ,   $alert = $el.parents( ".alert" );
+
+            $el.addClass( "disabled" );
+
             options.requestId = getRequestId(this);
 
            _doCancelMentoringRequest(
@@ -522,7 +509,19 @@
                 params: options
             ,   callback: function()
                 {
-                    //
+                    $alert.fadeOut( "slow", function()
+                    {
+                        $alert.remove();
+                        start();
+                    });
+                }
+            ,   error: function( jqXhr )
+                {
+                    var response = $.parseJSON( jqXhr.responseText);
+
+                    $el.removeClass( "disabled" );
+
+                    bidx.utils.error( "Client  error occured", response );
                 }
             } );
         });
@@ -539,6 +538,8 @@
             ,   params = {}
             ;
 
+            $el.addClass( "disabled" );
+
             params.entityId = getBsId(this);
             params.initiatorId = parseInt(currentUserId, 10);
             params.mentorId = currentUserId;
@@ -548,7 +549,7 @@
                 params: params
             ,   callback: function()
                 {
-                    $el.fadeOut( "slow", function() {
+                    $el.fadeOut( "fast", function() {
                         $el.remove();
                     });
 
@@ -564,7 +565,26 @@
                 {
                     var response = $.parseJSON( jqXhr.responseText);
 
-                    bidx.utils.error( "Client  error occured", response );
+                    if ( response.code === "alreadyMentor" )
+                    {
+                        $el.fadeOut( "fast", function() {
+                            $el.remove();
+                        });
+
+                        getMentoringRequest(
+                        {
+                            callback: function( result )
+                            {
+                                checkMentoringRelationship( result );
+                            }
+                        } );
+                    }
+                    else
+                    {
+                        $el.removeClass( "disabled" );
+
+                        bidx.utils.error( "Client  error occured", response );                        
+                    }
                 }
             } );
         });
@@ -579,7 +599,6 @@
         {
             return $( el ).parents( "*[data-bsid]" ).attr( "data-bsid" );
         }
-
     };
 
     var businessSummaryMentorActions = function ( )
@@ -592,14 +611,14 @@
                 checkOfferMentoring();
             }
         } );
-
     };
 
     var checkOfferMentoring = function ()
     {
         getMentoringRequestsForCurrentUser(
         {
-            callback: function( result )
+            id: parseInt( bidxConfig.context.businessSummaryId, 10)
+        ,   callback: function( result )
             {
                 if ( $.isEmptyObject( result ) && isMentor && !isOwnBusiness && $bpElement.length )
                 {
@@ -608,6 +627,25 @@
             }
         } );
     };
+
+    var doOfferMentoringMultipleBusinesses = function ()
+    {
+        $.each( $businessElements, function ( index, bs )
+        {
+            getMentoringRequestsForCurrentUser(
+            {
+                id: $(bs).data( "bsid" )
+            ,   callback: function( result )
+                {
+                    if ( $.isEmptyObject( result ) && isMentor && $(bs).find( ".actions button" ).length === 0 )
+                    {
+                        $(bs).find( ".actions" ).prepend( renderOfferBtn() );
+                    }
+                }
+            } );
+        });
+    };
+
 
     var entrepreneurProfileMentorActions = function ( )
     {
@@ -640,7 +678,7 @@
                 {
                     var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
 
-                    _showMainError("Something went wrong while retrieving contactlist of the member: " + status);
+                    bidx.utils.log("Something went wrong while retrieving contactlist of the member: " + status);
                 }
             }
         );
@@ -661,7 +699,7 @@
         bidx.api.call(
             "mentorRelationships.getEntityForUser"
         ,   {
-                id:                     parseInt( bidxConfig.context.businessSummaryId, 10 )
+                id:                     options.id
             ,   groupDomain:            bidx.common.groupDomain
             ,   extraUrlParameters:     extraUrlParameters
             ,   success: function( result )
@@ -676,7 +714,7 @@
                 {
                     var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
 
-                    _showMainError("Something went wrong while retrieving contactlist of the member: " + status);
+                    bidx.utils.log("Something went wrong while retrieving contactlist of the member: " + status);
                 }
             }
         );
@@ -699,11 +737,11 @@
                         options.callback( result );
                     }
                 }
-                , error: function( jqXhr, textStatus )
+            , error: function( jqXhr, textStatus )
                 {
                     var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
 
-                    _showMainError("Something went wrong while retrieving contactlist of the member: " + status);
+                    bidx.utils.log("Something went wrong while retrieving contactlist of the member: " + status);
                 }
             }
         );
@@ -713,7 +751,6 @@
 
     var _doCreateMentorRequest = function( options )
     {
-
         var uriStatus
         ,   params      = options.params
         ,   initiatorId = bidx.utils.getValue(params, 'initiatorId')
@@ -745,12 +782,10 @@
 
             ,   error: function( jqXhr, textStatus )
                 {
-
                     if (options && options.error)
                     {
                         options.error( jqXhr );
                     }
-
                 }
             }
         );
@@ -780,48 +815,32 @@
                     bidx.utils.log("[mentor] mutated a contact",  response );
                     if ( response && response.status === "OK" )
                     {
-
                         if (options && options.callback)
                         {
                             options.callback();
                         }
-
-                         // window.bidx.controller.updateHash(  params.updateHash, true );
-
                     }
-
                 }
 
             ,   error: function( jqXhr, textStatus )
                 {
-
                     var response = $.parseJSON( jqXhr.responseText);
 
                     if (options && options.error)
                     {
                         options.error();
                     }
-
                 }
             }
         );
     };
 
-
     var _doCancelMentoringRequest = function( options )
     {
-
         var uriStatus
         ,   statusMsg
         ,   params = options.params
         ;
-
-         //uriStatus = document.location.href.split( "#" ).shift() + "?smsg=8&sparam=" + window.btoa('action=' + params.action) + '#mentoring/mentor';
-         //document.location.href = uriStatus;
-        //bidx.controller.updateHash(uriStatus, true, true);
-        //bidx.controller.doSuccess( uriStatus,false);
-
-        //return;
 
         bidx.api.call(
              "mentorRelationships.cancel"
@@ -835,29 +854,14 @@
                                     {
 
                                         //  execute callback if provided
-                                        // uriStatus = document.location.href.split( "#" ).shift() + "?smsg=10" + '#mentoring/mentor';
-
-                                        //bidx.controller.updateHash(uriStatus, true, true);
-                                        //bidx.controller.doSuccess( uriStatus,false);
-                                        // statusMsg   =   (params.action === 'stop') ? 'statusStop' : 'statusCancel';
-
-                                        // _showMainSuccessMsg(bidx.i18n.i(statusMsg));
-
                                         if (options && options.callback)
                                         {
                                             options.callback();
                                         }
-
-                                         // window.bidx.controller.updateHash( params.updateHash, true );
-
-
                                     }
-
                                 }
-
             ,   error:          function( jqXhr, textStatus )
                                 {
-
                                     var response = $.parseJSON( jqXhr.responseText);
 
                                     // 400 errors are Client errors
@@ -865,197 +869,28 @@
                                     if ( jqXhr.status >= 400 && jqXhr.status < 500)
                                     {
                                         bidx.utils.error( "Client  error occured", response );
-                                        _showMainError( "Something went wrong while updating a relationship: " + response.code );
+                                        bidx.utils.log( "Something went wrong while updating a relationship: " + response.code );
                                     }
+
                                     // 500 erors are Server errors
                                     //
                                     if ( jqXhr.status >= 500 && jqXhr.status < 600)
                                     {
                                         bidx.utils.error( "Internal Server error occured", response );
-                                        _showMainError( "Something went wrong while updating a relationship: " + response.code );
+                                        bidx.utils.log( "Something went wrong while updating a relationship: " + response.code );
                                     }
 
                                     if (options && options.callback)
                                     {
                                         options.callback();
                                     }
-
                                 }
             }
         );
     };
 
-
-    //  ################################## MODAL #####################################  \\
-
-
-    /*************** Main Views *************************/
-
-    //  show modal view with optionally and ID to be appended to the views buttons
-    function _showMainModal( options )
-    {
-        var href
-        ,   replacedModal
-        ,   action
-        ,   redirect
-        ,   actionKey
-        ,   actionMsg
-        ,   btnKey
-        ,   btnTxt
-        ,   params = {}
-        ;
-
-        if(options.params)
-        {
-            params  =   options.params;
-            action  =   options.params.action;
-            redirect =   bidx.utils.getValue(options.params, 'redirect');
-        }
-
-        bidx.utils.log("[dashboard] show modal", options );
-
-        $mainModal        = $mainModals.filter( bidx.utils.getViewName ( options.view, "modal" ) ).find( ".bidx-modal");
-
-        if( action )
-        {
-            // Modal popup message
-            action      =   action.replace( /ed/g, '');
-            actionKey   =   'modal' + action.substring(0,1).toUpperCase() + action.substring(1); // ex 'modalAccept, modalCancel, modalIgnore', 'modalStop'
-            actionMsg   =   bidx.i18n.i( actionKey ) ;
-            bidx.utils.log("action", actionKey  );
-            $mainModal.find(".modal-body").empty().append( actionMsg );
-
-            //Modal Primary Button Text
-            btnKey      =   'modalBtn' + action.substring(0,1).toUpperCase() + action.substring(1); // ex 'modalBtnAccept, modalBtnCancel, modalBtnIgnore', 'modalBtnStop'
-            btnTxt      =   bidx.i18n.i( btnKey );
-            $mainModal.find(".btn-primary").html(btnTxt);
-
-            //Modal header change
-            $mainModal.find("#myModalLabel").html(btnTxt);
-
-            //Change the cancel button link if refresh exists
-            if( redirect )
-            {
-                $mainModal.find(".btn-request-cancel").attr( 'href' , redirect + '/cancel=true') ;
-            }
-        }
-
-        $mainModal.find( ".btn-primary[href], .btn-cancel[href]" ).each( function()
-        {
-            var $this = $( this );
-
-            href = $this.attr( "data-href" ) + $.param( params ) ;
-
-            $this.attr( "href", href );
-        } );
-
-        if( options.onHide )
-        {
-            //  to prevent duplicate attachments bind event only onces
-            $mainModal.on( 'hidden.bs.modal', options.onHide );
-        }
-
-        if( options.onShow )
-        {
-
-            $mainModal.on( 'show.bs.modal' ,options.onShow );
-        }
-
-        $mainModal.modal( {} );
-
-    }
-
-    //  closing of modal view state
-    var _closeMainModal = function(options)
-    {
-        if ($mainModal)
-        {
-            if (options && options.unbindHide)
-            {
-                $mainModal.unbind('hide');
-            }
-            $mainModal.modal('hide');
-        }
-    };
-
-    var _showMainView = function(view, showAll)
-    {
-
-        //  show title of the view if available
-        if (!showAll)
-        {
-            $mainViews.hide();
-        }
-         var $mainView = $mainViews.filter(bidx.utils.getViewName(view)).show();
-    };
-    var _showBpView = function(view, showAll)
-    {
-
-        //  show title of the view if available
-        if (!showAll)
-        {
-            $mainBpViews.hide();
-        }
-         var $mainView = $mainBpViews.filter(bidx.utils.getViewName(view)).show();
-    };
-
-    var _showMainHideView = function(view, hideview)
-    {
-
-        $mainViews.filter(bidx.utils.getViewName(hideview)).hide();
-        var $mainView = $mainViews.filter(bidx.utils.getViewName(view)).show();
-
-    };
-
-    var _hideMainView = function(hideview)
-    {
-        $mainViews.filter(bidx.utils.getViewName(hideview)).hide();
-    };
-
-    // display generic error view with msg provided
-    //
-    function _showMainError( msg )
-    {
-        $mainViews.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
-        _showMainView( "error" , true);
-    }
-    // display generic error view with msg provided
-    //
-    function _showBpError( msg )
-    {
-        $mainBpViews.filter( "#businessSummaryCollapse-MentoringDetails .viewError" ).append( msg ).show();
-       // _showBpView( "error" , true);
-    }
-
-    function _hideBpError(msg)
-    {
-        $mainBpViews.filter( "#businessSummaryCollapse-MentoringDetails .viewError" ).hide();
-    }
-     // Private functions
-    //
-    function _showMainSuccessMsg( msg , hideview )
-    {
-        if( hideview ) {
-            $mainViews.filter(bidx.utils.getViewName(hideview)).hide();
-        }
-
-        $mainViews.filter( ".viewMainsuccess" ).find( ".successMsg" ).text( msg );
-        _showMainView( "mainsuccess" );
-    }
-    function _showBpSuccessMsg( msg , hideview )
-    {
-        if( hideview ) {
-            $mainBpViews.filter(bidx.utils.getViewName(hideview)).hide();
-        }
-
-        $mainBpViews.filter( ".viewMainsuccess" ).find( ".successMsg" ).text( msg );
-        _showBpView( "mainsuccess", true );
-    }
-
     // ROUTER
-
-
-    //var navigate = function( requestedState, section, id )
+    // var navigate = function( requestedState, section, id )
     var navigate = function(options)
     {
         bidx.utils.log("routing options", options);
@@ -1065,301 +900,29 @@
 
         state  = options.state;
 
+        // switch (state)
+        // {
+        //     case "cancel":
+
+        //     break;
+
+        //     case "confirmRequest":
+
+        //     break;
+
+        //     case "confirmInitiateMentoring": 
+
+        //     break;
+
+        //     case "sendRequest":
 
 
-        switch (state)
-        {
-            /*case "load" :
+        //     break;
 
-                _showView("load");
-                break;
+        //     case 'mentor' :
 
-             case "help" :
-                 _menuActivateWithTitle(".Help","My mentor Helppage");
-                _showView("help");
-                break;*/
-
-            case "cancel":
-
-                _closeMainModal(
-                {
-                    unbindHide: true
-                } );
-
-                window.bidx.controller.updateHash("#cancel", false, true);
-
-            break;
-
-            case "confirmRequest":
-
-                _hideBpError(); // Remove previous occured error
-
-                _closeMainModal(
-                {
-                    unbindHide: true
-                } );
-
-                _showMainModal(
-                {
-                    view  : "confirmRequest"
-                ,   params: options.params
-                ,   onHide: function()
-                    {
-                        updateHash  = bidx.utils.getValue( options.params, 'redirect' );
-
-                        if( !updateHash )
-                        {
-                            updateHash  = '#mentoring/mentor';
-                            window.bidx.controller.updateHash( updateHash, false, false );
-
-                        }
-
-                    }
-                } );
-
-                break;
-
-            case "confirmInitiateMentoring": /***** Mentor this plan Start functionlaity **/
-
-                _hideBpError(); // Remove previous occured error
-                _closeMainModal(
-                {
-                    unbindHide: true
-                } );
-
-                if( options.params ) {
-                    bidx.utils.log('insideconfirm request');
-                    _showMainModal(
-                    {
-                        view  : "confirmRequest"
-                    ,   params: options.params
-                    ,   onHide: function()
-                        {
-                           // window.bidx.controller.updateHash("#mentoring/mentor", false, false);
-                        }
-                    } );
-                }
-            break;
-
-            case "sendRequest":
-                var btnHtml
-                ,   $mentorButton
-                ,   params = options.params
-                ,   smsg
-                ,   action = params.action
-                ,   initiate
-                ;
-
-                action = (params.action) ? params.action : 'default';
-
-                $mentorButton = $mainElement.find( '.btn-request' );
-                btnHtml = $mentorButton.text();
-                $mentorButton.addClass( "disabled" ).i18nText("msgWaitForSave");
-
-                _showMainView("loadrequest", true);
-
-                switch( action )
-                {
-
-                    case 'bpCancel':
-                    params.updateHash = '#loadMentors/' + params.entityId;
-
-                    _doCancelMentoringRequest(
-                        {
-                            params: params
-                        ,   callback: function()
-                            {
-                                _showBpSuccessMsg(bidx.i18n.i("statusCancel"));
-                                _showMainHideView("match", "loadrequest");
-                                $mentorButton.removeClass( "disabled" );
-                                $mentorButton.text(btnHtml);
-                                _closeMainModal(
-                                {
-                                    unbindHide: true
-                                } );
-
-                            }
-                        } );
-
-
-                    break;
-
-                    case 'cancel':
-                    case 'stop':
-
-                       params.updateHash = '#mentoring/mentor';
-
-                       _doCancelMentoringRequest(
-                        {
-                            params: params
-                        ,   callback: function()
-                            {
-                                _showMainSuccessMsg(bidx.i18n.i("statusCancel"));
-                                _showMainHideView("respond", "loadrequest");
-                                $mentorButton.removeClass( "disabled" );
-                                $mentorButton.text(btnHtml);
-                                _closeMainModal(
-                                {
-                                    unbindHide: true
-                                } );
-
-                            }
-                        } );
-                    break;
-
-
-                    case 'send':
-
-                        params.updateHash = '#mentoring/mentor';
-
-                         _doCreateMentorRequest(
-                        {
-                            params: params
-                        ,   callback: function()
-                            {
-                                _showMainSuccessMsg(bidx.i18n.i("statusRequest"));
-                                _showMainHideView("match", "loadrequest");
-                                $mentorButton.removeClass( "disabled" );
-                                $mentorButton.text(btnHtml);
-                                _closeMainModal(
-                                {
-                                    unbindHide: true
-                                } );
-
-                            }
-                        ,   error:  function(jqXhr)
-                            {
-                                var response = $.parseJSON( jqXhr.responseText);
-                                bidx.utils.error( "Client  error occured", response );
-                                _showMainError( bidx.i18n.i("errorRequest") + response.text);
-                                 _hideMainView( 'loadrequest');
-                                $mentorButton.removeClass( "disabled" );
-                                $mentorButton.text(btnHtml);
-                                _closeMainModal(
-                                {
-                                    unbindHide: true
-                                } );
-                            }
-                        } );
-                    break;
-
-                    case 'bpSend': // this is initiated from edit businesssummary-->mentor tab
-                        params.updateHash = '#loadMentors/' + params.entityId;
-
-
-                         _doCreateMentorRequest(
-                        {
-                            params: params
-                        ,   callback: function()
-                            {
-                               _showBpSuccessMsg(bidx.i18n.i("statusRequest"));
-                                _showMainHideView("match", "loadrequest");
-                                $mentorButton.removeClass( "disabled" );
-                                $mentorButton.text(btnHtml);
-                                _closeMainModal(
-                                {
-                                    unbindHide: true
-                                } );
-
-                            }
-                        ,   error:  function(jqXhr)
-                            {
-                                var response = $.parseJSON( jqXhr.responseText);
-                                bidx.utils.error( "Client  error occured", response );
-                                _showBpError( bidx.i18n.i("errorRequest") + response.text);
-                                _hideMainView( 'loadrequest');
-                                $mentorButton.removeClass( "disabled" );
-                                $mentorButton.text(btnHtml);
-                                _closeMainModal(
-                                {
-                                    unbindHide: true
-                                } );
-
-                            }
-                        } );
-
-                    break;
-
-                    default:
-                        initiate  =  params.initiate;
-
-                        params.updateHash = ( initiate === 'bp') ? '#loadMentors/' + params.entityId : '#mentoring/mentor';
-
-                        _doMutateMentoringRequest(
-                        {
-                            params: params
-                        ,   callback: function()
-                            {
-                                smsg       = (action === 'accepted') ? 'statusAccept' : 'statusIgnore';
-
-                                if(initiate === 'bp')
-                                {
-                                    _showBpSuccessMsg(bidx.i18n.i(smsg));
-                                }
-                                else
-                                {
-                                     _showMainSuccessMsg(bidx.i18n.i(smsg));
-                                }
-
-                                _showMainHideView("respond", "loadrequest");
-                                $mentorButton.removeClass( "disabled" );
-                                $mentorButton.text(btnHtml);
-                                _closeMainModal(
-                                {
-                                    unbindHide: true
-                                } );
-
-                            }
-                        ,   error: function(jqXhr)
-                            {
-                                var response = $.parseJSON( jqXhr.responseText);
-                                bidx.utils.error( "Client  error occured", response );
-                                _showBpError( bidx.i18n.i("errorRequest") + response.text);
-                                _showMainHideView("respond", "loadrequest");
-                                $mentorButton.removeClass( "disabled" );
-                                $mentorButton.text(btnHtml);
-                                _closeMainModal(
-                                {
-                                    unbindHide: true
-                                } );
-                            }
-                        } );
-
-                    break;
-                }
-
-                break;
-
-            case 'mentor' :
-                getMentoringRequest(
-                {
-                    list: "match"
-                ,   view: "match"
-                ,   callback: function( result )
-                    {
-                        var isMentor = bidx.utils.getValue( bidxConfig.session, "wp.entities.bidxMentorProfile" );
-
-                        if ( isMentor )
-                        {
-                           options.result = result;
-
-                            bidx.mentormentordashboard.navigate( options );
-                        }
-
-                        var isEntrepreneur = bidx.utils.getValue( bidxConfig.session, "wp.entities.bidxEntrepreneurProfile" );
-
-                        if ( isEntrepreneur )
-                        {
-                            options.result = result;
-
-                            bidx.entrepreneurmentordashboard.navigate( options );
-
-                        }
-                    }
-                } );
-
-                break;
-         }
+        //     break;
+        //  }
     };
 
     _oneTimeSetup();
@@ -1368,7 +931,6 @@
     var mentoring =
             {
                     navigate:                   navigate
-                ,   $element:                   $element
                 ,   doCreateMentorRequest:      _doCreateMentorRequest
                 ,   doMutateMentoringRequest:   _doMutateMentoringRequest
                 ,   doCancelMentoringRequest:   _doCancelMentoringRequest
@@ -1376,6 +938,8 @@
                 ,   getEntityMentoringRequests: getEntityMentoringRequests
                 ,   constructMentorBox:         constructMentorBox
                 ,   checkMentoringRelationship: checkMentoringRelationship
+                ,   getMentorInfo:              getMentorInfo
+                ,   delegateActions:            delegateActions
             };
 
 
@@ -1386,13 +950,8 @@
 
     window.bidx.commonmentordashboard = mentoring;
 
-    //Initialize Handlers
-    //_initHandlers();
-
-
-    if ($("body.bidx-mentor-dashboard").length && !bidx.utils.getValue(window, "location.hash").length)
+    if ( $("body.bidx-mentor-dashboard").length && !bidx.utils.getValue(window, "location.hash").length )
     {
-
         document.location.hash = "#mentoring/mentor";
     }
 

@@ -1,26 +1,24 @@
 <div id="mail" class="mainState mainStateMail">
-    <h1><?php _e('Your mailbox','bidxplugin')?></h1>
+
     <div class="row">
         <!-- Left menu -->
-        <div class="col-sm-2 side-menu">
-            <div class="well">
-                <div>
-                    <a class="btn btn-block btn-success" href="#mail/compose"><i class="fa fa-edit"></i> <?php _e('Compose','bidxplugin')?></a>
-                </div>
-                <div class="bidx-menuitems">
-                    <div class="bidx-mailFolders">
-                        <!-- menu items will be created by app -->
-                    </div>
-                    <div class="bidx-contacts">
-                        <a class="btn btn-block btn-info" href="#mail/contacts"><i class="fa fa-book"></i> <?php _e('Contacts','bidxplugin')?></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- mail stage: this is the ajax target -->
-        <section class="col-sm-10 mail">
-                <!-- ************************* utility views *********************************** -->
+        <section class="col-sm-8 mail">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h4><?php _e('Your mailbox','bidxplugin')?></h4>
+                    </div>
+                    <div class=" col-sm-8 btn-group">
+                        <div class="bidx-menuitems">
+                            <div class="bidx-mailFolders pull-right">
+                                <!-- menu items will be created by app -->
+                            </div>
+                            <div class="pull-right">
+                                <a class="btn btn-success" href="#mail/compose"><i class="fa fa-edit"></i> <?php _e('Compose','bidxplugin')?></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="view viewLoad alert alert-info text-center">
                     <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Loading...','bidxplugin')?>
                 </div>
@@ -31,7 +29,6 @@
                 </article>
 
                 <article class="view viewUndefined"><h1><?php _e('No view defined for this state','bidxplugin')?></h1></article>
-
 
                 <!-- ************************* application views *********************************** -->
 
@@ -188,95 +185,6 @@
                     </form>
                 </article>
 
-                  <!-- contacts view -->
-                <article class="view viewContacts">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <strong><?php _e('Contacts','bidxplugin')?></strong>
-                        </div>
-                        <div class="panel-body">
-
-                            <div class="toast-wrapper"></div>
-
-                            <!-- Accordion -->
-                            <div id="contacts">
-                                <!-- ACTIVE REQUESTS -->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <a class="btn-block trigger-active-contacts" data-toggle="collapse" data-parent="#contacts" href="#activeRequests">
-                                            <?php _e('Active contact requests (0)')?>
-                                        </a>
-                                    </div>
-                                    <div id="activeRequests" class="panel-collapse collapse in">
-                                        <div class="panel-body">
-                                            <div class="contact-request-list list-unstyled clearfix row">
-                                            </div>
-                                            <div class="text-center clearfix">
-                                                <a class="btn btn-warning bidx-btn-showMore" href="showMore=active"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <a class="btn-block trigger-incoming-contacts" data-toggle="collapse" data-parent="#contacts" href="#incomingRequests">
-                                            <?php _e('Incoming contact requests (0)')?>
-                                        </a>
-                                    </div>
-
-                                    <!-- RECEIVED CONTACT REQUESTS -->
-                                    <div id="incomingRequests" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="contact-request-list list-unstyled clearfix row">
-                                            </div>
-                                            <div class="text-center clearfix">
-                                                <a class="btn btn-warning bidx-btn-showMore" href="showMore=incoming"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- SEND REQUESTS -->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <a class="btn-block trigger-pending-contacts" data-toggle="collapse" data-parent="#contacts" href="#pendingRequests">
-                                            <?php _e('Pending contact requests (0)')?>
-                                        </a>
-                                    </div>
-                                    <div id="pendingRequests" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="contact-request-list list-unstyled clearfix row">
-                                            </div>
-                                            <div class="text-center clearfix">
-                                                <a class="btn btn-warning bidx-btn-showMore" href="showMore=pending"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- IGNORED REQUESTS -->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <a class="btn-block trigger-ignored-contacts" data-toggle="collapse" data-parent="#contacts" href="#ignoredRequests">
-                                            <?php _e('Ignored contact requests (0)')?>
-                                        </a>
-                                    </div>
-                                    <div id="ignoredRequests" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="contact-request-list list-unstyled clearfix row">
-                                            </div>
-                                            <div class="text-center clearfix">
-                                                <a class="btn btn-warning bidx-btn-showMore" href="showMore=ignored"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> <!-- \\ END Accordion  -->
-                        </div>
-                    </div>
-                </article>
-
                <!-- contact relationship pending view -->
                 <article class="view viewContactPending">
                     <div class="panel panel-default">
@@ -369,7 +277,89 @@
                     </div>
                 </article>
         </section>
+        <section class="col-sm-4 contacts">
+            <h4><?php _e('Contacts','bidxplugin')?></h4>
+             <!-- contacts view -->
+             <div class="viewContactload alert alert-info text-center">
+                    <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Loading...','bidxplugin')?>
+                </div>
+            <article class="viewContacts hide">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong><?php _e('Contacts','bidxplugin')?></strong>
+                    </div>
+                    <div class="">
 
+                        <div class="toast-wrapper"></div>
+
+                        <!-- Accordion -->
+                        <div id="contacts">
+
+                            <ul class="list-group">
+                              <li class="list-group-item list-contact-menu">
+                                <a class="btn-block trigger-active-contacts" data-toggle="collapse" data-parent="#contacts" href="#activeRequests">
+                                        <?php _e('Active contact requests (0)')?>
+                                </a>
+                                <div id="activeRequests" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="contact-request-list list-unstyled clearfix row">
+                                        </div>
+                                        <div class="text-center clearfix hide">
+                                            <a class="btn btn-warning bidx-btn-showMore" href="showMore=active"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                              </li>
+                              <li class="list-group-item list-contact-menu">
+                                <a class="btn-block trigger-incoming-contacts" data-toggle="collapse" data-parent="#contacts" href="#incomingRequests">
+                                        <?php _e('Incoming contact requests (0)'); ?>
+                                </a>
+                                <!-- RECEIVED CONTACT REQUESTS -->
+                                <div id="incomingRequests" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="contact-request-list list-unstyled clearfix row">
+                                        </div>
+                                        <div class="text-center clearfix hide">
+                                            <a class="btn btn-warning bidx-btn-showMore" href="showMore=incoming"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                              </li>
+                              <li class="list-group-item list-contact-menu">
+                                <a class="btn-block trigger-pending-contacts" data-toggle="collapse" data-parent="#contacts" href="#pendingRequests">
+                                        <?php _e('Pending contact requests (0)')?>
+                                </a>
+                                <!-- RECEIVED CONTACT REQUESTS -->
+                                <div id="pendingRequests" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="contact-request-list list-unstyled clearfix row">
+                                        </div>
+                                        <div class="text-center clearfix">
+                                            <a class="btn btn-warning bidx-btn-showMore" href="showMore=pending"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                              </li>
+                              <li class="list-group-item list-contact-menu">
+                                <a class="btn-block trigger-ignored-contacts" data-toggle="collapse" data-parent="#contacts" href="#ignoredRequests">
+                                        <?php _e('Blocked contact requests (0)')?>
+                                </a>
+                                <div id="ignoredRequests" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="contact-request-list list-unstyled clearfix row">
+                                        </div>
+                                        <div class="text-center clearfix">
+                                            <a class="btn btn-warning bidx-btn-showMore" href="showMore=ignored"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                              </li>
+                            </ul>
+                        </div> <!-- \\ END Accordion  -->
+                    </div>
+                </div>
+            </article>
+        </section>
     </div>
 </div>
 
@@ -435,87 +425,79 @@
 -->
 </script>
 
-
 <script type="text/html" id="contact-request-incoming">
 <!--
-    <div class="col-sm-6 ">
-        <div class="well">
-            <div class="media">
-                <a class="pull-left" href="/member/%contactId%">
-                    %pictureUrl%
-                </a>
-                <div class="media-body">
-                    <a class="media-heading" href="/member/%contactId%"><strong>%contactName%</strong></a>
-                    %professionalTitle%
-                    %country%
-                    %roles%
-                </div>
-            </div>
-            <div class="row contact-request-buttons">
-                <div class="col-sm-6">
-                    <a href="#" class="btn btn-block btn-success btn-bidx-accept"><?php _e('Accept','bidxplugin')?></a>
-                </div>
-                <div class="col-sm-6">
-                    <a href="#" class="btn btn-block btn-danger btn-bidx-ignore"><?php _e('Ignore','bidxplugin')?></a>
-                </div>
-            </div>
+  <li class="list-group-item" data-requestId = "%contactId%">
+    <a href="/member/%contactId%">%contactName%</a>
+    <div class="btn-group pull-right">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-chevron-down"></i>
+        </button>
+        <ul class="dropdown-menu box-border" role="menu">
+            <li><a href="/member/%contactId%">View</a></li>
+            <li><a data-btn="connectcancel">Cancel request</a></li>
+            <li><a class="blockProfile" href="#">Block</a></li>
+        </ul>
+    </div>
+    <div class="row contact-request-buttons">
+        <div class="col-sm-6">
+            <a class="btn btn-block btn-success btn-bidx-accept" data-btn="connectaccept"><?php _e('Accept','bidxplugin')?></a>
+        </div>
+        <div class="col-sm-6">
+            <a class="btn btn-block btn-danger btn-bidx-ignore" data-btn="connectcancel"><?php _e('Ignore','bidxplugin')?></a>
         </div>
     </div>
+  </li>
 -->
 </script>
 
 <script type="text/html" id="contact-request-pending">
 <!--
-
-    <div class="col-sm-6 ">
-        <div class="well media">
-            <a class="pull-left" href="/member/%contactId%">
-                %pictureUrl%
-            </a>
-            <div class="media-body">
-                <a class="media-heading" href="/member/%contactId%"><strong>%contactName%</strong></a>
-                %professionalTitle%
-                %country%
-                %roles%
-            </div>
-        </div>
+  <li class="list-group-item" data-requestId = "%contactId%">
+    <a href="/member/%contactId%">%contactName%</a>
+    <div class="btn-group pull-right">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-chevron-down"></i>
+        </button>
+        <ul class="dropdown-menu box-border" role="menu">
+            <li><a href="/member/%contactId%">View</a></li>
+            <li><a data-btn="connectcancel">Cancel request</a></li>
+        </ul>
     </div>
+  </li>
 -->
 </script>
 
 <script type="text/html" id="contact-request-active">
 <!--
-    <div class="col-sm-6">
-        <div class="well media">
-            <a class="pull-left" href="/member/%contactId%">
-                %pictureUrl%
-            </a>
-            <div class="media-body">
-                <a class="media-heading" href="/member/%contactId%"><strong>%contactName%</strong></a>
-                %professionalTitle%
-                %country%
-                %roles%
-            </div>
-        </div>
+  <li class="list-group-item" data-requestId = "%contactId%">
+    <a href="/member/%contactId%">%contactName%</a>
+    <div class="btn-group pull-right">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-chevron-down"></i>
+        </button>
+        <ul class="dropdown-menu box-border" role="menu">
+            <li><a href="/member/%contactId%">View</a></li>
+            <li><a data-btn="connectcancel">Disconnect</a></li>
+        </ul>
     </div>
+  </li>
 -->
 </script>
 
 <script type="text/html" id="contact-request-ignored">
 <!--
-    <div class="col-sm-6">
-        <div class="well media">
-            <a class="pull-left" href="/member/%contactId%">
-                %pictureUrl%
-            </a>
-            <div class="media-body">
-                <a class="media-heading" href="/member/%contactId%"><strong>%contactName%</strong></a>
-                %professionalTitle%
-                %country%
-                %roles%
-            </div>
-        </div>
+  <li class="list-group-item" data-requestId = "%contactId%">
+    <a href="/member/%contactId%">%contactName%</a>
+    <div class="btn-group pull-right">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-chevron-down"></i>
+        </button>
+        <ul class="dropdown-menu box-border" role="menu">
+            <li><a href="/member/%contactId%">View</a></li>
+        </ul>
     </div>
+  </li>
 -->
 </script>
 

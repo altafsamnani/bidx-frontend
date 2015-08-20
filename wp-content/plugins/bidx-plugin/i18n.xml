@@ -145,6 +145,9 @@
     <!-- Connection details -->
     <Item value="youAreInContact">You have active connection with this contact.</Item>
     <Item value="btnStopConnect">Stop connection</Item>
+    <Item value="youAskedConnection">Your connect request has been sent to this user.</Item>
+    <Item value="wantsToConnect">wants to connect with you.</Item>
+
 
     <!-- Modal dialogs status messages -->
      <Item value="modalSend">You are about to send request. Are you sure?</Item>

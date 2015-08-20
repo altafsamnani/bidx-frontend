@@ -387,7 +387,7 @@
 
         if(loggedInMemberId)
         {
-            _getActiveContacts();
+            // _getActiveContacts();
         }
 
         _inContacts();

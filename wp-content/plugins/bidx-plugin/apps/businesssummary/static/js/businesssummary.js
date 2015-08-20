@@ -3315,8 +3315,8 @@
 
         $tabMentor.on( "shown.bs.collapse", function ()
         {
-            _handleToggleChange( "true", "mentorMatches" );
-            _getMentorRequests( options );
+            // _handleToggleChange( "true", "mentorMatches" );
+            // _getMentorRequests( options );
         });
     }
 
@@ -3347,7 +3347,7 @@
         {
             $tabMentor.on( "shown.bs.collapse", function ()
             {
-                _getMentorRequests( );
+                // _getMentorRequests( );
             });
         }
 
@@ -3459,7 +3459,7 @@
                     bidx.common.removeValidationErrors();
 
                     _showView( "edit" );
-                    _getMentorRequests( );
+                    // _getMentorRequests( );
                     _showAllView( "mentor" );
                     _showAllView( "matchingmentors" );
 

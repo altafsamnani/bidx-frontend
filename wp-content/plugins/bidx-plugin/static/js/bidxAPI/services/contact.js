@@ -66,7 +66,7 @@
 
     contact.connect = function( params )
     {
-        var method  =   "POST"
+        var method  =   "PUT"
         ,   url     =   baseUrl + '/connect'
         ;
 

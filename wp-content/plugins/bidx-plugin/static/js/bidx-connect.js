@@ -15,9 +15,7 @@
         options:
         {
             connect:    "connect"
-        ,   state:      ""
-        ,   label:      ""
-        ,   button:     ""
+        ,   btnOptions: ""
         }
     ,   _create: function(  )
         {
@@ -29,26 +27,43 @@
             //widget._setconnectData(  );
 
         }
-    ,   _delegateActions: function ( params )
+    ,   _delegateActions: function ( )
         {
-            var widget              =   this
-            ,   options         = {}
-            ,   $buttonElement  = $( "#tab-member" );
+            var contact
+            ,   contacts
+            ,   request
+            ,   $alert
+            ,   widget          =   this
+            ,   options         =   {}
+            ,   $buttonElement  =   $( ".alert-connect" )
+            ;
 
-            $buttonElement.delegate( '*[data-btn="accept"]', "click", function( e )
+            $(document).on('click', '*[data-btn="connectaccept"]', function ( e )
             {
-                options.requestId = getRequestId(this);
-                options.action = "accept";
-                options.type = "contact";
+                $alert      = $(this).parents( ".alert" );
+                contact   = parseInt( getRequestId(this), 10);
 
-                widget._doMutateConnectRequest(
+                bidx.common.doCreateConnectRequest(
                 {
-                    params: options
-                ,   callback: function()
+                    contact:   contact
+                ,   callback:   function( data )
                     {
-                        // Remove the facet
+                        $alert.fadeOut( "slow", function()
+                        {
+                            $alert.remove();
+
+                            contacts    = data.contacts;
+
+                            bidx.utils.log('contacts', contacts);
+
+                            request     = _.findWhere(contacts, { id: contact });
+
+                            bidx.utils.log('request', request);
+
+                            bidx.construct.connectActionBox( request );
+                        });
                     }
-                ,   error: function(jqXhr)
+                ,   error:      function(jqXhr)
                     {
                         var response = $.parseJSON( jqXhr.responseText);
                         bidx.utils.error( "Client  error occured", response );
@@ -56,62 +71,67 @@
                 } );
             });
 
-            $buttonElement.delegate( '*[data-btn="reject"]', "click", function( e )
+            $(document).on('click', '*[data-btn="connectreject"]', function ( e )
             {
-                options.requestId = getRequestId(this);
-                options.action = "ignore";
-                options.type = "contact";
+                $alert      = $(this).parents( ".alert" );
+                contact   = parseInt( getRequestId(this), 10);
 
-                widget._doMutateConnectRequest(
+                bidx.common.doCancelConnectRequest(
                 {
-                    params: options
-                ,   callback: function()
-                    {
-                        // Remove the facet
-                    }
-                ,   error: function(jqXhr)
-                    {
-                        var response = $.parseJSON( jqXhr.responseText);
-                        bidx.utils.error( "Client  error occured", response );
-                    }
-                } );
-            });
-
-            $buttonElement.delegate( '*[data-btn="cancel"]', "click", function( e )
-            {
-                var $alert = $(this).parents( ".alert" );
-                options.requestId = getRequestId(this);
-
-               widget._doCancelConnectRequest(
-                {
-                    params: options
+                    contact: contact
                 ,   callback: function()
                     {
                         $alert.fadeOut( "slow", function()
                         {
                             $alert.remove();
-                            checkForActivities();
-                            checkOfferMentoring();
+
+                            widget._addConnectButton();
                         });
                     }
                 } );
             });
 
-            $buttonElement.delegate( '*[data-btn="stop"]', "click", function( e )
+            $(document).on('click', '*[data-btn="connectcancel"]', function ( e )
             {
-                options.requestId = getRequestId(this);
+                $alert      = $(this).parents( ".alert" );
+                contact   = parseInt( getRequestId(this), 10);
 
-               widget._doCancelConnectRequest(
+               bidx.common.doCancelConnectRequest(
                 {
-                    params: options
+                    contact: contact
                 ,   callback: function()
                     {
-                        //
+                        $alert.fadeOut( "slow", function()
+                        {
+                            $alert.remove();
+
+                            widget._addConnectButton();
+                        });
                     }
                 } );
             });
 
-            $buttonElement.delegate( '*[data-btn="remind"]', "click", function( e )
+            $(document).on('click', '*[data-btn="connectstop"]', function ( e )
+            {
+                $alert      = $(this).parents( ".alert" );
+                contact   = parseInt( getRequestId(this), 10);
+
+                bidx.common.doCancelConnectRequest(
+                {
+                    contact: contact
+                ,   callback: function()
+                    {
+                        $alert.fadeOut( "slow", function()
+                        {
+                            $alert.remove();
+
+                            widget._addConnectButton();
+                        });
+                    }
+                } );
+            });
+
+            $(document).on('click', '*[data-btn="connectremind"]', function ( e )
             {
                 bidx.utils.log("click remind", this);
                 bidx.utils.log("getRequestId", getRequestId(this) );
@@ -134,9 +154,10 @@
             var status
             ,   limit
             ,   offset
+            ,   widget                  =   this
             ,   extraUrlParameters      =   []
             ,   loggedInMemberId        =   params.currentUserId
-            ,   visitingMemberPageId    =   params.visitingMemberPageId
+            ,   visitingMemberPageId    =   parseInt( params.visitingMemberPageId, 10)
             ;
 
             extraUrlParameters =
@@ -156,29 +177,33 @@
                     {
                         var sortIndex                   = []
                         ,   contacts                    = bidx.utils.getValue( response, 'contacts')
-                        ,   contact                     = bidx.utils.getValue( contacts, 'contact')
+                        ,   request                     = _.findWhere(contacts, { id: visitingMemberPageId })
+                        ,   contact                     = bidx.utils.getValue( request, 'contact')
                         ,   result                      = {}
                         ,   visitingMemberConnection    = false
                         ,   currentUserId               = bidx.utils.getValue( bidxConfig, "session.id" )
                         ;
 
-                        bidx.utils.log("[connect] retrieved following contact ", contact );
+                        bidx.utils.log("[connect] retrieved following response ", contacts );
 
-                        if( !contact )
+                        if( !$.isEmptyObject( request )  && contact)
                         {
-                            bidx.utils.log("[connect] if retrieved following contact ", contact );
+
+                            bidx.utils.log("[connect] else retrieved following contact ", request );
+
+                            bidx.construct.connectActionBox( request );
+                        }
+                        else
+                        {
+                            bidx.utils.log("[connect] if retrieved following contact ", request );
 
                             if (params && params.callback)
                             {
                                 params.callback(  );
                             }
                         }
-                        else
-                        {
-                            bidx.utils.log("[connect] else retrieved following contact ", contact );
 
-                            bidx.construct.connectActionBox( contact );
-                        }
+                        widget._delegateActions( );
                     }
                 ,   error: function(jqXhr, textStatus)
                     {
@@ -195,57 +220,69 @@
                 }
             );
         }
-    ,   constructButton: function ( btnOptions )
+    ,  _addConnectButton:   function (  )
         {
             var $btnHtml
-            ,   widget                  =   this
-            ,   options                 =   widget.options
-            ,   $el                     =   widget.element
-            ,   $button                 =   $el.find('.' + btnOptions.class)
-            ,   visitingMemberPageId    =   bidx.utils.getValue( options, "visitingMemberPageId" )
-            ,   currentUserId           =   bidx.utils.getValue( options, "currentUserId" )
+            ,   widget      =   this
+            ,   options     =   widget.options
+            ,   btnOptions  =   options.btnOptions
+            ,   $el         =   widget.element
+            ,   $button     =   $el.find('.' + btnOptions.class)
             ;
 
-            if( $button.length)
+            if( $button.length )
             {
-                if( currentUserId && currentUserId !== visitingMemberPageId )
-                {
-                    widget._hasRelationship(
-                    {
-                        options:                btnOptions
-                    ,   visitingMemberPageId:   visitingMemberPageId
-                    ,   currentUserId:          currentUserId
-                    ,   callback:               function( )
-                                                {
-                                                    $btnHtml    =   widget._renderButton(
-                                                                    {
-                                                                        btnOptions:    btnOptions
-                                                                    ,   options:       options
-                                                                    });
+                $btnHtml    =   widget._renderButton(
+                                {
+                                    options:    options
+                                ,   btnOptions: btnOptions
+                                });
 
-                                                    $button.append( $btnHtml );
+                $button.append( $btnHtml );
 
-                                                    $el.removeClass('hide');
-
-                                                    widget._onTagButtonClick(
-                                                    {
-                                                        btnOptions:   btnOptions
-                                                    });
-                                                }
-                    });
-                }
+                $el.removeClass('hide');
             }
             else
             {
                 bidx.common.notifyError( 'errorNoTagEntityId' );
             }
         }
+    ,   constructButton: function ( btnOptions )
+        {
+            var widget                  =   this
+            ,   options                 =   widget.options
+            ,   visitingMemberPageId    =   bidx.utils.getValue( options, "visitingMemberPageId" )
+            ,   currentUserId           =   bidx.utils.getValue( options, "currentUserId" )
+            ;
+
+            widget.options.btnOptions   =   btnOptions;
+
+            if( currentUserId && currentUserId !== visitingMemberPageId )
+            {
+                widget._hasRelationship(
+                {
+                    options:                btnOptions
+                ,   visitingMemberPageId:   visitingMemberPageId
+                ,   currentUserId:          currentUserId
+                ,   callback:               function( )
+                                            {
+                                                widget._addConnectButton();
+                                            }
+                });
+            }
+
+            /* Add Connect Button Onclick event is here because we need to fire it once only */
+            widget._onTagButtonClick(
+            {
+                btnOptions:   btnOptions
+            });
+        }
     ,   _renderButton: function ( params  )
         {
             var $btnHtml
             ,   options                 =   params.options
             ,   btnOptions              =   params.btnOptions
-            ,   tagClass                =   btnOptions.tagClass
+            ,   tagClass                =   btnOptions.class
             ,   tagLabel                =   btnOptions.label
             ,   iconClass               =   btnOptions.iconClass
             ,   requesteeId             =   bidx.utils.getValue( options, "visitingMemberPageId" )
@@ -276,210 +313,43 @@
             return $btnHtml;
 
         }
-    ,   _doCreateConnectRequest: function( options )
-        {
-            var extraUrlParameters
-            ,   params      = options.params
-            ,   requesteeId = bidx.utils.getValue(params, 'requesteeId')
-            ;
-
-            extraUrlParameters =
-            [
-                {
-                    label :     "inviteeName"
-                ,   value :     requesteeId
-                }
-            ];
-
-            bidx.api.call(
-                 "contact.connect"
-            ,   {
-                    groupDomain:            bidx.common.groupDomain
-                ,   extraUrlParameters:     extraUrlParameters
-                ,   data:
-                    {
-                        "type":             "contact"
-                    }
-
-                ,   success: function( response )
-                    {
-                        bidx.utils.log("[connect] created a connect relationship",  response );
-                        if ( response && response.status === "OK" )
-                        {
-                            //  execute callback if provided
-                            if (options && options.callback)
-                            {
-                                options.callback( response.data );
-                            }
-                        }
-                    }
-
-                ,   error: function( jqXhr, textStatus )
-                    {
-                        if (options && options.error)
-                        {
-                            options.error( jqXhr );
-                        }
-
-                    }
-                }
-            );
-        }
-    ,   _doCancelConnectRequest: function ( options )
-        {
-
-            var uriStatus
-            ,   statusMsg
-            ,   params = options.params
-            ;
-
-            bidx.api.call(
-                 "connect.cancel"
-            ,   {
-                    groupDomain:    bidx.common.groupDomain
-                ,   requestId:      params.requestId
-                ,   success:        function( response )
-                                    {
-                                        bidx.utils.log("[connect] mutated a contact",  response );
-                                        if ( response && response.status === "OK" )
-                                        {
-
-                                            if (options && options.callback)
-                                            {
-                                                options.callback();
-                                            }
-
-                                             // window.bidx.controller.updateHash( params.updateHash, true );
-
-
-                                        }
-
-                                    }
-
-                ,   error:          function( jqXhr, textStatus )
-                                    {
-
-                                        var response = $.parseJSON( jqXhr.responseText);
-
-                                        // 400 errors are Client errors
-                                        //
-                                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                                        {
-                                            bidx.utils.error( "Client  error occured", response );
-                                            _showMainError( "Something went wrong while updating a relationship: " + response.code );
-                                        }
-                                        // 500 erors are Server errors
-                                        //
-                                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                                        {
-                                            bidx.utils.error( "Internal Server error occured", response );
-                                            _showMainError( "Something went wrong while updating a relationship: " + response.code );
-                                        }
-
-                                        if (options && options.callback)
-                                        {
-                                            options.callback();
-                                        }
-
-                                    }
-                }
-            );
-        }
-    ,   _doMutateConnectRequest: function ( options )
-        {
-            var params      = options.params
-            ,   postData    = {}
-            ;
-
-            postData =  {
-                            accept:          (params.action === "accepted") ?  "true" :  "false"
-                        ,   reason:          params.type
-                        };
-
-            bidx.api.call(
-                 "connect.mutate"
-            ,   {
-                    groupDomain:            bidx.common.groupDomain
-                ,   requesterId:            href.requesterId
-                ,   extraUrlParameters:
-                    [
-                        {
-                            label:          "action"
-                        ,   value:          href.action
-                        }
-                    ,   {
-                            label:          "type"
-                        ,   value:          href.type
-                        }
-                    ]
-                ,   success: function( response )
-                    {
-                        bidx.utils.log("[mentor] mutated a contact",  response );
-                        if ( response && response.status === "OK" )
-                        {
-
-                            if (options && options.callback)
-                            {
-                                options.callback();
-                            }
-
-                             // window.bidx.controller.updateHash(  params.updateHash, true );
-
-                        }
-
-                    }
-
-                ,   error: function( jqXhr, textStatus )
-                    {
-
-                        var response = $.parseJSON( jqXhr.responseText);
-
-                        if (options && options.error)
-                        {
-                            options.error();
-                        }
-
-                    }
-                }
-            );
-        }
     ,   _onTagButtonClick: function( params )
         {
             var widget          =   this
             ,   $el             =   widget.element
             ,   options         =   widget.options
-            ,   labelOptions    =   options.label
-            ,   labelTags       =   labelOptions.tags
             ,   btnOptions      =   params.btnOptions
-            ,   $labelElement   =   $('.' + labelOptions.class)
             ,   $buttonElement  =   $el.find('.' + btnOptions.class)
             ;
 
             // Set Accreditation / No Accreditation status
-            $buttonElement.delegate( ".btn-connect", "click", function( e )
+            $(document).on("click", ".btn-connect", function( e )
             {
                 var contacts
                 ,   request
-                ,   $el = $(this)
-                ,   params = {}
-                ,   $tagLabel       =   $el.find('.tagLabel')
-                ,   requesteeId     =   $el.data('requesteeid')
+                ,   $el         =   $(this)
+                ,   $tagLabel   =   $el.find('.tagLabel')
+                ,   contact   =   parseInt( $el.data('requesteeid'), 10)
                 ;
 
-                params.requesteeId = requesteeId;
 
-                widget._doCreateConnectRequest(
+                bidx.common.doCreateConnectRequest(
                 {
-                    params: params
-                ,   callback: function( data )
+                    contact:  contact
+                ,   callback:   function( data )
                     {
-                        $el.fadeOut( "slow", function() {
+                        $el.fadeOut( "slow", function()
+                        {
                             $el.remove();
                         });
 
                         contacts    = data.contacts;
 
-                        request     = _.findWhere(contacts, { id: requesteeId });
+                        bidx.utils.log('contacts', contacts);
+
+                        request     = _.findWhere(contacts, { id: contact });
+
+                        bidx.utils.log('request', request);
 
                         bidx.construct.connectActionBox( request );
                         /*getMentoringRequest(
