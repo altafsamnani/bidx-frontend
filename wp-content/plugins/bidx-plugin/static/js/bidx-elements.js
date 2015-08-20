@@ -418,13 +418,13 @@
                         $( "<span />" )
                             .append
                             (
-                                $( "<button />", { "class": "btn btn-xs btn-success", "data-btn": "connectcancel", "html": bidx.i18n.i( "btnCancelRequest" ) } )
+                                $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "connectcancel", "html": bidx.i18n.i( "btnCancelRequest" ) } )
                             )
                             .append( "&nbsp;" )
-                            .append
+                            /*.append
                             (
                                 $( "<button />", { "class": "btn btn-xs btn-warning", "data-btn": "connectremind", "html": bidx.i18n.i( "btnRemind" ) } )
-                            )
+                            )*/
                     ;
 
                     $bsElement.find( ".pull-left" ).last()

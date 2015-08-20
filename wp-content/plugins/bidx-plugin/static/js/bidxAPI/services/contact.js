@@ -87,6 +87,52 @@
         } );
     };
 
+    contact.block = function( params )
+    {
+        var method  =   "PUT"
+        ,   url     =   baseUrl + '/block'
+        ;
+
+        api._call(
+        {
+            method:             method
+        ,   groupDomain:        params.groupDomain
+        ,   extraUrlParameters: params.extraUrlParameters
+        ,   baseUrl:            url
+        ,   success:        function( data, textStatus, jqXhr )
+            {
+                params.success( data, textStatus, jqXhr );
+            }
+        ,   error:          function( jqXhr, textStatus, errorThrown )
+            {
+                params.error( jqXhr, textStatus, errorThrown );
+            }
+        } );
+    };
+
+    contact.unblock = function( params )
+    {
+        var method  =   "PUT"
+        ,   url     =   baseUrl + '/unblock'
+        ;
+
+        api._call(
+        {
+            method:             method
+        ,   groupDomain:        params.groupDomain
+        ,   extraUrlParameters: params.extraUrlParameters
+        ,   baseUrl:            url
+        ,   success:        function( data, textStatus, jqXhr )
+            {
+                params.success( data, textStatus, jqXhr );
+            }
+        ,   error:          function( jqXhr, textStatus, errorThrown )
+            {
+                params.error( jqXhr, textStatus, errorThrown );
+            }
+        } );
+    };
+
 
     api.contact = contact;
 } )( jQuery );

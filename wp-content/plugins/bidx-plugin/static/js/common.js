@@ -462,6 +462,94 @@
         } );
     } );
 
+    function doBlockRequest( options )
+    {
+        var extraUrlParameters
+        ,   contact   =   options.contact
+        ;
+
+        extraUrlParameters =
+        [
+            {
+                label :     "contact"
+            ,   value :     contact
+            }
+        ];
+
+        bidx.api.call(
+             "contact.block"
+        ,   {
+                groupDomain:            bidx.common.groupDomain
+            ,   extraUrlParameters:     extraUrlParameters
+            ,   success: function( response )
+                {
+                    bidx.utils.log("[block] block a connect",  response );
+                    if ( response && response.status === "OK" )
+                    {
+                        //  execute callback if provided
+                        if (options && options.callback)
+                        {
+                            options.callback( response.data );
+                        }
+                    }
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+                    if (options && options.error)
+                    {
+                        options.error( jqXhr );
+                    }
+
+                }
+            }
+        );
+    }
+
+    function doUnBlockRequest( options )
+    {
+        var extraUrlParameters
+        ,   contact   =   options.contact
+        ;
+
+        extraUrlParameters =
+        [
+            {
+                label :     "contact"
+            ,   value :     contact
+            }
+        ];
+
+        bidx.api.call(
+             "contact.unblock"
+        ,   {
+                groupDomain:            bidx.common.groupDomain
+            ,   extraUrlParameters:     extraUrlParameters
+            ,   success: function( response )
+                {
+                    bidx.utils.log("[block] block a connect",  response );
+                    if ( response && response.status === "OK" )
+                    {
+                        //  execute callback if provided
+                        if (options && options.callback)
+                        {
+                            options.callback( response.data );
+                        }
+                    }
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+                    if (options && options.error)
+                    {
+                        options.error( jqXhr );
+                    }
+
+                }
+            }
+        );
+    }
+
     function doCreateConnectRequest( options )
     {
         var extraUrlParameters
@@ -529,27 +617,27 @@
                 groupDomain:        bidx.common.groupDomain
             ,   extraUrlParameters: extraUrlParameters
             ,   success:            function( response )
-                                    {
-                                        bidx.utils.log("[connect] mutated a contact",  response );
-                                        if ( response && response.status === "OK" )
-                                        {
-                                            if (options && options.callback)
-                                            {
-                                                options.callback();
-                                            }
-                                             // window.bidx.controller.updateHash( params.updateHash, true );
-                                        }
+                {
+                    bidx.utils.log("[connect] cancelled a contact",  response );
+                    if ( response && response.status === "OK" )
+                    {
+                        if (options && options.callback)
+                        {
+                            options.callback();
+                        }
+                         // window.bidx.controller.updateHash( params.updateHash, true );
+                    }
 
-                                    }
+                }
 
             ,   error:          function( jqXhr, textStatus )
-                                {
-                                    if (options && options.error)
-                                    {
-                                        options.error( jqXhr );
-                                    }
+                {
+                    if (options && options.error)
+                    {
+                        options.error( jqXhr );
+                    }
 
-                                }
+                }
             }
         );
     }
@@ -1348,6 +1436,21 @@
         $formGroup.find( "div.error" ).remove();
     };
 
+    var showMoreLess   =   function( items )
+    {
+        var $moreless = $(items).parent().find( ".more-less" );
+        if ( items.hasClass( "hide" ) )
+        {
+            items.removeClass( "hide" );
+            $moreless.html( bidx.i18n.i( "showLess" ) );
+        }
+        else
+        {
+            items.addClass( "hide" );
+            $moreless.html( bidx.i18n.i( "showMore" ) );
+        }
+    };
+
     //  Validator extentions
     //
 
@@ -1477,6 +1580,9 @@
 
     ,   doCreateConnectRequest:         doCreateConnectRequest
     ,   doCancelConnectRequest:         doCancelConnectRequest
+    ,   doBlockRequest:                 doBlockRequest
+    ,   doUnBlockRequest:               doUnBlockRequest
+    ,   showMoreLess:                   showMoreLess
 
 
     ,   getInvestorProfileId: function()

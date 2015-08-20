@@ -283,7 +283,7 @@
              <div class="viewContactload alert alert-info text-center">
                     <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Loading...','bidxplugin')?>
                 </div>
-            <article class="viewContacts hide">
+            <article class="viewContacts">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <strong><?php _e('Contacts','bidxplugin')?></strong>
@@ -298,7 +298,7 @@
                             <ul class="list-group">
                               <li class="list-group-item list-contact-menu">
                                 <a class="btn-block trigger-active-contacts" data-toggle="collapse" data-parent="#contacts" href="#activeRequests">
-                                        <?php _e('Active contact requests (0)')?>
+                                        <?php _e('Active contact requests')?>
                                 </a>
                                 <div id="activeRequests" class="panel-collapse collapse in">
                                     <div class="panel-body">
@@ -312,7 +312,7 @@
                               </li>
                               <li class="list-group-item list-contact-menu">
                                 <a class="btn-block trigger-incoming-contacts" data-toggle="collapse" data-parent="#contacts" href="#incomingRequests">
-                                        <?php _e('Incoming contact requests (0)'); ?>
+                                        <?php _e('Incoming contact requests'); ?>
                                 </a>
                                 <!-- RECEIVED CONTACT REQUESTS -->
                                 <div id="incomingRequests" class="panel-collapse collapse in">
@@ -327,28 +327,28 @@
                               </li>
                               <li class="list-group-item list-contact-menu">
                                 <a class="btn-block trigger-pending-contacts" data-toggle="collapse" data-parent="#contacts" href="#pendingRequests">
-                                        <?php _e('Pending contact requests (0)')?>
+                                        <?php _e('Pending contact requests')?>
                                 </a>
                                 <!-- RECEIVED CONTACT REQUESTS -->
                                 <div id="pendingRequests" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <div class="contact-request-list list-unstyled clearfix row">
                                         </div>
-                                        <div class="text-center clearfix">
+                                        <div class="text-center clearfix hide">
                                             <a class="btn btn-warning bidx-btn-showMore" href="showMore=pending"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
                                         </div>
                                     </div>
                                 </div>
                               </li>
                               <li class="list-group-item list-contact-menu">
-                                <a class="btn-block trigger-ignored-contacts" data-toggle="collapse" data-parent="#contacts" href="#ignoredRequests">
-                                        <?php _e('Blocked contact requests (0)')?>
+                                <a class="btn-block trigger-blocked-contacts" data-toggle="collapse" data-parent="#contacts" href="#blockedRequests">
+                                        <?php _e('Blocked contact requests')?>
                                 </a>
-                                <div id="ignoredRequests" class="panel-collapse collapse">
+                                <div id="blockedRequests" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <div class="contact-request-list list-unstyled clearfix row">
                                         </div>
-                                        <div class="text-center clearfix">
+                                        <div class="text-center clearfix hide">
                                             <a class="btn btn-warning bidx-btn-showMore" href="showMore=ignored"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
                                         </div>
                                     </div>
@@ -435,8 +435,8 @@
         </button>
         <ul class="dropdown-menu box-border" role="menu">
             <li><a href="/member/%contactId%">View</a></li>
-            <li><a data-btn="connectcancel">Cancel request</a></li>
-            <li><a class="blockProfile" href="#">Block</a></li>
+            <li class='cancelRequest'><a data-btn="connectcancel">Cancel request</a></li>
+            <li class='blockProfile'><a class='blockLink' data-btn="connectblock">Block</a></li>
         </ul>
     </div>
     <div class="row contact-request-buttons">
@@ -461,7 +461,7 @@
         </button>
         <ul class="dropdown-menu box-border" role="menu">
             <li><a href="/member/%contactId%">View</a></li>
-            <li><a data-btn="connectcancel">Cancel request</a></li>
+            <li class='cancelRequest'><a data-btn="connectcancel">Cancel request</a></li>
         </ul>
     </div>
   </li>
@@ -478,14 +478,14 @@
         </button>
         <ul class="dropdown-menu box-border" role="menu">
             <li><a href="/member/%contactId%">View</a></li>
-            <li><a data-btn="connectcancel">Disconnect</a></li>
+            <li class='cancelRequest'><a data-btn="connectcancel">Disconnect</a></li>
         </ul>
     </div>
   </li>
 -->
 </script>
 
-<script type="text/html" id="contact-request-ignored">
+<script type="text/html" id="contact-request-blocked">
 <!--
   <li class="list-group-item" data-requestId = "%contactId%">
     <a href="/member/%contactId%">%contactName%</a>
@@ -494,7 +494,7 @@
             <i class="fa fa-chevron-down"></i>
         </button>
         <ul class="dropdown-menu box-border" role="menu">
-            <li><a href="/member/%contactId%">View</a></li>
+            <li class='unblockProfile'><a data-btn="connectunblock">Unblock</a></li>
         </ul>
     </div>
   </li>
@@ -503,10 +503,8 @@
 
 <script type="text/html" id="contacts-empty">
 <!--
-<li>
-    <div class="col-sm-12">
-        <?php _e('No contacts available','bidxplugin')?>
-    </div>
+<li class='contactsEmpty'>
+    <?php _e('No contacts available','bidxplugin')?>
 </li>
 -->
 </script>

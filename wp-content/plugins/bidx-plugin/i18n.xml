@@ -216,6 +216,8 @@
     <Item value="From">From</Item>
     <Item value="To">To</Item>
     <Item value="emailNew">new</Item>
+    <Item value="showMore">More</Item>
+    <Item value="showLess">Less</Item>
 
     <Item value="loadingLbl">Loading</Item>
 
