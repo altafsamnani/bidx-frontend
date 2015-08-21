@@ -192,7 +192,7 @@ class Bidx_Group_Customizer {
 				) )
 		);
 
-		$wp_customize->add_setting( 'main_logo_selector' );
+		/*$wp_customize->add_setting( 'main_logo_selector' );
 		$wp_customize->add_control(
 				new WP_Customize_Image_Control(
 						$wp_customize,
@@ -204,7 +204,7 @@ class Bidx_Group_Customizer {
 								'context'    => 'main_logo_settings'
 						)
 				)
-		);
+		);*/
 
 		$wp_customize->add_setting( 'brand-full-pattern', array(
 				        'default'     => BIDX_BRAND_FULL_PATTERN,
