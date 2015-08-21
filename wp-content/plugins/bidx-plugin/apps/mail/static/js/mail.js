@@ -819,147 +819,6 @@
         );
     }
 
-    // Create a connection between requester and Requestee (the logged in user)
-    // @params: options
-    // {
-    //     requesterId: [ ID person to connect with ]
-    // ,   requesteeId: [ ID logged in user ]
-    // }
-    //
-    function _doSendContactRequest( options )
-    {
-        var $currentView    = $views.filter( bidx.utils.getViewName( "contacts" ) )
-        ,   $alert          = $currentView.find( ".alert" )
-        ,   $toastWrapper   = $currentView.find( ".toast-wrapper" )
-        ,   toastSnippet    = $( "#toast-snippet" ).html().replace( /(<!--)*(-->)*/g, "" )
-        ,   $toast          = $( toastSnippet )
-        ;
-
-
-        bidx.api.call(
-             "memberRelationships.create"
-        ,   {
-                groupDomain:            bidx.common.groupDomain
-            ,   requesteeId:            options.requesteeId
-            ,   data:
-                {
-                    "type":             "contact"
-                }
-
-            ,   success: function( response )
-                {
-                    bidx.utils.log("[contacts] requested a relationship",  response );
-                    if ( response && response.status === "OK" )
-                    {
-
-                        $toastWrapper.append( $toast );
-                        // set text for success toast on contact overview page
-                        //
-
-
-                        $toast.find( ".messageContent" )
-                            .i18nText( "contactRequestSendTo", appName )
-                            .append( " " + response.data.name )
-                        ;
-
-                        // show the toast
-                        //
-                        $toast.toggleClass( "hide" );
-
-                        // change hash to contacts overview
-                        //
-                        bidx.controller.updateHash( "#mail/contacts", true, false );
-                    }
-
-                }
-
-            ,   error: function( jqXhr, textStatus )
-                {
-                    var response = $.parseJSON( jqXhr.responseText);
-
-                    // 400 errors are Client errors
-                    //
-                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                    {
-                        bidx.utils.error( "Client error occured", response );
-                        _showError( "Something went wrong while creating a relationship: " + response.text );
-                    }
-                    // 500 erors are Server errors
-                    //
-                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                    {
-                        if( response.code === "relationshipPendingBetweenUsers" )
-                        {
-
-                            // show the user that there is already a pending relationship between these two users
-                            //
-                            _showPendingRelationship( options.requesteeId );
-
-
-
-                        }
-                        else
-                        {
-                            bidx.utils.error( "Internal Server error occured", response );
-                            _showError( "Something went wrong while creating a relationship: " + response.text );
-                        }
-
-                    }
-
-
-                }
-            }
-        );
-    }
-
-    function _showPendingRelationship( requesteeId )
-    {
-        bidx.api.call(
-            "member.fetch"
-        ,   {
-                requesteeId:              requesteeId
-            ,   groupDomain:              bidx.common.groupDomain
-
-            ,   success: function( response )
-                {
-                    var $contactPending         = $views.filter( ".viewContactPending" )
-                    ,   $relationshipUser       = $contactPending.find( ".js-pending-relationship-with-user" )
-                    ;
-
-
-                    if ( response && response && response.member && response.member.displayName )
-                    {
-                        $relationshipUser.text( response.member.displayName );
-
-                    }
-                    _showView( "ContactPending" );
-                }
-
-            ,   error: function( jqXhr, textStatus )
-                {
-
-                    var response = $.parseJSON( jqXhr.responseText);
-
-                    // 400 errors are Client errors
-                    //
-                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                    {
-                        bidx.utils.error( "Client  error occured", response );
-                        _showError( "Something went wrong while retrieving the member info: " + response.text );
-                    }
-                    // 500 erors are Server errors
-                    //
-                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                    {
-                        bidx.utils.error( "Internal Server error occured", response );
-                        _showError( "Something went wrong while retrieving the member info: " + response.text );
-                    }
-
-                }
-            }
-        );
-
-    }
 
     // handler for deleting multiple items
     //
@@ -1457,7 +1316,7 @@
                         lbl     = bidx.i18n.i( "replyContentHeader", appName )
                                 .replace( "%date%", bidx.utils.parseTimestampToDateTime( message.dateSent, "date" ) )
                                 .replace( "%time%", bidx.utils.parseTimestampToDateTime( message.dateSent, "time" ) )
-                                .replace( "%sender%", message.sender.displayName );
+                                .replace( "%sender%", message.sender.name );
                         content = "\n\n" + lbl + "\n" + content;
 
                         $frmCompose.find( "[name=content]" ).val( content );
@@ -1968,7 +1827,7 @@
                 // replace contact requesters name in the snippet
                 //
                 snippet  = snippet
-                                .replace( "%contactName%", message.sender.displayName )
+                                .replace( "%contactName%", message.sender.name )
                                 .replace( "%contactId%", message.sender.id )
                                 ;
 
@@ -2467,7 +2326,7 @@
                                         //
                                         $.each( item.recipients, function( idx, recipient )
                                         {
-                                            recipients.push( recipient.displayName );
+                                            recipients.push( recipient.name );
                                         } );
 
                                         // For folders with mixed content (such as Trash and any archive), prefix with "To:"
@@ -2479,7 +2338,7 @@
                                         // The current user/group is (one of) the recipient(s): show the Sender. For folders with
                                         // mixed content prefix with "From:"
                                         //
-                                        senderReceiverName = ( !item.trashed && item.folderName == "Inbox" ? "" : prefixFrom ) +  item.sender.displayName;
+                                        senderReceiverName = ( !item.trashed && item.folderName == "Inbox" ? "" : prefixFrom ) +  item.sender.name;
                                     }
 
                                     // replace placeholders
