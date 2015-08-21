@@ -133,7 +133,7 @@ class Bidx_Group_Customizer {
 		);
 		$wp_customize->add_setting( 'brand-primary', array(
  		        'default'           => BIDX_BRAND_PRIMARY, //brand-primary
-		        'sanitize_callback' => 'sanitzie_hex_color',
+		        'sanitize_callback' => 'sanitize_hex_color',
 		        'capability'        => 'edit_theme_options',
  		        'type'              => 'option',
 		));
