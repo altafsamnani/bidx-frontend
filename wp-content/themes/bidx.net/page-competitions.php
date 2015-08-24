@@ -21,13 +21,13 @@ get_header(); ?>
             <div class="col-xs-6">
                 <div class="service">
                     <div class="trial-title small"><?php _e('Easy and Simple','bidxtheme');?></div>
-                    <div class="trial-sub"><?php _e('Monthly $299 - Annually $1.999','bidxtheme');?></div>
+                    <div class="trial-sub"><?php _e('Monthly $299 - Annually $1999','bidxtheme');?></div>
                 </div>
             </div>
             <div class="col-xs-6">
                 <div class="service">
                     <div class="trial-title small"><?php _e('Extensive and Detailed','bidxtheme');?></div>
-                    <div class="trial-sub"><?php _e('Annually $9.999','bidxtheme');?></div>
+                    <div class="trial-sub"><?php _e('Annually $9999','bidxtheme');?></div>
                 </div>
             </div>
         </div>
