@@ -205,6 +205,7 @@
         }
     ,   inMailAction: function ( visitingMemberPageId )
         {
+            return;
             var message             =   {}
             ,   userIds             =   []
             ,   $sendInMailWrapper  =   $('.sendMessageWrapper')

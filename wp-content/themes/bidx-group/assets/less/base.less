@@ -2707,7 +2707,7 @@ tbody tr.extrapanel td
 
 .bottomModalBox
 {
-    .modal-body
+   /* .modal-body
     {
         position: absolute;
         bottom: -250px;
@@ -2725,7 +2725,18 @@ tbody tr.extrapanel td
     {
         background-color:#FFFFFF;
         padding:10px;
+    } */
+
+    .modal.fade .modal-dialog {
+    -webkit-transform: translate3d(0, -25%, 0) !important;
+    transform: translate3d(0, -25%, 0) !important;
     }
+
+    .modal.fade:not(.in) .modal-dialog {
+    -webkit-transform: translate3d(-25%, 0, 0) !important;
+    transform: translate3d(-25%, 0, 0) !important;
+}
+
 }
 
 
