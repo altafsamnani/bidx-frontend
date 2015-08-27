@@ -311,16 +311,20 @@ endif;
                                     <label><?php _e('Message','bidxplugin'); ?></label>
                                     <textarea name="content" class="form-control" placeholder="<?php _e('Please type your message here','bidxplugin')?>"></textarea>
                                 </div>
-                                <div class="col-sm-12">
-                                    <div class="pull-right composeBox">
+                                <div class="col-sm-12 composeBox">
+                                    <div class="pull-left">
+                                        <button type="button" class="btn btn-danger compose-cancel" data-dismiss="modal">
+                                            <i class="fa fa-trash-o"></i>
+                                            <?php _e('Discard message','bidxplugin')?>
+                                        </button>
+                                    </div>
+                                    <div class="pull-right ">
                                         <button type="submit" class="btn btn-primary compose-submit">
                                             <i class="fa fa-envelope-o"></i>
                                             <?php _e('Send message','bidxplugin')?>
                                         </button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                                            <?php _e('Discard message','bidxplugin')?>
-                                        </button>
                                     </div>
+
                                 </div>
                             </div>
                         </div>

@@ -3,8 +3,6 @@
     <Item value="replyContentHeader">On %date% at %time%, %sender% wrote:</Item>
     <Item value="forwardContentHeader">Forwarded message</Item>
     <Item value="sendingMessage">Sending message</Item>
-    <Item value="messageSent">Message sent</Item>
-
 
     <Item value="incomingContact">Incoming contact requests</Item>
     <Item value="pendingContact">Pending contact requests</Item>

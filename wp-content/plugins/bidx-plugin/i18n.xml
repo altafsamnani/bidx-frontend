@@ -240,5 +240,6 @@
 
     <!-- Connect -->
     <Item value="lblConnect">Connect</Item>
+    <Item value="messageSent">Message sent</Item>
 
 </I18N>

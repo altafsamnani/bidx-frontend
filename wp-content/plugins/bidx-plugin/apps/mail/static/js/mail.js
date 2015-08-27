@@ -109,14 +109,28 @@
 
                 $btnComposeSubmit.addClass( "disabled" );
 
-
-                _doSend(
+                if ( !message )
                 {
-                    error: function()
-                    {
-                        alert( "Something went wrong during submit" );
+                    return;
+                }
 
+                _prepareMessage();
+
+                bidx.common.doMailSend(
+                {
+                    message: message
+                ,   success:    function( response )
+                    {
                         $btnComposeSubmit.removeClass( "disabled" );
+
+                        $btnComposeCancel.removeClass( "disabled" );
+
+                        bidx.controller.updateHash( "#mail/mbx-inbox", true, false );
+                    }
+                ,   error: function( jqXhr )
+                    {
+                        $btnComposeSubmit.removeClass( "disabled" );
+
                         $btnComposeCancel.removeClass( "disabled" );
                     }
                 } );
@@ -437,68 +451,7 @@
 
     // actual sending of message to API
     //
-    function _doSend( params )
-    {
-        //var key = "sendingMessage";
 
-        if ( !message )
-        {
-            return;
-        }
-
-        _prepareMessage();
-
-        var extraUrlParameters =
-        [
-            {
-                label :     "mailType",
-                value :     "PLATFORM"
-            }
-        ];
-
-        bidx.api.call(
-            "mailboxMail.send"
-        ,   {
-                groupDomain:              bidx.common.groupDomain
-            ,   extraUrlParameters:       extraUrlParameters
-            ,   data:                     message
-
-            ,   success: function( response )
-                {
-
-                    bidx.utils.log( "[mail] mail send", response );
-                    //var key = "messageSent";
-
-                    bidx.common.notifyCustomSuccess( bidx.i18n.i( "messageSent", appName ) );
-
-                    bidx.controller.updateHash( "#mail/mbx-inbox", true, false );
-                }
-
-            ,   error: function( jqXhr, textStatus )
-                {
-
-                    var response = $.parseJSON( jqXhr.responseText);
-
-                    // 400 errors are Client errors
-                    //
-                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                    {
-                        bidx.utils.error( "Client  error occured", response );
-                        _showError( "Something went wrong while sending the email: " + response.text );
-                    }
-                    // 500 erors are Server errors
-                    //
-                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                    {
-                        bidx.utils.error( "Internal Server error occured", response );
-                        _showError( "Something went wrong while sending the email: " + response.text );
-                    }
-
-                }
-            }
-        );
-
-    }
 
 
 

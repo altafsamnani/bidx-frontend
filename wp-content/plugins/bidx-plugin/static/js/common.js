@@ -658,6 +658,52 @@
         );
     }
 
+    function doMailSend( params )
+    {
+        var message             =   params.message
+        ,   extraUrlParameters  =
+            [
+                {
+                    label :     "mailType",
+                    value :     "PLATFORM"
+                }
+            ]
+        ;
+
+        bidx.api.call(
+            "mailboxMail.send"
+        ,   {
+                groupDomain:        bidx.common.groupDomain
+            ,   extraUrlParameters: extraUrlParameters
+            ,   data:               message
+            ,   success:            function( response )
+                {
+                    bidx.utils.log( "[mail] mail send", response );
+
+                    bidx.common.notifyCustomSuccess( bidx.i18n.i( "messageSent" ) );
+
+                    params.success(  );
+                }
+
+            ,   error:              function( jqXhr, textStatus )
+                {
+                    var error
+                    ,   response = $.parseJSON( jqXhr.responseText)
+                    ;
+
+                    bidx.utils.error( "Client  error occured", response );
+
+                    error   =   "Something went wrong while sending the email: " + response.text ;
+
+                    bidx.common.notifyError( error );
+
+                    params.error(  );
+                }
+            }
+        );
+
+    }
+
     // Perform an API call to join the group
     //
     function leaveGroup( groupId, cb )
@@ -1602,6 +1648,7 @@
     ,   doCancelConnectRequest:         doCancelConnectRequest
     ,   doBlockRequest:                 doBlockRequest
     ,   doUnBlockRequest:               doUnBlockRequest
+    ,   doMailSend:                     doMailSend
     ,   showMoreLess:                   showMoreLess
 
 

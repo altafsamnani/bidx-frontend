@@ -229,43 +229,62 @@
         }
     ,   rendersendInMailBtn: function ( visitingMemberPageId )
         {
-            var $sendInMailWrapper  =   $('.message')
-            ,   $sendInMailBtn      =   $sendInMailWrapper.find('.sendMessage')
-
+            var message             =   {}
+            ,   $sendInMailWrapper  =   $('.message')
+            ,   $sendMessageEditor  =   $('#sendMessageEditor')
+            ,   $frmCompose         =   $sendMessageEditor.find("form")
+            ,   $containerBody      =   $sendMessageEditor.find('.container-modal-body')
+            ,   $inMailSubmit       =   $containerBody.find('.inmail-submit')
+            ,   $btnComposeSubmit   =   $frmCompose.find(".compose-submit")
+            ,   $btnComposeCancel   =   $frmCompose.find(".compose-cancel")
             ;
 
             $sendInMailWrapper.removeClass('hide');
 
-            $sendInMailBtn.on('click', function( e )
+            $frmCompose.validate(
             {
-
-            });
-
-
-        }
-    ,   sendInMail: function()
-        {
-            var $sendInMailBtn
-            ,   loggedInMemberId    =   bidx.common.getCurrentUserId()
-            ;
-
-            $sendInMailBtn.on('click', function( e )
-            {
-
-                bidx.common.sendInMail(
+                rules:
                 {
-                    contact:   loggedInMemberId
-                ,   callback:   function( data )
+                    "subject":
                     {
+                        required:               true
+                    }
+                ,   "content":
+                    {
+                        required:               true
+                    }
 
-                    }
-                ,   error:      function(jqXhr)
+                }
+            ,   submitHandler:  function()
+                {
+                    if ( $btnComposeSubmit.hasClass( "disabled" ) )
                     {
-                        var response = $.parseJSON( jqXhr.responseText);
-                        bidx.utils.error( "Client  error occured", response );
+                        return;
                     }
-                } );
-            });
+
+                    $btnComposeSubmit.addClass( "disabled" );
+
+                    bidx.utils.setValue( message, "subject", $frmCompose.find( "[name=subject]" ).val() );
+                    bidx.utils.setValue( message, "content", $frmCompose.find( "[name=content]" ).val() );
+
+                    bidx.common.doMailSend(
+                    {
+                        message: message
+                    ,   success:    function( response )
+                        {
+                            $btnComposeSubmit.removeClass( "disabled" );
+
+                            $btnComposeCancel.removeClass( "disabled" );
+                        }
+                    ,   error: function( jqXhr )
+                        {
+                            $btnComposeSubmit.removeClass( "disabled" );
+
+                            $btnComposeCancel.removeClass( "disabled" );
+                        }
+                    } );
+                }
+            } );
         }
     ,  _addConnectButton:   function (  )
         {
