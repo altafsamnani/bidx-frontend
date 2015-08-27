@@ -1,30 +1,33 @@
-<div id="mentor-dashboard">
-    <?php
-
-    // TODO Arjan TODO Altaf typo in $this->isEntrpreneur ?
-    if($this->isMentor || $this->isEntrpreneur || $this->isGroupOwner)
-    { ?>
-        <h1 class="pagetitle"><?php _e('My mentor dashboard','bidxplugin');?></h1>
-    <?php }
-    ?>
+<div id="mentor-dashboard" class="box-border top-margin-lineheight">
+<?php
+    if($this->isMentor || $this->isEntrepreneur || $this->isGroupOwner)
+    {
+?>
+        <div class="clearfix bg-primary-light main-padding">
+            <h1 class="text-center bidx-page-heading"><?php _e('My mentor dashboard','bidxplugin');?></h1>
+        </div>
+<?php
+    }
+?>
 
     <div class="dashboard">
-        <?php
-        if( !$this->isBuisnessSummary )
+<?php
+        if( !$this->isBusinessSummary )
         {
-        ?>
-        <div class="view viewMainsuccess alert alert-success">
-                <p class="successMsg"></p>
-        </div>
+?>
+            <div class="view viewMainsuccess alert alert-success main-margin">
+                    <p class="successMsg"></p>
+            </div>
 
-        <div class="view viewError alert alert-warning">
-            <h1><?php _e('Error','bidxplugin')?></h1>
-            <span class="errorMsg"></span>
-        </div>
-        <?php
-        } ?>
+            <div class="view viewError alert alert-warning main-margin">
+                <h1><?php _e('Error','bidxplugin')?></h1>
+                <span class="errorMsg"></span>
+            </div>
+<?php
+        }
+?>
+        <!-- Modal -->
         <div class="modalView modalConfirmRequest">
-            <!-- Modal -->
             <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                      <div class="modal-content">
@@ -44,26 +47,68 @@
             </div>
         </div>
         <!-- Modal -->
-        <div class="view viewLoadrequest alert alert-info text-center">
-            <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e ('Loading (Sending your request)...', 'bidxplugin') ?>
-        </div>
-        <div id="mentorDashboardAccordion">
-            <!-- Help
-            <div class="panel panel-default">
 
-                <div class="panel-heading">
-                    <a class="btn-block" data-toggle="collapse" data-parent="#mentorDashboardAccordion" href="#mentorDashboardAccordion-Help"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php //_e('Help','bidxplugin'); ?></a>
-                </div>
-                <div id="mentorDashboardAccordion-Help" class="panel-collapse collapse">
-                    <div class="panel-body">
-                       <?php //$this->render('dashboard/help.phtml'); ?>
+        <div class="view viewLoadrequest alert alert-info text-center main-margin">
+            <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e ('Loading', 'bidxplugin') ?>
+        </div>
+<?php
+
+        // TODO: Remove this logic when Entrepreneur's Mentoring Activities move to the right page -> Entrepreneur Dashboard
+        $activeMentorClass       = ($this->isMentor)       ? 'active' : '';
+        $activeEntrepreneurClass = ($this->isEntrepreneur) ? 'active' : '';
+        if ( $this->isMentor && $this->isEntrepreneur )
+        {
+            $activeEntrepreneurClass = '';
+        }
+?>
+        <div class="row tabs-vertical main-padding">
+            <div class="col-sm-3 tabs-nav">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs tabs-left">
+                    <li class="<?php echo $activeMentorClass ?>"><a href="#tab-mentor-business" data-toggle="tab"><?php _e('Recommended Businesses','bidxplugin');?></a></li>
+                    <li><a href="#tab-mentor-mentoring" data-toggle="tab"><?php _e("Contacted Businesses",'bidxplugin');?></a></li>
+                    <li class="<?php echo $activeEntrepreneurClass ?>"><a href="#tab-entrepreneur-mentoring" data-toggle="tab"><?php _e ("Entrepreneur's mentoring activities", 'bidxplugin') ?></a></li>
+                    <li><a href="#tab-mentoring-preferences" data-toggle="tab"><?php _e('Preferences','bidxplugin');?></a></li>
+
+                    <!-- <li class="<?php ($this->isGroupOwner) ? 'active' : '' ?>"><a href="#tab-groupowner-mentoring" data-toggle="tab"><?php _e ("Groupowner's mentoring activities", 'bidxplugin') ?></a></li> -->
+                </ul>
+            </div>
+            <div class="col-sm-9 tabs-content">
+                <div class="tab-content">
+                    <div class="tab-pane <?php echo $activeMentorClass ?>" id="tab-mentor-business">
+                        <div class="mentor-mentordashboard">
+                            <?php ($this->isMentor) ? $this->render('dashboard/mentor-business.phtml')       : '' ?>
+                        </div>
                     </div>
+                    <div class="tab-pane" id="tab-mentor-mentoring">
+                        <div class="mentor-mentordashboard">
+                            <?php ($this->isMentor) ? $this->render('dashboard/mentor-mentoring.phtml')       : '' ?>
+                        </div>
+                    </div>
+                    <div class="tab-pane <?php echo $activeEntrepreneurClass ?>" id="tab-entrepreneur-mentoring">
+                      <?php ($this->isEntrepreneur) ? $this->render('dashboard/entrepreneur-mentoring.phtml') : '' ?>
+                    </div>
+                    <div class="tab-pane" id="tab-mentoring-preferences">
+
+                        <div class="hide-overflow">
+                            <div class="btn-group pull-right">
+<?php
+                                // #msp: is it possible not to have an ID in the page?? what would the url be then..
+                                $id = $this->exst ( $this -> sessionData -> data -> id );
+                                $href = "/member#editMentor/" . $id . "/" . http_build_query( array( "success"=> "/mentor-dashboard/#dashboard/mentor", "cancel"=> "/mentor-dashboard/#dashboard/mentor" ) );
+?>
+                                <a class="btn btn-primary" href="<?php echo $href; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                            </div>
+                        </div>
+                        <div class="preference mentor-preference"></div>
+                    </div>
+                    <!-- <div class="tab-pane" id="tab-groupowner-mentoring"> -->
+                      <?php // ($this->isGroupOwner)   ? $this->render('dashboard/groupowner-mentoring.phtml')   : '' ?>
+                    <!-- </div> -->
                 </div>
-            </div> -->
-              <?php ($this->isMentor)       ? $this->render('dashboard/mentor-mentoring.phtml')       : '' ?>
-              <?php ($this->isEntrpreneur)  ? $this->render('dashboard/entrepreneur-mentoring.phtml') : '' ?>
-              <?php ($this->isGroupOwner)   ? $this->render('dashboard/groupowner-mentoring.phtml')   : '' ?>
-        </div><!-- accordion -->
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -80,3 +125,52 @@
 -->
 </script>
 
+<script type="text/html" id="mentor-preferenceitem">
+<!--
+<br>
+<table class="table table-condensed table-bottom-border">
+    <tbody>
+        <tr>
+            <td><?php _e('Languages','bidxplugin');?></td>
+            <td class="focusLanguage" >%focusLanguage%</td>
+        </tr>
+        <tr>
+            <td><?php _e('Focus countries','bidxplugin');?></td>
+            <td class="focusCountry" >%focusCountry%</td>
+        </tr>
+        <tr>
+            <td><?php _e('Focus cities','bidxplugin');?></td>
+            <td class="focusCity">%focusCity%</td>
+        </tr>
+        <tr>
+            <td><?php _e('Focus Industry','bidxplugin');?></td>
+            <td class="focusIndustry">%focusIndustry%</td>
+        </tr>
+        <tr>
+            <td><?php _e('Focus Expertise','bidxplugin');?></td>
+            <td class="focusExpertise" >%focusExpertise%</td>
+        </tr>
+        <tr>
+            <td><?php _e('Focus Gender','bidxplugin');?></td>
+            <td class="focusGender" >%focusGender%</td>
+        </tr>
+        <tr>
+            <td><?php _e('Stage of business','bidxplugin');?></td>
+            <td class="focusStageBusiness" >%focusStageBusiness%</td>
+        </tr>
+        <tr>
+            <td><?php _e('Social impact','bidxplugin');?></td>
+            <td class="focusSocialImpact">%focusSocialImpact%</td>
+        </tr>
+        <tr>
+            <td><?php _e('Environmental impact','bidxplugin');?></td>
+            <td class="focusEnvImpact" >%focusEnvImpact%</td>
+        </tr>
+        <tr>
+            <td><?php _e('Other preferences','bidxplugin');?></td>
+            <td class="focusPreferences" >%focusPreferences%</td>
+        </tr>
+    </tbody>
+</table>
+-->
+</script>

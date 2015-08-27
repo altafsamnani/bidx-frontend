@@ -766,14 +766,14 @@
 
             mainState = "dashboard";
 
-            _navigateToApp
-            (
-                "dashboard"
-            ,   {
-                    state:    state
-                ,   params:   _deparamSplat( splat )
-                }
-            );
+            // _navigateToApp
+            // (
+            //     "dashboard"
+            // ,   {
+            //         state:    state
+            //     ,   params:   _deparamSplat( splat )
+            //     }
+            // );
         }
 
      ,  mentoring:               function( state, splat )

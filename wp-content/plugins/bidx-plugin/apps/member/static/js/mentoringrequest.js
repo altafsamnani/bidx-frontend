@@ -72,8 +72,8 @@
                 groupDomain :   bidx.common.groupDomain
             ,   entityid    :   params.entityId
             ,   data        :   {
-                                    "initiatorId" :   parseInt(initiatorId)
-                                ,   "mentorId"    :   parseInt(mentorId)
+                                    "initiatorId" :   parseInt(initiatorId, 10)
+                                ,   "mentorId"    :   parseInt(mentorId, 10)
                                 }
             ,   success: function( response )
                 {
@@ -225,51 +225,51 @@
             if ( loggedInMemberId )
             {
                 //Call mentoring request always, When visiting own profile at that time for mentor matches text and otherwise to display buttons on member profile ex send request etc
-                getMentoringRequest(
-                {
-                    callback    :   function( )
-                                    {
-                                        /* 1. When visiting other members profile need to populate dropdown */
-                                        if( visitingMemberPageId !== loggedInMemberId )
-                                        {
-                                            var bpLength    = _.size(listDropdownBp); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
-                                            if( bpLength )
-                                            {
-                                                _getBusinessPlans( )
-                                                .done( function( listBpItems )
-                                                {
+                // getMentoringRequest(
+                // {
+                //     callback    :   function( )
+                //                     {
+                //                         /* 1. When visiting other members profile need to populate dropdown */
+                //                         if( visitingMemberPageId !== loggedInMemberId )
+                //                         {
+                //                             var bpLength    = _.size(listDropdownBp); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
+                //                             if( bpLength )
+                //                             {
+                //                                 _getBusinessPlans( )
+                //                                 .done( function( listBpItems )
+                //                                 {
 
-                                                    bidx.utils.log('listBpItems',listBpItems);
-                                                    $businessSummary.append( listBpItems );
-                                                    $businessSummary.trigger( "chosen:updated" );
+                //                                     bidx.utils.log('listBpItems',listBpItems);
+                //                                     $businessSummary.append( listBpItems );
+                //                                     $businessSummary.trigger( "chosen:updated" );
 
-                                                } );
-                                            }
-                                        }
-                                        else if( mentorProfileId )
-                                        {
-                                            getMatchingEntrepreneur(
-                                            {
-                                                callback    :   function()
-                                                                {
-                                                                    var bpLength    = _.size(listDropdownBp); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
-                                                                    if( bpLength )
-                                                                    {
-                                                                        _getBusinessPlans( )
-                                                                        .done( function( listBpItems )
-                                                                        {
+                //                                 } );
+                //                             }
+                //                         }
+                //                         else if( mentorProfileId )
+                //                         {
+                //                             getMatchingEntrepreneur(
+                //                             {
+                //                                 callback    :   function()
+                //                                                 {
+                //                                                     var bpLength    = _.size(listDropdownBp); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
+                //                                                     if( bpLength )
+                //                                                     {
+                //                                                         _getBusinessPlans( )
+                //                                                         .done( function( listBpItems )
+                //                                                         {
 
-                                                                            bidx.utils.log('listBpItems',listBpItems);
-                                                                            $businessSummary.append( listBpItems );
-                                                                            $businessSummary.trigger( "chosen:updated" );
+                //                                                             bidx.utils.log('listBpItems',listBpItems);
+                //                                                             $businessSummary.append( listBpItems );
+                //                                                             $businessSummary.trigger( "chosen:updated" );
 
-                                                                        } );
-                                                                    }
-                                                                }
-                                            });
-                                        }
-                                    }
-                });
+                //                                                         } );
+                //                                                     }
+                //                                                 }
+                //                             });
+                //                         }
+                //                     }
+                // });
             }
         }
     }

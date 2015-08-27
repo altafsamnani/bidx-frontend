@@ -275,6 +275,25 @@ h1, h2, h3, h4, h5, h6,
         vertical-align: middle;
     }
 }
+.icons-rounded-sm
+{
+    padding: ceil(@font-size-base * 0.7);
+    background-color: lighten(#000, 90%);
+    font-size: floor(@font-size-base * 2.2);
+    width: 50px;
+    height: 45px;
+    display: table;
+    text-align: center;
+    margin: -10px;
+    margin-right: 10px;
+    .rounded(1px);
+    .fa
+    {
+        color: lighten(#000, 60%);
+        display: table-cell;
+        vertical-align: middle;
+    }
+}
 
 .img-logo
 {
@@ -583,6 +602,7 @@ table.table-bottom-border
     top: 0;
     left: 0;
 }
+
 .img-cropper
 {
     .rounded(6px);
@@ -594,6 +614,23 @@ table.table-bottom-border
     img
     {
         .rounded(6px);
+        position: absolute;
+    }
+}
+
+.img-cropper-sm
+{
+    .rounded(2px);
+    position: relative;
+    overflow: hidden;
+    width: 45px;
+    height: 45px;
+    z-index: 1;
+    margin: -10px;
+    margin-right: 10px;
+    img
+    {
+        .rounded(2px);
         position: absolute;
     }
 }
@@ -1166,7 +1203,7 @@ header
     display: block;
 }
 
-.bg-Granted, .bg-Ongoing
+.bg-Granted, .bg-Ongoing, .bg-Accepted
 {
     .label-variant(@alert-success-bg);
 }
@@ -1178,7 +1215,7 @@ header
 {
     .label-variant(@alert-danger-bg);
 }
-.bg-Waiting, .bg-Received
+.bg-Waiting, .bg-Received, .bg-Requested
 {
     .label-variant(@alert-info-bg);
 }
@@ -1994,6 +2031,14 @@ select
 // alerts.less
 // -------------------------
 
+.alert-sm
+{
+    padding: ceil(@font-size-base * 0.7);
+    margin: 10px 0;
+    border-radius: 0;
+    line-height: 2.2;
+}
+
 // badges.less
 // -------------------------
 
@@ -2059,6 +2104,15 @@ select
 .btn-mentor
 {
     background-color: @mentor;
+    color: @white;
+    &:hover
+    {
+        color: @white;
+    }
+    &:focus
+    {
+        color: @white;
+    }
 }
 a.btn-mentor
 {
@@ -2643,6 +2697,29 @@ tbody tr.extrapanel td
         margin-right: 5px;
     }
 }
+
+// bottom Modalbox Styling
+.bottomModalBox.modal.fade.in .modal-body
+{
+    bottom: 0;
+}
+
+.bottomModalBox .modal-body
+{
+    position: absolute;
+    bottom: -250px;
+    right: 0%;
+    left:  0%;
+    padding: 15px;
+    width: 100%;
+    background-color: #FFFFFF;
+    border-radius: 6px 6px 0 0;
+    -webkit-transition: bottom 0.3s ease-out;
+    -moz-transition: bottom 0.3s ease-out;
+    -o-transition: bottom 0.3s ease-out;
+    transition: bottom 0.3s ease-out;
+}
+
 
 
 // thumbnails.less

@@ -106,6 +106,48 @@
     <Item value="investor">Investor</Item>
     <Item value="mentor">Mentor</Item>
 
+    <!-- Common Mentor strings -->
+    <Item value="offerMentoring">Offer Mentoring</Item>
+    <Item value="receivedRequestFrom">You have a request from</Item>
+    <Item value="pendingRequestTo">Your request is pending from</Item>
+    <Item value="mentoringActive">You are the mentor of this business</Item>
+    <Item value="wantsToMentor">wants to be your mentor</Item>
+    <Item value="isMentoring">is mentoring your business</Item>
+    <Item value="youAreMentoring">You are mentoring this business</Item>
+    <Item value="youAskedMentor">You asked to mentor this business</Item>
+
+    <Item value="btnStopMentor">Stop Mentoring</Item>
+
+    <Item value="btnRemove">Remove</Item>
+    <Item value="btnReject">Reject</Item>
+    <Item value="btnAccept">Accept</Item>
+    <Item value="btnRemind">Send a Reminder</Item>
+    <Item value="btnCancelRequest">Cancel Request</Item>
+
+    <Item value="wantsFullAccess">requests full access</Item>
+    <Item value="hasFullAccess">has full access</Item>
+
+    <!-- Cards -->
+    <Item value="bsCompleted">Completed</Item>
+    <Item value="bsFinanceNeeded">Finance Needed</Item>
+    <Item value="bsBusinessStage">Business stage</Item>
+    <Item value="bsYearSalesStarted">Year sales started</Item>
+    <Item value="bsIndustry">Industry</Item>
+    <Item value="bsCountryBusiness">Country of business</Item>
+    <Item value="bsViewBusiness">View Business</Item>
+
+    <Item value="cmDateRegistration">Date of registration</Item>
+    <Item value="cmRegistrationNumber">Registration number</Item>
+    <Item value="cmFiscalNumber">Fiscal number</Item>
+    <Item value="cmFLegalFormBusiness">Legal form of business</Item>
+    <Item value="cmCompany">View Company</Item>
+
+    <!-- Connection details -->
+    <Item value="youAreInContact">You have active connection with this contact.</Item>
+    <Item value="btnStopConnect">Stop connection</Item>
+    <Item value="youAskedConnection">You have successfully sent a connect request to this user.</Item>
+    <Item value="wantsToConnect">wants to connect with you.</Item>
+
 
     <!-- Modal dialogs status messages -->
      <Item value="modalSend">You are about to send request. Are you sure?</Item>
@@ -174,6 +216,8 @@
     <Item value="From">From</Item>
     <Item value="To">To</Item>
     <Item value="emailNew">new</Item>
+    <Item value="showMore">More</Item>
+    <Item value="showLess">Less</Item>
 
     <Item value="loadingLbl">Loading</Item>
 
@@ -193,5 +237,8 @@
     <Item value="lblPendingAccreditation">Pending Accreditation</Item>
     <Item value="lblNoTaggingExist">Assignment is not allowed for tags:</Item>
     <Item value="errorNoTagEntityId">EntityId is not specified</Item>
+
+    <!-- Connect -->
+    <Item value="lblConnect">Connect</Item>
 
 </I18N>

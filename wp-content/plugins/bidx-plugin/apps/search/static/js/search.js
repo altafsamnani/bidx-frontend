@@ -459,12 +459,12 @@
                     $categoryList = $bigCategory.find( ".list-group" );
 
                     $categoryList.find( "a.filter:gt("+CONSTANTS.VISIBLE_FILTER_ITEMS+")" ).addClass( "hide toggling" );
-                    $categoryList.append( $( "<a />", { html: bidx.i18n.i( "showMore", appName ), "class": "list-group-item list-group-item-warning text-center more-less" }) );
+                    $categoryList.append( $( "<a />", { html: bidx.i18n.i( "showMore" ), "class": "list-group-item list-group-item-warning text-center more-less" }) );
 
                     $categoryList.find( ".more-less" ).on('click', function( e )
                     {
                         e.preventDefault();
-                        _showMoreLess( $(this).parent().find( ".toggling" ) );
+                        bidx.common.showMoreLess( $(this).parent().find( ".toggling" ) );
                     });
                 }
             });
@@ -573,21 +573,6 @@
 
             });
 
-    }
-
-    function _showMoreLess ( items )
-    {
-        var $moreless = $(items).parent().find( ".more-less" );
-        if ( items.hasClass( "hide" ) )
-        {
-            items.removeClass( "hide" );
-            $moreless.html( bidx.i18n.i( "showLess", appName ) );
-        }
-        else
-        {
-            items.addClass( "hide" );
-            $moreless.html( bidx.i18n.i( "showMore", appName ) );
-        }
     }
 
     var placeBusinessThumb = function( $listItem, imageSource )
