@@ -97,7 +97,7 @@
         ,   options = {}
         ;
 
-        if ( bidx.globalChecks.isBusinessPage() && $mentorActivities.length )
+        if ( $mentorActivities.length )
         {
             $mentorActivities.fadeIn();
         }
@@ -169,7 +169,7 @@
 
                     if ( isThereRelationship )
                     {
-                        if ( $.inArray( request.mentorId, memberIds) === -1 )
+                        if ( $.inArray( request.mentorId, memberIds) === -1 && bidx.common.checkMemberExists( request.mentorId ) === false  )
                         {
                             memberIds.push( request.mentorId );
                         }
@@ -197,76 +197,34 @@
                 }
             } );
 
-            fetchMemberProfiles( memberIds );
+            if ( memberIds.length )
+            {
+                bidx.common.fetchMemberProfiles( memberIds, "mentor" );
+            }
+            else
+            {
+                generateRequests();
+            }
+
+            // Empty the "memberIds" array
+            memberIds = [];
         }
     };
 
-    var fetchMemberProfiles = function ( memberIds )
-    {
-        var count = 0;
-
-        $.each( memberIds, function ( i, memberId )
-        {
-            bidx.common.getMemberInfo(
-            {
-                id          :   memberId
-            ,   callback    :   function ( memberInfo )
-                {
-                    bidx.common.addToTempMembers( memberInfo );
-
-                    count = count+1;
-
-                    if ( count === memberIds.length )
-                    {
-                        processRequests();
-                    }
-                }
-            ,   error:  function(jqXhr, textStatus)
-                {
-                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
-
-                    bidx.utils.log("status", status);
-                }
-            });
-        } );
-    };
-
-    var processRequests = function ()
+    var generateRequests = function ()
     {
         $.each( requests, function( i, req )
         {
             constructMentorBox( bidx.common.tmpUsersData.members[req.request.mentorId], req.request, req.relChecks );
         });
+
+        // Empty the "requests" object
+        requests = {};
     };
-
-    // var getMentorInfo = function ( mentorId, request, relChecks )
-    // {
-    //     bidx.common.getMemberInfo(
-    //     {
-    //         id          :   mentorId
-    //     ,   callback    :   function ( memberInfo )
-    //         {
-    //             if ( request.status !== "rejected" )
-    //             {
-    //                 constructMentorBox( memberInfo, request, relChecks );
-    //             }
-    //         }
-    //     ,   error:  function(jqXhr, textStatus)
-    //         {
-    //             var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
-
-    //             bidx.utils.log("status", status);
-    //         }
-    //     });
-    // };
 
     var constructMentorBox = function ( memberInfo, request, relChecks )
     {
-        // bidx.utils.log("=================================================================");
-        // bidx.utils.log( " name:: ", memberInfo.displayName," ::::: relChecks:: ", relChecks, " ::::: request:: ", request);
-        // bidx.utils.log("=================================================================");
-
-        var $mentorItem
+        var $mentorBox
         ,   $memberLink
         ,   $memberThumb
         ,   $actions
@@ -277,12 +235,12 @@
 
         if ( $bpElement.length )
         {
-            $bsElement = $mentorActivities.find( ".cardFooter" );
+            $bsElement = $mentorActivities.find( ".cardView" );
         }
 
         if ( $mpElement.length )
         {
-            $bsElement = $mpElement.find( '*[data-bsid="'+ relChecks.businessId +'"]' );
+            $bsElement = $mpElement.find( '*[data-bsid="'+ relChecks.businessId +'"] .cardView' );
         }
 
         if ( $entreDash.length )
@@ -304,7 +262,7 @@
 
         $memberLink = $( "<a />", { "href": "/member/" + memberInfo.bidxMemberProfile.bidxMeta.bidxOwnerId, "html": memberInfo.bidxMemberProfile.bidxMeta.bidxOwnerDisplayName } );
 
-        $mentorItem =
+        $mentorBox =
             $( "<div />", { "class": "alert alert-sm hide-overflow bg-" + bidx.common.capitalizeFirstLetter( request.status ), "data-requestId": request.requestId } )
                 .append
                 (
@@ -316,10 +274,11 @@
                 )
             ;
 
-        $bsElement.last().append( $mentorItem );
+        $bsElement.last().append( $mentorBox );
 
 
         // Construct message and action buttons
+        //
         switch ( request.status )
         {
             case "accepted":
@@ -343,15 +302,15 @@
                         )
                     ;
                 }
-                // else if ( isThereRelationship )
-                // {
-
-                // }
                 else
                 {
                     $actions = $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "stop", "html": bidx.i18n.i( "btnStopMentor" ) } );
 
                     $bsElement.find( ".pull-left" ).last()
+                        .append
+                        (
+                            $memberThumb
+                        )
                         .append
                         (
                             $( "<span />", { "html": " " + bidx.i18n.i( "youAreMentoring" )  } )
@@ -430,10 +389,7 @@
 
         if ( isThereRelationship )
         {
-            if ( $bpElement.length )
-            {
-                $mentorActivities.removeClass( "hide" );
-            }
+            $mentorActivities.removeClass( "hide" );
 
             $bsElement.find( ".mentor-actions" ).last().append( $actions );
         }
@@ -531,7 +487,7 @@
                         if ( bidx.globalChecks.isBusinessPage() )
                         {
                             checkForActivities();
-                            checkOfferMentoring();
+                            doOfferMentoringSingleBusiness();
                         }
                         else
                         {
@@ -663,12 +619,23 @@
             callback: function( result )
             {
                 checkMentoringRelationship( result );
-                checkOfferMentoring();
+                doOfferMentoringSingleBusiness();
             }
         } );
     };
 
-    var checkOfferMentoring = function ()
+    var entrepreneurProfileMentorActions = function ( )
+    {
+        getMentoringRequest(
+        {
+            callback: function( result )
+            {
+                checkMentoringRelationship( result );
+            }
+        } );
+    };
+
+    var doOfferMentoringSingleBusiness = function ()
     {
         getMentoringRequestsForCurrentUser(
         {
@@ -699,17 +666,6 @@
                 }
             } );
         });
-    };
-
-    var entrepreneurProfileMentorActions = function ( )
-    {
-        getMentoringRequest(
-        {
-            callback: function( result )
-            {
-                checkMentoringRelationship( result );
-            }
-        } );
     };
 
     var getEntityMentoringRequests = function( options )
@@ -991,7 +947,7 @@
                 ,   getEntityMentoringRequests: getEntityMentoringRequests
                 ,   constructMentorBox:         constructMentorBox
                 ,   checkMentoringRelationship: checkMentoringRelationship
-                ,   fetchMemberProfiles:        fetchMemberProfiles
+                ,   generateRequests:            generateRequests
                 ,   delegateActions:            delegateActions
             };
 

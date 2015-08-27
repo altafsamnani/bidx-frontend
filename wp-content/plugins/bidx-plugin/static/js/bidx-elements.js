@@ -8,7 +8,7 @@
     ,   bidxConfig          = window.bidxConfig || {}
     ;
 
-    var placeBusinessThumb = function( item )
+    var placeLogoThumb = function( item )
     {
         var thumb
         ,   logo
@@ -150,7 +150,7 @@
                                     $( "<a />", { "href": "/businesssummary/" + item.bidxMeta.bidxEntityId, "class": "pull-left main-margin-half", "data-role": "businessImage" } )
                                     .append
                                     (
-                                        placeBusinessThumb( item )
+                                        placeLogoThumb( item )
                                     )
                                 )
                             )
@@ -275,7 +275,7 @@
                                     $( "<a />", { "href": "/company/" + item.bidxMeta.bidxEntityId, "class": "pull-left main-margin-half", "data-role": "businessImage" } )
                                     .append
                                     (
-                                        placeBusinessThumb( item )
+                                        placeLogoThumb( item )
                                     )
                                 )
                             )
