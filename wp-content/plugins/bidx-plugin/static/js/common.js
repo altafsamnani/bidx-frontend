@@ -229,7 +229,7 @@
     {
         var memberExists = false;
 
-        if ( bidx.common.tmpUsersData.members.length )
+        if ( bidx.common.tmpUsersData.members )
         {
             $.each( bidx.common.tmpUsersData.members, function( i, m )
             {
@@ -242,6 +242,57 @@
 
         return memberExists;
     }
+
+    // Reason: "mentor", "investor", "connect"
+    //
+    var fetchMemberProfiles = function ( memberIds, reason )
+    {
+        var count = 0;
+
+        $.each( memberIds, function ( i, memberId )
+        {
+            bidx.common.getMemberInfo(
+            {
+                id          :   memberId
+            ,   callback    :   function ( memberInfo )
+                {
+                    addToTempMembers( memberInfo );
+
+                    count = count+1;
+
+                    if ( count === memberIds.length )
+                    {
+                        switch (reason)
+                        {
+                            case "mentor" :
+
+                                bidx.commonmentordashboard.generateRequests();
+
+                            break;
+
+                            case "investor" :
+
+                                // bidx.commonmentordashboard.generateRequests();
+
+                            break;
+
+                            case "connect" :
+
+                                // bidx.commonmentordashboard.generateRequests();
+
+                            break;
+                        }
+                    }
+                }
+            ,   error:  function(jqXhr, textStatus)
+                {
+                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                    bidx.utils.log("status", status);
+                }
+            });
+        } );
+    };
 
     // retrieve a value from the session object
     //
@@ -1625,6 +1676,7 @@
     ,   addToTempMembers:               addToTempMembers
     ,   checkMemberExists:              checkMemberExists
     ,   tmpUsersData:                   tmpUsersData
+    ,   fetchMemberProfiles:            fetchMemberProfiles
 
     ,   notifyRedirect:                 notifyRedirect
     ,   notifySave:                     notifySave
