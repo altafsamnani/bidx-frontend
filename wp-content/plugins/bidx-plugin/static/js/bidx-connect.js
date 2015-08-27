@@ -35,7 +35,6 @@
             ,   $alert
             ,   widget          =   this
             ,   options         =   {}
-            ,   $buttonElement  =   $( ".alert-connect" )
             ;
 
             $(document).on('click', '*[data-btn="connectaccept"]', function ( e )
