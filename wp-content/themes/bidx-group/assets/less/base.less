@@ -2699,25 +2699,33 @@ tbody tr.extrapanel td
 }
 
 // bottom Modalbox Styling
-.bottomModalBox.modal.fade.in .modal-body
+.bottomModalBox.modal.fade .modal-body
 {
     bottom: 0;
+    padding:0px;
 }
 
-.bottomModalBox .modal-body
+.bottomModalBox
 {
-    position: absolute;
-    bottom: -250px;
-    right: 0%;
-    left:  0%;
-    padding: 15px;
-    width: 100%;
-    background-color: #FFFFFF;
-    border-radius: 6px 6px 0 0;
-    -webkit-transition: bottom 0.3s ease-out;
-    -moz-transition: bottom 0.3s ease-out;
-    -o-transition: bottom 0.3s ease-out;
-    transition: bottom 0.3s ease-out;
+    .modal-body
+    {
+        position: absolute;
+        bottom: -250px;
+        right: 0%;
+        left:  0%;
+        padding:0px;
+        background:transparent;
+        border-radius: 6px 6px 0 0;
+        -webkit-transition: bottom 0.3s ease-out;
+        -moz-transition: bottom 0.3s ease-out;
+        -o-transition: bottom 0.3s ease-out;
+        transition: bottom 0.3s ease-out;
+    }
+    .container .container-modal-body
+    {
+        background-color:#FFFFFF;
+        padding:10px;
+    }
 }
 
 
