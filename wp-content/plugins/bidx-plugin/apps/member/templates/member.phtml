@@ -24,7 +24,7 @@ $hasAccessToInvestorProfile     = ( $isInvestor && $isLoggedinMemberIsInvestor &
 
 // Authorized Entrepreneur
 $entrepreneurAccess = false;
-if ( $isLoggedinMemberIsEntrepreneur ) :
+if ( $isLoggedinMemberIsEntrepreneur && $data->authorizedBusinessSummaries ) :
 
     foreach ($data->authorizedBusinessSummaries as $key => $business)
     {
@@ -90,8 +90,7 @@ endif;
 
 <?php
             endif;
-?>
-<?php
+
             if ( $isLoggedinMemberIsInvestor && !$isLoggedinMemberIsMentor ) :
 ?>
                 <a href="<?php echo _l('member');?>/#createMentor" class="btn btn-sm btn-primary">
@@ -132,27 +131,28 @@ endif;
 ?>
 <?php
         if ( $memberId != $loggedInMemberId && $authenticated )
-        { ?>
-            <div class="connect connectBtn hide pull-right">
+        {
+?>
+            <div class="connect hide pull-right">
                 <div class="connectUserButton"></div>
             </div>
-<?php   } ?>
-<?php
-        if ( false && $memberId != $loggedInMemberId && $authenticated && $inGroup ) :
+<?php 
+        }
 ?>
-            <a href="<?php echo _l('mail');?>/#mail/contacts/action=connect&id=<?php echo $memberId ?>" class="btn btn-sm btn-warning btn-contact hide pull-right">
-                <div class="fa fa-user fa-above fa-big"></div>
-                <?php _e('Connect', 'bidxplugin')?>
-            </a>
+        <div class="message hide pull-right">
+            <button class="btn btn-sm btn-primary sendMessage" data-toggle="modal" data-target="#sendMessageEditor">
+                <div class="fa fa-edit fa-above fa-big"></div>
+                <?php _e('Send Message', 'bidxplugin')?>
+            </button>
+        </div>
 <?php
-        endif;
 
         // If current profile is not loggedin user, is  mentor, loggedin is not mentor, in a group
         if ( $memberId != $loggedInMemberId && $authenticated && $inGroup && $isMentor && !$isLoggedinMemberIsMentor && $isLoggedinMemberIsEntrepreneur) :
 ?>
             <a href="#mentoringRequest/confirmMentoringRequest/mentorId=<?php echo $memberId ?>" class="btn btn-sm btn-mentor btn-mentoring mentor-cl hide pull-right">
                 <div class="fa fa-compass fa-above fa-big"></div>
-                <span class="request-text"> <?php _e('Request mentoring', 'bidxplugin')?> </span>
+                <span class="request-text"> <?php _e('Request Mentoring', 'bidxplugin')?> </span>
             </a>
 <?php
         endif;
@@ -294,6 +294,35 @@ endif;
 
 
     </div>
+    <!-- Compose view http://stackoverflow.com/questions/26598291/make-twitter-bootstrap-popup-modal-slide-and-stick-to-bottom-of-page -->
+     <div class="modal fade bottomModalBox" id="sendMessageEditor" data-keyboard="false">
+
+        <!-- Modal content-->
+            <form action="">
+
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="form-group">
+                        <label><?php _e('Subject','bidxplugin'); ?></label>
+                        <input type="text" class="form-control" name="subject" placeholder="<?php _e('Your subject goes here','bidxplugin')?>">
+                    </div>
+                    <div class="form-group">
+                        <label><?php _e('Message','bidxplugin'); ?></label>
+                        <textarea name="content" class="form-control" placeholder="<?php _e('Please type your message here','bidxplugin')?>"></textarea>
+                    </div>
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary compose-submit">
+                            <i class="fa fa-envelope-o"></i>
+                            <?php _e('Send message','bidxplugin')?>
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <?php _e('Discard message','bidxplugin')?>
+                        </button>
+                    </div>
+                </div>
+            </form>
+    </div>
+
     <?php $this->render('edit-member.phtml'); ?>
     <?php $this->render('edit-entrepreneur.phtml'); ?>
     <?php $this->render('edit-investor.phtml'); ?>
