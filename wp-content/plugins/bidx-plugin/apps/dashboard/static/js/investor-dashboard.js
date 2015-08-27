@@ -72,7 +72,7 @@
     var getContact = function(options)
     {
         var snippit     = $("#investor-contactitem").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listEmpty  = $($("#investor-empty").html().replace(/(<!--)*(-->)*/g, ""))
+        ,   $listEmpty  = $("#investor-empty").html().replace(/(<!--)*(-->)*/g, "")
         ,   $list       = $("." + options.list)
         ,   listItem
         ,   $listItem
