@@ -207,7 +207,7 @@
         {
             var message             =   {}
             ,   userIds             =   []
-            ,   $sendInMailWrapper  =   $('.message')
+            ,   $sendInMailWrapper  =   $('.sendMessageWrapper')
             ,   $sendMessageEditor  =   $('#sendMessageEditor')
             ,   $frmCompose         =   $sendMessageEditor.find("form")
             ,   $containerBody      =   $sendMessageEditor.find('.container-modal-body')
@@ -217,7 +217,7 @@
             ;
 
             $sendInMailWrapper.removeClass('hide');
-
+            bidx.utils.log('I am in inmail ok');
             $frmCompose.validate(
             {
                 rules:
@@ -299,7 +299,36 @@
                 bidx.common.notifyError( 'errorNoTagEntityId' );
             }
         }
-    ,   constructButton: function ( btnOptions )
+    ,   constructInMail: function (  )
+        {
+            var widget                  =   this
+            ,   options                 =   widget.options
+            ,   visitingMemberPageId    =   bidx.utils.getValue( options, "visitingMemberPageId" )
+            ,   currentUserId           =   bidx.utils.getValue( options, "currentUserId" )
+            ;
+
+            if( currentUserId && currentUserId !== visitingMemberPageId )
+            {
+                widget.hasRelationship(
+                {
+                    visitingMemberPageId:   visitingMemberPageId
+                ,   currentUserId:          currentUserId
+                ,   callback:               function( params )
+                                            {
+                                                var request     =   params.request
+                                                ,   contact     =   params.contact
+                                                ;
+
+                                                // If User is blocked then dont display send message button
+                                                if( !contact || contact.status !== 'BLOCKED')
+                                                {
+                                                    widget.inMailAction( visitingMemberPageId );
+                                                }
+                                            }
+                });
+            }
+        }
+    ,   constructConnectInMail: function ( btnOptions )
         {
             var widget                  =   this
             ,   options                 =   widget.options
@@ -313,8 +342,7 @@
             {
                 widget.hasRelationship(
                 {
-                    options:                btnOptions
-                ,   visitingMemberPageId:   visitingMemberPageId
+                    visitingMemberPageId:   visitingMemberPageId
                 ,   currentUserId:          currentUserId
                 ,   callback:               function( params )
                                             {

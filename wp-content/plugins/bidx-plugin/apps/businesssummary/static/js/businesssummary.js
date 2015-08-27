@@ -296,6 +296,25 @@
         }
     };
 
+    function _inMail( )
+    {
+        var businessOwnerId =  $element.data('ownerid')
+        ,   $inMail         =  $element.find( '.inmail' )
+        ,   connectOptions  =   { }
+        ;
+
+        bidx.utils.log('businessOwnerId', businessOwnerId);
+
+        connectOptions =    {
+                                currentUserId:          loggedInMemberId
+                            ,   visitingMemberPageId:   businessOwnerId
+                            };
+
+        $inMail.connect( connectOptions );
+
+        $inMail.connect( "constructInMail" );
+    }
+
     // Setup function for doing work that should only be done once
     //
     function _oneTimeSetup()
@@ -307,6 +326,7 @@
         _managementTeam();
         _companyDetails();
         _documents();
+        _inMail();
 
         // On any changes, how little doesn't matter, notify that we have a pending change
         // But no need to track the changes when doing a member data load
@@ -323,7 +343,7 @@
         $btnDeleteBs.bind( "click", function( e )
         {
             e.preventDefault();
-            
+
             bidx.common.notifyConfirm( bidx.i18n.i( "summaryDeletion", appName ), bidxConfig.context.businessSummaryId );
         } );
 
