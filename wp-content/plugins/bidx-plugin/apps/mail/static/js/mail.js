@@ -1468,11 +1468,11 @@
                     ,   $blockLink          =   $blockProfile.find('.blockLink')
                     ;
 
-                    /*bidx.common.doBlockRequest(
+                    bidx.common.doBlockRequest(
                     {
                         contact: contact
                     ,   callback: function()
-                        {*/
+                        {
                             $list.fadeOut( "slow", function()
                             {
 
@@ -1512,8 +1512,8 @@
                                 $list.remove();
 
                             });
-                        /*}
-                    } );*/
+                        }
+                    } );
                 });
             }
 
@@ -1530,11 +1530,11 @@
                     ,   contact         =   parseInt( contactId, 10)
                     ;
 
-                    /*bidx.common.doUnBlockRequest(
+                    bidx.common.doUnBlockRequest(
                     {
                         contact: contact
                     ,   callback: function()
-                        {*/
+                        {
                             $list.fadeOut( "slow", function()
                             {
                                 $list.remove();
@@ -1546,8 +1546,8 @@
                                     $blockedWrapper.append( emptySnippet );
                                 }
                             });
-                       /* }
-                    } );*/
+                        }
+                    } );
                 });
             }
 

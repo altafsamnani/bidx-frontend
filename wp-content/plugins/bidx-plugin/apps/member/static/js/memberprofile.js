@@ -144,9 +144,8 @@
         connectOptions =    {
                                 currentUserId:          loggedInMemberId
                             ,   visitingMemberPageId:   visitingMemberPageId
+                            ,   sendInMailBtn:           true
                             };
-
-        bidx.utils.log( 'connectOptions: ', connectOptions);
 
         $connect.connect( connectOptions );
 

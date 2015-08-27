@@ -163,7 +163,7 @@
             extraUrlParameters =
             [
                 {
-                    label :     "contactIdOrName"
+                    label :     "contact"
                 ,   value :     visitingMemberPageId
                 }
             ];
@@ -192,6 +192,8 @@
                             bidx.utils.log("[connect] else retrieved following contact ", request );
 
                             bidx.construct.connectActionBox( request );
+
+
                         }
                         else
                         {
@@ -201,6 +203,12 @@
                             {
                                 params.callback(  );
                             }
+                        }
+
+                        // If User is blocked then dont display send message button
+                        if( !contact || contact.status !== 'BLOCKED')
+                        {
+                            widget.rendersendInMailBtn( visitingMemberPageId );
                         }
 
                         widget._delegateActions( );
@@ -219,6 +227,46 @@
                     }
                 }
             );
+        }
+    ,   rendersendInMailBtn: function ( visitingMemberPageId )
+        {
+            var $sendInMailWrapper  =   $('.message')
+            ,   $sendInMailBtn      =   $sendInMailWrapper.find('.sendMessage')
+
+            ;
+
+            $sendInMailWrapper.removeClass('hide');
+
+            $sendInMailBtn.on('click', function( e )
+            {
+
+            });
+
+
+        }
+    ,   sendInMail: function()
+        {
+            var $sendInMailBtn
+            ,   loggedInMemberId    =   bidx.common.getCurrentUserId()
+            ;
+
+            $sendInMailBtn.on('click', function( e )
+            {
+
+                bidx.common.sendInMail(
+                {
+                    contact:   loggedInMemberId
+                ,   callback:   function( data )
+                    {
+
+                    }
+                ,   error:      function(jqXhr)
+                    {
+                        var response = $.parseJSON( jqXhr.responseText);
+                        bidx.utils.error( "Client  error occured", response );
+                    }
+                } );
+            });
         }
     ,  _addConnectButton:   function (  )
         {
