@@ -30,6 +30,8 @@
     ,   isTheMentor
     ,   isTheInitiator
     ,   relChecks
+    ,   memberIds               = []
+    ,   requests                = {}
 
     ;
 
@@ -92,6 +94,7 @@
     {
         var mentorInfo = {}
         ,   bsids = []
+        ,   options = {}
         ;
 
         if ( bidx.globalChecks.isBusinessPage() && $mentorActivities.length )
@@ -138,7 +141,7 @@
         }
         else
         {
-            bidx.utils.log("BSID elements not present", bsids);
+            bidx.utils.log( "BSID elements not present", bsids);
             bidx.utils.log( "checkMentoringRelationship::: no BSIDs found" );
         }
 
@@ -146,7 +149,9 @@
         {
             $.each( result, function ( i, request )
             {
-                var relChecks = {};
+                var relChecks = {}
+                ,   options = {}
+                ;
 
                 // bidx.utils.log("::::: Request ::::: ->", request);
 
@@ -164,6 +169,11 @@
 
                     if ( isThereRelationship )
                     {
+                        if ( $.inArray( request.mentorId, memberIds) === -1 )
+                        {
+                            memberIds.push( request.mentorId );
+                        }
+
                         isTheMentor     = ( request.mentorId    === currentUserId ) ? true : false;
                         isTheInitiator  = ( request.initiatorId === currentUserId ) ? true : false;
 
@@ -176,33 +186,79 @@
                         relChecks.isOwnBusiness         = isOwnBusiness;
                         relChecks.businessId            = request.entityId;
 
-                        getMentorInfo( request.mentorId, request, relChecks );
+                        options.relChecks               = relChecks;
+                        options.request                 = request;
+
+                        if ( request.requestId in requests === false )
+                        {
+                            requests[request.requestId] = options ;
+                        }
                     }
                 }
             } );
+
+            fetchMemberProfiles( memberIds );
         }
     };
 
-    var getMentorInfo = function ( mentorId, request, relChecks )
+    var fetchMemberProfiles = function ( memberIds )
     {
-        bidx.common.getMemberInfo(
-        {
-            id          :   mentorId
-        ,   callback    :   function ( memberInfo )
-            {
-                if ( request.status !== "rejected" )
-                {
-                    constructMentorBox( memberInfo, request, relChecks );
-                }
-            }
-        ,   error:  function(jqXhr, textStatus)
-            {
-                var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+        var count = 0;
 
-                bidx.utils.log("status", status);
-            }
+        $.each( memberIds, function ( i, memberId )
+        {
+            bidx.common.getMemberInfo(
+            {
+                id          :   memberId
+            ,   callback    :   function ( memberInfo )
+                {
+                    bidx.common.addToTempMembers( memberInfo );
+
+                    count = count+1;
+
+                    if ( count === memberIds.length )
+                    {
+                        processRequests();
+                    }
+                }
+            ,   error:  function(jqXhr, textStatus)
+                {
+                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                    bidx.utils.log("status", status);
+                }
+            });
+        } );
+    };
+
+    var processRequests = function ()
+    {
+        $.each( requests, function( i, req )
+        {
+            constructMentorBox( bidx.common.tmpUsersData.members[req.request.mentorId], req.request, req.relChecks );
         });
     };
+
+    // var getMentorInfo = function ( mentorId, request, relChecks )
+    // {
+    //     bidx.common.getMemberInfo(
+    //     {
+    //         id          :   mentorId
+    //     ,   callback    :   function ( memberInfo )
+    //         {
+    //             if ( request.status !== "rejected" )
+    //             {
+    //                 constructMentorBox( memberInfo, request, relChecks );
+    //             }
+    //         }
+    //     ,   error:  function(jqXhr, textStatus)
+    //         {
+    //             var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+    //             bidx.utils.log("status", status);
+    //         }
+    //     });
+    // };
 
     var constructMentorBox = function ( memberInfo, request, relChecks )
     {
@@ -246,7 +302,7 @@
 
         $memberThumb = bidx.construct.placeProfileThumbSmall( memberInfo );
 
-        $memberLink = $( "<a />", { "href": "/member/" + memberInfo.bidxMeta.bidxOwnerId, "html": memberInfo.bidxMeta.bidxOwnerDisplayName } );
+        $memberLink = $( "<a />", { "href": "/member/" + memberInfo.bidxMemberProfile.bidxMeta.bidxOwnerId, "html": memberInfo.bidxMemberProfile.bidxMeta.bidxOwnerDisplayName } );
 
         $mentorItem =
             $( "<div />", { "class": "alert alert-sm hide-overflow bg-" + bidx.common.capitalizeFirstLetter( request.status ), "data-requestId": request.requestId } )
@@ -383,7 +439,6 @@
         }
 
         $( ".img-cropper-sm img" ).fakecrop( {fill: true, wrapperWidth: 50, wrapperHeight: 50} );
-
     };
 
     var delegateActions = function ()
@@ -583,7 +638,7 @@
                     {
                         $el.removeClass( "disabled" );
 
-                        bidx.utils.error( "Client  error occured", response );                        
+                        bidx.utils.error( "Client  error occured", response );
                     }
                 }
             } );
@@ -646,7 +701,6 @@
         });
     };
 
-
     var entrepreneurProfileMentorActions = function ( )
     {
         getMentoringRequest(
@@ -657,7 +711,6 @@
             }
         } );
     };
-
 
     var getEntityMentoringRequests = function( options )
     {
@@ -938,7 +991,7 @@
                 ,   getEntityMentoringRequests: getEntityMentoringRequests
                 ,   constructMentorBox:         constructMentorBox
                 ,   checkMentoringRelationship: checkMentoringRelationship
-                ,   getMentorInfo:              getMentorInfo
+                ,   fetchMemberProfiles:        fetchMemberProfiles
                 ,   delegateActions:            delegateActions
             };
 

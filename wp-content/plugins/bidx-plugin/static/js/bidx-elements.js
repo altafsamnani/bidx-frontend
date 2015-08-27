@@ -57,7 +57,7 @@
     var placeProfileThumbSmall = function( memberInfo )
     {
         var thumb
-        ,   profilePicture = bidx.utils.getValue( memberInfo.personalDetails.profilePicture, "document")
+        ,   profilePicture = bidx.utils.getValue( memberInfo.bidxMemberProfile.personalDetails.profilePicture, "document")
         ;
 
         if ( profilePicture )
@@ -472,19 +472,23 @@
         }
 
         $bsElement.find( ".mentor-actions" ).last().append( $actions );
-
     };
 
-
-    var constructActionBox = function ( data, item )
+    var constructActionBox = function ( data, memberInfo )
     {
         var box
         ,   $memberLink
+        ,   $memberThumb
         ,   $actions
         ,   $message
         ;
 
-        $memberLink = $( "<a />", { "href": "/member/" + data.user.id, "html": data.user.displayName } );
+        if ( memberInfo )
+        {
+            $memberThumb = bidx.construct.placeProfileThumbSmall( memberInfo );
+        }
+
+        $memberLink = $( "<a />", { "href": "/member/" + data.user.id, "html": data.user.name } );
 
         if ( data.status === "pending" )
         {
@@ -515,6 +519,10 @@
                     $( "<div />", { "class": "pull-left" } )
                         .append
                         (
+                            $memberThumb
+                        )
+                        .append
+                        (
                             $memberLink
                         )
                         .append
@@ -531,6 +539,8 @@
                         )
                 )
             ;
+
+        $(box).find( ".img-cropper-sm img" ).fakecrop( {fill: true, wrapperWidth: 50, wrapperHeight: 50} );
 
         return box;
     };

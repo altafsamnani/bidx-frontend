@@ -23,6 +23,7 @@
     ,   changesQueue    = [] // array holding app names that have pending changes
 
     ,   $frmLoginModal  = $( "#frmLoginModal" )
+    ,   tmpUsersData    = { members: {} }
     ;
 
     // Add something to the list of apps having a reason to ask the user for confirmation on page unload
@@ -197,20 +198,9 @@
             ,   groupDomain: bidx.common.groupDomain
             ,   success:        function( item )
                 {
-
-                    // now format it into array of objects with value and label
-                    if ( !$.isEmptyObject(item.member) )
+                    if (options && options.callback)
                     {
-                        bidxMeta       = bidx.utils.getValue( item, "bidxMemberProfile" );
-
-                        if ( bidxMeta  )
-                        {
-                            //  execute callback if provided
-                            if (options && options.callback)
-                            {
-                                options.callback( bidxMeta );
-                            }
-                        }
+                        options.callback( item );
                     }
                 }
             ,   error: function(jqXhr, textStatus)
@@ -225,6 +215,32 @@
                 }
             }
         );
+    }
+
+    function addToTempMembers( item )
+    {
+        if ( checkMemberExists( item.member.bidxMeta.bidxMemberId ) === false )
+        {
+            tmpUsersData.members[item.member.bidxMeta.bidxMemberId] = item ;
+        }
+    }
+
+    function checkMemberExists( bidxMemberId )
+    {
+        var memberExists = false;
+
+        if ( bidx.common.tmpUsersData.members.length )
+        {
+            $.each( bidx.common.tmpUsersData.members, function( i, m )
+            {
+                 if ( m.member.bidxMeta.bidxMemberId === bidxMemberId )
+                 {
+                    memberExists = m;
+                 }
+            });
+        }
+
+        return memberExists;
     }
 
     // retrieve a value from the session object
@@ -1559,6 +1575,10 @@
     bidx.common =
     {
         groupDomain:                    groupDomain
+
+    ,   addToTempMembers:               addToTempMembers
+    ,   checkMemberExists:              checkMemberExists
+    ,   tmpUsersData:                   tmpUsersData
 
     ,   notifyRedirect:                 notifyRedirect
     ,   notifySave:                     notifySave
