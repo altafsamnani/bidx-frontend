@@ -23,9 +23,6 @@
             ,   $btnHtml
             ,   existingGroupTags
             ;
-
-            //widget._setconnectData(  );
-
         }
     ,   _delegateActions: function ( )
         {
@@ -95,7 +92,7 @@
                 $alert      = $(this).parents( ".alert" );
                 contact   = parseInt( getRequestId(this), 10);
 
-               bidx.common.doCancelConnectRequest(
+                bidx.common.doCancelConnectRequest(
                 {
                     contact: contact
                 ,   callback: function()
@@ -147,7 +144,7 @@
             }
 
         }
-    ,   _hasRelationship: function ( params )
+    ,   hasRelationship: function ( params )
         {
             bidx.utils.log( "[connect] get active contacts" );
             var status
@@ -170,47 +167,26 @@
             bidx.api.call(
                 "contact.fetch"
             ,   {
-                    groupDomain:            bidx.common.groupDomain
-                ,   extraUrlParameters:     extraUrlParameters
-                ,   success:        function( response )
+                    groupDomain:        bidx.common.groupDomain
+                ,   extraUrlParameters: extraUrlParameters
+                ,   success:            function( response )
                     {
-                        var sortIndex                   = []
-                        ,   contacts                    = bidx.utils.getValue( response, 'contacts')
-                        ,   request                     = _.findWhere(contacts, { id: visitingMemberPageId })
-                        ,   contact                     = bidx.utils.getValue( request, 'contact')
-                        ,   result                      = {}
-                        ,   visitingMemberConnection    = false
-                        ,   currentUserId               = bidx.utils.getValue( bidxConfig, "session.id" )
+                        var sortIndex   =   []
+                        ,   contacts    =   bidx.utils.getValue( response, 'contacts')
+                        ,   request     =   _.findWhere(contacts, { id: visitingMemberPageId })
+                        ,   contact     =   bidx.utils.getValue( request, 'contact')
                         ;
 
                         bidx.utils.log("[connect] retrieved following response ", contacts );
 
-                        if( !$.isEmptyObject( request )  && contact)
+                        if (params && params.callback)
                         {
-
-                            bidx.utils.log("[connect] else retrieved following contact ", request );
-
-                            bidx.construct.connectActionBox( request );
-
-
-                        }
-                        else
-                        {
-                            bidx.utils.log("[connect] if retrieved following contact ", request );
-
-                            if (params && params.callback)
+                            params.callback(
                             {
-                                params.callback(  );
-                            }
+                                request:    request
+                            ,   contact:    contact
+                            });
                         }
-
-                        // If User is blocked then dont display send message button
-                        if( !contact || contact.status !== 'BLOCKED')
-                        {
-                            widget.rendersendInMailBtn( visitingMemberPageId );
-                        }
-
-                        widget._delegateActions( );
                     }
                 ,   error: function(jqXhr, textStatus)
                     {
@@ -227,9 +203,10 @@
                 }
             );
         }
-    ,   rendersendInMailBtn: function ( visitingMemberPageId )
+    ,   inMailAction: function ( visitingMemberPageId )
         {
             var message             =   {}
+            ,   userIds             =   []
             ,   $sendInMailWrapper  =   $('.message')
             ,   $sendMessageEditor  =   $('#sendMessageEditor')
             ,   $frmCompose         =   $sendMessageEditor.find("form")
@@ -253,7 +230,6 @@
                     {
                         required:               true
                     }
-
                 }
             ,   submitHandler:  function()
                 {
@@ -264,19 +240,29 @@
 
                     $btnComposeSubmit.addClass( "disabled" );
 
+                    userIds.push( visitingMemberPageId );
+
+                    bidx.utils.setValue( message, "userIds", userIds );
                     bidx.utils.setValue( message, "subject", $frmCompose.find( "[name=subject]" ).val() );
                     bidx.utils.setValue( message, "content", $frmCompose.find( "[name=content]" ).val() );
 
                     bidx.common.doMailSend(
                     {
-                        message: message
+                        message:    message
                     ,   success:    function( response )
                         {
+                            $sendMessageEditor.modal('hide');
+
                             $btnComposeSubmit.removeClass( "disabled" );
 
                             $btnComposeCancel.removeClass( "disabled" );
+
+                            $frmCompose.find( ":input" ).val("");
+
+                            $frmCompose.validate().resetForm();
+
                         }
-                    ,   error: function( jqXhr )
+                    ,   error:      function( jqXhr )
                         {
                             $btnComposeSubmit.removeClass( "disabled" );
 
@@ -325,20 +311,42 @@
 
             if( currentUserId && currentUserId !== visitingMemberPageId )
             {
-                widget._hasRelationship(
+                widget.hasRelationship(
                 {
                     options:                btnOptions
                 ,   visitingMemberPageId:   visitingMemberPageId
                 ,   currentUserId:          currentUserId
-                ,   callback:               function( )
+                ,   callback:               function( params )
                                             {
-                                                widget._addConnectButton();
+                                                var request     =   params.request
+                                                ,   contact     =   params.contact
+                                                ;
+
+                                                if( !$.isEmptyObject( request )  && contact)
+                                                {
+                                                    bidx.utils.log("[connect] else retrieved following contact ", request );
+
+                                                    bidx.construct.connectActionBox( request );
+                                                }
+                                                else
+                                                {
+                                                    bidx.utils.log("[connect] if retrieved following contact ", request );
+
+                                                    widget._addConnectButton();
+                                                }
+                                                // If User is blocked then dont display send message button
+                                                if( !contact || contact.status !== 'BLOCKED')
+                                                {
+                                                    widget.inMailAction( visitingMemberPageId );
+                                                }
+
+                                                widget._delegateActions( );
                                             }
                 });
             }
 
             /* Add Connect Button Onclick event is here because we need to fire it once only */
-            widget._onTagButtonClick(
+            widget._onConnectButtonClick(
             {
                 btnOptions:   btnOptions
             });
@@ -358,28 +366,28 @@
             $btnHtml    =   $( "<div />", { "class": "connect" } );
 
             $btnHtml.append
-                    (
-                        $( "<button />", { "class": "btn btn-sm btn-warning " + tagClass +  " btn-connect", "data-requesteeid": requesteeId
+            (
+                $( "<button />", { "class": "btn btn-sm btn-warning " + tagClass +  " btn-connect", "data-requesteeid": requesteeId
 
-                                } )
-                        .append
-                        (
-                            $( "<div />", { "class": "fa fa-above fa-big " + iconClass })
-                        )
-                        .append
-                        (
-                            $("<span />", { "class": "labelWrapper"})
-                            .append
-                            (
-                                $( "<span class='tagLabel'>" +  tagLabel + "</span>")
-                            )
-                        )
-                    );
+                        } )
+                .append
+                (
+                    $( "<div />", { "class": "fa fa-above fa-big " + iconClass })
+                )
+                .append
+                (
+                    $("<span />", { "class": "labelWrapper"})
+                    .append
+                    (
+                        $( "<span class='tagLabel'>" +  tagLabel + "</span>")
+                    )
+                )
+            );
 
             return $btnHtml;
 
         }
-    ,   _onTagButtonClick: function( params )
+    ,   _onConnectButtonClick: function( params )
         {
             var widget          =   this
             ,   $el             =   widget.element
@@ -397,7 +405,6 @@
                 ,   $tagLabel   =   $el.find('.tagLabel')
                 ,   contact   =   parseInt( $el.data('requesteeid'), 10)
                 ;
-
 
                 bidx.common.doCreateConnectRequest(
                 {
@@ -418,13 +425,7 @@
                         bidx.utils.log('request', request);
 
                         bidx.construct.connectActionBox( request );
-                        /*getMentoringRequest(
-                        {
-                            callback: function( result )
-                            {
-                                checkMentoringRelationship( result );
-                            }
-                        } );*/
+
                     }
                 ,   error:  function(jqXhr)
                     {
