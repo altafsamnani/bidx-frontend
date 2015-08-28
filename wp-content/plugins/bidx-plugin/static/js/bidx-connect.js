@@ -269,6 +269,17 @@
                             $btnComposeCancel.removeClass( "disabled" );
                         }
                     } );*/
+                        $sendMessageEditor.modal('hide');
+
+                        $btnComposeSubmit.removeClass( "disabled" );
+
+                        $btnComposeCancel.removeClass( "disabled" );
+
+                        $frmCompose.find( ":input" ).val("");
+
+                        $frmCompose.validate().resetForm();
+
+
                 }
             } );
         }
