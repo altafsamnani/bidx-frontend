@@ -205,7 +205,6 @@
         }
     ,   inMailAction: function ( visitingMemberPageId )
         {
-            return;
             var message             =   {}
             ,   userIds             =   []
             ,   $sendInMailWrapper  =   $('.sendMessageWrapper')
@@ -218,7 +217,7 @@
             ;
 
             $sendInMailWrapper.removeClass('hide');
-            bidx.utils.log('I am in inmail ok');
+
             $frmCompose.validate(
             {
                 rules:
@@ -247,7 +246,7 @@
                     bidx.utils.setValue( message, "subject", $frmCompose.find( "[name=subject]" ).val() );
                     bidx.utils.setValue( message, "content", $frmCompose.find( "[name=content]" ).val() );
 
-                    bidx.common.doMailSend(
+                   /* bidx.common.doMailSend(
                     {
                         message:    message
                     ,   success:    function( response )
@@ -269,7 +268,7 @@
 
                             $btnComposeCancel.removeClass( "disabled" );
                         }
-                    } );
+                    } );*/
                 }
             } );
         }
