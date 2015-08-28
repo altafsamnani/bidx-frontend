@@ -23,7 +23,7 @@
     ,   changesQueue    = [] // array holding app names that have pending changes
 
     ,   $frmLoginModal  = $( "#frmLoginModal" )
-    ,   tmpUsersData    = { members: {} }
+    ,   tmpData    = { members: {}, businesses: {} }
     ;
 
     // Add something to the list of apps having a reason to ask the user for confirmation on page unload
@@ -221,7 +221,7 @@
     {
         if ( checkMemberExists( item.member.bidxMeta.bidxMemberId ) === false )
         {
-            tmpUsersData.members[item.member.bidxMeta.bidxMemberId] = item ;
+            tmpData.members[item.member.bidxMeta.bidxMemberId] = item ;
         }
     }
 
@@ -229,9 +229,9 @@
     {
         var memberExists = false;
 
-        if ( bidx.common.tmpUsersData.members )
+        if ( bidx.common.tmpData.members )
         {
-            $.each( bidx.common.tmpUsersData.members, function( i, m )
+            $.each( bidx.common.tmpData.members, function( i, m )
             {
                  if ( m.member.bidxMeta.bidxMemberId === bidxMemberId )
                  {
@@ -241,6 +241,24 @@
         }
 
         return memberExists;
+    }
+
+    function checkBusinessExists( entityId )
+    {
+        var businessExists = false;
+
+        if ( bidx.common.tmpData.businesses )
+        {
+            $.each( bidx.common.tmpData.businesses, function( i, b )
+            {
+                 if ( b.bidxMeta.bidxEntityId === entityId )
+                 {
+                    businessExists = b;
+                 }
+            });
+        }
+
+        return businessExists;
     }
 
     // Reason: "mentor", "investor", "connect"
@@ -310,6 +328,34 @@
 
         return new Date( now );
     }
+
+    function getEntity( options )
+    {
+        bidx.api.call(
+            "entity.fetch"
+        ,   {
+                entityId:               options.entityId
+            ,   groupDomain:            bidx.common.groupDomain
+            ,   success: function( result )
+                {
+                    //  execute callback if provided
+                    if (options && options.callback)
+                    {
+                        options.callback( result );
+                    }
+                }
+            ,   error: function( jqXhr, textStatus )
+                {
+                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                    bidx.utils.log("'No entity found'::: Status:" + status + " entity id: " + options.entityId);
+                }
+            }
+        );
+
+        return ;
+    }
+
 
     // Convenience function for itterating over the list of entities of the session
     // data and lookup the existance (and id) of a specific entity
@@ -1675,8 +1721,11 @@
 
     ,   addToTempMembers:               addToTempMembers
     ,   checkMemberExists:              checkMemberExists
-    ,   tmpUsersData:                   tmpUsersData
+    ,   checkBusinessExists:            checkBusinessExists
+    ,   tmpData:                        tmpData
     ,   fetchMemberProfiles:            fetchMemberProfiles
+
+    ,   getEntity:                      getEntity
 
     ,   notifyRedirect:                 notifyRedirect
     ,   notifySave:                     notifySave
