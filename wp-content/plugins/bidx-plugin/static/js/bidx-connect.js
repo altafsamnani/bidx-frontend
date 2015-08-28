@@ -203,9 +203,12 @@
                 }
             );
         }
+
     ,   inMailAction: function ( visitingMemberPageId )
         {
-            var message             =   {}
+            var widget              =   this
+            ,   options             =   widget.options
+            ,   message             =   {}
             ,   userIds             =   []
             ,   $sendInMailWrapper  =   $('.sendMessageWrapper')
             ,   $sendMessageEditor  =   $('#sendMessageEditor')
@@ -215,6 +218,8 @@
             ,   $btnComposeSubmit   =   $frmCompose.find(".compose-submit")
             ,   $btnComposeCancel   =   $frmCompose.find(".compose-cancel")
             ;
+
+            widget._addInMailButton( );
 
             $sendInMailWrapper.removeClass('hide');
 
@@ -283,6 +288,20 @@
                 }
             } );
         }
+    ,   _addInMailButton:   function( )
+        {
+            var $btnHtml
+            ,   widget      =   this
+            ,   options     =   widget.options
+            ,   $sendInMailWrapper  =   $('.sendMessageWrapper')
+            ,   btnOptions  =   options.btnOptions
+            ,   $el         =   widget.element
+            ;
+
+            $btnHtml    =   widget._renderAddInMailButton( );
+
+            $el.append( $btnHtml );
+        }
     ,  _addConnectButton:   function (  )
         {
             var $btnHtml
@@ -290,25 +309,86 @@
             ,   options     =   widget.options
             ,   btnOptions  =   options.btnOptions
             ,   $el         =   widget.element
-            ,   $button     =   $el.find('.' + btnOptions.class)
             ;
 
-            if( $button.length )
-            {
-                $btnHtml    =   widget._renderButton(
-                                {
-                                    options:    options
-                                ,   btnOptions: btnOptions
-                                });
+            $btnHtml    =   widget._renderButton(
+                            {
+                                options:    options
+                            ,   btnOptions: btnOptions
+                            });
 
-                $button.append( $btnHtml );
+            $el.append( $btnHtml );
 
-                $el.removeClass('hide');
-            }
-            else
+            /* Add Connect Button Onclick event is here because we need to fire it once only */
+            widget._onConnectButtonClick(
             {
-                bidx.common.notifyError( 'errorNoTagEntityId' );
-            }
+                btnOptions:   btnOptions
+            });
+
+            //$el.removeClass('hide');
+
+        }
+    ,   _renderAddInMailButton: function (  )
+        {
+            var $btnHtml
+            ;
+
+            //$btnHtml    =   $( "<div />", { "class": "sendMessageWrapper" } );
+
+            $btnHtml    =   $(  "<button />"
+                            ,   {
+                                    "class":        "btn btn-sm btn-primary "  +  " btn-inmail"
+                                ,   "data-toggle":  "modal"
+                                ,   "data-target":  "#sendMessageEditor"
+                            } )
+                            .append
+                            (
+                                $( "<div />", { "class": "fa fa-edit fa-above fa-big" })
+                            )
+                            .append
+                            (
+                                $("<span />", { "class": "labelWrapper"})
+                                .append
+                                (
+                                    $( "<span class='tagLabel'>" +  bidx.i18n.i('inMailBtn') + "</span>")
+                                )
+                            );
+
+            return $btnHtml;
+        }
+    ,   _renderButton: function ( params  )
+        {
+            var $btnHtml                =   ''
+            ,   options                 =   params.options
+            ,   btnOptions              =   params.btnOptions
+            ,   tagClass                =   btnOptions.class
+            ,   tagLabel                =   btnOptions.label
+            ,   iconClass               =   btnOptions.iconClass
+            ,   requesteeId             =   bidx.utils.getValue( options, "visitingMemberPageId" )
+            ,   currentUserId           =   bidx.utils.getValue( options, "currentUserId" )
+            ;
+
+            //$btnHtml    =   $( "<div />", { "class": "connectBtnWrapper" } );
+
+            $btnHtml    =   $( "<button />"
+                        ,   {
+                                "class": "btn btn-sm btn-warning " + tagClass
+                            ,   "data-requesteeid": requesteeId
+                        } )
+                        .append
+                        (
+                            $( "<div />", { "class": "fa fa-above fa-big " + iconClass })
+                        )
+                        .append
+                        (
+                            $("<span />", { "class": "labelWrapper"})
+                            .append
+                            (
+                                $( "<span class='tagLabel'>" +  tagLabel + "</span>")
+                            )
+                        );
+
+            return $btnHtml;
         }
     ,   constructInMail: function (  )
         {
@@ -384,46 +464,6 @@
                 });
             }
 
-            /* Add Connect Button Onclick event is here because we need to fire it once only */
-            widget._onConnectButtonClick(
-            {
-                btnOptions:   btnOptions
-            });
-        }
-    ,   _renderButton: function ( params  )
-        {
-            var $btnHtml
-            ,   options                 =   params.options
-            ,   btnOptions              =   params.btnOptions
-            ,   tagClass                =   btnOptions.class
-            ,   tagLabel                =   btnOptions.label
-            ,   iconClass               =   btnOptions.iconClass
-            ,   requesteeId             =   bidx.utils.getValue( options, "visitingMemberPageId" )
-            ,   currentUserId           =   bidx.utils.getValue( options, "currentUserId" )
-            ;
-
-            $btnHtml    =   $( "<div />", { "class": "connect" } );
-
-            $btnHtml.append
-            (
-                $( "<button />", { "class": "btn btn-sm btn-warning " + tagClass +  " btn-connect", "data-requesteeid": requesteeId
-
-                        } )
-                .append
-                (
-                    $( "<div />", { "class": "fa fa-above fa-big " + iconClass })
-                )
-                .append
-                (
-                    $("<span />", { "class": "labelWrapper"})
-                    .append
-                    (
-                        $( "<span class='tagLabel'>" +  tagLabel + "</span>")
-                    )
-                )
-            );
-
-            return $btnHtml;
 
         }
     ,   _onConnectButtonClick: function( params )
@@ -435,13 +475,12 @@
             ,   $buttonElement  =   $el.find('.' + btnOptions.class)
             ;
 
-            // Set Accreditation / No Accreditation status
-            $(document).on("click", ".btn-connect", function( e )
+            bidx.utils.log('buttonelement', $buttonElement);
+            $buttonElement.click( function( e )
             {
                 var contacts
                 ,   request
                 ,   $el         =   $(this)
-                ,   $tagLabel   =   $el.find('.tagLabel')
                 ,   contact   =   parseInt( $el.data('requesteeid'), 10)
                 ;
 
@@ -450,18 +489,14 @@
                     contact:  contact
                 ,   callback:   function( data )
                     {
-                        $el.fadeOut( "slow", function()
+                        $buttonElement.fadeOut( "slow", function()
                         {
-                            $el.remove();
+                            $buttonElement.remove();
                         });
 
                         contacts    = data.contacts;
 
-                        bidx.utils.log('contacts', contacts);
-
                         request     = _.findWhere(contacts, { id: contact });
-
-                        bidx.utils.log('request', request);
 
                         bidx.construct.connectActionBox( request );
 

@@ -241,5 +241,6 @@
     <!-- Connect -->
     <Item value="lblConnect">Connect</Item>
     <Item value="messageSent">Message sent</Item>
+    <Item value="inMailBtn">Send Message</Item>
 
 </I18N>
