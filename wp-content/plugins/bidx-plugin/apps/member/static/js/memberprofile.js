@@ -144,7 +144,6 @@
         connectOptions =    {
                                 currentUserId:          loggedInMemberId
                             ,   visitingMemberPageId:   visitingMemberPageId
-                            ,   sendInMailBtn:           true
                             };
 
         $connect.connect( connectOptions );
@@ -155,7 +154,7 @@
                         ,   class:      'connectUserButton'
                         };
 
-        $connect.connect( "constructButton", btnOptions );
+        $connect.connect( "constructConnectInMail", btnOptions );
     }
 
     function _tagging( options )

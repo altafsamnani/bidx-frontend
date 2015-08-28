@@ -9,7 +9,7 @@ class businesssummary
     static $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2',
         'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-globalchecks', 'bidx-elements', 'bidx-reflowrower', 'bidx-industries','bidx-cover', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
         'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
-        'bidx-location', 'bidx-chosen', 'jquery-fitvids', 'jquery-raty'
+        'bidx-location', 'bidx-chosen', 'bidx-connect', 'jquery-fitvids', 'jquery-raty'
     );
 
     /**
@@ -57,7 +57,7 @@ class businesssummary
             $businessSummaryId = $sessionData->requestedBusinessSummaryId;
         }
 
-        if ( !is_null( $businessSummaryId )) 
+        if ( !is_null( $businessSummaryId ))
         {
             /* 2. Service Business Summary (entity)*/
             require_once( BIDX_PLUGIN_DIR .'/../services/businesssummary-service.php' );

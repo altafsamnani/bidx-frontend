@@ -136,16 +136,14 @@ endif;
             <div class="connect hide pull-right">
                 <div class="connectUserButton"></div>
             </div>
-<?php
-        }
-?>
-        <div class="message hide pull-right">
-            <button class="btn btn-sm btn-primary sendMessage" data-toggle="modal" data-target="#sendMessageEditor">
-                <div class="fa fa-edit fa-above fa-big"></div>
-                <?php _e('Send Message', 'bidxplugin')?>
-            </button>
-        </div>
-<?php
+
+            <div class="sendMessageWrapper hide pull-right">
+                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#sendMessageEditor">
+                    <div class="fa fa-edit fa-above fa-big"></div>
+                    <?php _e('Send Message', 'bidxplugin')?>
+                </button>
+            </div>
+<?php   }
 
         // If current profile is not loggedin user, is  mentor, loggedin is not mentor, in a group
         if ( $memberId != $loggedInMemberId && $authenticated && $inGroup && $isMentor && !$isLoggedinMemberIsMentor && $isLoggedinMemberIsEntrepreneur) :
@@ -287,54 +285,9 @@ endif;
 
 
         </div>
-
-
-
-
-    </div>
-    <!-- Compose view http://stackoverflow.com/questions/26598291/make-twitter-bootstrap-popup-modal-slide-and-stick-to-bottom-of-page -->
-     <div class="modal fade bottomModalBox" id="sendMessageEditor" data-keyboard="false" data-backdrop="true">
-
-        <!-- Modal content-->
-
-            <form action="">
-
-                <div class="modal-body">
-                    <div class="container">
-                        <div class='container-modal-body'>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <label><?php _e('Subject','bidxplugin'); ?></label>
-                                    <input type="text" class="form-control" name="subject" placeholder="<?php _e('Your subject goes here','bidxplugin')?>">
-                                </div>
-                                <div class="col-sm-12">
-                                    <label><?php _e('Message','bidxplugin'); ?></label>
-                                    <textarea name="content" class="form-control" placeholder="<?php _e('Please type your message here','bidxplugin')?>"></textarea>
-                                </div>
-                                <div class="col-sm-12 composeBox">
-                                    <div class="pull-left">
-                                        <button type="button" class="btn btn-danger compose-cancel" data-dismiss="modal">
-                                            <i class="fa fa-trash-o"></i>
-                                            <?php _e('Discard message','bidxplugin')?>
-                                        </button>
-                                    </div>
-                                    <div class="pull-right ">
-                                        <button type="submit" class="btn btn-primary compose-submit">
-                                            <i class="fa fa-envelope-o"></i>
-                                            <?php _e('Send message','bidxplugin')?>
-                                        </button>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                     </div>
-                </div>
-            </form>
-
     </div>
 
+    <?php $this->render('../../mail/templates/compose.phtml'); ?>
     <?php $this->render('edit-member.phtml'); ?>
     <?php $this->render('edit-entrepreneur.phtml'); ?>
     <?php $this->render('edit-investor.phtml'); ?>
