@@ -138,7 +138,7 @@
     function _inContacts( )
     {
         var connectOptions
-        ,   btnOptions      =   { }
+        ,   btnOptions
         ;
 
         connectOptions =    {
@@ -149,9 +149,10 @@
         $connect.connect( connectOptions );
 
         btnOptions =    {
-                            label:      bidx.i18n.i('lblConnect')
-                        ,   iconClass:  'fa-user-plus fa-above fa-big'
-                        ,   class:      'connectUserButton'
+                            label:          bidx.i18n.i('lblConnect')
+                        ,   iconClass:      'fa-user-plus fa-above fa-big'
+                        ,   class:          'connectUserButton'
+                        ,   inmailClass:    'btn-sm btn-inmail'
                         };
 
         $connect.connect( "constructConnectInMail", btnOptions );

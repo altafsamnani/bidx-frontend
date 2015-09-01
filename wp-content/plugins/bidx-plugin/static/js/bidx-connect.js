@@ -298,7 +298,11 @@
             ,   $el         =   widget.element
             ;
 
-            $btnHtml    =   widget._renderAddInMailButton( );
+            $btnHtml        =   widget._renderAddInMailButton(
+                                {
+                                    options:    options
+                                ,   btnOptions: btnOptions
+                                });
 
             $el.append( $btnHtml );
         }
@@ -328,16 +332,19 @@
             //$el.removeClass('hide');
 
         }
-    ,   _renderAddInMailButton: function (  )
+    ,   _renderAddInMailButton: function ( params )
         {
             var $btnHtml
+            ,   options                 =   params.options
+            ,   btnOptions              =   params.btnOptions
+            ,   tagClass                =   btnOptions.inmailClass
             ;
 
             //$btnHtml    =   $( "<div />", { "class": "sendMessageWrapper" } );
 
             $btnHtml    =   $(  "<button />"
                             ,   {
-                                    "class":        "btn btn-sm btn-primary "  +  " btn-inmail"
+                                    "class":        "btn btn-primary "  +  tagClass
                                 ,   "data-toggle":  "modal"
                                 ,   "data-target":  "#sendMessageEditor"
                             } )
@@ -390,13 +397,17 @@
 
             return $btnHtml;
         }
-    ,   constructInMail: function (  )
+    ,   constructInMail: function ( btnOptions )
         {
             var widget                  =   this
             ,   options                 =   widget.options
             ,   visitingMemberPageId    =   bidx.utils.getValue( options, "visitingMemberPageId" )
             ,   currentUserId           =   bidx.utils.getValue( options, "currentUserId" )
             ;
+
+            widget.options.btnOptions   =   btnOptions;
+
+            bidx.utils.log('I am thereeeee');
 
             if( currentUserId && currentUserId !== visitingMemberPageId )
             {
@@ -441,6 +452,12 @@
                                                 ,   contact     =   params.contact
                                                 ;
 
+                                                // If User is blocked then dont display send message button
+                                                if( !contact || contact.status !== 'BLOCKED')
+                                                {
+                                                    widget.inMailAction( visitingMemberPageId );
+                                                }
+
                                                 if( !$.isEmptyObject( request )  && contact)
                                                 {
                                                     bidx.utils.log("[connect] else retrieved following contact ", request );
@@ -452,11 +469,6 @@
                                                     bidx.utils.log("[connect] if retrieved following contact ", request );
 
                                                     widget._addConnectButton();
-                                                }
-                                                // If User is blocked then dont display send message button
-                                                if( !contact || contact.status !== 'BLOCKED')
-                                                {
-                                                    widget.inMailAction( visitingMemberPageId );
                                                 }
 
                                                 widget._delegateActions( );
