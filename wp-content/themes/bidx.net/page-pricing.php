@@ -37,7 +37,7 @@
                                         <div class="product-descr">Online Training <br> or <br> Order Separately</div>
                                         <div class="product-divider"></div>
                                     </div>
-                                    <div class="sect-price">$ 1.999</div>
+                                    <div class="sect-price">$1999</div>
                                 </div>
                             </div>
                             <div class="col-sm-3">
@@ -68,7 +68,7 @@
                                         <div class="product-descr">Startup Training</div>
                                         <div class="product-divider"></div>
                                     </div>
-                                    <div class="sect-price">$ 9.999</div>
+                                    <div class="sect-price">$9999</div>
                                 </div>
                             </div>
                             <div class="col-sm-3">
@@ -99,7 +99,7 @@
                                         <div class="product-descr">Startup Training <br> Moderator Training <br> SEO Package</div>
                                         <div class="product-divider"></div>
                                     </div>
-                                    <div class="sect-price">$ 14.999</div>
+                                    <div class="sect-price">$14999</div>
                                 </div>
                             </div>
                             <div class="col-sm-3">
@@ -130,7 +130,7 @@
                                         <div class="product-descr">Startup Training <br> Moderator Training <br> SEO Package <br> 40 hours expert</div>
                                         <div class="product-divider"></div>
                                     </div>
-                                    <div class="sect-price">$ 24.999</div>
+                                    <div class="sect-price">$24999</div>
                                 </div>
                             </div>
                         </div>

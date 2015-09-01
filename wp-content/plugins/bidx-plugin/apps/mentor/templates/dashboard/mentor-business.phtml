@@ -1,0 +1,66 @@
+<!-- ********Mentoring Respond Request********* -->
+<div class="view viewMatch">
+    <div class="matching mentor-matching"></div>
+    <div class="view viewLoadmatch alert alert-info text-center">
+        <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e ('Loading', 'bidxplugin') ?>
+    </div>
+    <div class="view viewPager">
+        <div class="pagerContainer">
+            <div class="row">
+                <div class="col-sm-2 pagerTotal">
+                    <?php _e('%count% matches found', 'bidxplugin'); ?>
+                </div>
+                <div class="col-sm-10">
+                    <ul class="pager pull-left"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/html" id="mentor-bp-matches">
+    <!--
+    <div class="cardView">
+        <div class="cardHeader hide-overflow">
+            <div class="info-cell pull-left"><?php echo _e( 'Completed', 'bidxplugin' ); ?>: %completeness%%</div>
+            <div class="info-cell pull-left"><?php echo _e( 'Finance Needed', 'bidxplugin' ); ?>: %financingNeeded%</div>
+            <a href="/businesssummary/%entityId%" class="btn btn-primary btn-xs pull-right info-action main-margin-half"><?php echo _e( 'View Business', 'bidxplugin' ); ?> </a>
+            <a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmInitiateMentoring/entityId=%entityId%&mentorId=%mentorId%&initiatorId=%initiatorId%&type=mentor&action=send" class="btn-bidx-send btn-mentor mentor-cl btn btn-xs pull-right main-margin-half"><?php _e('Offer mentoring','bidxplugin');?></a>
+            <a href="#" data-href="<?php echo _l('mail')?>/#mail/compose/recipients=%receipientId%" target="_blank" class="btn-bidx-contact hide btn btn-xs btn-info pull-right main-margin-half"><?php _e('Contact entrepreneur','bidxplugin');?></a>
+        </div>
+        <div class="cardContent main-padding">
+            <div class="cardTop">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <a class="pull-left main-margin-half" href="/businesssummary/%entityId%" data-role='businessImage'>
+                            <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
+                        </a>
+                    </div>
+                    <div class="col-sm-9">
+                        <h3 class="top-0">%name%</h3>
+                        <h4><span class="bs-slogan">%slogan%</span></h4>
+                        <table class="table table-condensed table-bottom-border">
+                            <tbody>
+                                <tr><td>Entrepreneur</td><td><a class="" href="/member/%creatorId%">%creator%</a></td></tr>
+                                <tr><td>Business stage</td><td>%stageBusiness%</td></tr>
+                                <tr><td>Year sales started</td><td>%yearSalesStarted%</td></tr>
+                                <tr><td>Industry</td><td>%industry%</td></tr>
+                                <tr><td>Country of business</td><td>%countryOperation%</td></tr>
+                            </tbody>
+                        </table>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+-->
+</script>
+
+<script type="text/html" id="mentor-match-action">
+<!--
+<a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmInitiateMentoring/entityId=%entityId%&mentorId=%mentorId%&initiatorId=%initiatorId%&type=mentor&action=send" class="btn-bidx-send btn-mentor mentor-cl btn btn-xs"><?php _e('Offer mentoring','bidxplugin');?></a>
+<a href="#" data-href="<?php echo _l('mail')?>/#mail/compose/recipients=%receipientId%" target="_blank" class="btn-bidx-contact hide btn btn-xs btn-info"><?php _e('Contact entrepreneur','bidxplugin');?></a>
+-->
+</script>
+

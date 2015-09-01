@@ -67,7 +67,7 @@
                     <div class="trial-title"><?php _e('Portals','bidxtheme');?></div>
                     <div class="trial-sub"><?php _e('Match your entrepreneurs with financiers and mentors. A portal in your brand and language','bidxtheme');?></div>
                     <br>
-                    <a href="/portals" class="btn btn-flat flat-warning"><?php _e('6 month free trial','bidxtheme');?></a>
+                    <a href="/portals" class="btn btn-flat flat-warning"><?php _e('3 month free trial','bidxtheme');?></a>
                 </div>
             </div>
             <!-- /.col-sm-6 -->

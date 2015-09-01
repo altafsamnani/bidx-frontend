@@ -20,9 +20,26 @@ $isEntrepreneur                 = isset( $data->bidxEntrepreneurProfile ) ? $dat
 $isInvestor                     = isset( $data->bidxInvestorProfile ) ? $data->bidxInvestorProfile : NULL;
 $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bidxMentorProfile : NULL;
 $hasAccessToInvestorProfile     = ( $isInvestor && $isLoggedinMemberIsInvestor && $ownProfile ) || ( $isInvestor && $this->isLoggedInGroupOwner ) ? true : false;
+// d($data);
+
+// Authorized Entrepreneur
+$entrepreneurAccess = false;
+if ( $isLoggedinMemberIsEntrepreneur ) :
+
+    foreach ($data->authorizedBusinessSummaries as $key => $business)
+    {
+        $businessOwnerId = $business->businessSummary->bidxMeta->bidxOwnerId;
+
+        if ( $businessOwnerId === $loggedInMemberId && ( $business->status === "granted" || $business->status === "pending" ) ) :
+            $entrepreneurAccess = true;
+        endif;
+    }
+endif;
+
+
 
 ?>
-<div class="member box-border top-margin-lineheight">
+<div class="member box-border top-margin-lineheight" data-ownerid="<?php echo $memberId; ?>" >
     <div class="clearfix bg-primary-light main-padding">
         <h1 class="text-center bidx-page-heading">
             <span class="default"><?php echo (isset($this->data->isMyProfile) && $this->data->isMyProfile) ? __('My Profile','bidxplugin') : $member; ?></span>
@@ -114,7 +131,14 @@ $hasAccessToInvestorProfile     = ( $isInvestor && $isLoggedinMemberIsInvestor &
         endif;
 ?>
 <?php
-        if ( $memberId != $loggedInMemberId && $authenticated && $inGroup ) :
+        if ( $memberId != $loggedInMemberId && $authenticated )
+        { ?>
+            <div class="connect connectBtn hide pull-right">
+                <div class="connectUserButton"></div>
+            </div>
+<?php   } ?>
+<?php
+        if ( false && $memberId != $loggedInMemberId && $authenticated && $inGroup ) :
 ?>
             <a href="<?php echo _l('mail');?>/#mail/contacts/action=connect&id=<?php echo $memberId ?>" class="btn btn-sm btn-warning btn-contact hide pull-right">
                 <div class="fa fa-user fa-above fa-big"></div>
@@ -146,7 +170,7 @@ $hasAccessToInvestorProfile     = ( $isInvestor && $isLoggedinMemberIsInvestor &
             <div class="text-uppercase pull-right main-margin-horizontal accreditation accr-Pending">
                 <span class="fa fa-bookmark-o fa-big pull-left"></span>
                 <?php _e('Pending Accreditation', 'bidxplugin')?>
-                
+
             </div>
 
             <div class="text-uppercase pull-right main-margin-horizontal accreditation accr-Accepted">
@@ -192,8 +216,9 @@ $hasAccessToInvestorProfile     = ( $isInvestor && $isLoggedinMemberIsInvestor &
             endif;
 ?>
 <?php
+
             /* Temparary fix for invesor visibility */
-            if ( $hasAccessToInvestorProfile ) :
+            if ( $hasAccessToInvestorProfile || $entrepreneurAccess ) :
 ?>
                 <li><a href="#tab-investor" data-toggle="tab">
                         <i class="pull-left fa fa-bank"></i>
@@ -227,6 +252,7 @@ $hasAccessToInvestorProfile     = ( $isInvestor && $isLoggedinMemberIsInvestor &
         <div id="myProfile" class="tab-content">
             <div class="tab-pane active" id="tab-member">
                 <?php $this->render('view-member.phtml');  ?>
+
             </div>
 <?php
             if ( !empty($this->data->bidxEntrepreneurProfile ) ):
@@ -239,7 +265,7 @@ $hasAccessToInvestorProfile     = ( $isInvestor && $isLoggedinMemberIsInvestor &
 ?>
 <?php
             /* Temparary fix for invesor visibility */
-            if ( $hasAccessToInvestorProfile ) :
+            if ( $hasAccessToInvestorProfile || $entrepreneurAccess ) :
 ?>
             <div class="tab-pane" id="tab-investor">
                 <?php $this->render('view-investor.phtml'); ?>
