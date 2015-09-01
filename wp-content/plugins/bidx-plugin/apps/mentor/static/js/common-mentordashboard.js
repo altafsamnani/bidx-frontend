@@ -23,12 +23,7 @@
     ,   $ownerId                = $.find( "*[data-ownerid]" )
     ,   ownerId                 = parseInt( $( $ownerId ).attr( "data-ownerid" ), 10)
     ,   $mentorActivities       = $( ".js-activities" )
-    ,   bsid                    // Business ID
-    ,   isOwnBusiness           = false
-    ,   isThereRelationship
     ,   requestStatus           // "accepted", "rejected" or "requested"
-    ,   isTheMentor
-    ,   isTheInitiator
     ,   relChecks
     ,   membersDataId           = []
     ,   businessesDataId        = []
@@ -104,55 +99,64 @@
     var checkMentoringRelationship = function ( result, databsids )
     {
         var mentorInfo = {}
+        ,   bsid // Business ID
         ,   bsids = []
         ,   options = {}
         ;
 
+        // Write down different pages / relationships
+        // 1. Own Profile Page
+        // 2. Else's Profile Page
+        // 3. Own Business Page
+        // 4. Else's Business Page
+        // 5. Entrepreneur Dashboard
+        // 6. Mentor Dashboard
+        // 7. Investor Dashboard
+
         // Check if we are in the Business Summary Page and set the var bsid
         // else iterate through all the data-bsid and create an array
-        if ( bidx.globalChecks.isBusinessPage() )
-        {
-            var ownBusinesses;
-            
-            bsid = parseInt( bidxConfig.context.businessSummaryId, 10);
-            
-            if ( bidxConfig.session && bidxConfig.session.wp.entities.bidxBusinessSummary )
-            {
-                ownBusinesses = bidxConfig.session.wp.entities.bidxBusinessSummary;
-    
-                $.each(ownBusinesses, function ( i, ownBusiness )
-                {
-                    if ( bsid === ownBusiness )
-                    {
-                        isOwnBusiness = true;
-                    }
-                } );
-            }
-        }
-        else if ( bidx.globalChecks.isOwnProfile() )
+        //
+        if ( bidx.globalChecks.isProfilePage() )
         {
             $.each( $businessElements, function ( i, b )
             {
                  bsids.push( $(this).attr( "data-bsid") );
             });
 
-            isOwnBusiness = bidx.globalChecks.isOwnProfile() ? true : false;
+            if ( !bidx.globalChecks.isOwnProfile() )
+            {
+                bidx.utils.log( "[checkMentoringRelationship] Not in own Profile page" );
+            }
         }
-        else if ( !bidx.globalChecks.isOwnProfile() )
+
+        if ( bidx.globalChecks.isBusinessPage() )
         {
-            bidx.utils.log( "checkMentoringRelationship::: Not in own profile page" );
+            bsid = parseInt( bidxConfig.context.businessSummaryId, 10);
+
+            if ( !bidx.globalChecks.isOwnBusiness() )
+            {
+                bidx.utils.log( "[checkMentoringRelationship] Not in own Business page" );
+            }
         }
-        else if ( databsids )
+        
+        if ( bidx.globalChecks.isEntrepreneurDashboard() )
         {
             bsids = databsids;
-
-            // in Dashboards is always an owned business
-            isOwnBusiness = true;
         }
-        else
+
+        if ( bidx.globalChecks.isMentorDashboard() )
         {
-            bidx.utils.log( "BSID elements not present", bsids);
-            bidx.utils.log( "checkMentoringRelationship::: no BSIDs found" );
+            bsids = databsids;
+        }
+
+        if ( bidx.globalChecks.isInvestorDashboard() )
+        {
+            bsids = databsids;
+        }
+
+        if ( !bsid && !bsids )
+        {
+            bidx.utils.log( "[checkMentoringRelationship] no Business(es) found" );
         }
 
         if ( result )
@@ -161,29 +165,35 @@
             {
                 var relChecks = {}
                 ,   options = {}
+                ,   isThereRelationship = false
                 ;
 
-                // bidx.utils.log("::::: Request ::::: ->", request);
+                // Do not continue if there is already an mentor box with the same requestId
+                //
+                var $elAlert = $( '*[data-requestid="'+ request.requestId +'"]' );
+                if ( $elAlert.length && $elAlert.data( "requestid" ) === request.requestId ) { return; }
 
+                //
+                //
                 if ( request.status !== "rejected" )
                 {
-                    if ( bsid )
+                    if ( bidx.globalChecks.isBusinessPage() && bsid )
                     {
                         isThereRelationship = ( request.entityId === bsid ) ? true : false;
                     }
 
-                    if ( bsids.length )
+                    if ( bidx.globalChecks.isProfilePage() && bsids.length )
                     {
                         isThereRelationship = ( $.inArray( request.entityId.toString(), bsids) !== -1 ) ? true : false;
-                    }
 
-                    if ( !bidx.globalChecks.isOwnProfile() && bidx.globalChecks.isProfilePage() )
-                    {
-                        isThereRelationship = ( ownerId === request.initiatorId || ownerId === request.mentorId ) ? true : false;
-
-                        if ( $.inArray( request.entityId, businessesDataId ) === -1 && bidx.common.checkBusinessExists( request.entityId ) === false  )
+                        if ( !bidx.globalChecks.isOwnProfile() )
                         {
-                            businessesDataId.push( request.entityId );
+                            isThereRelationship = ( $.inArray( request.entityId.toString(), bsids) !== -1 && (ownerId === request.initiatorId || ownerId === request.mentorId) ) ? true : false;
+
+                            if ( isThereRelationship && $.inArray( request.entityId, businessesDataId ) === -1 && bidx.common.checkBusinessExists( request.entityId ) === false  )
+                            {
+                                businessesDataId.push( request.entityId );
+                            }
                         }
                     }
 
@@ -194,16 +204,10 @@
                             membersDataId.push( request.mentorId );
                         }
 
-                        isTheMentor     = ( request.mentorId    === currentUserId ) ? true : false;
-                        isTheInitiator  = ( request.initiatorId === currentUserId ) ? true : false;
-
-                        requestStatus = request.status;
-
                         relChecks.isThereRelationship   = isThereRelationship;
-                        relChecks.isTheMentor           = isTheMentor;
-                        relChecks.isTheInitiator        = isTheInitiator;
-                        relChecks.requestStatus         = requestStatus;
-                        relChecks.isOwnBusiness         = isOwnBusiness;
+                        relChecks.isTheMentor           = ( request.mentorId === currentUserId ) ? true : false;
+                        relChecks.isTheInitiator        = ( request.initiatorId === currentUserId ) ? true : false;
+                        relChecks.requestStatus         = request.status;
                         relChecks.businessId            = request.entityId;
 
                         options.relChecks               = relChecks;
@@ -217,9 +221,17 @@
                 }
             } );
 
-            if ( membersDataId.length )
+            if ( membersDataId.length || businessesDataId.length )
             {
-                bidx.common.fetchMemberProfiles( membersDataId, "mentor" );
+                $.when(
+                        bidx.common.fetchMemberProfiles( membersDataId, "mentor" )
+                    ,   bidx.common.getEntities( businessesDataId )
+                        // bidx.common.getMembersSummaries( { data: { "userIdList": membersDataId } } )
+                    )
+                    .done( function ( result1, result2 )
+                    {
+                        generateRequests();
+                    } );
             }
             else
             {
@@ -259,16 +271,7 @@
 
         if ( $mpElement.length )
         {
-            if ( bidx.globalChecks.isOwnProfile() )
-            {
-                $bsElement = $mpElement.find( '*[data-bsid="'+ relChecks.businessId +'"] .cardView' );
-            }
-            else
-            {
-                $bsElement = $mentorActivities;
-                var bsEntity = getBusisess( request.entityId );
-                bidx.utils.log('bsEntity:::: ', bsEntity);
-            }
+            $bsElement = $mpElement.find( '*[data-bsid="'+ relChecks.businessId +'"] .cardView' );
         }
 
         if ( $entreDash.length )
@@ -280,11 +283,6 @@
         {
             $bsElement = $mentorDash.find( '*[data-bsid="'+ relChecks.businessId +'"]' );
         }
-
-        // Do not continue if there is already an mentor box with the same requestId
-        //
-        var $elAlert = $bsElement.find( ".alert" );
-        if ( $elAlert.length && $elAlert.data( "requestid" ) === request.requestId ) { return; }
 
         $memberThumb = bidx.construct.placeProfileThumbSmall( memberInfo );
 
@@ -311,7 +309,7 @@
         {
             case "accepted":
 
-                if ( isThereRelationship && relChecks.isOwnBusiness )
+                if ( isThereRelationship && bidx.globalChecks.isOwnBusiness() )
                 {
                     $actions = $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "stop", "html": bidx.i18n.i( "btnRemove" ) } );
                     
@@ -669,7 +667,7 @@
             id: parseInt( bidxConfig.context.businessSummaryId, 10)
         ,   callback: function( result )
             {
-                if ( $.isEmptyObject( result ) && isMentor && !isOwnBusiness && $bpElement.length )
+                if ( $.isEmptyObject( result ) && isMentor && !bidx.globalChecks.isOwnBusiness() && $bpElement.length )
                 {
                     $bpElement.find( ".info-bar .text-right" ).prepend( renderOfferBtn( "large" ) );
                 }
@@ -785,20 +783,28 @@
         return ;
     };
 
-    var getBusisess = function( id )
-    {
-        bidx.utils.log("entityId", id);
-        bidx.common.getEntity(
-        {
-            entityId: id
-        ,   callback: function( result )
-            {
-                bidx.utils.log('callback', result);
+    // var getBusisesses = function( businessesDataId )
+    // {
+    //     var promises = [];
+    //     $.each( businessesDataId, function( i, businessId)
+    //     {
+    //         var $def = $.Deferred();
 
-                return result;
-            }
-        } );
-    };
+    //         bidx.common.getEntity(
+    //         {
+    //             entityId: businessId
+    //         ,   callback: function( result )
+    //             {
+    //                 bidx.utils.log('getBusisess:::', result);
+
+    //                 $def.resolve(result);
+    //             }
+    //         } );
+    //         promises.push($def);
+    //     });
+
+    //     return $.when.apply(undefined, promises).promise();
+    // };
 
     var _doCreateMentorRequest = function( options )
     {

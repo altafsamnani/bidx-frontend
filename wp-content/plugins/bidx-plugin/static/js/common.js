@@ -217,11 +217,50 @@
         );
     }
 
+    // Return basic info of given members
+    //
+    function getMembersSummaries( options )
+    {
+        var $d = $.Deferred();
+
+        bidx.api.call(
+            "member.summaries"
+        ,   {
+                data:           options.data
+            ,   groupDomain:    bidx.common.groupDomain
+            ,   success:        function( results )
+                {
+                    addToTempMembers( results );
+                    $d.resolve( results );
+                }
+            ,   error: function(jqXhr, textStatus)
+                {
+                    var status  = bidx.utils.getValue( jqXhr, "status" ) || textStatus
+                    ,   msg     = "Something went wrong while retrieving members: " + status
+                    ,   error   = new Error( msg )
+                    ;
+
+                    $d.reject( error );
+                }
+            }
+        );
+
+        return $d;
+    }
+
     function addToTempMembers( item )
     {
         if ( checkMemberExists( item.member.bidxMeta.bidxMemberId ) === false )
         {
             tmpData.members[item.member.bidxMeta.bidxMemberId] = item ;
+        }
+    }
+
+    function addToTempBusinesses( item )
+    {
+        if ( checkBusinessExists( item.bidxMeta.bidxEntityId ) === false )
+        {
+            tmpData.businesses[item.bidxMeta.bidxEntityId] = item ;
         }
     }
 
@@ -265,51 +304,34 @@
     //
     var fetchMemberProfiles = function ( memberIds, reason )
     {
-        var count = 0;
+        var promises = [];
 
         $.each( memberIds, function ( i, memberId )
         {
+            var $def = $.Deferred();
+
             bidx.common.getMemberInfo(
             {
                 id          :   memberId
             ,   callback    :   function ( memberInfo )
                 {
                     addToTempMembers( memberInfo );
-
-                    count = count+1;
-
-                    if ( count === memberIds.length )
-                    {
-                        switch (reason)
-                        {
-                            case "mentor" :
-
-                                bidx.commonmentordashboard.generateRequests();
-
-                            break;
-
-                            case "investor" :
-
-                                // bidx.commonmentordashboard.generateRequests();
-
-                            break;
-
-                            case "connect" :
-
-                                // bidx.commonmentordashboard.generateRequests();
-
-                            break;
-                        }
-                    }
+                    $def.resolve( memberInfo );
                 }
             ,   error:  function(jqXhr, textStatus)
                 {
-                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+                    var status  = bidx.utils.getValue( jqXhr, "status" ) || textStatus
+                    ,   msg     = "Something went wrong while retrieving the entity: " + status
+                    ,   error   = new Error( msg )
+                    ;
 
-                    bidx.utils.log("status", status);
+                    $def.reject( error );
                 }
             });
+            promises.push($def);
         } );
+
+        return $.when.apply(undefined, promises).promise();
     };
 
     // retrieve a value from the session object
@@ -329,31 +351,39 @@
         return new Date( now );
     }
 
-    function getEntity( options )
+    function getEntities( businessesDataId )
     {
-        bidx.api.call(
-            "entity.fetch"
-        ,   {
-                entityId:               options.entityId
-            ,   groupDomain:            bidx.common.groupDomain
-            ,   success: function( result )
-                {
-                    //  execute callback if provided
-                    if (options && options.callback)
+        var promises = [];
+
+        $.each( businessesDataId, function( i, businessId)
+        {
+            var $def = $.Deferred();
+
+            bidx.api.call(
+                "entity.fetch"
+            ,   {
+                    entityId:               businessId
+                ,   groupDomain:            bidx.common.groupDomain
+                ,   success:        function( results )
                     {
-                        options.callback( result );
+                        addToTempBusinesses( results );
+                        $def.resolve( results );
+                    }
+                ,   error: function(jqXhr, textStatus)
+                    {
+                        var status  = bidx.utils.getValue( jqXhr, "status" ) || textStatus
+                        ,   msg     = "Something went wrong while retrieving the entity: " + status
+                        ,   error   = new Error( msg )
+                        ;
+
+                        $def.reject( error );
                     }
                 }
-            ,   error: function( jqXhr, textStatus )
-                {
-                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+            );
+            promises.push($def);
+        });
 
-                    bidx.utils.log("'No entity found'::: Status:" + status + " entity id: " + options.entityId);
-                }
-            }
-        );
-
-        return ;
+        return $.when.apply(undefined, promises).promise();
     }
 
 
@@ -1720,12 +1750,13 @@
         groupDomain:                    groupDomain
 
     ,   addToTempMembers:               addToTempMembers
+    ,   addToTempBusinesses:            addToTempBusinesses
     ,   checkMemberExists:              checkMemberExists
     ,   checkBusinessExists:            checkBusinessExists
     ,   tmpData:                        tmpData
     ,   fetchMemberProfiles:            fetchMemberProfiles
 
-    ,   getEntity:                      getEntity
+    ,   getEntities:                    getEntities
 
     ,   notifyRedirect:                 notifyRedirect
     ,   notifySave:                     notifySave
@@ -1774,6 +1805,7 @@
     ,   getCurrentGroupId:              getCurrentGroupId
     ,   getCurrentUserId:               getCurrentUserId
     ,   getMemberInfo:                  getMemberInfo
+    ,   getMembersSummaries:            getMembersSummaries
     ,   getAccreditation:               getAccreditation
     ,   isGroupAdmin:                   isGroupAdmin
     ,   getSessionValue:                getSessionValue
