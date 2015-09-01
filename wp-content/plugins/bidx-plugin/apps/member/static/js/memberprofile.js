@@ -20,7 +20,7 @@
     ,   $investorTaggingLabel               = $( ".investorTaggingLabel")
     ,   $mentorTaggingLabel                 = $( ".mentorTaggingLabel")
 
-    ,   $connect                            = $('.connect')
+    ,   $connect                            = $('.connectWrapper')
 
         // Profile picture
         //
