@@ -8,14 +8,30 @@
     ,   bidxConfig          = window.bidxConfig || {}
     ;
 
-    var placeLogoThumb = function( item )
+    var placeLogoThumb = function( item, size )
     {
         var thumb
         ,   logo
         ,   logoDocument
         ,   cover
         ,   coverDocument
+        ,   cropDimensions
+        ,   imgSize = {}
         ;
+
+        if ( size === "sm" )
+        {
+            imgSize.class = "img-cropper-sm pull-left";
+            imgSize.default = "icons-rounded-sm pull-left";
+            cropDimensions = 50;
+        }
+        else
+        {
+            imgSize.class = "img-cropper";
+            imgSize.default = "icons-rounded";
+            cropDimensions = 90;
+        }
+
 
         logo = bidx.utils.getValue( item, "logo");
         logoDocument = bidx.utils.getValue( item, "logo.document");
@@ -26,7 +42,7 @@
 
         if ( logo && logoDocument )
         {
-            thumb = $( "<div />", { "class": "img-cropper" } )
+            thumb = $( "<div />", { "class": imgSize.class } )
                         .append
                         (
                             $( "<img />", { "src": logoDocument, "class": "center-img" })
@@ -34,7 +50,7 @@
         }
         else if ( cover && coverDocument )
         {
-            thumb = $( "<div />", { "class": "img-cropper" } )
+            thumb = $( "<div />", { "class": imgSize.class } )
                         .append
                         (
                             $( "<img />", { "src": coverDocument, "class": "center-img" })
@@ -42,14 +58,14 @@
         }
         else
         {
-            thumb = $( "<div />", { "class": "icons-rounded" } )
+            thumb = $( "<div />", { "class": imgSize.default } )
                         .append
                         (
                             $( "<i />", { "class": "fa fa-suitcase text-primary-light" } )
                         );
         }
 
-        thumb.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+        thumb.find( "img" ).fakecrop( {fill: true, wrapperWidth: cropDimensions, wrapperHeight: cropDimensions} );
 
         return thumb;
     };
@@ -77,6 +93,8 @@
                             $( "<i />", { "class": "fa fa-user text-primary-light" })
                         );
         }
+
+        thumb.find( "img" ).fakecrop( {fill: true, wrapperWidth: 50, wrapperHeight: 50} );
 
         return thumb;
     };
@@ -559,6 +577,7 @@
     ,   constructCompanyCardView:           constructCompanyCardView
     ,   constructActionBox:                 constructActionBox
     ,   connectActionBox:                   connectActionBox
+    ,   placeLogoThumb:                     placeLogoThumb
     ,   placeProfileThumbSmall:             placeProfileThumbSmall
     };
 
