@@ -108,6 +108,7 @@
 
     <!-- Common Mentor strings -->
     <Item value="offerMentoring">Offer Mentoring</Item>
+    <Item value="requestMentoring">Request Mentoring</Item>
     <Item value="receivedRequestFrom">You have a request from</Item>
     <Item value="pendingRequestTo">Your request is pending from</Item>
     <Item value="mentoringActive">You are the mentor of this business</Item>
