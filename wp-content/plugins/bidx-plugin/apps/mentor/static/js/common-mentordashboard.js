@@ -342,7 +342,7 @@
         {
             case "accepted":
 
-                if ( isThereRelationship && bidx.globalChecks.isOwnBusiness() )
+                if ( isThereRelationship && ( bidx.globalChecks.isOwnBusiness() || bidx.globalChecks.isOwnProfile() ) )
                 {
                     $actions = $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "stop", "html": bidx.i18n.i( "btnRemove" ) } );
                     
