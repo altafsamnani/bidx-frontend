@@ -300,10 +300,9 @@
     {
         var businessOwnerId =  $element.data('ownerid')
         ,   $inMail         =  $element.find( '.inmail' )
-        ,   connectOptions  =   { }
+        ,   connectOptions
+        ,   btnOptions
         ;
-
-        bidx.utils.log('businessOwnerId', businessOwnerId);
 
         connectOptions =    {
                                 currentUserId:          loggedInMemberId
@@ -312,7 +311,11 @@
 
         $inMail.connect( connectOptions );
 
-        $inMail.connect( "constructInMail" );
+        btnOptions =    {
+                            inmailClass:    'btn-inmail'
+                        };
+
+        $inMail.connect( "constructInMail", btnOptions );
     }
 
     // Setup function for doing work that should only be done once
@@ -326,7 +329,7 @@
         _managementTeam();
         _companyDetails();
         _documents();
-        //_inMail();
+        _inMail();
 
         // On any changes, how little doesn't matter, notify that we have a pending change
         // But no need to track the changes when doing a member data load

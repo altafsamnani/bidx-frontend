@@ -131,7 +131,7 @@
     //
     function _createFeedbackPanelStructure()
     {
-        var $btnFeedbackSnippet   = $( "<button />", { "class": "btn btn-warning btn-feedback" })
+        var $btnFeedbackSnippet   = $( "<button />", { "class": "btn btn-warning btn-feedback pull-right" })
                                     .prepend
                                     (
                                         $("<i/>", { "class": "fa fa-comments fa-big fa-above" })

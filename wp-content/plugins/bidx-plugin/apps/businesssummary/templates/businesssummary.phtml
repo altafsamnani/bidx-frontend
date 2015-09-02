@@ -293,7 +293,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 ?>
                 </div>
             </div>
-            <div class="col-sm-4 text-right">
+            <div class="col-sm-4 text-right <?php echo ( $ownerId !== $loggedInUserId ) ? 'inmail' : ''; ?>">
 <?php
                     // if a user is allowed to request full access to a business summary and it NOT The owner of the business summary
                     //
@@ -332,15 +332,6 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 
 <?php
                     }
-
-                    if ( $ownerId !== $loggedInUserId )
-                    {
-?>
-                            <button class="btn btn-primary sendMessageWrapper hide inmail" data-toggle="modal" data-target="#sendMessageEditor">
-                                <div class="fa fa-edit fa-above fa-big"></div>
-                                <?php _e('Send Message', 'bidxplugin')?>
-                            </button>
-<?php               }
 ?>
                 <div class="editControlsContainer">
                     <div class="editControls pull-right">
