@@ -692,6 +692,11 @@
             bidx.utils.log("click requestMentoring", this);
             bidx.utils.log("getMemberId", getMemberId(this) );
             bidx.utils.log("ownedBusinesses", ownedBusinesses);
+            $.each( ownedBusinesses, function(index, val)
+            {
+                bidx.utils.log("ownedBusiness::::", val);
+                bidx.common.checkBusinessExists( val );
+            });
 
         });
 

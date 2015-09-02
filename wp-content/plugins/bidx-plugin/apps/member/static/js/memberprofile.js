@@ -202,7 +202,7 @@
                                                 {
                                                     label:      bidx.i18n.i('lblMarked') + ' ' + bidx.i18n.i('lblNoAccreditation')
                                                 ,   status:     'accreditation_refused'
-                                                ,   iconClass:   'fa-ban'
+                                                ,   iconClass:  'fa-ban'
                                                 ,   class:      'accr-Refused'
                                                 }]
                             ,   class:          labelClass
@@ -282,7 +282,7 @@
         ,   status                  =   false
         ;
 
-        if( (loggedInMemberId !== visitingMemberPageId) && (investorProfileEntityId || mentorProfileEntityId ) )
+        if( (investorProfileEntityId || mentorProfileEntityId ) )
         {
             if( investorProfileEntityId )
             {
