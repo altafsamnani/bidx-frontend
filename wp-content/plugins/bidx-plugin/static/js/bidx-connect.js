@@ -251,7 +251,7 @@
                     bidx.utils.setValue( message, "subject", $frmCompose.find( "[name=subject]" ).val() );
                     bidx.utils.setValue( message, "content", $frmCompose.find( "[name=content]" ).val() );
 
-                   /* bidx.common.doMailSend(
+                    bidx.common.doMailSend(
                     {
                         message:    message
                     ,   success:    function( response )
@@ -265,7 +265,6 @@
                             $frmCompose.find( ":input" ).val("");
 
                             $frmCompose.validate().resetForm();
-
                         }
                     ,   error:      function( jqXhr )
                         {
@@ -273,18 +272,7 @@
 
                             $btnComposeCancel.removeClass( "disabled" );
                         }
-                    } );*/
-                        $sendMessageEditor.modal('hide');
-
-                        $btnComposeSubmit.removeClass( "disabled" );
-
-                        $btnComposeCancel.removeClass( "disabled" );
-
-                        $frmCompose.find( ":input" ).val("");
-
-                        $frmCompose.validate().resetForm();
-
-
+                    } );
                 }
             } );
         }
@@ -406,8 +394,6 @@
             ;
 
             widget.options.btnOptions   =   btnOptions;
-
-            bidx.utils.log('I am thereeeee');
 
             if( currentUserId && currentUserId !== visitingMemberPageId )
             {
