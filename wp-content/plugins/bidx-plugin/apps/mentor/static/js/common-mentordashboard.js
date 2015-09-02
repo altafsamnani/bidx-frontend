@@ -260,6 +260,10 @@
                     .done( function ( result1, result2 )
                     {
                         generateRequests();
+                        if ( bidx.globalChecks.isProfilePage() && !bidx.globalChecks.isOwnProfile() && hasMentorProfile && !hasEntrepreneurProfile )
+                        {
+                            doRequestMentoringSingleBusiness();
+                        }
                     } );
             }
             else
@@ -689,14 +693,24 @@
 
         $(document).on('click', '*[data-btn="requestMentoring"]', function ( e )
         {
+            var ownBs = [];
+
             bidx.utils.log("click requestMentoring", this);
             bidx.utils.log("getMemberId", getMemberId(this) );
             bidx.utils.log("ownedBusinesses", ownedBusinesses);
-            $.each( ownedBusinesses, function(index, val)
+            
+            $.each( ownedBusinesses, function( i, bs )
             {
-                bidx.utils.log("ownedBusiness::::", val);
-                bidx.common.checkBusinessExists( val );
+                if ( !bidx.common.checkBusinessExists( bs ) )
+                {
+                    ownBs.push( bs );
+                }
             });
+
+            if ( ownBs.length )
+            {
+                bidx.common.getEntities( ownBs );
+            }
 
         });
 
@@ -737,8 +751,6 @@
                 checkMentoringRelationship( result );
             }
         } );
-        doRequestMentoringSingleBusiness();
-
     };
 
     var doOfferMentoringSingleBusiness = function ()
