@@ -153,7 +153,7 @@
     var profileThumb = function( memberid )
     {
         var thumb
-        ,   profilePicture = bidx.common.tmpData.members[memberid].bidxMemberProfile.personalDetails.profilePicture.document
+        ,   profilePicture = bidx.utils.getValue(bidx.common.tmpData.members[memberid].bidxMemberProfile.personalDetails, "profilePicture.document")
         ;
 
         if ( profilePicture )
@@ -649,6 +649,7 @@
         ,   dataAttr
         ,   dataid
         ,   status
+        ,   contact
         ;
 
         switch ( reason )
@@ -660,7 +661,7 @@
                 status      = data.request.status;
 
             break;
-            
+
             case "investor":
 
                 dataAttr    = "data-investorid";
@@ -668,15 +669,26 @@
                 status      = data.status;
 
             break;
-            
+
             case "contact":
 
+                contact         = bidx.utils.getValue(data, "contact");
+
                 dataAttr    = "data-contactmemberid";
-                // dataid      = data.request.requestId; ?????????????
-                // status      = "Pending";
+                dataid      = data.id;
+                status      = bidx.utils.getValue(contact, "status");
+
+                if( status === 'PENDING')
+                {
+                    status = 'requested';
+                }
+                else if( status === 'CONNECTED')
+                {
+                    status = 'accepted';
+                }
 
             break;
-            
+
             case "business":
 
                 dataAttr    = "data-businessid";
@@ -718,7 +730,7 @@
                         $actions = $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "stop", "html": bidx.i18n.i( "btnStopMentor" ) } );
 
                     break;
-                    
+
                     case "requested":
 
                         if ( data.relChecks.isThereRelationship && data.relChecks.isTheInitiator )
@@ -756,7 +768,7 @@
                 }
 
             break;
-            
+
             case "investor":
 
                 switch ( data.status )
@@ -786,18 +798,93 @@
                 }
 
             break;
-            
+
             case "contact":
+                var contact         = bidx.utils.getValue(data, "contact")
+                ,   isTheInitiator  = !bidx.utils.getValue(contact, "isInitiator")
+                ,   status          = bidx.utils.getValue(contact, "status")
+                ;
+
+                switch ( status )
+                {
+                    case "CONNECTED":
+
+                            $actions = $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "connectstop", "html": bidx.i18n.i( "btnStopConnect" ) } );
+
+                            /*$bsElement.find( ".pull-left" ).last()
+                                .append
+                                (
+                                    $( "<span />", { "html": " " + bidx.i18n.i( "youAreInContact" )  } )
+                                )
+                            ;*/
+                    break;
+
+                    case "PENDING":
+
+                        if ( isTheInitiator )
+                        {
+                            $actions =
+                                $( "<span />" )
+                                    .append
+                                    (
+                                        $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "connectcancel", "html": bidx.i18n.i( "btnCancelRequest" ) } )
+                                    )
+                                    .append( "&nbsp;" )
+                                    /*.append
+                                    (
+                                        $( "<button />", { "class": "btn btn-xs btn-warning", "data-btn": "connectremind", "html": bidx.i18n.i( "btnRemind" ) } )
+                                    )*/
+                            ;
+
+                            /*$bsElement.find( ".pull-left" ).last()
+                                .append
+                                (
+                                    $( "<span />", { "html": bidx.i18n.i( "youAskedConnection" ) + " " } )
+                                )
+                                .append
+                                (
+                                    $memberLink
+                                )
+                            ;*/
+                        }
+                        else
+                        {
+                            $actions =
+                                $( "<span />" )
+                                    .append
+                                    (
+                                        $( "<button />", { "class": "btn btn-xs btn-success", "data-btn": "connectaccept", "html": bidx.i18n.i( "btnAccept" ) } )
+                                    )
+                                    .append( "&nbsp;" )
+                                    .append
+                                    (
+                                        $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "connectreject", "html": bidx.i18n.i( "btnReject" ) } )
+                                    )
+                            ;
+                            /*$bsElement.find( ".pull-left" ).last()
+                                .append
+                                (
+                                    $memberLink
+                                )
+                                .append
+                                (
+                                    $( "<span />", { "html":  " " + bidx.i18n.i( "wantsToConnect" ) } )
+                                )
+                            ;*/
+                        }
+
+                    break;
+                }
 
             break;
-            
+
             case "business":
 
                 $actions = $( "<button />", { "class": "btn btn-xs btn-warning", "data-btn": "requestForMentorBusiness", "html": bidx.i18n.i( "btnRequest" ) } );
 
             break;
         }
-        
+
         $html.append( $actions );
 
         return $html;
@@ -857,7 +944,7 @@
                         }
 
                     break;
-                    
+
                     case "requested":
 
                         if ( data.relChecks.isThereRelationship && data.relChecks.isTheInitiator )
@@ -873,25 +960,44 @@
                 }
 
             break;
-            
+
             case "investor":
 
                 if ( data.status === "pending" ) {text =  " " + bidx.i18n.i( "wantsFullAccess" ); }
                 if ( data.status === "granted" ) {text =  " " + bidx.i18n.i( "hasFullAccess" ); }
 
             break;
-            
+
             case "contact":
 
+                var contact         = bidx.utils.getValue(data, "contact")
+                ,   isTheInitiator  = !bidx.utils.getValue(contact, "isInitiator")
+                ,   status          = bidx.utils.getValue(contact, "status")
+                ;
+
+                switch ( status )
+                {
+                    case "CONNECTED":
+
+                        text = " " + bidx.i18n.i( "youAreInContact" );
+                    break;
+
+                    case "PENDING":
+
+                        text =  " " + ( isTheInitiator ) ?  bidx.i18n.i( "youAskedConnection" ) :  bidx.i18n.i( "wantsToConnect" );
+
+                    break;
+                }
+
             break;
-            
+
             case "business":
-                
+
                 text = bidx.i18n.i( "requestMentoringBusiness" ) + " ";
-                
+
             break;
         }
-        
+
         $message = $( "<span />", { "html": text } );
 
         return $message;
