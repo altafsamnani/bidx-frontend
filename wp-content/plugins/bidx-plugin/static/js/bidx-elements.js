@@ -99,6 +99,86 @@
         return thumb;
     };
 
+    var businessThumb = function( entityid )
+    {
+        var thumb
+        ,   logo
+        ,   logoDocument
+        ,   cover
+        ,   coverDocument
+        ,   cropDimensions
+        ,   imgSize = {}
+        ;
+
+        imgSize.class = "img-cropper-sm pull-left";
+        imgSize.default = "icons-rounded-sm pull-left";
+        cropDimensions = 50;
+
+        logo = bidx.common.tmpData.businesses[entityid].logo;
+        logoDocument = logo ? bidx.common.tmpData.businesses[entityid].logo.document : null;
+
+        cover = bidx.common.tmpData.businesses[entityid].cover;
+        coverDocument = cover ? bidx.common.tmpData.businesses[entityid].cover.document : null;
+
+        if ( logo && logoDocument )
+        {
+            thumb = $( "<div />", { "class": imgSize.class } )
+                        .append
+                        (
+                            $( "<img />", { "src": logoDocument, "class": "center-img" })
+                        );
+        }
+        else if ( cover && coverDocument )
+        {
+            thumb = $( "<div />", { "class": imgSize.class } )
+                        .append
+                        (
+                            $( "<img />", { "src": coverDocument, "class": "center-img" })
+                        );
+        }
+        else
+        {
+            thumb = $( "<div />", { "class": imgSize.default } )
+                        .append
+                        (
+                            $( "<i />", { "class": "fa fa-suitcase text-primary-light" } )
+                        );
+        }
+
+        thumb.find( "img" ).fakecrop( {fill: true, wrapperWidth: cropDimensions, wrapperHeight: cropDimensions} );
+
+        return thumb;
+    };
+
+    var profileThumb = function( memberid )
+    {
+        var thumb
+        ,   profilePicture = bidx.common.tmpData.members[memberid].bidxMemberProfile.personalDetails.profilePicture.document
+        ;
+
+        if ( profilePicture )
+        {
+            thumb = $( "<div />", { "class": "img-cropper-sm pull-left" } )
+                        .append
+                        (
+                            $( "<img />", { "src": profilePicture, "class": "center-img" })
+                        );
+
+        }
+        else
+        {
+            thumb = $( "<div />", { "class": "icons-rounded-sm pull-left" } )
+                        .append
+                        (
+                            $( "<i />", { "class": "fa fa-user text-primary-light" })
+                        );
+        }
+
+        thumb.find( "img" ).fakecrop( {fill: true, wrapperWidth: 50, wrapperHeight: 50} );
+
+        return thumb;
+    };
+
     var _getStaticDataVal = function ( data )
     {
         var dataArr
@@ -127,7 +207,7 @@
         });
     };
 
-    var constructBusinessCardView = function ( item )
+    var businessCardView = function ( item )
     {
         var card;
 
@@ -140,7 +220,7 @@
                     $( "<div />", { "class": "cardHeader hide-overflow" } )
                     .append
                     (
-                        $( "<div />", { "class": "info-cell pull-left" + (item.bidxMeta.bidxCompletionMesh ? "" : " hide"), "html": bidx.i18n.i( "bsCompleted" ) + ": " + item.bidxMeta.bidxCompletionMesh + "%" } )
+                        $( "<div />", { "class": "info-cell pull-left" + ( item.bidxMeta.bidxCompletionMesh ? "" : " hide" ), "html": bidx.i18n.i( "bsCompleted" ) + ": " + item.bidxMeta.bidxCompletionMesh + "%" } )
                     )
                     .append
                     (
@@ -256,7 +336,7 @@
         return card;
     };
 
-    var constructCompanyCardView = function ( item )
+    var companyCardView = function ( item )
     {
         var card;
 
@@ -563,6 +643,260 @@
         return box;
     };
 
+    var actionBox = function ( data, reason )
+    {
+        var box
+        ,   dataAttr
+        ,   dataid
+        ,   status
+        ;
+
+        switch ( reason )
+        {
+            case "mentor":
+
+                dataAttr    = "data-requestid";
+                dataid      = data.request.requestId;
+                status      = data.request.status;
+
+            break;
+            
+            case "investor":
+
+                dataAttr    = "data-investorid";
+                dataid      = data.user.id;
+                status      = data.status;
+
+            break;
+            
+            case "contact":
+
+                dataAttr    = "data-contactmemberid";
+                // dataid      = data.request.requestId; ?????????????
+                // status      = "Pending";
+
+            break;
+            
+            case "business":
+
+                dataAttr    = "data-businessid";
+                dataid      = data.bidxMeta.bidxEntityId;
+                status      = "Pending";
+
+            break;
+        }
+
+        box =
+            $( "<div />", { "class": "alert alert-sm hide-overflow bg-" + bidx.common.capitalizeFirstLetter( status ) } ).attr( dataAttr, dataid)
+                .append
+                (
+                    $( "<div />", { "class": "pull-left" } )
+                    .append
+                    (
+                        $( "<span />", { "class": "alert-message" } )
+                    )
+                )
+            ;
+
+        return box;
+    };
+
+    var actionButtons = function ( data, reason )
+    {
+        var $actions
+        ,   $html = $( "<div />", { "class": "pull-right activity-actions" } )
+        ;
+
+        switch ( reason )
+        {
+            case "mentor":
+
+                switch ( data.request.status )
+                {
+                    case "accepted":
+
+                        $actions = $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "stop", "html": bidx.i18n.i( "btnStopMentor" ) } );
+
+                    break;
+                    
+                    case "requested":
+
+                        if ( data.relChecks.isThereRelationship && data.relChecks.isTheInitiator )
+                        {
+                            $actions =
+                                $( "<span />" )
+                                    .append
+                                    (
+                                        $( "<button />", { "class": "btn btn-xs btn-success", "data-btn": "cancel", "html": bidx.i18n.i( "btnCancelRequest" ) } )
+                                    )
+                                    // .append( "&nbsp;" )
+                                    // .append
+                                    // (
+                                    //     $( "<button />", { "class": "btn btn-xs btn-warning", "data-btn": "remind", "html": bidx.i18n.i( "btnRemind" ) } )
+                                    // )
+                            ;
+                        }
+                        else
+                        {
+                            $actions =
+                                $( "<span />" )
+                                    .append
+                                    (
+                                        $( "<button />", { "class": "btn btn-xs btn-success", "data-btn": "accept", "html": bidx.i18n.i( "btnAccept" ) } )
+                                    )
+                                    .append( "&nbsp;" )
+                                    .append
+                                    (
+                                        $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "reject", "html": bidx.i18n.i( "btnReject" ) } )
+                                    )
+                            ;
+                        }
+
+                    break;
+                }
+
+            break;
+            
+            case "investor":
+
+                switch ( data.status )
+                {
+                    case "pending":
+
+                        $actions =
+                            $( "<span />" )
+                                .append
+                                (
+                                    $( "<button />", { "class": "btn btn-xs btn-success", "data-btn": "acceptAccess", "html": bidx.i18n.i( "btnAccept" ) } )
+                                )
+                                .append( "&nbsp;" )
+                                .append
+                                (
+                                    $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "rejectAccess", "html": bidx.i18n.i( "btnReject" ) } )
+                                )
+                        ;
+
+                    break;
+
+                    case "granted":
+
+                        // $actions = $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "removeAccess", "html": bidx.i18n.i( "btnRemoveAccess" ) } );
+
+                    break;
+                }
+
+            break;
+            
+            case "contact":
+
+            break;
+            
+            case "business":
+
+                $actions = $( "<button />", { "class": "btn btn-xs btn-warning", "data-btn": "requestForMentorBusiness", "html": bidx.i18n.i( "btnRequest" ) } );
+
+            break;
+        }
+        
+        $html.append( $actions );
+
+        return $html;
+    };
+
+    var memberLink = function ( memberid )
+    {
+        var $memberLink;
+
+        $memberLink =
+            $( "<a />", { "href": "/member/" + memberid } )
+            .append
+            (
+                $( "<strong />", { "html": bidx.common.tmpData.members[memberid].member.displayName } )
+            )
+        ;
+
+        return $memberLink;
+    };
+
+    var businessLink = function ( entityid )
+    {
+        var $businessLink;
+
+        $businessLink =
+            $( "<a />", { "href": "/member/" + entityid } )
+            .append
+            (
+                $( "<strong />", { "html": bidx.common.tmpData.businesses[entityid].name } )
+            )
+        ;
+
+        return $businessLink;
+    };
+
+    var actionMessage = function ( data, reason )
+    {
+        var $message
+        ,   text
+        ;
+
+        switch ( reason )
+        {
+            case "mentor":
+
+                switch ( data.request.status )
+                {
+                    case "accepted":
+
+                        if ( data.relChecks.isThereRelationship && ( bidx.globalChecks.isOwnBusiness() || bidx.globalChecks.isOwnProfile() ) )
+                        {
+                            text = " " + bidx.i18n.i( "isMentoring" );
+                        }
+                        else
+                        {
+                            text = data.relChecks.showBusinessInfo ? text = bidx.i18n.i( "isMentoring" ) + " " : text = bidx.i18n.i( "youAreMentoring" );
+                        }
+
+                    break;
+                    
+                    case "requested":
+
+                        if ( data.relChecks.isThereRelationship && data.relChecks.isTheInitiator )
+                        {
+                            text = bidx.i18n.i( "youAskedMentor" ) + " ";
+                        }
+                        else
+                        {
+                            text = data.relChecks.showBusinessInfo ? text = " " + bidx.i18n.i( "mentorAskedYou" ) + " " : text = " " + bidx.i18n.i( "wantsToMentor" );
+                        }
+
+                    break;
+                }
+
+            break;
+            
+            case "investor":
+
+                if ( data.status === "pending" ) {text =  " " + bidx.i18n.i( "wantsFullAccess" ); }
+                if ( data.status === "granted" ) {text =  " " + bidx.i18n.i( "hasFullAccess" ); }
+
+            break;
+            
+            case "contact":
+
+            break;
+            
+            case "business":
+                
+                text = bidx.i18n.i( "requestMentoringBusiness" ) + " ";
+                
+            break;
+        }
+        
+        $message = $( "<span />", { "html": text } );
+
+        return $message;
+    };
+
 
     // Expose
     //
@@ -573,9 +907,16 @@
 
     bidx.construct =
     {
-        constructBusinessCardView:          constructBusinessCardView
-    ,   constructCompanyCardView:           constructCompanyCardView
-    ,   constructActionBox:                 constructActionBox
+        businessCardView:          businessCardView
+    ,   companyCardView:           companyCardView
+    ,   actionBox:                 actionBox
+    ,   actionButtons:             actionButtons
+    ,   memberLink:                memberLink
+    ,   businessLink:              businessLink
+    ,   actionMessage:             actionMessage
+    ,   businessThumb:             businessThumb
+    ,   profileThumb:              profileThumb
+
     ,   connectActionBox:                   connectActionBox
     ,   placeLogoThumb:                     placeLogoThumb
     ,   placeProfileThumbSmall:             placeProfileThumbSmall

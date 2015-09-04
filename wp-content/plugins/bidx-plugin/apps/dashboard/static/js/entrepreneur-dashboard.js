@@ -54,7 +54,7 @@
                                 //     if ( $tabBusinesses.length && auth.accessType === "MENTOR" && auth.status !== "rejected" )
                                 //     {
 
-                                //         $tabBusinesses.append( bidx.construct.constructBusinessCardView( item.entity ) );
+                                //         $tabBusinesses.append( bidx.construct.businessCardView( item.entity ) );
 
                                 //         databsids.push( item.entity.bidxMeta.bidxEntityId.toString() );
                                 //     }
@@ -64,10 +64,10 @@
                                 //         // bidx.utils.log("----------------------------- ");
                                 //         // bidx.utils.log("fetchBusinesses:::: auth:::: item:::: ", auth, item);
                                 //         // bidx.utils.log("----------------------------- ");
-                                //         $tabBusinesses.append( bidx.construct.constructBusinessCardView( item.entity ) );
+                                //         $tabBusinesses.append( bidx.construct.businessCardView( item.entity ) );
 
                                 //         $tabBusinesses.find( ".cardFooter" ).last()
-                                //             .append( bidx.construct.constructActionBox( auth ) )
+                                //             .append( bidx.construct.actionBox( auth ) )
                                 //         ;
                                 //     }
                                 // });
@@ -114,7 +114,7 @@
 
                             if ( bidxMeta && bidxMeta.bidxEntityType === 'bidxCompany' )
                             {
-                                $tabCompanies.append( bidx.construct.constructCompanyCardView( item ) );
+                                $tabCompanies.append( bidx.construct.companyCardView( item ) );
                             }
                         } );
                     }
@@ -149,7 +149,7 @@
                     {
                         if ( $tabBusinesses.length && auth.accessType === "MENTOR" && auth.status !== "rejected" )
                         {
-                            $tabBusinesses.append( bidx.construct.constructBusinessCardView( item.entity ) );
+                            $tabBusinesses.append( bidx.construct.businessCardView( item.entity ) );
 
                             databsids.push( item.entity.bidxMeta.bidxEntityId.toString() );
                         }
@@ -157,10 +157,10 @@
                         if ( $tabBusinesses.length && auth.accessType === "INVESTOR" && auth.status !== "rejected" && item.owner.id === currentUserId )
                         {
                             bidx.utils.log("fetchBusinesses:::: auth:::: authorizations:::: ", auth, authorizations);
-                            $tabBusinesses.append( bidx.construct.constructBusinessCardView( item.entity ) );
+                            $tabBusinesses.append( bidx.construct.businessCardView( item.entity ) );
 
                             $tabBusinesses.find( ".cardFooter" ).last()
-                                .append( bidx.construct.constructActionBox( auth ) )
+                                .append( bidx.construct.actionBox( auth ) )
                             ;
                         }
                     }

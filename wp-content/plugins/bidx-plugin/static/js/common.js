@@ -380,7 +380,7 @@
                     }
                 }
             );
-            promises.push($def);
+            promises.push( $def );
         });
 
         return $.when.apply(undefined, promises).promise();

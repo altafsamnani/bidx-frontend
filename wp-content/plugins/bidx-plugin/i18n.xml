@@ -109,6 +109,7 @@
     <!-- Common Mentor strings -->
     <Item value="offerMentoring">Offer Mentoring</Item>
     <Item value="requestMentoring">Request Mentoring</Item>
+    <Item value="requestMentoringBusiness">Request Mentoring for</Item>
     <Item value="receivedRequestFrom">You have a request from</Item>
     <Item value="pendingRequestTo">Your request is pending from</Item>
     <Item value="mentoringActive">You are the mentor of this business</Item>
@@ -121,10 +122,12 @@
     <Item value="btnStopMentor">Stop Mentoring</Item>
 
     <Item value="btnRemove">Remove</Item>
+    <Item value="btnRequest">Request</Item>
     <Item value="btnReject">Reject</Item>
     <Item value="btnAccept">Accept</Item>
     <Item value="btnRemind">Send a Reminder</Item>
     <Item value="btnCancelRequest">Cancel Request</Item>
+    <Item value="btnRemoveAccess">Remove Access</Item>
 
     <Item value="wantsFullAccess">requests full access</Item>
     <Item value="hasFullAccess">has full access</Item>
