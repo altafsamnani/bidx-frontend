@@ -56,7 +56,8 @@
 
                             bidx.utils.log('request', request);
 
-                            bidx.construct.connectActionBox( request );
+                            //bidx.construct.connectActionBox( request );
+                            widget.createActionBox( request );
                         });
                     }
                 ,   error:      function(jqXhr)
@@ -135,7 +136,7 @@
 
             function getRequestId ( el )
             {
-                return $( el ).parents( "*[data-requestId]" ).attr( "data-requestId" );
+                return $( el ).parents( "*[data-contactmemberid]" ).attr( "data-contactmemberid" );
             }
 
             function getBsId ( el )
@@ -416,6 +417,44 @@
                 });
             }
         }
+    ,   createActionBox: function( request )
+        {
+            var data
+            ,   $bsEl           = $( '.cardView' )
+            ,   contact         = bidx.utils.getValue(request, "contact")
+            ,   isTheInitiator  = !bidx.utils.getValue(contact, "isInitiator")
+            ;
+
+            bidx.common.getMemberInfo(
+            {
+                id          :   request.id
+            ,   callback    :   function ( memberInfo )
+                {
+                    bidx.common.addToTempMembers( memberInfo );
+                    $bsEl.first()
+                    .append
+                    (
+                        bidx.construct.actionBox( request, "contact" )
+                        .append
+                        (
+                            bidx.construct.actionButtons( request, "contact" )
+                        )
+                    );
+                    bidx.utils.log( 'testttttt',bidx.construct.actionMessage( request, "contact" ));
+
+                    $bsEl.first().find( ".alert-message" ).last()
+                    .prepend
+                    (
+                        bidx.construct.profileThumb( request.id )
+                    )
+                    .append
+                    (
+                        isTheInitiator ? "" : bidx.construct.memberLink( request.id )
+                    ,   bidx.construct.actionMessage( request, "contact" )
+                    );
+                }
+            });
+        }
     ,   constructConnectInMail: function ( btnOptions )
         {
             var widget                  =   this
@@ -448,7 +487,8 @@
                                                 {
                                                     bidx.utils.log("[connect] else retrieved following contact ", request );
 
-                                                    bidx.construct.connectActionBox( request );
+                                                    //bidx.construct.connectActionBox( request );
+                                                    widget.createActionBox( request );
                                                 }
                                                 else
                                                 {
@@ -496,7 +536,8 @@
 
                         request     = _.findWhere(contacts, { id: contact });
 
-                        bidx.construct.connectActionBox( request );
+                        //bidx.construct.connectActionBox( request );
+                        widget.createActionBox( request );
 
                     }
                 ,   error:  function(jqXhr)
