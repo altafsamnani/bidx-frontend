@@ -117,6 +117,8 @@
     <Item value="isMentoring">is mentoring your business</Item>
     <Item value="youAreMentoring">You are mentoring this business</Item>
     <Item value="youAskedMentor">You asked to mentor this business</Item>
+    <Item value="youAskedMentorForBusiness">You asked mentoring for</Item>
+    <Item value="youAskedFromMentor">You asked mentoring from</Item>
     <Item value="mentorAskedYou">asked you to mentor your business</Item>
 
     <Item value="btnStopMentor">Stop Mentoring</Item>

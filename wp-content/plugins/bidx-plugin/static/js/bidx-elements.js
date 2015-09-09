@@ -649,10 +649,11 @@
         ,   dataAttr
         ,   dataid
         ,   status
+        ,   theReason = data.relChecks && data.relChecks.reason ? data.relChecks.reason : reason
         ,   contact
         ;
 
-        switch ( reason )
+        switch ( theReason )
         {
             case "mentor":
 
@@ -691,7 +692,7 @@
 
             case "business":
 
-                dataAttr    = "data-businessid";
+                dataAttr    = "data-bsid";
                 dataid      = data.bidxMeta.bidxEntityId;
                 status      = "Pending";
 
@@ -717,9 +718,10 @@
     {
         var $actions
         ,   $html = $( "<div />", { "class": "pull-right activity-actions" } )
+        ,   theReason = data.relChecks && data.relChecks.reason ? data.relChecks.reason : reason
         ;
 
-        switch ( reason )
+        switch ( theReason )
         {
             case "mentor":
 
@@ -924,9 +926,10 @@
     {
         var $message
         ,   text
+        ,   theReason = data.relChecks && data.relChecks.reason ? data.relChecks.reason : reason
         ;
 
-        switch ( reason )
+        switch ( theReason )
         {
             case "mentor":
 
@@ -949,7 +952,18 @@
 
                         if ( data.relChecks.isThereRelationship && data.relChecks.isTheInitiator )
                         {
-                            text = bidx.i18n.i( "youAskedMentor" ) + " ";
+                            if ( data.relChecks.isTheMentor )
+                            {
+                                text = bidx.i18n.i( "youAskedMentor" ) + " ";
+                            }
+                            else if ( !data.relChecks.isTheMentor && !bidx.globalChecks.isOwnProfile() )
+                            {
+                                text = bidx.i18n.i( "youAskedMentorForBusiness" ) + " ";
+                            }
+                            else
+                            {
+                                text = bidx.i18n.i( "youAskedFromMentor" ) + " ";
+                            }
                         }
                         else
                         {

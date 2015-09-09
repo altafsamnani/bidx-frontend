@@ -302,7 +302,7 @@
 
     // Reason: "mentor", "investor", "connect"
     //
-    var fetchMemberProfiles = function ( memberIds, reason )
+    var fetchMemberProfiles = function ( memberIds )
     {
         var promises = [];
 
@@ -331,7 +331,7 @@
             promises.push($def);
         } );
 
-        return $.when.apply(undefined, promises).promise();
+        return $.when.apply( undefined, promises ).promise();
     };
 
     // retrieve a value from the session object
@@ -383,7 +383,7 @@
             promises.push( $def );
         });
 
-        return $.when.apply(undefined, promises).promise();
+        return $.when.apply( undefined, promises ).promise();
     }
 
 
