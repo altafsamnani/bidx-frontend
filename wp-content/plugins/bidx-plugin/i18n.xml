@@ -153,7 +153,7 @@
     <Item value="youAreInContact">You have active connection with this contact.</Item>
     <Item value="btnStopConnect">Stop connection</Item>
     <Item value="youAskedConnection">You have successfully sent a connect request to this user.</Item>
-    <Item value="wantsToConnect">wants to connect with you.</Item>
+    <Item value="wantsToConnect"> wants to connect with you.</Item>
 
 
     <!-- Modal dialogs status messages -->

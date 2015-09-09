@@ -984,8 +984,9 @@
 
             case "contact":
 
-                var contact         = bidx.utils.getValue(data, "contact")
-                ,   isTheInitiator  = !bidx.utils.getValue(contact, "isInitiator")
+                var labelTxt
+                ,   contact         = bidx.utils.getValue(data, "contact")
+                ,   isTheInitiator  = bidx.utils.getValue(contact, "isInitiator")
                 ,   status          = bidx.utils.getValue(contact, "status")
                 ;
 
@@ -998,7 +999,17 @@
 
                     case "PENDING":
 
-                        text =  " " + ( isTheInitiator ) ?  bidx.i18n.i( "youAskedConnection" ) :  bidx.i18n.i( "wantsToConnect" );
+                        text =  " " ;
+                        if( isTheInitiator )
+                        {
+                            labelTxt = 'wantsToConnect';
+                        }
+                        else
+                        {
+                            labelTxt = 'youAskedConnection';
+                        }
+
+                        text =  " " +  bidx.i18n.i( labelTxt );
 
                     break;
                 }

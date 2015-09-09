@@ -420,14 +420,15 @@
     ,   createActionBox: function( request )
         {
             var data
-            ,   $bsEl           = $( '.cardView' )
-            ,   contact         = bidx.utils.getValue(request, "contact")
-            ,   isTheInitiator  = !bidx.utils.getValue(contact, "isInitiator")
+            ,   $bsEl               = $( '.cardView' )
+            ,   contact             = bidx.utils.getValue(request, "contact")
+            ,   requestInitiator    = bidx.utils.getValue(contact, "isInitiator")
+            ,   isTheInitiator      = requestInitiator ? request.id : bidx.common.getCurrentUserId()
             ;
 
             bidx.common.getMemberInfo(
             {
-                id          :   request.id
+                id          :   isTheInitiator
             ,   callback    :   function ( memberInfo )
                 {
                     bidx.common.addToTempMembers( memberInfo );
@@ -440,18 +441,19 @@
                             bidx.construct.actionButtons( request, "contact" )
                         )
                     );
-                    bidx.utils.log( 'testttttt',bidx.construct.actionMessage( request, "contact" ));
 
                     $bsEl.first().find( ".alert-message" ).last()
                     .prepend
                     (
-                        bidx.construct.profileThumb( request.id )
+                        bidx.construct.profileThumb( isTheInitiator )
                     )
                     .append
                     (
-                        isTheInitiator ? "" : bidx.construct.memberLink( request.id )
+                        requestInitiator ? bidx.construct.memberLink( isTheInitiator ) : " "
                     ,   bidx.construct.actionMessage( request, "contact" )
                     );
+
+                    $bsEl.removeClass('hide').show();
                 }
             });
         }
