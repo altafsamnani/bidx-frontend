@@ -234,8 +234,6 @@
                             ,   class:  buttonClass
                             };
 
-            bidx.utils.log('Investor Profile constructButton: ', btnOptions);
-
             $tagging.tagging( "constructButton", btnOptions );
 
             return true;
