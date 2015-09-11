@@ -29,6 +29,7 @@
             var contact
             ,   contacts
             ,   request
+            ,   $this
             ,   $alert
             ,   widget          =   this
             ,   options         =   {}
@@ -56,7 +57,6 @@
 
                             bidx.utils.log('request', request);
 
-                            //bidx.construct.connectActionBox( request );
                             widget.createActionBox( request );
                         });
                     }
@@ -132,6 +132,19 @@
             {
                 bidx.utils.log("click remind", this);
                 bidx.utils.log("getRequestId", getRequestId(this) );
+
+                $this   =   $(this);
+                $alert  =   $this.parents( ".alert" );
+                contact =   parseInt( getRequestId(this), 10);
+
+                bidx.common.doSendContactReminder(
+                {
+                    contact: contact
+                ,   callback: function()
+                    {
+                        $this.i18nText( "reminderSent" ).addClass('disabled');
+                    }
+                } );
             });
 
             function getRequestId ( el )
@@ -489,7 +502,6 @@
                                                 {
                                                     bidx.utils.log("[connect] else retrieved following contact ", request );
 
-                                                    //bidx.construct.connectActionBox( request );
                                                     widget.createActionBox( request );
                                                 }
                                                 else
@@ -538,7 +550,6 @@
 
                         request     = _.findWhere(contacts, { id: contact });
 
-                        //bidx.construct.connectActionBox( request );
                         widget.createActionBox( request );
 
                     }

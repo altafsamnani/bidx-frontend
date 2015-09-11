@@ -785,6 +785,53 @@
         );
     }
 
+    function doSendContactReminder( options )
+    {
+
+        var uriStatus
+        ,   statusMsg
+        ,   extraUrlParameters  =   []
+        ,   contact              = options.contact
+        ;
+
+        extraUrlParameters =
+        [
+            {
+                label :     "contact"
+            ,   value :     contact
+            }
+        ];
+
+        bidx.api.call(
+            "contact.reminder"
+        ,   {
+                groupDomain:        bidx.common.groupDomain
+            ,   extraUrlParameters: extraUrlParameters
+            ,   success:            function( response )
+                {
+                    bidx.utils.log("[connect] send reminder",  response );
+                    if ( response && response.status === "OK" )
+                    {
+                        if (options && options.callback)
+                        {
+                            options.callback();
+                        }
+                         // window.bidx.controller.updateHash( params.updateHash, true );
+                    }
+                }
+            ,   error:          function( jqXhr, textStatus )
+                {
+                    if (options && options.error)
+                    {
+                        options.error( jqXhr );
+                    }
+
+                }
+            }
+        );
+    }
+
+
     function doMailSend( params )
     {
         var message             =   params.message
@@ -1781,6 +1828,7 @@
     ,   doBlockRequest:                 doBlockRequest
     ,   doUnBlockRequest:               doUnBlockRequest
     ,   doMailSend:                     doMailSend
+    ,   doSendContactReminder:          doSendContactReminder
     ,   showMoreLess:                   showMoreLess
 
 

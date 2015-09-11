@@ -133,6 +133,29 @@
         } );
     };
 
+    contact.reminder= function( params )
+    {
+        var method  =   "PUT"
+        ,   url     =   baseUrl + '/remind'
+        ;
+
+        api._call(
+        {
+            method:             method
+        ,   groupDomain:        params.groupDomain
+        ,   extraUrlParameters: params.extraUrlParameters
+        ,   baseUrl:            url
+        ,   success:        function( data, textStatus, jqXhr )
+            {
+                params.success( data, textStatus, jqXhr );
+            }
+        ,   error:          function( jqXhr, textStatus, errorThrown )
+            {
+                params.error( jqXhr, textStatus, errorThrown );
+            }
+        } );
+    };
+
 
     api.contact = contact;
 } )( jQuery );
