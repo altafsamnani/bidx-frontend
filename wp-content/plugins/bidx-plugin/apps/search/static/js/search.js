@@ -341,6 +341,33 @@
         });
     }
 
+    function _addMainSearchFacets( item )
+    {
+        var listFacetsItem
+        ,   $listFacetsItem
+        ,   newname
+        ,   $filters        =  $('.topfilters')
+        ,   subsnippit      = $("#facettop-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ;
+
+        newname = item.name.replace(/ /g, '');
+
+        listFacetsItem = subsnippit
+                        .replace( /%facetValues_name%/g,    item.name )
+                        .replace( /%facetValues_anchor%/g,  newname )
+                        .replace( /%facetValues_count%/g,   item.count )
+                        .replace( /%filterQuery%/g,         item.filterQuery )
+                        ;
+
+        // execute cb function
+        //
+
+        $listFacetsItem = $( listFacetsItem );
+
+        $filters.append( $listFacetsItem );
+
+    }
+
     /* Get the search list
     Sample
     bidxBusinessGroup - 8747 - Cleancookstoves
@@ -409,10 +436,14 @@
                             dataKey      = facetItems.name.replace(/facet_/g, '');
 
                             item.name    = bidx.data.i( item.name, dataKey );  // ict.services in industry
+
+
                         }
                         else
                         {
                             item.name    = bidx.i18n.i( item.name, appName );
+
+                            _addMainSearchFacets( item );
                         }
 
                         if ( item.name )
@@ -430,7 +461,6 @@
                             //
                             $listFacetsItem = $( listFacetsItem );
 
-                            // bidx.utils.log( facetCriteria);
 
                             // Display Close button for criteria
                             //

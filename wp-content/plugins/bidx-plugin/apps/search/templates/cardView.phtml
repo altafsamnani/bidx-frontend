@@ -18,6 +18,9 @@
                                 </span>
                             </div>
                         </form>
+                        <div class="topfilters main-facet">
+
+                        </div>
                     </div>
                 </div>
 
@@ -95,6 +98,16 @@
                 <span class="badge">%facetValues_count%</span>
                 %facetValues_name%
             </a>
+        </script>
+
+        <!-- Html Templates for Category results -->
+        <script type="text/html" id="facettop-listitem">
+            <div class="search-sm-6">
+                <a data-filter="%filterQuery%" class="filter">
+                    %facetValues_name%<span class="">(%facetValues_count%)</span>
+                    <span class="view viewClose"><i class="fa fa-times text-success"></i></span>
+                </a>
+            </div>
         </script>
 
         <!-- Html Template for Sort -->
