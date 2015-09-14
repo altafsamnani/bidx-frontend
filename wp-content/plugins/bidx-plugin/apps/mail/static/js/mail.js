@@ -2439,7 +2439,7 @@
                                         break;
 
                                         case 'PENDING':
-                                            if( contact.isInitiator === true)
+                                            if( contact.isInitiator === true )
                                             {
                                                 incoming.push( contactsVal );
                                             }
@@ -2449,7 +2449,10 @@
                                             }
                                         break;
                                         case 'BLOCKED':
-                                            blocked.push( contactsVal );
+                                            if( contact.isInitiator === false ) // Only display if initiator has blocked
+                                            {
+                                                blocked.push( contactsVal );
+                                            }
                                         break;
                                     }
                                 }
