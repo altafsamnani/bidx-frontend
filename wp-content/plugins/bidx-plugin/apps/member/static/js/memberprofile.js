@@ -280,7 +280,8 @@
         ,   status                  =   false
         ;
 
-        if( (investorProfileEntityId || mentorProfileEntityId ) )
+        if( (investorProfileEntityId || mentorProfileEntityId ) &&
+            (visitingMemberPageId !== loggedInMemberId) )
         {
             if( investorProfileEntityId )
             {

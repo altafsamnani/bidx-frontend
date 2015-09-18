@@ -500,9 +500,12 @@
 
                                                 if( !$.isEmptyObject( request )  && contact)
                                                 {
-                                                    bidx.utils.log("[connect] else retrieved following contact ", request );
+                                                    if( contact.status !== 'BLOCKED')
+                                                    {
+                                                        bidx.utils.log("[connect] else retrieved following contact ", request );
 
-                                                    widget.createActionBox( request );
+                                                        widget.createActionBox( request );
+                                                    }
                                                 }
                                                 else
                                                 {

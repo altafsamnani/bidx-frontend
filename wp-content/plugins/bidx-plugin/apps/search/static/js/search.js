@@ -383,6 +383,7 @@
         ,   $mainFacet      = $element.find(".main-facet")
         ,   $resetFacet     = $element.find(".facet-reset")
         ,   $list           = $element.find(".facet-list")
+        ,   $filters        =  $('.topfilters')
         ,   emptyVal        = ''
         ,   $listItem
         ,   $listFacetsItem
@@ -410,6 +411,7 @@
 
         $list.empty();
 
+        $filters.empty();
 
         if ( response && response.facets )
         {

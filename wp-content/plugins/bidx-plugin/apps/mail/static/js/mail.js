@@ -29,6 +29,7 @@
     ,   state
     ,   section
     ,   loggedInMemberId            = bidx.common.getCurrentUserId()
+    ,   connectContacts
     ;
 
     // Constants
@@ -49,7 +50,9 @@
         _getContacts( )
         .then( function( contacts )
         {
+            connectContacts = contacts;
             _initContactListing( contacts );
+
         })
         .fail( function ( error )
         {
@@ -1365,6 +1368,281 @@
             $contactsDropdown.bidx_chosen();
         }
 
+        function _delegateActionBlock( $listItem, category )
+        {
+            var emptySnippet    = $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" )
+            ;
+
+            $listItem.on('click', '*[data-btn="connectblock"]', function ( e )
+            {
+                var contacts
+                ,   items               =   []
+                ,   item                =   this
+                ,   $this               =   $(this)
+                ,   $delegateblockList
+                ,   $list               =   $(this).parents( "*[data-requestId]" )
+                ,   isToolbar           =   $list.hasClass( "btn-toolbar" )
+                ,   $incomingWrapper    =   $('#' + category + 'Requests .contact-request-list')
+                ,   $badge              =   $('.trigger-' + category + '-contacts .badge')
+                ,   badgeValue          =   parseInt( $badge.text() )
+                ,   $blockedWrapper     =   $('#blockedRequests .contact-request-list')
+                ,   $badgeblock         =   $('.trigger-blocked-contacts .badge')
+                ,   badgeblockVal       =   parseInt( $badgeblock.text() )
+                ,   contactId           =   $list.attr( "data-requestId" )
+                ,   contactName         =   $list.attr( "data-requestName" )
+                ,   contact             =   parseInt( contactId, 10)
+                ,   $blockHtml          =   $($list.prop('outerHTML'))
+                ,   $blockProfile       =   $blockHtml.find('.blockProfile')
+                ,   $blockLink          =   $blockProfile.find('.blockLink')
+                ,   $incomingReqList    =   $('#contacts').find('[data-requestId=' + contactId + ']')
+                ;
+
+                bidx.common.doBlockRequest(
+                {
+                    contact: contact
+                ,   callback: function( data )
+                    {
+
+                        $incomingReqList.fadeOut( "slow", function()
+                        {
+                            if(!isToolbar)
+                            {
+                                $list.remove();
+                            }
+                        });
+
+                        contacts    =   data.contacts;
+
+                        badgeValue  =   badgeValue - 1;
+
+                        $badge.text(badgeValue);
+
+                        if( !badgeValue )
+                        {
+                            $incomingWrapper.append( emptySnippet );
+                        }
+
+                        if(!badgeblockVal) // If no block contact then need to remove empty message first
+                        {
+                            $blockedWrapper.html('');
+                        }
+
+                        badgeblockVal =    badgeblockVal + 1;
+
+                        connectContacts.blocked.push( contacts[0]);
+
+                        bidx.utils.log('connectContacts', connectContacts);
+
+                        _createListItems(
+                        {
+                            snippetId:              "contact-request-blocked"
+                        ,   category:               "blocked"
+                        ,   items:                  contacts
+                        ,   badgeValue:             badgeblockVal
+                        ,   view:                   "Contacts"
+                        ,   targetListSelector:     "#blockedRequests .contact-request-list"
+                        ,   cb:                     _getContactsCallback( 'blocked' )
+                        } );
+
+                        /*
+                        //Adding To the block Category Listing
+                        $blockHtml.find('.contact-request-buttons').remove(); // Remove Accept/Deny buttons inorder to add to block list
+                        $blockHtml.find('.cancelRequest').remove(); //
+
+                        $blockProfile.addClass('unblockProfile');
+                        $blockLink.attr('data-btn', 'connectunblock');
+                        $blockLink.html( bidx.i18n.i( "labelUnblock", appName ) );
+                        $blockProfile.removeClass('blockProfile');
+
+                        $blockedWrapper.append( $blockHtml );
+
+                        $delegateblockList     =   $blockedWrapper.find('[data-requestId=' + contactId + ']');
+
+                        _delegateActionUnBlock($delegateblockList, 'blocked');
+
+
+
+                        */
+
+
+
+                        $listItem.find('.bidx-btn-block').css("display","none");
+
+
+                    }
+                } );
+            });
+        }
+
+        function _delegateActionUnBlock( $listItem, category )
+        {
+            var emptySnippet    = $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" )
+            ;
+
+            $listItem.on('click', '*[data-btn="connectunblock"]', function ( e )
+            {
+                var item = this
+                ,   $list           =   $(this).parents( "*[data-requestId]" )
+                ,   $badge          =   $('.trigger-' + category + '-contacts .badge')
+                ,   $blockedWrapper =   $('#' + category + 'Requests .contact-request-list')
+                ,   badgeValue      =   parseInt( $badge.text() )
+                ,   contactId       =   $list.attr( "data-requestId" )
+                ,   contact         =   parseInt( contactId, 10)
+                ,   $toolbarBlock
+                ,   blockedContacts =   bidx.utils.getValue(connectContacts, 'blocked')
+                ;
+
+                bidx.common.doUnBlockRequest(
+                {
+                    contact: contact
+                ,   callback: function()
+                    {
+                        $list.fadeOut( "slow", function()
+                        {
+                            $list.remove();
+                            badgeValue  =   badgeValue - 1;
+                            $badge.text(badgeValue);
+
+                            if( !badgeValue )
+                            {
+                                $blockedWrapper.append( emptySnippet );
+                            }
+
+                            $toolbarBlock   =   $('.mail-toolbar').find('[data-requestId=' + contactId + ']');
+
+                            bidx.utils.log('toolbar', $toolbarBlock);
+
+                            $toolbarBlock.find('.bidx-btn-block').css("display","block");
+
+                            blockedContacts     = _.reject( connectContacts.blocked
+                                                  , function( blockContact )
+                                                    {
+                                                        if( blockContact.id === contact )
+                                                        {
+                                                            return true;
+                                                        }
+                                                    });
+
+                            connectContacts.blocked =   blockedContacts;
+
+                        });
+                    }
+                } );
+            });
+        }
+
+        function _delegateActionDisconnect( $listItem, category )
+        {
+            var emptySnippet    = $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" )
+            ;
+
+            $listItem.on('click', '*[data-btn="connectcancel"]', function ( e )
+            {
+                var item = this
+                ,   $list               =   $(this).parents( "*[data-requestId]" )
+                ,   $categoryWrapper    =   $('#' + category + 'Requests .contact-request-list')
+                ,   $badge              =   $('.trigger-' + category + '-contacts .badge')
+                ,   badgeValue          =   parseInt( $badge.text() )
+                ,   contactId           =   $list.attr( "data-requestId" )
+                ,   contact             =   parseInt( contactId, 10)
+                ;
+
+                bidx.common.doCancelConnectRequest(
+                {
+                    contact: contact
+                ,   callback: function()
+                    {
+                        $list.fadeOut( "slow", function()
+                        {
+                            $list.remove();
+
+                            badgeValue  =   badgeValue - 1;
+
+                            $badge.text(badgeValue);
+
+                            if( !badgeValue )
+                            {
+                                $categoryWrapper.append( emptySnippet );
+                            }
+
+                            if( category === 'active' )
+                            {
+                                _removeMailRecipient( contact );
+                            }
+                        });
+                    }
+                } );
+            });
+        }
+
+        function _delegateActionConnect( $listItem, category )
+        {
+            var emptySnippet    = $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" )
+            ;
+
+            $listItem.on('click', '*[data-btn="connectaccept"]', function ( e )
+            {
+                var item = this
+                ,   $delegateActiveList
+                ,   $list               =   $(this).parents( "*[data-requestId]" )
+                ,   $incomingWrapper    =   $('#' + category + 'Requests .contact-request-list')
+                ,   $badge              =   $('.trigger-' + category + '-contacts .badge')
+                ,   badgeValue          =   parseInt( $badge.text() )
+                ,   $activeList         =   $('#activeRequests .contact-request-list')
+                ,   $badgeActive        =   $('.trigger-active-contacts .badge')
+                ,   badgeActiveVal      =   parseInt( $badgeActive.text() )
+                ,   contactId           =   $list.attr( "data-requestId" )
+                ,   contact             =   parseInt( contactId, 10)
+                ,   $activeHtml         =   $($list.prop('outerHTML'))
+                ;
+
+                bidx.common.doCreateConnectRequest(
+                {
+                    contact: contact
+                ,   callback: function( data )
+                    {
+                        $list.fadeOut( "slow", function()
+                        {
+
+                            badgeValue  =   badgeValue - 1;
+
+                            $badge.text(badgeValue);
+
+                            if( !badgeValue )
+                            {
+                                $incomingWrapper.append( emptySnippet );
+                            }
+
+                            if(!badgeActiveVal) // If no active contact then need to remove empty message first
+                            {
+                                $activeList.html('');
+                            }
+
+                            _populateMailRecipients( data.contacts, true );
+
+                            //Adding To the Active Category Listing
+                            $activeHtml.find('.contact-request-buttons').remove(); // Remove Accept/Deny buttons inorder to add to active list
+
+                            $activeHtml.find('.blockProfile').remove();
+
+                            $activeList.append( $activeHtml );
+
+                            $delegateActiveList     =   $activeList.find('[data-requestId=' + contactId + ']');
+
+                            _delegateActionDisconnect($delegateActiveList, 'active');
+
+                            badgeActiveVal =    badgeActiveVal + 1;
+
+                            $badgeActive.text(badgeActiveVal);
+
+                            $list.remove();
+
+                        });
+                    }
+                } );
+            });
+        }
+
         // initializes the contactlisting. Expects an object with array per contact category (active, pending, ignore, incoming, ... )
         //
         function _initContactListing( contacts )
@@ -1398,218 +1676,6 @@
         //
         function _getContactsCallback( contactCategory )
         {
-            var emptySnippet    = $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" )
-            ;
-
-            function _delegateActionBlock( $listItem, category )
-            {
-                $listItem.on('click', '*[data-btn="connectblock"]', function ( e )
-                {
-                    var item = this
-                    ,   $delegateblockList
-                    ,   $list               =   $(this).parents( "*[data-requestId]" )
-                    ,   $incomingWrapper    =   $('#' + category + 'Requests .contact-request-list')
-                    ,   $badge              =   $('.trigger-' + category + '-contacts .badge')
-                    ,   badgeValue          =   parseInt( $badge.text() )
-                    ,   $blockedWrapper     =   $('#blockedRequests .contact-request-list')
-                    ,   $badgeblock         =   $('.trigger-blocked-contacts .badge')
-                    ,   badgeblockVal       =   parseInt( $badgeblock.text() )
-                    ,   contactId           =   $list.attr( "data-requestId" )
-                    ,   contact             =   parseInt( contactId, 10)
-                    ,   $blockHtml          =   $($list.prop('outerHTML'))
-                    ,   $blockProfile       =   $blockHtml.find('.blockProfile')
-                    ,   $blockLink          =   $blockProfile.find('.blockLink')
-                    ;
-
-                    bidx.common.doBlockRequest(
-                    {
-                        contact: contact
-                    ,   callback: function()
-                        {
-                            $list.fadeOut( "slow", function()
-                            {
-
-                                badgeValue  =   badgeValue - 1;
-
-                                $badge.text(badgeValue);
-
-                                if( !badgeValue )
-                                {
-                                    $incomingWrapper.append( emptySnippet );
-                                }
-
-                                if(!badgeblockVal) // If no block contact then need to remove empty message first
-                                {
-                                    $blockedWrapper.html('');
-                                }
-
-                                //Adding To the block Category Listing
-                                $blockHtml.find('.contact-request-buttons').remove(); // Remove Accept/Deny buttons inorder to add to block list
-                                $blockHtml.find('.cancelRequest').remove(); //
-
-                                $blockProfile.addClass('unblockProfile');
-                                $blockLink.attr('data-btn', 'connectunblock');
-                                $blockLink.html( bidx.i18n.i( "labelUnblock", appName ) );
-                                $blockProfile.removeClass('blockProfile');
-
-                                $blockedWrapper.append( $blockHtml );
-
-                                $delegateblockList     =   $blockedWrapper.find('[data-requestId=' + contactId + ']');
-
-                                _delegateActionUnBlock($delegateblockList, 'blocked');
-
-                                badgeblockVal =    badgeblockVal + 1;
-
-                                $badgeblock.text( badgeblockVal );
-
-                                $list.remove();
-
-                            });
-                        }
-                    } );
-                });
-            }
-
-            function _delegateActionUnBlock( $listItem, category )
-            {
-                $listItem.on('click', '*[data-btn="connectunblock"]', function ( e )
-                {
-                    var item = this
-                    ,   $list           =   $(this).parents( "*[data-requestId]" )
-                    ,   $badge          =   $('.trigger-' + category + '-contacts .badge')
-                    ,   $blockedWrapper =   $('#' + category + 'Requests .contact-request-list')
-                    ,   badgeValue      =   parseInt( $badge.text() )
-                    ,   contactId       =   $list.attr( "data-requestId" )
-                    ,   contact         =   parseInt( contactId, 10)
-                    ;
-
-                    bidx.common.doUnBlockRequest(
-                    {
-                        contact: contact
-                    ,   callback: function()
-                        {
-                            $list.fadeOut( "slow", function()
-                            {
-                                $list.remove();
-                                badgeValue  =   badgeValue - 1;
-                                $badge.text(badgeValue);
-
-                                if( !badgeValue )
-                                {
-                                    $blockedWrapper.append( emptySnippet );
-                                }
-                            });
-                        }
-                    } );
-                });
-            }
-
-            function _delegateActionDisconnect( $listItem, category )
-            {
-                $listItem.on('click', '*[data-btn="connectcancel"]', function ( e )
-                {
-                    var item = this
-                    ,   $list               =   $(this).parents( "*[data-requestId]" )
-                    ,   $categoryWrapper    =   $('#' + category + 'Requests .contact-request-list')
-                    ,   $badge              =   $('.trigger-' + category + '-contacts .badge')
-                    ,   badgeValue          =   parseInt( $badge.text() )
-                    ,   contactId           =   $list.attr( "data-requestId" )
-                    ,   contact             =   parseInt( contactId, 10)
-                    ;
-
-                    bidx.common.doCancelConnectRequest(
-                    {
-                        contact: contact
-                    ,   callback: function()
-                        {
-                            $list.fadeOut( "slow", function()
-                            {
-                                $list.remove();
-
-                                badgeValue  =   badgeValue - 1;
-
-                                $badge.text(badgeValue);
-
-                                if( !badgeValue )
-                                {
-                                    $categoryWrapper.append( emptySnippet );
-                                }
-
-                                if( category === 'active' )
-                                {
-                                    _removeMailRecipient( contact );
-                                }
-                            });
-                        }
-                    } );
-                });
-            }
-
-            function _delegateActionConnect( $listItem, category )
-            {
-                $listItem.on('click', '*[data-btn="connectaccept"]', function ( e )
-                {
-                    var item = this
-                    ,   $delegateActiveList
-                    ,   $list               =   $(this).parents( "*[data-requestId]" )
-                    ,   $incomingWrapper    =   $('#' + category + 'Requests .contact-request-list')
-                    ,   $badge              =   $('.trigger-' + category + '-contacts .badge')
-                    ,   badgeValue          =   parseInt( $badge.text() )
-                    ,   $activeList         =   $('#activeRequests .contact-request-list')
-                    ,   $badgeActive        =   $('.trigger-active-contacts .badge')
-                    ,   badgeActiveVal      =   parseInt( $badgeActive.text() )
-                    ,   contactId           =   $list.attr( "data-requestId" )
-                    ,   contact             =   parseInt( contactId, 10)
-                    ,   $activeHtml         =   $($list.prop('outerHTML'))
-                    ;
-
-                    bidx.common.doCreateConnectRequest(
-                    {
-                        contact: contact
-                    ,   callback: function( data )
-                        {
-                            $list.fadeOut( "slow", function()
-                            {
-
-                                badgeValue  =   badgeValue - 1;
-
-                                $badge.text(badgeValue);
-
-                                if( !badgeValue )
-                                {
-                                    $incomingWrapper.append( emptySnippet );
-                                }
-
-                                if(!badgeActiveVal) // If no active contact then need to remove empty message first
-                                {
-                                    $activeList.html('');
-                                }
-
-                                _populateMailRecipients( data.contacts, true );
-
-                                //Adding To the Active Category Listing
-                                $activeHtml.find('.contact-request-buttons').remove(); // Remove Accept/Deny buttons inorder to add to active list
-
-                                $activeHtml.find('.blockProfile').remove();
-
-                                $activeList.append( $activeHtml );
-
-                                $delegateActiveList     =   $activeList.find('[data-requestId=' + contactId + ']');
-
-                                _delegateActionDisconnect($delegateActiveList, 'active');
-
-                                badgeActiveVal =    badgeActiveVal + 1;
-
-                                $badgeActive.text(badgeActiveVal);
-
-                                $list.remove();
-
-                            });
-                        }
-                    } );
-                });
-            }
-
 
             var callbacks =
             {
@@ -1658,8 +1724,8 @@
             ,   $view               = $element.find('.view' + options.view )
             ,   $list               = $view.find( options.targetListSelector )
             ,   $categoryWrapper    = $('#' + options.category + 'Requests .contact-request-list')
-            ,   totals              = _.size( options.items )
-
+            ,   badgeValue          = bidx.utils.getValue( options, 'badgeValue')
+            ,   totals              = ( badgeValue ) ? badgeValue : _.size( options.items )
             ,   $listItem
             ,   listItem
             ;
@@ -1710,6 +1776,10 @@
 
                 // finally append item to list
                 //
+                bidx.utils.log('listeItem', $listItem);
+
+                bidx.utils.log('list', $list);
+
                 $list.append( $listItem );
             } );
 
@@ -2511,10 +2581,12 @@
 
         //  sets any given toolbar and associate toolbar buttons with ID
         //
-        function _setToolbarButtonsTarget( id, state, v )
+        function _setToolbarButtonsTarget( message, state, v )
         {
-            var $toolbar = $views.filter( bidx.utils.getViewName( v ) ).find( ".mail-toolbar" )
-            ,   $this
+            var $this
+            ,   $toolbar    =   $views.filter( bidx.utils.getViewName( v ) ).find( ".mail-toolbar" )
+            ,   $btnSender  =   $toolbar.find(".btn-sender")
+            ,   id          =   message.id
             ,   href
             ;
 
@@ -2533,6 +2605,12 @@
                     $this.attr( "href", href );
                 }
             });
+
+            $btnSender.attr("data-requestId", message.sender.id );
+            $btnSender.attr("data-requestName", message.sender.name );
+
+            _delegateActionBlock( $toolbar, 'incoming' );
+
         }
 
 
@@ -2716,6 +2794,11 @@
                 _getEmail( mailId )
                     .then( function ( message )
                     {
+                        var senderId        =   bidx.utils.getValue(message, 'sender.id')
+                        ,   blockedContacts =   bidx.utils.getValue(connectContacts, 'blocked')
+                        ,   isUserBlocked   =   _.findWhere(blockedContacts, { id: senderId })
+                        ;
+
                         _initEmail( action, message );
 
                         // enable specific set of toolbar buttons
@@ -2728,6 +2811,11 @@
                         ,   state === "mbx-trash" ? ".bidx-btn-undelete" : ".bidx-btn-delete"
                         ];
 
+                        if( !isUserBlocked )
+                        {
+                            buttons.push( ".bidx-btn-block" );
+                        }
+
                         if ( state !== "mbx-sent" )
                         {
                             if ( message.type === "MAIL_CONTACT_REQUEST" )
@@ -2739,15 +2827,11 @@
                                     ".bidx-btn-delete"
                                 ];
                             }
-
-
-
                         }
-
 
                         _showToolbarButtons( action, buttons );
 
-                        _setToolbarButtonsTarget( mailId, state, action );
+                        _setToolbarButtonsTarget( message, state, action );
 
                         // check if $pGetMailboxes is a Deferred object with a promise function
                         if( $pGetMailboxes && $pGetMailboxes.promise )

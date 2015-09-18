@@ -115,7 +115,7 @@
                         <div class="panel-body">
                             <!-- TOOLBAR -->
                             <nav class="mail-toolbar bg-primary-dark">
-                                <div class="btn-group">
+                                <div class="btn-group btn-sender btn-toolbar" data-requestId="%senderid%" data-requestName="%sendername%">
                                     <a class="btn btn-small btn-primary btn-reply" href="#" data-href="/mail/#mail/%state%/action=reply&id=%id%"><?php _e('Reply','bidxplugin')?></a>
                                     <a class="btn btn-small btn-primary btn-forward" href="#" data-href="/mail/#mail/%state%/action=forward&id=%id%"><?php _e('Forward','bidxplugin')?></a>
                                     <a class="btn btn-small btn-primary bidx-btn-delete" href="#"><?php _e('Delete','bidxplugin')?></a>
@@ -128,7 +128,9 @@
                                         <ul class="dropdown-menu">
                                             <!-- dropdown menu links -->
                                         </ul>
-                                  </div>
+                                    </div>
+                                    <a class="btn btn-small btn-primary bidx-btn-block blockLink" data-btn="connectblock"><?php _e('Block user','bidxplugin')?></a>
+
                                 </div>
                             </nav>
                             <div class="mail-message">
@@ -427,7 +429,7 @@
 
 <script type="text/html" id="contact-request-incoming">
 <!--
-  <li class="list-group-item" data-requestId = "%contactId%">
+  <li class="list-group-item" data-requestId = "%contactId%" data-requestName="%contactName%">
     <a href="/member/%contactId%">%contactName%</a>
     <div class="btn-group pull-right">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -453,7 +455,7 @@
 
 <script type="text/html" id="contact-request-pending">
 <!--
-  <li class="list-group-item" data-requestId = "%contactId%">
+  <li class="list-group-item" data-requestId = "%contactId%" data-requestName="%contactName%">
     <a href="/member/%contactId%">%contactName%</a>
     <div class="btn-group pull-right">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -470,7 +472,7 @@
 
 <script type="text/html" id="contact-request-active">
 <!--
-  <li class="list-group-item" data-requestId = "%contactId%">
+  <li class="list-group-item" data-requestId = "%contactId%" data-requestName="%contactName%">
     <a href="/member/%contactId%">%contactName%</a>
     <div class="btn-group pull-right">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -487,7 +489,7 @@
 
 <script type="text/html" id="contact-request-blocked">
 <!--
-  <li class="list-group-item" data-requestId = "%contactId%">
+  <li class="list-group-item" data-requestId = "%contactId%" data-requestName="%contactName%">
     <a href="/member/%contactId%">%contactName%</a>
     <div class="btn-group pull-right">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
