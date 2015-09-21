@@ -1441,6 +1441,7 @@
                         ,   badgeValue:             badgeblockVal
                         ,   view:                   "Contacts"
                         ,   targetListSelector:     "#blockedRequests .contact-request-list"
+                        ,   appendToList:           true
                         ,   cb:                     _getContactsCallback( 'blocked' )
                         } );
 
@@ -2609,7 +2610,7 @@
             $btnSender.attr("data-requestId", message.sender.id );
             $btnSender.attr("data-requestName", message.sender.name );
 
-            _delegateActionBlock( $toolbar, 'incoming' );
+            _delegateActionBlock( $toolbar, 'toolbar' );
 
         }
 
