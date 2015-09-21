@@ -445,7 +445,7 @@
                         {
                             item.name    = bidx.i18n.i( item.name, appName );
 
-                            _addMainSearchFacets( item );
+                            //_addMainSearchFacets( item );
                         }
 
                         if ( item.name )
