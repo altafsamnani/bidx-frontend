@@ -129,6 +129,14 @@
             });
         }
         
+        if ( bidx.globalChecks.isProfilePage() && hasMentorProfile && !hasEntrepreneurProfile )
+        {
+            $.each( result, function ( i, b )
+            {
+                bsids.push( b.entityId );
+            });
+        }
+        
         if ( bidx.globalChecks.isEntrepreneurDashboard() || bidx.globalChecks.isMentorDashboard() || bidx.globalChecks.isInvestorDashboard() )
         {
             bsids = databsids;
@@ -231,7 +239,7 @@
                         bidx.common.getEntities( businessesDataId )
                     ,   bidx.common.getMembersSummaries( { data: { "userIdList": membersDataId } } )
                     )
-                    .done( function ( result1, result2, result3  )
+                    .done( function ()
                     {
                         generateRequests();
                     } );
@@ -306,7 +314,7 @@
             }
             else if ( hasMentorProfile && !hasEntrepreneurProfile )
             {
-                $bsEl = $( '.cardView' );
+                $bsEl = $mentorActivities;
             }
         }
         else if ( bidx.globalChecks.isMentorDashboard() || bidx.globalChecks.isInvestorDashboard() )
