@@ -108,20 +108,27 @@
 
     <!-- Common Mentor strings -->
     <Item value="offerMentoring">Offer Mentoring</Item>
+    <Item value="offerMentoringTo">Offer mentoring to</Item>
     <Item value="requestMentoring">Request Mentoring</Item>
     <Item value="requestMentoringBusiness">Request Mentoring for</Item>
     <Item value="receivedRequestFrom">You have a request from</Item>
     <Item value="pendingRequestTo">Your request is pending from</Item>
     <Item value="mentoringActive">You are the mentor of this business</Item>
     <Item value="wantsToMentor">wants to be your mentor</Item>
+    <Item value="wantsYouToMentor">wants you to mentor this business</Item>
     <Item value="isMentoring">is mentoring your business</Item>
     <Item value="youAreMentoring">You are mentoring this business</Item>
+    <Item value="youCancelledMentoring">You cancelled your request</Item>
     <Item value="youAskedMentor">You asked to mentor this business</Item>
+    <Item value="youAskedMentorFrom">You asked to mentor this business from</Item>
     <Item value="youAskedMentorForBusiness">You asked mentoring for</Item>
     <Item value="youAskedFromMentor">You asked mentoring from</Item>
     <Item value="mentorAskedYou">asked you to mentor your business</Item>
+    <Item value="mentorYouCancelled">You cancelled your request to</Item>
+    <Item value="mentorYouCancelledForBusiness">You cancelled your request for</Item>
 
     <Item value="btnStopMentor">Stop Mentoring</Item>
+    <Item value="youStoppedMentor">You stopped the mentoring request from</Item>
 
     <Item value="btnRemove">Remove</Item>
     <Item value="btnRequest">Request</Item>
@@ -130,9 +137,15 @@
     <Item value="btnRemind">Send a Reminder</Item>
     <Item value="btnCancelRequest">Cancel Request</Item>
     <Item value="btnRemoveAccess">Remove Access</Item>
+    <Item value="btnDismiss">Dismiss</Item>
 
     <Item value="wantsFullAccess">requests full access</Item>
     <Item value="hasFullAccess">has full access</Item>
+    <Item value="userRejected">has been rejected</Item>
+    <Item value="requestAccessBusiness">Request full access from</Item>
+    <Item value="btnRequestAccess">Request Access</Item>
+    <Item value="youRequestedAccessFrom">You have requested full access from</Item>
+    <Item value="youHaveAccessFrom">You have full access from</Item>
 
     <!-- Cards -->
     <Item value="bsCompleted">Completed</Item>

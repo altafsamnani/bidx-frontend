@@ -4,7 +4,7 @@
     var $bpElement              = $("div.container #businessSummary")
     ,   $mpElement              = $(".bidx-member_profile")
     ,   $entreDash              = $("#entrepreneur-dashboard")
-    ,   $mentorDash             = $("#mentor-dashboard")
+    ,   $investorDash           = $("#investor-dashboard #tab-contacted")
 
     ,   bidx                    = window.bidx
     ,   currentGroupId          = bidx.common.getCurrentGroupId( "currentGroup ")
@@ -28,7 +28,6 @@
     ,   $ownerId                = $.find( "*[data-ownerid]" )
     ,   ownerId                 = parseInt( $( $ownerId ).attr( "data-ownerid" ), 10)
     ,   $mentorActivities       = $( ".js-activities" )
-    ,   requestStatus           // "accepted", "rejected" or "requested"
     ,   relChecks
     ,   membersDataId           = []
     ,   businessesDataId        = []
@@ -39,7 +38,7 @@
     function _oneTimeSetup()
     {
         start();
-        delegateActions();
+        // delegateActions();
     }
 
     var start = function ()
@@ -153,13 +152,13 @@
                 relChecks.showBusinessInfo = false;
 
                 // Do not continue if there is already an mentor box with the same requestId
-                //                
+                //
                 if ( $elAlert.length && $elAlert.data( "requestid" ) === request.requestId )
                 {
                     return;
                 }
 
-                //
+                // Not interested in rejected
                 //
                 if ( request.status !== "rejected" )
                 {
@@ -193,6 +192,11 @@
                         }
                     }
 
+                    if ( bidx.globalChecks.isEntrepreneurDashboard() || bidx.globalChecks.isInvestorDashboard() )
+                    {
+                        relChecks.isThereRelationship = request.entityId in bidx.common.tmpData.businesses ? true : false;
+                    }
+
                     if ( relChecks.isThereRelationship )
                     {
                         relChecks.isTheMentor           = ( request.mentorId === currentUserId ) ? true : false;
@@ -216,7 +220,7 @@
                 }
             } );
 
-            if ( bidx.globalChecks.isProfilePage() && !bidx.globalChecks.isOwnProfile() && hasMentorProfile && !hasEntrepreneurProfile )
+            if ( bidx.globalChecks.isProfilePage() && !bidx.globalChecks.isOwnProfile() && hasMentorProfile && isEntrepreneur )
             {
                 doRequestMentoringSingleBusiness();
             }
@@ -224,11 +228,10 @@
             if ( membersDataId.length || businessesDataId.length )
             {
                 $.when(
-                        bidx.common.fetchMemberProfiles( membersDataId )
-                    ,   bidx.common.getEntities( businessesDataId )
-                        // bidx.common.getMembersSummaries( { data: { "userIdList": membersDataId } } )
+                        bidx.common.getEntities( businessesDataId )
+                    ,   bidx.common.getMembersSummaries( { data: { "userIdList": membersDataId } } )
                     )
-                    .done( function ( result1, result2 )
+                    .done( function ( result1, result2, result3  )
                     {
                         generateRequests();
                     } );
@@ -257,7 +260,7 @@
     {
         $.each( ownBs, function( i, bs )
         {
-            var $el = $( ".js-activities" );
+            var $el = $( ".js-activities" ).first();
 
             $el
                 .append
@@ -306,9 +309,14 @@
                 $bsEl = $( '.cardView' );
             }
         }
-        else if ( bidx.globalChecks.isEntrepreneurDashboard() || bidx.globalChecks.isMentorDashboard() || bidx.globalChecks.isInvestorDashboard() )
+        else if ( bidx.globalChecks.isMentorDashboard() || bidx.globalChecks.isInvestorDashboard() )
         {
-            $bsEl = $( '*[data-bsid="'+ req.relChecks.businessId +'"]' );
+            $bsEl = $investorDash.find( '*[data-bsid="'+ req.relChecks.businessId +'"]' );
+        }
+
+        else if ( bidx.globalChecks.isEntrepreneurDashboard() )
+        {
+            $bsEl = $entreDash.find( '*[data-bsid="'+ req.relChecks.businessId +'"]' );
         }
 
         // Start
@@ -336,7 +344,7 @@
                         )
                         .append
                         (
-                            bidx.construct.memberLink( memberInfo.bidxMemberProfile.bidxMeta.bidxOwnerId ) , " "
+                            bidx.construct.memberLink( memberInfo.id ) , " "
                         ,   bidx.construct.actionMessage( req )
                         ,   bidx.construct.businessLink( req.relChecks.businessId )
                         );
@@ -362,12 +370,38 @@
                     $bsEl.last().find( ".alert-message" ).last()
                         .prepend
                         (
-                            bidx.construct.profileThumb( memberInfo.bidxMemberProfile.bidxMeta.bidxOwnerId )
+                            bidx.construct.profileThumb( memberInfo.id )
                         )
                         .append
                         (
                             bidx.construct.actionMessage( req )
-                        ,   bidx.construct.memberLink( memberInfo.bidxMemberProfile.bidxMeta.bidxOwnerId )
+                        ,   bidx.construct.memberLink( memberInfo.id )
+                        );
+                }
+                else if ( req.relChecks.isTheInitiator && req.relChecks.isTheMentor && bidx.globalChecks.isInvestorDashboard() )
+                {
+                    $bsEl.last().find( ".alert-message" ).last()
+                        .prepend
+                        (
+                            bidx.construct.profileThumb( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
+                        )
+                        .append
+                        (
+                            bidx.construct.actionMessage( req )
+                        ,   bidx.construct.memberLink( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
+                        );
+                }
+                else if ( req.relChecks.isTheMentor && bidx.globalChecks.isInvestorDashboard() && !req.relChecks.isTheInitiator  )
+                {
+                    $bsEl.last().find( ".alert-message" ).last()
+                        .prepend
+                        (
+                            bidx.construct.profileThumb( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
+                        )
+                        .append
+                        (
+                            bidx.construct.memberLink( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
+                        ,   bidx.construct.actionMessage( req )
                         );
                 }
                 else
@@ -375,11 +409,11 @@
                     $bsEl.last().find( ".alert-message" ).last()
                         .prepend
                         (
-                            bidx.construct.profileThumb( memberInfo.bidxMemberProfile.bidxMeta.bidxOwnerId )
+                            bidx.construct.profileThumb( memberInfo.id )
                         )
                         .append
                         (
-                            req.relChecks.isTheInitiator ? "" : bidx.construct.memberLink( memberInfo.bidxMemberProfile.bidxMeta.bidxOwnerId )
+                            req.relChecks.isTheInitiator ? "" : bidx.construct.memberLink( memberInfo.id )
                         ,   bidx.construct.actionMessage( req )
                         );
                 }
@@ -392,142 +426,6 @@
     var delegateActions = function ()
     {
         var options = {};
-
-        $(document).on('click', '*[data-btn="accept"]', function ( e )
-        {
-            var $el = $(this)
-            ,   $alert = $el.parents( ".alert" );
-
-            $el.addClass( "disabled" );
-
-            options.requestId = getRequestId(this);
-            options.action = "accepted";
-            options.type = "mentor";
-
-            _doMutateMentoringRequest(
-            {
-                params: options
-            ,   callback: function()
-                {
-                    $alert.fadeOut( "slow", function()
-                    {
-                        $alert.remove();
-                        start();
-                    });
-                }
-            ,   error: function( jqXhr )
-                {
-                    var response = $.parseJSON( jqXhr.responseText);
-
-                    $el.removeClass( "disabled" );
-
-                    bidx.utils.error( "Client  error occured", response );
-                }
-            } );
-        });
-
-        $(document).on('click', '*[data-btn="reject"]', function ( e )
-        {
-            var $el = $(this)
-            ,   $alert = $el.parents( ".alert" );
-
-            $el.addClass( "disabled" );
-
-            options.requestId = getRequestId(this);
-            options.action = "rejected";
-            options.type = "mentor";
-
-            _doMutateMentoringRequest(
-            {
-                params: options
-            ,   callback: function()
-                {
-                    $alert.fadeOut( "slow", function()
-                    {
-                        $alert.remove();
-                        start();
-                    });
-                }
-            ,   error: function( jqXhr )
-                {
-                    var response = $.parseJSON( jqXhr.responseText);
-
-                    $el.removeClass( "disabled" );
-
-                    bidx.utils.error( "Client  error occured", response );
-                }
-            } );
-        });
-
-        $(document).on('click', '*[data-btn="cancel"]', function ( e )
-        {
-            var $el = $(this)
-            ,   $alert = $el.parents( ".alert" );
-
-            $el.addClass( "disabled" );
-
-            options.requestId = getRequestId(this);
-
-           _doCancelMentoringRequest(
-            {
-                params: options
-            ,   callback: function()
-                {
-                    $alert.fadeOut( "slow", function()
-                    {
-                        $alert.remove();
-                        checkForActivities();
-                        start();
-                    });
-                }
-            ,   error: function( jqXhr )
-                {
-                    var response = $.parseJSON( jqXhr.responseText);
-
-                    $el.removeClass( "disabled" );
-
-                    bidx.utils.error( "Client  error occured", response );
-                }
-            } );
-        });
-
-        $(document).on('click', '*[data-btn="stop"]', function ( e )
-        {
-            var $el = $(this)
-            ,   $alert = $el.parents( ".alert" );
-
-            $el.addClass( "disabled" );
-
-            options.requestId = getRequestId(this);
-
-           _doCancelMentoringRequest(
-            {
-                params: options
-            ,   callback: function()
-                {
-                    $alert.fadeOut( "slow", function()
-                    {
-                        $alert.remove();
-                        checkForActivities();
-                        start();
-                    });
-                }
-            ,   error: function( jqXhr )
-                {
-                    var response = $.parseJSON( jqXhr.responseText);
-
-                    $el.removeClass( "disabled" );
-
-                    bidx.utils.error( "Client  error occured", response );
-                }
-            } );
-        });
-
-        $(document).on('click', '*[data-btn="remind"]', function ( e )
-        {
-            bidx.utils.log("click remind", this);
-            bidx.utils.log("getRequestId", getRequestId(this) );
-        });
 
         $(document).on('click', '*[data-btn="offerMentoring"]', function ( e )
         {
@@ -544,7 +442,7 @@
              _doCreateMentorRequest(
             {
                 params: params
-            ,   callback: function()
+            ,   callback: function( result )
                 {
                     $el.fadeOut( "fast", function() {
                         $el.remove();
@@ -677,11 +575,11 @@
 
         });
 
-        $(document).on('click', '*[data-btn="removeAccess"]', function ( e )
-        {
-            bidx.utils.log("click removeAccess", this);
-            bidx.utils.log("getBsId", getBsId(this) );
-        });
+        // $(document).on('click', '*[data-btn="removeAccess"]', function ( e )
+        // {
+        //     bidx.utils.log("click removeAccess", this);
+        //     bidx.utils.log("getBsId", getBsId(this) );
+        // });
 
         function getRequestId ( el )
         {
@@ -876,7 +774,7 @@
                         //  execute callback if provided
                         if (options && options.callback)
                         {
-                            options.callback();
+                            options.callback( response );
                         }
                     }
                 }
@@ -990,57 +888,24 @@
         );
     };
 
-    // ROUTER
-    // var navigate = function( requestedState, section, id )
-    var navigate = function(options)
-    {
-        bidx.utils.log("routing options", options);
-        var state
-        ,   updateHash
-        ;
-
-        state  = options.state;
-
-        // switch (state)
-        // {
-        //     case "cancel":
-
-        //     break;
-
-        //     case "confirmRequest":
-
-        //     break;
-
-        //     case "confirmInitiateMentoring": 
-
-        //     break;
-
-        //     case "sendRequest":
-
-
-        //     break;
-
-        //     case 'mentor' :
-
-        //     break;
-        //  }
-    };
-
     _oneTimeSetup();
 
     //expose
     var mentoring =
             {
-                    navigate:                   navigate
-                ,   doCreateMentorRequest:      _doCreateMentorRequest
-                ,   doMutateMentoringRequest:   _doMutateMentoringRequest
-                ,   doCancelMentoringRequest:   _doCancelMentoringRequest
-                ,   getMentoringRequest:        getMentoringRequest
-                ,   getEntityMentoringRequests: getEntityMentoringRequests
-                ,   constructMentorBox:         constructMentorBox
-                ,   checkMentoringRelationship: checkMentoringRelationship
-                ,   generateRequests:            generateRequests
-                ,   delegateActions:            delegateActions
+                    doCreateMentorRequest:              _doCreateMentorRequest
+                ,   doMutateMentoringRequest:           _doMutateMentoringRequest
+                ,   doCancelMentoringRequest:           _doCancelMentoringRequest
+                ,   doOfferMentoringMultipleBusinesses: doOfferMentoringMultipleBusinesses
+                ,   getMentoringRequest:                getMentoringRequest
+                ,   getEntityMentoringRequests:         getEntityMentoringRequests
+                ,   constructMentorBox:                 constructMentorBox
+                ,   checkMentoringRelationship:         checkMentoringRelationship
+                ,   generateRequests:                   generateRequests
+                ,   delegateActions:                    delegateActions
+                ,   checkForActivities:                 checkForActivities
+                ,   showUserBusinesses:                 showUserBusinesses
+                ,   start:                              start
             };
 
 

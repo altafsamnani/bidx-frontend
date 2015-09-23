@@ -11,7 +11,19 @@
     ,   $firstPage        = $element.find( "input[name='firstpage']" )
     ,   bidx              = window.bidx
     ,   currentUserId     = bidx.common.getSessionValue( "id" )
+    ,   userBusinesses    = bidxConfig.session.wp.entities.bidxBusinessSummary
+    ,   userBsArray       = []
+    ,   membersDataId     = []
+    ,   authItems         = []
     ;
+
+    var getUserBusinesses = function ( userBusinesses )
+    {
+        $.each( userBusinesses, function( i, bs )
+        {
+             userBsArray.push( bs );
+        });
+    };
 
     //public functions
     //
@@ -24,67 +36,34 @@
                 ,   async      :    false
                 ,   success: function( response )
                     {
-
-                        $.each( response.data.requested, function( id, item )
-                        {
-                            if ( item.owner.id === currentUserId )
-                            {
-                                var entityId = bidx.utils.getValue( item.entity.bidxMeta, "bidxEntityId" );
-
-                                // bidx.utils.log("Requested item ::::--->>>>", entityId);
-                                // bidx.utils.log("Requested item ::::--->>>>", item);
-                                authorizationsList( item.authorizations, item );
-                            }
-                        });
-                        // now format it into array of objects with value and label
                         if ( response && response.data && response.data.received )
                         {
-                            // bidx.utils.log("THE RESPONSE:::: fetchBusinesses:::: ", response.data.received);
-                            
-                            var databsids = [];
-
                             $.each( response.data.received, function( id, item )
                             {
-                                bidx.utils.log("THE ITEM OWNER:::: fetchBusinesses:::: ", item.owner.displayName);
+                                if ( item.entity.bidxMeta.bidxEntityId in bidx.common.tmpData.businesses )
+                                {
+                                    getAuthMembers( item );
 
-                                // $.each( item.authorizations, function( id, auth )
-                                // {
-                                //     // bidx.utils.log("THE AUTH:::: fetchBusinesses:::: ", id, auth);
-
-                                //     if ( $tabBusinesses.length && auth.accessType === "MENTOR" && auth.status !== "rejected" )
-                                //     {
-
-                                //         $tabBusinesses.append( bidx.construct.businessCardView( item.entity ) );
-
-                                //         databsids.push( item.entity.bidxMeta.bidxEntityId.toString() );
-                                //     }
-                                    
-                                //     if ( $tabBusinesses.length && auth.accessType === "INVESTOR" && auth.status !== "rejected" && item.owner.id === currentUserId )
-                                //     {
-                                //         // bidx.utils.log("----------------------------- ");
-                                //         // bidx.utils.log("fetchBusinesses:::: auth:::: item:::: ", auth, item);
-                                //         // bidx.utils.log("----------------------------- ");
-                                //         $tabBusinesses.append( bidx.construct.businessCardView( item.entity ) );
-
-                                //         $tabBusinesses.find( ".cardFooter" ).last()
-                                //             .append( bidx.construct.actionBox( auth ) )
-                                //         ;
-                                //     }
-                                // });
-
-                                authorizationsList( item.authorizations, item );
+                                    authItems.push( item );
+                                }
                             });
 
-                            if ( $tabBusinesses.find('.cardView').length )
+                            if ( membersDataId.length )
                             {
-                                bidx.commonmentordashboard.getMentoringRequest(
-                                {
-                                    callback: function( result )
+                                $.when(
+                                        bidx.common.getMembersSummaries( { data: { "userIdList": membersDataId } } )
+                                    )
+                                    .done( function ( authorizations )
                                     {
-                                        bidx.commonmentordashboard.checkMentoringRelationship( result, databsids );
-                                    }
-                                } );
+                                        constructAlertBoxes( authItems );
+                                    } );
                             }
+                            else
+                            {
+                                constructAlertBoxes( authItems );
+                            }
+
+
                         }
                     }
 
@@ -130,86 +109,101 @@
         );
     };
 
-    var authorizationsList = function ( authorizations, item )
+    var getAuthMembers = function ( item )
     {
-        var databsids = [];
-
-        $.each( authorizations, function( id, auth )
+        $.each( item.authorizations, function( id, auth )
         {
-
-            // bidx.common.getMemberInfo(
-            // {
-            //     id          :   auth.user.id
-            // ,   callback    :   function ( memberInfo )
-            //     {
-            bidx.utils.log("authorizationsList::::::::::::::::::---------------- ");
-            bidx.utils.log("authorizationsList::::::::::::::::::------------------->>>> ", item, auth,  authorizations);
-            bidx.utils.log("authorizationsList::::::::::::::::::---------------- ");
-                    if ( auth.status !== "rejected" )
-                    {
-                        if ( $tabBusinesses.length && auth.accessType === "MENTOR" && auth.status !== "rejected" )
-                        {
-                            $tabBusinesses.append( bidx.construct.businessCardView( item.entity ) );
-
-                            databsids.push( item.entity.bidxMeta.bidxEntityId.toString() );
-                        }
-                        
-                        if ( $tabBusinesses.length && auth.accessType === "INVESTOR" && auth.status !== "rejected" && item.owner.id === currentUserId )
-                        {
-                            bidx.utils.log("fetchBusinesses:::: auth:::: authorizations:::: ", auth, authorizations);
-                            $tabBusinesses.append( bidx.construct.businessCardView( item.entity ) );
-
-                            $tabBusinesses.find( ".cardFooter" ).last()
-                                .append( bidx.construct.actionBox( auth ) )
-                            ;
-                        }
-                    }
-            //     }
-            // ,   error:  function(jqXhr, textStatus)
-            //     {
-            //         var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
-
-            //         bidx.utils.log("status", status);
-            //     }
-            // });
-
-
+            if ( $.inArray( auth.user.id, membersDataId) === -1 && bidx.common.checkMemberExists( auth.user.id ) === false  )
+            {
+                membersDataId.push( auth.user.id );
+            }
         });
     };
 
-    // Perform an API call to join the group
+    var constructAlertBoxes = function ( authItems )
+    {
+        $.each( authItems, function( id, item )
+        {
+            $.each( item.authorizations, function( id, auth )
+            {
+                var $bsEl = $( '*[data-bsid="'+ item.entity.bidxMeta.bidxEntityId +'"]' );
+
+                if ( auth.status !== "rejected" )
+                {
+                    if ( auth.accessType === "INVESTOR" && auth.status !== "rejected" && item.owner.id === currentUserId )
+                    {
+                        $bsEl.append
+                        (
+                            bidx.construct.actionBox( auth, "investor" )
+                            .append
+                            (
+                                bidx.construct.actionButtons( auth, "investor" )
+                            )
+                        );
+
+                        $bsEl.last().find( ".alert-message" ).last()
+                            .prepend
+                            (
+                                bidx.construct.profileThumb( auth.user.id )
+                            )
+                            .append
+                            (
+                                bidx.construct.memberLink( auth.user.id )
+                            ,   bidx.construct.actionMessage( auth, "investor" )
+                            );
+                    }
+                }
+            });
+        });
+    };
+
+    // Perform an API call to Grant Access
     //
-    // var _doGrantRequest = function( params, cb )
-    // {
+    var _doGrantRequest = function( params, cb )
+    {
 
-    //     bidx.api.call(
-    //         "businesssummaryGrantAccess.send"
-    //     ,   {
-    //             groupDomain:            bidx.common.groupDomain
-    //         ,   id:                     params.id
-    //         ,   investorId:             params.investorId
-    //         ,   extraUrlParameters:
-    //             [
-    //                 {
-    //                     label:          "action"
-    //                 ,   value:          params.action
-    //                 }
-    //             ]
-    //         ,   success:            function( response )
-    //             {
-    //                 bidx.utils.log( "bidx::requestAccess::save::success", response );
+        bidx.api.call(
+            "businesssummaryGrantAccess.send"
+        ,   {
+                groupDomain:            bidx.common.groupDomain
+            ,   id:                     parseInt( params.params.id, 10)
+            ,   investorId:             parseInt( params.params.investorId, 10)
+            ,   extraUrlParameters:
+                [
+                    {
+                        label:          "action"
+                    ,   value:          params.params.action
+                    }
+                ]
+            ,   success:            function( response )
+                {
+                    bidx.utils.log( "bidx::requestAccess::save::success", response );
 
-    //                 cb();
-    //             }
-    //         ,   error:            function( jqXhr, textStatus )
-    //             {
-    //                 bidx.utils.log( "bidx::requestAccess::save::error", jqXhr, textStatus );
+                    var investorId      = response.data.investor.id
+                    ,   businessesid    = response.data.businessSummary.bidxMeta.bidxEntityId
+                    ,   $bsEl           = $( '*[data-bsid="'+ businessesid +'"]' )
+                    ,   data            = {}
+                    ;
 
-    //                 cb( new Error( "Problem granting access" ) );
-    //             }
-    //         }
-    //     );
-    // };
+                    data.status = params.params.action === "reject" ? "rejected" : "granted";
+                    data.user   = investorId;
+                    data.action = params.params.action;
+
+                    //  execute callback if provided
+                    if (params && params.callback)
+                    {
+                        params.callback();
+                    }
+                }
+            ,   error:            function( jqXhr, textStatus )
+                {
+                    bidx.utils.log( "bidx::requestAccess::save::error", jqXhr, textStatus );
+
+                    cb( new Error( "Problem granting access" ) );
+                }
+            }
+        );
+    };
 
     var _showView = function(view, showAll)
     {
@@ -238,45 +232,39 @@
         _showView( "error" );
     }
 
-    // ROUTER
+    if ( $tabBusinesses.length )
+    {
+        getUserBusinesses( userBusinesses );
+        fetchBusinesses();
 
-    //var navigate = function( requestedState, section, id )
-    // var navigate = function(options)
-    // {
-    //     var state;
+        $.when(
+                bidx.common.getEntities( userBsArray )
+            ,   bidx.commonmentordashboard.getMentoringRequest()
+            )
+            .done( function ( businesses, requests )
+            {
+                $.each( bidx.common.tmpData.businesses, function( i, item)
+                {
+                    $tabBusinesses.append( bidx.construct.businessCardView( item ) );
+                });
 
-    //     state = options.state;
+                bidx.commonmentordashboard.checkMentoringRelationship( requests, "mentor", userBsArray );
+            } );
+    }
 
-    //     switch (state)
-    //     {
-    //         case "load" :
+    if ( $tabCompanies.length )
+    {
+        fetchCompanies();
+    }
 
-    //             _showView("load");
 
-    //             break;
-
-    //         case "help" :
-    //             _showView("help");
-    //             break;
-
-    //         case "entrepreneur":
-
-    //             _showView("load");
-    //             _showView("loadinvestors",true);
-    //             _showView("loadmentors",true);
-
-    //             break;
-    //     }
-    // };
-
-    fetchBusinesses();
-    fetchCompanies();
 
     //expose
     var dashboard =
             {
                 // navigate: navigate
-               $element: $element
+                $element: $element
+            ,   doGrantRequest: _doGrantRequest
             };
 
 

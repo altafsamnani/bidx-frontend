@@ -243,6 +243,7 @@ class BidxShortcode
             wp_register_script ('bidx-common', $bidxJsDir . '/common.js', array ('bidx-utils', 'bidx-api-core', 'bidx-data', 'bidx-tagsinput', 'jquery-validation', 'bidx-i18n', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bootstrap-paginator'), '20130501', TRUE);
             wp_register_script ('bidx-globalchecks', $bidxJsDir . '/globalchecks.js', array ('bidx-utils', 'bidx-api-core', 'bidx-data', 'bidx-i18n'), '20150806', TRUE);
             wp_register_script ('bidx-elements', $bidxJsDir . '/bidx-elements.js', array ('bidx-utils', 'bidx-api-core', 'bidx-data', 'bidx-i18n'), '20150807', TRUE);
+            wp_register_script ('bidx-interactions', $bidxJsDir . '/bidx-interactions.js', array ('bidx-utils', 'bidx-api-core', 'bidx-data', 'bidx-i18n'), '20150915', TRUE);
             wp_register_script ('bidx-controller', $bidxJsDir . '/controller.js', array ('bidx-utils', 'bidx-api-core', 'bidx-data', 'backbone'), '20130501', TRUE);
 
             wp_register_script ('bidx-reflowrower', $bidxJsDir . '/bidx-reflowrower.js', array ('jquery', 'jquery-ui-widget'), '20130501', TRUE);

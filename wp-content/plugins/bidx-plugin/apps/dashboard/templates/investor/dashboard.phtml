@@ -1,6 +1,6 @@
 <div id="investor-dashboard" class="box-border top-margin-lineheight">
     <div class="clearfix bg-primary-light main-padding">
-        <h1 class="text-center bidx-page-heading"><?php _e('My investor dashboard','bidxplugin');?></h1>
+        <h1 class="text-center bidx-page-heading"><?php _e('My dashboard','bidxplugin');?></h1>
     </div>
     <div class="dashboard">
         <div class="view viewError alert alert-warning main-margin">
@@ -13,22 +13,22 @@
             <div class="col-sm-3 tabs-nav">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs tabs-left">
-                    <li class="active"><a href="#tab-recommended-business" data-toggle="tab"><?php _e('Recommended Businesses','bidxplugin');?></a></li>
-                    <li><a href="#tab-businesses-contacted" data-toggle="tab"><?php _e('Contacted Businesses','bidxplugin');?></a></li>
-                    <li><a href="#tab-investment-preferences" data-toggle="tab"><?php _e('Preferences','bidxplugin');?></a></li>
+                    <li class="active"><a href="#tab-recommended" data-toggle="tab"><?php _e('Recommended Businesses','bidxplugin');?></a></li>
+                    <li><a href="#tab-contacted" data-toggle="tab"><?php _e('Contacted Businesses','bidxplugin');?></a></li>
+                    <!-- <li><a href="#tab-investment-preferences" data-toggle="tab"><?php _e('Preferences','bidxplugin');?></a></li> -->
                 </ul>
             </div>
 
             <div class="col-sm-9 tabs-content">
                 <div class="tab-content">
-                    <div class="tab-pane active" id="tab-recommended-business">
+                    <div class="tab-pane active" id="tab-recommended">
                         <div class="match investor-match"></div>
 
                         <div class="view viewLoad alert alert-info text-center">
                             <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e ('Loading', 'bidxplugin') ?>
                         </div>
                     </div>
-                    <div class="tab-pane" id="tab-businesses-contacted">
+                    <div class="tab-pane" id="tab-contacted">
                         <div class="contact investor-contact "></div>
                         <div class="view viewLoadcontact alert alert-info text-center">
                             <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e ('Loading', 'bidxplugin') ?>
@@ -45,10 +45,10 @@
                                 <a class="btn btn-primary" href="<?php echo $href; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
                             </div>
                         </div>
-                        <div class="preference investor-preference"></div>
+                        <!-- <div class="preference investor-preference"></div>
                         <div class="view viewLoadpreference alert alert-info text-center">
                             <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e ('Loading', 'bidxplugin') ?>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -58,201 +58,3 @@
 
     </div>
 </div>
-<!-- <span class="stopviewing pull-right main-margin-half"><a class="btn btn-danger btn-xs" href="#"><?php _e( 'Stop viewing','bidxplugin' );?></a></span> -->
-<script type="text/html" id="investor-contactitem">
-<!--
-    <div class="cardView">
-        <div class="cardHeader hide-overflow">
-            <div class="info-cell pull-left bg-%status%"><?php echo _e( 'Status', 'bidxplugin' ); ?>: %status%</div>
-            <div class="info-cell pull-left"><?php echo _e( 'Finance Needed', 'bidxplugin' ); ?>: %financingNeeded%</div>
-            <a href="/businesssummary/%bidxEntityId%" class="btn btn-primary btn-xs pull-right info-action main-margin-half"><?php echo _e( 'View Business', 'bidxplugin' ); ?> </a>
-        </div>
-        <div class="cardContent main-padding">
-            <div class="cardTop">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <a class="pull-left main-margin-half" href="/businesssummary/%bidxEntityId%" data-role='businessImage'>
-                            <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
-                        </a>
-                    </div>
-                    <div class="col-sm-9">
-                        <h3 class="top-0">%name%</h3>
-                        <h4><span class="bs-slogan">%slogan%</span></h4>
-                        <table class="table table-condensed table-bottom-border">
-                            <tbody>
-                                <tr><td>Entrepreneur</td><td><a class="" href="/member/%creatorId%">%creator%</a></td></tr>
-                                <tr><td>Business stage</td><td>%stageBusiness%</td></tr>
-                                <tr><td>Year sales started</td><td>%yearSalesStarted%</td></tr>
-                                <tr><td>Industry</td><td>%industry%</td></tr>
-                                <tr><td>Country of business</td><td>%countryOperation%</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
--->
-</script>
-
-<script type="text/html" id="investor-preferenceitem">
-<!--
-<br>
-<table class="table table-condensed table-bottom-border">
-    <tbody>
-        <tr>
-            <td><?php _e('Industry','bidxplugin');?></td>
-            <td class="focusIndustry">%focusIndustry%</td>
-        </tr>
-        <tr>
-            <td><?php _e('Social impact','bidxplugin');?></td>
-            <td class="focusSocialImpact">%focusSocialImpact%</td>
-        </tr>
-        <tr>
-            <td><?php _e('Environmental impact','bidxplugin');?></td>
-            <td class="placeholder focusEnvImpact">%focusEnvImpact%</td>
-        </tr>
-        <tr>
-            <td><?php _e('Languages','bidxplugin');?></td>
-            <td class="placeholder focusLanguage" >%focusLanguage%</td>
-        </tr>
-        <tr>
-            <td><?php _e('Country','bidxplugin');?></td>
-            <td class="placeholder focusCountry" >%focusCountry%</td>
-        </tr>
-        <tr>
-            <td><?php _e('Consumer type','bidxplugin');?></td>
-            <td class="placeholder focusConsumerType" >%focusConsumerType%</td>
-        </tr>
-        <tr>
-            <td><?php _e('Stage of business','bidxplugin');?></td>
-            <td class="placeholder focusStageBusiness" >%focusStageBusiness%</td>
-        </tr>
-        <tr>
-            <td><?php _e('Gender','bidxplugin');?></td>
-            <td class="placeholder focusGender" >%focusGender%</td>
-        </tr>
-        <tr>
-            <td><?php _e('Investment type','bidxplugin');?></td>
-            <td class="placeholder investmentType" >%investmentType%</td>
-        </tr>
-        <tr>
-            <td><?php _e('Minimum investment','bidxplugin');?></td>
-            <td class="placeholder minInvestment" >%minInvestment%</td>
-        </tr>
-        <tr>
-            <td><?php _e('Maximum investment','bidxplugin');?></td>
-            <td class="placeholder maxInvestment" >%maxInvestment%</td>
-        </tr>
-        <tr>
-            <td><?php _e('Total investment in the previous year','bidxplugin');?></td>
-            <td class="placeholder totalInvestment">%totalInvestment%</td>
-        </tr>
-        <tr>
-            <td><?php _e('Other preferences','bidxplugin');?></td>
-            <td class="placeholder additionalPreferences" >%additionalPreferences%</td>
-        </tr>
-    </tbody>
-</table>
--->
-</script>
-<script type="text/html" id="investor-matchitem">
-    <!--
-    <div class="cardView">
-        <div class="cardHeader hide-overflow">
-            <div class="info-cell pull-left"><?php echo _e( 'Completed', 'bidxplugin' ); ?>: %completeness%%</div>
-            <div class="info-cell pull-left"><?php echo _e( 'Finance Needed', 'bidxplugin' ); ?>: %financingNeeded%</div>
-            <a href="/businesssummary/%entityid_l%" class="btn btn-primary btn-xs pull-right info-action main-margin-half"><?php echo _e( 'View Business', 'bidxplugin' ); ?> </a>
-        </div>
-        <div class="cardContent main-padding">
-            <div class="cardTop">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <a class="pull-left main-margin-half" href="/businesssummary/%entityid_l%" data-role='businessImage'>
-                            <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
-                        </a>
-                    </div>
-                    <div class="col-sm-9">
-                        <h3 class="top-0">%name_s%</h3>
-                        <h4><span class="bs-slogan">%slogan_s%</span></h4>
-                        <table class="table table-condensed table-bottom-border">
-                            <tbody>
-                                <tr><td>Business stage</td><td>%stageBusiness%</td></tr>
-                                <tr><td>Year sales started</td><td>%yearSalesStarted%</td></tr>
-                                <tr><td>Industry</td><td>%industrylabel_ss%</td></tr>
-                                <tr><td>Country of business</td><td>%countrylabel_ss%</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="cardFooter">
-
-        </div>
-    </div>
-    -->
-</script>
-
-<script type="text/html" id="investor-empty">
-<!--
-<tr class="investor-empty" >
-    <td colspan='7'>
-       <div class="pull-left">
-          <?php _e ('No matches available', 'bidxplugin') ?>
-       </div>
-    </td>
-</tr>
--->
-</script>
-
-<script type="text/html" id="entrepreneur-listitem">
-    <!--
-    <td colspan="5" class="detailRow">
-    <div class="panel-collapse collapse" id="table1-row1-col2">
-    <div class="row">
-    <div class="col-sm-12">
-    <h4><?php _e('Entrepreneur Profile','bidxplugin');?></h4>
-    <ul class="list-unstyled">
-    <li>
-    <label><?php _e('Entrepreneur','bidxplugin');?></label>
-    <span class="placeholder ename"/>
-    </li>
-    <li>
-    <label><?php _e('Industry','bidxplugin');?></label>
-    <span class="placeholder eindustry"/>
-    </li>
-    <li>
-    <label><?php _e('Product','bidxplugin');?></label>
-    <span class="placeholder eproduct"/>
-    </li>
-    <li>
-    <label><?php _e('Country','bidxplugin');?></label>
-    <span class="placeholder ecountry"/>
-    </li>
-    <li>
-    <label><?php _e('Investment needed','bidxplugin');?></label>
-    <span class="placeholder eamount"/>
-    </li>
-    <li>
-    <label><?php _e('Business stage','bidxplugin');?></label>
-    <span class="placeholder estage"/>
-    </li>
-    <li>
-    <label><?php _e('Impact','bidxplugin');?></label>
-    <span class="placeholder eimpact"/>
-    </li>
-    </ul>
-    </div>
-
-    <div class="pull-right">
-    <a href="#"><?php _e('View full profile','bidxplugin');?></a>
-    </div>
-    </div>
-    </div>
-    </td>
-    -->
-</script>
-
-

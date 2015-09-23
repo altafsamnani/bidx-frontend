@@ -1,4 +1,4 @@
-// globalchecks.js is a miscelaneous home for 'state full' utilities
+// bidx-elements.js is a miscelaneous home for Views
 //
 ( function( $ )
 {
@@ -73,7 +73,7 @@
     var placeProfileThumbSmall = function( memberInfo )
     {
         var thumb
-        ,   profilePicture = bidx.utils.getValue( memberInfo.bidxMemberProfile.personalDetails.profilePicture, "document")
+        ,   profilePicture = bidx.utils.getValue( memberInfo, "profilePicture")
         ;
 
         if ( profilePicture )
@@ -153,7 +153,9 @@
     var profileThumb = function( memberid )
     {
         var thumb
-        ,   profilePicture = bidx.utils.getValue(bidx.common.tmpData.members[memberid].bidxMemberProfile.personalDetails, "profilePicture.document")
+        ,   profilePicture  = bidx.common.tmpData.members[memberid].profilePicture
+                            ? bidx.common.tmpData.members[memberid].profilePicture
+                            : null
         ;
 
         if ( profilePicture )
@@ -326,10 +328,6 @@
                             )
                         )
                     )
-                )
-                .append
-                (
-                    $( "<div />", { "class": "cardFooter" } )
                 )
             ;
 
@@ -570,6 +568,14 @@
                 status      = "Pending";
 
             break;
+
+            case "access":
+
+                dataAttr    = "data-ownerid";
+                dataid      = data.owner.id;
+                status      = "Pending";
+
+            break;
         }
 
         box =
@@ -640,6 +646,12 @@
                         }
 
                     break;
+
+                    case "rejected":
+
+                        $actions = $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "removeAlert", "html": bidx.i18n.i( "btnDismiss" ) } );
+
+                    break;
                 }
 
             break;
@@ -667,7 +679,14 @@
 
                     case "granted":
 
+                        // Uncomment when it is ready
                         // $actions = $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "removeAccess", "html": bidx.i18n.i( "btnRemoveAccess" ) } );
+
+                    break;
+
+                    case "rejected":
+
+                        $actions = $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "removeAlert", "html": bidx.i18n.i( "btnDismiss" ) } );
 
                     break;
                 }
@@ -728,6 +747,25 @@
                 $actions = $( "<button />", { "class": "btn btn-xs btn-warning", "data-btn": "requestForMentorBusiness", "html": bidx.i18n.i( "btnRequest" ) } );
 
             break;
+
+            case "stopped":
+
+                $actions = $( "<button />", { "class": "btn btn-xs btn-danger", "data-btn": "removeAlert", "html": bidx.i18n.i( "btnDismiss" ) } );
+
+            break;
+
+            case "access":
+
+                $actions = $( "<button />", { "class": "btn btn-xs btn-warning", "data-btn": "requestFullAccess", "html": bidx.i18n.i( "btnRequestAccess" ) } );
+
+            break;
+
+            case "offer":
+
+                $actions = $( "<button />", { "class": "btn btn-xs btn-mentor", "data-btn": "offerMentoringDash", "html": bidx.i18n.i( "offerMentoring" ) } );
+
+            break;
+
         }
 
         $html.append( $actions );
@@ -743,7 +781,7 @@
             $( "<a />", { "href": "/member/" + memberid } )
             .append
             (
-                $( "<strong />", { "html": bidx.common.tmpData.members[memberid].member.displayName } )
+                $( "<strong />", { "html": bidx.common.tmpData.members[memberid].name } )
             )
         ;
 
@@ -780,7 +818,7 @@
                 {
                     case "accepted":
 
-                        if ( data.relChecks.isThereRelationship && ( bidx.globalChecks.isOwnBusiness() || bidx.globalChecks.isOwnProfile() ) )
+                        if ( data.relChecks.isThereRelationship && ( bidx.globalChecks.isOwnBusiness() || bidx.globalChecks.isOwnProfile() || bidx.globalChecks.isEntrepreneurDashboard() || bidx.globalChecks.isMentorDashboard() || bidx.globalChecks.isInvestorDashboard() ) )
                         {
                             text = " " + bidx.i18n.i( "isMentoring" );
                         }
@@ -797,9 +835,9 @@
                         {
                             if ( data.relChecks.isTheMentor )
                             {
-                                text = bidx.i18n.i( "youAskedMentor" ) + " ";
+                                text = bidx.globalChecks.isInvestorDashboard() ? bidx.i18n.i( "youAskedMentorFrom" ) + " " :  bidx.i18n.i( "youAskedMentor" ) + " ";
                             }
-                            else if ( !data.relChecks.isTheMentor && !bidx.globalChecks.isOwnProfile() )
+                            else if ( !data.relChecks.isTheMentor && !bidx.globalChecks.isOwnProfile() && data.relChecks.showBusinessInfo )
                             {
                                 text = bidx.i18n.i( "youAskedMentorForBusiness" ) + " ";
                             }
@@ -808,20 +846,57 @@
                                 text = bidx.i18n.i( "youAskedFromMentor" ) + " ";
                             }
                         }
+                        else if ( data.relChecks.isTheMentor && bidx.globalChecks.isInvestorDashboard() && !data.relChecks.isTheInitiator )
+                        {
+                            text = " " + bidx.i18n.i( "wantsYouToMentor" );
+                        }
                         else
                         {
                             text = data.relChecks.showBusinessInfo ? text = " " + bidx.i18n.i( "mentorAskedYou" ) + " " : text = " " + bidx.i18n.i( "wantsToMentor" );
                         }
 
                     break;
+
+                    case "rejected":
+
+                            text = " " + bidx.i18n.i( "userRejected" );
+
+                    break;
+
+                    case "stopped":
+
+                            if ( (!bidx.globalChecks.isOwnBusiness() && bidx.globalChecks.isBusinessPage() ) || ( bidx.globalChecks.isProfilePage() && !bidx.globalChecks.isOwnProfile() && $( "#tab-entrepreneur" ).length ) )
+                            {
+                                text = bidx.i18n.i( "youCancelledMentoring" ) + " ";
+                            }
+                            else if ( bidx.globalChecks.isProfilePage() && !bidx.globalChecks.isOwnProfile() )
+                            {
+                                text = bidx.i18n.i( "mentorYouCancelledForBusiness" ) + " ";
+                            }
+                            else
+                            {
+                                text = bidx.i18n.i( "youStoppedMentor" ) + " ";
+                            }
+
+                    break;
+
+                    case "offerMentoring":
+
+                            text = " " + bidx.i18n.i( "offerMentoring" );
+
+                    break;
+
                 }
 
             break;
 
             case "investor":
 
-                if ( data.status === "pending" ) {text =  " " + bidx.i18n.i( "wantsFullAccess" ); }
-                if ( data.status === "granted" ) {text =  " " + bidx.i18n.i( "hasFullAccess" ); }
+                if ( data.status === "pending" ) { text =  " " + bidx.i18n.i( "wantsFullAccess" ); }
+                if ( data.status === "granted" ) { text =  " " + bidx.i18n.i( "hasFullAccess" ); }
+                if ( data.status === "rejected" ) { text =  " " + bidx.i18n.i( "userRejected" ); }
+                if ( data.status === "requested" ) { text = bidx.i18n.i( "youRequestedAccessFrom" ) + " "; }
+                if ( data.status === "recommended" ) { text = bidx.i18n.i( "requestAccessBusiness" ) + " "; }
 
             break;
 
@@ -864,13 +939,25 @@
                 text = bidx.i18n.i( "requestMentoringBusiness" ) + " ";
 
             break;
+
+            case "investorDash":
+
+                if ( data.status === "pending" ) { text = bidx.i18n.i( "youRequestedAccessFrom" ) + " "; }
+                if ( data.status === "granted" ) { text = bidx.i18n.i( "youHaveAccessFrom" ) + " "; }
+
+            break;
+
+            case "offerMentoring":
+
+                text = bidx.i18n.i( "offerMentoringTo" ) + " ";
+
+            break;
         }
 
         $message = $( "<span />", { "html": text } );
 
         return $message;
     };
-
 
     // Expose
     //

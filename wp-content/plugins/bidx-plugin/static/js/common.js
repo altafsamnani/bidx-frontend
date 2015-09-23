@@ -230,7 +230,11 @@
             ,   groupDomain:    bidx.common.groupDomain
             ,   success:        function( results )
                 {
-                    addToTempMembers( results );
+                    $.each( results.userSummaries, function( i, member)
+                    {
+                        addToTempMembers( member );
+                    });
+
                     $d.resolve( results );
                 }
             ,   error: function(jqXhr, textStatus)
@@ -250,10 +254,16 @@
 
     function addToTempMembers( item )
     {
-        if ( checkMemberExists( item.member.bidxMeta.bidxMemberId ) === false )
+        if ( checkMemberExists( item.id ) === false )
         {
-            tmpData.members[item.member.bidxMeta.bidxMemberId] = item ;
+            tmpData.members[item.id] = item ;
         }
+
+        // if ( checkMemberExists( item.member.bidxMeta.bidxMemberId ) === false )
+        // {
+        //     tmpData.members[item.member.bidxMeta.bidxMemberId] = item ;
+        // }
+
     }
 
     function addToTempBusinesses( item )
@@ -272,7 +282,7 @@
         {
             $.each( bidx.common.tmpData.members, function( i, m )
             {
-                 if ( m.member.bidxMeta.bidxMemberId === bidxMemberId )
+                 if ( m.id === bidxMemberId )
                  {
                     memberExists = m;
                  }
@@ -300,35 +310,49 @@
         return businessExists;
     }
 
-    // Reason: "mentor", "investor", "connect"
+    //
     //
     var fetchMemberProfiles = function ( memberIds )
     {
         var promises = [];
 
+        if ( memberIds.length === 0 )
+        {
+            return;
+        }
+
         $.each( memberIds, function ( i, memberId )
         {
-            var $def = $.Deferred();
-
-            bidx.common.getMemberInfo(
+            if ( !checkMemberExists( memberId ) )
             {
-                id          :   memberId
-            ,   callback    :   function ( memberInfo )
-                {
-                    addToTempMembers( memberInfo );
-                    $def.resolve( memberInfo );
-                }
-            ,   error:  function(jqXhr, textStatus)
-                {
-                    var status  = bidx.utils.getValue( jqXhr, "status" ) || textStatus
-                    ,   msg     = "Something went wrong while retrieving the entity: " + status
-                    ,   error   = new Error( msg )
-                    ;
+                var $def = $.Deferred();
 
-                    $def.reject( error );
+                if ( checkMemberExists( memberId ) )
+                {
+                    return;
                 }
-            });
-            promises.push($def);
+
+                bidx.common.getMemberInfo(
+                {
+                    id          :   memberId
+                ,   callback    :   function ( memberInfo )
+                    {
+                        // addToTempMembers( memberInfo );
+                        $def.resolve( memberInfo );
+                    }
+                ,   error:  function(jqXhr, textStatus)
+                    {
+                        var status  = bidx.utils.getValue( jqXhr, "status" ) || textStatus
+                        ,   msg     = "Something went wrong while retrieving the entity: " + status
+                        ,   error   = new Error( msg )
+                        ;
+
+                        $def.reject( error );
+                    }
+                });
+
+                promises.push($def);
+            }
         } );
 
         return $.when.apply( undefined, promises ).promise();
@@ -355,6 +379,11 @@
     {
         var promises = [];
 
+        if ( businessesDataId.length === 0 )
+        {
+            return;
+        }
+
         $.each( businessesDataId, function( i, businessId)
         {
             var $def = $.Deferred();
@@ -376,10 +405,11 @@
                         ,   error   = new Error( msg )
                         ;
 
-                        $def.reject( error );
+                        // $def.reject( error );
                     }
                 }
             );
+
             promises.push( $def );
         });
 
@@ -877,6 +907,50 @@
         );
 
     }
+
+    // Do a full access request for this businessSummary
+    //
+    function doAccessRequest( options )
+    {
+        bidx.api.call(
+             "businesssummaryRequestAccess.send"
+        ,   {
+                groupDomain:            bidx.common.groupDomain
+            ,   id:                     options.options.id
+            ,   success: function( response )
+                {
+                    if ( response.status === "OK" )
+                    {
+                        //  execute callback if provided
+                        if (options && options.callback)
+                        {
+                            options.callback( response );
+                        }
+                    }
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+                    var response = $.parseJSON( jqXhr.responseText);
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Client  error occured", response );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                    }
+                }
+            }
+        );
+    }
+
+
 
     // Perform an API call to join the group
     //
@@ -1828,7 +1902,11 @@
     ,   doBlockRequest:                 doBlockRequest
     ,   doUnBlockRequest:               doUnBlockRequest
     ,   doMailSend:                     doMailSend
+<<<<<<< Updated upstream
     ,   doSendContactReminder:          doSendContactReminder
+=======
+    ,   doAccessRequest:                doAccessRequest
+>>>>>>> Stashed changes
     ,   showMoreLess:                   showMoreLess
 
 
