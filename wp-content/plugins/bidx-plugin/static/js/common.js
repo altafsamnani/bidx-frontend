@@ -1902,11 +1902,8 @@
     ,   doBlockRequest:                 doBlockRequest
     ,   doUnBlockRequest:               doUnBlockRequest
     ,   doMailSend:                     doMailSend
-<<<<<<< Updated upstream
     ,   doSendContactReminder:          doSendContactReminder
-=======
     ,   doAccessRequest:                doAccessRequest
->>>>>>> Stashed changes
     ,   showMoreLess:                   showMoreLess
 
 
