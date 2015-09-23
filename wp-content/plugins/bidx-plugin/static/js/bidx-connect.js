@@ -438,12 +438,44 @@
             ,   requestInitiator    = bidx.utils.getValue(contact, "isInitiator")
             ,   isTheInitiator      = requestInitiator ? request.id : bidx.common.getCurrentUserId()
             ;
+            $.when(
+                                        bidx.common.getMembersSummaries( { data: { "userIdList": [isTheInitiator] } } )
+                                    )
+                                    .done( function ( memberInfo )
+                                    {
+                                        bidx.utils.log('memberInfo', memberInfo);
+                                        bidx.common.addToTempMembers( memberInfo );
+                                        $bsEl.first()
+                                        .append
+                                        (
+                                            bidx.construct.actionBox( request, "contact" )
+                                            .append
+                                            (
+                                                bidx.construct.actionButtons( request, "contact" )
+                                            )
+                                        );
 
-            bidx.common.getMemberInfo(
+                                        $bsEl.first().find( ".alert-message" ).last()
+                                        .prepend
+                                        (
+                                            bidx.construct.profileThumb( isTheInitiator )
+                                        )
+                                        .append
+                                        (
+                                            requestInitiator ? bidx.construct.memberLink( isTheInitiator ) : " "
+                                        ,   bidx.construct.actionMessage( request, "contact" )
+                                        );
+
+                                        $bsEl.removeClass('hide').show();
+                                    } );
+
+
+            /*bidx.common.getMembersSummaries(
             {
-                id          :   isTheInitiator
+                data          :   { "userIdList": [isTheInitiator] }
             ,   callback    :   function ( memberInfo )
                 {
+                    bidx.utils.log('memberInfo', memberInfo);
                     bidx.common.addToTempMembers( memberInfo );
                     $bsEl.first()
                     .append
@@ -468,7 +500,7 @@
 
                     $bsEl.removeClass('hide').show();
                 }
-            });
+            });*/
         }
     ,   constructConnectInMail: function ( btnOptions )
         {

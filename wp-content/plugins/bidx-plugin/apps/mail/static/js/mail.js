@@ -40,31 +40,46 @@
     ;
 
 
-    function _loadActiveConnections()
+    function _loadActiveConnections( options )
     {
 
-        var $varContacts        =   $element.find('.viewContacts')
-        ,   $varLoadContacts    =   $element.find('.viewContactload')
-        ;
-
-        _getContacts( )
-        .then( function( contacts )
+        if( $.isEmptyObject( connectContacts ) )
         {
-            connectContacts = contacts;
-            _initContactListing( contacts );
+            var $varContacts        =   $element.find('.viewContacts')
+            ,   $varLoadContacts    =   $element.find('.viewContactload')
+            ;
 
-        })
-        .fail( function ( error )
-        {
-            bidx.utils.log( "Error in promise chain ", error );
-        } )
-        .done( function()
-        {
-            $varLoadContacts.addClass('hide');
-            $varContacts.removeClass('hide');
+            _getContacts( )
+            .then( function( contacts )
+            {
+                connectContacts = contacts;
+                _initContactListing( contacts );
 
-            _setActiveMenu();
-        } );
+                if (options && options.callback)
+                {
+                    options.callback(  );
+                }
+
+            })
+            .fail( function ( error )
+            {
+                bidx.utils.log( "Error in promise chain ", error );
+            } )
+            .done( function()
+            {
+                $varLoadContacts.addClass('hide');
+                $varContacts.removeClass('hide');
+
+                _setActiveMenu();
+            } );
+        }
+        else
+        {
+            if (options && options.callback)
+            {
+                options.callback(  );
+            }
+        }
     }
 
     // private functions
@@ -1192,9 +1207,12 @@
 
             //  reset formfield values
             //
+
             $frmCompose.find( ":input" ).val("");
-            $contactsDropdown.val();
-            $contactsDropdown.bidx_chosen();
+
+            _populateMailRecipients( connectContacts.active );
+            //$contactsDropdown.val();
+            // $contactsDropdown.bidx_chosen();
             $btnComposeSubmit.removeClass( "disabled" );
             $btnComposeCancel.removeClass( "disabled" );
 
@@ -1219,6 +1237,7 @@
                 ,   mailbox
                 ,   isSenderId
                 ,   isGroupId
+                ,   option
                 ;
 
                 if( state.search( /(^mbx-)/ ) === 0 )
@@ -1250,7 +1269,14 @@
                             isGroupId  = message.sender.groupId;
                             if( isSenderId )
                             {
-                                recipients.push( message.sender.id.toString() );
+                                option = $( "<option/>",
+                                {
+                                    value: message.sender.id.toString()
+                                } );
+
+                                option.text( message.sender.name );
+
+                                recipients.push( option );
 
                             } else if( isGroupId )
                             {
@@ -1258,9 +1284,10 @@
                             }
                         }
 
+                        bidx.utils.log( 'recipients', recipients);
 
-
-                        $contactsDropdown.val( recipients );
+                        $contactsDropdown.append( recipients );
+                        $contactsDropdown.val( isSenderId );
                         $contactsDropdown.bidx_chosen();
 
                         subject = bidx.i18n.i( "Re" );
@@ -1319,6 +1346,8 @@
             ,   $options
             ,   sortedContacts  =   _.sortBy(activeContacts, 'name')
             ;
+
+            $contactsDropdown.empty();
 
             $options = $contactsDropdown.find( "option" );
 
@@ -1539,7 +1568,8 @@
 
             $listItem.on('click', '*[data-btn="connectcancel"]', function ( e )
             {
-                var item = this
+                var activeContacts
+                ,   item = this
                 ,   $list               =   $(this).parents( "*[data-requestId]" )
                 ,   $categoryWrapper    =   $('#' + category + 'Requests .contact-request-list')
                 ,   $badge              =   $('.trigger-' + category + '-contacts .badge')
@@ -1570,6 +1600,19 @@
                             {
                                 _removeMailRecipient( contact );
                             }
+
+                            activeContacts  =   _.reject( connectContacts.active
+                                                ,   function( activeContact )
+                                                    {
+                                                        if( activeContact.id === contact )
+                                                        {
+                                                            return true;
+                                                        }
+                                                });
+
+                            connectContacts.active =   activeContacts;
+
+                            _populateMailRecipients( connectContacts.active );
                         });
                     }
                 } );
@@ -1583,7 +1626,10 @@
 
             $listItem.on('click', '*[data-btn="connectaccept"]', function ( e )
             {
-                var item = this
+                var option
+                ,   dataContact
+                ,   listItems           =   []
+                ,   item                =   this
                 ,   $delegateActiveList
                 ,   $list               =   $(this).parents( "*[data-requestId]" )
                 ,   $incomingWrapper    =   $('#' + category + 'Requests .contact-request-list')
@@ -1619,7 +1665,28 @@
                                 $activeList.html('');
                             }
 
-                            _populateMailRecipients( data.contacts, true );
+                            //_populateMailRecipients( data.contacts, true );
+                            dataContact     =   data.contacts[0];
+
+                            connectContacts.active.push( dataContact );
+
+                            //_populateMailRecipients( connectContacts.active );
+
+                            bidx.utils.log('dataContact', dataContact);
+
+                            option = $( "<option/>",
+                            {
+                                value: dataContact.id
+                            } );
+
+                            option.text( dataContact.name );
+
+                            listItems.push( option );
+
+                            $contactsDropdown.append( listItems );
+
+                            $contactsDropdown.bidx_chosen();
+
 
                             //Adding To the Active Category Listing
                             $activeHtml.find('.contact-request-buttons').remove(); // Remove Accept/Deny buttons inorder to add to active list
@@ -1652,8 +1719,6 @@
 
             // loop through all contact statuses and populate the associated lists
             //
-
-            _populateMailRecipients( contacts.active );
 
             $.each( contacts, function( key, items )
             {
@@ -2878,7 +2943,13 @@
             case /^forward$/.test( action ):
             case /^compose$/.test( action ):
 
-                _initComposeForm();
+
+                _loadActiveConnections({
+                    callback:   function()
+                                {
+                                    _initComposeForm( );
+                                }
+                });
 
                 // check if mailbox is not empty, else reload mailboxes and redraw folder navigation
                 //

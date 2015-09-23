@@ -384,6 +384,7 @@
         ,   $resetFacet     = $element.find(".facet-reset")
         ,   $list           = $element.find(".facet-list")
         ,   $filters        =  $('.topfilters')
+        ,   $advancedSearch =  $('.advancedFilters')
         ,   emptyVal        = ''
         ,   $listItem
         ,   $listFacetsItem
@@ -416,6 +417,7 @@
         if ( response && response.facets )
         {
             // Add Default image if there is no image attached to the bs
+            bidx.utils.log('facets', response.facets);
             $.each( response.facets , function ( idx, facetItems)
             {
 
@@ -438,14 +440,12 @@
                             dataKey      = facetItems.name.replace(/facet_/g, '');
 
                             item.name    = bidx.data.i( item.name, dataKey );  // ict.services in industry
-
-
                         }
                         else
                         {
                             item.name    = bidx.i18n.i( item.name, appName );
 
-                            //_addMainSearchFacets( item );
+                            _addMainSearchFacets( item );
                         }
 
                         if ( item.name )
@@ -481,6 +481,8 @@
                             $currentCategory.find( ".list-group" ).append($listFacetsItem);
                         }
                     });
+
+                    $advancedSearch.css('display','block');
                 }
 
                 // Show the first VISIBLE_FILTER_ITEMS filter items if more than (VISIBLE_FILTER_ITEMS + 3)

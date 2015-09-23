@@ -153,9 +153,7 @@
     var profileThumb = function( memberid )
     {
         var thumb
-        ,   profilePicture  = bidx.common.tmpData.members[memberid].profilePicture
-                            ? bidx.common.tmpData.members[memberid].profilePicture
-                            : null
+        ,   profilePicture  = bidx.utils.getValue(bidx.common.tmpData.members[memberid], 'profilePicture')
         ;
 
         if ( profilePicture )
@@ -776,6 +774,9 @@
     var memberLink = function ( memberid )
     {
         var $memberLink;
+
+        bidx.utils.log('memberid', memberid);
+        bidx.utils.log('bidx.common.tmpData.members', bidx.common.tmpData.members);
 
         $memberLink =
             $( "<a />", { "href": "/member/" + memberid } )
