@@ -53,7 +53,7 @@
             if ( bidx.globalChecks.isProfilePage() )
             {
                 entrepreneurProfileMentorActions();
-                if ( !bidx.globalChecks.isOwnProfile() )
+                if ( !bidx.globalChecks.isOwnProfile() && !hasEntrepreneurProfile )
                 {
                     doOfferMentoringMultipleBusinesses();
                 }
@@ -129,13 +129,13 @@
             });
         }
         
-        if ( bidx.globalChecks.isProfilePage() && hasMentorProfile && !hasEntrepreneurProfile )
-        {
-            $.each( result, function ( i, b )
-            {
-                bsids.push( b.entityId.toString() );
-            });
-        }
+        // if ( bidx.globalChecks.isProfilePage() && hasMentorProfile && !hasEntrepreneurProfile )
+        // {
+        //     $.each( result, function ( i, b )
+        //     {
+        //         bsids.push( b.entityId.toString() );
+        //     });
+        // }
         
         if ( bidx.globalChecks.isEntrepreneurDashboard() || bidx.globalChecks.isMentorDashboard() || bidx.globalChecks.isInvestorDashboard() )
         {
@@ -923,12 +923,6 @@
     }
 
     window.bidx.commonmentordashboard = mentoring;
-
-    if ( $("body.bidx-mentor-dashboard").length && !bidx.utils.getValue(window, "location.hash").length )
-    {
-        document.location.hash = "#mentoring/mentor";
-    }
-
 
 }(jQuery));
 

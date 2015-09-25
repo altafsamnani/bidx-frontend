@@ -1673,6 +1673,61 @@ h1.service {
         @include single-box-shadow(rgba(80,80,80,0.35), 0, 0, 5px, 0);
         background-color: $white;
     }
+    table.table
+    {
+        @include single-box-shadow(rgba(80,80,80,0.35), 0, 0, 5px, 0);
+        margin: 0 0 20px 0;
+        background-color: #fff;
+        width: 100%;
+        max-width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        thead
+        {
+            font-weight: 600;
+            font-size: 22px;
+            padding: 8px;
+            background-color: lighten( darken($hc2_yellow, 40%), 10% );
+            color: #FFF;
+            line-height: 1 !important;
+            th
+            {   
+                text-align: center;
+            }
+        }
+        tbody
+        {
+            td
+            {
+                border-top: 1px solid #E4CEAF;
+            }
+            td:first-child
+            {
+                font-weight: 500;
+                font-size: 20px;
+                padding: 8px 8px 0 8px;
+                background-color: lighten($hc2_yellow, 40%);
+                color: lighten( darken($hc2_yellow, 40%), 10% );
+                text-align: left;
+            }
+            td + td
+            {
+                width: 14%;
+                text-align: center;
+                border-left: 1px solid #E4CEAF;
+            }
+            tr:last-child
+            {
+                font-weight: bold;
+                background-color: lighten($hc2_yellow, 40%);
+                text-align: center;
+                font-weight: 600;
+                font-size: 25px;
+                padding: 8px;
+                color: lighten( darken($hc2_yellow, 20%), 10% );
+            }
+        }
+    }
 }
 
 .pricing {
@@ -1772,6 +1827,7 @@ h1.service {
         }
     }
 }
+
 .error404 {
     background-color: $lightgreen;
     color: $white;
