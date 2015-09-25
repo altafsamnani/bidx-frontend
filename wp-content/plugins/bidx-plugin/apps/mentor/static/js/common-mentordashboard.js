@@ -128,15 +128,7 @@
                  bsids.push( $(this).attr( "data-bsid") );
             });
         }
-        
-        // if ( bidx.globalChecks.isProfilePage() && hasMentorProfile && !hasEntrepreneurProfile )
-        // {
-        //     $.each( result, function ( i, b )
-        //     {
-        //         bsids.push( b.entityId.toString() );
-        //     });
-        // }
-        
+                
         if ( bidx.globalChecks.isEntrepreneurDashboard() || bidx.globalChecks.isMentorDashboard() || bidx.globalChecks.isInvestorDashboard() )
         {
             bsids = databsids;
@@ -386,7 +378,20 @@
                         ,   bidx.construct.memberLink( memberInfo.id )
                         );
                 }
-                else if ( req.relChecks.isTheInitiator && req.relChecks.isTheMentor && bidx.globalChecks.isInvestorDashboard() )
+                else if ( req.relChecks.isTheInitiator && req.relChecks.isTheMentor && bidx.globalChecks.isInvestorDashboard() && req.request.status === "accepted" )
+                {
+                    $bsEl.last().find( ".alert-message" ).last()
+                        .prepend
+                        (
+                            bidx.construct.profileThumb( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
+                        )
+                        .append
+                        (
+                            bidx.construct.memberLink( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
+                        ,   bidx.construct.actionMessage( req )
+                        );
+                }
+                else if ( req.relChecks.isTheInitiator && req.relChecks.isTheMentor && bidx.globalChecks.isInvestorDashboard() && req.request.status === "requested" )
                 {
                     $bsEl.last().find( ".alert-message" ).last()
                         .prepend

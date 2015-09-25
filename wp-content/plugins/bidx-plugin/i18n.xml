@@ -142,7 +142,7 @@
     <!-- Common Investor strings -->
     <Item value="wantsFullAccess">requests access</Item>
     <Item value="hasFullAccess">has access</Item>
-    <Item value="userRejected">has not been granted access</Item>
+    <Item value="userRejected">has been rejected</Item>
     <Item value="requestAccessBusiness">Request access from</Item>
     <Item value="btnRequestAccess">Requests Access</Item>
     <Item value="youRequestedAccessFrom">You have requested access from</Item>
