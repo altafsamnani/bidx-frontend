@@ -185,16 +185,18 @@
         ,   i18nItem
         ;
 
-        dataArr =   {       'industry'             : 'industry'
-                        ,   'countryOperation'     : 'country'
-                        ,   'stageBusiness'        : 'stageBusiness'
-                        ,   'productService'       : 'productService'
-                        ,   'envImpact'            : 'envImpact'
-                        ,   'consumerType'         : 'consumerType'
-                        ,   'investmentType'       : 'investmentType'
-                        ,   'investorType'         : 'investorType'
-                        ,   'summaryRequestStatus' : 'summaryRequestStatus'
-                        ,   'legalFormBusiness'    : 'legalForm'
+        dataArr =   {       'industry'              : 'industry'
+                        ,   'countryOperation'      : 'country'
+                        ,   'stageBusiness'         : 'stageBusiness'
+                        ,   'productService'        : 'productService'
+                        ,   'envImpact'             : 'envImpact'
+                        ,   'consumerType'          : 'consumerType'
+                        ,   'investmentType'        : 'investmentType'
+                        ,   'investorType'          : 'investorType'
+                        ,   'summaryRequestStatus'  : 'summaryRequestStatus'
+                        ,   'legalFormBusiness'     : 'legalForm'
+                        ,   'country'               : 'country'
+                        ,   'language'              : 'language'
                     };
 
         bidx.data.getStaticDataVal(
@@ -428,6 +430,111 @@
                                             .append
                                             (
                                                 $( "<td />", { "html": item.legalFormBusiness })
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            ;
+
+        return card;
+    };
+
+    var memberCardView = function ( member )
+    {
+        var card;
+
+        _getStaticDataVal( member );
+
+        card =
+            $( "<div />", { "class": "cardView", "data-memberid": member.id } )
+                .append
+                (
+                    $( "<div />", { "class": "cardHeader hide-overflow" } )
+                    // .append
+                    // (
+                    //     $( "<div />", { "class": "info-cell pull-left" + (item.dateCompanyEstab ? "" : " hide"), "html": bidx.i18n.i( "cmDateRegistration" ) + ": " + item.dateCompanyEstab } )
+                    // )
+                    .append
+                    (
+                        $( "<a />", { "href": "/member/" + member.id, "class": "btn btn-primary btn-xs pull-right info-action main-margin-half", "html": bidx.i18n.i( "btnViewProfile" ) } )
+                    )
+                )
+                .append
+                (
+                    $( "<div />", { "class": "cardContent main-padding" } )
+                    .append
+                    (
+                        $( "<div />", { "class": "cardTop" } )
+                        .append
+                        (
+                            $( "<div />", { "class": "row" } )
+                            .append
+                            (
+                                $( "<div />", { "class": "col-sm-3" } )
+                                .append
+                                (
+                                    $( "<a />", { "href": "/company/" + member.id, "class": "pull-left main-margin-half", "data-role": "businessImage" } )
+                                    .append
+                                    (
+                                        profileThumb( member.id )
+                                    )
+                                )
+                            )
+                            .append
+                            (
+                                $( "<div />", { "class": "col-sm-9" } )
+                                .append
+                                (
+                                    $( "<h3 />", { "class": "top-0", "html": member.name } )
+                                )
+                                .append
+                                (
+                                    $( "<h4 />", { "class": ( member.professionalTitle ? "" : " hide" ), "html": ( member.professionalTitle ) })
+                                )
+                                .append
+                                (
+                                    $( "<table />", { "class": "table table-condensed table-bottom-border" } )
+                                    .append
+                                    (
+                                        $( "<tbody />" )
+                                        .append
+                                        (
+                                            $( "<tr />", { "class": ( member.country ? "" : " hide") })
+                                            .append
+                                            (
+                                                $( "<td />", { "html": bidx.i18n.i( "facet_country" ) })
+                                            )
+                                            .append
+                                            (
+                                                $( "<td />", { "html": member.country })
+                                            )
+                                        )
+                                        .append
+                                        (
+                                            $( "<tr />", { "class": ( member.city ? "" : " hide") })
+                                            .append
+                                            (
+                                                $( "<td />", { "html": bidx.i18n.i( "facet_city" ) })
+                                            )
+                                            .append
+                                            (
+                                                $( "<td />", { "html": member.city })
+                                            )
+                                        )
+                                        .append
+                                        (
+                                            $( "<tr />", { "class": ( member.language ? "" : " hide") })
+                                            .append
+                                            (
+                                                $( "<td />", { "html": bidx.i18n.i( "facet_language" ) })
+                                            )
+                                            .append
+                                            (
+                                                $( "<td />", { "html": member.language })
                                             )
                                         )
                                     )
@@ -968,6 +1075,7 @@
     {
         businessCardView:          businessCardView
     ,   companyCardView:           companyCardView
+    ,   memberCardView:            memberCardView
     ,   actionBox:                 actionBox
     ,   actionButtons:             actionButtons
     ,   memberLink:                memberLink

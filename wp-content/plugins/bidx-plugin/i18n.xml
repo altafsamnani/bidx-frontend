@@ -39,6 +39,7 @@
     <Item value="btnRequestRejectedByEntrepreneur">Rejected by entrepreneur</Item>
     <Item value="btnRequestAccepted">Request accepted</Item>
 
+    <Item value="btnViewProfile">View Profile</Item>
 
 
     <Item value="btnCreateBs">Create business proposal</Item>
@@ -192,6 +193,7 @@
     <!-- Facet Title -->
     <Item value="facet_industry">Industry</Item>
     <Item value="facet_country">Country</Item>
+    <Item value="facet_city">City</Item>
     <Item value="facet_language">Language</Item>
     <Item value="facet_entityType">Type</Item>
 
