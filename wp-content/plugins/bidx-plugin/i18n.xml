@@ -110,25 +110,25 @@
     <Item value="offerMentoring">Offer Mentoring</Item>
     <Item value="offerMentoringTo">Offer mentoring to</Item>
     <Item value="requestMentoring">Request Mentoring</Item>
-    <Item value="requestMentoringBusiness">Request Mentoring for</Item>
-    <Item value="receivedRequestFrom">You have a request from</Item>
-    <Item value="pendingRequestTo">Your request is pending from</Item>
-    <Item value="mentoringActive">You are the mentor of this business</Item>
-    <Item value="wantsToMentor">wants to be your mentor</Item>
-    <Item value="wantsYouToMentor">wants you to mentor this business</Item>
+    <Item value="requestMentoringBusiness">Request Mentoring for </Item>
+    <Item value="receivedRequestFrom">You have a mentor request from</Item>
+    <Item value="pendingRequestTo">Your mentor request is pending</Item>
+    <Item value="mentoringActive">You are mentoring this business</Item>
+    <Item value="wantsToMentor">has offered to be your mentor</Item>
+    <Item value="wantsYouToMentor">has requested you to mentor this business</Item>
     <Item value="isMentoring">is mentoring your business</Item>
     <Item value="youAreMentoring">You are mentoring this business</Item>
-    <Item value="youCancelledMentoring">You cancelled your request</Item>
-    <Item value="youAskedMentor">You asked to mentor this business</Item>
-    <Item value="youAskedMentorFrom">You asked to mentor this business from</Item>
-    <Item value="youAskedMentorForBusiness">You asked mentoring for</Item>
-    <Item value="youAskedFromMentor">You asked mentoring from</Item>
-    <Item value="mentorAskedYou">asked you to mentor your business</Item>
-    <Item value="mentorYouCancelled">You cancelled your request to</Item>
-    <Item value="mentorYouCancelledForBusiness">You cancelled your request for</Item>
+    <Item value="youCancelledMentoring">You cancelled your mentor request</Item>
+    <Item value="youAskedMentor">You offered to mentor this business</Item>
+    <Item value="youAskedMentorFrom">You offered to mentor this business by</Item>
+    <Item value="youAskedMentorForBusiness">You requested mentoring for</Item>
+    <Item value="youAskedFromMentor">You requested mentoring from</Item>
+    <Item value="mentorAskedYou">has offered to be your mentor</Item>
+    <Item value="mentorYouCancelled">You cancelled your offer to mentor this business</Item>
+    <Item value="mentorYouCancelledForBusiness">You cancelled your mentor request for</Item>
 
     <Item value="btnStopMentor">Stop Mentoring</Item>
-    <Item value="youStoppedMentor">You stopped the mentoring request from</Item>
+    <Item value="youStoppedMentor">You have cancelled the mentor request of</Item>
 
     <Item value="btnRemove">Remove</Item>
     <Item value="btnRequest">Request</Item>
@@ -139,13 +139,14 @@
     <Item value="btnRemoveAccess">Remove Access</Item>
     <Item value="btnDismiss">Dismiss</Item>
 
-    <Item value="wantsFullAccess">requests full access</Item>
-    <Item value="hasFullAccess">has full access</Item>
-    <Item value="userRejected">has been rejected</Item>
-    <Item value="requestAccessBusiness">Request full access from</Item>
-    <Item value="btnRequestAccess">Request Access</Item>
-    <Item value="youRequestedAccessFrom">You have requested full access from</Item>
-    <Item value="youHaveAccessFrom">You have full access from</Item>
+    <!-- Common Investor strings -->
+    <Item value="wantsFullAccess">requests access</Item>
+    <Item value="hasFullAccess">has access</Item>
+    <Item value="userRejected">has not been granted access</Item>
+    <Item value="requestAccessBusiness">Request access from</Item>
+    <Item value="btnRequestAccess">Requests Access</Item>
+    <Item value="youRequestedAccessFrom">You have requested access from</Item>
+    <Item value="youHaveAccessFrom">You have been granted full access by</Item>
 
     <!-- Cards -->
     <Item value="bsCompleted">Completed</Item>
@@ -163,10 +164,10 @@
     <Item value="cmCompany">View Company</Item>
 
     <!-- Connection details -->
-    <Item value="youAreInContact">You have active connection with this contact.</Item>
+    <Item value="youAreInContact">This user has been added to your contacts</Item>
     <Item value="btnStopConnect">Disconnect</Item>
-    <Item value="youAskedConnection">You have successfully sent a connect request to this user.</Item>
-    <Item value="wantsToConnect"> wants to connect with you.</Item>
+    <Item value="youAskedConnection">You have successfully sent a contact request to this user</Item>
+    <Item value="wantsToConnect">wants to connect with you</Item>
 
 
     <!-- Modal dialogs status messages -->
