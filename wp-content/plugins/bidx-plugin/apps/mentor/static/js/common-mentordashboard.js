@@ -133,7 +133,7 @@
         {
             $.each( result, function ( i, b )
             {
-                bsids.push( b.entityId );
+                bsids.push( b.entityId.toString() );
             });
         }
         
