@@ -280,8 +280,9 @@
         ,   status                  =   false
         ;
 
-        if( (investorProfileEntityId || mentorProfileEntityId ) &&
-            (visitingMemberPageId !== loggedInMemberId) )
+        if( (investorProfileEntityId || mentorProfileEntityId )
+            //&& (visitingMemberPageId !== loggedInMemberId) Commented because BIDX-3692
+            )
         {
             if( investorProfileEntityId )
             {
