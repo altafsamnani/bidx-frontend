@@ -76,6 +76,7 @@
             CONSTANTS.ENTITY_TYPES.pop(); // Removes Investor Profile, not to display
         }
 
+        _tabSearch();
         _languages();
 
         if ( $fakecrop )
@@ -206,7 +207,36 @@
     //         bidx.utils.log('_addVideoThumb:: ', 'No matches' + matches );
     //     }
     // }
+    function _tabSearch()
+    {
+        var isadvancedTab
+        ,   $tabSearch
+        ,   $advancedFilters    =   $('.advancedFilters')
+        ;
 
+        $tabSearch  =   $('.nav-search').find("li");
+
+        $tabSearch.on('click', function( e )
+        {
+            e.preventDefault();
+
+            var tab
+            ,   $this = $( this )
+            ;
+
+            isadvancedTab   =   $this.hasClass( "advancedTab" );
+
+            if( isadvancedTab )
+            {
+                $advancedFilters.removeClass('hide');
+            }
+            else
+            {
+                $advancedFilters.addClass('hide');
+            }
+        });
+
+    }
     function _languages()
     {
         // Retrieve the list of languages from the data api
