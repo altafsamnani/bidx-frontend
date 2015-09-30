@@ -257,7 +257,9 @@
         ,   status                  =   false
         ;
 
-        if( (loggedInMemberId !== visitingMemberPageId) && (investorProfileEntityId || mentorProfileEntityId ) )
+        if( (investorProfileEntityId || mentorProfileEntityId )
+            //&& (visitingMemberPageId !== loggedInMemberId) Commented because BIDX-3692
+            )
         {
             if( investorProfileEntityId )
             {
