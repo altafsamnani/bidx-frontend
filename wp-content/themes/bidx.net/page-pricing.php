@@ -122,12 +122,6 @@
 <td></td>
 </tr>
 <tr>
-<td>Service desk</td>
-<td>√ (½)</td>
-<td>√</td>
-<td></td>
-</tr>
-<tr>
 <td>Service desk Pro</td>
 <td></td>
 <td></td>
