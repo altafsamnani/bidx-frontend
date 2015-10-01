@@ -5,9 +5,18 @@
 
 #searchHome
 {
+    .collapsed .fa-advanced:before
+    {
+        content: "\f0fe";
+    }
+    a:not(.collapsed) .fa-advanced:before
+    {
+        content: "\f146";
+    }
+
     .advancedFilters
     {
-        margin-top:5%;
+        margin-top:10%;
         position:relative;
         display:none;
     }

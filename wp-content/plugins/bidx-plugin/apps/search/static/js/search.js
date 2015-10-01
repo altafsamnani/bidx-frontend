@@ -9,6 +9,9 @@
     ,   $element                = $( "#searchHome")
     ,   $frmSearch              = $element.find( ".searchform" )
 
+    ,   $nationality            = $element.find( "[name='nationality']" )
+    ,   $languageSelect         = $element.find( "[name='languages']"     )
+
     ,   $views                  = $element.find( ".view" )
     ,   $searchList             = $element.find( ".search-list" )
     ,   $errorListItem          = $element.find( "#error-listitem" )
@@ -69,6 +72,22 @@
     ,   displayInvestorProfile  = ( $.inArray("GroupOwner", roles) !== -1 || $.inArray("GroupAdmin", roles) !== -1 || currentInvestorId ) ? true : false
     ;
 
+    function _advancedFilters()
+    {
+        $nationality.bidx_chosen(
+        {
+            dataKey:            "nationality"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
+
+        $languageSelect.bidx_chosen(
+            {
+                dataKey:            "language"
+            ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+            });
+
+    }
+
     function _oneTimeSetup()
     {
         if(!displayInvestorProfile)
@@ -78,6 +97,7 @@
 
         _tabSearch();
         _languages();
+        _advancedFilters();
 
         if ( $fakecrop )
         {
