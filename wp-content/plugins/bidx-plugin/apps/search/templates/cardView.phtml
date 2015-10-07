@@ -12,7 +12,7 @@
                         <li role="presentation" class="active basicTab">
                             <a href="#home" aria-controls="home" class='basic' role="tab" data-toggle="tab"><?php _e('Basic Search','bidxplugin');?></a>
                         </li>
-                        <li role="presentation" class="advancedTab">
+                        <li role="presentation" class="advancedTab hide">
                             <a href="#home" aria-controls="profile" class='advanced' role="tab" data-toggle="tab"><?php _e('Advanced','bidxplugin');?></a>
                         </li>
                     </ul>
@@ -32,7 +32,7 @@
                                             </span>
                                         </div>
                                     </form>
-                                    <div class="topfilters main-facet"></div>
+                                    <div class="topfilters main-facet hide"></div>
 
                                     <div class="advancedFilters hide">
                                         <div class="row">
@@ -68,110 +68,53 @@
                                                                 <div class="row">
                                                                     <div class="col-sm-12"><label><?php _e('Date registered','bidxplugin'); ?></label></div>
                                                                     <div class="col-sm-6">
-                                                                        <div class="form-group">
-                                                                           <?php _e('From','bidxplugin'); ?>
-                                                                           <div class="input-group">
-                                                                           <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                                <input type="text" class="form-control" name="personalDetails.dateOfBirth" data-type="date">
-                                                                            </div>
+                                                                       <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                            <input type="text" class="form-control" name="personalDetails.dateOfBirth" data-type="date" placeholder="<?php _e('From','bidxplugin');?>">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
-                                                                        <div class="form-group">
-                                                                           <?php _e('To','bidxplugin'); ?>
-                                                                           <div class="input-group">
-                                                                           <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                                <input type="text" class="form-control" name="personalDetails.dateOfBirth" data-type="date">
-                                                                            </div>
+                                                                       <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                            <input type="text" class="form-control" name="personalDetails.dateOfBirth" data-type="date" placeholder="<?php _e('To','bidxplugin');?>">
                                                                         </div>
                                                                     </div>
                                                                 </div>
+
                                                                  <div class="row">
                                                                     <div class="col-sm-12"><label><?php _e('Last updated','bidxplugin'); ?></label></div>
                                                                     <div class="col-sm-6">
-                                                                        <div class="form-group">
-                                                                           <?php _e('From','bidxplugin'); ?>
-                                                                           <div class="input-group">
-                                                                           <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                                <input type="text" class="form-control" name="personalDetails.dateOfBirth" data-type="date">
-                                                                            </div>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                            <input type="text" class="form-control" name="personalDetails.dateOfBirth" data-type="date" placeholder="<?php _e('From','bidxplugin');?>">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
-                                                                        <div class="form-group">
-                                                                           <?php _e('To','bidxplugin'); ?>
-                                                                           <div class="input-group">
-                                                                           <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                                <input type="text" class="form-control" name="personalDetails.dateOfBirth" data-type="date">
-                                                                            </div>
+                                                                       <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                            <input type="text" class="form-control" name="personalDetails.dateOfBirth" data-type="date" placeholder="<?php _e('To','bidxplugin');?>">
                                                                         </div>
                                                                     </div>
                                                                 </div>
+
                                                                  <div class="row">
                                                                     <div class="col-sm-12"><label><?php _e('Age','bidxplugin'); ?></label></div>
                                                                     <div class="col-sm-6">
-                                                                        <div class="form-group">
-                                                                           <?php _e('From','bidxplugin'); ?>
-                                                                           <div class="input-group">
-                                                                           <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                                <input type="text" class="form-control" name="personalDetails.dateOfBirth" data-type="date">
-                                                                            </div>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                            <input type="text" class="form-control" name="personalDetails.dateOfBirth" data-type="date" placeholder="<?php _e('From','bidxplugin');?>">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
-                                                                        <div class="form-group">
-                                                                           <?php _e('To','bidxplugin'); ?>
-                                                                           <div class="input-group">
-                                                                           <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                                <input type="text" class="form-control" name="personalDetails.dateOfBirth" data-type="date">
-                                                                            </div>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                            <input type="text" class="form-control" name="personalDetails.dateOfBirth" data-type="date" placeholder="<?php _e('To','bidxplugin');?>">
                                                                         </div>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="row">
-                                                                    <div class="col-sm-4">
-                                                                        <div class="checkbox">
-                                                                            <input type="checkbox" value="%s" id="checkbox-%s" name="highesteducation" />
-                                                                            <label for="checkbox-%s"><span></span><?php _e('Highest education','bidxplugin'); ?></label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="checkbox">
-                                                                            <input type="checkbox" value="%s" id="checkbox-%s" name="facebook" />
-                                                                            <label for="checkbox-%s"><span></span><?php _e('Facebook','bidxplugin'); ?></label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="checkbox">
-                                                                            <input type="checkbox" value="%s" id="checkbox-%s" name="linkedIn" />
-                                                                            <label for="checkbox-%s"><span></span><?php _e('LinkedIn','bidxplugin'); ?></label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-sm-4">
-                                                                        <div class="checkbox">
-                                                                            <input type="checkbox" value="%s" id="checkbox-%s" name="skype" />
-                                                                            <label for="checkbox-%s"><span></span><?php _e('Skype','bidxplugin'); ?></label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="checkbox">
-                                                                            <input type="checkbox" value="%s" id="checkbox-%s" name="twitter" />
-                                                                            <label for="checkbox-%s"><span></span><?php _e('Twitter','bidxplugin'); ?></label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="checkbox">
-                                                                            <input type="checkbox" value="%s" id="checkbox-%s" name="attachments" />
-                                                                            <label for="checkbox-%s"><span></span><?php _e('Has attachments?','bidxplugin'); ?></label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                 <div class="row">
-                                                                    <div class="col-sm-6">
+                                                                    <div class="col-sm-12">
                                                                         <div class="form-group">
                                                                             <label><?php _e('Gender','bidxplugin'); ?></label>
 
@@ -188,6 +131,46 @@
                                                                     </div>
                                                                 </div>
 
+                                                                 <div class="row">
+                                                                    <div class="col-sm-12"><label><?php _e('Does member have ?','bidxplugin'); ?></label></div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="checkbox">
+                                                                            <input type="checkbox" value="%s" id="checkbox-%s" name="skype" />
+                                                                            <label for="checkbox-%s"><span></span><?php _e('Skype','bidxplugin'); ?></label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="checkbox">
+                                                                            <input type="checkbox" value="%s" id="checkbox-%s" name="twitter" />
+                                                                            <label for="checkbox-%s"><span></span><?php _e('Twitter','bidxplugin'); ?></label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="checkbox">
+                                                                            <input type="checkbox" value="%s" id="checkbox-%s" name="facebook" />
+                                                                            <label for="checkbox-%s"><span></span><?php _e('Facebook','bidxplugin'); ?></label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="checkbox">
+                                                                            <input type="checkbox" value="%s" id="checkbox-%s" name="linkedIn" />
+                                                                            <label for="checkbox-%s"><span></span><?php _e('LinkedIn','bidxplugin'); ?></label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="checkbox">
+                                                                            <input type="checkbox" value="%s" id="checkbox-%s" name="highesteducation" />
+                                                                            <label for="checkbox-%s"><span></span><?php _e('Highest education','bidxplugin'); ?></label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="checkbox">
+                                                                            <input type="checkbox" value="%s" id="checkbox-%s" name="attachments" />
+                                                                            <label for="checkbox-%s"><span></span><?php _e('Attachments','bidxplugin'); ?></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -200,7 +183,218 @@
                                                           </h4>
                                                         </div>
                                                         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                          <div class="panel-body panel-entrepreneurs-body">
+                                                          <div class="panel-body panel-entrepreneurs-body">.
+                                                                <div class="row">
+                                                                    <!-- Social impact -->
+                                                                    <div class="form-group col-sm-6">
+                                                                        <label><?php _e('Social impact','bidxplugin'); ?></label>
+                                                                        <select name="socialImpact" multiple></select>
+                                                                    </div>
+                                                                    <!-- Env impact -->
+                                                                    <div class="form-group col-sm-6">
+                                                                        <label><?php _e('Environmental impact','bidxplugin'); ?></label>
+                                                                        <select name="envImpact" multiple></select>
+                                                                    </div>
+                                                                </div>
+                                                                 <div class="row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Expertise needed','bidxplugin'); ?></label>
+                                                                            <select name="expertiseNeeded" multiple></select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Reason For Submission -->
+                                                                    <div class="col-sm-6">
+                                                                        <label><?php _e('Reason for submitting business proposal?','bidxplugin'); ?></label>
+                                                                        <select name="reasonForSubmission" data-forcearray="true"></select>
+                                                                    </div>
+                                                                </div>
+                                                                 <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <div class="industrySectors">
+                                                                            <label><?php _e('Focus Industry','bidxplugin'); ?></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-12"><label><?php _e('Sales revenue','bidxplugin'); ?></label></div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                                                                            <input type="text" class="form-control" name="salesRevenue[2014]" placeholder="<?php _e('From','bidxplugin');?>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                                                                            <input type="text" class="form-control " name="salesRevenue[2014]" placeholder="<?php _e('To','bidxplugin');?>">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-12"><label><?php _e('Finance needed','bidxplugin'); ?></label></div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                                                                            <input type="text" class="form-control" name="salesRevenue[2014]" placeholder="<?php _e('From','bidxplugin');?>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                                                                            <input type="text" class="form-control" name="salesRevenue[2014]" placeholder="<?php _e('To','bidxplugin');?>">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-12"><label><?php _e('Number of employees','bidxplugin'); ?></label></div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                                                            <input type="text" class="form-control valid" name="numberOfEmployees[2014]" placeholder="<?php _e('From','bidxplugin');?>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                                                            <input type="text" class="form-control valid" name="numberOfEmployees[2014]" placeholder="<?php _e('To','bidxplugin');?>">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-12"><label><?php _e('Completeness score','bidxplugin'); ?></label></div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="input-group">
+                                                                           <span class="input-group-addon">%</span>
+                                                                            <input type="text" class="form-control valid" name="completenessfrm" placeholder="<?php _e('From','bidxplugin');?>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="input-group">
+                                                                           <span class="input-group-addon">%</span>
+                                                                            <input type="text" class="form-control valid" name="completenessto" placeholder="<?php _e('To','bidxplugin');?>">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-12"><label><?php _e('Rating','bidxplugin'); ?></label></div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="input-group">
+                                                                           <span class="input-group-addon">%</span>
+                                                                            <input type="text" class="form-control valid" name="ratingfrm" placeholder="<?php _e('From','bidxplugin');?>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="input-group">
+                                                                           <span class="input-group-addon">%</span>
+                                                                            <input type="text" class="form-control valid" name="ratingto" placeholder="<?php _e('To','bidxplugin');?>">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-12"><label><?php _e('Equity currently retained','bidxplugin'); ?></label></div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="input-group">
+                                                                           <span class="input-group-addon">%</span>
+                                                                            <input type="text" class="form-control valid" name="equityRetainedfrm" placeholder="<?php _e('From','bidxplugin');?>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="input-group">
+                                                                           <span class="input-group-addon">%</span>
+                                                                            <input type="text" class="form-control valid" name="equityRetainedto" placeholder="<?php _e('To','bidxplugin');?>">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-6">
+                                                                        <!-- Mentor Advisory? -->
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Need a mentor?​','bidxplugin'); ?></label>
+                                                                            <div class="controls">
+                                                                                <div class="radio">
+                                                                                    <input type="radio" value="true" id="radio-AdvisoryYes" name="mentorAdvisory" data-toggle="radio" />
+                                                                                    <label for="radio-AdvisoryYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
+                                                                                </div>
+                                                                                <div class="radio">
+                                                                                    <input type="radio" value="false" id="radio-AdvisoryNo" name="mentorAdvisory" data-toggle="radio" />
+                                                                                    <label for="radio-AdvisoryNo"><span></span><?php _e('No','bidxplugin'); ?></label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Owned a business before?','bidxplugin'); ?></label>
+
+                                                                            <div class="radio">
+                                                                                <input type="radio" value="true" id="radio-prevRunBusinessYes" name="prevRunBusiness" data-toggle="radio" />
+                                                                                <label for="radio-prevRunBusinessYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
+                                                                            </div>
+                                                                            <div class="radio">
+                                                                                <input type="radio" value="false" id="radio-prevRunBusinessNo" name="prevRunBusiness" data-toggle="radio" />
+                                                                                <label for="radio-prevRunBusinessNo"><span></span><?php _e('No','bidxplugin'); ?></label>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <!-- Investment type -->
+                                                                    <div class="form-group">
+                                                                        <div class="col-sm-12"><label><?php _e('Finance preferred','bidxplugin'); ?></label></div>
+                                    <?php
+                                                                            // Render the checkboxes based upon the items from the static data api for the 'investmentType' typeCode / groupCode / context
+                                                                            //
+                                                                            if ( isset(BidxCommon::$i18nData['static']['investmentType']) ) {
+                                                                                foreach ( BidxCommon::$i18nData['static']['investmentType'] as $investmentType ) {
+                                                                                    printf( '<div class="col-sm-3">
+                                                                                                <div class="checkbox">
+                                                                                                    <input type="checkbox" value="%s" id="checkbox-%s" name="investmentType[]" />
+                                                                                                    <label for="checkbox-%s"><span></span>%s</label>
+                                                                                                </div>
+                                                                                            </div>', $investmentType->value, $investmentType->value, $investmentType->value, $investmentType->label );
+                                                                                }
+                                                                            }
+                                    ?>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-12"><label><?php _e('Does entrepreneur have ?','bidxplugin'); ?></label></div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="checkbox">
+                                                                            <input type="checkbox" value="%s" id="logo" name="logo" />
+                                                                            <label for="logo"><span></span><?php _e('Logo','bidxplugin'); ?></label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="checkbox">
+                                                                            <input type="checkbox" value="%s" id="video-pitch" name="twitter" />
+                                                                            <label for="video-pitch"><span></span><?php _e('Video pitch','bidxplugin'); ?></label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="checkbox">
+                                                                            <input type="checkbox" value="%s" id="audio-pitch" name="attachments" />
+                                                                            <label for="audio-pitch"><span></span><?php _e('Audio pitch','bidxplugin'); ?></label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="checkbox">
+                                                                            <input type="checkbox" value="%s" id="cv" name="cv" />
+                                                                            <label for="logo"><span></span><?php _e('CV','bidxplugin'); ?></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
 
                                                           </div>
                                                         </div>
@@ -209,12 +403,344 @@
                                                         <div class="panel-heading" role="tab" id="headingThree">
                                                           <h4 class="panel-title">
                                                             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                              <i class="fa fa-advanced"></i> <?php _e('Investors','bidxplugin');?>
+                                                              <i class="fa fa-advanced"></i> <?php _e('Mentors','bidxplugin');?>
                                                             </a>
                                                           </h4>
                                                         </div>
                                                         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                                          <div class="panel-body panel-investor-body">
+                                                          <div class="panel-body panel-mentor-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Focus languages','bidxplugin'); ?></label>
+                                                                            <select name="focusLanguage" multiple></select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group toggle toggle-focusLocationType toggle-focusLocationType-country">
+                                                                            <label><?php _e('Focus Country','bidxplugin'); ?></label>
+                                                                            <select name="focusCountry" multiple></select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Focus Social impact','bidxplugin'); ?></label>
+                                                                            <select name="focusSocialImpact" multiple></select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Focus Environmental impact','bidxplugin'); ?></label>
+                                                                            <select name="focusEnvImpact" multiple></select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <!-- Suggested Industry -->
+                                                                    <div class="col-sm-6">
+                                                                        <label><?php _e('Focus expertise','bidxplugin'); ?></label>
+                                                                        <select name="focusExpertise" multiple></select>
+                                                                    </div>
+                                                                </div>
+
+                                                                 <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <div class="focusIndustrySectors">
+                                                                            <label><?php _e('Focus industry','bidxplugin'); ?></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Mentor on behalf of an institution?','bidxplugin'); ?></label>
+                                                                            <div class="radio">
+                                                                                <input type="radio" value="true" id="radio-mentorsForInstYes" name="mentorsForInst" data-toggle="radio" />
+                                                                                <label for="radio-mentorsForInstYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
+                                                                            </div>
+                                                                            <div class="radio">
+                                                                                <input type="radio" value="false" id="radio-mentorsForInstNo" name="mentorsForInst" data-toggle="radio" />
+                                                                                <label for="radio-mentorsForInstNo"><span></span><?php _e('No, I am an independent mentor','bidxplugin'); ?></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Accredited','bidxplugin'); ?></label>
+                                                                            <div class="radio">
+                                                                                <input type="radio" value="true" id="radio-accreditedYes" name="accredited" data-toggle="radio" />
+                                                                                <label for="radio-accreditedYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
+                                                                            </div>
+
+                                                                            <div class="radio">
+                                                                                <input type="radio" value="false" id="radio-accreditedNo" name="accredited" data-toggle="radio" />
+                                                                                <label for="radio-accreditedNo"><span></span><?php _e('No','bidxplugin'); ?></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Focus gender','bidxplugin');?></label>
+                                                                            <div class="checkbox">
+                                                                                <input type="checkbox" value="m" id="checkbox-focusGenderMale" name="focusGender" data-toggle="checkbox" />
+                                                                                <label for="checkbox-focusGenderMale"><span></span><?php _e('Male','bidxplugin'); ?></label>
+                                                                            </div>
+                                                                            <div class="checkbox">
+                                                                                <input type="checkbox" value="f" id="checkbox-focusGenderFemale" name="focusGender" data-toggle="checkbox" />
+                                                                                <label for="checkbox-focusGenderFemale"><span></span><?php _e('Female','bidxplugin'); ?></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Focus Stage of business','bidxplugin'); ?></label>
+                                                                            <div class="checkbox">
+                                                                                <input type="checkbox" value="startup" id="checkbox-focusStageBusinessStartup" name="focusStageBusiness" />
+                                                                                <label for="checkbox-focusStageBusinessStartup"><span></span><?php _e('Startup (has no sales revenues yet)','bidxplugin'); ?></label>
+                                                                            </div>
+                                                                            <div class="checkbox">
+                                                                                <input type="checkbox" value="established" id="checkbox-focusStageBusinessEstablished" name="focusStageBusiness" />
+                                                                                <label for="checkbox-focusStageBusinessEstablished"><span></span><?php _e('Established (has sales revenues)','bidxplugin'); ?></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-12"><label><?php _e('Does mentor have ?','bidxplugin'); ?></label></div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="checkbox">
+                                                                            <input type="checkbox" value="%s" id="cv" name="cv" />
+                                                                            <label for="cv"><span></span><?php _e('CV/Attachments','bidxplugin'); ?></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                          </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading" role="tab" id="headingFour">
+                                                          <h4 class="panel-title">
+                                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                              <i class="fa fa-advanced"></i> <?php _e('Investors','bidxplugin');?>
+                                                            </a>
+                                                          </h4>
+                                                        </div>
+                                                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                                            <div class="panel-body panel-investor-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Focus languages','bidxplugin'); ?></label>
+                                                                            <select name="investorFocusLanguage" multiple></select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group toggle toggle-focusLocationType toggle-focusLocationType-country">
+                                                                            <label><?php _e('Focus Country','bidxplugin'); ?></label>
+                                                                            <select name="investorFocusCountry" multiple></select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Focus Social impact','bidxplugin'); ?></label>
+                                                                            <select name="investorFocusSocialImpact" multiple></select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Focus Environmental impact','bidxplugin'); ?></label>
+                                                                            <select name="investorFocusEnvImpact" multiple></select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <!-- Suggested Industry -->
+                                                                    <div class="col-sm-6">
+                                                                        <label><?php _e('Focus expertise','bidxplugin'); ?></label>
+                                                                        <select name="investorFocusExpertise" multiple></select>
+                                                                    </div>
+
+                                                                     <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Investor type','bidxplugin'); ?></label>
+                                                                            <select name="investorType"></select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-12"><label><?php _e('Investment size','bidxplugin'); ?></label></div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                                                                                <input type="text" class="form-control" name="minInvestment">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                                                                                <input type="text" class="form-control" name="maxInvestment">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-12"><label><?php _e('Number of investments in the last 12 months','bidxplugin'); ?></label></div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                                                                <input type="text" class="form-control" name="fromNumberInvestments">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                                                                <input type="text" class="form-control" name="ToNumberInvestments">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-12"><label><?php _e('Amount invested in the last 12 months','bidxplugin'); ?></label></div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                                                                                <input type="text" class="form-control" name="fromTotalInvestment">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                                                                                <input type="text" class="form-control" name="toTotalInvestment">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                 <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <div class="investorFocusIndustrySectors">
+                                                                            <label><?php _e('Focus industry','bidxplugin'); ?></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Investor on behalf of an institution?','bidxplugin'); ?></label>
+                                                                            <div class="radio">
+                                                                                <input type="radio" value="true" id="radio-investorForInstYes" name="investorForInst" data-toggle="radio" />
+                                                                                <label for="radio-investorForInstYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
+                                                                            </div>
+                                                                            <div class="radio">
+                                                                                <input type="radio" value="false" id="radio-investorForInstNo" name="investorForInst" data-toggle="radio" />
+                                                                                <label for="radio-investorForInstNo"><span></span><?php _e('No, I am an independent investor','bidxplugin'); ?></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Accredited','bidxplugin'); ?></label>
+                                                                            <div class="radio">
+                                                                                <input type="radio" value="true" id="radio-accreditedYes" name="accredited" data-toggle="radio" />
+                                                                                <label for="radio-accreditedYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
+                                                                            </div>
+
+                                                                            <div class="radio">
+                                                                                <input type="radio" value="false" id="radio-accreditedNo" name="accredited" data-toggle="radio" />
+                                                                                <label for="radio-accreditedNo"><span></span><?php _e('No','bidxplugin'); ?></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                 <div class="row">
+
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Previous investment','bidxplugin'); ?></label>
+                                                                            <div class="radio">
+                                                                                <input type="radio" value="true" id="radio-prevInvYes" name="previousInvestment" data-toggle="radio" />
+                                                                                <label for="radio-prevInvYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
+                                                                            </div>
+
+                                                                            <div class="radio">
+                                                                                <input type="radio" value="false" id="radio-prevInvNo" name="previousInvestment" data-toggle="radio" />
+                                                                                <label for="radio-prevInvNo"><span></span><?php _e('No','bidxplugin'); ?></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Focus gender','bidxplugin');?></label>
+                                                                            <div class="checkbox">
+                                                                                <input type="checkbox" value="m" id="checkbox-focusGenderMale" name="focusGender" data-toggle="checkbox" />
+                                                                                <label for="checkbox-focusGenderMale"><span></span><?php _e('Male','bidxplugin'); ?></label>
+                                                                            </div>
+                                                                            <div class="checkbox">
+                                                                                <input type="checkbox" value="f" id="checkbox-focusGenderFemale" name="focusGender" data-toggle="checkbox" />
+                                                                                <label for="checkbox-focusGenderFemale"><span></span><?php _e('Female','bidxplugin'); ?></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label><?php _e('Focus Stage of business','bidxplugin'); ?></label>
+                                                                            <div class="checkbox">
+                                                                                <input type="checkbox" value="startup" id="checkbox-focusStageBusinessStartup" name="focusStageBusiness" />
+                                                                                <label for="checkbox-focusStageBusinessStartup"><span></span><?php _e('Startup (has no sales revenues yet)','bidxplugin'); ?></label>
+                                                                            </div>
+                                                                            <div class="checkbox">
+                                                                                <input type="checkbox" value="established" id="checkbox-focusStageBusinessEstablished" name="focusStageBusiness" />
+                                                                                <label for="checkbox-focusStageBusinessEstablished"><span></span><?php _e('Established (has sales revenues)','bidxplugin'); ?></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-12"><label><?php _e('Does mentor have ?','bidxplugin'); ?></label></div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="checkbox">
+                                                                            <input type="checkbox" value="%s" id="cv" name="cv" />
+                                                                            <label for="cv"><span></span><?php _e('CV/Attachments','bidxplugin'); ?></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
                                                           </div>
                                                         </div>

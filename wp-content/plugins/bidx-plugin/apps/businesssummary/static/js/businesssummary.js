@@ -356,7 +356,7 @@
         forms.generalOverview.$el.find( "[name='reasonForSubmission']" ).bidx_chosen(
         {
             dataKey:            "reasonForSubmission"
-        ,   emptyValue:         bidx.i18n.i( "selectReasonForSubmission", appName )
+        ,   emptyValue:         bidx.i18n.i( "selectReasonForSubmission" )
         });
 
         $expertiseNeeded.bidx_chosen(

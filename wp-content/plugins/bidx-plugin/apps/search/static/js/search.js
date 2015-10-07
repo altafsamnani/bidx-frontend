@@ -11,6 +11,27 @@
 
     ,   $nationality            = $element.find( "[name='nationality']" )
     ,   $languageSelect         = $element.find( "[name='languages']"     )
+    ,   $industrySectors        = $element.find( ".industrySectors" )
+    ,   $socialImpact           = $element.find( "[name='socialImpact']" )
+    ,   $envImpact              = $element.find( "[name='envImpact']" )
+    ,   $expertiseNeeded        = $element.find( "[name='expertiseNeeded']" )
+    ,   $reasonForSubmission    = $element.find( "[name='reasonForSubmission']" )
+
+    ,   $focusLanguage          = $element.find( "[name='focusLanguage']" )
+    ,   $focusCountry           = $element.find( "[name='focusCountry']" )
+    ,   $focusExpertise         = $element.find( "[name='focusExpertise']" )
+    ,   $focusSocialImpact      = $element.find( "[name='focusSocialImpact']" )
+    ,   $focusEnvImpact         = $element.find( "[name='focusEnvImpact']" )
+    ,   $focusIndustrySectors   = $element.find( ".focusIndustrySectors" )
+
+    ,   $investorType           = $element.find( "[name='investorType']" )
+    ,   $investorFocusLanguage  = $element.find( "[name='investorFocusLanguage']" )
+    ,   $investorFocusCountry   = $element.find( "[name='investorFocusCountry']" )
+    ,   $investorFocusExpertise = $element.find( "[name='investorFocusExpertise']" )
+    ,   $investorFocusSocImpact = $element.find( "[name='investorFocusSocialImpact']" )
+    ,   $investorFocusEnvImpact = $element.find( "[name='investorFocusEnvImpact']" )
+    ,   $investorIndSectors     = $element.find( ".investorFocusIndustrySectors" )
+
 
     ,   $views                  = $element.find( ".view" )
     ,   $searchList             = $element.find( ".search-list" )
@@ -85,6 +106,105 @@
                 dataKey:            "language"
             ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
             });
+
+        /* Entrpreneurs */
+         // Run the industry widget on the selector
+        //
+        $industrySectors.industries();
+        $envImpact.bidx_chosen(
+        {
+            dataKey:            "envImpact"
+        });
+
+        $socialImpact.bidx_chosen(
+        {
+            dataKey:            "socialImpact"
+        });
+
+        $expertiseNeeded.bidx_chosen(
+        {
+            dataKey:            "mentorExpertise"
+        });
+
+        // Populate the dropdowns with the values
+        //
+        $reasonForSubmission.bidx_chosen(
+        {
+            dataKey:            "reasonForSubmission"
+        ,   emptyValue:         bidx.i18n.i( "selectReasonForSubmission" )
+        });
+
+        $focusLanguage.bidx_chosen(
+        {
+            dataKey:            "language"
+        });
+
+        $focusCountry.bidx_chosen(
+        {
+            dataKey:            "country"
+        });
+
+        // Populate the selects
+        //
+        $focusExpertise.bidx_chosen(
+        {
+            dataKey:            "mentorExpertise"
+        });
+
+        $focusSocialImpact.bidx_chosen(
+        {
+            dataKey:            "socialImpact"
+        });
+
+        $focusEnvImpact.bidx_chosen(
+        {
+            dataKey:            "envImpact"
+        });
+
+        // Run the industry widget on the selector
+        //
+        $focusIndustrySectors.industries();
+
+
+        /* Investor */
+        $investorType.bidx_chosen(
+        {
+            dataKey:            "investorType"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
+
+        $investorFocusLanguage.bidx_chosen(
+        {
+            dataKey:            "language"
+        });
+
+        $investorFocusCountry.bidx_chosen(
+        {
+            dataKey:            "country"
+        });
+
+        // Populate the selects
+        //
+        $investorFocusExpertise.bidx_chosen(
+        {
+            dataKey:            "mentorExpertise"
+        });
+
+        $investorFocusSocImpact.bidx_chosen(
+        {
+            dataKey:            "socialImpact"
+        });
+
+        $investorFocusEnvImpact.bidx_chosen(
+        {
+            dataKey:            "envImpact"
+        });
+
+        // Run the industry widget on the selector
+        //
+        $investorIndSectors.industries();
+
+
 
     }
 
