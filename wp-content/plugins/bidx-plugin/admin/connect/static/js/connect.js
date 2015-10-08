@@ -1448,6 +1448,7 @@
                 ,   mailbox
                 ,   isSenderId
                 ,   isGroupId
+                ,   option
                 ;
 
                 if( state.search( /(^mbx-)/ ) === 0 )
@@ -1479,7 +1480,14 @@
                             isGroupId  = message.sender.groupId;
                             if( isSenderId )
                             {
-                                recipients.push( message.sender.id.toString() );
+                                option = $( "<option/>",
+                                {
+                                    value: message.sender.id.toString()
+                                } );
+
+                                option.text( message.sender.name );
+
+                                recipients.push( option );
 
                             } else if( isGroupId )
                             {
@@ -1499,7 +1507,7 @@
                         lbl     = bidx.i18n.i( "replyContentHeader", appName )
                                 .replace( "%date%", bidx.utils.parseTimestampToDateTime( message.dateSent, "date" ) )
                                 .replace( "%time%", bidx.utils.parseTimestampToDateTime( message.dateSent, "time" ) )
-                                .replace( "%sender%", message.sender.displayName );
+                                .replace( "%sender%", message.sender.name );
                         content = "\n\n" + lbl + "\n" + content;
 
                         $frmCompose.find( "[name=connectBody]" ).val( content );
@@ -1591,7 +1599,7 @@
                 // prefix with "From:" (after moving a Sent item from Trash to Inbox, this will not show
                 // such prefix, which may be confusing).
                 //
-                senderReceiverName = ( !message.trashed && message.folderName === "Inbox" ? "" : prefixFrom ) +  message.sender.displayName;
+                senderReceiverName = ( !message.trashed && message.folderName === "Inbox" ? "" : prefixFrom ) +  message.sender.name;
             }
 
              $currentView.find( ".mail-sender").html( senderReceiverName );
@@ -2115,7 +2123,7 @@
                                         // prefix with "From:" (after moving a Sent item from Trash to Inbox, this will not show
                                         // such prefix, which may be confusing).
                                         //
-                                        senderReceiverName = ( !item.trashed && item.folderName == "Inbox" ? "" : prefixFrom ) +  item.sender.displayName;
+                                        senderReceiverName = ( !item.trashed && item.folderName == "Inbox" ? "" : prefixFrom ) +  item.sender.name;
                                     }
 
                                     // replace placeholders
