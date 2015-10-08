@@ -45,6 +45,7 @@
     ,   $fakecrop               = $views.find( ".js-fakecrop img" )
     ,   languages
     ,   appName                 = "search"
+    ,   loggedInMemberId        = bidx.common.getCurrentUserId()
 
     ,   paging                  =
         {
@@ -1499,6 +1500,7 @@
                 ,   gender
                 ,   isEntrepreneur
                 ,   isInvestor
+                ,   investorMemberId
                 ,   isMentor
                 ,   cityTown
                 ,   sepCountry
@@ -1517,6 +1519,7 @@
                 bidxMeta         = bidx.utils.getValue( i18nItem, "bidxMemberProfile.bidxMeta" );
                 isEntrepreneur   = bidx.utils.getValue( i18nItem, "bidxEntrepreneurProfile" );
                 isInvestor       = bidx.utils.getValue( i18nItem, "bidxInvestorProfile" );
+                investorMemberId = bidx.utils.getValue( isInvestor, "bidxMeta.bidxOwnerId" );
                 isMentor         = bidx.utils.getValue( i18nItem, "bidxMentorProfile" );
                 personalDetails  = i18nItem.bidxMemberProfile.personalDetails;
                 cityTown         = bidx.utils.getValue( personalDetails, "address.0.cityTown");
@@ -1644,7 +1647,7 @@
 
                     $listItem.find('.fa-mentor').addClass( mentorTaggingId );
                 }
-                if(isInvestor && isGroupAdmin)
+                if( ( isInvestor && isGroupAdmin) || ( investorMemberId === loggedInMemberId ) )
                 {
                     investorTaggingId   =   'hide';
                     taggingInvestor     =   bidx.utils.getValue(tagging, 'investor' );
