@@ -45,6 +45,7 @@
     ,   $tabMentor                  = $element.find( "#businessSummaryCollapse-MentoringDetails" )
 
     ,   loggedInMemberId            = bidx.common.getCurrentUserId()
+    ,   isGroupAdmin                = bidx.common.isGroupAdmin()
 
     ,   active                      = []
     ,   wait                        = []
@@ -2768,6 +2769,12 @@
         ,   isEntrepreneur
         ,   isMentor
         ,   isInvestor
+        ,   tagging
+        ,   taggingMentor
+        ,   taggingInvestor
+        ,   mentorTaggingId
+        ,   investorTaggingId
+        ,   investorMemberId
         ,   countHtml
         ,   isCurrentUserInList
         ,   cbParams        =  {}
@@ -2848,6 +2855,7 @@
 
             // create member listitems
             //
+            bidx.utils.log('response.docs', response.docs);
             $.each( response.docs, function( idx, item )
             {
                 mentorId    = bidx.utils.getValue( item, "ownerId" );
@@ -2868,14 +2876,16 @@
 
                                             if(itemMember)
                                             {
-                                                memberId        =   bidx.utils.getValue( itemMember,        "member.bidxMeta.bidxMemberId" );
-                                                memberProfile   =   bidx.utils.getValue( itemMember,        "bidxMemberProfile" );
-                                                personalDetails =   bidx.utils.getValue( itemMember,        "bidxMemberProfile.personalDetails" );
-                                                profilePic      =   bidx.utils.getValue( personalDetails,   "profilePicture" );
-                                                memberCountry   =   bidx.utils.getValue( personalDetails,   "address.0.country");
-                                                isEntrepreneur  =   bidx.utils.getValue( itemMember,        "bidxEntrepreneurProfile" );
-                                                isInvestor      =   bidx.utils.getValue( itemMember,        "bidxInvestorProfile" );
-                                                isMentor        =   bidx.utils.getValue( itemMember,        "bidxMentorProfile" );
+                                                memberId            =   bidx.utils.getValue( itemMember,        "member.bidxMeta.bidxMemberId" );
+                                                memberProfile       =   bidx.utils.getValue( itemMember,        "bidxMemberProfile" );
+                                                personalDetails     =   bidx.utils.getValue( itemMember,        "bidxMemberProfile.personalDetails" );
+                                                profilePic          =   bidx.utils.getValue( personalDetails,   "profilePicture" );
+                                                memberCountry       =   bidx.utils.getValue( personalDetails,   "address.0.country");
+                                                isEntrepreneur      =   bidx.utils.getValue( itemMember,        "bidxEntrepreneurProfile" );
+                                                isInvestor          =   bidx.utils.getValue( itemMember,        "bidxInvestorProfile" );
+                                                investorMemberId    =   bidx.utils.getValue( isInvestor, "bidxMeta.bidxOwnerId" );
+                                                isMentor            =   bidx.utils.getValue( itemMember,        "bidxMentorProfile" );
+                                                tagging             =   bidx.common.getAccreditation( itemMember );
 
                                                 /* Profile Picture */
                                                 if ( profilePic && profilePic.document )
@@ -2922,6 +2932,32 @@
                                                         $(this).remove();
                                                     }
                                                 });
+
+                                                /* tagging */
+                                                if(isMentor)
+                                                {
+                                                    mentorTaggingId     =   'hide';
+                                                    taggingMentor       =   bidx.utils.getValue(tagging, 'mentor' );
+
+                                                    if( !_.isUndefined(taggingMentor) )
+                                                    {
+                                                        mentorTaggingId     =   (taggingMentor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
+                                                    }
+
+                                                    $listItem.find('.fa-mentor').addClass( mentorTaggingId );
+                                                }
+                                                if( ( isInvestor && isGroupAdmin) || ( investorMemberId === loggedInMemberId ) )
+                                                {
+                                                    investorTaggingId   =   'hide';
+                                                    taggingInvestor     =   bidx.utils.getValue(tagging, 'investor' );
+
+                                                    if( !_.isUndefined(taggingInvestor) )
+                                                    {
+                                                        investorTaggingId   =   (taggingInvestor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
+                                                    }
+
+                                                    $listItem.find('.fa-investor').addClass( investorTaggingId );
+                                                }
 
                                                 //$requestMentoringBtn     = $listItem.find( '.btn-mentoring' );
                                                 //$requestMentoringBtn.addClass('disabled').i18nText("btnRequestSent");
@@ -3074,6 +3110,12 @@
             ,   isEntrepreneur
             ,   isMentor
             ,   isInvestor
+            ,   tagging
+            ,   taggingMentor
+            ,   taggingInvestor
+            ,   mentorTaggingId
+            ,   investorTaggingId
+            ,   investorMemberId
             ,   cbParams        =  {}
             ,   $d              =  $.Deferred()
             ,   responseLength
@@ -3166,10 +3208,11 @@
                                                                 personalDetails =   bidx.utils.getValue( itemMember, "bidxMemberProfile.personalDetails" );
                                                                 profilePic      =   bidx.utils.getValue( personalDetails, "profilePicture" );
                                                                 memberCountry   =   bidx.utils.getValue( personalDetails, "address.0.country");
-                                                                isEntrepreneur   = bidx.utils.getValue( itemMember, "bidxEntrepreneurProfile" );
-                                                                isInvestor       = bidx.utils.getValue( itemMember, "bidxInvestorProfile" );
-                                                                isMentor         = bidx.utils.getValue( itemMember, "bidxMentorProfile" );
-
+                                                                isEntrepreneur  =   bidx.utils.getValue( itemMember, "bidxEntrepreneurProfile" );
+                                                                isInvestor      =   bidx.utils.getValue( itemMember, "bidxInvestorProfile" );
+                                                                investorMemberId = bidx.utils.getValue( isInvestor, "bidxMeta.bidxOwnerId" );
+                                                                isMentor        =   bidx.utils.getValue( itemMember, "bidxMentorProfile" );
+                                                                tagging         =   bidx.common.getAccreditation( itemMember );
                                                                 /* Profile Picture */
                                                                 if ( profilePic )
                                                                 {
@@ -3206,7 +3249,43 @@
                                                                     .replace( /%action%/g,   actionData)
                                                                 ;
 
-                                                                $listItem = $( listItem );
+                                                                $listItem       = $( listItem );
+
+                                                                var roleLabel  = $listItem.find( ".bidx-label" );
+
+                                                                $.each( roleLabel, function( index, val )
+                                                                {
+                                                                    if ( $(this).text() === "" )
+                                                                    {
+                                                                        $(this).remove();
+                                                                    }
+                                                                });
+
+                                                                /* tagging */
+                                                                if(isMentor)
+                                                                {
+                                                                    mentorTaggingId     =   'hide';
+                                                                    taggingMentor       =   bidx.utils.getValue(tagging, 'mentor' );
+
+                                                                    if( !_.isUndefined(taggingMentor) )
+                                                                    {
+                                                                        mentorTaggingId     =   (taggingMentor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
+                                                                    }
+
+                                                                    $listItem.find('.fa-mentor').addClass( mentorTaggingId );
+                                                                }
+                                                                if( ( isInvestor && isGroupAdmin) || ( investorMemberId === loggedInMemberId ) )
+                                                                {
+                                                                    investorTaggingId   =   'hide';
+                                                                    taggingInvestor     =   bidx.utils.getValue(tagging, 'investor' );
+
+                                                                    if( !_.isUndefined(taggingInvestor) )
+                                                                    {
+                                                                        investorTaggingId   =   (taggingInvestor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
+                                                                    }
+
+                                                                    $listItem.find('.fa-investor').addClass( investorTaggingId );
+                                                                }
 
                                                                 if( options && options.cb )
                                                                 {
@@ -3370,7 +3449,7 @@
         {
             $tabMentor.on( "shown.bs.collapse", function ()
             {
-                // _getMentorRequests( );
+                 _getMentorRequests( );
             });
         }
 
@@ -3482,7 +3561,7 @@
                     bidx.common.removeValidationErrors();
 
                     _showView( "edit" );
-                    // _getMentorRequests( );
+                    _getMentorRequests( );
                     _showAllView( "mentor" );
                     _showAllView( "matchingmentors" );
 

@@ -121,6 +121,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             {
     ?>
                 <div class="coverBtns">
+                    <a class="btn btn-primary btn-large btnCover" data-toggle="modal" href="#coverImage"><?php echo _e( 'Juliaaa', 'bidxplugin' ); ?></a>
                     <a class="btn btn-primary btn-large btnCover" data-toggle="modal" href="#coverImage"><?php echo _e( 'Select', 'bidxplugin' ); ?></a>
                     <a class="btn btn-primary btn-large btnRemove hide" data-toggle="modal" href="#coverRemove"><?php echo _e( 'Remove', 'bidxplugin' ); ?></a>
                 </div>
@@ -1208,6 +1209,49 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                         </form>
                     </div><!-- /EDIT -->
 
+                     <!-- Mentor Matching Start -->
+                    <div class="toggle toggle-mentorMatches">
+                        <div class="view viewMentor">
+                            <!-- ACTIVE REQUESTS -->
+                            <div class="panel-heading">
+                                <a class="btn-block trigger-active-contacts">
+                                    <?php _e('Active mentors','bidxplugin')?>
+                                </a>
+                            </div>
+                            <div id="activeRequests">
+                                <div class="panel-body">
+                                    <div class="mentor-active-list list-unstyled clearfix row">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                             <!-- RECEIVED CONTACT REQUESTS -->
+                        <div class="view viewMatchingmentors">
+                            <div class="panel-heading">
+                                <a class="btn-block trigger-incoming-contacts">
+                                    <?php _e('Matching mentors','bidxplugin')?>
+                                </a>
+                            </div>
+                            <div id="incomingRequests">
+                                <div class="panel-body">
+                                    <div class="mentor-match-list list-unstyled clearfix row"></div>
+                                    <div class="view viewPager">
+                                        <div class="pagerContainer">
+                                            <div class="row">
+                                                <div class="col-sm-2 pagerTotal">
+                                                    <?php _e('%count% matches found', 'bidxplugin'); ?>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <ul class="pager pull-left"></ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Mentor Matching End -->
         </div><!-- /Mentoring Details -->
     </div>
     <div class="tab-pane hide-overflow" id="tab-bs-documents">
@@ -1395,8 +1439,8 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                 <div>%country%</div>
                 <div>
                     <span class="label bidx-label bidx-entrepreneur">%role_entrepreneur%</span>
-                    <span class="label bidx-label bidx-mentor">%role_mentor%</span>
-                    <span class="label bidx-label bidx-investor">%role_investor%</span>
+                    <span class="label bidx-label bidx-mentor">%role_mentor%</span><i class="fa fa-mentor"></i>
+                    <span class="label bidx-label bidx-investor">%role_investor%</span><i class="fa fa-investor"></i>
                 </div>
 
             </div>
