@@ -330,7 +330,6 @@
         _managementTeam();
         _companyDetails();
         _documents();
-        _inMail();
 
         // On any changes, how little doesn't matter, notify that we have a pending change
         // But no need to track the changes when doing a member data load
@@ -3904,7 +3903,7 @@
             case 'view':
 
                bidx.utils.log( "businessSummary::AppRouter::view" );
-
+                _inMail();
                _getMentors({
                     showMatch : 'hide'
                 });

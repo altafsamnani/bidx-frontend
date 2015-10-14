@@ -25,13 +25,22 @@ class businesssummary
     */
     function register_businesssummary_bidx_ui_libs()
     {
+        $sessionData = BidxCommon::$staticSession;
+        $businessSummaryId = $sessionData->requestedBusinessSummaryId;
+
         /* Common mentoring functions & mentoring activities functions */
-        wp_register_script ('commenting', plugins_url ('../commenting/static/js/commenting.js', __FILE__), NULL , '20140307', TRUE);;
-        wp_register_script ('bp-mentor', plugins_url ('../mentor/static/js/common-mentordashboard.js', __FILE__), NULL , '20140307', TRUE);
-        $deps = array_merge( self :: $deps, array(  'bp-mentor', 'commenting' ) );
+        if( $businessSummaryId )
+        {
+            wp_register_script ('bp-mentor', plugins_url ('../mentor/static/js/common-mentordashboard.js', __FILE__), NULL , '20140307', TRUE);
+            self::$deps[] = 'bp-mentor';
+
+            wp_register_script ('commenting', plugins_url ('../commenting/static/js/commenting.js', __FILE__), NULL , '20140307', TRUE);;
+            self::$deps[] = 'commenting';
+        }
+
         //$deps = self::$deps;
 
-        wp_register_script('businesssummary', plugins_url('static/js/businesssummary.js', __FILE__), $deps, '20130501', TRUE);
+        wp_register_script('businesssummary', plugins_url('static/js/businesssummary.js', __FILE__), self::$deps, '20130501', TRUE);
     }
 
     /**
