@@ -40,7 +40,7 @@
                 options.relChecks = {};
                 options.request.status = "accepted";
                 options.relChecks.isThereRelationship = true;
-                
+
                 $alert
                     .removeClass( "bg-Requested" )
                     .addClass( "bg-Accepted" )
@@ -52,9 +52,9 @@
                 $alert
                     .find( ".activity-actions" )
                     .remove();
-                
+
                 $alert.append( bidx.construct.actionButtons( options, "mentor" ) );
-                
+
                 bidx.commonmentordashboard.checkForActivities();
 
                 if ( bidx.globalChecks.isEntrepreneurDashboard() || bidx.globalChecks.isMentorDashboard() || bidx.globalChecks.isInvestorDashboard() )
@@ -101,7 +101,7 @@
             {
                 options.request = {};
                 options.request.status = "rejected";
-                
+
                 $alert
                     .removeClass( "bg-Requested" )
                     .addClass( "bg-Rejected" )
@@ -113,7 +113,7 @@
                 $alert
                     .find( ".activity-actions" )
                     .remove();
-                
+
                 $alert.append( bidx.construct.actionButtons( options, "mentor" ) );
             }
         ,   error: function( jqXhr )
@@ -125,7 +125,7 @@
                 bidx.utils.error( "Client  error occured", response );
             }
         } );
-        
+
         options = {};
     });
 
@@ -145,7 +145,7 @@
             {
                 options.request = {};
                 options.request.status = "stopped";
-                
+
                 $alert
                     .removeClass( "bg-Requested" )
                     .addClass( "bg-Rejected" )
@@ -157,9 +157,9 @@
                 $alert
                     .find( ".activity-actions" )
                     .remove();
-                
+
                 $alert.append( bidx.construct.actionButtons( options, "stopped" ) );
-                
+
                 bidx.commonmentordashboard.checkForActivities();
                 bidx.commonmentordashboard.doOfferMentoringMultipleBusinesses();
 
@@ -173,7 +173,7 @@
                 bidx.utils.error( "Client  error occured", response );
             }
         } );
-        
+
         options = {};
     });
 
@@ -193,7 +193,7 @@
             {
                 options.request = {};
                 options.request.status = "stopped";
-                
+
                 $alert
                     .removeClass( "bg-Accepted" )
                     .addClass( "bg-Rejected" )
@@ -205,10 +205,11 @@
                 $alert
                     .find( ".activity-actions" )
                     .remove();
-                
+
                 $alert.append( bidx.construct.actionButtons( options, "stopped" ) );
-                
+
                 bidx.commonmentordashboard.checkForActivities();
+                bidx.commonmentordashboard.doOfferMentoringMultipleBusinesses();
             }
         ,   error: function( jqXhr )
             {
@@ -219,7 +220,7 @@
                 bidx.utils.error( "Client  error occured", response );
             }
         } );
-        
+
         options = {};
     });
 
@@ -320,7 +321,7 @@
                 $alert
                     .find( ".activity-actions" )
                     .remove();
-                
+
                 $alert.append( bidx.construct.actionButtons( params, "mentor" ) );
             }
         ,   error:  function(jqXhr)
@@ -412,7 +413,7 @@
                 options.relChecks.isTheInitiator = true;
                 options.relChecks.isTheMentor = false;
                 options.relChecks.showBusinessInfo = true;
-                
+
                 $alert
                     .attr( "data-requestid", response.data.requestId )
                     .removeClass( "bg-Pending" )
@@ -425,9 +426,9 @@
                 $alert
                     .find( ".activity-actions" )
                     .remove();
-                
+
                 $alert.append( bidx.construct.actionButtons( options, "mentor" ) );
-                
+
                 bidx.commonmentordashboard.checkForActivities();
             }
         ,   error:  function(jqXhr)
@@ -475,7 +476,7 @@
         ,   callback: function()
             {
                 params.status = "granted";
-                
+
                 $alert
                     .removeClass( "bg-Pending" )
                     .addClass( "bg-Granted" )
@@ -487,7 +488,7 @@
                 $alert
                     .find( ".activity-actions" )
                     .remove();
-                
+
                 $alert.append( bidx.construct.actionButtons( params, "investor" ) );
             }
         ,   error: function( jqXhr )
@@ -520,7 +521,7 @@
         ,   callback: function()
             {
                 params.status = "rejected";
-                
+
                 $alert
                     .removeClass( "bg-Requested" )
                     .addClass( "bg-Rejected" )
@@ -532,7 +533,7 @@
                 $alert
                     .find( ".activity-actions" )
                     .remove();
-                
+
                 $alert.append( bidx.construct.actionButtons( params, "investor" ) );
 
             }
@@ -564,7 +565,7 @@
         ,   callback: function()
             {
                 options.status = "requested";
-                
+
                 $alert
                     .removeClass( "bg-Pending" )
                     .addClass( "bg-Requested" )

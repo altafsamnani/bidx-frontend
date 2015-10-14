@@ -53,7 +53,7 @@
             if ( bidx.globalChecks.isProfilePage() )
             {
                 entrepreneurProfileMentorActions();
-                if ( !bidx.globalChecks.isOwnProfile() && !hasEntrepreneurProfile )
+                if ( !bidx.globalChecks.isOwnProfile() && hasEntrepreneurProfile )
                 {
                     doOfferMentoringMultipleBusinesses();
                 }
@@ -119,7 +119,7 @@
         ,   options = {}
         ;
 
-        // 
+        //
         //
         if ( bidx.globalChecks.isProfilePage() && hasEntrepreneurProfile && $businessElements.length )
         {
@@ -128,7 +128,7 @@
                  bsids.push( $(this).attr( "data-bsid") );
             });
         }
-                
+
         if ( bidx.globalChecks.isEntrepreneurDashboard() || bidx.globalChecks.isMentorDashboard() || bidx.globalChecks.isInvestorDashboard() )
         {
             bsids = databsids;
@@ -167,7 +167,7 @@
                         relChecks.isThereRelationship = ( request.entityId === parseInt( bidxConfig.context.businessSummaryId, 10) ) ? true : false;
                     }
 
-                    // 
+                    //
                     //
                     if ( bidx.globalChecks.isProfilePage() )
                     {
