@@ -323,7 +323,8 @@
                 bidx.utils.error( "i18n::Problem translating", key, context );
             }
 
-            label           =   ( $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent(escape(label)) : label;
+            //label           =   ( currentLanguage === 'mz' || $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent(escape(label)) : label;
+            label           =   ( currentLanguage === 'mz' || $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent(label) : label;
 
             $el.text( label );
 
