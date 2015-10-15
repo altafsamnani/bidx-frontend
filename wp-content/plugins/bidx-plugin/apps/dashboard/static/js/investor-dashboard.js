@@ -72,6 +72,7 @@
 
                             if ( response.data.received.length )
                             {
+
                                 $.each( response.data.received, function( i, bs )
                                 {
                                     if ( checkRejected( bs ) )
@@ -93,14 +94,18 @@
 
                             if ( response.data.requested.length )
                             {
+
                                 $.each( response.data.requested, function( i, bs )
                                 {
                                     if ( checkRejected( bs ) )
                                     {
+
                                         requestedResult[i] = bs;
 
-                                        if ( $.inArray( bs.entity.bidxMeta.bidxEntityId, requeBsArray) === -1 && bidx.common.checkMemberExists( bs.entity.bidxMeta.bidxEntityId ) === false )
+                                        if ( $.inArray( bs.entity.bidxMeta.bidxEntityId, requeBsArray) === -1
+                                            && bidx.common.checkMemberExists( bs.entity.bidxMeta.bidxEntityId ) === false )
                                         {
+                                            bidx.utils.log('requested', bs);
                                             requeBsArray.push( bs.entity.bidxMeta.bidxEntityId );
                                         }
 
@@ -231,6 +236,9 @@
         if ( data.received )
         {
             addReceivedBoxes();
+
+            _showView('match');
+            _showView('contact', true);
         }
     };
 
@@ -335,6 +343,9 @@
         {
             if ( $tabRecommended.length )
             {
+                _showView('load');
+                _showView('loadcontact', true);
+
                 fetchBusinesses();
             }
         }
@@ -347,6 +358,7 @@
         {
             $views.hide();
         }
+
          var $view = $views.filter(bidx.utils.getViewName(view)).show();
     };
 

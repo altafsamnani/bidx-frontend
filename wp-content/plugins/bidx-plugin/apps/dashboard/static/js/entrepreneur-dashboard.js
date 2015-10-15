@@ -96,6 +96,8 @@
                                 $tabCompanies.append( bidx.construct.companyCardView( item ) );
                             }
                         } );
+
+                        _hideView('loadcompanies');
                     }
                 }
 
@@ -155,6 +157,8 @@
                 }
             });
         });
+
+        _hideView('load');
     };
 
     // Perform an API call to Grant Access
@@ -216,6 +220,11 @@
          var $view = $views.filter(bidx.utils.getViewName(view)).show();
     };
 
+    var _hideView = function(view, showAll)
+    {
+         var $view = $views.filter(bidx.utils.getViewName(view)).hide();
+    };
+
     // var _showMainView = function(view, hideview)
     // {
 
@@ -254,6 +263,9 @@
 
     if ( $tabCompanies.length )
     {
+        _showView('load');
+        _showView('loadcompanies', true);
+
         fetchCompanies();
     }
 
