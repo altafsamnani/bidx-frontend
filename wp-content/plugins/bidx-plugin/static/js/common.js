@@ -1407,6 +1407,7 @@
     {
         var bidxAPIService = "entity.destroy"
         ,   bidxAPIParams
+        ,   currentLanguage
         ,   urlLocation = window.location.pathname
         ;
 
@@ -1428,7 +1429,15 @@
                 }
                 else
                 {
-                    document.location.href = '/member';
+                    currentLanguage = getCurrentLanguage();
+
+                    if (currentLanguage === 'en') {
+                        document.location.href = '/member';
+                    } 
+                    else 
+                    {
+                        document.location.href =  '/' + currentLanguage + '/member';
+                    }                 
                 }
             }
         ,   error:          function( jqXhr, textStatus )
