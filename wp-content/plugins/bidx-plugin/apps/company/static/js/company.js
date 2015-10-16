@@ -163,9 +163,10 @@
             e.preventDefault();
 
             //BUGFIX: BIDX-3691 - display the Logo has been removed message only on remove button action
-            if (!$logoContainer.hasClass("icons-rounded")){
-            		$logoContainer.find( "img" ).remove();
-            		$logoContainer.html( $( "<p />", { "html": bidx.i18n.i( "docDeleted" ) } ) );
+            if (!$logoContainer.hasClass("icons-rounded"))
+            {
+                $logoContainer.find( "img" ).remove();
+                $logoContainer.html( $( "<p />", { "html": bidx.i18n.i( "docDeleted" ) } ) );
             }
         } );
 
@@ -587,7 +588,7 @@
         // Editing an existing company has 3 different cases
         // No Logo is placed, Logo is placed, Logo has beed removed
         //
-        
+
         //BUGFIX: BIDX-3691 - display the Logo has been removed message only on remove button action
         if ( state === "edit" )
         {
