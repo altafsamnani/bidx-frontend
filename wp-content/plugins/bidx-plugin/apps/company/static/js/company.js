@@ -592,9 +592,12 @@
         //BUGFIX: BIDX-3691 - display the Logo has been removed message only on remove button action
         if ( state === "edit" )
         {
-        	  if (logo && logo[ 0 ].document){
+            if (logo && logo[ 0 ].document)
+            {
                 _logoIsSet();
-            } else {
+            }
+            else
+            {
                 _noLogo();
             }
         }
