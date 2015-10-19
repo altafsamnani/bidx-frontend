@@ -10,6 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.5\n"
 
 # Language Original
 # _x("Select what best matches your reason for submission", "auth","i18n");
@@ -28,12 +29,6 @@ msgstr ""
 # Context auth TextDomain i18n
 msgctxt "auth"
 msgid "Select an Option"
-msgstr ""
-
-# _x("Select what best matches your reason for submission", "businesssummary","i18n");
-# Context businesssummary TextDomain i18n
-msgctxt "businesssummary"
-msgid "Select what best matches your reason for submission"
 msgstr ""
 
 # _x("Current year", "businesssummary","i18n");
@@ -516,12 +511,6 @@ msgctxt "mail"
 msgid "Sending message"
 msgstr ""
 
-# _x("Message sent", "mail","i18n");
-# Context mail TextDomain i18n
-msgctxt "mail"
-msgid "Message sent"
-msgstr ""
-
 # _x("Incoming contact requests", "mail","i18n");
 # Context mail TextDomain i18n
 msgctxt "mail"
@@ -546,10 +535,10 @@ msgctxt "mail"
 msgid "Active contacts"
 msgstr ""
 
-# _x("Ignored contacts", "mail","i18n");
+# _x("Blocked contacts", "mail","i18n");
 # Context mail TextDomain i18n
 msgctxt "mail"
-msgid "Ignored contacts"
+msgid "Blocked contacts"
 msgstr ""
 
 # _x("New contact request", "mail","i18n");
@@ -574,6 +563,12 @@ msgstr ""
 # Context mail TextDomain i18n
 msgctxt "mail"
 msgid "Deleted from"
+msgstr ""
+
+# _x("Unblock", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "Unblock"
 msgstr ""
 
 # _x("You cannot trash a system mail this way", "mail","i18n");
@@ -694,18 +689,6 @@ msgstr ""
 # Context search TextDomain i18n
 msgctxt "search"
 msgid "Registered"
-msgstr ""
-
-# _x("More", "search","i18n");
-# Context search TextDomain i18n
-msgctxt "search"
-msgid "More"
-msgstr ""
-
-# _x("Less", "search","i18n");
-# Context search TextDomain i18n
-msgctxt "search"
-msgid "Less"
 msgstr ""
 
 # _x("results", "search","i18n");
@@ -1211,6 +1194,11 @@ msgstr ""
 msgid "Request accepted"
 msgstr ""
 
+# _e("View Profile", "i18n");
+# Context  TextDomain i18n
+msgid "View Profile"
+msgstr ""
+
 # _e("Create business proposal", "i18n");
 # Context  TextDomain i18n
 msgid "Create business proposal"
@@ -1256,6 +1244,11 @@ msgstr ""
 msgid "Something went wrong while creating a relationship:"
 msgstr ""
 
+# _e("No results match", "i18n");
+# Context  TextDomain i18n
+msgid "No results match"
+msgstr ""
+
 # _e("Select an Option", "i18n");
 # Context  TextDomain i18n
 msgid "Select an Option"
@@ -1264,6 +1257,11 @@ msgstr ""
 # _e("Select Some Options", "i18n");
 # Context  TextDomain i18n
 msgid "Select Some Options"
+msgstr ""
+
+# _e("Select what best matches your reason for submission", "i18n");
+# Context  TextDomain i18n
+msgid "Select what best matches your reason for submission"
 msgstr ""
 
 # _e("This field is required", "i18n");
@@ -1416,6 +1414,256 @@ msgstr ""
 msgid "Mentor"
 msgstr ""
 
+# _e("Offer Mentoring", "i18n");
+# Context  TextDomain i18n
+msgid "Offer Mentoring"
+msgstr ""
+
+# _e("Offer mentoring to", "i18n");
+# Context  TextDomain i18n
+msgid "Offer mentoring to"
+msgstr ""
+
+# _e("Request Mentoring", "i18n");
+# Context  TextDomain i18n
+msgid "Request Mentoring"
+msgstr ""
+
+# _e("Request Mentoring for ", "i18n");
+# Context  TextDomain i18n
+msgid "Request Mentoring for "
+msgstr ""
+
+# _e("You have a mentor request from", "i18n");
+# Context  TextDomain i18n
+msgid "You have a mentor request from"
+msgstr ""
+
+# _e("Your mentor request is pending", "i18n");
+# Context  TextDomain i18n
+msgid "Your mentor request is pending"
+msgstr ""
+
+# _e("You are mentoring this business", "i18n");
+# Context  TextDomain i18n
+msgid "You are mentoring this business"
+msgstr ""
+
+# _e("has offered to be your mentor", "i18n");
+# Context  TextDomain i18n
+msgid "has offered to be your mentor"
+msgstr ""
+
+# _e("has requested you to mentor this business", "i18n");
+# Context  TextDomain i18n
+msgid "has requested you to mentor this business"
+msgstr ""
+
+# _e("is mentoring your business", "i18n");
+# Context  TextDomain i18n
+msgid "is mentoring your business"
+msgstr ""
+
+# _e("You cancelled your mentor request", "i18n");
+# Context  TextDomain i18n
+msgid "You cancelled your mentor request"
+msgstr ""
+
+# _e("You offered to mentor this business", "i18n");
+# Context  TextDomain i18n
+msgid "You offered to mentor this business"
+msgstr ""
+
+# _e("You offered to mentor this business by", "i18n");
+# Context  TextDomain i18n
+msgid "You offered to mentor this business by"
+msgstr ""
+
+# _e("You requested mentoring for", "i18n");
+# Context  TextDomain i18n
+msgid "You requested mentoring for"
+msgstr ""
+
+# _e("You requested mentoring from", "i18n");
+# Context  TextDomain i18n
+msgid "You requested mentoring from"
+msgstr ""
+
+# _e("You cancelled your offer to mentor this business", "i18n");
+# Context  TextDomain i18n
+msgid "You cancelled your offer to mentor this business"
+msgstr ""
+
+# _e("You cancelled your mentor request for", "i18n");
+# Context  TextDomain i18n
+msgid "You cancelled your mentor request for"
+msgstr ""
+
+# _e("Stop Mentoring", "i18n");
+# Context  TextDomain i18n
+msgid "Stop Mentoring"
+msgstr ""
+
+# _e("You have cancelled the mentor request of", "i18n");
+# Context  TextDomain i18n
+msgid "You have cancelled the mentor request of"
+msgstr ""
+
+# _e("Remove", "i18n");
+# Context  TextDomain i18n
+msgid "Remove"
+msgstr ""
+
+# _e("Request", "i18n");
+# Context  TextDomain i18n
+msgid "Request"
+msgstr ""
+
+# _e("Reject", "i18n");
+# Context  TextDomain i18n
+msgid "Reject"
+msgstr ""
+
+# _e("Accept", "i18n");
+# Context  TextDomain i18n
+msgid "Accept"
+msgstr ""
+
+# _e("Send a Reminder", "i18n");
+# Context  TextDomain i18n
+msgid "Send a Reminder"
+msgstr ""
+
+# _e("Cancel Request", "i18n");
+# Context  TextDomain i18n
+msgid "Cancel Request"
+msgstr ""
+
+# _e("Remove Access", "i18n");
+# Context  TextDomain i18n
+msgid "Remove Access"
+msgstr ""
+
+# _e("Dismiss", "i18n");
+# Context  TextDomain i18n
+msgid "Dismiss"
+msgstr ""
+
+# _e("requests access", "i18n");
+# Context  TextDomain i18n
+msgid "requests access"
+msgstr ""
+
+# _e("has access", "i18n");
+# Context  TextDomain i18n
+msgid "has access"
+msgstr ""
+
+# _e("has been rejected", "i18n");
+# Context  TextDomain i18n
+msgid "has been rejected"
+msgstr ""
+
+# _e("Request access from", "i18n");
+# Context  TextDomain i18n
+msgid "Request access from"
+msgstr ""
+
+# _e("Requests Access", "i18n");
+# Context  TextDomain i18n
+msgid "Requests Access"
+msgstr ""
+
+# _e("You have requested access from", "i18n");
+# Context  TextDomain i18n
+msgid "You have requested access from"
+msgstr ""
+
+# _e("You have been granted full access by", "i18n");
+# Context  TextDomain i18n
+msgid "You have been granted full access by"
+msgstr ""
+
+# _e("Completed", "i18n");
+# Context  TextDomain i18n
+msgid "Completed"
+msgstr ""
+
+# _e("Finance Needed", "i18n");
+# Context  TextDomain i18n
+msgid "Finance Needed"
+msgstr ""
+
+# _e("Business stage", "i18n");
+# Context  TextDomain i18n
+msgid "Business stage"
+msgstr ""
+
+# _e("Year sales started", "i18n");
+# Context  TextDomain i18n
+msgid "Year sales started"
+msgstr ""
+
+# _e("Industry", "i18n");
+# Context  TextDomain i18n
+msgid "Industry"
+msgstr ""
+
+# _e("Country of business", "i18n");
+# Context  TextDomain i18n
+msgid "Country of business"
+msgstr ""
+
+# _e("View Business", "i18n");
+# Context  TextDomain i18n
+msgid "View Business"
+msgstr ""
+
+# _e("Date of registration", "i18n");
+# Context  TextDomain i18n
+msgid "Date of registration"
+msgstr ""
+
+# _e("Registration number", "i18n");
+# Context  TextDomain i18n
+msgid "Registration number"
+msgstr ""
+
+# _e("Fiscal number", "i18n");
+# Context  TextDomain i18n
+msgid "Fiscal number"
+msgstr ""
+
+# _e("Legal form of business", "i18n");
+# Context  TextDomain i18n
+msgid "Legal form of business"
+msgstr ""
+
+# _e("View Company", "i18n");
+# Context  TextDomain i18n
+msgid "View Company"
+msgstr ""
+
+# _e("This user has been added to your contacts", "i18n");
+# Context  TextDomain i18n
+msgid "This user has been added to your contacts"
+msgstr ""
+
+# _e("Disconnect", "i18n");
+# Context  TextDomain i18n
+msgid "Disconnect"
+msgstr ""
+
+# _e("You have successfully sent a contact request to this user", "i18n");
+# Context  TextDomain i18n
+msgid "You have successfully sent a contact request to this user"
+msgstr ""
+
+# _e("wants to connect with you", "i18n");
+# Context  TextDomain i18n
+msgid "wants to connect with you"
+msgstr ""
+
 # _e("You are about to send request. Are you sure?", "i18n");
 # Context  TextDomain i18n
 msgid "You are about to send request. Are you sure?"
@@ -1486,14 +1734,14 @@ msgstr ""
 msgid "Stop mentoring"
 msgstr ""
 
-# _e("Industry", "i18n");
-# Context  TextDomain i18n
-msgid "Industry"
-msgstr ""
-
 # _e("Country", "i18n");
 # Context  TextDomain i18n
 msgid "Country"
+msgstr ""
+
+# _e("City", "i18n");
+# Context  TextDomain i18n
+msgid "City"
 msgstr ""
 
 # _e("Language", "i18n");
@@ -1671,6 +1919,16 @@ msgstr ""
 msgid "new"
 msgstr ""
 
+# _e("More", "i18n");
+# Context  TextDomain i18n
+msgid "More"
+msgstr ""
+
+# _e("Less", "i18n");
+# Context  TextDomain i18n
+msgid "Less"
+msgstr ""
+
 # _e("Loading", "i18n");
 # Context  TextDomain i18n
 msgid "Loading"
@@ -1731,3 +1989,22 @@ msgstr ""
 msgid "EntityId is not specified"
 msgstr ""
 
+# _e("Connect", "i18n");
+# Context  TextDomain i18n
+msgid "Connect"
+msgstr ""
+
+# _e("Message sent", "i18n");
+# Context  TextDomain i18n
+msgid "Message sent"
+msgstr ""
+
+# _e("Reminder sent", "i18n");
+# Context  TextDomain i18n
+msgid "Reminder sent"
+msgstr ""
+
+# _e("Send Message", "i18n");
+# Context  TextDomain i18n
+msgid "Send Message"
+msgstr ""
