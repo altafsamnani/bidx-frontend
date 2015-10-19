@@ -367,7 +367,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                 <h1>
                     <?php echo $this->exst( $businessSummary->name ); ?>
                     <small>&nbsp;<?php echo _e( 'by', 'bidxplugin' ); ?>&nbsp;
-                        <a href="/member/<?php echo $this->exst( $businessSummaryBidxMeta->bidxOwnerId ); ?>"><?php echo $this->exst( $businessSummaryBidxMeta->bidxOwnerDisplayName ); ?></a>
+                        <a href="<?php echo _l('member')."/".$this->exst( $businessSummaryBidxMeta->bidxOwnerId ); ?>"><?php echo $this->exst( $businessSummaryBidxMeta->bidxOwnerDisplayName ); ?></a>
                     </small>
                 </h1>
 <?php
@@ -1427,12 +1427,12 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 <script type="text/html" id="mentor-snippet">
 <!--
         <div class="well media">
-            <a class="pull-left" href="/member/%contactId%">
+            <a class="pull-left" href="<?php echo _l('member');?>/%contactId%">
                 %pictureUrl%
             </a>
             <div class="action">%action%</div>
             <div class="media-body">
-                <a class="media-heading" href="/member/%contactId%"><strong>%contactName%</strong></a>
+                <a class="media-heading" href="<?php echo _l('member');?>/%contactId%"><strong>%contactName%</strong></a>
 
                 <div>%professionalTitle%</div>
                 <div>%country%</div>
