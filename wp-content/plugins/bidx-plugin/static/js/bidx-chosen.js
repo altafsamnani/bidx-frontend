@@ -10,6 +10,7 @@
             ,   "width":                        "100%"
             ,   "disable_search_threshold":     10
             ,   "placeholder_text_single":      bidx.i18n.i("selectSingleOption")
+            ,   "no_results_text":              bidx.i18n.i("selectNoResults")
             ,   "placeholder_text_multiple":    bidx.i18n.i("selectMultipleOptions")
             }
         }

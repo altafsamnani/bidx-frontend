@@ -58,6 +58,7 @@
     <Item value="errorRequest">Something went wrong while creating a relationship:</Item>
 
     <!-- Dropdown messages -->
+    <Item value="selectNoResults">No results match</Item>
     <Item value="selectSingleOption">Select an Option</Item>
     <Item value="selectMultipleOptions">Select Some Options</Item>
     <Item value="selectReasonForSubmission">Select what best matches your reason for submission</Item>
