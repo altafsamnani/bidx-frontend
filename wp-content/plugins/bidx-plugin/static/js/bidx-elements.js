@@ -460,7 +460,7 @@
                     // )
                     .append
                     (
-                        $( "<a />", { "href": "/member/" + member.id, "class": "btn btn-primary btn-xs pull-right info-action main-margin-half", "html": bidx.i18n.i( "btnViewProfile" ) } )
+                        $( "<a />", { "href": bidx.common.url('member') + member.id, "class": "btn btn-primary btn-xs pull-right info-action main-margin-half", "html": bidx.i18n.i( "btnViewProfile" ) } )
                     )
                 )
                 .append
@@ -477,7 +477,7 @@
                                 $( "<div />", { "class": "col-sm-3" } )
                                 .append
                                 (
-                                    $( "<a />", { "href": "/company/" + member.id, "class": "pull-left main-margin-half", "data-role": "businessImage" } )
+                                    $( "<a />", { "href": bidx.common.url('company') + member.id, "class": "pull-left main-margin-half", "data-role": "businessImage" } )
                                     .append
                                     (
                                         profileThumb( member.id )
@@ -562,7 +562,7 @@
             $memberThumb = bidx.construct.placeProfileThumbSmall( memberInfo );
         }
 
-        $memberLink = $( "<a />", { "href": "/member/" + data.user.id, "html": data.user.name } );
+        $memberLink = $( "<a />", { "href": bidx.common.url('member') + data.user.id, "html": data.user.name } );
 
         if ( data.status === "pending" )
         {
@@ -883,7 +883,7 @@
         var $memberLink;
 
         $memberLink =
-            $( "<a />", { "href": "/member/" + memberid } )
+            $( "<a />", { "href": bidx.common.url('member') + memberid } )
             .append
             (
                 $( "<strong />", { "html": bidx.common.tmpData.members[memberid].name } )
@@ -898,7 +898,7 @@
         var $businessLink;
 
         $businessLink =
-            $( "<a />", { "href": "/member/" + entityid } )
+            $( "<a />", { "href": bidx.common.url('member') + entityid } )
             .append
             (
                 $( "<strong />", { "html": bidx.common.tmpData.businesses[entityid].name } )
