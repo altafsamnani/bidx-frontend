@@ -131,7 +131,7 @@
     <Item value="mentorYouCancelledForBusiness">You cancelled your mentor request for</Item>
 
     <Item value="btnStopMentor">Stop Mentoring</Item>
-    <Item value="youStoppedMentor">You have cancelled the mentor request of</Item>
+    <Item value="youStoppedMentor">You have cancelled the mentor request </Item>
 
     <Item value="btnRemove">Remove</Item>
     <Item value="btnRequest">Request</Item>

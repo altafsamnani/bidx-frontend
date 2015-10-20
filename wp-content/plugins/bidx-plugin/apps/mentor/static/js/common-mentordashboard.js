@@ -211,6 +211,10 @@
                         {
                             membersDataId.push( request.mentorId );
                         }
+                        if ( $.inArray( request.initiatorId, membersDataId) === -1 && bidx.common.checkMemberExists( request.initiatorId ) === false  )
+                        {
+                            membersDataId.push( request.initiatorId );
+                        }
 
                         if ( request.requestId in requests === false )
                         {
@@ -250,7 +254,7 @@
     {
         $.each( requests, function( i, req )
         {
-            constructMentorBox( bidx.common.tmpData.members[req.request.mentorId], req );
+            constructMentorBox( req );
         });
 
         requests = {}; // Empty the "requests" object
@@ -288,9 +292,13 @@
         ownBs = []; // Empty the "ownBs" array
     };
 
-    var constructMentorBox = function ( memberInfo, req )
+    var constructMentorBox = function ( req )
     {
-        var $bsEl;
+        var $bsEl
+        ,   memberLink  =   ''
+        ,   memberInfo
+        ,   memberId
+        ;
 
         // Set the element to inject the box
         //
@@ -335,8 +343,11 @@
 
             if ( req.relChecks.showBusinessInfo )
             {
-                if ( !req.relChecks.isTheInitiator && !req.relChecks.isTheMentor )
+                if ( (!req.relChecks.isTheInitiator && !req.relChecks.isTheMentor ) || req.request.status === "accepted" )
                 {
+                    bidx.utils.log('1', req);
+                    memberInfo  =   bidx.common.tmpData.members[req.request.mentorId];
+
                     $bsEl.last().find( ".alert-message" ).last()
                         .prepend
                         (
@@ -351,6 +362,7 @@
                 }
                 else
                 {
+                    bidx.utils.log('2', req);
                     $bsEl.last().find( ".alert-message" ).last()
                         .prepend
                         (
@@ -365,8 +377,10 @@
             }
             else
             {
-                if ( req.relChecks.isTheInitiator && !req.relChecks.isTheMentor )
+                if ( req.relChecks.isTheInitiator && !req.relChecks.isTheMentor && req.request.status !== "accepted")
                 {
+                    bidx.utils.log('3', req);
+                    memberInfo  =   bidx.common.tmpData.members[req.request.mentorId];
                     $bsEl.last().find( ".alert-message" ).last()
                         .prepend
                         (
@@ -378,8 +392,12 @@
                         ,   bidx.construct.memberLink( memberInfo.id )
                         );
                 }
-                else if ( req.relChecks.isTheInitiator && req.relChecks.isTheMentor && bidx.globalChecks.isInvestorDashboard() && req.request.status === "accepted" )
+                else if ( req.relChecks.isTheInitiator
+                        && req.relChecks.isTheMentor
+                        && bidx.globalChecks.isInvestorDashboard()
+                        && req.request.status === "accepted" )
                 {
+                    bidx.utils.log('4', req);
                     $bsEl.last().find( ".alert-message" ).last()
                         .prepend
                         (
@@ -387,12 +405,16 @@
                         )
                         .append
                         (
-                            bidx.construct.memberLink( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
-                        ,   bidx.construct.actionMessage( req )
+                        //    bidx.construct.memberLink( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
+                              bidx.construct.actionMessage( req )
                         );
                 }
-                else if ( req.relChecks.isTheInitiator && req.relChecks.isTheMentor && bidx.globalChecks.isInvestorDashboard() && req.request.status === "requested" )
+                else if ( req.relChecks.isTheInitiator
+                        && req.relChecks.isTheMentor
+                        && bidx.globalChecks.isInvestorDashboard()
+                        && req.request.status === "requested" )
                 {
+                    bidx.utils.log('5', req);
                     $bsEl.last().find( ".alert-message" ).last()
                         .prepend
                         (
@@ -404,21 +426,47 @@
                         ,   bidx.construct.memberLink( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
                         );
                 }
-                else if ( req.relChecks.isTheMentor && bidx.globalChecks.isInvestorDashboard() && !req.relChecks.isTheInitiator  )
+                else if ( req.relChecks.isTheMentor
+                        && !req.relChecks.isTheInitiator
+                      //  && bidx.globalChecks.isInvestorDashboard()
+                        )
                 {
+                    bidx.utils.log('6', req);
+                   // memberId    =   bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId;
+                   memberId       =   req.request.initiatorId;
+                    if(req.request.status !== "accepted")
+                    {
+                        memberLink  =   bidx.construct.memberLink( memberId );
+                    }
+                    else
+                    {
+                        memberId  =    req.request.mentorId;
+                    }
+
                     $bsEl.last().find( ".alert-message" ).last()
                         .prepend
                         (
-                            bidx.construct.profileThumb( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
+                            bidx.construct.profileThumb( memberId )
                         )
                         .append
                         (
-                            bidx.construct.memberLink( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
+                            memberLink
                         ,   bidx.construct.actionMessage( req )
                         );
                 }
                 else
                 {
+                    bidx.utils.log('7', req);
+                    bidx.utils.log('requestttttttttt', req);
+                    memberId    =   ( req.relChecks.isTheInitiator && req.request.status !== "accepted") ?  req.request.initiatorId : req.request.mentorId;
+                    memberInfo  =   bidx.common.tmpData.members[ memberId ];
+                    if( (!req.relChecks.isTheInitiator && req.request.status !== "accepted" )
+                        || ((!req.relChecks.isTheMentor && req.request.status === "accepted" ))
+                        || ( req.relChecks.isTheInitiator && !req.relChecks.isTheMentor))
+                    {
+
+                        memberLink  =   bidx.construct.memberLink( memberInfo.id );
+                    }
                     $bsEl.last().find( ".alert-message" ).last()
                         .prepend
                         (
@@ -426,7 +474,7 @@
                         )
                         .append
                         (
-                            req.relChecks.isTheInitiator ? "" : bidx.construct.memberLink( memberInfo.id )
+                            memberLink
                         ,   bidx.construct.actionMessage( req )
                         );
                 }
@@ -452,7 +500,7 @@
             params.initiatorId = parseInt(currentUserId, 10);
             params.mentorId = currentUserId;
 
-             _doCreateMentorRequest(
+             doCreateMentorRequest(
             {
                 params: params
             ,   callback: function( result )
@@ -545,7 +593,7 @@
             params.initiatorId = parseInt(currentUserId, 10);
             params.mentorId = ownerId;
 
-             _doCreateMentorRequest(
+             doCreateMentorRequest(
             {
                 params: params
             ,   callback: function()
@@ -761,7 +809,7 @@
         return $d;
     };
 
-    var _doCreateMentorRequest = function( options )
+    var doCreateMentorRequest = function( options )
     {
         var uriStatus
         ,   params      = options.params
@@ -805,7 +853,7 @@
 
     // this function mutates the relationship between two contacts. Possible mutations for relationship: action=[ignore / accept]
     //
-    var _doMutateMentoringRequest = function( options )
+    var doMutateMentoringRequest = function( options )
     {
         var params      = options.params
         ,   postData    = {}
@@ -847,7 +895,7 @@
         );
     };
 
-    var _doCancelMentoringRequest = function( options )
+    var doCancelMentoringRequest = function( options )
     {
         var uriStatus
         ,   statusMsg
@@ -906,9 +954,9 @@
     //expose
     var mentoring =
             {
-                    doCreateMentorRequest:              _doCreateMentorRequest
-                ,   doMutateMentoringRequest:           _doMutateMentoringRequest
-                ,   doCancelMentoringRequest:           _doCancelMentoringRequest
+                    doCreateMentorRequest:              doCreateMentorRequest
+                ,   doMutateMentoringRequest:           doMutateMentoringRequest
+                ,   doCancelMentoringRequest:           doCancelMentoringRequest
                 ,   doOfferMentoringMultipleBusinesses: doOfferMentoringMultipleBusinesses
                 ,   getMentoringRequest:                getMentoringRequest
                 ,   getEntityMentoringRequests:         getEntityMentoringRequests

@@ -2854,7 +2854,6 @@
 
             // create member listitems
             //
-            bidx.utils.log('response.docs', response.docs);
             $.each( response.docs, function( idx, item )
             {
                 mentorId    = bidx.utils.getValue( item, "ownerId" );

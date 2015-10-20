@@ -6,6 +6,7 @@
 
     var bidx                = window.bidx || {}
     ,   bidxConfig          = window.bidxConfig || {}
+    ,   loggedInMemberId    = bidx.common.getCurrentUserId()
     ;
 
     var placeLogoThumb = function( item, size )
@@ -912,20 +913,29 @@
     {
         var $message
         ,   text
-        ,   theReason = data.relChecks && data.relChecks.reason ? data.relChecks.reason : reason
+        ,   statusMsgLbl
+        ,   request     =   bidx.utils.getValue( data, 'request' )
+        ,   theReason   =   data.relChecks && data.relChecks.reason ? data.relChecks.reason : reason
         ;
 
         switch ( theReason )
         {
             case "mentor":
 
-                switch ( data.request.status )
+                switch ( request.status )
                 {
                     case "accepted":
 
-                        if ( data.relChecks.isThereRelationship && ( bidx.globalChecks.isOwnBusiness() || bidx.globalChecks.isOwnProfile() || bidx.globalChecks.isEntrepreneurDashboard() || bidx.globalChecks.isMentorDashboard() || bidx.globalChecks.isInvestorDashboard() ) )
+                        if ( data.relChecks.isThereRelationship &&
+                            ( bidx.globalChecks.isOwnBusiness() ||
+                              bidx.globalChecks.isOwnProfile() ||
+                              bidx.globalChecks.isEntrepreneurDashboard() ||
+                              bidx.globalChecks.isMentorDashboard() ||
+                              bidx.globalChecks.isInvestorDashboard() ) )
                         {
-                            text = " " + bidx.i18n.i( "isMentoring" );
+                            bidx.utils.log( 'dataaa',data);
+                            statusMsgLbl    =   ( request.mentorId === loggedInMemberId ) ? 'youAreMentoring' : 'isMentoring';
+                            text            =   " " + bidx.i18n.i( statusMsgLbl ) ;
                         }
                         else
                         {
@@ -940,23 +950,28 @@
                         {
                             if ( data.relChecks.isTheMentor )
                             {
+                                bidx.utils.log('11');
                                 text = bidx.globalChecks.isInvestorDashboard() ? bidx.i18n.i( "youAskedMentorFrom" ) + " " :  bidx.i18n.i( "youAskedMentor" ) + " ";
                             }
                             else if ( !data.relChecks.isTheMentor && !bidx.globalChecks.isOwnProfile() && data.relChecks.showBusinessInfo )
                             {
+                                bidx.utils.log('22');
                                 text = bidx.i18n.i( "youAskedMentorForBusiness" ) + " ";
                             }
                             else
                             {
+                                bidx.utils.log('33');
                                 text = bidx.i18n.i( "youAskedFromMentor" ) + " ";
                             }
                         }
-                        else if ( data.relChecks.isTheMentor && bidx.globalChecks.isInvestorDashboard() && !data.relChecks.isTheInitiator )
+                        else if ( data.relChecks.isTheMentor && !data.relChecks.isTheInitiator )
                         {
+                            bidx.utils.log('44');
                             text = " " + bidx.i18n.i( "wantsYouToMentor" );
                         }
                         else
                         {
+                            bidx.utils.log('55');
                             text = data.relChecks.showBusinessInfo ? text = " " + bidx.i18n.i( "mentorAskedYou" ) + " " : text = " " + bidx.i18n.i( "wantsToMentor" );
                         }
 
