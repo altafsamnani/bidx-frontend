@@ -351,7 +351,7 @@
                     )
                     .append
                     (
-                        $( "<a />", { "href": "/company/" + item.bidxMeta.bidxEntityId, "class": "btn btn-primary btn-xs pull-right info-action main-margin-half", "html": bidx.i18n.i( "cmCompany" ) } )
+                        $( "<a />", { "href": bidx.common.url('company') + item.bidxMeta.bidxEntityId, "class": "btn btn-primary btn-xs pull-right info-action main-margin-half", "html": bidx.i18n.i( "cmCompany" ) } )
                     )
                 )
                 .append
@@ -368,7 +368,7 @@
                                 $( "<div />", { "class": "col-sm-3" } )
                                 .append
                                 (
-                                    $( "<a />", { "href": "/company/" + item.bidxMeta.bidxEntityId, "class": "pull-left main-margin-half", "data-role": "businessImage" } )
+                                    $( "<a />", { "href": bidx.common.url('company') + item.bidxMeta.bidxEntityId, "class": "pull-left main-margin-half", "data-role": "businessImage" } )
                                     .append
                                     (
                                         placeLogoThumb( item )
