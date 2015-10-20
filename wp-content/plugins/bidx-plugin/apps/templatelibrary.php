@@ -920,14 +920,13 @@ class TemplateLibrary
                     // $fbUrl = (preg_match("/http/i", $fbUrl)) ? $fbUrl : 'https://' . $fbUrl;
                     $fbUrl = 'http://www.facebook.com/' . $username;
 
-
-                    $scriptContent = '<a title="View my Facebook Profile" target="_blank" href="' . $fbUrl . '"><i class="fa fa-facebook-square"></i></a>';
+                    $scriptContent = '<a title="' . __( 'View my Facebook Profile','bidxplugin' ) . '" target="_blank" href="' . $fbUrl . '"><i class="fa fa-facebook-square"></i></a>';
                     break;
 
                 case 'twitterprofile' :
                     $twitterUserName = str_replace ("#", "", $username);
                     $twitterUrl = 'https://twitter.com/' . $twitterUserName;
-                    $scriptContent = '<a title="View my Twitter Profile" target="_blank" href="' . $twitterUrl . '"><i class="fa fa-twitter-square"></i></a>';
+                    $scriptContent = '<a title="' . __( 'View my Twitter Profile', 'bidxplugin' ) . '" target="_blank" href="' . $twitterUrl . '"><i class="fa fa-twitter-square"></i></a>';
                     break;
             }
         }
