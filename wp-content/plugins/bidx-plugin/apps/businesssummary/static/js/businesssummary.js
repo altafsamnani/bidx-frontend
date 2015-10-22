@@ -3354,7 +3354,7 @@
 
     }
 
-    function _getMentorRequests ( options )
+    function _getMentorRequests_Old_Remove ( options )
     {
         var $mentorPanel        =   $element.find("#businessSummaryCollapse-MentoringDetails")
         ,   $mentorRequest      =   $mentorPanel.find('.mentor-active-list')
@@ -3447,7 +3447,7 @@
         {
             $tabMentor.on( "shown.bs.collapse", function ()
             {
-                 _getMentorRequests( );
+                // _getMentorRequests( );
             });
         }
 
@@ -3559,7 +3559,7 @@
                     bidx.common.removeValidationErrors();
 
                     _showView( "edit" );
-                    _getMentorRequests( );
+                    //_getMentorRequests( );
                     _showAllView( "mentor" );
                     _showAllView( "matchingmentors" );
 
