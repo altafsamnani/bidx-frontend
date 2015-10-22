@@ -1,25 +1,20 @@
 <?php
 
 $mentorDetails  =   isset($this->data->bidxMentorProfile) ? $this->data->bidxMentorProfile : NULL;
-$mentorDetailsBidxMeta = isset( $mentorDetails->bidxMeta )
-    ? $mentorDetails->bidxMeta
-    : $mentorDetails;
+$mentorDetailsBidxMeta = isset( $mentorDetails->bidxMeta ) ? $mentorDetails->bidxMeta : $mentorDetails;
 
 if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED' || $mentorDetailsBidxMeta->bidxCanEdit  ) ) {
 
-    //$mentorType = $this->exst ($mentorDetails->investorType);
-
-                if ($mentorDetailsBidxMeta->bidxCanEdit)
-                {
+        if ($mentorDetailsBidxMeta->bidxCanEdit)
+        {
 ?>
-                    <div class="view viewNoproposals alert alert-warning">
-                        <a data-dismiss='alert' class='close fa fa-times' type='button'></a>
-                        <?php _e( 'No business proposals found based on your filter settings', 'bidxplugin'); ?>
-                    </div>
+            <div class="view viewNoproposals alert alert-warning">
+                <a data-dismiss='alert' class='close fa fa-times' type='button'></a>
+                <?php _e( 'No business proposals found based on your filter settings', 'bidxplugin'); ?>
+            </div>
 <?php
-                }
+        }
 ?>
-
             <div class="profile-block">
                 <div class="mentorSectionTaggingLabel"></div>
 <?php
@@ -28,7 +23,6 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
 ?>
                     <div class="btn-group show hide-overflow">
 <?php
-
                             $href = "#editMentor/" . $this -> exst( $mentorDetailsBidxMeta->bidxOwnerId );
 ?>
                             <a class="btn btn-sm btn-primary pull-right hide" href="<?php echo $href; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
@@ -49,9 +43,6 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
                     echo $this->tableRow ( $rowValues );
                 endif;
 
-
-
-
                 $rowValues = array(
                     __('Languages','bidxplugin')                => $this->getMultiValues( $this->exst( $mentorDetails->focusLanguage ), ', ','language' ),
                     __('Focus countries','bidxplugin')          => $this->getMultiValues( $this->exst( $mentorDetails->focusCountry ), ', ','country' ),
@@ -70,9 +61,11 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
                     <h4><?php _e('Mentoring Preferences', 'bidxplugin')?></h4>
 <?php
                     echo $this->tableRow ( $rowValues );
+
                 endif;
 
                 $focusReach = $this->exst($mentorDetails->focusReach);
+
                 if ( $this->exst($focusReach->coordinates) && $this->exst($focusReach->coordinates) ) {
 ?>
                     <div class="row">
@@ -101,37 +94,7 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
                     echo $this->displayDocuments ( $mentorDetails->attachment, __('Documents','bidxplugin') );
                 }
 
-        ?>
-
-        <?php
                 $references = $this->exst( $mentorDetails->references );
-
-                // A set of properties is only applicable to any other type than Angel or private
-                //
-                //if ( $investorType && $investorType != 'AngelInvPrivIndiv' ) {
-
-                    // Institution name
-                    //
-                    // $rowValues = array (__('Institution details','bidxplugin') => $this->exst($mentorDetails->institutionName));
-                    // echo $this->addRowsWithLabelAdjacent ('col-sm-4', 'col-sm-8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
-
-                    // Institution website
-                    //
-                    // $rowValues = array (__('Institution website','bidxplugin') => $this->exst($mentorDetails->institutionWebsite));
-                    // echo $this->addRowsWithLabelAdjacent ('col-sm-4', 'col-sm-8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
-
-                //}
-
-                    // Reach
-                    //
-                    // - business says "there are one of three ways to specify reach"
-                    // - api says "there are three ways of specifying reach"
-                    //
-                    // So we have to figure out which type this investor has picked.
-
-                    // TODO: list references (personaldetails)
-                // Previous investments
-                //
 
                 if ( $references ) {
                     echo '<h5>' . __('References','bidxplugin') . '</h5>';
@@ -141,23 +104,12 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
                         __('Professional title','bidxplugin')       => 'professionalTitle',
                         __('LinkedIn profile','bidxplugin')         => 'linkedIn',
                         __('Email address','bidxplugin')            => 'emailAddress'
-                        // __('Landline','bidxplugin')                 => 'contactDetail[0].landLine',
-                        // __('Mobile','bidxplugin')                   => 'contactDetail[0].mobile'
                     );
 
                     $merge['name'] = array ('firstName', 'lastName');
 
                     echo $this->addTableRows($header, $this->exst( $mentorDetails->references ), 'table table-bordered', $merge, array('linkedIn' => 'hidden-xs', 'emailAddress' => 'hidden-xs') );
                 }
-
-                if ($mentorDetailsBidxMeta->bidxCanEdit)
-                {
 ?>
-                <a class="view viewMentoringbutton btn btn-xs bidx-mentor label bidx-label" href="<?php echo _l('mentor-dashboard');?>">
-                    <span class="countMentoringProposals"><?php _e('%count% business proposals want mentoring', 'bidxplugin')?></span>
-                </a>
-<?php
-                }
-?>
-            </div><!-- // details-block of investor -->
+            </div> <!-- // details-block of investor -->
 <?php } ?>

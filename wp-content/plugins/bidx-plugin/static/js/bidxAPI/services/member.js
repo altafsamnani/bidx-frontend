@@ -49,6 +49,35 @@
         } );
     };
 
+    member.summaries = function( params )
+    {
+        var method = "POST"
+        ,   url    = "/api/v1/members/summaries"
+        ;
+
+        api._call(
+        {
+            method:         method
+        ,   data:           params.data
+        ,   groupDomain:    params.groupDomain
+        ,   baseUrl:        url
+        ,   success:        function( response, textStatus, jqXhr )
+            {
+                if ( response && response.data )
+                {
+                    response = response.data;
+                }
+
+                params.success( response, textStatus, jqXhr );
+            }
+        ,   error:          function( jqXhr, textStatus, errorThrown )
+            {
+                params.error( jqXhr, textStatus, errorThrown );
+            }
+        } );
+    };
+
+
     member.destroy = function( params )
     {
         var method = "DELETE"

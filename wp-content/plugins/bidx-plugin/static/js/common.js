@@ -23,6 +23,7 @@
     ,   changesQueue    = [] // array holding app names that have pending changes
 
     ,   $frmLoginModal  = $( "#frmLoginModal" )
+    ,   tmpData    = { members: {}, businesses: {} }
     ;
 
     // Add something to the list of apps having a reason to ask the user for confirmation on page unload
@@ -183,6 +184,180 @@
     }
 
 
+    // Return basic info of a member
+    //
+    function getMemberInfo( options )
+    {
+        var bidxMeta;
+
+        bidx.api.call(
+            "member.fetch"
+        ,   {
+                id:          options.id
+            ,   requesteeId: options.id
+            ,   groupDomain: bidx.common.groupDomain
+            ,   success:        function( item )
+                {
+                    if (options && options.callback)
+                    {
+                        options.callback( item );
+                    }
+                }
+            ,   error: function(jqXhr, textStatus)
+                {
+                     bidx.utils.log('jqXhr', jqXhr, textStatus);
+                     // execute callback if provided
+                    if (options && options.error)
+                    {
+                        options.error( );
+                    }
+                    return false;
+                }
+            }
+        );
+    }
+
+    // Return basic info of given members
+    //
+    function getMembersSummaries( options )
+    {
+        var $d = $.Deferred();
+
+        bidx.api.call(
+            "member.summaries"
+        ,   {
+                data:           options.data
+            ,   groupDomain:    bidx.common.groupDomain
+            ,   success:        function( results )
+                {
+                    $.each( results.userSummaries, function( i, member)
+                    {
+                        addToTempMembers( member );
+                    });
+
+                    $d.resolve( results );
+                }
+            ,   error: function(jqXhr, textStatus)
+                {
+                    var status  = bidx.utils.getValue( jqXhr, "status" ) || textStatus
+                    ,   msg     = "Something went wrong while retrieving members: " + status
+                    ,   error   = new Error( msg )
+                    ;
+
+                    $d.reject( error );
+                }
+            }
+        );
+
+        return $d;
+    }
+
+    function addToTempMembers( item )
+    {
+        if ( checkMemberExists( item.id ) === false )
+        {
+            tmpData.members[item.id] = item ;
+        }
+
+        // if ( checkMemberExists( item.member.bidxMeta.bidxMemberId ) === false )
+        // {
+        //     tmpData.members[item.member.bidxMeta.bidxMemberId] = item ;
+        // }
+
+    }
+
+    function addToTempBusinesses( item )
+    {
+        if ( checkBusinessExists( item.bidxMeta.bidxEntityId ) === false )
+        {
+            tmpData.businesses[item.bidxMeta.bidxEntityId] = item ;
+        }
+    }
+
+    function checkMemberExists( bidxMemberId )
+    {
+        var memberExists = false;
+
+        if ( bidx.common.tmpData.members )
+        {
+            $.each( bidx.common.tmpData.members, function( i, m )
+            {
+                 if ( m.id === bidxMemberId )
+                 {
+                    memberExists = m;
+                 }
+            });
+        }
+
+        return memberExists;
+    }
+
+    function checkBusinessExists( entityId )
+    {
+        var businessExists = false;
+
+        if ( bidx.common.tmpData.businesses )
+        {
+            $.each( bidx.common.tmpData.businesses, function( i, b )
+            {
+                 if ( b.bidxMeta.bidxEntityId === entityId )
+                 {
+                    businessExists = b;
+                 }
+            });
+        }
+
+        return businessExists;
+    }
+
+    //
+    //
+    var fetchMemberProfiles = function ( memberIds )
+    {
+        var promises = [];
+
+        if ( memberIds.length === 0 )
+        {
+            return;
+        }
+
+        $.each( memberIds, function ( i, memberId )
+        {
+            if ( !checkMemberExists( memberId ) )
+            {
+                var $def = $.Deferred();
+
+                if ( checkMemberExists( memberId ) )
+                {
+                    return;
+                }
+
+                bidx.common.getMemberInfo(
+                {
+                    id          :   memberId
+                ,   callback    :   function ( memberInfo )
+                    {
+                        // addToTempMembers( memberInfo );
+                        $def.resolve( memberInfo );
+                    }
+                ,   error:  function(jqXhr, textStatus)
+                    {
+                        var status  = bidx.utils.getValue( jqXhr, "status" ) || textStatus
+                        ,   msg     = "Something went wrong while retrieving the entity: " + status
+                        ,   error   = new Error( msg )
+                        ;
+
+                        $def.reject( error );
+                    }
+                });
+
+                promises.push($def);
+            }
+        } );
+
+        return $.when.apply( undefined, promises ).promise();
+    };
+
     // retrieve a value from the session object
     //
     function getSessionValue( key )
@@ -199,6 +374,48 @@
 
         return new Date( now );
     }
+
+    function getEntities( businessesDataId )
+    {
+        var promises = [];
+
+        if ( businessesDataId.length === 0 )
+        {
+            return;
+        }
+
+        $.each( businessesDataId, function( i, businessId)
+        {
+            var $def = $.Deferred();
+
+            bidx.api.call(
+                "entity.fetch"
+            ,   {
+                    entityId:               businessId
+                ,   groupDomain:            bidx.common.groupDomain
+                ,   success:        function( results )
+                    {
+                        addToTempBusinesses( results );
+                        $def.resolve( results );
+                    }
+                ,   error: function(jqXhr, textStatus)
+                    {
+                        var status  = bidx.utils.getValue( jqXhr, "status" ) || textStatus
+                        ,   msg     = "Something went wrong while retrieving the entity: " + status
+                        ,   error   = new Error( msg )
+                        ;
+
+                        // $def.reject( error );
+                    }
+                }
+            );
+
+            promises.push( $def );
+        });
+
+        return $.when.apply( undefined, promises ).promise();
+    }
+
 
     // Convenience function for itterating over the list of entities of the session
     // data and lookup the existance (and id) of a specific entity
@@ -417,6 +634,323 @@
             ]
         } );
     } );
+
+    function doBlockRequest( options )
+    {
+        var extraUrlParameters
+        ,   contact   =   options.contact
+        ;
+
+        extraUrlParameters =
+        [
+            {
+                label :     "contact"
+            ,   value :     contact
+            }
+        ];
+
+        bidx.api.call(
+             "contact.block"
+        ,   {
+                groupDomain:            bidx.common.groupDomain
+            ,   extraUrlParameters:     extraUrlParameters
+            ,   success: function( response )
+                {
+                    bidx.utils.log("[block] block a connect",  response );
+                    if ( response && response.status === "OK" )
+                    {
+                        //  execute callback if provided
+                        if (options && options.callback)
+                        {
+                            options.callback( response.data );
+                        }
+                    }
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+                    if (options && options.error)
+                    {
+                        options.error( jqXhr );
+                    }
+
+                }
+            }
+        );
+    }
+
+    function doUnBlockRequest( options )
+    {
+        var extraUrlParameters
+        ,   contact   =   options.contact
+        ;
+
+        extraUrlParameters =
+        [
+            {
+                label :     "contact"
+            ,   value :     contact
+            }
+        ];
+
+        bidx.api.call(
+             "contact.unblock"
+        ,   {
+                groupDomain:            bidx.common.groupDomain
+            ,   extraUrlParameters:     extraUrlParameters
+            ,   success: function( response )
+                {
+                    bidx.utils.log("[block] block a connect",  response );
+                    if ( response && response.status === "OK" )
+                    {
+                        //  execute callback if provided
+                        if (options && options.callback)
+                        {
+                            options.callback( response.data );
+                        }
+                    }
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+                    if (options && options.error)
+                    {
+                        options.error( jqXhr );
+                    }
+
+                }
+            }
+        );
+    }
+
+    function doCreateConnectRequest( options )
+    {
+        var extraUrlParameters
+        ,   contact   =   options.contact
+        ;
+
+        extraUrlParameters =
+        [
+            {
+                label :     "contact"
+            ,   value :     contact
+            }
+        ];
+
+        bidx.api.call(
+             "contact.connect"
+        ,   {
+                groupDomain:            bidx.common.groupDomain
+            ,   extraUrlParameters:     extraUrlParameters
+            ,   success: function( response )
+                {
+                    bidx.utils.log("[connect] created a connect relationship",  response );
+                    if ( response && response.status === "OK" )
+                    {
+                        //  execute callback if provided
+                        if (options && options.callback)
+                        {
+                            options.callback( response.data );
+                        }
+                    }
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+                    if (options && options.error)
+                    {
+                        options.error( jqXhr );
+                    }
+
+                }
+            }
+        );
+    }
+
+    function doCancelConnectRequest( options )
+    {
+
+        var uriStatus
+        ,   statusMsg
+        ,   extraUrlParameters  =   []
+        ,   contact              = options.contact
+        ;
+
+        extraUrlParameters =
+        [
+            {
+                label :     "contact"
+            ,   value :     contact
+            }
+        ];
+
+        bidx.api.call(
+            "contact.disconnect"
+        ,   {
+                groupDomain:        bidx.common.groupDomain
+            ,   extraUrlParameters: extraUrlParameters
+            ,   success:            function( response )
+                {
+                    bidx.utils.log("[connect] cancelled a contact",  response );
+                    if ( response && response.status === "OK" )
+                    {
+                        if (options && options.callback)
+                        {
+                            options.callback();
+                        }
+                         // window.bidx.controller.updateHash( params.updateHash, true );
+                    }
+
+                }
+
+            ,   error:          function( jqXhr, textStatus )
+                {
+                    if (options && options.error)
+                    {
+                        options.error( jqXhr );
+                    }
+
+                }
+            }
+        );
+    }
+
+    function doSendContactReminder( options )
+    {
+
+        var uriStatus
+        ,   statusMsg
+        ,   extraUrlParameters  =   []
+        ,   contact              = options.contact
+        ;
+
+        extraUrlParameters =
+        [
+            {
+                label :     "contact"
+            ,   value :     contact
+            }
+        ];
+
+        bidx.api.call(
+            "contact.reminder"
+        ,   {
+                groupDomain:        bidx.common.groupDomain
+            ,   extraUrlParameters: extraUrlParameters
+            ,   success:            function( response )
+                {
+                    bidx.utils.log("[connect] send reminder",  response );
+                    if ( response && response.status === "OK" )
+                    {
+                        if (options && options.callback)
+                        {
+                            options.callback();
+                        }
+                         // window.bidx.controller.updateHash( params.updateHash, true );
+                    }
+                }
+            ,   error:          function( jqXhr, textStatus )
+                {
+                    if (options && options.error)
+                    {
+                        options.error( jqXhr );
+                    }
+
+                }
+            }
+        );
+    }
+
+
+    function doMailSend( params )
+    {
+        var message             =   params.message
+        ,   extraUrlParameters  =
+            [
+                {
+                    label :     "mailType",
+                    value :     "PLATFORM"
+                }
+            ]
+        ;
+
+        bidx.api.call(
+            "mailboxMail.send"
+        ,   {
+                groupDomain:        bidx.common.groupDomain
+            ,   extraUrlParameters: extraUrlParameters
+            ,   data:               message
+            ,   success:            function( response )
+                {
+                    bidx.utils.log( "[mail] mail send", response );
+
+                    bidx.common.notifyCustomSuccess( bidx.i18n.i( "messageSent" ) );
+
+                    params.success(  );
+                }
+
+            ,   error:              function( jqXhr, textStatus )
+                {
+                    var error
+                    ,   response = $.parseJSON( jqXhr.responseText)
+                    ;
+
+                    bidx.utils.error( "Client  error occured", response );
+
+                    error   =   "Something went wrong while sending the email: " + response.text ;
+
+                    bidx.common.notifyError( error );
+
+                    params.error(  );
+                }
+            }
+        );
+
+    }
+
+    // Do a full access request for this businessSummary
+    //
+    function doAccessRequest( options )
+    {
+        bidx.api.call(
+             "businesssummaryRequestAccess.send"
+        ,   {
+                groupDomain:            bidx.common.groupDomain
+            ,   id:                     options.options.id
+            ,   success: function( response )
+                {
+                    if ( response.status === "OK" )
+                    {
+                        //  execute callback if provided
+                        if (options && options.callback)
+                        {
+                            options.callback( response );
+                        }
+                    }
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+                    var response = $.parseJSON( jqXhr.responseText);
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Client  error occured", response );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                    }
+                }
+            }
+        );
+    }
+
+
 
     // Perform an API call to join the group
     //
@@ -873,6 +1407,7 @@
     {
         var bidxAPIService = "entity.destroy"
         ,   bidxAPIParams
+        ,   currentLanguage
         ,   urlLocation = window.location.pathname
         ;
 
@@ -894,7 +1429,15 @@
                 }
                 else
                 {
-                    document.location.href = '/member';
+                    currentLanguage = getCurrentLanguage();
+
+                    if (currentLanguage === 'en') {
+                        document.location.href = '/member';
+                    } 
+                    else 
+                    {
+                        document.location.href =  '/' + currentLanguage + '/member';
+                    }                 
                 }
             }
         ,   error:          function( jqXhr, textStatus )
@@ -1212,6 +1755,21 @@
         $formGroup.find( "div.error" ).remove();
     };
 
+    var showMoreLess   =   function( items )
+    {
+        var $moreless = $(items).parent().find( ".more-less" );
+        if ( items.hasClass( "hide" ) )
+        {
+            items.removeClass( "hide" );
+            $moreless.html( bidx.i18n.i( "showLess" ) );
+        }
+        else
+        {
+            items.addClass( "hide" );
+            $moreless.html( bidx.i18n.i( "showMore" ) );
+        }
+    };
+
     //  Validator extentions
     //
 
@@ -1321,6 +1879,15 @@
     {
         groupDomain:                    groupDomain
 
+    ,   addToTempMembers:               addToTempMembers
+    ,   addToTempBusinesses:            addToTempBusinesses
+    ,   checkMemberExists:              checkMemberExists
+    ,   checkBusinessExists:            checkBusinessExists
+    ,   tmpData:                        tmpData
+    ,   fetchMemberProfiles:            fetchMemberProfiles
+
+    ,   getEntities:                    getEntities
+
     ,   notifyRedirect:                 notifyRedirect
     ,   notifySave:                     notifySave
 
@@ -1339,6 +1906,16 @@
     ,   leaveGroup:                     leaveGroup
     ,   rate:							rate
 
+    ,   doCreateConnectRequest:         doCreateConnectRequest
+    ,   doCancelConnectRequest:         doCancelConnectRequest
+    ,   doBlockRequest:                 doBlockRequest
+    ,   doUnBlockRequest:               doUnBlockRequest
+    ,   doMailSend:                     doMailSend
+    ,   doSendContactReminder:          doSendContactReminder
+    ,   doAccessRequest:                doAccessRequest
+    ,   showMoreLess:                   showMoreLess
+
+
     ,   getInvestorProfileId: function()
         {
             return getEntityId( "bidxInvestorProfile" );
@@ -1351,11 +1928,16 @@
         {
             return getEntityId( "bidxMentorProfile" );
         }
-
+    ,   capitalizeFirstLetter: function ( string )
+        {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
 
     ,   getGroupIds:                    getGroupIds
     ,   getCurrentGroupId:              getCurrentGroupId
     ,   getCurrentUserId:               getCurrentUserId
+    ,   getMemberInfo:                  getMemberInfo
+    ,   getMembersSummaries:            getMembersSummaries
     ,   getAccreditation:               getAccreditation
     ,   isGroupAdmin:                   isGroupAdmin
     ,   getSessionValue:                getSessionValue

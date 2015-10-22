@@ -9,7 +9,7 @@
         ),
         'bidxEntrepreneurProfile'    => array(
             __('Entrepreneur', 'bidxplugin') => _l('entrepreneur-dashboard')
-        ,   __('Mentor', 'bidxplugin')       => _l('mentor-dashboard')
+        // ,   __('Mentor', 'bidxplugin')       => _l('mentor-dashboard')
         ),
         'bidxMentorProfile'          => array(
             __('Mentor Dashboard', 'bidxplugin')       => _l('mentor-dashboard')
@@ -93,11 +93,11 @@
         {
  ?>
             <div class="btn-group profiles">
-                <a href="#" type="button" class="text-white dropdown-toggle" data-toggle="dropdown" title="<?php _e('Dashboards', 'bidxplugin')?>">
+                <a href="<?php echo _l('dashboard');?>/" type="button" class="text-white"  title="<?php _e('Dashboard', 'bidxplugin')?>">
                     <i class="fa fa-dashboard"></i>
-                    <span class="iconbar-text"><?php _e('Dashboards','bidxplugin')?></span>
+                    <span class="iconbar-text"><?php _e('Dashboard','bidxplugin')?></span>
                 </a>
-                <ul class="dropdown-menu bg-primary-darker">
+                <ul class="dropdown-menu bg-primary-darker hide">
 <?php
                     foreach ( $profiles as $profilekey => $profilevalue )
                     {
@@ -241,11 +241,37 @@
 ?>
                      <li><a href="<?php echo _l('support');?>"><?php _e('Ask your question','bidxplugin')?></a></li>
 <?php           }
+                 if ( $isSysAdmin )
+                {
+?>
+                    <li>
+                        <a href="/wp-admin/"><i class="fa fa-wordpress"></i>&nbsp;<?php _e( 'Wordpress', 'bidxplugin' ); ?></a>
+                    </li>
+<?php
+                }
+                if ( $isAdmin )
+                {
+?>
+                    <li>
+                        <a href="/wp-admin/admin.php?page=getting-started"><i class="fa fa-wordpress"></i>&nbsp;<?php _e( 'bidX', 'bidxplugin' ); ?></a>
+                    </li>
+<?php
+                }
+                if ( $isJudge )
+                {
+?>
+                    <li>
+                        <a href="<?php echo $skipsoJudgeUrl;?>"><i class="fa fa-gavel"></i>&nbsp;<?php _e('Judge','bidxplugin')?></a>
+                    </li>
+<?php
+                }
 
                 if( $showLogout )
                 {
 ?>
-                     <li> <a href="<?php echo wp_logout_url( home_url() ); ?>"><i class="fa fa-power-off"></i>&nbsp;<?php _e('Logout', 'bidxplugin')?></a>
+                     <li>
+                        <a href="<?php echo wp_logout_url( home_url() ); ?>"><i class="fa fa-power-off"></i>&nbsp;<?php _e('Logout', 'bidxplugin')?></a>
+                    </li>
 <?php
                 }
 ?>

@@ -202,6 +202,7 @@
 
             widget.options.label        =   labelOptions;
 
+
             if( true || loggedInMemberId !== visitingMemberPageId )
             {
                 $labelHtml  =   $( "<span />", { "class": "accreditation-labels iconbar" } );
@@ -219,6 +220,8 @@
                         tagExist        = (_.indexOf( existingTags, tag.status ) !== -1) ? true : false;
 
                         anyTagExist     = ( tagExist )  ? true : anyTagExist;
+
+                        bidx.utils.log('tagsdata', tagsData);
 
                         tagDataExist    =   _.findWhere( tagsData, { tagId: tag.status });
 

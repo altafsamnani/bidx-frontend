@@ -20,6 +20,8 @@
     ,   $investorTaggingLabel               = $( ".investorTaggingLabel")
     ,   $mentorTaggingLabel                 = $( ".mentorTaggingLabel")
 
+    ,   $connect                            = $('.connectWrapper')
+
         // Profile picture
         //
     ,   $profilePictureControl              = $editForm.find( ".profilePictureControl" )
@@ -133,6 +135,29 @@
         ]
     };
 
+    function _inContacts( )
+    {
+        var connectOptions
+        ,   btnOptions
+        ;
+
+        connectOptions =    {
+                                currentUserId:          loggedInMemberId
+                            ,   visitingMemberPageId:   visitingMemberPageId
+                            };
+
+        $connect.connect( connectOptions );
+
+        btnOptions =    {
+                            label:          bidx.i18n.i('lblConnect')
+                        ,   iconClass:      'fa-user-plus fa-above fa-big'
+                        ,   class:          'connectUserButton'
+                        ,   inmailClass:    'btn-sm btn-inmail'
+                        };
+
+        $connect.connect( "constructConnectInMail", btnOptions );
+    }
+
     function _tagging( options )
     {
         var btnOptions          =   {}
@@ -148,10 +173,10 @@
 
         if( entityId )
         {
-            taggingOptions =   {
-                            entityId:   entityId
-                        ,   tagsData:   tagsData
-                        };
+            taggingOptions =    {
+                                    entityId:   entityId
+                                ,   tagsData:   tagsData
+                                };
 
             bidx.utils.log( labelClass + ' taggingOptions: ', taggingOptions);
 
@@ -177,7 +202,7 @@
                                                 {
                                                     label:      bidx.i18n.i('lblMarked') + ' ' + bidx.i18n.i('lblNoAccreditation')
                                                 ,   status:     'accreditation_refused'
-                                                ,   iconClass:   'fa-ban'
+                                                ,   iconClass:  'fa-ban'
                                                 ,   class:      'accr-Refused'
                                                 }]
                             ,   class:          labelClass
@@ -208,8 +233,6 @@
                                         }]
                             ,   class:  buttonClass
                             };
-
-            bidx.utils.log('Investor Profile constructButton: ', btnOptions);
 
             $tagging.tagging( "constructButton", btnOptions );
 
@@ -356,14 +379,17 @@
     //
     function _oneTimeSetup()
     {
+
         _snippets();
         _languages();
         _attachments();
 
         if(loggedInMemberId)
         {
-            _getActiveContacts();
+            // _getActiveContacts();
         }
+
+        _inContacts();
 
         _accreditation();
 
@@ -765,8 +791,8 @@
                 }
             );
         }
-
     }
+
 
     // Try to gecode the address (array)
     // On failure, pop one item from the address array and retry untill there is no
@@ -1764,7 +1790,6 @@
 
         $(".type-bidx").find( ".total-error-message" ).hide();
     }
-
     // Engage!
     //
     _oneTimeSetup();

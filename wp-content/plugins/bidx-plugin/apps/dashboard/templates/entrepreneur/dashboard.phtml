@@ -1,89 +1,31 @@
-<div id="entrepreneur-dashboard">
-    <div>
-        <h1 class="pagetitle"><?php _e('My entrepreneur dashboard','bidxplugin');?></h1>
-        <div class="dashboard">
-
-            <div class="view viewError alert alert-warning">
-                <h1><?php _e('Error','bidxplugin')?></h1>
-                <span class="errorMsg"></span>
+<div id="entrepreneur-dashboard" class="box-border top-margin-lineheight">
+    <div class="clearfix bg-primary-light main-padding">
+        <h1 class="text-center bidx-page-heading"><?php _e('My entrepreneur dashboard','bidxplugin');?></h1>
+    </div>
+    <div class="dashboard">
+        <div class="view viewError alert alert-warning main-margin">
+            <h1><?php _e('Error','bidxplugin')?></h1>
+            <span class="errorMsg"></span>
+        </div>
+        <div class="row tabs-vertical main-padding">
+            <div class="col-sm-3 tabs-nav">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs tabs-left">
+                    <li class="active"><a href="#tab-businesses" data-toggle="tab"><?php _e('My Businesses','bidxplugin');?></a></li>
+                    <li><a href="#tab-companies" data-toggle="tab"><?php _e('My Companies','bidxplugin');?></a></li>
+                </ul>
             </div>
-
-            <div id="entrepreneurDashboardAccordion">
-                <!-- Help -->
-                <div class="view viewLoad alert alert-info text-center">
-                    <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e ('Loading businesses ...', 'bidxplugin') ?>
-                </div>
-                <div class="view viewLoadinvestors alert alert-info text-center">
-                    <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e ('Loading investors ...', 'bidxplugin') ?>
-                </div>
-                <div class="panel panel-default <?php echo ($this->startingPage) ? 'panel-open': '';?>">
-                    <div class="panel-heading">
-                        <a class="btn-block" data-toggle="collapse" data-parent="#entrepreneurDashboardAccordion" href="#entrepreneurDashboardAccordion-Help"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Help','bidxplugin'); ?></a>
-                    </div>
-                    <div id="entrepreneurDashboardAccordion-Help" class="panel-collapse collapse <?php echo ($this->startingPage) ? 'in': '';?>">
-                        <div class="panel-body">
-                           <?php $this->render('entrepreneur/help.phtml'); ?>
-                        </div>
-                   </div>
-                </div>
-
-
-                <div class="panel panel-default panel-open view viewBusiness">
-                    <div class="panel-heading">
-                        <a class="btn-block" data-toggle="collapse" data-parent="#entrepreneurDashboardAccordion" href="#entrepreneurDashboardAccordion-Business"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Businesses','bidxplugin')?></a>
-                    </div>
-                    <div id="entrepreneurDashboardAccordion-Business" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <p><?php _e('Here you can see the businesses you have created some details about them.','bidxplugin')?></p>
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th><?php _e('Title','bidxplugin')?></th>
-                                        <th><?php _e('Industry','bidxplugin')?></th>
-                                        <th class="hidden-xs"><?php _e('Location','bidxplugin')?></th>
-                                        <th class="hidden-xs"><?php _e('Finance needed','bidxplugin')?></th>
-                                        <th class="hidden-xs"><?php _e('Year sales started','bidxplugin')?></th>
-                                        <th class="hidden-xs"><?php _e('Status','bidxplugin')?></th>
-                                        <th class="hidden-xs"><?php _e('Last update','bidxplugin')?></th>
-                                    </tr>
-                                </thead>
-                                <tbody class="business entrepreneur-business">
-                                    <div class="pull-left">
-                                        <?php //_e ('Loading...', 'bidxplugin') ?>
-                                    </div>
-                                </tbody>
-                            </table>
+            <div class="col-sm-9 tabs-content">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab-businesses">
+                        <div class="view viewLoad alert alert-info text-center">
+                            <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e ('Loading', 'bidxplugin') ?>
                         </div>
                     </div>
-                </div>
 
-
-                <div class="panel panel-default view viewInvestors">
-                    <div class="panel-heading">
-                        <a class="btn-block" data-toggle="collapse" data-parent="#entrepreneurDashboardAccordion" href="#entrepreneurDashboardAccordion-Investors"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Interested investors','bidxplugin')?></a>
-                    </div>
-                    <div id="entrepreneurDashboardAccordion-Investors" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <p></p>
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th><?php _e('Investor','bidxplugin')?></th>
-                                        <th><?php _e('Interested in','bidxplugin')?></th>
-                                        <th class="hidden-xs"><?php _e('Location','bidxplugin')?></th>
-                                        <th class="hidden-xs"><?php _e('Type of Investor','bidxplugin')?></th>
-                                        <th class="hidden-xs"><?php _e('Type of Investment','bidxplugin')?></th>
-                                        <th class="hidden-xs"><?php _e('Request status','bidxplugin')?></th>
-                                        <th class="hidden-xs"><?php _e('Last time viewed plan','bidxplugin')?></th>
-                                        <th><?php _e('Actions','bidxplugin')?></th>
-                                    </tr>
-                                </thead>
-                                <tbody class="investors entrepreneur-investors">
-                                    <div class="pull-left">
-                                        <?php// _e ('Loading...', 'bidxplugin') ?>
-                                    </div>
-                                </tbody>
-                            </table>
+                    <div class="tab-pane" id="tab-companies">
+                        <div class="view viewLoadcompanies alert alert-info text-center">
+                            <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e ('Loading', 'bidxplugin') ?>
                         </div>
                     </div>
                 </div>
@@ -94,230 +36,93 @@
 
 <script type="text/html" id="entrepreneur-investorsitem">
     <!--
-<tr>
-    <td>
-        <span class="placeholder displayName">
-            <a href="<?php echo _l('member');?>/%investorId%">%displayName%</a>
-        </span>
-    </td>
-    <td>
-      <a data-toggle="collapse" data-target="#investor-%accordion-id%" class="btn-block">
-      <span class="placeholder name">%name%</span>
-      </a>
-   </td>
 
-    <td class="hidden-xs">
-        <span class="placeholder countryOperation">%countryOperation%</span>
-    </td>
-    <td class="hidden-xs">
-        <span class="placeholder investorType">%investorType%</span>
-    </td>
-    <td class="hidden-xs">
-        <span class="placeholder investmentType">%investmentType%</span>
-    </td>
-
-    <td class="hidden-xs">
-        <span class="placeholder status label label-%status%">%status%</span>
-        </a>
-    </td>
-    <td class="hidden-xs">
-        <span class="placeholder bidxLastUpdateDateTime">%bidxLastUpdateDateTime%</span>
-    </td>
-    <td class="controlbuttons">
-        <span class="btn-%bidxEntityId%-%investorId%">
-            <button type="button" data-btn="accept" class="grantAccess btn btn-xs btn-success" data-summaryid="%bidxEntityId%" data-investorid="%investorId%"><?php _e('Accept','bidxplugin')?></button>
-            <button type="button" data-btn="reject" class="grantAccess btn btn-xs btn-danger" data-summaryid="%bidxEntityId%" data-investorid="%investorId%" ><?php _e('Reject','bidxplugin')?></button>
-        </span>
-        <a href="<?php echo _l('mail');?>#mail/compose/recipients=%investorId%" class ="btn btn-xs btn-info" title="Send a message" target="_blank"><?php _e('Contact','bidxplugin')?></a>
-    </td>
-
-</tr>
-<tr class="list detail-list" >
-    <td colspan="9" class="detailRow">
-        <div class="panel-collapse collapse" id="investor-%accordion-id%">
-            <div class="row">
-                <div class="col-sm-2">
-                    <a class="pull-left" href="<?php echo _l('businesssummary');?>/%bidxEntityId%" data-role='businessImage'>
-                        <div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>
-                    </a>
-                </div>
-                <div class="col-sm-10">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label><?php _e('Business proposal','bidxplugin')?></label>
-                            <span class="placeholder name"> %name% </span>
-                        </div>
-                        <div class="col-sm-6">
-                             <label><?php _e('Slogan','bidxplugin')?></label>
-                             <span class="placeholder slogan"> %slogan% </span>
-                        </div>
+    <div class="cardView">
+        <div class="cardHeader hide-overflow">
+            <div class="info-cell pull-left"><?php echo _e( 'Completed', 'bidxplugin' ); ?>: %completionMess%</div>
+            <div class="info-cell pull-left"><?php echo _e( 'Finance Needed', 'bidxplugin' ); ?>: %financingNeeded%</div>
+            <a href="/businesssummary/%bidxEntityId%" class="btn btn-primary btn-xs pull-right info-action main-margin-half"><?php echo _e( 'View Business', 'bidxplugin' ); ?> </a>
+        </div>
+        <div class="cardContent main-padding">
+            <div class="cardTop">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <a class="pull-left main-margin-half" href="/businesssummary/%bidxEntityId%" data-role='businessImage'>
+                            <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
+                        </a>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label><?php _e('Summary','bidxplugin')?></label>
-                            <span class="placeholder summary"> %summary% </span>
-                        </div>
-                        <div class="col-sm-6">
-                            <label><?php _e('Reason for submission','bidxplugin')?></label>
-                            <span class="placeholder reasonForSubmission"> %reasonForSubmission% </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label><?php _e('Environmental Impact','bidxplugin')?></label>
-                            <span class="placeholder envImpact"> %envImpact% </span>
-                        </div>
-                        <div class="col-sm-6">
-                            <label><?php _e('Country','bidxplugin')?></label>
-                            <span class="placeholder countryOperation"> %countryOperation% </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label><?php _e('Business stage','bidxplugin')?></label>
-                            <span class="placeholder stageBusiness"> %stageBusiness% </span>
-                        </div>
-                        <div class="col-sm-6">
-                            <label><?php _e('Consumer type','bidxplugin')?></label>
-                            <span class="placeholder consumerType"> %consumerType% </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label><?php _e('Investment type','bidxplugin')?></label>
-                            <span class="placeholder investmentType"> %investmentType% </span>
-                        </div>
-                        <div class="col-sm-6">
-                            <label><?php _e('Finance needed','bidxplugin')?></label>
-                            <span class="placeholder financingNeeded"> %financingNeeded% </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label><?php _e('Summary of finance needed','bidxplugin')?></label>
-                            <span class="placeholder summaryFinancingNeeded"> %summaryFinancingNeeded% </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-sm-offset-6">
-                            <div class="pull-right">
-                                <span class="placeholder bidxEntityId"><a class="btn btn-primary btn-sm" target = "_blank" href="<?php echo _l('businesssummary');?>/%bidxEntityId%"><?php _e('View Proposal','bidxplugin')?></a> </span>
-                            </div>
-                        </div>
+                    <div class="col-sm-9">
+                        <h3 class="top-0">%name%</h3>
+                        <h4><span class="bs-slogan">%slogan%</span></h4>
+                        <table class="table table-condensed table-bottom-border">
+                            <tbody>
+                                <tr><td>Business stage</td><td>%stageBusiness%</td></tr>
+                                <tr><td>Year sales started</td><td>%yearSalesStarted%</td></tr>
+                                <tr><td>Industry</td><td>%industry%</td></tr>
+                                <tr><td>Country of business</td><td>%countryOperation%</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-   </td>
-</tr>
+        <div class="cardFooter">
+            <div class="alert alert-info hide-overflow">
+                <div class="pull-left">
+                    <?php _e('Interested investor','bidxplugin')?>: <a href="/member/%investorId%">%displayName%</a>
+                </div>
+                <div class="pull-right">
+                    <span class="info-cell pull-left bg-%status%"><?php echo _e( 'Status', 'bidxplugin' ); ?>: %status%</span>
+                    <span class="btn-%bidxEntityId%-%investorId%">
+                        <button type="button" data-btn="accept" class="grantAccess btn btn-xs btn-success" data-summaryid="%bidxEntityId%" data-investorid="%investorId%"><?php _e('Accept','bidxplugin')?></button>
+                        <button type="button" data-btn="reject" class="grantAccess btn btn-xs btn-danger" data-summaryid="%bidxEntityId%" data-investorid="%investorId%" ><?php _e('Reject','bidxplugin')?></button>
+                    </span>
+                    <a href="/mail#mail/compose/recipients=%investorId%" class ="btn btn-xs btn-info" title="Send a message" target="_blank"><?php _e('Contact','bidxplugin')?></a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     -->
 </script>
+
 <script type="text/html" id="entrepreneur-businessitem">
     <!--
-    <tr>
-        <td>
-           <span class="placeholder name"> <a data-toggle="collapse" data-target="#%accordion-id%" class="btn-block">%name%</a> </span>
-        </td>
-        <td>
-           <span class="placeholder industry"> %industry% </span>
-        </td>
-        <td class="hidden-xs">
-           <span class="placeholder countryOperation"> %countryOperation% </span>
-        </td>
-        <td class="hidden-xs">
-           <span class="placeholder financingNeeded"> %financingNeeded% </span>
-        </td>
-        <td class="hidden-xs">
-           <span class="placeholder yearSalesStarted"> %yearSalesStarted% </span>
-        </td>
-        <td class="hidden-xs">
-           <span class="placeholder stageBusiness"> %stageBusiness% </span>
-        </td>
-        <td class="hidden-xs">
-           <span class="placeholder bidxLastUpdateDateTime"> %bidxLastUpdateDateTime% </span>
-        </td>
-    </tr>
-    <tr class="list detail-list" >
-        <td colspan="7" class="detailRow">
-            <div class="panel-collapse collapse" id="%accordion-id%">
+
+    <div class="cardView">
+        <div class="cardHeader hide-overflow">
+            <div class="info-cell pull-left"><?php echo _e( 'Completed', 'bidxplugin' ); ?>: %completeness%%</div>
+            <div class="info-cell pull-left"><?php echo _e( 'Finance Needed', 'bidxplugin' ); ?>: %financingNeeded%</div>
+            <a href="/businesssummary/%bidxEntityId%" class="btn btn-primary btn-xs pull-right info-action main-margin-half"><?php echo _e( 'View Business', 'bidxplugin' ); ?> </a>
+        </div>
+        <div class="cardContent main-padding">
+            <div class="cardTop">
                 <div class="row">
-                    <div class="col-sm-2">
-                        <a class="pull-left" href="<?php echo _l('businesssummary');?>/%bidxEntityId%" data-role='businessImage'>
-                            <div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>
+                    <div class="col-sm-3">
+                        <a class="pull-left main-margin-half" href="/businesssummary/%bidxEntityId%" data-role='businessImage'>
+                            <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
                         </a>
                     </div>
-                    <div class="col-sm-10">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label><?php _e('Business proposal','bidxplugin')?></label>
-                                <div class="placeholder name"> %name% </div>
-                            </div>
-                            <div class="col-sm-6">
-                                 <label><?php _e('Slogan','bidxplugin')?></label>
-                                 <div class="placeholder slogan"> %slogan% </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label><?php _e('Summary','bidxplugin')?></label>
-                                <div class="placeholder summary"> %summary% </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <label><?php _e('Reason for submission','bidxplugin')?></label>
-                                <div class="placeholder reasonForSubmission"> %reasonForSubmission% </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label><?php _e('Environmental Impact','bidxplugin')?></label>
-                                <div class="placeholder envImpact"> %envImpact% </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <label><?php _e('Country','bidxplugin')?></label>
-                                <div class="placeholder countryOperation"> %countryOperation% </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label><?php _e('Business stage','bidxplugin')?></label>
-                                <div class="placeholder stageBusiness"> %stageBusiness% </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <label><?php _e('Consumer type','bidxplugin')?></label>
-                                <div class="placeholder consumerType"> %consumerType% </div>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label><?php _e('Investment type','bidxplugin')?></label>
-                                <div class="placeholder investmentType"> %investmentType% </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <label><?php _e('Finance needed','bidxplugin')?></label>
-                                <div class="placeholder financingNeeded"> %financingNeeded% </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label><?php _e('Summary of finance needed','bidxplugin')?></label>
-                                <div class="placeholder summaryFinancingNeeded"> %summaryFinancingNeeded% </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 col-sm-offset-6">
-                                <div class="pull-right">
-                                    <div class="placeholder bidxEntityId"><a class="btn btn-primary btn-sm" target = "_blank" href="<?php echo _l('businesssummary');?>/%bidxEntityId%"><?php _e('View Proposal','bidxplugin')?></a> </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-sm-9">
+                        <h3 class="top-0">%name%</h3>
+                        <h4><span class="bs-slogan">%slogan%</span></h4>
+                        <table class="table table-condensed table-bottom-border">
+                            <tbody>
+                                <tr><td>Business stage</td><td>%stageBusiness%</td></tr>
+                                <tr><td>Year sales started</td><td>%yearSalesStarted%</td></tr>
+                                <tr><td>Industry</td><td>%industry%</td></tr>
+                                <tr><td>Country of business</td><td>%countryOperation%</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-        </td>
-    </tr>
+        </div>
+        <div class="cardFooter">
+
+        </div>
+    </div>
     -->
 </script>
 <script type="text/html" id="entrepreneur-empty">
@@ -332,50 +137,59 @@
 -->
 </script>
 
-<script type="text/html" id="entrepreneur-listitem">
-    <!--
-    <td colspan="5" class="detailRow">
-    <div class="panel-collapse collapse" id="table1-row1-col2">
-    <div class="row">
-    <div class="col-sm-12">
-    <h4><?php _e('Entrepreneur Profile','bidxplugin')?></h4>
-    <ul class="list-unstyled">
-    <li>
-    <label><?php _e('Entrepreneur','bidxplugin')?></label>
-    <span class="placeholder ename"/>
-    </li>
-    <li>
-    <label><?php _e('Industry','bidxplugin')?></label>
-    <span class="placeholder eindustry"/>
-    </li>
-    <li>
-    <label><?php _e('Product','bidxplugin')?></label>
-    <span class="placeholder eproduct"/>
-    </li>
-    <li>
-    <label><?php _e('Country','bidxplugin')?>Country</label>
-    <span class="placeholder ecountry"/>
-    </li>
-    <li>
-    <label><?php _e('Investment needed','bidxplugin')?></label>
-    <span class="placeholder eamount"/>
-    </li>
-    <li>
-    <label><?php _e('Business stage','bidxplugin')?></label>
-    <span class="placeholder estage"/>
-    </li>
-    <li>
-    <label><?php _e('Impact','bidxplugin')?></label>
-    <span class="placeholder eimpact"/>
-    </li>
-    </ul>
+<script type="text/html" id="entrepreneur-mentorsitem">
+     <!--
+    <div class="cardView">
+        <div class="cardHeader hide-overflow">
+            <div class="info-cell pull-left bg-%status%"><?php echo _e( 'Status', 'bidxplugin' ); ?>: %status%</div>
+            <div class="info-cell pull-left"><?php echo _e( 'Finance Needed', 'bidxplugin' ); ?>: %financingNeeded%</div>
+            <a href="/businesssummary/%entityId%" class="btn btn-primary btn-xs pull-right info-action main-margin-half"><?php echo _e( 'View Business', 'bidxplugin' ); ?> </a>
+        </div>
+        <div class="cardContent main-padding">
+            <div class="cardTop">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <a class="pull-left main-margin-half" href="/businesssummary/%entityId%" data-role='businessImage'>
+                            <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
+                        </a>
+                    </div>
+                    <div class="col-sm-9">
+                        <h3 class="top-0">%name%</h3>
+                        <h4><span class="bs-slogan">%slogan%</span></h4>
+                        <table class="table table-condensed table-bottom-border">
+                            <tbody>
+                                <tr><td>Business stage</td><td>%stageBusiness%</td></tr>
+                                <tr><td>Year sales started</td><td>%yearSalesStarted%</td></tr>
+                                <tr><td>Industry</td><td>%industry%</td></tr>
+                                <tr><td>Country of business</td><td>%countryOperation%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cardFooter">
+            <div class="alert bg-%status% hide-overflow">
+                <div class="pull-left">
+                    %statusMessage% <a href="/member/%creatorId%">%creator%</a>
+                </div>
+                <div class="pull-right">
+                    <span class="entrepreneur-respond-action">
+                        <a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmRequest/requestId=%requestId%&type=mentor&action=accepted" class="btn-bidx-accept btn btn-xs btn-success"><?php _e('Accept','bidxplugin');?></a>
+                        <a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmRequest/requestId=%requestId%&type=mentor&action=rejected" class="btn-bidx-ignore btn btn-xs btn-danger"><?php _e('Ignore','bidxplugin');?></a>
+                        <a href="#" data-href="<?php echo _l('mail')?>/#mail/compose/recipients=%receipientId%" target="_blank" class="btn-bidx-contact hide btn btn-xs btn-info"><?php _e('Contact mentor','bidxplugin');?></a>
+                    </span>
+                    <span class="entrepreneur-wait-action">
+                        <a href="#" data-href="<?php echo _l('mail')?>/#mail/compose/recipients=%receipientId%" class="btn-bidx-reminder btn btn-xs btn-primary"><?php _e('Send a reminder','bidxplugin');?></a>
+                        <a href="#" data-href="<?php echo _l('mail')?>/#mail/compose/recipients=%receipientId%" target="_blank" class="btn-bidx-contact hide btn btn-xs btn-info"><?php _e('Contact mentor','bidxplugin');?></a>
+                        <a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmRequest/requestId=%requestId%&type=mentor&action=cancel" class="btn-bidx-cancel btn btn-xs btn-danger"><?php _e('Cancel request','bidxplugin');?></a>
+                    </span>
+                    <span class="entrepreneur-ongoing-action">
+                        <a href="#" data-href="<?php echo _l('mail')?>/#mail/compose/recipients=%receipientId%" target="_blank" class="btn-bidx-contact hide btn btn-xs btn-info"><?php _e('Contact mentor','bidxplugin');?></a>
+                        <a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmRequest/requestId=%requestId%&type=mentor&action=cancel" class="btn-bidx-stop btn btn-xs btn-danger"><?php _e('Stop mentoring','bidxplugin');?></a>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="pull-right">
-    <a href="#"><?php _e('View full profile','bidxplugin')?></a>
-    </div>
-    </div>
-    </div>
-    </td>
-    -->
 </script>

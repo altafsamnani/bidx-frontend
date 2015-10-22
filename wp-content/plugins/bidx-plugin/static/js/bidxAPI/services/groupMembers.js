@@ -7,7 +7,7 @@
     var bidx            = window.bidx
     ,   api             = bidx.api
     ,   groupMembers    = {}
-    ,   baseUrl         = "/api/v1/groups/%groupId%/contacts"
+    ,   baseUrl         = "/api/v1/groups/%groupId%/members"
     ,   params          = []
     ;
 

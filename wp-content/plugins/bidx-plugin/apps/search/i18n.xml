@@ -5,8 +5,6 @@
 
     <!-- ##################Facet################# -->
     <!-- Facet Show -->
-    <Item value="showMore">More</Item>
-    <Item value="showLess">Less</Item>
      <Item value="resultsLabel">results</Item>
 
     <!-- Facet Entity types -->

@@ -162,7 +162,12 @@
         {
             e.preventDefault();
 
-            $logoContainer.find( "img" ).remove();
+            //BUGFIX: BIDX-3691 - display the Logo has been removed message only on remove button action
+            if (!$logoContainer.hasClass("icons-rounded"))
+            {
+                $logoContainer.find( "img" ).remove();
+                $logoContainer.html( $( "<p />", { "html": bidx.i18n.i( "docDeleted" ) } ) );
+            }
         } );
 
 
@@ -566,11 +571,6 @@
                     .append( $( "<i />", { "class": "fa fa-building text-primary-light" } ) )
                     ;
             }
-        ,   _logoRemoved = function()
-            {
-                $logoContainer.append(  $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
-                $logoContainer.append( $( "<p />", { "html": bidx.i18n.i( "docDeleted" ) } ) );
-            }
         ,   _logoIsSet = function()
             {
                 $logoContainer.data( "bidxData", logo[ 0 ] );
@@ -588,18 +588,13 @@
         // Editing an existing company has 3 different cases
         // No Logo is placed, Logo is placed, Logo has beed removed
         //
+
+        //BUGFIX: BIDX-3691 - display the Logo has been removed message only on remove button action
         if ( state === "edit" )
         {
-            if ( logo && logo.length )
+            if (logo && logo[ 0 ].document)
             {
-                if ( logo[ 0 ].document )
-                {
-                    _logoIsSet();
-                }
-                else
-                {
-                    _logoRemoved();
-                }
+                _logoIsSet();
             }
             else
             {

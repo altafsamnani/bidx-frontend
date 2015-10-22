@@ -169,13 +169,13 @@
                         <div class="col-sm-5 member-social">
 <?php
                             $rowValues1 = array (
-                                __('Facebook','bidxplugin') => $this->addSocialPluginScript ('facebookprofile', $this->exst ($personalDetails->facebook)),
-                                __('Linkedin','bidxplugin') => $this->addSocialPluginScript ('linkedin', $this->exst ($personalDetails->linkedIn)),
+                                'Facebook' => $this->addSocialPluginScript ('facebookprofile', $this->exst ($personalDetails->facebook)),
+                                'Linkedin' => $this->addSocialPluginScript ('linkedin', $this->exst ($personalDetails->linkedIn)),
                             );
                             if ( $authenticated ) {
                                 $rowValues2 = array (
-                                    __('Twitter','bidxplugin') => $this->addSocialPluginScript ('twitterprofile', $this->exst ($personalDetails->twitter)),
-                                    __('Skype','bidxplugin') => $this->addSocialPluginScript ('skype', $this->exst ($personalDetails->skype))
+                                    'Twitter' => $this->addSocialPluginScript ('twitterprofile', $this->exst ($personalDetails->twitter)),
+                                    'Skype' => $this->addSocialPluginScript ('skype', $this->exst ($personalDetails->skype))
                                 );
                             }
                             $rowValues = ( isset( $rowValues2 ) ) ? array_merge( $rowValues1, $rowValues2 ) : $rowValues1;

@@ -483,7 +483,7 @@
                 //
 
                 submitBtnLabel = $btnRegister.text();
-                // $btnRegister.i18nText("btnPleaseWait");
+                $btnRegister.i18nText("btnPleaseWait");
 
                 _handleFormSubmition( role );
             }

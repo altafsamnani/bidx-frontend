@@ -39,6 +39,7 @@
     <Item value="btnRequestRejectedByEntrepreneur">Rejected by entrepreneur</Item>
     <Item value="btnRequestAccepted">Request accepted</Item>
 
+    <Item value="btnViewProfile">View Profile</Item>
 
 
     <Item value="btnCreateBs">Create business proposal</Item>
@@ -57,8 +58,10 @@
     <Item value="errorRequest">Something went wrong while creating a relationship:</Item>
 
     <!-- Dropdown messages -->
+    <Item value="selectNoResults">No results match</Item>
     <Item value="selectSingleOption">Select an Option</Item>
     <Item value="selectMultipleOptions">Select Some Options</Item>
+    <Item value="selectReasonForSubmission">Select what best matches your reason for submission</Item>
 
 
     <!--
@@ -106,6 +109,69 @@
     <Item value="investor">Investor</Item>
     <Item value="mentor">Mentor</Item>
 
+    <!-- Common Mentor strings -->
+    <Item value="offerMentoring">Offer Mentoring</Item>
+    <Item value="offerMentoringTo">Offer mentoring to</Item>
+    <Item value="requestMentoring">Request Mentoring</Item>
+    <Item value="requestMentoringBusiness">Request Mentoring for </Item>
+    <Item value="receivedRequestFrom">You have a mentor request from</Item>
+    <Item value="pendingRequestTo">Your mentor request is pending</Item>
+    <Item value="mentoringActive">You are mentoring this business</Item>
+    <Item value="wantsToMentor">has offered to be your mentor</Item>
+    <Item value="wantsYouToMentor">has requested you to mentor this business</Item>
+    <Item value="isMentoring">is mentoring your business</Item>
+    <Item value="youAreMentoring">You are mentoring this business</Item>
+    <Item value="youCancelledMentoring">You cancelled your mentor request</Item>
+    <Item value="youAskedMentor">You offered to mentor this business</Item>
+    <Item value="youAskedMentorFrom">You offered to mentor this business by</Item>
+    <Item value="youAskedMentorForBusiness">You requested mentoring for</Item>
+    <Item value="youAskedFromMentor">You requested mentoring from</Item>
+    <Item value="mentorAskedYou">has offered to be your mentor</Item>
+    <Item value="mentorYouCancelled">You cancelled your offer to mentor this business</Item>
+    <Item value="mentorYouCancelledForBusiness">You cancelled your mentor request for</Item>
+
+    <Item value="btnStopMentor">Stop Mentoring</Item>
+    <Item value="youStoppedMentor">You have cancelled the mentor request </Item>
+
+    <Item value="btnRemove">Remove</Item>
+    <Item value="btnRequest">Request</Item>
+    <Item value="btnReject">Reject</Item>
+    <Item value="btnAccept">Accept</Item>
+    <Item value="btnRemind">Send a Reminder</Item>
+    <Item value="btnCancelRequest">Cancel Request</Item>
+    <Item value="btnRemoveAccess">Remove Access</Item>
+    <Item value="btnDismiss">Dismiss</Item>
+
+    <!-- Common Investor strings -->
+    <Item value="wantsFullAccess">requests access</Item>
+    <Item value="hasFullAccess">has access</Item>
+    <Item value="userRejected">has been rejected</Item>
+    <Item value="requestAccessBusiness">Request access from</Item>
+    <Item value="btnRequestAccess">Requests Access</Item>
+    <Item value="youRequestedAccessFrom">You have requested access from</Item>
+    <Item value="youHaveAccessFrom">You have been granted full access by</Item>
+
+    <!-- Cards -->
+    <Item value="bsCompleted">Completed</Item>
+    <Item value="bsFinanceNeeded">Finance Needed</Item>
+    <Item value="bsBusinessStage">Business stage</Item>
+    <Item value="bsYearSalesStarted">Year sales started</Item>
+    <Item value="bsIndustry">Industry</Item>
+    <Item value="bsCountryBusiness">Country of business</Item>
+    <Item value="bsViewBusiness">View Business</Item>
+
+    <Item value="cmDateRegistration">Date of registration</Item>
+    <Item value="cmRegistrationNumber">Registration number</Item>
+    <Item value="cmFiscalNumber">Fiscal number</Item>
+    <Item value="cmFLegalFormBusiness">Legal form of business</Item>
+    <Item value="cmCompany">View Company</Item>
+
+    <!-- Connection details -->
+    <Item value="youAreInContact">This user has been added to your contacts</Item>
+    <Item value="btnStopConnect">Disconnect</Item>
+    <Item value="youAskedConnection">You have successfully sent a contact request to this user</Item>
+    <Item value="wantsToConnect">wants to connect with you</Item>
+
 
     <!-- Modal dialogs status messages -->
      <Item value="modalSend">You are about to send request. Are you sure?</Item>
@@ -129,6 +195,7 @@
     <!-- Facet Title -->
     <Item value="facet_industry">Industry</Item>
     <Item value="facet_country">Country</Item>
+    <Item value="facet_city">City</Item>
     <Item value="facet_language">Language</Item>
     <Item value="facet_entityType">Type</Item>
 
@@ -174,6 +241,8 @@
     <Item value="From">From</Item>
     <Item value="To">To</Item>
     <Item value="emailNew">new</Item>
+    <Item value="showMore">More</Item>
+    <Item value="showLess">Less</Item>
 
     <Item value="loadingLbl">Loading</Item>
 
@@ -193,5 +262,11 @@
     <Item value="lblPendingAccreditation">Pending Accreditation</Item>
     <Item value="lblNoTaggingExist">Assignment is not allowed for tags:</Item>
     <Item value="errorNoTagEntityId">EntityId is not specified</Item>
+
+    <!-- Connect -->
+    <Item value="lblConnect">Connect</Item>
+    <Item value="messageSent">Message sent</Item>
+    <Item value="reminderSent">Reminder sent</Item>
+    <Item value="inMailBtn">Send Message</Item>
 
 </I18N>

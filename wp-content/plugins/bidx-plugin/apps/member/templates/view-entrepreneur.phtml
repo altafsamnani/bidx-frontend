@@ -73,7 +73,7 @@ if ($entrepreneurDetails &&
         if ($businessSummary) {
             $labelBusiness = ( count( $businessSummary ) > 1 ) ? __('Businesses','bidxplugin') : __('Business','bidxplugin');
 ?>
-            <div class="row" id="existingBusinesses">
+            <div class="row" id="existingBusinesses" data-ownerid= <?php echo $memberId; ?>>
                 <div class="col-sm-12">
                     <h4>
                         <?php echo $labelBusiness; ?>
@@ -91,7 +91,7 @@ if ($entrepreneurDetails &&
 <?php
                         foreach ($businessSummary as $index => $business) {
 ?>
-                                    <div class="list-group-item" data-entityid="<?php echo $business->bidxMeta->bidxEntityId; ?>">
+                                    <div class="list-group-item" data-bsid="<?php echo $business->bidxMeta->bidxEntityId; ?>">
                                         <div class="list-group-item-text">
                                             <div class="row">
                                                 <div class="col-sm-2">
@@ -138,39 +138,30 @@ if ($entrepreneurDetails &&
 ?>
                                                     </ul>
                                                 </div>
-                                                <div class="col-sm-2">
+                                                <div class="col-sm-2 actions">
 <?php
                                                     if ( $memberId === $loggedInMemberId )
                                                     {
 ?>
-
-                                                    <div class="btn-group pull-right">
-                                                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                            <i class="fa fa-chevron-down"></i>
-                                                        </button>
-                                                        <ul class="dropdown-menu box-border" role="menu">
-                                                            <li><a href="<?php echo _l('businesssummary');?>/<?php echo $business->bidxMeta->bidxEntityId ?>"><?php _e( 'View', 'bidxplugin' ); ?></a></li>
-                                                            <li>
-                                                                <a href="<?php echo _l('businesssummary');?>/<?php echo $business->bidxMeta->bidxEntityId ?>/#editBusinessSummary/<?php echo $business->bidxMeta->bidxEntityId; ?>"><?php _e( 'Edit', 'bidxplugin' ); ?></a>
-                                                            </li>
-                                                            <li><a class="deleteEntityItem" href="#"><?php _e( 'Delete', 'bidxplugin' ); ?></a></li>
-                                                        </ul>
-                                                    </div>
-<?php
-                                                    }
-
-                                                    // If current profile is not loggedin user, not a mentor, in a group and Loggedin user is mentor
-                                                    if ( $memberId != $loggedInMemberId && $authenticated && $inGroup && $isLoggedinMemberIsMentor && !$isMentor)
-                                                    {
-?>
-                                                        <a class="btn btn-sm btn-danger pull-right bp-<?php echo $business->bidxMeta->bidxEntityId;?>" href="#mentoringRequest/confirmRequest/entityId=<?php echo $business->bidxMeta->bidxEntityId;?>"><?php _e('Mentor this plan', 'bidxplugin')?></a>
+                                                        <div class="btn-group pull-right">
+                                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                                <i class="fa fa-chevron-down"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu box-border" role="menu">
+                                                                <li><a href="<?php echo _l('businesssummary');?>/<?php echo $business->bidxMeta->bidxEntityId ?>"><?php _e( 'View', 'bidxplugin' ); ?></a></li>
+                                                                <li>
+                                                                    <a href="<?php echo _l('businesssummary');?>/<?php echo $business->bidxMeta->bidxEntityId ?>/#editBusinessSummary/<?php echo $business->bidxMeta->bidxEntityId; ?>"><?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                                                                </li>
+                                                                <li><a class="deleteEntityItem" href="#"><?php _e( 'Delete', 'bidxplugin' ); ?></a></li>
+                                                            </ul>
+                                                        </div>
 <?php
                                                     }
 ?>
-
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="cardView main-margin-half-vertical js-activities hide"></div>
                                     </div>
 <?php
                         }

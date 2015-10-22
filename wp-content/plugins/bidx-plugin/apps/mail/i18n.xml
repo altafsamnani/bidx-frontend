@@ -3,19 +3,19 @@
     <Item value="replyContentHeader">On %date% at %time%, %sender% wrote:</Item>
     <Item value="forwardContentHeader">Forwarded message</Item>
     <Item value="sendingMessage">Sending message</Item>
-    <Item value="messageSent">Message sent</Item>
-
 
     <Item value="incomingContact">Incoming contact requests</Item>
     <Item value="pendingContact">Pending contact requests</Item>
     <Item value="contactRequestSendTo">New contact request has been sent to</Item>
     <Item value="activeContact">Active contacts</Item>
-    <Item value="ignoredContact">Ignored contacts</Item>
+    <Item value="blockedContact">Blocked contacts</Item>
     <Item value="contactRequest">New contact request</Item>
 
     <Item value="groupAdmin">Group admin</Item>
     <Item value="msgToGroup">Message to group owner</Item>
     <Item value="trashedFrom">Deleted from</Item>
+
+    <Item value="labelUnblock">Unblock</Item>
 
     <Item value="insufficientRights">You cannot trash a system mail this way</Item>
 </I18N>

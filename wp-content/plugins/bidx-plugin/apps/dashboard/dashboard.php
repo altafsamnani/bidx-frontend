@@ -9,8 +9,8 @@
 class dashboard
 {
 
-    static $deps = array ('bidx-tagsinput', 'bidx-common', 'bidx-i18n', 'jquery-validation',
-      'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
+    static $deps = array ('bidx-tagsinput', 'bidx-common', 'bidx-globalchecks', 'bidx-elements', 'bidx-interactions', 'bidx-i18n', 'jquery-validation',
+      'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-mentor');
 
     /**
      * Constructor
@@ -95,32 +95,28 @@ class dashboard
         $command = $atts['view'];
 
         switch ($command) {
-            case 'investor-dashboard':
-                wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
+            case 'dashboard':
                 $sessionSvc = new SessionService( );
                 $investorProfile = $sessionSvc->isHavingProfile ('bidxInvestorProfile');
-                $view->groupOwnersIdsArr = $sessionSvc->getGroupOwnerIds ();
+                $mentorProfile = $sessionSvc->isHavingProfile ('bidxMentorProfile');
+                $entrepreneurProfile = $sessionSvc->isHavingProfile ('bidxEntrepreneurProfile');
 
-                if ($investorProfile) {
-
+                if ( $investorProfile || $mentorProfile )
+                {
+                    wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
                     $investorDashboard = get_option ('investor-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
+                    
                     $view->startingPage = 0;
-                    if ($investorDashboard) {
+                    if ( $investorDashboard )
+                    {
                         ($investorDashboard != 2 ) ? update_option ('investor-startingpage', 0) : $view->startingPage = $investorDashboard;
                     }
 
                     $template = 'investor/dashboard.phtml';
-                } else {
-                    $view->return_404 ();
                 }
-                break;
-            case 'entrepreneur-dashboard':
-                wp_register_script ('dashboard', plugins_url ('static/js/entrepreneur-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
-                $sessionSvc = new SessionService( );
-                $entrepreneurProfile = $sessionSvc->isHavingProfile ('bidxEntrepreneurProfile');
-                $view->groupOwnersIdsArr = $sessionSvc->getGroupOwnerIds ();
-
-                if ($entrepreneurProfile) {
+                else if ( $entrepreneurProfile )
+                {
+                    wp_register_script ('dashboard', plugins_url ('static/js/entrepreneur-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
 
                     $entrepreneurDashboard = get_option ('entrepreneur-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
                     $view->startingPage = 0;
@@ -129,10 +125,52 @@ class dashboard
                     }
 
                     $template = 'entrepreneur/dashboard.phtml';
-                } else {
+                }
+                else
+                {
                     $view->return_404 ();
                 }
+
                 break;
+
+            // case 'investor-dashboard':
+            //     wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
+            //     $sessionSvc = new SessionService( );
+            //     $investorProfile = $sessionSvc->isHavingProfile ('bidxInvestorProfile');
+            //     $view->groupOwnersIdsArr = $sessionSvc->getGroupOwnerIds ();
+
+            //     if ($investorProfile) {
+
+            //         $investorDashboard = get_option ('investor-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
+            //         $view->startingPage = 0;
+            //         if ($investorDashboard) {
+            //             ($investorDashboard != 2 ) ? update_option ('investor-startingpage', 0) : $view->startingPage = $investorDashboard;
+            //         }
+
+            //         $template = 'investor/dashboard.phtml';
+            //     } else {
+            //         $view->return_404 ();
+            //     }
+            //     break;
+            // case 'entrepreneur-dashboard':
+            //     wp_register_script ('dashboard', plugins_url ('static/js/entrepreneur-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
+            //     $sessionSvc = new SessionService( );
+            //     $entrepreneurProfile = $sessionSvc->isHavingProfile ('bidxEntrepreneurProfile');
+            //     $view->groupOwnersIdsArr = $sessionSvc->getGroupOwnerIds ();
+
+            //     if ($entrepreneurProfile) {
+
+            //         $entrepreneurDashboard = get_option ('entrepreneur-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
+            //         $view->startingPage = 0;
+            //         if ($entrepreneurDashboard) {
+            //             ($entrepreneurDashboard != 2 ) ? update_option ('entrepreneur-startingpage', 0) : $view->startingPage = $entrepreneurDashboard;
+            //         }
+
+            //         $template = 'entrepreneur/dashboard.phtml';
+            //     } else {
+            //         $view->return_404 ();
+            //     }
+            //     break;
             case 'group-dashboard':
                 //wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
                 if (isset ($view->sessionData->data) && isset ($view->sessionData->data->currentGroup)) {
@@ -198,7 +236,7 @@ class dashboard
 
             default:
 
-                $template = 'my-dashboard.phtml';
+                $template = 'dashboard.phtml';
                 break;
         }
 

@@ -9,6 +9,30 @@
     ,   $element                = $( "#searchHome")
     ,   $frmSearch              = $element.find( ".searchform" )
 
+    ,   $nationality            = $element.find( "[name='nationality']" )
+    ,   $languageSelect         = $element.find( "[name='languages']"     )
+    ,   $industrySectors        = $element.find( ".industrySectors" )
+    ,   $socialImpact           = $element.find( "[name='socialImpact']" )
+    ,   $envImpact              = $element.find( "[name='envImpact']" )
+    ,   $expertiseNeeded        = $element.find( "[name='expertiseNeeded']" )
+    ,   $reasonForSubmission    = $element.find( "[name='reasonForSubmission']" )
+
+    ,   $focusLanguage          = $element.find( "[name='focusLanguage']" )
+    ,   $focusCountry           = $element.find( "[name='focusCountry']" )
+    ,   $focusExpertise         = $element.find( "[name='focusExpertise']" )
+    ,   $focusSocialImpact      = $element.find( "[name='focusSocialImpact']" )
+    ,   $focusEnvImpact         = $element.find( "[name='focusEnvImpact']" )
+    ,   $focusIndustrySectors   = $element.find( ".focusIndustrySectors" )
+
+    ,   $investorType           = $element.find( "[name='investorType']" )
+    ,   $investorFocusLanguage  = $element.find( "[name='investorFocusLanguage']" )
+    ,   $investorFocusCountry   = $element.find( "[name='investorFocusCountry']" )
+    ,   $investorFocusExpertise = $element.find( "[name='investorFocusExpertise']" )
+    ,   $investorFocusSocImpact = $element.find( "[name='investorFocusSocialImpact']" )
+    ,   $investorFocusEnvImpact = $element.find( "[name='investorFocusEnvImpact']" )
+    ,   $investorIndSectors     = $element.find( ".investorFocusIndustrySectors" )
+
+
     ,   $views                  = $element.find( ".view" )
     ,   $searchList             = $element.find( ".search-list" )
     ,   $errorListItem          = $element.find( "#error-listitem" )
@@ -21,6 +45,7 @@
     ,   $fakecrop               = $views.find( ".js-fakecrop img" )
     ,   languages
     ,   appName                 = "search"
+    ,   loggedInMemberId        = bidx.common.getCurrentUserId()
 
     ,   paging                  =
         {
@@ -69,6 +94,121 @@
     ,   displayInvestorProfile  = ( $.inArray("GroupOwner", roles) !== -1 || $.inArray("GroupAdmin", roles) !== -1 || currentInvestorId ) ? true : false
     ;
 
+    function _advancedFilters()
+    {
+        $nationality.bidx_chosen(
+        {
+            dataKey:            "nationality"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
+
+        $languageSelect.bidx_chosen(
+            {
+                dataKey:            "language"
+            ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+            });
+
+        /* Entrpreneurs */
+         // Run the industry widget on the selector
+        //
+        $industrySectors.industries();
+        $envImpact.bidx_chosen(
+        {
+            dataKey:            "envImpact"
+        });
+
+        $socialImpact.bidx_chosen(
+        {
+            dataKey:            "socialImpact"
+        });
+
+        $expertiseNeeded.bidx_chosen(
+        {
+            dataKey:            "mentorExpertise"
+        });
+
+        // Populate the dropdowns with the values
+        //
+        $reasonForSubmission.bidx_chosen(
+        {
+            dataKey:            "reasonForSubmission"
+        ,   emptyValue:         bidx.i18n.i( "selectReasonForSubmission" )
+        });
+
+        $focusLanguage.bidx_chosen(
+        {
+            dataKey:            "language"
+        });
+
+        $focusCountry.bidx_chosen(
+        {
+            dataKey:            "country"
+        });
+
+        // Populate the selects
+        //
+        $focusExpertise.bidx_chosen(
+        {
+            dataKey:            "mentorExpertise"
+        });
+
+        $focusSocialImpact.bidx_chosen(
+        {
+            dataKey:            "socialImpact"
+        });
+
+        $focusEnvImpact.bidx_chosen(
+        {
+            dataKey:            "envImpact"
+        });
+
+        // Run the industry widget on the selector
+        //
+        $focusIndustrySectors.industries();
+
+
+        /* Investor */
+        $investorType.bidx_chosen(
+        {
+            dataKey:            "investorType"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
+
+        $investorFocusLanguage.bidx_chosen(
+        {
+            dataKey:            "language"
+        });
+
+        $investorFocusCountry.bidx_chosen(
+        {
+            dataKey:            "country"
+        });
+
+        // Populate the selects
+        //
+        $investorFocusExpertise.bidx_chosen(
+        {
+            dataKey:            "mentorExpertise"
+        });
+
+        $investorFocusSocImpact.bidx_chosen(
+        {
+            dataKey:            "socialImpact"
+        });
+
+        $investorFocusEnvImpact.bidx_chosen(
+        {
+            dataKey:            "envImpact"
+        });
+
+        // Run the industry widget on the selector
+        //
+        $investorIndSectors.industries();
+
+
+
+    }
+
     function _oneTimeSetup()
     {
         if(!displayInvestorProfile)
@@ -76,7 +216,9 @@
             CONSTANTS.ENTITY_TYPES.pop(); // Removes Investor Profile, not to display
         }
 
+        _tabSearch();
         _languages();
+        _advancedFilters();
 
         if ( $fakecrop )
         {
@@ -206,7 +348,36 @@
     //         bidx.utils.log('_addVideoThumb:: ', 'No matches' + matches );
     //     }
     // }
+    function _tabSearch()
+    {
+        var isadvancedTab
+        ,   $tabSearch
+        ,   $advancedFilters    =   $('.advancedFilters')
+        ;
 
+        $tabSearch  =   $('.nav-search').find("li");
+
+        $tabSearch.on('click', function( e )
+        {
+            e.preventDefault();
+
+            var tab
+            ,   $this = $( this )
+            ;
+
+            isadvancedTab   =   $this.hasClass( "advancedTab" );
+
+            if( isadvancedTab )
+            {
+                $advancedFilters.removeClass('hide');
+            }
+            else
+            {
+                $advancedFilters.addClass('hide');
+            }
+        });
+
+    }
     function _languages()
     {
         // Retrieve the list of languages from the data api
@@ -341,6 +512,33 @@
         });
     }
 
+    function _addMainSearchFacets( item )
+    {
+        var listFacetsItem
+        ,   $listFacetsItem
+        ,   newname
+        ,   $filters        =  $('.topfilters')
+        ,   subsnippit      = $("#facettop-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ;
+
+        newname = item.name.replace(/ /g, '');
+
+        listFacetsItem = subsnippit
+                        .replace( /%facetValues_name%/g,    item.name )
+                        .replace( /%facetValues_anchor%/g,  newname )
+                        .replace( /%facetValues_count%/g,   item.count )
+                        .replace( /%filterQuery%/g,         item.filterQuery )
+                        ;
+
+        // execute cb function
+        //
+
+        $listFacetsItem = $( listFacetsItem );
+
+        $filters.append( $listFacetsItem );
+
+    }
+
     /* Get the search list
     Sample
     bidxBusinessGroup - 8747 - Cleancookstoves
@@ -356,6 +554,8 @@
         ,   $mainFacet      = $element.find(".main-facet")
         ,   $resetFacet     = $element.find(".facet-reset")
         ,   $list           = $element.find(".facet-list")
+        ,   $filters        =  $('.topfilters')
+        ,   $advancedSearch =  $('.advancedFilters')
         ,   emptyVal        = ''
         ,   $listItem
         ,   $listFacetsItem
@@ -383,10 +583,12 @@
 
         $list.empty();
 
+        $filters.empty();
 
         if ( response && response.facets )
         {
             // Add Default image if there is no image attached to the bs
+            bidx.utils.log('facets', response.facets);
             $.each( response.facets , function ( idx, facetItems)
             {
 
@@ -413,6 +615,8 @@
                         else
                         {
                             item.name    = bidx.i18n.i( item.name, appName );
+
+                            _addMainSearchFacets( item );
                         }
 
                         if ( item.name )
@@ -430,7 +634,6 @@
                             //
                             $listFacetsItem = $( listFacetsItem );
 
-                            // bidx.utils.log( facetCriteria);
 
                             // Display Close button for criteria
                             //
@@ -449,6 +652,8 @@
                             $currentCategory.find( ".list-group" ).append($listFacetsItem);
                         }
                     });
+
+                    $advancedSearch.css('display','block');
                 }
 
                 // Show the first VISIBLE_FILTER_ITEMS filter items if more than (VISIBLE_FILTER_ITEMS + 3)
@@ -459,12 +664,12 @@
                     $categoryList = $bigCategory.find( ".list-group" );
 
                     $categoryList.find( "a.filter:gt("+CONSTANTS.VISIBLE_FILTER_ITEMS+")" ).addClass( "hide toggling" );
-                    $categoryList.append( $( "<a />", { html: bidx.i18n.i( "showMore", appName ), "class": "list-group-item list-group-item-warning text-center more-less" }) );
+                    $categoryList.append( $( "<a />", { html: bidx.i18n.i( "showMore" ), "class": "list-group-item list-group-item-warning text-center more-less" }) );
 
                     $categoryList.find( ".more-less" ).on('click', function( e )
                     {
                         e.preventDefault();
-                        _showMoreLess( $(this).parent().find( ".toggling" ) );
+                        bidx.common.showMoreLess( $(this).parent().find( ".toggling" ) );
                     });
                 }
             });
@@ -573,21 +778,6 @@
 
             });
 
-    }
-
-    function _showMoreLess ( items )
-    {
-        var $moreless = $(items).parent().find( ".more-less" );
-        if ( items.hasClass( "hide" ) )
-        {
-            items.removeClass( "hide" );
-            $moreless.html( bidx.i18n.i( "showLess", appName ) );
-        }
-        else
-        {
-            items.addClass( "hide" );
-            $moreless.html( bidx.i18n.i( "showMore", appName ) );
-        }
     }
 
     var placeBusinessThumb = function( $listItem, imageSource )
@@ -1310,6 +1500,7 @@
                 ,   gender
                 ,   isEntrepreneur
                 ,   isInvestor
+                ,   investorMemberId
                 ,   isMentor
                 ,   cityTown
                 ,   sepCountry
@@ -1328,6 +1519,7 @@
                 bidxMeta         = bidx.utils.getValue( i18nItem, "bidxMemberProfile.bidxMeta" );
                 isEntrepreneur   = bidx.utils.getValue( i18nItem, "bidxEntrepreneurProfile" );
                 isInvestor       = bidx.utils.getValue( i18nItem, "bidxInvestorProfile" );
+                investorMemberId = bidx.utils.getValue( isInvestor, "bidxMeta.bidxOwnerId" );
                 isMentor         = bidx.utils.getValue( i18nItem, "bidxMentorProfile" );
                 personalDetails  = i18nItem.bidxMemberProfile.personalDetails;
                 cityTown         = bidx.utils.getValue( personalDetails, "address.0.cityTown");
@@ -1455,7 +1647,7 @@
 
                     $listItem.find('.fa-mentor').addClass( mentorTaggingId );
                 }
-                if(isInvestor && isGroupAdmin)
+                if( ( isInvestor && isGroupAdmin) || ( investorMemberId === loggedInMemberId ) )
                 {
                     investorTaggingId   =   'hide';
                     taggingInvestor     =   bidx.utils.getValue(tagging, 'investor' );

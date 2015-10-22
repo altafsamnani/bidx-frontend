@@ -5,11 +5,40 @@
 
 #searchHome
 {
+    .collapsed .fa-advanced:before
+    {
+        content: "\f0fe";
+    }
+    a:not(.collapsed) .fa-advanced:before
+    {
+        content: "\f146";
+    }
+
+    .advancedFilters
+    {
+        margin-top:10%;
+        position:relative;
+        display:none;
+    }
+
+    .advancedFilters
+    {
+        .radio label, .checkbox label
+        {
+            padding-left:0px !important;
+        }
+    }
     .searchcontrol
     {
         border-radius: 6px;
-        padding: 20px;
+        padding: 20px 20px 100px 20px;
         margin-bottom: 20px;
+    }
+    .search-sm-6
+    {
+        width: 50%;
+        float:left;
+        margin-top:1%;
     }
     .searchform
     {
@@ -28,7 +57,8 @@
         }
     }
     a.list-group-item:hover, a.list-group-item:focus,
-    a.sort
+    a.sort,
+    .topfilters a.filter
     {
        cursor:pointer;
     }

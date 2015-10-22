@@ -49,7 +49,7 @@
                 //
                 $btnResetpassword.addClass( "disabled" );
                 submitBtnLabel = $btnResetpassword.text();
-                // $btnResetpassword.i18nText("btnPleaseWait");
+                $btnResetpassword.i18nText("btnPleaseWait");
 
                 $loginErrorMessage.text( "" ).hide();
 

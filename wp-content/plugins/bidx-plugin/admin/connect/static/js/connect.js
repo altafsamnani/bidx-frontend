@@ -1401,13 +1401,13 @@
                 switch( state )
                 {
                 case "inbox":
-                    columnToFromHeader.text( bidx.i18n.i( "From", appName ) );
+                    columnToFromHeader.text( bidx.i18n.i( "From" ) );
                     break;
                 case "sent":
-                    columnToFromHeader.text( bidx.i18n.i( "To", appName ) );
+                    columnToFromHeader.text( bidx.i18n.i( "To" ) );
                     break;
                 default:
-                    columnToFromHeader.text( bidx.i18n.i( "To", appName ) + " / " +  bidx.i18n.i( "From", appName ));
+                    columnToFromHeader.text( bidx.i18n.i( "To" ) + " / " +  bidx.i18n.i( "From" ));
                 }
             }
         }
@@ -1448,6 +1448,7 @@
                 ,   mailbox
                 ,   isSenderId
                 ,   isGroupId
+                ,   option
                 ;
 
                 if( state.search( /(^mbx-)/ ) === 0 )
@@ -1479,7 +1480,14 @@
                             isGroupId  = message.sender.groupId;
                             if( isSenderId )
                             {
-                                recipients.push( message.sender.id.toString() );
+                                option = $( "<option/>",
+                                {
+                                    value: message.sender.id.toString()
+                                } );
+
+                                option.text( message.sender.name );
+
+                                recipients.push( option );
 
                             } else if( isGroupId )
                             {
@@ -1499,7 +1507,7 @@
                         lbl     = bidx.i18n.i( "replyContentHeader", appName )
                                 .replace( "%date%", bidx.utils.parseTimestampToDateTime( message.dateSent, "date" ) )
                                 .replace( "%time%", bidx.utils.parseTimestampToDateTime( message.dateSent, "time" ) )
-                                .replace( "%sender%", message.sender.displayName );
+                                .replace( "%sender%", message.sender.name );
                         content = "\n\n" + lbl + "\n" + content;
 
                         $frmCompose.find( "[name=connectBody]" ).val( content );
@@ -1578,7 +1586,7 @@
                 //
                 $.each( message.recipients, function( idx, recipient )
                 {
-                    recipients.push( recipient.displayName );
+                    recipients.push( recipient.name );
                 } );
 
                 // For most folders (such as Trash and any archive), prefix with "To:"
@@ -1591,7 +1599,7 @@
                 // prefix with "From:" (after moving a Sent item from Trash to Inbox, this will not show
                 // such prefix, which may be confusing).
                 //
-                senderReceiverName = ( !message.trashed && message.folderName === "Inbox" ? "" : prefixFrom ) +  message.sender.displayName;
+                senderReceiverName = ( !message.trashed && message.folderName === "Inbox" ? "" : prefixFrom ) +  message.sender.name;
             }
 
              $currentView.find( ".mail-sender").html( senderReceiverName );
@@ -1710,19 +1718,11 @@
             offset  = options.offset ? options.offset : 0;
 
             bidx.api.call(
-                "memberRelationships.fetch"
+                "groupMembers.fetch"
             ,   {
                     extraUrlParameters:
                     [
                         {
-                            label:      "type",
-                            value:      "contact"
-                        }
-                    ,   {
-                            label:      "status",
-                            value:      status
-                        }
-                    ,   {
                             label:      "limit",
                             value:      limit
                         }
@@ -1731,9 +1731,8 @@
                             value:      offset
                         }
                     ]
-                ,   requesterId:              bidx.common.getCurrentUserId( "id" )
-                ,   groupDomain:              bidx.common.groupDomain
-
+                ,   id:             bidx.common.getCurrentGroupId
+                ,   groupDomain:    bidx.common.groupDomain
                 ,   success: function( response )
                     {
                         var sortIndex           = []
@@ -1744,11 +1743,11 @@
                         ;
 
                         bidx.utils.log("[members] retrieved following active contacts ", response );
-                        if ( response && response.relationshipType && response.relationshipType.contact && response.relationshipType.contact.types )
+                        if ( response && response.members )
                         {
                             // first add the admins and groupowners
                             //
-                            if ( response.relationshipType.contact.types.groupOwner )
+                            /*if ( response.relationshipType.contact.types.groupOwner )
                             {
                                $.each( response.relationshipType.contact.types.groupOwner , function ( idx, item)
                                 {
@@ -1764,19 +1763,19 @@
                                         sortIndex.push( item.name.toLowerCase() );
                                     }
                                 } );
-                            }
+                            }*/
 
-                            if ( response.relationshipType.contact.types.active )
+                            if ( response.totalMembers > 0 )
                             {
                                 // then add the active contactsm but we first check if we are not adding a duplicate member id (member who already acts as an admin or groupowner )
                                 //
-                                $.each( response.relationshipType.contact.types.active , function ( idx, item)
+                                $.each( response.members , function ( idx, item)
                                 {
                                     exists = false;
 
                                     // test the active contactid against a group owner id
                                     //
-                                    if ( response.relationshipType.contact.types.groupOwner )
+                                    /*if ( response.relationshipType.contact.types.groupOwner )
                                     {
                                         $.map( response.relationshipType.contact.types.groupOwner, function( groupAdmin, index )
                                         {
@@ -1786,11 +1785,11 @@
                                                 return false;
                                             }
                                         } );
-                                    }
+                                    }*/
                                     // if contactId is unique, add it to the contacts list
                                     //
-                                    if ( !exists  )
-                                    {
+                                    //if ( !exists  )
+                                    //{
                                         contacts[ item.name.toLowerCase() ] =
                                         {
                                             value:      item.id
@@ -1798,7 +1797,7 @@
                                         ,   roles:      item.roles
                                         };
                                         sortIndex.push( item.name.toLowerCase() );
-                                    }
+                                    //}
                                 });
 
                                 result =
@@ -2102,7 +2101,7 @@
                                         //
                                         $.each( item.recipients, function( idx, recipient )
                                         {
-                                            recipients.push( recipient.displayName );
+                                            recipients.push( recipient.name );
                                         } );
 
                                         // For most folders (such as Trash and any archive), prefix with "To:"
@@ -2115,7 +2114,7 @@
                                         // prefix with "From:" (after moving a Sent item from Trash to Inbox, this will not show
                                         // such prefix, which may be confusing).
                                         //
-                                        senderReceiverName = ( !item.trashed && item.folderName == "Inbox" ? "" : prefixFrom ) +  item.sender.displayName;
+                                        senderReceiverName = ( !item.trashed && item.folderName == "Inbox" ? "" : prefixFrom ) +  item.sender.name;
                                     }
 
                                     // replace placeholders

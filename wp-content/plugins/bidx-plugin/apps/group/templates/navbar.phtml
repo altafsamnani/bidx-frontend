@@ -72,10 +72,10 @@
         if ( $isSuperAdmin || $isAdmin || ( $inGroup && $hasProfiles ) ||  $isJudge) {
  ?>
             <div class="btn-group profiles">
-                <a href="#" type="button" class="text-white dropdown-toggle" data-toggle="dropdown" title="<?php _e('Dashboards', 'bidxplugin')?>">
+                <a href="<?php echo _l('dashboard');?>/" type="button" class="text-white" title="<?php _e('Dashboard', 'bidxplugin')?>">
                     <i class="fa fa-dashboard"></i>
                 </a>
-                <ul class="dropdown-menu bg-primary-dark">
+                <ul class="dropdown-menu bg-primary-dark hide">
 <?php
                     foreach ( $profiles as $profilekey => $profilevalue ) {
                         foreach($profilevalue as $menuName => $menuLink) {
@@ -201,6 +201,28 @@
 <?php               }
 
                 }
+                if ( $isSuperAdmin ) {
+?>
+                        <li>
+                            <a href="/wp-admin/"><?php _e( 'Wordpress dashboard', 'bidxplugin' ); ?></a>
+                        </li>
+<?php
+                    }
+                    if ( $isAdmin ) {
+?>
+                        <li>
+                            <a href="/wp-admin/admin.php?page=getting-started"><?php _e( 'bidX dashboard', 'bidxplugin' ); ?></a>
+                        </li>
+<?php
+                    }
+                    if( $isJudge ) {
+?>
+                        <li>
+                            <a href="<?php echo $skipsoJudgeUrl;?>"><?php _e('Judge dashboard','bidxplugin')?></a>
+                        </li>
+<?php
+                    }
+
                 if( $showLogout ) {
 ?>
                      <li> <a href="<?php echo wp_logout_url( home_url() ); ?>"><?php _e('Logout', 'bidxplugin')?></a>
@@ -209,5 +231,4 @@
 ?>
             </ul>
         </div>
-
 </div>

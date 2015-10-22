@@ -1,0 +1,41 @@
+<!-- Compose view http://stackoverflow.com/questions/26598291/make-twitter-bootstrap-popup-modal-slide-and-stick-to-bottom-of-page -->
+     <div class="modal fade bottomModalBox" id="sendMessageEditor" data-keyboard="false" data-backdrop="true">
+        <!-- Modal content-->
+        <form action="">
+            <div class="modal-body">
+                <div class="container">
+                    <div class='container-modal-body'>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label><?php _e('Subject','bidxplugin'); ?></label>
+                                    <input type="text" class="form-control" name="subject" placeholder="<?php _e('Your subject goes here','bidxplugin')?>">
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label><?php _e('Message','bidxplugin'); ?></label>
+                                    <textarea name="content" class="form-control" placeholder="<?php _e('Please type your message here','bidxplugin')?>"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 composeBox">
+                                <div class="pull-left">
+                                    <button type="button" class="btn btn-danger compose-cancel" data-dismiss="modal">
+                                        <i class="fa fa-trash-o"></i>
+                                        <?php _e('Discard message','bidxplugin')?>
+                                    </button>
+                                </div>
+                                <div class="pull-right ">
+                                    <button type="submit" class="btn btn-primary compose-submit">
+                                        <i class="fa fa-envelope-o"></i>
+                                        <?php _e('Send message','bidxplugin')?>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </form>
+    </div>
