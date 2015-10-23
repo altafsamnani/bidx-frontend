@@ -22,8 +22,10 @@
     //
     $(document).on('click', '*[data-btn="accept"]', function ( e )
     {
-        var $el = $( this )
-        ,   $alert = $el.parents( ".alert" );
+        var $el             = $( this )
+        ,   $alert          = $el.parents( ".alert" )
+        ,   $alertMessage   = $alert.find( ".alert-message" )
+        ;
 
         $el.addClass( "disabled" );
 
@@ -34,20 +36,50 @@
         bidx.commonmentordashboard.doMutateMentoringRequest(
         {
             params: options
-        ,   callback: function()
+        ,   callback: function( request )
             {
-                options.request = {};
+                var profileLink
+                ,   alertHtml
+                ;
+
+                options.request = request;
                 options.relChecks = {};
-                options.request.status = "accepted";
                 options.relChecks.isThereRelationship = true;
 
-                $alert
-                    .removeClass( "bg-Requested" )
-                    .addClass( "bg-Accepted" )
-                    .find( ".alert-message span" )
-                    .remove();
+                profileLink     =   $("<div />").append($alert.find("a").clone()).html();
 
-                $alert.find( ".alert-message" ).append( bidx.construct.actionMessage( options, "mentor" ) );
+                bidx.utils.log('profileLinkkkk', profileLink);
+
+                $alert.removeClass( "bg-Requested" ).addClass( "bg-Accepted" );
+                $alertMessage.empty( );
+
+                alertHtml   =   bidx.construct.actionMessage( options, "mentor" );
+
+                bidx.utils.log('options', options);
+
+                $alertMessage
+                .prepend( bidx.construct.profileThumb( request.mentorId ))
+                ;
+
+                if(  request.mentorId === currentUserId )
+                {
+                    $alertMessage
+                    .append
+                    (
+                        alertHtml
+                    ,   profileLink
+                    )
+                    ;
+                }
+                else
+                {
+                    $alertMessage
+                    .append
+                    (
+                        profileLink
+                    ,   alertHtml
+                    );
+                }
 
                 $alert
                     .find( ".activity-actions" )
