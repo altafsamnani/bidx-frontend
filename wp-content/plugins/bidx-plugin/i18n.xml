@@ -120,7 +120,7 @@
     <Item value="wantsToMentor">has offered to be your mentor</Item>
     <Item value="wantsYouToMentor">has requested you to mentor this business</Item>
     <Item value="isMentoring">is mentoring your business</Item>
-    <Item value="youAreMentoring">You are mentoring this business</Item>
+    <Item value="youAreMentoring">You are mentoring this business by </Item>
     <Item value="youCancelledMentoring">You cancelled your mentor request</Item>
     <Item value="youAskedMentor">You offered to mentor this business</Item>
     <Item value="youAskedMentorFrom">You offered to mentor this business by</Item>

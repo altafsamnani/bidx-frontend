@@ -79,6 +79,10 @@ class businesssummary
 
             $view->data             = $businessSummaryData->data;
 
+            //Localize to js variables, currently to use focusexpertise for mentoring to display match
+            $jsParams = array('business' => $view->data);
+            wp_localize_script ('bidx-data', '__bidxBusiness', $jsParams);
+
             $view->competitionData  = $competitionData;
 
             if ( isset( $businessSummaryData -> data -> bidxMeta -> bidxCompletionMesh) ) {

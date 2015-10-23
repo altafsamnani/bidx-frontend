@@ -169,6 +169,7 @@
         ,   labelClass          =   options.labelClass
         ,   labelSectionClass   =   options.labelSectionClass
         ,   buttonClass         =   options.buttonClass
+        ,   visibility          =   options.visibility
         ;
 
         if( entityId )
@@ -220,7 +221,7 @@
                                         ,   iconClass:  'fa-bookmark'
                                         ,   class:      'btn-success'
                                         ,   type:       'accredited'
-                                        ,   visibility: 'CONTACTS'
+                                        ,   visibility:  visibility
                                         },
                                         {
                                             label:      bidx.i18n.i('lblNoAccreditation')
@@ -229,7 +230,7 @@
                                         ,   detached:   'accredited'
                                         ,   class:      'btn-danger'
                                         ,   type:       'nonaccredited'
-                                        ,   visibility: 'CONTACTS'
+                                        ,   visibility: visibility
                                         }]
                             ,   class:  buttonClass
                             };
@@ -250,6 +251,7 @@
                 ,   labelClass:         'investorTaggingLabel'
                 ,   labelSectionClass:  'investorSectionTaggingLabel'
                 ,   buttonClass:        'investorTaggingButton'
+                ,   visibility:         'CONTACTS'
                 } );
     }
 
@@ -263,6 +265,7 @@
                 ,   labelClass:         'mentorTaggingLabel'
                 ,   labelSectionClass:  'mentorSectionTaggingLabel'
                 ,   buttonClass:        'mentorTaggingButton'
+                ,   visibility:         'MEMBERS'
                 } );
     }
 
