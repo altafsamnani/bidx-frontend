@@ -111,13 +111,29 @@ class TemplateLibrary
     public function addAdjacentRows ($gridColumnVal, $rowValues, $className = NULL, $tagName = 'div')
     {
         $rowHtml = "";
+        $title = "";
 
         foreach ($rowValues as $label => $values) {
+
+            switch ($label) {
+                case 'Linkedin':
+                    $title = __( 'View my Linkedin Profile','bidxplugin' );
+                    break;
+                case 'Skype':
+                    $title = __( 'Connect through Skype','bidxplugin' );
+                    break;
+                case 'Facebook': 
+                    $title = __( 'View my Facebook Profile','bidxplugin' );
+                    break;
+                case 'Twitter':
+                    $title = __( 'View my Twitter Profile','bidxplugin' );
+                    break; 
+            }
 
             $values = $this->addExtraValuesToRows ($label, $values);
             $classRow = NULL;
             if ($values && $values != 'null') {
-                $rowHtml .= "<div class='" . $gridColumnVal . "'>";
+                $rowHtml .= "<div class='" . $gridColumnVal . "' title='" . $title . "'>";
                 //Class Name
                 if (is_array ($className) && isset ($className[$label])) {
 
@@ -920,13 +936,13 @@ class TemplateLibrary
                     // $fbUrl = (preg_match("/http/i", $fbUrl)) ? $fbUrl : 'https://' . $fbUrl;
                     $fbUrl = 'http://www.facebook.com/' . $username;
 
-                    $scriptContent = '<a title="' . __( 'View my Facebook Profile','bidxplugin' ) . '" target="_blank" href="' . $fbUrl . '"><i class="fa fa-facebook-square"></i></a>';
+                    $scriptContent = '<a target="_blank" href="' . $fbUrl . '"><i class="fa fa-facebook-square"></i></a>';
                     break;
 
                 case 'twitterprofile' :
                     $twitterUserName = str_replace ("#", "", $username);
                     $twitterUrl = 'https://twitter.com/' . $twitterUserName;
-                    $scriptContent = '<a title="' . __( 'View my Twitter Profile', 'bidxplugin' ) . '" target="_blank" href="' . $twitterUrl . '"><i class="fa fa-twitter-square"></i></a>';
+                    $scriptContent = '<a target="_blank" href="' . $twitterUrl . '"><i class="fa fa-twitter-square"></i></a>';
                     break;
             }
         }
