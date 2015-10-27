@@ -68,7 +68,7 @@
 
         if ( options === "large" )
         {
-            btn = $( "<button />", { "class": "btn btn-mentor pull-right margin-half-left", "data-btn": "offerMentoring", "html": bidx.i18n.i( "offerMentoring" ) } )
+            btn = $( "<button />", { "class": "btn btn-mentor margin-half-left", "data-btn": "offerMentoring", "html": bidx.i18n.i( "offerMentoring" ) } )
                     .prepend
                     (
                         $( "<i />", { "class": "fa fa-compass fa-big fa-above" } )
@@ -737,7 +737,7 @@
             {
                 if ( $.isEmptyObject( result ) && isMentor && !bidx.globalChecks.isOwnBusiness() && bidx.globalChecks.isBusinessPage() )
                 {
-                    $( ".info-bar .text-right" ).prepend( renderOfferBtn( "large" ) );
+                    $( ".mentor-investor-actions" ).prepend( renderOfferBtn( "large" ) );
                 }
             }
         } );
