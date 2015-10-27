@@ -288,6 +288,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                         }
 ?>
                         <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><i class="fa fa-eye fa-big fa-above"></i><?php echo _e( 'Request access', 'bidxplugin' ); ?></a>
+                        <?php } ?>
                 </div>
             </div>
 
@@ -322,7 +323,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             </div>
             <div class="col-sm-4 text-right <?php echo ( $ownerId !== $loggedInUserId ) ? 'inmail' : ''; ?>">
 <?php
-                    }
+
 
                     // does a user have rights to edit ( is the owner )
                     //
