@@ -101,15 +101,18 @@ class BidxShortcode
             if (empty (self::$transalationVars))
             { // First Shortcode
                 self::$transalationVars = $bidxCommonObj->getLocaleTransient (array ($appname), $static = true, $i18nGlobal = true);
-            } else
-            { // More than 1 shortcode
+            } 
+            else
+            {   // More than 1 shortcode
                 $appTranslationsArr = $bidxCommonObj->getLocaleTransient (array ($appname), $static = false, $i18nGlobal = false);
                 if (isset ($appTranslationsArr['i18n'][$appname]))
                 {
                     self::$transalationVars['i18n'][$appname] = $appTranslationsArr['i18n'][$appname];
                 }
             }
-            if (isset ($atts["hash"])) {
+
+            if ( isset ($atts["hash"] ) ) 
+            {
                 self::$hash = $atts["hash"];
             }
 

@@ -1449,6 +1449,7 @@
                 ,   isSenderId
                 ,   isGroupId
                 ,   option
+                ,   senderId
                 ;
 
                 if( state.search( /(^mbx-)/ ) === 0 )
@@ -1478,24 +1479,43 @@
                         {
                             isSenderId = message.sender.id;
                             isGroupId  = message.sender.groupId;
+                            bidx.utils.log('message', message);
                             if( isSenderId )
                             {
-                                option = $( "<option/>",
+                                senderId = $contactsDropdown.find('option[value='+ isSenderId +']');
+                                if( !senderId )
                                 {
-                                    value: message.sender.id.toString()
-                                } );
+                                    option = $( "<option/>",
+                                    {
+                                        value: isSenderId.toString()
+                                    } );
 
-                                option.text( message.sender.name );
+                                    option.text( message.sender.name );
 
-                                recipients.push( option );
+                                    recipients.push( option );
+
+                                    $contactsDropdown.append( recipients );
+
+                                    $contactsDropdown.val( isSenderId.toString() );
+                                }
+                                else
+                                {
+
+                                    recipients.push( isSenderId );
+
+                                    $contactsDropdown.val( recipients );
+                                }
 
                             } else if( isGroupId )
                             {
                                 bidx.utils.log( "[connect] group admins cannot send message to group" );
                             }
+
+
+
+
                         }
 
-                        $contactsDropdown.val( recipients );
                         $contactsDropdown.bidx_chosen();
 
                         subject = bidx.i18n.i( "Re" );

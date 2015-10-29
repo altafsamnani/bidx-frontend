@@ -796,6 +796,7 @@ class BidxCommon
 
         /* 2. I18n Global/App Locale Data */
         $i18PluginArr = array ();
+
         $i18AppsArr = array ();
 
         if ($i18nGlobal)
@@ -806,10 +807,9 @@ class BidxCommon
         if (!empty ($i18n))
         {
             $moduleNameArr  =   implode (',', $i18n);
+
             $i18AppsArr     =   glob (WP_PLUGIN_DIR . '/bidx-plugin/{apps,admin}/*{' . $moduleNameArr . '}/{i18n.xml}', GLOB_BRACE);
-
         }
-
 
         $fileArr = array_merge ($i18AppsArr, $i18PluginArr);
 
@@ -830,7 +830,6 @@ class BidxCommon
 
             foreach ($items as $xmlObj)
             {
-
                 $transientI18nData[$appName][$count] = new stdClass();
 
                 $arr = $xmlObj->attributes ();
@@ -852,14 +851,15 @@ class BidxCommon
             }
         }
 
-        /* Messages */
+        /* Messages
         $filename = BIDX_PLUGIN_DIR . '/../pages/message.xml';
         $countMessage = 0;
-        //try /catch / log ignore
+
         $document = simplexml_load_file ($filename);
         $messages = $document->xpath ('//message');
 
-        foreach ($messages as $message) {
+        foreach ($messages as $message)
+        {
 
             $templateLibrary = new TemplateLibrary();
             $body = $templateLibrary->replaceMessageTokens ($message->content);
@@ -881,6 +881,7 @@ class BidxCommon
 
             $countMessage++;
         }
+        */
 
         (isset ($transientI18nData['__global'])) ? $returnData['__global'] = $transientI18nData['__global'] : '';
         ($transientStaticData) ? $returnData['static'] = $transientStaticData : '';

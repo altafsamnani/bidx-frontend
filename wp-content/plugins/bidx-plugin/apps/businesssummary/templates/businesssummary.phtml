@@ -254,6 +254,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
     <div class="main-padding bg-info info-bar">
         <div class="row">
             <div class="col-sm-4">
+                <div class="mentor-investor-actions">
 <?php
                     if ( $canEdit )
                     {
@@ -261,7 +262,34 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                         <button id="deleteBS" class="btn btn-danger"><i class="fa fa-eraser fa-big fa-above"></i> <?php _e( 'Delete', 'bidxplugin' ); ?></button>
 <?php
                     }
+
+                    // if a user is allowed to request full access to a business summary and it NOT The owner of the business summary
+                    //
+                    if ( $canRequestAccess && !$canEdit )
+                    {
+                        $accessRequestControl = "";
+
+                        switch ( $requestStatus )
+                        {
+                            case 'pending':
+                                $accessRequestSend = 'hide';
+                                break;
+                            case 'refused':
+                                $accessRequestSend = 'hide';
+                                break;
+                            case 'granted':
+                                $accessRequestSend = 'hide';
+                                break;
+                            case 'none':
+                                $accessRequestSend = '';
+                                break;
+                            default:
+                                $accessRequestSend = 'hide';
+                        }
 ?>
+                        <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><i class="fa fa-eye fa-big fa-above"></i><?php echo _e( 'Request access', 'bidxplugin' ); ?></a>
+                        <?php } ?>
+                </div>
             </div>
 
             <div class="col-sm-4">
@@ -295,33 +323,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             </div>
             <div class="col-sm-4 text-right <?php echo ( $ownerId !== $loggedInUserId ) ? 'inmail' : ''; ?>">
 <?php
-                    // if a user is allowed to request full access to a business summary and it NOT The owner of the business summary
-                    //
-                    if ( $canRequestAccess && !$canEdit )
-                    {
-                        $accessRequestControl = "";
 
-                        switch ( $requestStatus )
-                        {
-                            case 'pending':
-                                $accessRequestSend = 'hide';
-                                break;
-                            case 'refused':
-                                $accessRequestSend = 'hide';
-                                break;
-                            case 'granted':
-                                $accessRequestSend = 'hide';
-                                break;
-                            case 'none':
-                                $accessRequestSend = '';
-                                break;
-                            default:
-                                $accessRequestSend = 'hide';
-                        }
-?>
-                        <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><i class="fa fa-eye fa-big fa-above"></i><?php echo _e( 'Request access', 'bidxplugin' ); ?></a>
-<?php
-                    }
 
                     // does a user have rights to edit ( is the owner )
                     //
@@ -1209,7 +1211,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                     </div><!-- /EDIT -->
 
                      <!-- Mentor Matching Start -->
-                    <div class="toggle toggle-mentorMatches">
+                    <div class="toggle toggle-mentorMatches hide">
                         <div class="view viewMentor">
                             <!-- ACTIVE REQUESTS -->
                             <div class="panel-heading">

@@ -241,9 +241,10 @@
         _showView( "error" );
     }
 
-    if ( $tabBusinesses.length )
+    getUserBusinesses( userBusinesses );
+
+    if ( userBsArray.length )
     {
-        getUserBusinesses( userBusinesses );
         fetchBusinesses();
 
         $.when(
