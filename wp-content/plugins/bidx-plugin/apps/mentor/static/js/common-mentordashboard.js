@@ -119,9 +119,10 @@
         var bsid
         ,   summary
         ,   memberId
-        ,   bsids = []
-        ,   options = {}
+        ,   bidxOwnerId
         ,   currentUserSummaries
+        ,   bsids   = []
+        ,   options = {}
         ;
 
         //
@@ -142,14 +143,18 @@
                                 }
                                 return false;
                             }); //From current business page
+
                 memberId    =   (bidx.globalChecks.isOwnProfile()) ? 'session.id' : 'context.memberId' ;
 
-                summary.bidxMeta.bidxOwnerId  =  bidx.utils.getValue( bidxConfig, memberId );
+                bidxOwnerId =   bidx.utils.getValue( bidxConfig, memberId );
+
+                summary.bidxMeta.bidxOwnerId  = bidxOwnerId;
 
                 bidx.common.addToTempBusinesses( summary );
 
                 bsids.push( bsid );
 
+                membersDataId.push( bidxOwnerId );
             });
         }
 
@@ -399,30 +404,30 @@
                     memberInfo  =   bidx.common.tmpData.members[req.request.mentorId];
 
                     $bsEl.last().find( ".alert-message" ).last()
-                        .prepend
-                        (
-                            bidx.construct.businessThumb( req.relChecks.businessId )
-                        )
-                        .append
-                        (
-                            bidx.construct.memberLink( memberInfo.id ) , " "
-                        ,   bidx.construct.actionMessage( req )
-                        ,   bidx.construct.businessLink( req.relChecks.businessId )
-                        );
+                    .prepend
+                    (
+                        bidx.construct.businessThumb( req.relChecks.businessId )
+                    )
+                    .append
+                    (
+                        bidx.construct.memberLink( memberInfo.id ) , " "
+                    ,   bidx.construct.actionMessage( req )
+                    ,   bidx.construct.businessLink( req.relChecks.businessId )
+                    );
                 }
                 else
                 {
                     bidx.utils.log('2', req);
                     $bsEl.last().find( ".alert-message" ).last()
-                        .prepend
-                        (
-                            bidx.construct.businessThumb( req.relChecks.businessId )
-                        )
-                        .append
-                        (
-                            bidx.construct.actionMessage( req )
-                        ,   bidx.construct.businessLink( req.relChecks.businessId )
-                        );
+                    .prepend
+                    (
+                        bidx.construct.businessThumb( req.relChecks.businessId )
+                    )
+                    .append
+                    (
+                        bidx.construct.actionMessage( req )
+                    ,   bidx.construct.businessLink( req.relChecks.businessId )
+                    );
                 }
             }
             else
@@ -432,15 +437,15 @@
                     bidx.utils.log('3', req);
                     memberInfo  =   bidx.common.tmpData.members[req.request.mentorId];
                     $bsEl.last().find( ".alert-message" ).last()
-                        .prepend
-                        (
-                            bidx.construct.profileThumb( memberInfo.id )
-                        )
-                        .append
-                        (
-                            bidx.construct.actionMessage( req )
-                        ,   bidx.construct.memberLink( memberInfo.id )
-                        );
+                    .prepend
+                    (
+                        bidx.construct.profileThumb( memberInfo.id )
+                    )
+                    .append
+                    (
+                        bidx.construct.actionMessage( req )
+                    ,   bidx.construct.memberLink( memberInfo.id )
+                    );
                 }
                 else if ( req.relChecks.isTheMentor
                        // && req.relChecks.isTheInitiator
@@ -448,18 +453,17 @@
                         && req.request.status === "accepted" )
                 {
                     bidx.utils.log('4', req);
-                    bidx.utils.log('ownerid', req.request.entityId);
-                    bidx.utils.log('ownerid', bidx.common.tmpData.businesses);
+
                     $bsEl.last().find( ".alert-message" ).last()
-                        .prepend
-                        (
-                            bidx.construct.profileThumb( req.relChecks.isTheMentor )
-                        )
-                        .append
-                        (
-                            bidx.construct.actionMessage( req )
-                        ,   bidx.construct.memberLink( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
-                        );
+                    .prepend
+                    (
+                        bidx.construct.profileThumb( req.relChecks.isTheMentor )
+                    )
+                    .append
+                    (
+                        bidx.construct.actionMessage( req )
+                    ,   bidx.construct.memberLink( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
+                    );
                 }
                 else if ( req.relChecks.isTheInitiator
                         && req.relChecks.isTheMentor
@@ -468,15 +472,15 @@
                 {
                     bidx.utils.log('5', req);
                     $bsEl.last().find( ".alert-message" ).last()
-                        .prepend
-                        (
-                            bidx.construct.profileThumb( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
-                        )
-                        .append
-                        (
-                            bidx.construct.actionMessage( req )
-                        ,   bidx.construct.memberLink( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
-                        );
+                    .prepend
+                    (
+                        bidx.construct.profileThumb( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
+                    )
+                    .append
+                    (
+                        bidx.construct.actionMessage( req )
+                    ,   bidx.construct.memberLink( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
+                    );
                 }
                 else if ( req.relChecks.isTheMentor
                         && !req.relChecks.isTheInitiator
@@ -496,15 +500,15 @@
                     }
 
                     $bsEl.last().find( ".alert-message" ).last()
-                        .prepend
-                        (
-                            bidx.construct.profileThumb( memberId )
-                        )
-                        .append
-                        (
-                            memberLink
-                        ,   bidx.construct.actionMessage( req )
-                        );
+                    .prepend
+                    (
+                        bidx.construct.profileThumb( memberId )
+                    )
+                    .append
+                    (
+                        memberLink
+                    ,   bidx.construct.actionMessage( req )
+                    );
                 }
                 else
                 {
@@ -519,15 +523,15 @@
                         memberLink  =   bidx.construct.memberLink( memberId );
                     }
                     $bsEl.last().find( ".alert-message" ).last()
-                        .prepend
-                        (
-                            bidx.construct.profileThumb( memberId )
-                        )
-                        .append
-                        (
-                            memberLink
-                        ,   bidx.construct.actionMessage( req )
-                        );
+                    .prepend
+                    (
+                        bidx.construct.profileThumb( memberId )
+                    )
+                    .append
+                    (
+                        memberLink
+                    ,   bidx.construct.actionMessage( req )
+                    );
                 }
             }
 
@@ -686,12 +690,6 @@
 
 
         });
-
-        // $(document).on('click', '*[data-btn="removeAccess"]', function ( e )
-        // {
-        //     bidx.utils.log("click removeAccess", this);
-        //     bidx.utils.log("getBsId", getBsId(this) );
-        // });
 
         function getRequestId ( el )
         {
