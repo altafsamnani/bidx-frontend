@@ -188,7 +188,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                 {
                     if ( $key === $currentYear ) :
                 ?>
-                        <div class="bs-cell main-padding pull-left"><i class="fa fa-dollar"></i> <span class="hidden-xs"><?php echo _e('Finance Needed', 'bidxplugin')?>:</span> <?php echo $year->financeNeeded; ?></div>
+                        <div class="bs-cell main-padding pull-left"><i class="fa fa-dollar"></i> <span class="hidden-xs"><?php echo _e('Finance Needed', 'bidxplugin')?>:</span> <?php echo number_format($year->financeNeeded, 0, '', '.'); ?></div>
                 <?php
                     endif;
                 }
@@ -627,10 +627,10 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 
                         echo '<tr>';
                         echo '<td class="text-center">' . $year . '</td>';
-                        echo '<td class="text-right hidden-sm hidden-xs">' . '<small>$</small> ' . $yearDetails->salesRevenue . '</td>';
-                        echo '<td class="text-right hidden-sm hidden-xs">' . '<small>$</small> ' . $yearDetails->operationalCosts . '</td>';
-                        echo '<td class="text-right">' . '<small>$</small> ' . $yearDetails->totalIncome . '</td>';
-                        echo '<td class="text-right">' . '<small>$</small> ' . $yearDetails->financeNeeded . '</td>';
+                        echo '<td class="text-right hidden-sm hidden-xs">' . '<small>$</small> ' . number_format($yearDetails->salesRevenue, 0, '', '.') . '</td>';
+                        echo '<td class="text-right hidden-sm hidden-xs">' . '<small>$</small> ' . number_format($yearDetails->operationalCosts, 0, '', '.') . '</td>';
+                        echo '<td class="text-right">' . '<small>$</small> ' . number_format($yearDetails->totalIncome, 0, '', '.') . '</td>';
+                        echo '<td class="text-right">' . '<small>$</small> ' . number_format($yearDetails->financeNeeded, 0, '', '.') . '</td>';
                         echo '<td class="text-center hidden-sm hidden-xs">' . $yearDetails->numberOfEmployees . '</td>';
                         echo '</tr>';
 

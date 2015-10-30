@@ -84,7 +84,7 @@ $currentYear = date("Y");
             {
                 if ( $key === $currentYear ) :
             ?>
-                    <div class="bs-cell main-padding pull-left"><i class="fa fa-dollar"></i> <span class="hidden-xs"><?php echo _e('Finance Needed', 'bidxplugin')?>:</span> <?php echo $year->financeNeeded; ?></div>
+                    <div class="bs-cell main-padding pull-left"><i class="fa fa-dollar"></i> <span class="hidden-xs"><?php echo _e('Finance Needed', 'bidxplugin')?>:</span> <?php echo number_format($year->financeNeeded, 0, '', '.'); ?></div>
             <?php
                 endif;
             }

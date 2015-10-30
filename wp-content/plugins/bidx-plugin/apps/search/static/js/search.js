@@ -1346,11 +1346,11 @@
                     .replace( /%entityId%/g,                    bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : emptyVal )
                     .replace( /%name%/g,                        i18nItem.name   ? i18nItem.name     : emptyVal )
                     .replace( /%summary%/g,                     i18nItem.summary   ? i18nItem.summary     : emptyVal )
-                    .replace( /%bidxCreationDateTime%/g,      bidxMeta.bidxCreationDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxCreationDateTime) : emptyVal )
+                    .replace( /%bidxCreationDateTime%/g,        bidxMeta.bidxCreationDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxCreationDateTime) : emptyVal )
                     .replace( /%countryOperation%/g,            country )
                     .replace( /%industry%/g,                    industry )
                     .replace( /%reasonForSubmission%/g,         reason )
-                    .replace( /%financingNeeded%/g,             i18nItem.financingNeeded   ? i18nItem.financingNeeded     : emptyVal )
+                    .replace( /%financingNeeded%/g,             bidx.utils.formatNumber(i18nItem.financingNeeded)   ? bidx.utils.formatNumber(i18nItem.financingNeeded) : emptyVal )
                     ;
 
                 $listItem = $(listItem);
