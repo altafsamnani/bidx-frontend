@@ -249,7 +249,7 @@
             }
         );
 
-        return $d;
+        return $d.promise( );
     }
 
     function addToTempMembers( item )
@@ -377,17 +377,19 @@
 
     function getEntities( businessesDataId )
     {
-        var promises = [];
+        var counter         =   1
+        ,   $def            =   $.Deferred()
+        ,   businessLength  =   businessesDataId.length
+        ,   promises        =   [ ]
+        ;
 
-        if ( businessesDataId.length === 0 )
+        if ( businessLength === 0 )
         {
             return;
         }
 
         $.each( businessesDataId, function( i, businessId)
         {
-            var $def = $.Deferred();
-
             bidx.api.call(
                 "entity.fetch"
             ,   {
@@ -396,7 +398,13 @@
                 ,   success:        function( results )
                     {
                         addToTempBusinesses( results );
-                        $def.resolve( results );
+
+                        if( counter === businessLength )
+                        {
+                            $def.resolve( );
+                        }
+
+                        counter = counter + 1;
                     }
                 ,   error: function(jqXhr, textStatus)
                     {
@@ -405,15 +413,19 @@
                         ,   error   = new Error( msg )
                         ;
 
+                        if(counter === businessLength )
+                        {
+                            $def.resolve( );
+                        }
+
+                        counter = counter + 1;
                         // $def.reject( error );
                     }
                 }
             );
-
-            promises.push( $def );
         });
 
-        return $.when.apply( undefined, promises ).promise();
+        return $def.promise( );
     }
 
 
@@ -1433,11 +1445,11 @@
 
                     if (currentLanguage === 'en') {
                         document.location.href = '/member';
-                    } 
-                    else 
+                    }
+                    else
                     {
                         document.location.href =  '/' + currentLanguage + '/member';
-                    }                 
+                    }
                 }
             }
         ,   error:          function( jqXhr, textStatus )

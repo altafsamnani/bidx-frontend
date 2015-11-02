@@ -133,16 +133,16 @@
 
             $.each( $businessElements, function ( i, b )
             {
-                bsid    =   $(this).attr( "data-bsid");
+                bsid        =   $(this).attr( "data-bsid");
 
-                summary =   _.find( currentUserSummaries,   function( summaryValue )
-                            {
-                                if( summaryValue.bidxMeta.bidxEntityId === parseInt( bsid ) )
+                summary     =   _.find( currentUserSummaries,   function( summaryValue )
                                 {
-                                    return true;
-                                }
-                                return false;
-                            }); //From current business page
+                                    if( summaryValue.bidxMeta.bidxEntityId === parseInt( bsid ) )
+                                    {
+                                        return true;
+                                    }
+                                    return false;
+                                }); //From current business page
 
                 memberId    =   (bidx.globalChecks.isOwnProfile()) ? 'session.id' : 'context.memberId' ;
 
@@ -150,11 +150,11 @@
 
                 summary.bidxMeta.bidxOwnerId  = bidxOwnerId;
 
+                membersDataId.push( bidxOwnerId );
+
                 bidx.common.addToTempBusinesses( summary );
 
                 bsids.push( bsid );
-
-                membersDataId.push( bidxOwnerId );
             });
         }
 
@@ -175,13 +175,14 @@
                 var memberData
                 ,   bidxBusinessPage
                 ,   bpOwnerId
-                ,   relChecks = {}
-                ,   options = {}
-                ,   $elAlert = $( '*[data-requestid="'+ request.requestId +'"]' )
+                ,   relChecks   = {}
+                ,   options     = {}
+                ,   $elAlert    = $( '*[data-requestid="'+ request.requestId +'"]' )
                 ;
 
-                relChecks.isThereRelationship = false;
-                relChecks.showBusinessInfo = false;
+                relChecks.isThereRelationship   = false;
+
+                relChecks.showBusinessInfo      = false;
 
                 // Do not continue if there is already an mentor box with the same requestId
                 //
