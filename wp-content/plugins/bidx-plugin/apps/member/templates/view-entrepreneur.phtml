@@ -71,7 +71,7 @@ if ($entrepreneurDetails &&
         // Business Summary listing
         //
         if ($businessSummary) {
-            $labelBusiness = ( count( $businessSummary ) > 1 ) ? __('Businesses','bidxplugin') : __('Business','bidxplugin');
+            $labelBusiness = ( count( $businessSummary ) > 1 ) ? __('Business plans','bidxplugin') : __('Business plan','bidxplugin');
 ?>
             <div class="row" id="existingBusinesses" data-ownerid= <?php echo $memberId; ?>>
                 <div class="col-sm-12">
@@ -80,7 +80,7 @@ if ($entrepreneurDetails &&
 <?php
                         if ( $entrepreneurDetails->bidxMeta->bidxCanEdit ):
 ?>
-                        <a href="<?php echo _l("businesssummary");?>#createBusinessSummary" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e( 'Add new Business', 'bidxplugin' ); ?> </a>
+                        <a href="<?php echo _l("businesssummary");?>#createBusinessSummary" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e( 'Add new Business plan', 'bidxplugin' ); ?> </a>
 <?php
                         endif;
 ?>
