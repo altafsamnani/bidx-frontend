@@ -29,52 +29,44 @@
     //
     var fetchBusinesses = function ( options )
     {
+        var $d = $.Deferred();
+
         bidx.api.call(
             "businesssummary.fetch"
             ,   {
                     groupDomain:    bidx.common.groupDomain
-                ,   async      :    false
                 ,   success: function( response )
                     {
                         if ( response && response.data && response.data.received )
                         {
                             $.each( response.data.received, function( id, item )
                             {
-                                if ( item.entity.bidxMeta.bidxEntityId in bidx.common.tmpData.businesses )
-                                {
-                                    getAuthMembers( item );
+                                getAuthMembers( item );
 
-                                    authItems.push( item );
-                                }
+                                authItems.push( item );
+
+                                bidx.common.addToTempBusinesses( item.entity );
+
                             });
-
-                            if ( membersDataId.length )
-                            {
-                                $.when(
-                                        bidx.common.getMembersSummaries( { data: { "userIdList": membersDataId } } )
-                                    )
-                                    .done( function ( authorizations )
-                                    {
-                                        constructAlertBoxes( authItems );
-                                    } );
-                            }
-                            else
-                            {
-                                constructAlertBoxes( authItems );
-                            }
-
-
                         }
+                        $d.resolve( );
                     }
 
                 , error: function(jqXhr, textStatus)
                 {
-                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+                    var status  = bidx.utils.getValue(jqXhr, "status") || textStatus
+                    ,   msg     = "Something went wrong while retrieving members: " + status
+                    ,   error   = new Error( msg )
+                    ;
 
                     _showError("Something went wrong while retrieving investorslist of the member: " + status);
+
+                    $d.reject( error );
                 }
             }
         );
+
+        return $d.promise( );
     };
 
     var fetchCompanies = function( options )
@@ -245,30 +237,50 @@
 
     if ( userBsArray.length )
     {
-        fetchBusinesses();
-
-        $.when(
-                bidx.common.getEntities( userBsArray )
-            ,   bidx.commonmentordashboard.getMentoringRequest()
-            )
-            .done( function ( businesses, requests )
+        fetchBusinesses()
+        .then( function()
+        {
+            bidx.common.getEntities( userBsArray )
+            .then( function( )
             {
                 $.each( bidx.common.tmpData.businesses, function( i, item)
                 {
                     $tabBusinesses.append( bidx.construct.businessCardView( item ) );
                 });
 
-                bidx.commonmentordashboard.checkMentoringRelationship( requests, "mentor", userBsArray );
-            } );
+                if ( membersDataId.length )
+                {
+                    bidx.common.getMembersSummaries( { data: { "userIdList": membersDataId } } )
+                    .done( function(  )
+                    {
+                        constructAlertBoxes( authItems );
+
+                    } );
+                }
+                else
+                {
+                    constructAlertBoxes( authItems );
+                }
+
+                bidx.commonmentordashboard.getMentoringRequest()
+                .then( function (requests )
+                {
+                    bidx.commonmentordashboard.checkMentoringRelationship( requests, "mentor", userBsArray );
+                });
+            });
+        });
+
+        if ( $tabCompanies.length )
+        {
+            _showView('load');
+            _showView('loadcompanies', true);
+
+            fetchCompanies();
+        }
+
     }
 
-    if ( $tabCompanies.length )
-    {
-        _showView('load');
-        _showView('loadcompanies', true);
 
-        fetchCompanies();
-    }
 
 
 
