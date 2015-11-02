@@ -1013,7 +1013,11 @@
 
         $scaleBtns.delegate( ".js-smaller", "click", function()
         {
-            $el.width( Math.floor( $el.width() * 0.8 ) );
+            //BIDX-3074 - we need a limit for shrinking the image - if it's shrinked to much image ratio is messed up        
+            if ( $el.width() > 90 && $el.height() > 90 )
+            {
+                $el.width( Math.floor( $el.width() * 0.8 ) );
+            }
         });
 
         $scaleBtns.delegate( ".js-bigger", "click", function()
