@@ -962,7 +962,7 @@
         {
             if ( $profileImg[0].width < 90 || $profileImg[0].height < 90 )
             {
-                // NOOP : hide the scaling buttons
+                // NOOP : hide the scaling/ buttons
                 bidx.utils.log('Picture is less than 90px and therefore no need to be cropped');
                 $scaleBtns.addClass( "hide" );
             }
@@ -1014,7 +1014,7 @@
         $scaleBtns.delegate( ".js-smaller", "click", function()
         {
             //BIDX-3074 - we need a limit for shrinking the image - if it's shrinked to much image ratio is messed up        
-            if ( $el.width() > 90 && $el.height() > 90 )
+            if ( $el.width() > 100 && $el.height() > 100 )
             {
                 $el.width( Math.floor( $el.width() * 0.8 ) );
             }
