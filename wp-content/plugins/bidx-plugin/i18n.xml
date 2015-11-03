@@ -19,7 +19,6 @@
     <Item value="attachmentUploadDone">Attachment upload done</Item>
     <Item value="attachmentUploadError">Problem uploading attachment</Item>
     <Item value="errAttachmentDelete">Problems deleting attachment</Item>
-    <Item value="errAttachmentNotAllowed">Attachment file type not allowed</Item>
 
     <!-- Buttons -->
     <Item value="btnNext">Next</Item>
