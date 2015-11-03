@@ -118,7 +118,6 @@
                                 bidx.utils.log('Redirecting to link ', loginRedirect);
 
                                 document.location   =   loginRedirect;
-                            //}
                         }
                         else if ( response.status === "ERROR")
                         {
