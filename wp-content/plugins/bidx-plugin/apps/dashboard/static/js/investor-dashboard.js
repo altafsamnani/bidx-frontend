@@ -6,6 +6,7 @@
     ,   $tabRecommended     = $element.find( "#tab-recommended" )
     ,   $tabContacted       = $element.find( "#tab-contacted" )
     ,   $firstPage          = $element.find( "input[name='firstpage']" )
+    ,   emptySnippet        = $("#empty-message").html().replace(/(<!--)*(-->)*/g, "")
     ,   bidx                = window.bidx
     ,   currentUserId       = bidx.common.getSessionValue( "id" )
     ,   currentGroupId      = bidx.common.getCurrentGroupId( "currentGroup ")
@@ -37,6 +38,8 @@
     ,   recommendedResult   = {}
     ,   receivedResult      = {}
     ,   requestedResult     = {}
+    ,   businessEntities    = {}
+    ,   appName             = "dashboard"
     ;
 
     var fetchBusinesses = function ( options )
@@ -67,6 +70,9 @@
                                     {
                                         recomMbArray.push( bs.owner.id );
                                     }
+
+                                    //businessEntities[bs.entity.bidxMeta.bidxEntityId] = bs.entity;
+                                    bidx.common.addToTempBusinesses( bs.entity );
                                 });
                             }
 
@@ -89,6 +95,9 @@
                                             receiMbArray.push( bs.owner.id );
                                         }
                                     }
+
+                                    //businessEntities[bs.entity.bidxMeta.bidxEntityId] = bs.entity;
+                                    bidx.common.addToTempBusinesses( bs.entity );
                                 });
                             }
 
@@ -113,6 +122,9 @@
                                         {
                                             requeMbArray.push( bs.owner.id );
                                         }
+
+                                        //businessEntities[bs.entity.bidxMeta.bidxEntityId] = bs.entity;
+                                        bidx.common.addToTempBusinesses( bs.entity );
                                     }
                                 });
                             }
@@ -142,8 +154,8 @@
                             if ( allBs.length || allMb.length )
                             {
                                 $.when(
-                                        bidx.common.getEntities( allBs )
-                                    ,   bidx.common.getMembersSummaries( { data: { "userIdList": allMb } } )
+                                       // bidx.common.getEntities( allBs )
+                                        bidx.common.getMembersSummaries( { data: { "userIdList": allMb } } )
                                     )
                                     .done( function ( businesses )
                                     {
@@ -208,28 +220,44 @@
 
     var constructBusinessBoxes = function ()
     {
-        $.each( recommendedResult, function( i, item )
-        {
-            $tabRecommended.append( bidx.construct.businessCardView( item.entity ) );
+        var tabBusinessMsg  =   emptySnippet.replace( /%msg%/g, bidx.i18n.i("noBusiness", appName ) );
 
-            addRecommendationBox( item );
-        });
+        if( recommendedResult.length )
+        {
+            $.each( recommendedResult, function( i, item )
+            {
+                $tabRecommended.append( bidx.construct.businessCardView( item.entity ) );
+
+                addRecommendationBox( item );
+            });
+        }
+        else
+        {
+            $tabRecommended.append( tabBusinessMsg );
+        }
+
 
         if ( receivedResult || requestedResult )
         {
+            bidx.utils.log('contBs', contBs );
             if ( contBs )
             {
                 var item;
 
                 $.each( contBs, function( i, bs )
                 {
-                    item = bidx.common.tmpData.businesses[bs];
+                    item    = bidx.common.tmpData.businesses[bs];
+                    //item    =   businessEntities[bs];
 
                     if ( removeOwnBs( item ) )
                     {
                         $tabContacted.append( bidx.construct.businessCardView( item ) );
                     }
                 });
+            }
+            else
+            {
+                $tabContacted.append( tabBusinessMsg );
             }
         }
 
@@ -339,13 +367,14 @@
 
     var start = function ()
     {
+
         if ( bidx.globalChecks.isInvestorDashboard() )
         {
+            _showView('load');
+            _showView('loadcontact', true);
+
             if ( $tabRecommended.length )
             {
-                _showView('load');
-                _showView('loadcontact', true);
-
                 fetchBusinesses();
             }
         }
