@@ -194,41 +194,25 @@
                 bidx.utils.log( "[fileupload] Add", e, data );
 
                 var file            = {}
-                ,   originalFiles   = bidx.utils.getValue( data, "originalFiles", true )
-                ,   origFileType
-                ,   imgType
-                ;
+                ,   originalFiles   = bidx.utils.getValue( data, "originalFiles", true );
+
 
                 if ( originalFiles )
                 {
-                    origFileType = originalFiles[ 0 ].type;
-                    imgType = origFileType.match( /^image/ );
+                    file.documentName = originalFiles[ 0 ].name;
                 }
+                data.context = _addFile( file, true );
 
-                //if we allow only image upload than check the document type
-                if (settings.onlyImages && imgType !== null)
-                {
-                    if ( originalFiles )
-                    {
-                        file.documentName = originalFiles[ 0 ].name;
-                    }
-                    data.context = _addFile( file, true );
+                // Start the upload
+                //
+                data.submit();
 
-                    // Start the upload
-                    //
-                    data.submit();
+                // Reset the form fields so we do not suggest you can use it to edit
+                //
+                $newFileDocumentType.val( "other" );
+                $newFileDocumentType.trigger( "chosen:updated" );
 
-                    // Reset the form fields so we do not suggest you can use it to edit
-                    //
-                    $newFileDocumentType.val( "other" );
-                    $newFileDocumentType.trigger( "chosen:updated" );
-
-                    $newFilePurpose.val( "" );
-                }
-                else 
-                {
-                    bidx.common.notifyError( bidx.i18n.i( "errAttachmentNotAllowed" ) );
-                }
+                $newFilePurpose.val( "" );
             }
 
         ,   done: function( e, data )

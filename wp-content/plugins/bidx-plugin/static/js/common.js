@@ -1163,6 +1163,7 @@
         noty( params );
     };
 
+
     // Notify the user that he is going to be redirected
     //
     var notifyRedirect = function()
