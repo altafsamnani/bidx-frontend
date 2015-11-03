@@ -1,20 +1,22 @@
 ;(function($)
 {
     "use strict";
-    var $element          = $("#entrepreneur-dashboard")
-    ,   $views            = $element.find( ".view" )
-    ,   $elementHelp      = $element.find( ".startpage" )
-    ,   $tabBusinesses    = $element.find( "#tab-businesses" )
-    ,   $tabCompanies     = $element.find( "#tab-companies" )
-    ,   $tabInvestors     = $element.find( "#tab-interested-investors" )
-    ,   $tabMentors       = $element.find( "#tab-interested-mentors" )
-    ,   $firstPage        = $element.find( "input[name='firstpage']" )
-    ,   bidx              = window.bidx
-    ,   currentUserId     = bidx.common.getSessionValue( "id" )
-    ,   userBusinesses    = bidxConfig.session.wp.entities.bidxBusinessSummary
-    ,   userBsArray       = []
-    ,   membersDataId     = []
-    ,   authItems         = []
+    var $element            =   $("#entrepreneur-dashboard")
+    ,   $views              =   $element.find( ".view" )
+    ,   $elementHelp        =   $element.find( ".startpage" )
+    ,   $tabBusinesses      =   $element.find( "#tab-businesses" )
+    ,   $tabCompanies       =   $element.find( "#tab-companies" )
+    ,   $tabInvestors       =   $element.find( "#tab-interested-investors" )
+    ,   $tabMentors         =   $element.find( "#tab-interested-mentors" )
+    ,   $firstPage          =   $element.find( "input[name='firstpage']" )
+    ,   emptySnippet        =   $("#empty-message").html().replace(/(<!--)*(-->)*/g, "")
+    ,   bidx                =   window.bidx
+    ,   currentUserId       =   bidx.common.getSessionValue( "id" )
+    ,   userBusinesses      =   bidxConfig.session.wp.entities.bidxBusinessSummary
+    ,   userBsArray         =   []
+    ,   membersDataId       =   []
+    ,   authItems           =   []
+    ,   appName             =   "dashboard"
     ;
 
     var getUserBusinesses = function ( userBusinesses )
@@ -71,6 +73,9 @@
 
     var fetchCompanies = function( options )
     {
+        var tabCompanyMsg
+        ;
+
         bidx.api.call(
             "company.fetchAll"
         ,   {
@@ -85,12 +90,26 @@
 
                             if ( bidxMeta && bidxMeta.bidxEntityType === 'bidxCompany' )
                             {
-                                $tabCompanies.append( bidx.construct.companyCardView( item ) );
+                                tabCompanyMsg   =   bidx.construct.companyCardView( item );
+
+                                $tabCompanies.append( tabCompanyMsg );
                             }
                         } );
-
-                        _hideView('loadcompanies');
                     }
+                    else
+                    {
+                        tabCompanyMsg    =  emptySnippet
+                                            .replace( /%msg%/g, bidx.i18n.i("noCompany", appName ) )
+                                            .replace( /%btnLink%/g, bidx.common.url('company') + '#createCompany' )
+                                            .replace( /%btnMsg%/g, bidx.i18n.i("newCompany", appName ) );
+
+                        $tabCompanies.append( tabCompanyMsg );
+
+                    }
+
+
+
+                    _hideView('loadcompanies');
                 }
 
             ,   error:          function( jqXhr, textStatus )
@@ -149,8 +168,6 @@
                 }
             });
         });
-
-        _hideView('load');
     };
 
     // Perform an API call to Grant Access
@@ -237,16 +254,37 @@
 
     if ( userBsArray.length )
     {
+        var businesses
+        ,   tabBusinessMsg
+        ;
+
         fetchBusinesses()
         .then( function()
         {
             bidx.common.getEntities( userBsArray )
             .then( function( )
             {
-                $.each( bidx.common.tmpData.businesses, function( i, item)
+                businesses  =   bidx.common.tmpData.businesses;
+                bidx.utils.log('buisnesslength', businesses);
+
+                if( $.isEmptyObject(businesses) )
                 {
-                    $tabBusinesses.append( bidx.construct.businessCardView( item ) );
-                });
+                    tabBusinessMsg  =   emptySnippet
+                                        .replace( /%msg%/g, bidx.i18n.i("noBusiness", appName ) )
+                                        .replace( /%btnLink%/g, bidx.common.url('businesssummary') + '#createBusinessSummary' )
+                                        .replace( /%btnMsg%/g, bidx.i18n.i("newBusiness", appName ) );
+
+                    $tabBusinesses.append( tabBusinessMsg );
+                }
+                else // If no business then add an empty message
+                {
+                    $.each( businesses, function( i, item)
+                    {
+                        $tabBusinesses.append( bidx.construct.businessCardView( item ) );
+                    });
+
+                    _hideView('load');
+                }
 
                 if ( membersDataId.length )
                 {
