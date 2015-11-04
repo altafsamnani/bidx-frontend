@@ -183,6 +183,7 @@
                 ,   selectFile:             true
                 ,   multiSelect:            true
                 ,   showEditBtn:            false
+                ,   onlyImages:             false
                 ,   btnSelect:              $selectBtn
                 ,   btnCancel:              $cancelBtn
                 ,   callbacks:

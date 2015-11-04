@@ -1216,6 +1216,7 @@
                 ,   selectFile:             true
                 ,   multiSelect:            true
                 ,   showEditBtn:            false
+                ,   onlyImages:             false
                 ,   btnSelect:              $selectBtn
                 ,   btnCancel:              $cancelBtn
                 ,   callbacks:
@@ -1876,6 +1877,7 @@ function _editDocument( doc )
     ,   slaveApp:               true
     ,   selectFile:             true
     ,   multiSelect:            true
+    ,   onlyImages:             false
     ,   showEditBtn:            false
     ,   showDeleteBtn:          false
     ,   showDownloadBtn:        false

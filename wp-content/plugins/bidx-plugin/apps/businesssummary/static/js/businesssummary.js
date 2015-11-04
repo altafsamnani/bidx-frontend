@@ -748,6 +748,7 @@
                 ,   selectFile:             true
                 ,   multiSelect:            false
                 ,   showEditBtn:            false
+                ,   onlyImages:             true
                 ,   btnSelect:              $selectBtn
                 ,   btnCancel:              $cancelBtn
                 ,   callbacks:
@@ -1401,6 +1402,7 @@
                 ,   selectFile:             true
                 ,   multiSelect:            true
                 ,   showEditBtn:            false
+                ,   onlyImages:             false
                 ,   btnSelect:              $selectBtn
                 ,   btnCancel:              $cancelBtn
                 ,   callbacks:
@@ -1636,6 +1638,7 @@
         ,   slaveApp:               true
         ,   selectFile:             true
         ,   multiSelect:            true
+        ,   onlyImages:             false
         ,   showEditBtn:            false
         ,   showDeleteBtn:          false
         ,   showDownloadBtn:        false

@@ -194,25 +194,43 @@
                 bidx.utils.log( "[fileupload] Add", e, data );
 
                 var file            = {}
-                ,   originalFiles   = bidx.utils.getValue( data, "originalFiles", true );
+                ,   originalFiles   = bidx.utils.getValue( data, "originalFiles", true )
+                ,   origFileType
+                ,   imgType
+                ;
 
 
                 if ( originalFiles )
                 {
+                    origFileType = originalFiles[ 0 ].type;
+                    imgType = origFileType.match( /^image/ );
                     file.documentName = originalFiles[ 0 ].name;
                 }
-                data.context = _addFile( file, true );
 
-                // Start the upload
-                //
-                data.submit();
+                bidx.utils.log("settings" , settings);
+                bidx.utils.log("imgType", imgType);
+                bidx.utils.log("common", settings.onlyImages && imgType !== null);
+                // hulyeseg: bidx.utils.log("active tab", $('.nav.nav-tabs.tabs-left').first().children().hasClass('active'));
 
-                // Reset the form fields so we do not suggest you can use it to edit
-                //
-                $newFileDocumentType.val( "other" );
-                $newFileDocumentType.trigger( "chosen:updated" );
+                if ((settings.onlyImages && imgType !== null) || (!settings.onlyImages && imgType === null))
+                {
+                    data.context = _addFile( file, true );
 
-                $newFilePurpose.val( "" );
+                    // Start the upload
+                    //
+                    data.submit();
+
+                    // Reset the form fields so we do not suggest you can use it to edit
+                    //
+                    $newFileDocumentType.val( "other" );
+                    $newFileDocumentType.trigger( "chosen:updated" );
+
+                    $newFilePurpose.val( "" );
+                }
+                else 
+                {
+                    bidx.common.notifyError( bidx.i18n.i( "errAttachmentNotAllowed" ) );
+                }
             }
 
         ,   done: function( e, data )
