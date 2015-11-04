@@ -207,11 +207,6 @@
                     file.documentName = originalFiles[ 0 ].name;
                 }
 
-                bidx.utils.log("settings" , settings);
-                bidx.utils.log("imgType", imgType);
-                bidx.utils.log("common", settings.onlyImages && imgType !== null);
-                // hulyeseg: bidx.utils.log("active tab", $('.nav.nav-tabs.tabs-left').first().children().hasClass('active'));
-
                 if ((settings.onlyImages && imgType !== null) || (!settings.onlyImages && imgType === null))
                 {
                     data.context = _addFile( file, true );
