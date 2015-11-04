@@ -220,10 +220,13 @@
 
     var constructBusinessBoxes = function ()
     {
-        var tabBusinessMsg  =   emptySnippet.replace( /%msg%/g, bidx.i18n.i("noBusiness", appName ) );
+        var noRecommendMsg
+        ,   noContactedMsg
+        ;
 
         if( recommendedResult.length )
         {
+
             $.each( recommendedResult, function( i, item )
             {
                 $tabRecommended.append( bidx.construct.businessCardView( item.entity ) );
@@ -233,13 +236,14 @@
         }
         else
         {
-            $tabRecommended.append( tabBusinessMsg );
+            noRecommendMsg  =   emptySnippet.replace( /%msg%/g, bidx.i18n.i("noRecommendations", appName ) );
+
+            $tabRecommended.append( noRecommendMsg );
         }
 
 
         if ( receivedResult || requestedResult )
         {
-            bidx.utils.log('contBs', contBs );
             if ( contBs )
             {
                 var item;
@@ -257,7 +261,9 @@
             }
             else
             {
-                $tabContacted.append( tabBusinessMsg );
+                noContactedMsg  =   emptySnippet.replace( /%msg%/g, bidx.i18n.i("noContactedBp", appName ) );
+
+                $tabContacted.append( noContactedMsg );
             }
         }
 

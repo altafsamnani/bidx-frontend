@@ -2,6 +2,8 @@
     <!-- <Item value=""></Item> -->
     <Item value="noCompany">You have no companies</Item>
     <Item value="noBusiness">You have no business summaries</Item>
+    <Item value="noRecommendations">There are no recommended businesses</Item>
+    <Item value="noContactedBp">You have no contacted business summaries</Item>
     <Item value="newBusiness">Add new business plan</Item>
      <Item value="newCompany">Add new company</Item>
 </I18N>
