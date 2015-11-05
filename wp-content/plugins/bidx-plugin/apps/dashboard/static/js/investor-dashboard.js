@@ -114,7 +114,6 @@
                                         if ( $.inArray( bs.entity.bidxMeta.bidxEntityId, requeBsArray) === -1
                                             && bidx.common.checkMemberExists( bs.entity.bidxMeta.bidxEntityId ) === false )
                                         {
-                                            bidx.utils.log('requested', bs);
                                             requeBsArray.push( bs.entity.bidxMeta.bidxEntityId );
                                         }
 
@@ -123,7 +122,6 @@
                                             requeMbArray.push( bs.owner.id );
                                         }
 
-                                        //businessEntities[bs.entity.bidxMeta.bidxEntityId] = bs.entity;
                                         bidx.common.addToTempBusinesses( bs.entity );
                                     }
                                 });
@@ -244,7 +242,7 @@
 
         if ( receivedResult || requestedResult )
         {
-            if ( contBs )
+            if ( contBs.length )
             {
                 var item;
 
