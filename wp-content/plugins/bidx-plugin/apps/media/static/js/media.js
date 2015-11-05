@@ -194,25 +194,38 @@
                 bidx.utils.log( "[fileupload] Add", e, data );
 
                 var file            = {}
-                ,   originalFiles   = bidx.utils.getValue( data, "originalFiles", true );
+                ,   originalFiles   = bidx.utils.getValue( data, "originalFiles", true )
+                ,   origFileType
+                ,   imgType
+                ;
 
 
                 if ( originalFiles )
                 {
+                    origFileType = originalFiles[ 0 ].type;
+                    imgType = origFileType.match( /^image/ );
                     file.documentName = originalFiles[ 0 ].name;
                 }
-                data.context = _addFile( file, true );
 
-                // Start the upload
-                //
-                data.submit();
+                if ((settings.onlyImages && imgType !== null) || (!settings.onlyImages && imgType === null))
+                {
+                    data.context = _addFile( file, true );
 
-                // Reset the form fields so we do not suggest you can use it to edit
-                //
-                $newFileDocumentType.val( "other" );
-                $newFileDocumentType.trigger( "chosen:updated" );
+                    // Start the upload
+                    //
+                    data.submit();
 
-                $newFilePurpose.val( "" );
+                    // Reset the form fields so we do not suggest you can use it to edit
+                    //
+                    $newFileDocumentType.val( "other" );
+                    $newFileDocumentType.trigger( "chosen:updated" );
+
+                    $newFilePurpose.val( "" );
+                }
+                else 
+                {
+                    bidx.common.notifyError( bidx.i18n.i( "errAttachmentNotAllowed" ) );
+                }
             }
 
         ,   done: function( e, data )
