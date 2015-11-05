@@ -1947,9 +1947,10 @@
                 {
                     var $input = $form.find( "[name^='" + f + "']" )
                     ,   value  = bidx.utils.getValue( businessSummary, f )
+                    ,  decoded = $('<textarea/>').html(value).text()
                     ;
 
-                    bidx.utils.setElementValue( $input, value );
+                    bidx.utils.setElementValue( $input, decoded );
                 } );
             }
         } );
