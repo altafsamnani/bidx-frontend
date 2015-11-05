@@ -89,7 +89,7 @@
     $isJudge        = ($isCompetition && in_array( $userName, $judgeEmails )) ? true : false;
     $showLogout     = true;
 
-    if ( !$inGroup && $hasProfiles )
+    if ( $inGroup && $hasProfiles )
     {
     ?>
         <div class="btn-group profiles">
