@@ -1,7 +1,7 @@
 <I18N>
     <!-- <Item value=""></Item> -->
-    <Item value="noCompany">You have no companies</Item>
-    <Item value="noBusiness">You have no business summaries</Item>
+    <Item value="noCompany">You have no company</Item>
+    <Item value="noBusiness">You have no business plan</Item>
     <Item value="noRecommendations">There are no recommended businesses</Item>
     <Item value="noContactedBp">You have not contacted any businesses</Item>
     <Item value="newBusiness">Add new business plan</Item>
