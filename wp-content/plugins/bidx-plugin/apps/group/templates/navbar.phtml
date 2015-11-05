@@ -45,7 +45,7 @@
     //
     $hasProfiles    = count( $profiles) !== 0;
     $hasGroups      = count( $groups) >= 1;
-	$isAdmin        = $sessionSvc->isAdmin();
+    $isAdmin        = $sessionSvc->isAdmin();
     $isSuperAdmin   = is_super_admin();
 
 
@@ -69,46 +69,13 @@
         // only when a member has profiles, show the profile dropdown
         //
 
-        if ( $isSuperAdmin || $isAdmin || ( $inGroup && $hasProfiles ) ||  $isJudge) {
+        if ( $inGroup && $hasProfiles )
+        {
  ?>
             <div class="btn-group profiles">
                 <a href="<?php echo _l('dashboard');?>/" type="button" class="text-white" title="<?php _e('Dashboard', 'bidxplugin')?>">
                     <i class="fa fa-dashboard"></i>
                 </a>
-                <ul class="dropdown-menu bg-primary-dark hide">
-<?php
-                    foreach ( $profiles as $profilekey => $profilevalue ) {
-                        foreach($profilevalue as $menuName => $menuLink) {
-                        // fetch the key value for printing as text in the hyperlink
-                        //
-
-?>
-                        <li><a href="<?php echo $menuLink ?>"><?php _e( $menuName, 'bidxplugin' ); ?></a></li>
-<?php                   }
-                    }
-                    if ( $isSuperAdmin ) {
-?>
-                        <li>
-                            <a href="/wp-admin/"><?php _e( 'Wordpress dashboard', 'bidxplugin' ); ?></a>
-                        </li>
-<?php
-                    }
-                    if ( $isAdmin ) {
-?>
-                        <li>
-                            <a href="/wp-admin/admin.php?page=getting-started"><?php _e( 'bidX dashboard', 'bidxplugin' ); ?></a>
-                        </li>
-<?php
-                    }
-                    if( $isJudge ) {
-?>
-                        <li>
-                            <a href="<?php echo $skipsoJudgeUrl;?>"><?php _e('Judge dashboard','bidxplugin')?></a>
-                        </li>
-<?php
-                    }
-?>
-                </ul>
             </div>
 <?php
         }

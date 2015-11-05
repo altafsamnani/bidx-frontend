@@ -89,55 +89,17 @@
     $isJudge        = ($isCompetition && in_array( $userName, $judgeEmails )) ? true : false;
     $showLogout     = true;
 
-        if ( $isSysAdmin || $isAdmin || ( $inGroup && $hasProfiles ) || $isJudge)
-        {
- ?>
-            <div class="btn-group profiles">
-                <a href="<?php echo _l('dashboard');?>/" type="button" class="text-white"  title="<?php _e('Dashboard', 'bidxplugin')?>">
-                    <i class="fa fa-dashboard"></i>
-                    <span class="iconbar-text"><?php _e('Dashboard','bidxplugin')?></span>
-                </a>
-                <ul class="dropdown-menu bg-primary-darker hide">
+    if ( $inGroup && $hasProfiles )
+    {
+    ?>
+        <div class="btn-group profiles">
+            <a href="<?php echo _l('dashboard');?>/" type="button" class="text-white"  title="<?php _e('Dashboard', 'bidxplugin')?>">
+                <i class="fa fa-dashboard"></i>
+                <span class="iconbar-text"><?php _e('Dashboard','bidxplugin')?></span>
+            </a>
+        </div>
 <?php
-                    foreach ( $profiles as $profilekey => $profilevalue )
-                    {
-                        foreach($profilevalue as $menuName => $menuLink)
-                        {
-                            // fetch the key value for printing as text in the hyperlink
-                            //
-?>
-                            <li><a href="<?php echo $menuLink ?>"><i class="fa fa-angle-right"></i>&nbsp;<?php _e( $menuName, 'bidxplugin' ); ?></a></li>
-<?php                   }
-                    }
-                    if ( $isSysAdmin )
-                    {
-?>
-                        <li>
-                            <a href="/wp-admin/"><i class="fa fa-angle-right"></i>&nbsp;<?php _e( 'Wordpress dashboard', 'bidxplugin' ); ?></a>
-                        </li>
-<?php
-                    }
-                    if ( $isAdmin )
-                    {
-?>
-                        <li>
-                            <a href="/wp-admin/admin.php?page=getting-started"><i class="fa fa-angle-right"></i>&nbsp;<?php _e( 'bidX', 'bidxplugin' ); ?></a>
-                        </li>
-<?php
-                    }
-                    if ( $isJudge )
-                    {
-?>
-                        <li>
-                            <a href="<?php echo $skipsoJudgeUrl;?>"><i class="fa fa-angle-right"></i>&nbsp;<?php _e('Judge','bidxplugin')?></a>
-                        </li>
-<?php
-                    }
-?>
-                </ul>
-            </div>
-<?php
-        }
+    }
  ?>
 
  <?php
