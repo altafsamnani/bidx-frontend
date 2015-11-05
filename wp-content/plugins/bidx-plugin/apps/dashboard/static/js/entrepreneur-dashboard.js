@@ -21,10 +21,17 @@
 
     var getUserBusinesses = function ( userBusinesses )
     {
-        $.each( userBusinesses, function( i, bs )
+        if( !$.isEmptyObject( userBusinesses ) )
         {
-             userBsArray.push( bs );
-        });
+            $.each( userBusinesses, function( i, bs )
+            {
+                 userBsArray.push( bs );
+            });
+        }
+        else
+        {
+            _msgForEmptyBusiness();
+        }
     };
 
     //public functions
@@ -218,6 +225,19 @@
         );
     };
 
+    var _msgForEmptyBusiness = function ()
+    {
+        var tabBusinessMsg
+        ;
+
+        tabBusinessMsg  =   emptySnippet
+                                        .replace( /%msg%/g, bidx.i18n.i("noBusiness", appName ) )
+                                        .replace( /%btnLink%/g, bidx.common.url('businesssummary') + '#createBusinessSummary' )
+                                        .replace( /%btnMsg%/g, bidx.i18n.i("newBusiness", appName ) );
+
+        $tabBusinesses.append( tabBusinessMsg );
+    };
+
     var _showView = function(view, showAll)
     {
 
@@ -258,6 +278,8 @@
         ,   tabBusinessMsg
         ;
 
+        _showView('load');
+
         fetchBusinesses()
         .then( function()
         {
@@ -265,16 +287,12 @@
             .then( function( )
             {
                 businesses  =   bidx.common.tmpData.businesses;
-                bidx.utils.log('buisnesslength', businesses);
+
+                _hideView('load');
 
                 if( $.isEmptyObject(businesses) )
                 {
-                    tabBusinessMsg  =   emptySnippet
-                                        .replace( /%msg%/g, bidx.i18n.i("noBusiness", appName ) )
-                                        .replace( /%btnLink%/g, bidx.common.url('businesssummary') + '#createBusinessSummary' )
-                                        .replace( /%btnMsg%/g, bidx.i18n.i("newBusiness", appName ) );
-
-                    $tabBusinesses.append( tabBusinessMsg );
+                    _msgForEmptyBusiness( );
                 }
                 else // If no business then add an empty message
                 {
@@ -282,8 +300,6 @@
                     {
                         $tabBusinesses.append( bidx.construct.businessCardView( item ) );
                     });
-
-                    _hideView('load');
                 }
 
                 if ( membersDataId.length )
@@ -307,20 +323,14 @@
                 });
             });
         });
-
-        if ( $tabCompanies.length )
-        {
-            _showView('load');
-            _showView('loadcompanies', true);
-
-            fetchCompanies();
-        }
-
     }
 
+    if ( $tabCompanies.length )
+    {
+        _showView('loadcompanies', true);
 
-
-
+        fetchCompanies();
+    }
 
     //expose
     var dashboard =
