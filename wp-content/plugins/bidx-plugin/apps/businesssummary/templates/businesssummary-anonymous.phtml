@@ -98,7 +98,7 @@ $currentYear = date("Y");
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
             <h1>
-                <?php echo $this->exst( $businessSummary->name ); ?>
+                <?php echo $this->exst( $businessSummary->name, null, false ); ?>
                 <small>&nbsp;<?php echo _e( 'by', 'bidxplugin' ); ?>&nbsp;
                     <a href="/member/<?php echo $this->exst( $businessSummaryBidxMeta->bidxOwnerId ); ?>"><?php echo $this->exst( $businessSummaryBidxMeta->bidxOwnerDisplayName ); ?></a>
                 </small>
@@ -107,7 +107,7 @@ $currentYear = date("Y");
     </div>
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-            <h4><?php echo $this->exst( $businessSummary->slogan ); ?></h4>
+            <h4><?php echo $this->exst( $businessSummary->slogan, null, false ); ?></h4>
         </div>
     </div>
     <div class="row">
