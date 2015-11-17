@@ -806,7 +806,7 @@ class TemplateLibrary
      * @return String $rowHtml Row html
      *
      */
-    public function getMultiValues ($data, $seperator, $elementKey = NULL, $subVal = NULL, $condition = NULL)
+    public function getMultiValues ($data, $seperator, $elementKey = NULL, $subVal = NULL, $condition = NULL, $escape = false)
     {
 
         $sep = '';
@@ -849,7 +849,13 @@ class TemplateLibrary
 
                 $objValue = $this->getMultiReplacedValues ($elementKey, $objValue);
                 if ($objValue != 'null' && $objValue) {
-                    $htmlDisplay .= $sep . $this->escapeHtml ($objValue);
+                    if ($escape){
+                        $htmlDisplay .= $sep . $this->escapeHtml ($objValue);
+                    }
+                    else 
+                    {
+                        $htmlDisplay .= $sep . $objValue;
+                    }
                     $count++;
 
                     $sep = ($count == $countData) ? $seperatorAnd : $seperator;

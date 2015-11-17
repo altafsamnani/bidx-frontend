@@ -93,7 +93,7 @@ if ( !empty( $attachment ) )
 
 $hasMentorAdvisory = false;
 
-if ( $businessSummary->mentorAdvisory === TRUE && ( $this->exst ($businessSummary->expertiseNeeded) || $this->exst ($businessSummary->expertiseNeededDetail) ) )
+if ( $businessSummary->mentorAdvisory === TRUE && ( $this->exst ($businessSummary->expertiseNeeded, null, false) || $this->exst ($businessSummary->expertiseNeededDetail, null, false) ) )
 {
     $hasMentorAdvisory = true;
 }
@@ -759,8 +759,8 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 <?php
                 $rowValues = array
                 (
-                    __('Expertise needed', 'bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->expertiseNeeded), ', ', 'mentorExpertise' ),
-                    __('Expertise needed in detail', 'bidxplugin') => $this->exst($businessSummary->expertiseNeededDetail)
+                    __('Expertise needed', 'bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->expertiseNeeded, null, false), ', ', 'mentorExpertise' ),
+                    __('Expertise needed in detail', 'bidxplugin') => $this->exst($businessSummary->expertiseNeededDetail, null, false)
                 );
 
                 echo $this->tableRow ( $rowValues );
