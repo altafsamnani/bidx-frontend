@@ -38,13 +38,13 @@
         <?php
             if ($this->showLink != "false")
             {
-                 _e('Forgot your password? Click <a href="#auth/resetpassword">here</a> to recover.','bidxplugin');
+                 _e('Forgot your password? Click <strong><a href="#auth/resetpassword">here</a></strong> to recover.','bidxplugin');
 
 
         ?><br/>
         <?php
                 $registerUrl = _l('join'.'/#join/register');
-                printf( __('Not a member? Click <a href="%s">here</a> to register.','bidxplugin'), $registerUrl);
+                printf( __('Not a member? Click <strong><a href="%s">here</a></strong> to register.','bidxplugin'), $registerUrl);
 
             }
         ?>
