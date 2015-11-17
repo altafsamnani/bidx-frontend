@@ -1,7 +1,7 @@
 ;(function($)
 {
     "use strict";
-    var $element            =   $("#entrepreneur-dashboard")
+    var $element            =   $( "#entrepreneur-dashboard" )
     ,   $views              =   $element.find( ".view" )
     ,   $elementHelp        =   $element.find( ".startpage" )
     ,   $tabBusinesses      =   $element.find( "#tab-businesses" )
