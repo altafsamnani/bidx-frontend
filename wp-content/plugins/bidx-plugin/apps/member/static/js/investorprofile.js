@@ -59,6 +59,7 @@
     //Map variables
     ,   institutionAddressMapOptions
     ,   institutionAddressMap
+    ,   marker
     ,   geocoder
     ,   geocodeTimer
 
@@ -843,6 +844,7 @@
 
                     institutionAddressMap.setZoom( zoom );
                     institutionAddressMap.setCenter( response.results.geometry.location );
+                    marker.setPosition( response.results.geometry.location );
 
                     $institutionAddressMap.fadeIn( function()
                     {
@@ -1339,6 +1341,13 @@
             if ( $institutionAddressMap.length )
             {
                 institutionAddressMap = new google.maps.Map( $institutionAddressMap[ 0 ], institutionAddressMapOptions );
+
+                marker = new google.maps.Marker({
+                    position: institutionAddressMapOptions.center,
+                    map: institutionAddressMap
+                });
+
+                marker.setMap(institutionAddressMap);
             }
 
             geocoder        = new google.maps.Geocoder();
