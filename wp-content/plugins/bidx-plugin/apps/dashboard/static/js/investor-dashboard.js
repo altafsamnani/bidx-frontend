@@ -5,6 +5,7 @@
     ,   $views              = $element.find( ".view" )
     ,   $tabRecommended     = $element.find( "#tab-recommended" )
     ,   $tabContacted       = $element.find( "#tab-contacted" )
+    ,   $tabGroups          = $element.find( "#tab-groups" )
     ,   $firstPage          = $element.find( "input[name='firstpage']" )
     ,   emptySnippet        = $("#empty-message").html().replace(/(<!--)*(-->)*/g, "")
     ,   bidx                = window.bidx
@@ -380,6 +381,10 @@
             if ( $tabRecommended.length )
             {
                 fetchBusinesses();
+            }
+            if ( $tabGroups.length )
+            {
+                $tabGroups.append(bidx.common.showGroups());
             }
         }
     };
