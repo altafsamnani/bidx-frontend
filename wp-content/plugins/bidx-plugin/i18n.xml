@@ -231,6 +231,9 @@
     <Item value="toolTipLastPage">Go to last page</Item>
     <Item value="toolTipForPage">Go to page %num%</Item>
 
+    <!-- Currency / Other static values -->
+    <Item value="usd">USD</Item>
+
     <!-- Connect / mail Strings -->
     <Item value="Inbox">Inbox</Item>
     <Item value="Sent">Sent</Item>
