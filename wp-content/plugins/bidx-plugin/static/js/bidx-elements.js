@@ -386,8 +386,6 @@
         ,   roles = groupRoles( item.bidxMeta.bidxGroupRoles )
         ,   isAdmin = bidx.common.isGroupAdmin()
 
-        bidx.utils.log("BIDX config", bidxConfig);
-
         var card =
             $( "<div />", { "class": "cardView", "data-compid": item.bidxMeta.bidxGroupId } )
                 .append
