@@ -550,6 +550,22 @@
         });
     } );
 
+    //Function which appends the joined groups cardViews to the tab passed as a parameter
+    //
+    function showGroups ()
+    {
+        var groups = bidxConfig.session.groups
+        ,   tabGroupMsg
+        ;
+
+        for ( var key in groups )
+        {
+            tabGroupMsg = bidx.construct.groupCardView(groups[key]);
+        }
+        
+        return tabGroupMsg;
+    }
+
     // Perform an API call to join the group
     //
     function joinGroup( groupId, cb )
@@ -1952,6 +1968,7 @@
     ,   getMemberInfo:                  getMemberInfo
     ,   getMembersSummaries:            getMembersSummaries
     ,   getAccreditation:               getAccreditation
+    ,   showGroups:                     showGroups
     ,   isGroupAdmin:                   isGroupAdmin
     ,   getSessionValue:                getSessionValue
     ,   getNow:                         getNow

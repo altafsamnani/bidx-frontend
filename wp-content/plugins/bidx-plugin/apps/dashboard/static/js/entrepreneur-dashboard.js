@@ -1,11 +1,12 @@
 ;(function($)
 {
     "use strict";
-    var $element            =   $("#entrepreneur-dashboard")
+    var $element            =   $( "#entrepreneur-dashboard" )
     ,   $views              =   $element.find( ".view" )
     ,   $elementHelp        =   $element.find( ".startpage" )
     ,   $tabBusinesses      =   $element.find( "#tab-businesses" )
     ,   $tabCompanies       =   $element.find( "#tab-companies" )
+    ,   $tabGroups          =   $element.find( "#tab-groups" )
     ,   $tabInvestors       =   $element.find( "#tab-interested-investors" )
     ,   $tabMentors         =   $element.find( "#tab-interested-mentors" )
     ,   $firstPage          =   $element.find( "input[name='firstpage']" )
@@ -36,6 +37,7 @@
 
     //public functions
     //
+
     var fetchBusinesses = function ( options )
     {
         var $d = $.Deferred();
@@ -330,6 +332,11 @@
         _showView('loadcompanies', true);
 
         fetchCompanies();
+    }
+
+    if ( $tabGroups.length )
+    {
+        $tabGroups.append(bidx.common.showGroups());
     }
 
     //expose

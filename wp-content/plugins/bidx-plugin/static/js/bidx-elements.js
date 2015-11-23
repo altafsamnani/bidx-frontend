@@ -335,6 +335,110 @@
         return card;
     };
 
+    var groupRoles = function ( rolesArray )
+    {
+        var roles = "";
+
+        for (var i=0; i < rolesArray.length; i++)
+        {
+            roles = roles + rolesArray[i] + ", ";
+        }
+
+        roles = roles.substring(0, roles.length - 2);
+
+        return roles;
+    }
+
+    var groupCardView = function (item)
+    {
+        var card
+        ,   roles = groupRoles( item.bidxMeta.bidxGroupRoles )
+        ,   isAdmin = bidx.common.isGroupAdmin()
+        ;
+
+        var card =
+            $( "<div />", { "class": "cardView", "data-compid": item.bidxMeta.bidxGroupId } )
+                .append
+                (
+                    $( "<div />", { "class": "cardHeader hide-overflow" } )
+                    .append
+                    (
+                        $( "<a />", { "href": item.bidxMeta.bidxGroupUrl, "class": "btn btn-primary btn-xs pull-right info-action main-margin-half", "html": bidx.i18n.i( "poPortal" ) } )
+                    )          
+                    .append
+                    (
+                        $( "<div />", { "class": (isAdmin ? "" : " hide") })
+                        .append
+                        (
+                            $( "<a />", { "href": item.bidxMeta.bidxGroupUrl + "/wp-login.php", "class": "btn btn-primary btn-xs pull-right info-action main-margin-half", "html": bidx.i18n.i( "poCustomize" ) } )
+                        )
+                    )
+                )
+                .append
+                (
+                    $( "<div />", { "class": "cardContent main-padding" } )
+                    .append
+                    (
+                        $( "<div />", { "class": "cardTop" } )
+                        .append
+                        (
+                            $( "<div />", { "class": "row" } )
+                            .append
+                            (
+                                $( "<div />", { "class": "col-sm-3" } )
+                                .append
+                                (
+                                    $( "<a />", { "href": item.bidxMeta.bidxGroupUrl, "class": "pull-left main-margin-half", "data-role": "businessImage" } )
+                                    .append
+                                    (
+                                        placeLogoThumb( item )
+                                    )
+                                )
+                            )
+                            .append
+                            (
+                                $( "<div />", { "class": "col-sm-9" } )
+                                .append
+                                (
+                                    $( "<h3 />", { "class": "top-0", "html": item.name } )
+                                )
+                                .append
+                                (
+                                    $( "<h4 />" )
+                                    .append
+                                    (
+                                        $( "<span />", { "class": "bs-slogan", "html": item.slogan } )
+                                    )
+                                )
+                                .append
+                                (
+                                    $( "<table />", { "class": "table table-condensed table-bottom-border" } )
+                                    .append
+                                    (
+                                        $( "<tbody />" )
+                                        .append
+                                        (
+                                            $( "<tr />" )
+                                            .append
+                                            (
+                                                $( "<td />", { "html": bidx.i18n.i( "poRoles" ) })
+                                            )
+                                            .append
+                                            (
+                                                $( "<td />", { "html": roles })
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+                ;
+
+        return card;
+    }
+
     var companyCardView = function ( item )
     {
         var card;
@@ -1091,6 +1195,7 @@
         businessCardView:          businessCardView
     ,   companyCardView:           companyCardView
     ,   memberCardView:            memberCardView
+    ,   groupCardView:             groupCardView
     ,   actionBox:                 actionBox
     ,   actionButtons:             actionButtons
     ,   memberLink:                memberLink

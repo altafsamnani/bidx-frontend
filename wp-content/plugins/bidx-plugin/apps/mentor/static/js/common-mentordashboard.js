@@ -35,6 +35,7 @@
 
     ;
 
+
     function _oneTimeSetup()
     {
         start();
@@ -123,8 +124,10 @@
         ,   currentUserSummaries
         ,   bsids   = []
         ,   options = {}
+        ,   renderMentoringButton
         ;
 
+        renderMentoringButton = (_.size(ownedBusinesses) > _.size(result)) ? true : false;
         //
         //
         if ( bidx.globalChecks.isProfilePage() && hasEntrepreneurProfile && $businessElements.length )
@@ -280,7 +283,7 @@
                 }
             } );
 
-            if ( bidx.globalChecks.isProfilePage() && !bidx.globalChecks.isOwnProfile() && hasMentorProfile && isEntrepreneur )
+            if ( bidx.globalChecks.isProfilePage() && !bidx.globalChecks.isOwnProfile() && hasMentorProfile && isEntrepreneur && renderMentoringButton)
             {
                 doRequestMentoringSingleBusiness();
             }

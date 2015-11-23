@@ -62,6 +62,7 @@
     ,   callbacks       = null
     ,   currentAddressMapOptions = {}
     ,   currentAddressMap
+    ,   marker
     ,   geocoder
     ,   geocodeTimer    = null
     ;
@@ -463,6 +464,8 @@
 
                     currentAddressMap.setZoom( zoom );
                     currentAddressMap.setCenter( response.results.geometry.location );
+
+                    marker.setPosition( response.results.geometry.location );
 
                     $currentAddressMap.fadeIn( function()
                     {
@@ -1032,6 +1035,12 @@
 
             geocodeTimer    = null;
 
+            marker = new google.maps.Marker({
+                position: currentAddressMapOptions.center,
+                map: currentAddressMap
+            });
+
+            marker.setMap(currentAddressMap);
 
             $currentAddressCountry.change(      function() { _updateCurrentAddressMap();    } );
             $currentAddressCityTown.change(     function() { _updateCurrentAddressMap();    } );
