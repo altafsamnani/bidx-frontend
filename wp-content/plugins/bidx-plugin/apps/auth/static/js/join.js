@@ -72,14 +72,10 @@
     // member object serves also the businessSummary object
     ,   member                      = {}
     ,   bidxProfile
-
     ,   mentorProfileId
-
     ,   businessSummaryId           = null
     ,   businessSummary
-
     ,   appName                     = "auth"
-
     ;
 
     // Form fields
