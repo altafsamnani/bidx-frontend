@@ -370,6 +370,18 @@
         });
     };
 
+    var showGroups = function()
+    {
+        var groups = bidxConfig.session.groups
+        ,   tabGroupMsg
+        ;
+
+        for ( var key in groups )
+        {
+            $tabGroups.append(bidx.construct.groupCardView(groups[key]));
+        }
+    }
+
     var start = function ()
     {
 
@@ -384,7 +396,7 @@
             }
             if ( $tabGroups.length )
             {
-                $tabGroups.append(bidx.common.showGroups());
+                showGroups();
             }
         }
     };
