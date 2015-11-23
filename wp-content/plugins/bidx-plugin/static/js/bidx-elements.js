@@ -9,6 +9,37 @@
     ,   loggedInMemberId    = bidx.common.getCurrentUserId()
     ;
 
+    var placeGroupThumb = function ( item, size )
+    {
+        var thumb
+        ,   cropDimensions
+        ,   imgSize = {}
+        ;
+
+        if ( size === "sm" )
+        {
+            imgSize.class = "img-cropper-sm pull-left";
+            imgSize.default = "icons-rounded-sm pull-left";
+            cropDimensions = 50;
+        }
+        else
+        {
+            imgSize.class = "img-cropper";
+            imgSize.default = "icons-rounded";
+            cropDimensions = 90;
+        }
+
+        thumb = $( "<div />", { "class": imgSize.default } )
+                    .append
+                    (
+                        $( "<i />", { "class": "fa fa-group text-primary-light" } )
+                    );
+
+        thumb.find( "img" ).fakecrop( {fill: true, wrapperWidth: cropDimensions, wrapperHeight: cropDimensions} );
+
+        return thumb;
+    }
+
     var placeLogoThumb = function( item, size )
     {
         var thumb
@@ -354,7 +385,8 @@
         var card
         ,   roles = groupRoles( item.bidxMeta.bidxGroupRoles )
         ,   isAdmin = bidx.common.isGroupAdmin()
-        ;
+
+        bidx.utils.log("BIDX config", bidxConfig);
 
         var card =
             $( "<div />", { "class": "cardView", "data-compid": item.bidxMeta.bidxGroupId } )
@@ -391,7 +423,7 @@
                                     $( "<a />", { "href": item.bidxMeta.bidxGroupUrl, "class": "pull-left main-margin-half", "data-role": "businessImage" } )
                                     .append
                                     (
-                                        placeLogoThumb( item )
+                                        placeGroupThumb( item )
                                     )
                                 )
                             )
