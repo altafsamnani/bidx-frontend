@@ -366,14 +366,17 @@
         return card;
     };
 
-    var groupRoles = function ( rolesArray )
+    var groupRoles = function ()
     {
-        var roles = "";
+        var roles = ""
+        ,   hasEntrepreneurProfile      = bidx.common.getEntrepreneurProfileId() ? true : false
+        ,   hasInvestorProfile          = bidx.common.getInvestorProfileId() ? true : false
+        ,   hasMentorProfile            = bidx.common.getMentorProfileId() ? true : false
+        ;
 
-        for (var i=0; i < rolesArray.length; i++)
-        {
-            roles = roles + rolesArray[i] + ", ";
-        }
+        if ( hasEntrepreneurProfile ) { roles = roles + "Entrepreneur, "; }
+        if ( hasInvestorProfile ) { roles = roles + "Investor, "; }
+        if ( hasMentorProfile ) { roles = roles + "Mentor, "}
 
         roles = roles.substring(0, roles.length - 2);
 
@@ -400,7 +403,7 @@
                         $( "<div />", { "class": (isAdmin ? "" : " hide") })
                         .append
                         (
-                            $( "<a />", { "href": item.bidxMeta.bidxGroupUrl + "/wp-login.php", "class": "btn btn-primary btn-xs pull-right info-action main-margin-half", "html": bidx.i18n.i( "poCustomize" ) } )
+                            $( "<a />", { "href": item.bidxMeta.bidxGroupUrl + "/wp-admin/admin.php?page=getting-started", "class": "btn btn-primary btn-xs pull-right info-action main-margin-half", "html": bidx.i18n.i( "poCustomize" ) } )
                         )
                     )
                 )
@@ -418,7 +421,7 @@
                                 $( "<div />", { "class": "col-sm-3" } )
                                 .append
                                 (
-                                    $( "<a />", { "href": item.bidxMeta.bidxGroupUrl, "class": "pull-left main-margin-half", "data-role": "businessImage" } )
+                                    $( "<a />", { "href": item.bidxMeta.bidxGroupUrl, "class": "pull-left main-margin-half", "data-role": "groupImage" } )
                                     .append
                                     (
                                         placeGroupThumb( item )

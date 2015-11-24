@@ -170,7 +170,7 @@
 
     <Item value="poPortal">Visit Portal</Item>
     <Item value="poRoles">Roles</Item>
-    <Item value="poCustomize">Customize Portal</Item>
+    <Item value="poCustomize">Customise Portal</Item>
 
     <!-- Connection details -->
     <Item value="youAreInContact">This user has been added to your contacts</Item>
