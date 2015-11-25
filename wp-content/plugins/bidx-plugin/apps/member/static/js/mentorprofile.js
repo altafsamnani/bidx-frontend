@@ -704,7 +704,7 @@
             $editForm.submit();
         } );
 
-        // if cancel is pressed enable the button
+        // if cancel is pressed enable the "Create Mentor" button
         $btnCancel.click( function( e )
         {
             $btnCreateMentor.removeClass( "disabled" );
@@ -982,7 +982,6 @@
                                     } );
 
 
-        //HEREHERE
         if ( state === "create" )
         {
             member =
