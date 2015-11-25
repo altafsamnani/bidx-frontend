@@ -30,8 +30,9 @@
 
         // Industy Sectors
         //
-    ,   $industrySectors         = $editForm.find( ".industrySectors" )
+    ,   $industrySectors                    = $editForm.find( ".industrySectors" )
 
+    ,   $btnCreateMentor                    = $( '.btncreateMentor' )
     ,   member
     ,   memberId
     ,   mentorProfileId
@@ -703,6 +704,12 @@
             $editForm.submit();
         } );
 
+        // if cancel is pressed enable the button
+        $btnCancel.click( function( e )
+        {
+            $btnCreateMentor.removeClass( "disabled" );
+        } );
+
         // Setup form
         //
         var $validator = $editForm.validate(
@@ -975,6 +982,7 @@
                                     } );
 
 
+        //HEREHERE
         if ( state === "create" )
         {
             member =
@@ -991,6 +999,7 @@
             //
             _populateScreen();
 
+            $btnCreateMentor.addClass( "disabled" );
             $btnSave.removeClass( "disabled" );
             $btnCancel.removeClass( "disabled" );
 

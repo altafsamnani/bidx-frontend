@@ -2034,7 +2034,7 @@
     });
 
     //Create Mentor
-    $( ".member" ).on( "click", "button.createMentor", function()
+    $( ".member" ).on( "click", "button.btncreateMentor", function()
     {
         window.location.href = window.location.pathname + "/#createMentor";
     });
