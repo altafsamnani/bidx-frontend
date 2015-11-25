@@ -19,15 +19,15 @@
             <name>homepage</name>
             <title>Home</title>
             <content>
-            	To get started, please login with your email and password. &lt;br&gt;
-				In the menu underneath your name you will find the link to WordPress -> bidx &lt;br&gt;
-				Change the appearance and style of your portal by selecting Appearance -> Customize &lt;br&gt;
-				Place your content in pages, posts or media. &lt;br&gt; 
-				The homepage can be adjusted using Appearance -> Widgets. &lt;br&gt;
-				This, and many other aspects are explained in our tutorials: https://bidx.net/help/ &lt;br&gt;
-				&lt;br&gt;
-				If you have any questions, please do not hesitate to contact us at info@bidx.net.  
-				&lt;br&gt;
+            	Some instructions to get you started :
+            	&lt;ul&gt;
+            	&lt;li&gt;To get started, please login with your email and password.&lt;/li&gt;
+				&lt;li&gt;In the menu underneath your name you will find the link to WordPress -> bidx&lt;/li&gt;
+				&lt;li&gt;Change the appearance and style of your portal by selecting Appearance -> Customize&lt;/li&gt;
+				&lt;li&gt;Place your content in pages, posts or media.&lt;/li&gt; 
+				&lt;li&gt;The homepage can be adjusted using Appearance -> Widgets.&lt;/li&gt; &lt;/ul&gt; &lt;/br&gt;
+				This, and many other aspects are explained in our tutorials: &lt;a href='https://bidx.net/help/'&gt;https://bidx.net/help/&lt;/a&gt;
+				If you have any questions, please do not hesitate to contact us at info@bidx.net.
 				Good luck!
             </content>
             <update>false</update>
