@@ -88,10 +88,12 @@ endif;
 
             if ( $isLoggedinMemberIsInvestor && !$isLoggedinMemberIsMentor ) :
 ?>
-                <a href="<?php echo _l('member');?>/#createMentor" class="btn btn-sm btn-primary">
-                    <div class="fa fa-compass fa-above fa-big"></div>
-                    <?php _e('Register as mentor', 'bidxplugin')?>
-                </a>
+                <div class="pull-left">
+                    <button class="btn btn-sm btn-primary createMentor">
+                        <div class="fa fa-compass fa-above fa-big"></div>
+                        <?php _e('Register as mentor', 'bidxplugin')?>
+                    </button>
+                </div>
 <?php
             endif;
 ?>
