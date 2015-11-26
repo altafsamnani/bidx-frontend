@@ -16,6 +16,7 @@
     ,   $envImpact              = $element.find( "[name='envImpact']" )
     ,   $expertiseNeeded        = $element.find( "[name='expertiseNeeded']" )
     ,   $reasonForSubmission    = $element.find( "[name='reasonForSubmission']" )
+    ,   $contactsDropdown       = $element.find( "[name=contacts]" )
 
     ,   $focusLanguage          = $element.find( "[name='focusLanguage']" )
     ,   $focusCountry           = $element.find( "[name='focusCountry']" )
@@ -268,6 +269,7 @@
                            _hideView( "load" );
                            _toggleListLoading( $element );
                            tempLimit = CONSTANTS.SEARCH_LIMIT;
+                           _actionBulkActions();
                           //
                         }
                 });
@@ -469,17 +471,15 @@
                                 .replace( /%created%/g,      sortDate )
                             ;
 
-        $listSortItem   = $( listSortItem );
+        $listSortItem           =   $( listSortItem );
 
         $list.append( $listSortItem );
 
-        $listAnchor     = $list.find('.sort');
+        $listAnchor             =   $list.find('.sort');
 
         $list.find( "[name='bulk']" ).removeClass('hide').bidx_chosen();
 
         $list.find( "[name='filterBy']" ).removeClass('hide').bidx_chosen();
-
-
 
         $listAnchor.on('click', function( e )
         {
@@ -521,6 +521,138 @@
             });
         });
     }
+
+    function _removeMailRecipient( val )
+    {
+        $contactsDropdown.find("option[value='" + val + "']").remove();
+
+        $contactsDropdown.bidx_chosen();
+    }
+
+    function _populateMailRecipients( activeContacts, append )
+    {
+        var option
+        ,   $options
+        ,   recipientIds            =   []
+        ,   listItems               =   []
+        ,   $sendMsgEditor          =   $('#sendMessageEditor')
+        ,   $selectRecordCheckbox   =   $element.find( "[name='actionRecord']")
+        ,   sortedContacts
+        ;
+
+        $contactsDropdown.empty();
+
+        $options = $contactsDropdown.find( "option" );
+
+        // Add the real contacts
+        //
+        if ( $selectRecordCheckbox.length )
+        {
+
+            $.each( $selectRecordCheckbox, function( idx, inputRecord )
+            {
+                var $this           =   $(inputRecord)
+                ,   recipientVal    =   $this.val()
+                ;
+
+                bidx.utils.log('selectRecordCheckbox', $this);
+
+                option = $( "<option/>",
+                {
+                    value: recipientVal
+                } );
+
+                option.text( $this.data('name') );
+
+                listItems.push( option );
+
+                recipientIds.push( recipientVal );
+            } );
+
+            // add the options to the select
+            //
+            $contactsDropdown.append( listItems );
+
+            $contactsDropdown.val( recipientIds );
+
+            // init bidx_chosen plugin
+            //
+            $contactsDropdown.bidx_chosen();
+
+            // Remove hide class as same html is used for Send message btn in memberprfile and businesssummary page
+            $sendMsgEditor.find('.recipient').removeClass('hide');
+
+            $sendMsgEditor.modal( );
+        }
+
+
+    }
+
+    function _actionBulkActions()
+    {
+        var selectAllCheckbox
+        ,   $bulk
+        ,   $actionRecord
+        ,   $selectAllCheckbox      =   $element.find( "[name='selectAll']" )
+        ,   $selectRecordCheckbox   =   $element.find( "[name='actionRecord']")
+        ,   $apply                  =   $element.find( "[name='apply']")
+        ,   lengthActionRecord      =   $selectRecordCheckbox.length
+        ;
+
+        bidx.utils.log('selectRecord', $selectRecordCheckbox);
+
+        $apply.click (function ( )
+        {
+            var  bulkValue
+            ;
+
+            $bulk       =   $element.find( "[name='bulk']");
+            bulkValue   =   $bulk.val();
+
+            switch( bulkValue)
+            {
+                case 'sendEmail':
+
+                    _populateMailRecipients( );
+
+                break;
+
+                case '':
+                break;
+
+                default:
+
+            }
+
+        });
+
+        $selectRecordCheckbox.change(function( )
+        {
+            selectAllCheckbox   =   false;
+            $actionRecord       =   $( "[name='actionRecord']:checked" )
+            ;
+
+            if( lengthActionRecord === $actionRecord.length )
+            {
+                selectAllCheckbox   =   true;
+            }
+
+            $selectAllCheckbox.prop("checked", selectAllCheckbox);
+
+        });
+
+        //Select All Checkbox
+        $selectAllCheckbox.change(function( )
+        {
+            $actionRecord = $( "[name='actionRecord']" );
+
+            $actionRecord.prop("checked", this.checked);
+
+            $selectAllCheckbox.prop("checked", this.checked);
+        });
+
+    }
+
 
     function _addMainSearchFacets( item )
     {
@@ -845,7 +977,7 @@
             $body.find(".form-q").val(q);
         }
 
-        criteriaQ = (q) ? q + '*' : 'm*';
+        criteriaQ = (q) ? q + '*' : 'l*';
 
         // 2. Sort criteria
         // ex sort:["field":"entity", "order": asc ]
@@ -931,13 +1063,13 @@
                 {
                     bidx.utils.log("[searchList] retrieved results ", response );
 
-                    /*_doFacetListing(
+                    _doFacetListing(
                     {
                         response    :   response
                     ,   q           :   search.q
                     ,   sort        :   search.sort
                     ,   criteria    :   search.criteria
-                    } );*/
+                    } );
 
 
                     _doSorting(
@@ -1067,6 +1199,7 @@
                                         _showAllView( "pager" );
                                         _showAllView( "sort" );
                                         tempLimit = CONSTANTS.SEARCH_LIMIT;
+                                        _actionBulkActions();
                                     }
                     });
                 }
@@ -1268,6 +1401,7 @@
                 //
                 listItem = snippit
                     .replace( /%entityId%/g,                    response.entityId   ? response.entityId : emptyVal )
+                    .replace( /%memberId%/g,                    response.entityId   ? response.entityId : emptyVal )
                     .replace( /%name%/g,                        i18nItem.title   ? i18nItem.title     : emptyVal )
                     .replace( /%summary%/g,                     i18nItem.title   ? i18nItem.title     : emptyVal )
                  //   .replace( /%bidxCreationDateTime%/g,        bidxMeta.bidxCreationDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxCreationDateTime) : emptyVal )
@@ -1430,10 +1564,10 @@
                 // search for placeholders in snippit
                 //
                 listItem = snippit
-                    .replace( /%memberId%/g,            i18nItem.userId )
+                    .replace( /%memberId%/g,            response.entityId )
                     .replace( /%name%/g,                i18nItem.name )
                     .replace( /%bidxUpdatedDateTime%/g, i18nItem.last  ? bidx.utils.parseTimestampToDateStr(i18nItem.last) : emptyVal )
-                    .replace( /%joined%/g, i18nItem.joined  ? bidx.utils.parseTimestampToDateStr(i18nItem.joined) : emptyVal )
+                    .replace( /%joined%/g,              i18nItem.joined  ? bidx.utils.parseTimestampToDateStr(i18nItem.joined) : emptyVal )
                     .replace( /%professionalTitle%/g,   i18nItem.title   ? i18nItem.title     : emptyVal )
                     .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
                     .replace( /%role_investor%/g,       ( isInvestor && displayInvestorProfile )      ? bidx.i18n.i( 'investor' )   : '' )
@@ -2318,6 +2452,7 @@
                                        _toggleListLoading( $element );
                                        tempLimit = CONSTANTS.SEARCH_LIMIT;
                                        //_showAllView( "pager" );
+                                       _actionBulkActions();
 
                                     }
                 });

@@ -23,16 +23,6 @@
             </div>
             <div class="col-sm-8">
                  <div>
-                     <!-- Nav tabs -->
-                    <ul class="nav nav-tabs nav-search hide" role="tablist">
-                        <li role="presentation" class="active basicTab">
-                            <a href="#home" aria-controls="home" class='basic' role="tab" data-toggle="tab"><?php _e('Basic Search','bidxplugin');?></a>
-                        </li>
-                        <li role="presentation" class="advancedTab ">
-                            <a href="#home" aria-controls="profile" class='advanced' role="tab" data-toggle="tab"><?php _e('Advanced','bidxplugin');?></a>
-                        </li>
-                    </ul>
-
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade in active" id="home">
@@ -53,12 +43,26 @@
 
                            <!-- BusinessSummaries VIEW -->
                             <article class="view viewSearchList">
+                                <div class="view viewPager hide" >
+                                    <div class="pagerContainer">
+                                        <div class="row bulkAction">
+                                            <div class="col-sm-2 col-sm-offset-2">
+                                                    <div class="pagerTotal pull-left"></div>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                    <ul class="pager"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="view viewPager" >
                                     <div class="pagerContainer">
                                         <div class="row bulkAction">
-                                            <div class="col-sm-2 pagerTotal"></div>
-                                            <div class="col-sm-10">
-                                                <ul class="pager pull-left"></ul>
+                                            <div class="col-sm-2 col-sm-offset-2">
+                                                    <div class="pagerTotal pull-left"></div>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                    <ul class="pager"></ul>
                                             </div>
                                         </div>
                                     </div>
@@ -68,7 +72,7 @@
                                         <?php _e('Rendering sort...', 'bidxplugin');?>
                                     </div>
                                 </div>
-
+                                 <hr/>
                                  <ul class="media-list search-list">
                                     <!-- Results will be loaded here through js -->
                                 </ul>
@@ -76,12 +80,19 @@
                                 <div class="view viewLoad alert alert-info text-center">
                                     <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e("Loading search results, please wait...", "bidxplugin");?>
                                 </div>
-                                <div class="view viewPager">
+                                <div class="view viewSort">
+                                   <div class="media-list sort-list">
+                                        <?php _e('Rendering sort...', 'bidxplugin');?>
+                                    </div>
+                                </div>
+                                <div class="view viewPager" >
                                     <div class="pagerContainer">
-                                        <div class="row">
-                                            <div class="col-sm-2 pagerTotal"></div>
-                                            <div class="col-sm-10">
-                                                <ul class="pager pull-left"></ul>
+                                        <div class="row bulkAction">
+                                            <div class="col-sm-2 col-sm-offset-2">
+                                                    <div class="pagerTotal pull-left"></div>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                    <ul class="pager"></ul>
                                             </div>
                                         </div>
                                     </div>
@@ -107,6 +118,10 @@
 
         </section>
     </div>
+
+    <?php $this->render('../../mail/templates/compose.phtml'); ?>
+
+
          <!-- Html Templates for Facet Category -->
         <script type="text/html" id="facet-type">
             <div class="facet-category-Type">
@@ -159,19 +174,19 @@
                 <div class="row">
                     <div class="col-sm-1">
                         <div class="checkbox">
-                            <input type="checkbox" value="%bidxEntityId%" id="checkbox-%bidxEntityId%" name="actionRecord[]" />
+                            <input type="checkbox" value="1" id="selectAll" name="selectAll" />
                             <label for="checkbox-%bidxEntityId%"><span></span></label>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="pull-left">
-                            <select name="bulk" class="hide">
-                                <option value=''><?php _e('Bulk actions', 'bidxplugin')?> </option>
+                            <select name="bulk">
+                                <option value=''><?php _e('  --Select Bulk actions--  ', 'bidxplugin')?> </option>
                                 <option value='sendEmail'><?php _e('Send email', 'bidxplugin')?> </option>
-                                <option value='sendRequest'><?php _e('Send request', 'bidxplugin')?> </option>
+                                <option class="hide" value='sendRequest'><?php _e('Send request', 'bidxplugin')?> </option>
                             </select>
                         </div>
-                        <a data-status="APPLIED" class="btn btn-lg btn-primary btn-apply">Apply</a>
+                        <a data-status="APPLIED" class="btn btn-lg btn-primary btn-apply" name='apply'>Apply</a>
                     </div>
                     <div class="col-sm-3 pull-right">
                         <select name="filterBy" class="hide">
@@ -210,7 +225,8 @@
                         <div class="row">
                             <div class="col-sm-1">
                                 <div class="checkbox">
-                                    <input type="checkbox" value="%bidxEntityId%" id="checkbox_%bidxEntityId%" name="actionRecord[]" />
+                                    <input type="checkbox" data-name = "%name%" value="%memberId%" id="checkbox_%memberId%" name="actionRecord" />
+                                    <label for="checkbox-%memberId%"><span></span></label>
                                 </div>
                             </div>
                             <div class="col-sm-2">
@@ -230,6 +246,63 @@
                                         <tr class="view viewCountry" ><td><?php _e("Country of business", "bidxplugin");?></td><td>%country%</td></tr>
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardFooter">
+
+                </div>
+            </div>
+            -->
+        </script>
+
+        <script type="text/html" id="member-profile-listitem">   <!--
+            <div class="cardView">
+                <div class="cardHeader hide-overflow">
+                    <div class="info-cell pull-left"><?php echo _e( 'Completed', 'bidxplugin' ); ?>: %completionMesh%</div>
+                    <div class="info-cell pull-left"><?php echo _e( 'Rating', 'bidxplugin' ); ?>: %rating%</div>
+                    <div class="info-cell pull-left"><?php echo _e( 'Joined', 'bidxplugin' ); ?>: %joined%</div>
+                    <a href="<?php echo _l('member');?>/%memberId%" class="btn btn-primary btn-xs pull-right info-action main-margin-half"><?php echo _e( 'View Member', 'bidxplugin' ); ?> </a>
+                </div>
+                <div class="cardContent main-padding">
+                    <div class="cardTop">
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <div class="checkbox">
+                                    <input type="checkbox" data-name = "%name%" value="%memberId%" id="checkbox-%memberId%" name="actionRecord" />
+                                    <label for="checkbox-%memberId%"><span></span></label>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="pull-left main-margin-half" href="<?php echo _l('member');?>/%memberId%" data-role='memberImage'>
+                                    <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
+                                </a>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h3 class="top-0 pull-left">%name%</h3>
+                                        <div class="">
+                                            <span class="label bidx-label bidx-entrepreneur">%role_entrepreneur%</span>
+                                            <span class="label bidx-label bidx-mentor">%role_mentor%</span><i class="fa fa-mentor"></i>
+                                            <span class="label bidx-label bidx-investor">%role_investor%</span><i class="fa fa-investor"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="view viewProfessionalTitle"><span class="bs-slogan">%professionalTitle%</span></h4>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-condensed table-bottom-border">
+                                            <tbody>
+                                                <tr class="view viewMotherTongue"><td><?php _e('Mothertongue', 'bidxplugin');?></td><td>%mothertongue%</td></tr>
+                                                <tr class="view viewLangauge"><td><?php _e('Languages spoken', 'bidxplugin');?></td><td>%language%</td></tr>
+                                                <tr class="view viewHighestEducation"><td><?php _e('Highest education', 'bidxplugin');?></td><td>%highestEducation%</td></tr>
+                                                <tr class="view viewCountry"><td><?php _e('Place', 'bidxplugin');?></td><td>%city%%country%</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -293,118 +366,9 @@
             </li>
             -->
         </script>
-        <script type="text/html" id="member-profile-listitem">   <!--
-            <div class="cardView">
-                <div class="cardHeader hide-overflow">
-                    <div class="info-cell pull-left"><?php echo _e( 'Completed', 'bidxplugin' ); ?>: %completionMesh%</div>
-                    <div class="info-cell pull-left"><?php echo _e( 'Rating', 'bidxplugin' ); ?>: %rating%</div>
-                    <div class="info-cell pull-left"><?php echo _e( 'Joined', 'bidxplugin' ); ?>: %joined%</div>
-                    <a href="<?php echo _l('member');?>/%memberId%" class="btn btn-primary btn-xs pull-right info-action main-margin-half"><?php echo _e( 'View Member', 'bidxplugin' ); ?> </a>
-                </div>
-                <div class="cardContent main-padding">
-                    <div class="cardTop">
-                        <div class="row">
-                            <div class="col-sm-1">
-                                <div class="checkbox">
-                                    <input type="checkbox" value="%bidxEntityId%" id="checkbox-%bidxEntityId%" name="actionRecord[]" />
-                                    <label for="checkbox-%bidxEntityId%"><span></span></label>
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <a class="pull-left main-margin-half" href="<?php echo _l('member');?>/%memberId%" data-role='memberImage'>
-                                    <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
-                                </a>
-                            </div>
-                            <div class="col-sm-9">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <h3 class="top-0 pull-left">%name%</h3>
-                                        <div class="">
-                                            <span class="label bidx-label bidx-entrepreneur">%role_entrepreneur%</span>
-                                            <span class="label bidx-label bidx-mentor">%role_mentor%</span><i class="fa fa-mentor"></i>
-                                            <span class="label bidx-label bidx-investor">%role_investor%</span><i class="fa fa-investor"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <h4 class="view viewProfessionalTitle"><span class="bs-slogan">%professionalTitle%</span></h4>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <table class="table table-condensed table-bottom-border">
-                                            <tbody>
-                                                <tr class="view viewMotherTongue"><td><?php _e('Mothertongue', 'bidxplugin');?></td><td>%mothertongue%</td></tr>
-                                                <tr class="view viewLangauge"><td><?php _e('Languages spoken', 'bidxplugin');?></td><td>%language%</td></tr>
-                                                <tr class="view viewHighestEducation"><td><?php _e('Highest education', 'bidxplugin');?></td><td>%highestEducation%</td></tr>
-                                                <tr class="view viewCountry"><td><?php _e('Place', 'bidxplugin');?></td><td>%city%%country%</td></tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="cardFooter">
 
-                </div>
-            </div>
-            -->
-        </script>
 
-        <!-- 3. Memberprofile Snippet -->
-        <script type="text/html" id="member-profile-listitemold">
-            <!--
-            <li class="media well">
 
-            <div class="row">
-                <div class="col-sm-3">
-                    <a class="pull-left" href="<?php echo _l('member');?>/%memberId%" data-role='memberImage'>
-                        <div class="icons-rounded pull-left"><i class="fa fa-user text-primary-light"></i></div>
-                    </a>
-                </div>
-                <div class="col-sm-9">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <a href="<?php echo _l('member');?>/%memberId%">
-                                <h4>%name%</h4>
-                            </a>
-                        </div>
-                        <div class="col-sm-6">
-                            <div "row view viewLastupdate pull-right">%bidxCreationDateTime%</div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                         %professionalTitle%
-                             <span class="label bidx-label bidx-entrepreneur">%role_entrepreneur%</span>
-                             <span class="label bidx-label bidx-mentor">%role_mentor%</span><i class="fa fa-mentor"></i>
-                             <span class="label bidx-label bidx-investor">%role_investor%</span><i class="fa fa-investor"></i>
-                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12"> <hr> </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <div>%gender%</div>
-                            <div>%motherLanguage%</div>
-                        </div>
-                        <div class="col-sm-7">
-                            <div> %highestEducation% </div>
-                            <div> %language% </div>
-                            <div> %city%%country% </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div>%interest%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </li>
-            -->
-        </script>
         <!-- 4. Business group snippet -->
         <script type="text/html" id="group-listitem">
              <!--
