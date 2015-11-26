@@ -103,12 +103,6 @@
     <Item value="usernameInvalid">This is not a valid email address</Item>
     <Item value="passwordIncorrect">The password is incorrect</Item>
 
-
-    <!-- Frequent used strings -->
-    <Item value="entrepreneur">Entrepreneur</Item>
-    <Item value="investor">Investor</Item>
-    <Item value="mentor">Mentor</Item>
-
     <!-- Common Mentor strings -->
     <Item value="offerMentoring">Offer Mentoring</Item>
     <Item value="offerMentoringTo">Offer mentoring to</Item>
@@ -193,6 +187,14 @@
 
 
     <!-- Facet Title -->
+    <!-- Facet Entity types -->
+
+    <Item value="bdxMember">Member profile</Item>
+    <Item value="bdxPlan">Business summary</Item>
+    <Item value="investor">Investor</Item>
+    <Item value="entrepreneur">Entrepreneur</Item>
+    <Item value="mentor">Mentor</Item>
+
     <Item value="facet_industry">Industry</Item>
     <Item value="facet_country">Country</Item>
     <Item value="facet_city">City</Item>

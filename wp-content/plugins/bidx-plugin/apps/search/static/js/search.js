@@ -67,27 +67,12 @@
         ,   LOAD_COUNTER:                       0
         ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
         ,   ENTITY_TYPES:                       [
-                                                    {
-                                                        "type": "bidxBusinessSummary"
-                                                    },
-                                                    {
-                                                        "type": "bidxMemberProfile"
-                                                    },
-                                                    {
-                                                        "type": "bidxEntrepreneurProfile"
-                                                    },
-                                                    {
-                                                        "type": "bidxMentorProfile"
-                                                    },
-                                                    // This MUST be the last, as it's removed if applicable
-                                                    {
-                                                        "type": "bidxInvestorProfile"
-                                                    }
-
+                                                    "bdxPlan"
+                                                ,   "bdxMember"
                                                 ]
         ,   NONTITY_TYPES:                      [
-                                                   // "bdxMember"
-                                                "bdxPlan"
+                                                    "bdxPlan"
+                                                ,   "bdxMember"
                                                 ]
         }
 
@@ -663,11 +648,11 @@
         ,   subsnippit      = $("#facettop-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ;
 
-        newname = item.name.replace(/ /g, '');
+        //newname = item.name.replace(/ /g, '');
 
         listFacetsItem = subsnippit
                         .replace( /%facetValues_name%/g,    item.name )
-                        .replace( /%facetValues_anchor%/g,  newname )
+                        .replace( /%facetValues_anchor%/g,  item.name )
                         .replace( /%facetValues_count%/g,   item.count )
                         .replace( /%filterQuery%/g,         item.filterQuery )
                         ;
@@ -748,17 +733,24 @@
                     $.each( facetValues , function ( idx, item )
                     {
 
-                        if ( facetItems.name !== 'facet_entityType' )
+                        switch (facetItems.name)
                         {
-                            dataKey      = facetItems.name.replace(/facet_/g, '');
+                            case 'entityType':
+                            case 'memberRoles':
 
-                            item.name    = bidx.data.i( item.name, dataKey );  // ict.services in industry
-                        }
-                        else
-                        {
-                            item.name    = bidx.i18n.i( item.name, appName );
+                            item.name    = bidx.i18n.i( item.name );
 
-                            _addMainSearchFacets( item );
+                            break;
+                            case 'memberGender':
+
+                            dataKey      = facetItems.name.replace(/member/g, '').toLowerCase();
+                            item.name    = bidx.data.i( item.name, dataKey );
+
+                            break;
+                            default:
+
+                            item.name    = bidx.data.i( item.name, facetItems.name );
+
                         }
 
                         if ( item.name )
@@ -1023,8 +1015,8 @@
                                         ,   "sort"          :   criteriaSort
                                         ,   "maxResult"     :   tempLimit
                                         ,   "offset"        :   paging.search.offset
-                                        // ,   "entityTypes"   :   CONSTANTS.ENTITY_TYPES
-                                        ,   "entityTypes"  :   CONSTANTS.NONTITY_TYPES
+                                        ,   "entityTypes"   :   CONSTANTS.ENTITY_TYPES
+                                        //,   "entityTypes"  :   CONSTANTS.NONTITY_TYPES
                                         //  ,   "facetsVisible" :   true
                                         // ,   "scope"         :   "local"
                                         //,   "filters"       :   filters
@@ -1062,13 +1054,13 @@
                 {
                     bidx.utils.log("[searchList] retrieved results ", response );
 
-                   /* _doFacetListing(
+                    _doFacetListing(
                     {
                         response    :   response
                     ,   q           :   search.q
                     ,   sort        :   search.sort
                     ,   criteria    :   search.criteria
-                    } );*/
+                    } );
 
 
                     _doSorting(

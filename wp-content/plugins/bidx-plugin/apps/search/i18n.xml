@@ -7,20 +7,17 @@
     <!-- Facet Show -->
      <Item value="resultsLabel">results</Item>
 
-    <!-- Facet Entity types -->
-    <Item value="bidxMemberProfile">Member profile</Item>
-    <Item value="bidxBusinessSummary">Business summary</Item>
-    <Item value="bidxInvestorProfile">Investor</Item>
-    <Item value="bidxEntrepreneurProfile">Entrepreneur</Item>
     <Item value="bidxBusinessGroup">Group</Item>
     <Item value="bidxCompany">Company</Item>
-    <Item value="bidxMentorProfile">Mentor</Item>
+
 
     <!-- Facet Title -->
-    <Item value="facet_industry">Industry</Item>
-    <Item value="facet_country">Country</Item>
-    <Item value="facet_language">Language</Item>
-    <Item value="facet_entityType">Type</Item>
+    <Item value="industry">Industry</Item>
+    <Item value="country">Country</Item>
+    <Item value="language">Language</Item>
+    <Item value="entityType">Type</Item>
+    <Item value="memberRoles">Roles</Item>
+    <Item value="memberGender">Gender</Item>
 
     <Item value="paginationTotal">%num% results</Item>
 
