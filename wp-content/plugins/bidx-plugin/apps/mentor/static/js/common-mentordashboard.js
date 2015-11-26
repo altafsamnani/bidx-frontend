@@ -127,7 +127,12 @@
         ,   renderMentoringButton
         ;
 
+        bidx.utils.log("SIZE OWNED BUSINESSES ", _.size(ownedBusinesses));
+        bidx.utils.log("SIZE RESULT ", _.size(result));
+
         renderMentoringButton = (_.size(ownedBusinesses) > _.size(result)) ? true : false;
+
+        bidx.utils.log("RENDER BUTTON ", renderMentoringButton);
         //
         //
         if ( bidx.globalChecks.isProfilePage() && hasEntrepreneurProfile && $businessElements.length )
