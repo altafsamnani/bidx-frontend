@@ -1292,7 +1292,7 @@
 
                         bidx.utils.log( 'recipients', recipients);
 
-                        $contactsDropdown.append( recipients );
+                        //BIDX-3836 $contactsDropdown.append( recipients );
                         $contactsDropdown.val( isSenderId );
                         $contactsDropdown.bidx_chosen();
 
