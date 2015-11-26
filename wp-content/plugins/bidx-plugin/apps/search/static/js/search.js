@@ -86,8 +86,8 @@
 
                                                 ]
         ,   NONTITY_TYPES:                      [
-                                                    "bdxMember"
-                                                ,   "bdxPlan"
+                                                   // "bdxMember"
+                                                "bdxPlan"
                                                 ]
         }
 
@@ -996,7 +996,7 @@
         else
         {
             criteriaSort.push( {
-                                            "field" : "created"
+                                            "field" : "modified"
                                         ,   "order":  "desc"
                                     });
         }
@@ -1020,7 +1020,7 @@
                     ,   criteria    :   {
                                             "searchTerm"    :   "basic: " + criteriaQ
                                        // ,   "facetFilters"  :   criteriaFilters
-                                        //,   "sort"          :   criteriaSort
+                                        ,   "sort"          :   criteriaSort
                                         ,   "maxResult"     :   tempLimit
                                         ,   "offset"        :   paging.search.offset
                                         // ,   "entityTypes"   :   CONSTANTS.ENTITY_TYPES
@@ -1327,7 +1327,6 @@
             }
             _hideView( "pager" );
             _hideView( "sort" );
-            _hideView( "sort" );
         }
 
         // execute cb function
@@ -1358,6 +1357,8 @@
                 ,   entrpreneurIndustry
                 ,   entrpreneurReason
                 ,   $el
+                ,   $raty
+                ,   $ratingWrapper
                 ,   logo
                 ,   logoDocument
                 ,   cover
@@ -1401,21 +1402,35 @@
                 // search for placeholders in snippit
                 //
                 listItem = snippit
-                    .replace( /%entityId%/g,                    response.entityId   ? response.entityId : emptyVal )
-                    .replace( /%memberId%/g,                    response.entityId   ? response.entityId : emptyVal )
-                    .replace( /%name%/g,                        i18nItem.title   ? i18nItem.title     : emptyVal )
-                    .replace( /%summary%/g,                     i18nItem.title   ? i18nItem.title     : emptyVal )
-                 //   .replace( /%bidxCreationDateTime%/g,        bidxMeta.bidxCreationDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxCreationDateTime) : emptyVal )
-                    .replace( /%country%/g,                     country )
-                    .replace( /%industry%/g,                    industry )
-                    .replace( /%reasonForSubmission%/g,         reason )
-                    .replace( /%financingNeeded%/g,             bidx.utils.formatNumber(i18nItem.financingNeeded)   ? bidx.utils.formatNumber(i18nItem.financingNeeded) + " " + bidx.i18n.i('usd') : emptyVal )
-                    .replace( /%stageOfBusines%/g,              i18nItem.stageOfBusines )
-                    .replace( /%yearSalesStarted%/g,            i18nItem.yearSalesStarted )
-                    .replace( /%completeness%/g,                response.completionMesh ? response.completionMesh + '%' : '' )
+                    .replace( /%entityId%/g,            response.entityId )
+                    .replace( /%userId%/g,              i18nItem.owner.userId )
+                    .replace( /%title%/g,               i18nItem.title   ? i18nItem.title : emptyVal )
+                    .replace( /%name%/g,                i18nItem.owner.name )
+                    .replace( /%slogan%/g,              i18nItem.slogan   ? i18nItem.slogan : emptyVal )
+                    .replace( /%modified%/g,            response.modified  ? bidx.utils.parseISODateTime(response.modified, "date") : emptyVal )
+                    .replace( /%country%/g,             country )
+                    .replace( /%industry%/g,            industry )
+                    .replace( /%reasonForSubmission%/g, reason )
+                    .replace( /%financingNeeded%/g,     bidx.utils.formatNumber(i18nItem.financingNeeded)   ? bidx.utils.formatNumber(i18nItem.financingNeeded) + " " + bidx.i18n.i('usd') : emptyVal )
+                    .replace( /%stageOfBusines%/g,      i18nItem.stageOfBusines )
+                    .replace( /%yearSalesStarted%/g,    i18nItem.yearSalesStarted )
+                    .replace( /%completeness%/g,        response.completionMesh ? response.completionMesh + '%' : '' )
                     ;
 
                 $listItem = $(listItem);
+
+                /* Displaying Rating Star Logic */
+                $ratingWrapper              = $listItem.find( ".rating-wrapper" );
+                $raty                       = $ratingWrapper.find( ".raty" );
+
+                $raty.raty({
+                    starType: 'i',
+                    readOnly: true,
+                    // TODO Arjan remove or translate?
+                    hints:  ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent'],
+                    score:  response.rating.toFixed(1)
+
+                });
 
                 logo = bidx.utils.getValue( i18nItem, "logo");
                 logoDocument = bidx.utils.getValue( i18nItem, "logo.url");
@@ -1580,7 +1595,7 @@
                     .replace( /%country%/g,             ( country )  ? country : emptyVal )
                     .replace( /%interest%/g,            industry )
                     .replace( /%completionMesh%/g,      response.completionMesh + '%' )
-                    .replace( /%rating%/g,              response.rating + '%')
+                    //.replace( /%rating%/g,              response.rating + '%')
                     ;
 
                 $listItem     = $(listItem);

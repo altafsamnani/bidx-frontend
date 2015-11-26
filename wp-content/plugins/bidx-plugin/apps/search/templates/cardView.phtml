@@ -207,25 +207,33 @@
                 <div class="cardHeader hide-overflow">
                     <div class="info-cell pull-left"><?php echo _e( 'Completed', 'bidxplugin' ); ?>: %completeness%</div>
                     <div class="info-cell pull-left"><?php echo _e( 'Finance Needed', 'bidxplugin' ); ?>: %financingNeeded%</div>
-                    <a href="/businesssummary/%bidxEntityId%" class="btn btn-primary btn-xs pull-right info-action main-margin-half"><?php echo _e( 'View Business', 'bidxplugin' ); ?> </a>
+                    <div class="info-cell pull-left"><?php echo _e( 'Last update', 'bidxplugin' ); ?>: %modified%</div>
+                    <a href="/businesssummary/%entityId%" class="btn btn-primary btn-xs pull-right info-action main-margin-half"><?php echo _e( 'View Business', 'bidxplugin' ); ?> </a>
                 </div>
                 <div class="cardContent main-padding">
                     <div class="cardTop">
                         <div class="row">
                             <div class="col-sm-1">
                                 <div class="checkbox">
-                                    <input type="checkbox" data-name = "%name%" value="%memberId%" id="checkbox_%memberId%" name="actionRecord" />
-                                    <label for="checkbox-%memberId%"><span></span></label>
+                                    <input type="checkbox" data-name = "%name%" value="%userId%" id="checkbox_%userId%" name="actionRecord" />
+                                    <label for="checkbox-%userId%"><span></span></label>
                                 </div>
                             </div>
                             <div class="col-sm-2">
-                                <a class="pull-left main-margin-half" href="/businesssummary/%bidxEntityId%" data-role='businessImage'>
+                                <a class="pull-left main-margin-half" href="/businesssummary/%entityId%" data-role='businessImage'>
                                     <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
                                 </a>
                             </div>
 
                             <div class="col-sm-9">
-                                <h3 class="top-0">%name%</h3>
+                                <div class="col-sm-12">
+                                    <h3 class="top-0 pull-left">%title%
+                                        <small>&nbsp; <?php _e('by', 'bidxplugin');?>&nbsp;<a href="<?php echo _l('member');?>/%userId%">%name%</a></small>
+                                    </h3>
+                                    <div class="rating-wrapper pull-right">
+                                        <div  class="raty"></div>
+                                    </div>
+                                </div>
                                 <h4><span class="bs-slogan">%slogan%</span></h4>
                                 <table class="table table-condensed table-bottom-border">
                                     <tbody>
@@ -250,7 +258,6 @@
             <div class="cardView">
                 <div class="cardHeader hide-overflow">
                     <div class="info-cell pull-left"><?php echo _e( 'Completed', 'bidxplugin' ); ?>: %completionMesh%</div>
-                    <div class="info-cell pull-left"><?php echo _e( 'Rating', 'bidxplugin' ); ?>: %rating%</div>
                     <div class="info-cell pull-left"><?php echo _e( 'Updated', 'bidxplugin' ); ?>: %modified%</div>
                     <a href="<?php echo _l('member');?>/%userId%" class="btn btn-primary btn-xs pull-right info-action main-margin-half"><?php echo _e( 'View Member', 'bidxplugin' ); ?> </a>
                 </div>

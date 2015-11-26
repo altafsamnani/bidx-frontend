@@ -20,7 +20,7 @@ class search {
             'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'underscore', 'backbone', 'json2', 'bidx-utils', 'bidx-api-core','jquery-fakecrop','bootstrap-paginator');
 */
 	static $deps = array ('underscore','bidx-tagsinput', 'bidx-checkbox', 'bidx-common','bidx-data', 'bidx-i18n', 'bidx-industries', 'jquery-validation',
-      'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods','bidx-chosen');
+      'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods','bidx-chosen', 'jquery-raty' );
 	/**
 	 * Constructor
 	 */
