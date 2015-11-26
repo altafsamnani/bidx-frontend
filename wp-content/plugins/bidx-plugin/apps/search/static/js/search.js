@@ -1063,13 +1063,13 @@
                 {
                     bidx.utils.log("[searchList] retrieved results ", response );
 
-                    _doFacetListing(
+                   /* _doFacetListing(
                     {
                         response    :   response
                     ,   q           :   search.q
                     ,   sort        :   search.sort
                     ,   criteria    :   search.criteria
-                    } );
+                    } );*/
 
 
                     _doSorting(
