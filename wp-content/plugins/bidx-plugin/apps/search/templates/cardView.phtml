@@ -43,18 +43,6 @@
 
                            <!-- BusinessSummaries VIEW -->
                             <article class="view viewSearchList">
-                                <div class="view viewPager hide" >
-                                    <div class="pagerContainer">
-                                        <div class="row bulkAction">
-                                            <div class="col-sm-2 col-sm-offset-2">
-                                                    <div class="pagerTotal pull-left"></div>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                    <ul class="pager"></ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="view viewPager" >
                                     <div class="pagerContainer">
                                         <div class="row bulkAction">
@@ -71,8 +59,9 @@
                                    <div class="media-list sort-list">
                                         <?php _e('Rendering sort...', 'bidxplugin');?>
                                     </div>
+
                                 </div>
-                                 <hr/>
+                                 <br/>
                                  <ul class="media-list search-list">
                                     <!-- Results will be loaded here through js -->
                                 </ul>
@@ -262,20 +251,20 @@
                 <div class="cardHeader hide-overflow">
                     <div class="info-cell pull-left"><?php echo _e( 'Completed', 'bidxplugin' ); ?>: %completionMesh%</div>
                     <div class="info-cell pull-left"><?php echo _e( 'Rating', 'bidxplugin' ); ?>: %rating%</div>
-                    <div class="info-cell pull-left"><?php echo _e( 'Joined', 'bidxplugin' ); ?>: %joined%</div>
-                    <a href="<?php echo _l('member');?>/%memberId%" class="btn btn-primary btn-xs pull-right info-action main-margin-half"><?php echo _e( 'View Member', 'bidxplugin' ); ?> </a>
+                    <div class="info-cell pull-left"><?php echo _e( 'Updated', 'bidxplugin' ); ?>: %modified%</div>
+                    <a href="<?php echo _l('member');?>/%userId%" class="btn btn-primary btn-xs pull-right info-action main-margin-half"><?php echo _e( 'View Member', 'bidxplugin' ); ?> </a>
                 </div>
                 <div class="cardContent main-padding">
                     <div class="cardTop">
                         <div class="row">
                             <div class="col-sm-1">
                                 <div class="checkbox">
-                                    <input type="checkbox" data-name = "%name%" value="%memberId%" id="checkbox-%memberId%" name="actionRecord" />
-                                    <label for="checkbox-%memberId%"><span></span></label>
+                                    <input type="checkbox" data-name = "%name%" value="%userId%" id="checkbox-%userId%" name="actionRecord" />
+                                    <label for="checkbox-%userId%"><span></span></label>
                                 </div>
                             </div>
                             <div class="col-sm-2">
-                                <a class="pull-left main-margin-half" href="<?php echo _l('member');?>/%memberId%" data-role='memberImage'>
+                                <a class="pull-left main-margin-half" href="<?php echo _l('member');?>/%userId%" data-role='memberImage'>
                                     <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
                                 </a>
                             </div>

@@ -86,8 +86,8 @@
 
                                                 ]
         ,   NONTITY_TYPES:                      [
-                                                    "BdxMember"
-                                                ,   "BdxPlan"
+                                                    "bdxMember"
+                                                ,   "bdxPlan"
                                                 ]
         }
 
@@ -690,7 +690,6 @@
     {
         var snippit         = $("#facet-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   subsnippit      = $("#facetsub-listitem").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listEmpty      = $("#error-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $facetType      = $("#facet-type").html().replace(/(<!--)*(-->)*/g, "")
         ,   criteria        = options.criteria
         ,   response        = options.response
@@ -977,7 +976,7 @@
             $body.find(".form-q").val(q);
         }
 
-        criteriaQ = (q) ? q + '*' : 'l*';
+        criteriaQ = (q) ? q + '*' : '*';
 
         // 2. Sort criteria
         // ex sort:["field":"entity", "order": asc ]
@@ -1019,7 +1018,7 @@
                     ,   sort        :   sort
                     ,   facetFilters:   facetFilters
                     ,   criteria    :   {
-                                            "searchTerm"    :   "extended: " + criteriaQ
+                                            "searchTerm"    :   "basic: " + criteriaQ
                                        // ,   "facetFilters"  :   criteriaFilters
                                         //,   "sort"          :   criteriaSort
                                         ,   "maxResult"     :   tempLimit
@@ -1327,6 +1326,8 @@
                 options.cb();
             }
             _hideView( "pager" );
+            _hideView( "sort" );
+            _hideView( "sort" );
         }
 
         // execute cb function
@@ -1487,7 +1488,7 @@
                 snippit         = $entityElement.html().replace(/(<!--)*(-->)*/g, "");
                 $elImage        = $entityElement.find( "[data-role = 'memberImage']" );
 
-                roles           = bidx.utils.getValue( bidxConfig.session, "roles" );
+                roles           = bidx.utils.getValue( i18nItem, "roles" );
                 isEntrepreneur  = ( $.inArray("entrepreneur", roles) !== -1 || $.inArray("entrepreneur", roles) !== -1 ) ? true : false;
                 isMentor        = ( $.inArray("mentor", roles) !== -1 || $.inArray("mentor", roles) !== -1 ) ? true : false;
                 isInvestor      = ( $.inArray("investor", roles) !== -1 || $.inArray("investor", roles) !== -1 ) ? true : false;
@@ -1564,10 +1565,9 @@
                 // search for placeholders in snippit
                 //
                 listItem = snippit
-                    .replace( /%memberId%/g,            response.entityId )
+                    .replace( /%userId%/g,              i18nItem.userId )
                     .replace( /%name%/g,                i18nItem.name )
-                    .replace( /%bidxUpdatedDateTime%/g, i18nItem.last  ? bidx.utils.parseTimestampToDateStr(i18nItem.last) : emptyVal )
-                    .replace( /%joined%/g,              i18nItem.joined  ? bidx.utils.parseTimestampToDateStr(i18nItem.joined) : emptyVal )
+                    .replace( /%modified%/g,            response.modified  ? bidx.utils.parseISODateTime(response.modified, "date") : emptyVal )
                     .replace( /%professionalTitle%/g,   i18nItem.title   ? i18nItem.title     : emptyVal )
                     .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
                     .replace( /%role_investor%/g,       ( isInvestor && displayInvestorProfile )      ? bidx.i18n.i( 'investor' )   : '' )
