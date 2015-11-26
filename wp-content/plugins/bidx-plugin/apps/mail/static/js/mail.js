@@ -30,6 +30,7 @@
     ,   section
     ,   loggedInMemberId            = bidx.common.getCurrentUserId()
     ,   connectContacts
+    ,   isblockedby //will contain the id's of the members who blocked logged in member             
     ;
 
     // Constants
@@ -53,6 +54,11 @@
             .then( function( contacts )
             {
                 connectContacts = contacts;
+
+                isblockedby = contacts.isblocked;
+                
+                delete contacts.isblocked;
+
                 _initContactListing( contacts );
 
                 if (options && options.callback)
@@ -2543,7 +2549,8 @@
             ,   active          =   []
             ,   pending         =   []
             ,   incoming        =   []
-            ,   blocked         =   []
+            ,   blocked         =   []  
+            ,   isblocked       =   []
             ,   $d              =   $.Deferred()
             ;
 
@@ -2589,6 +2596,10 @@
                                             {
                                                 blocked.push( contactsVal );
                                             }
+                                            else 
+                                            {
+                                                isblocked.push( contactsVal );
+                                            }
                                         break;
                                     }
                                 }
@@ -2599,6 +2610,7 @@
                                         ,   pending:    pending
                                         ,   incoming:   incoming
                                         ,   blocked:    blocked
+                                        ,   isblocked:  isblocked
                                         };
                         }
 
@@ -2862,7 +2874,7 @@
                     {
                         var senderId        =   bidx.utils.getValue(message, 'sender.id')
                         ,   blockedContacts =   bidx.utils.getValue(connectContacts, 'blocked')
-                        ,   isUserBlocked   =   _.findWhere(blockedContacts, { id: senderId })
+                        ,   isUserBlocked   =   _.findWhere(blockedContacts, { id: senderId }) || _.findWhere(isblockedby, { id: senderId })
                         ;
 
                         _initEmail( action, message );
@@ -2880,6 +2892,10 @@
                         if( !isUserBlocked )
                         {
                             buttons.push( ".bidx-btn-block" );
+                        }
+                        else 
+                        {
+                            buttons.splice(0, 1); //remove first element which is ".btn-reply"
                         }
 
                         if ( state !== "mbx-sent" )
@@ -3014,7 +3030,7 @@
 
                 ,   onHide: function()
                     {
-                        window.bidx.controller.updateHash( "#mail/compose", true, false );
+                        window.bidx.controller.updateHash( "#mail/mbx-inbox", true, false );
                     }
                 } );
 
