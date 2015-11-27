@@ -189,8 +189,8 @@
     <!-- Facet Title -->
     <!-- Facet Entity types -->
 
-    <Item value="bdxMember">Member profile</Item>
-    <Item value="bdxPlan">Business summary</Item>
+    <Item value="bdxmember">Member profile</Item>
+    <Item value="bdxplan">Business summary</Item>
     <Item value="investor">Investor</Item>
     <Item value="entrepreneur">Entrepreneur</Item>
     <Item value="mentor">Mentor</Item>

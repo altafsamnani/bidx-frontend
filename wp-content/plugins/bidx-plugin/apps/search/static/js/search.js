@@ -817,19 +817,23 @@
             {
                 e.preventDefault();
 
+                var facetFilters    =   bidx.utils.getValue( criteria, 'facetFilters')
+                ;
+
                 bidx.utils.log('Criteria before click=', criteria);
 
                 $this           = $( this );
                 filterQuery     = $this.data('filter');
 
-                if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterQuery, criteria.facetFilters ) !== -1)
+                if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterQuery, facetFilters ) !== -1)
                 {
                     bidx.utils.log('criteria removed' , filterQuery, criteria.facetFilters);
                     criteria.facetFilters = _.without(criteria.facetFilters, filterQuery); // removed the match value from criteria, using underscore function make sure its included
 
                 }
-                else if ( $.inArray(filterQuery, criteria.facetFilters ) === -1)
+                else if ( $.inArray(filterQuery, facetFilters ) === -1)
                 {
+                    criteria.facetFilters = [];
                     criteria.facetFilters.push( filterQuery );
                 }
 
@@ -1406,7 +1410,7 @@
                     .replace( /%financingNeeded%/g,     bidx.utils.formatNumber(i18nItem.financingNeeded)   ? bidx.utils.formatNumber(i18nItem.financingNeeded) + " " + bidx.i18n.i('usd') : emptyVal )
                     .replace( /%stageOfBusines%/g,      i18nItem.stageOfBusines )
                     .replace( /%yearSalesStarted%/g,    i18nItem.yearSalesStarted )
-                    .replace( /%completeness%/g,        response.completionMesh ? response.completionMesh + '%' : '' )
+                    .replace( /%completeness%/g,        i18nItem.completion ? i18nItem.completion + '%' : '' )
                     ;
 
                 $listItem = $(listItem);
@@ -1420,7 +1424,7 @@
                     readOnly: true,
                     // TODO Arjan remove or translate?
                     hints:  ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent'],
-                    score:  response.rating.toFixed(1)
+                    score:  i18nItem.rating.toFixed(1)
 
                 });
 
