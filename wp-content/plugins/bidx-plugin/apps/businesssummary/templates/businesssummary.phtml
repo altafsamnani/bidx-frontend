@@ -498,8 +498,8 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 <?php
             $rowValues = array
             (
-                __('Role of the entrepreneur','bidxplugin') => $this->exst($businessSummary->personalRole),
-                __('Expertise of the entrepreneur','bidxplugin') => $this->exst($businessSummary->personalExpertise)
+                __('Role of the entrepreneur','bidxplugin') => $this->exst($businessSummary->personalRole, null, false),
+                __('Expertise of the entrepreneur','bidxplugin') => $this->exst($businessSummary->personalExpertise, null, false)
             );
 
             if ( $this->checkEmpty( $rowValues ) ) :
