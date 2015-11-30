@@ -109,10 +109,10 @@
             e.preventDefault();
 
             var el          = $(this)
-            ,   item        = el.parents( ".list-group-item" )
+            ,   item        = el.parents( ".card-entityid" )
             ,   entityId    = item.data( "entityid" )
             ;
-            
+
             bidx.common.notifyConfirm( bidx.i18n.i( "itemDeletion", appName ), entityId );
 
         } );

@@ -91,7 +91,7 @@ if ($entrepreneurDetails &&
 <?php
                         foreach ($businessSummary as $index => $business) {
 ?>
-                                    <div class="list-group-item" data-bsid="<?php echo $business->bidxMeta->bidxEntityId; ?>">
+                                    <div class="card-entityid list-group-item" data-entityid="<?php echo $business->bidxMeta->bidxEntityId; ?>">
                                         <div class="list-group-item-text">
                                             <div class="row">
                                                 <div class="col-sm-2">
@@ -196,7 +196,7 @@ if ($entrepreneurDetails &&
 <?php
                         foreach ($companies as $index => $company) {
 ?>
-                            <div class="list-group-item" data-entityid="<?php echo $company->bidxMeta->bidxEntityId; ?>">
+                            <div class="card-entityid list-group-item" data-entityid="<?php echo $company->bidxMeta->bidxEntityId; ?>">
                                 <div class="list-group-item-text">
                                     <div class="row">
                                         <div class="col-sm-2">
