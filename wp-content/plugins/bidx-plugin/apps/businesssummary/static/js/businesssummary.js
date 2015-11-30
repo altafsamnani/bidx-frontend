@@ -3777,7 +3777,7 @@
         // Update the business summary object
         //
         _getFormValues();
-
+        
         if ( businessSummary.stageBusiness )
         {
             businessSummary.stageBusiness = businessSummary.stageBusiness.toLowerCase();
@@ -3788,6 +3788,12 @@
         if ( state === "create" )
         {
             businessSummary.periodStartDate = bidx.common.getNow().getFullYear() + "-01-01";
+
+            // BIDX-3838 - If attachment is empty don't send attachment to the API
+            if (businessSummary.attachment.length == 0)
+            {
+                delete businessSummary.attachment;
+            }
         }
 
         // Make sure the entitytype is set correctly, probably only needed for 'create'
