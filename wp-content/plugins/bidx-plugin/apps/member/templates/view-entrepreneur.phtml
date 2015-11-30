@@ -114,8 +114,8 @@ if ($entrepreneurDetails &&
                                                     <h4 class="list-group-item-heading"><a href="<?php echo _l('businesssummary');?>/<?php echo $business->bidxMeta->bidxEntityId ?>"><?php echo $business->name; ?></a></h4>
                                                     <ul class="list-unstyled">
 <?php
-                                                        $businessSlogan = $this->exst ( $business->slogan );
-                                                        $businessSummary = $this->exst ( $business->summary );
+                                                        $businessSlogan = $this->exst ( $business->slogan, null, false );
+                                                        $businessSummary = $this->exst ( $business->summary, null, false );
                                                         $businessCountry = $this->exst ( $business->countryOperation );
                                                         $businessIndustry = $this->exst ( $business->industry );
 
