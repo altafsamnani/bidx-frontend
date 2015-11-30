@@ -610,8 +610,10 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                     </tr>
 <?php
                     $financialDetails = $this->exst( $businessSummary->financialSummaries );
+                    $sortedfinancialDetails = new ArrayObject($financialDetails);
+                    $sortedfinancialDetails->ksort();
 
-                    foreach ( $financialDetails as $year => $yearDetails )
+                    foreach ( $sortedfinancialDetails as $year => $yearDetails )
                     {
                         if ( $year < $currentYear )
                         {
