@@ -91,7 +91,7 @@ if ($entrepreneurDetails &&
 <?php
                         foreach ($businessSummary as $index => $business) {
 ?>
-                                    <div class="list-group-item" data-bsid="<?php echo $business->bidxMeta->bidxEntityId; ?>">
+                                    <div class="card-entityid list-group-item" data-entityid="<?php echo $business->bidxMeta->bidxEntityId; ?>">
                                         <div class="list-group-item-text">
                                             <div class="row">
                                                 <div class="col-sm-2">
@@ -114,8 +114,8 @@ if ($entrepreneurDetails &&
                                                     <h4 class="list-group-item-heading"><a href="<?php echo _l('businesssummary');?>/<?php echo $business->bidxMeta->bidxEntityId ?>"><?php echo $business->name; ?></a></h4>
                                                     <ul class="list-unstyled">
 <?php
-                                                        $businessSlogan = $this->exst ( $business->slogan );
-                                                        $businessSummary = $this->exst ( $business->summary );
+                                                        $businessSlogan = $this->exst ( $business->slogan, null, false );
+                                                        $businessSummary = $this->exst ( $business->summary, null, false );
                                                         $businessCountry = $this->exst ( $business->countryOperation );
                                                         $businessIndustry = $this->exst ( $business->industry );
 
@@ -196,7 +196,7 @@ if ($entrepreneurDetails &&
 <?php
                         foreach ($companies as $index => $company) {
 ?>
-                            <div class="list-group-item" data-entityid="<?php echo $company->bidxMeta->bidxEntityId; ?>">
+                            <div class="card-entityid list-group-item" data-entityid="<?php echo $company->bidxMeta->bidxEntityId; ?>">
                                 <div class="list-group-item-text">
                                     <div class="row">
                                         <div class="col-sm-2">

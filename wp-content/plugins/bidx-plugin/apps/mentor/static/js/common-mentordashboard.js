@@ -125,14 +125,10 @@
         ,   bsids   = []
         ,   options = {}
         ,   renderMentoringButton
+        ,   mentoringCount = 0
+        ,   visitingId = bidx.utils.getValue( bidxConfig, 'context.memberId' )
         ;
 
-        bidx.utils.log("SIZE OWNED BUSINESSES ", _.size(ownedBusinesses));
-        bidx.utils.log("SIZE RESULT ", _.size(result));
-
-        renderMentoringButton = (_.size(ownedBusinesses) > _.size(result)) ? true : false;
-
-        bidx.utils.log("RENDER BUTTON ", renderMentoringButton);
         //
         //
         if ( bidx.globalChecks.isProfilePage() && hasEntrepreneurProfile && $businessElements.length )
@@ -191,6 +187,12 @@
                 relChecks.isThereRelationship   = false;
 
                 relChecks.showBusinessInfo      = false;
+
+                //count how many businesses have already mentoring relationship with the member we are visiting
+                if ( request.mentorId == visitingId)
+                {
+                    mentoringCount++;
+                }
 
                 // Do not continue if there is already an mentor box with the same requestId
                 //
@@ -287,6 +289,8 @@
                     }
                 }
             } );
+
+            renderMentoringButton = (_.size(ownedBusinesses) > mentoringCount) ? true : false;
 
             if ( bidx.globalChecks.isProfilePage() && !bidx.globalChecks.isOwnProfile() && hasMentorProfile && isEntrepreneur && renderMentoringButton)
             {

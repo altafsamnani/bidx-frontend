@@ -1292,7 +1292,7 @@
 
                         bidx.utils.log( 'recipients', recipients);
 
-                        $contactsDropdown.append( recipients );
+                        //BIDX-3836 $contactsDropdown.append( recipients );
                         $contactsDropdown.val( isSenderId );
                         $contactsDropdown.bidx_chosen();
 
@@ -1423,6 +1423,8 @@
                 ,   $blockedWrapper     =   $('#blockedRequests .contact-request-list')
                 ,   $badgeblock         =   $('.trigger-blocked-contacts .badge')
                 ,   badgeblockVal       =   parseInt( $badgeblock.text() )
+                ,   $badgeactive         =   $('.trigger-active-contacts .badge')
+                ,   badgeactiveVal       =   parseInt( $badgeactive.text() )
                 ,   contactId           =   $list.attr( "data-requestId" )
                 ,   contactName         =   $list.attr( "data-requestName" )
                 ,   contact             =   parseInt( contactId, 10)
@@ -1450,7 +1452,11 @@
 
                         badgeValue  =   badgeValue - 1;
 
+                        badgeactiveVal = badgeactiveVal - 1;
+
                         $badge.text(badgeValue);
+
+                        $badgeactive.text(badgeactiveVal);
 
                         if( !badgeValue )
                         {

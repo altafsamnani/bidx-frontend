@@ -1947,10 +1947,9 @@
                 {
                     var $input = $form.find( "[name^='" + f + "']" )
                     ,   value  = bidx.utils.getValue( businessSummary, f )
-                    ,  decoded = $('<textarea/>').html(value).text()
                     ;
 
-                    bidx.utils.setElementValue( $input, decoded );
+                    bidx.utils.setElementValue( $input, value );
                 } );
             }
         } );
@@ -3778,7 +3777,7 @@
         // Update the business summary object
         //
         _getFormValues();
-
+        
         if ( businessSummary.stageBusiness )
         {
             businessSummary.stageBusiness = businessSummary.stageBusiness.toLowerCase();
@@ -3789,6 +3788,12 @@
         if ( state === "create" )
         {
             businessSummary.periodStartDate = bidx.common.getNow().getFullYear() + "-01-01";
+
+            // BIDX-3838 - If attachment is empty don't send attachment to the API
+            if (businessSummary.attachment.length == 0)
+            {
+                delete businessSummary.attachment;
+            }
         }
 
         // Make sure the entitytype is set correctly, probably only needed for 'create'
