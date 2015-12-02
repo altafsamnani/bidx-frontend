@@ -2,11 +2,13 @@
 {
     "use strict";
 
-    var $element                = $( "div.member" )
+    var iclVars                 = window.icl_vars || {}
+    ,   $element                = $( "div.member" )
     ,   $quickActionLinks       = $( ".quick-action-links a" )
     ,   $tabs                   = $( ".nav-tabs" )
     ,   $existingBusinesses     = $element.find( "#existingBusinesses" )
     ,   $existingCompanies      = $element.find( "#existingCompanies" )
+    ,   currentLanguage         = ( iclVars.current_language ) ? '/' + iclVars.current_language : '';
     ;
 
     $quickActionLinks.click ( function( e )
@@ -30,7 +32,8 @@
             }
             else
             {
-                window.location = "/businesssummary/#createBusinessSummary";
+                //BIDX-3851
+                window.location = currentLanguage + "/businesssummary/#createBusinessSummary";
             }
         }
 
@@ -48,7 +51,8 @@
             }
             else
             {
-                window.location = "/company/#createCompany";
+                //BIDX-3851
+                window.location = currentLanguage + "/company/#createCompany";
             }
         }
 
