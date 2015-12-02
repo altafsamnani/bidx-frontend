@@ -1873,7 +1873,7 @@
                     .replace( /%city%/g,                ( cityTown ) ? cityTown : emptyVal )
                     .replace( /%country%/g,             ( country )  ? country : emptyVal )
                     .replace( /%interest%/g,            industry )
-                    .replace( /%completionMesh%/g,      response.completionMesh + '%' )
+                    .replace( /%completionMesh%/g,      i18nItem.completionMesh + '%' )
                     //.replace( /%rating%/g,              response.rating + '%')
                     ;
 
