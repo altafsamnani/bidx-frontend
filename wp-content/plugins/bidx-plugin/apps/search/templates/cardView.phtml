@@ -62,13 +62,12 @@
 
                                 </div>
                                  <br/>
-                                 <ul class="media-list search-list">
-                                    <!-- Results will be loaded here through js -->
-                                </ul>
-
                                 <div class="view viewLoad alert alert-info text-center">
                                     <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e("Loading search results, please wait...", "bidxplugin");?>
                                 </div>
+                                 <ul class="media-list search-list">
+                                    <!-- Results will be loaded here through js -->
+                                </ul>
                                 <div class="view viewSort">
                                    <div class="media-list sort-list">
                                         <?php _e('Rendering sort...', 'bidxplugin');?>
@@ -133,17 +132,17 @@
 
         <!-- Html Templates for Facet Category -->
         <script type="text/html" id="facet-listitem">
-            <div class="facet-category-%facets_name%">
-                <h5 class="facet-title">%facets_name%</h5>
+            <div class="facet-category-%facets_title%">
+                <h5 data-name="%facets_name%" class="facet-title">%facets_title%</h5>
                 <div class="list-group"></div>
             </div>
         </script>
         <!-- Html Templates for Category results -->
         <script type="text/html" id="facetsub-listitem">
-            <a data-filter="%filterQuery%" class="list-group-item filter">
+            <a data-value="%facetValues_name%" data-filter="%filterQuery%" class="list-group-item filter">
                 <span class="view viewClose"><i class="fa fa-times text-success"></i></span>
                 <span class="badge">%facetValues_count%</span>
-                %facetValues_name%
+                %facets_title%
             </a>
         </script>
 
@@ -175,7 +174,7 @@
                                 <option class="hide" value='sendRequest'><?php _e('Send request', 'bidxplugin')?> </option>
                             </select>
                         </div>
-                        <a data-status="APPLIED" class="btn btn-lg btn-primary btn-apply" name='apply'>Apply</a>
+                        <a data-status="APPLIED" class="btn btn-lg btn-primary btn-apply disabled" name='apply'>Apply</a>
                     </div>
                     <div class="col-sm-3 pull-right">
                         <select name="filterBy" class="hide">

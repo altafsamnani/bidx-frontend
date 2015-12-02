@@ -74,6 +74,7 @@
                                                     "bdxPlan"
                                                 ,   "bdxMember"
                                                 ]
+        ,   FILTERQUERY:                        []
         }
 
     ,   tempLimit               = CONSTANTS.SEARCH_LIMIT
@@ -203,7 +204,7 @@
     {
         if(!displayInvestorProfile)
         {
-            CONSTANTS.ENTITY_TYPES.pop(); // Removes Investor Profile, not to display
+        //    CONSTANTS.ENTITY_TYPES.pop(); // Removes Investor Profile, not to display
         }
 
         _tabSearch();
@@ -453,7 +454,7 @@
                                 .replace( /%relevance%/g,   sortRelevance)
                                 .replace( /%industry%/g,    sortIndustry )
                                 .replace( /%country%/g,     sortCountry )
-                                .replace( /%created%/g,      sortDate )
+                                .replace( /%created%/g,     sortDate )
                             ;
 
         $listSortItem           =   $( listSortItem );
@@ -521,7 +522,7 @@
         ,   recipientIds            =   []
         ,   listItems               =   []
         ,   $sendMsgEditor          =   $('#sendMessageEditor')
-        ,   $selectRecordCheckbox   =   $element.find( "[name='actionRecord']")
+        ,   $selectRecordCheckbox   =   $element.find( "[name='actionRecord']:checked")
         ,   sortedContacts
         ;
 
@@ -578,15 +579,17 @@
         var selectAllCheckbox
         ,   $bulk
         ,   $actionRecord
+        ,   actionRecordLength
+        ,   allChecked
         ,   $selectAllCheckbox      =   $element.find( "[name='selectAll']" )
         ,   $selectRecordCheckbox   =   $element.find( "[name='actionRecord']")
-        ,   $apply                  =   $element.find( "[name='apply']")
+        ,   $btnApply                  =   $element.find( "[name='apply']")
         ,   lengthActionRecord      =   $selectRecordCheckbox.length
         ;
 
         bidx.utils.log('selectRecord', $selectRecordCheckbox);
 
-        $apply.click (function ( )
+        $btnApply.click (function ( )
         {
             var  bulkValue
             ;
@@ -614,12 +617,23 @@
         $selectRecordCheckbox.change(function( )
         {
             selectAllCheckbox   =   false;
-            $actionRecord       =   $( "[name='actionRecord']:checked" )
-            ;
 
-            if( lengthActionRecord === $actionRecord.length )
+            $actionRecord       =   $( "[name='actionRecord']:checked" );
+
+            actionRecordLength  =   $actionRecord.length;
+
+            if( actionRecordLength )
             {
-                selectAllCheckbox   =   true;
+                $btnApply.removeClass('disabled');
+
+                if( lengthActionRecord === actionRecordLength )
+                {
+                    selectAllCheckbox   =   true;
+                }
+            }
+            else
+            {
+                $btnApply.addClass('disabled');
             }
 
             $selectAllCheckbox.prop("checked", selectAllCheckbox);
@@ -629,11 +643,23 @@
         //Select All Checkbox
         $selectAllCheckbox.change(function( )
         {
-            $actionRecord = $( "[name='actionRecord']" );
+            allChecked      =   this.checked;
+
+            $actionRecord   = $( "[name='actionRecord']" );
 
             $actionRecord.prop("checked", this.checked);
 
             $selectAllCheckbox.prop("checked", this.checked);
+
+            if(allChecked)
+            {
+                $btnApply.removeClass('disabled');
+            }
+            else
+            {
+                $btnApply.addClass('disabled');
+            }
+
         });
 
     }
@@ -666,12 +692,7 @@
 
     }
 
-    /* Get the search list
-    Sample
-    bidxBusinessGroup - 8747 - Cleancookstoves
-    */
-
-    function _doFacetListing(options)
+    function _doRangeFilterListing( options )
     {
         var snippit         = $("#facet-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   subsnippit      = $("#facetsub-listitem").html().replace(/(<!--)*(-->)*/g, "")
@@ -701,6 +722,7 @@
         ,   facetLabel
         ,   dataKey
         ,   itemName
+        ,   facetValName
         ,   industry
         ,   anchorFacet
         ,   isCriteriaSelected
@@ -719,12 +741,14 @@
             $.each( response.facets , function ( idx, facetItems)
             {
 
-                facetValues    = bidx.utils.getValue( facetItems, "facetValues" );
-                facetLabel     = bidx.i18n.i( facetItems.name, appName );
+                facetValues     = bidx.utils.getValue( facetItems, "facetValues" );
+                facetLabel      = bidx.i18n.i( facetItems.name, appName );
 
                 if ( !$.isEmptyObject(facetValues) )
                 {
-                    listItem = snippit.replace( /%facets_name%/g, facetItems.name ? bidx.i18n.i( facetItems.name, appName ) : emptyVal );
+                    listItem    =   snippit
+                                    .replace( /%facets_title%/g, bidx.i18n.i( facetItems.name, appName ) )
+                                     .replace( /%facets_name%/g, facetItems.name  );
 
                     $listItem  = listItem;
                     $list.append($listItem );
@@ -736,32 +760,38 @@
                         switch (facetItems.name)
                         {
                             case 'entityType':
-                            case 'memberRoles':
+                            case 'roles':
 
-                            item.name    = bidx.i18n.i( item.name );
+                            bidx.utils.log('1',facetItems.name, item.name);
+                            facetValName    = bidx.i18n.i( item.name );
 
                             break;
-                            case 'memberGender':
+                            case 'country':
+                            facetValName    = bidx.data.i( item.name.toUpperCase(), facetItems.name );
+                            break;
 
-                            dataKey      = facetItems.name.replace(/member/g, '').toLowerCase();
-                            item.name    = bidx.data.i( item.name, dataKey );
+                            case 'industry':
 
+                            bidx.utils.log('3',facetItems.name, item.name.toUpperCase());
+                            facetValName    = bidx.data.i( item.name.toUpperCase(), facetItems.name );
+                            item.name = 0;
                             break;
                             default:
-
-                            item.name    = bidx.data.i( item.name, facetItems.name );
+                            bidx.utils.log('2',facetItems.name, item.name);
+                            facetValName    = bidx.data.i( item.name, facetItems.name );
 
                         }
 
                         if ( item.name )
                         {
-                            newname = item.name.replace(/ /g, '');
+                            bidx.utils.log('facetValName', facetValName);
+                            newname = facetValName.replace(/ /g, '');
 
                             listFacetsItem = subsnippit
-                                .replace( /%facetValues_name%/g,    item.name           ? item.name        :    emptyVal )
-                                .replace( /%facetValues_anchor%/g,  item.name           ? newname          :    emptyVal )
-                                .replace( /%facetValues_count%/g,   item.count          ? item.count       :    emptyVal )
-                                .replace( /%filterQuery%/g,         item.filterQuery    ? item.filterQuery :    emptyVal )
+                                .replace( /%facets_title%/g,        item.name           ? newname      :    emptyVal )
+                                .replace( /%facetValues_count%/g,   item.count          ? item.count        :    emptyVal )
+                                .replace( /%facetValues_name%/g,    item.name           ? item.name         :    emptyVal )
+                                .replace( /%filterQuery%/g,         item.filterQuery    ? item.filterQuery  :    emptyVal )
                                 ;
 
                             // execute cb function
@@ -817,24 +847,268 @@
             {
                 e.preventDefault();
 
-                var facetFilters    =   bidx.utils.getValue( criteria, 'facetFilters')
+                $this           = $( this );
+                filterQuery     = {};
+                filterValue     = $this.data('value');
+
+                var filterValue
+                ,   facetFilters        =   bidx.utils.getValue( criteria, 'facetFilters')
+                ,   clickedCategory     =   $this.parent().parent().find( ".facet-title" ).data('name')
+                ,   facetFiltersCat     =   ( !$.isEmptyObject( facetFilters ) && !$.isEmptyObject(facetFilters.clickedCategory))   ? facetFilters.clickedCategory : []
                 ;
 
                 bidx.utils.log('Criteria before click=', criteria);
+                bidx.utils.log('clickedCategory=', $this.parent().parent().find( ".facet-title" ));
+                bidx.utils.log('filterValue=', filterValue);
 
-                $this           = $( this );
-                filterQuery     = $this.data('filter');
-
-                if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterQuery, facetFilters ) !== -1)
+                if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterValue, facetFiltersCat ) !== -1)
                 {
                     bidx.utils.log('criteria removed' , filterQuery, criteria.facetFilters);
                     criteria.facetFilters = _.without(criteria.facetFilters, filterQuery); // removed the match value from criteria, using underscore function make sure its included
 
                 }
-                else if ( $.inArray(filterQuery, facetFilters ) === -1)
+                else if ( $.inArray(filterValue, facetFiltersCat ) === -1 )
+                {
+                    criteria.facetFilters = ( facetFilters) ? facetFilters : [];
+                    filterQuery[clickedCategory] = [];
+
+                    filterQuery[clickedCategory].push( filterValue );
+                    criteria.facetFilters = filterQuery ;
+                }
+
+                /*// For search filtering add the current filter
+                if( filterQuery === 'reset' && !$resetFacet.hasClass('hide'))
                 {
                     criteria.facetFilters = [];
-                    criteria.facetFilters.push( filterQuery );
+                    options.q        = '';
+                    options.sort     = [];
+                    bidx.controller.updateHash( "#search/list" );
+
+                    $resetFacet.addClass( "hide" );
+                }*/
+
+                if ( criteria.facetFilters.length === 0 )
+                {
+                    $resetFacet.addClass( "hide" );
+                }
+
+                //Make offset 0 for filtering so start from begining
+                paging.search.offset = 0;
+
+                //set the max records limit to 10
+                tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+                bidx.utils.log('Filter clicked ', filterQuery);
+                bidx.utils.log('Filter clicked with q=', options.q);
+                bidx.utils.log('Filter sort=', options.sort);
+                bidx.utils.log('Filter criteria=', criteria.facetFilters);
+
+                navigate(
+                {
+                    state   :   'list'
+                ,   params  :   {
+                                    q           :   options.q
+                                ,   sort        :   options.sort
+                                ,   facetFilters:   criteria.facetFilters
+                                // ,   type        :   'facet'
+                                }
+                });
+            });
+        }
+        else
+        {
+
+            $list.append($facetType);
+        }
+    }
+
+    /* Get the search list
+    Sample
+    bidxBusinessGroup - 8747 - Cleancookstoves
+    */
+
+    function _doFacetListing(options)
+    {
+        var snippit         = $("#facet-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   subsnippit      = $("#facetsub-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $facetType      = $("#facet-type").html().replace(/(<!--)*(-->)*/g, "")
+        ,   criteria        = options.criteria
+        ,   response        = options.response
+        ,   $mainFacet      = $element.find(".main-facet")
+        ,   $resetFacet     = $element.find(".facet-reset")
+        ,   $list           = $element.find(".facet-list")
+        ,   $filters        =  $('.topfilters')
+        ,   $advancedSearch =  $('.advancedFilters')
+        ,   emptyVal        = ''
+        ,   $listItem
+        ,   $listFacetsItem
+        ,   $listAnchor
+        ,   $listClose
+        ,   $viewFacetItem
+        ,   $this
+        ,   $currentCategory
+        ,   $bigCategory
+        ,   $categoryList
+        ,   $hiddenItems
+        ,   newname
+        ,   listItem
+        ,   listFacetsItem
+        ,   facetValues
+        ,   facetLabel
+        ,   dataKey
+        ,   itemName
+        ,   facetValName
+        ,   industry
+        ,   anchorFacet
+        ,   isCriteriaSelected
+        ,   facetCriteria = {}
+        ,   filterQuery
+        ;
+
+        $list.empty();
+
+        $filters.empty();
+
+        if ( response && response.facets )
+        {
+            // Add Default image if there is no image attached to the bs
+            bidx.utils.log('facets', response.facets);
+            $.each( response.facets , function ( idx, facetItems)
+            {
+
+                facetValues     = bidx.utils.getValue( facetItems, "facetValues" );
+                facetLabel      = bidx.i18n.i( facetItems.name, appName );
+
+                if ( !$.isEmptyObject(facetValues) )
+                {
+                    listItem    =   snippit
+                                    .replace( /%facets_title%/g, bidx.i18n.i( facetItems.name, appName ) )
+                                     .replace( /%facets_name%/g, facetItems.name  );
+
+                    $listItem  = listItem;
+                    $list.append($listItem );
+                    $currentCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name, appName ) );
+
+                    $.each( facetValues , function ( idx, item )
+                    {
+
+                        switch (facetItems.name)
+                        {
+                            case 'entityType':
+                            case 'role':
+
+                            bidx.utils.log('1',facetItems.name, item.name);
+                            facetValName    = bidx.i18n.i( item.name );
+
+                            break;
+                            /*case 'country':
+                            facetValName    = bidx.data.i( item.name, facetItems.name );
+                            break;
+
+                            case 'industry':
+
+                            bidx.utils.log('3',facetItems.name, item.name.toUpperCase());
+                            facetValName    = bidx.data.i( item.name, facetItems.name );
+                            item.name = 0;
+                            break;*/
+                            default:
+                            bidx.utils.log('2',facetItems.name, item.name);
+                            facetValName    = bidx.data.i( item.name, facetItems.name );
+
+                        }
+
+                        if ( item.name )
+                        {
+                            bidx.utils.log('facetValName', facetValName);
+                            newname = facetValName.replace(/ /g, '');
+
+                            listFacetsItem = subsnippit
+                                .replace( /%facets_title%/g,        item.name           ? newname      :    emptyVal )
+                                .replace( /%facetValues_count%/g,   item.count          ? item.count        :    emptyVal )
+                                .replace( /%facetValues_name%/g,    item.name           ? item.name         :    emptyVal )
+                                .replace( /%filterQuery%/g,         item.filterQuery    ? item.filterQuery  :    emptyVal )
+                                ;
+
+                            // execute cb function
+                            //
+                            $listFacetsItem = $( listFacetsItem );
+
+
+                            // Display Close button for criteria
+                            //
+                            if ( $.inArray( item.filterQuery, criteria.facetFilters ) !== -1 )
+                            {
+                                $viewFacetItem = $listFacetsItem.find('.view');
+                                _showElement('close', $viewFacetItem);
+                                $resetFacet.removeClass( "hide" );
+
+                                if ( $listFacetsItem.find( ".viewClose:visible" ) )
+                                {
+                                    $listFacetsItem.addClass( "list-group-item-success" );
+                                }
+                            }
+
+                            $currentCategory.find( ".list-group" ).append($listFacetsItem);
+                        }
+                    });
+
+                    $advancedSearch.css('display','block');
+                }
+
+                // Show the first VISIBLE_FILTER_ITEMS filter items if more than (VISIBLE_FILTER_ITEMS + 3)
+                //
+                if ( facetItems.valueCount > CONSTANTS.VISIBLE_FILTER_ITEMS + 3 )
+                {
+                    $bigCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name, appName ) );
+                    $categoryList = $bigCategory.find( ".list-group" );
+
+                    $categoryList.find( "a.filter:gt("+CONSTANTS.VISIBLE_FILTER_ITEMS+")" ).addClass( "hide toggling" );
+                    $categoryList.append( $( "<a />", { html: bidx.i18n.i( "showMore" ), "class": "list-group-item list-group-item-warning text-center more-less" }) );
+
+                    $categoryList.find( ".more-less" ).on('click', function( e )
+                    {
+                        e.preventDefault();
+                        bidx.common.showMoreLess( $(this).parent().find( ".toggling" ) );
+                    });
+                }
+            });
+
+
+            // Facet Label Click
+            //
+            $listAnchor = $mainFacet.find('.filter');
+
+            $listAnchor.on('click', function( e )
+            {
+                e.preventDefault();
+
+                $this           = $( this );
+                filterQuery     = {};
+                filterValue     = $this.data('value');
+
+                var filterValue
+                ,   facetFilters        =   bidx.utils.getValue( criteria, 'facetFilters')
+                ,   clickedCategory     =   $this.parent().parent().find( ".facet-title" ).data('name')
+                ,   facetFiltersCat     =   ( !$.isEmptyObject( facetFilters ) && !$.isEmptyObject(facetFilters.clickedCategory))   ? facetFilters.clickedCategory : []
+                ;
+
+                bidx.utils.log('Criteria before click=', criteria);
+                bidx.utils.log('clickedCategory=', $this.parent().parent().find( ".facet-title" ));
+                bidx.utils.log('filterValue=', filterValue);
+
+                if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterValue, facetFiltersCat ) !== -1)
+                {
+                    bidx.utils.log('criteria removed' , filterQuery, criteria.facetFilters);
+                    criteria.facetFilters = _.without(criteria.facetFilters, filterQuery); // removed the match value from criteria, using underscore function make sure its included
+
+                }
+                else if ( $.inArray(filterValue, facetFiltersCat ) === -1 )
+                {
+                    criteria.facetFilters = ( facetFilters) ? facetFilters : [];
+                    filterQuery[clickedCategory] = [];
+
+                    filterQuery[clickedCategory].push( filterValue );
+                    criteria.facetFilters = filterQuery ;
                 }
 
                 /*// For search filtering add the current filter
@@ -972,7 +1246,7 @@
             $body.find(".form-q").val(q);
         }
 
-        criteriaQ = (q) ? q + '*' : '*';
+        criteriaQ = (q) ? q  : '*';
 
         // 2. Sort criteria
         // ex sort:["field":"entity", "order": asc ]
@@ -997,15 +1271,7 @@
                                     });
         }
 
-        // 3. Filter
-        // ex facetFilters:["0": "facet_language:fi" ]
-        //
 
-        facetFilters = bidx.utils.getValue(params, 'facetFilters' );
-        if(  facetFilters )
-        {
-            criteriaFilters = facetFilters;
-        }
 
        // filters.push('-facet_entityType:bidxEntrepreneurProfile');
 
@@ -1014,7 +1280,7 @@
                     ,   sort        :   sort
                     ,   facetFilters:   facetFilters
                     ,   criteria    :   {
-                                            "searchTerm"    :   "basic: " + criteriaQ
+                                            "searchTerm"    :   "basic:" + criteriaQ
                                        // ,   "facetFilters"  :   criteriaFilters
                                         ,   "sort"          :   criteriaSort
                                         ,   "maxResult"     :   tempLimit
@@ -1027,11 +1293,23 @@
                                         }
                     };
 
+        // 3. Filter
+        // ex facetFilters:["0": "facet_language:fi" ]
+        //
 
+        facetFilters = bidx.utils.getValue(params, 'facetFilters' );
+
+        if(  facetFilters )
+        {
+            criteriaFilters = facetFilters;
+            search.criteria.facetFilters    =   criteriaFilters;
+        }
 
         return search;
 
     }
+
+
     function _getSearchList( options )
     {
         var search
@@ -1066,6 +1344,10 @@
                     ,   criteria    :   search.criteria
                     } );
 
+                    /*_doRangeFilterListing(
+                    {
+
+                    } );*/
 
                     _doSorting(
                     {
@@ -1214,102 +1496,103 @@
 
             // create member listitems
             //
-            $.each( data.found, function( idx, response )
+            if( tempLimit )
             {
-                initialLoad = ( data.offset ) ? false: true;
-
-
-
-                switch( response.entityType )
+                $.each( data.found, function( idx, response )
                 {
-                    case 'bdxMember':
+                    initialLoad = ( data.offset ) ? false: true;
 
-                        showMemberProfile(
+                    switch( response.entityType )
+                    {
+                        case 'bdxMember':
+
+                            showMemberProfile(
+                                {
+                                    response : response
+                               // ,   criteria : data.criteria
+                                ,   cb       : options.cb
+                                } );
+
+                        break;
+
+                        case 'bdxPlan':
+
+                            showEntity(
                             {
                                 response : response
                            // ,   criteria : data.criteria
                             ,   cb       : options.cb
+
                             } );
 
-                    break;
+                        break;
 
-                    case 'bdxPlan':
+                        /* Initial load exclude investor,entrprneur and mentor profile so profile display is not duplicated , ex Altaf is member , entrprenneur and mentor too so dont need to display mentor/entrepreneur profile
+                           Or first time only it returned one result of entrprneeur, Ex search on summary thats written in entrpreneur profile so it returns entpreneur profile and it should be displyaed*/
+                        case 'bidxInvestorProfile':
+                            //response.entityType = 'bidxMemberProfile';
+                            if ( options.criteria.facetFilters.length !== 0 || data.total === 1 )
+                            {
+                                showMemberProfile(
+                                {
+                                    response : response
+                                //,   criteria : data.criteria
+                                ,   cb       : options.cb
+                                } );
+                            }
+                            else
+                            {
+                                initialLoad = true;
+                            }
 
-                        showEntity(
-                        {
-                            response : response
-                       // ,   criteria : data.criteria
-                        ,   cb       : options.cb
+                        break;
 
-                        } );
 
-                    break;
 
-                    /* Initial load exclude investor,entrprneur and mentor profile so profile display is not duplicated , ex Altaf is member , entrprenneur and mentor too so dont need to display mentor/entrepreneur profile
-                       Or first time only it returned one result of entrprneeur, Ex search on summary thats written in entrpreneur profile so it returns entpreneur profile and it should be displyaed*/
-                    case 'bidxInvestorProfile':
-                        //response.entityType = 'bidxMemberProfile';
-                        if ( options.criteria.facetFilters.length !== 0 || data.total === 1 )
-                        {
-                            showMemberProfile(
+
+                        case 'bidxCompany':
+
+                           showEntity(
                             {
                                 response : response
                             //,   criteria : data.criteria
                             ,   cb       : options.cb
+
                             } );
-                        }
-                        else
-                        {
-                            initialLoad = true;
-                        }
 
-                    break;
+                        break;
 
+                        case 'bidxBusinessGroup':
 
+                           showEntity(
+                            {
+                                response : response
+                           // ,   criteria : data.criteria
+                            ,   cb       : options.cb
 
+                            } );
 
-                    case 'bidxCompany':
+                        break;
 
-                       showEntity(
-                        {
-                            response : response
-                        //,   criteria : data.criteria
-                        ,   cb       : options.cb
+                        default:
 
-                        } );
-
-                    break;
-
-                    case 'bidxBusinessGroup':
-
-                       showEntity(
-                        {
-                            response : response
-                       // ,   criteria : data.criteria
-                        ,   cb       : options.cb
-
-                        } );
-
-                    break;
-
-                    default:
-
-                    break;
-                }
-
-                /*if ( initialLoad )
-                {
-                    CONSTANTS.LOAD_COUNTER ++;
-
-                    if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
-                    {
-                        if( $.isFunction( options.cb ) )
-                        {
-                            options.cb();
-                        }
+                        break;
                     }
-                }*/
-            });
+
+                    /*if ( initialLoad )
+                    {
+                        CONSTANTS.LOAD_COUNTER ++;
+
+                        if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
+                        {
+                            if( $.isFunction( options.cb ) )
+                            {
+                                options.cb();
+                            }
+                        }
+                    }*/
+                });
+            }
         }
         else
         {
@@ -1403,7 +1686,7 @@
                     .replace( /%title%/g,               i18nItem.title   ? i18nItem.title : emptyVal )
                     .replace( /%name%/g,                i18nItem.owner.name )
                     .replace( /%slogan%/g,              i18nItem.slogan   ? i18nItem.slogan : emptyVal )
-                    .replace( /%modified%/g,            response.modified  ? bidx.utils.parseISODateTime(response.modified, "date") : emptyVal )
+                    .replace( /%modified%/g,            i18nItem.modified  ? bidx.utils.parseTimestampToDateTime(i18nItem.modified, "date") : emptyVal )
                     .replace( /%country%/g,             country )
                     .replace( /%industry%/g,            industry )
                     .replace( /%reasonForSubmission%/g, reason )
@@ -1578,7 +1861,7 @@
                 listItem = snippit
                     .replace( /%userId%/g,              i18nItem.userId )
                     .replace( /%name%/g,                i18nItem.name )
-                    .replace( /%modified%/g,            response.modified  ? bidx.utils.parseISODateTime(response.modified, "date") : emptyVal )
+                    .replace( /%modified%/g,            i18nItem.modified  ? bidx.utils.parseTimestampToDateTime(i18nItem.modified, "date") : emptyVal )
                     .replace( /%professionalTitle%/g,   i18nItem.title   ? i18nItem.title     : emptyVal )
                     .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
                     .replace( /%role_investor%/g,       ( isInvestor && displayInvestorProfile )      ? bidx.i18n.i( 'investor' )   : '' )
@@ -2160,91 +2443,7 @@
         return replacedList;
     }
 
-    function showEntity_Old( options )
-    {
-        var $listItem
-        ,   listItem
-        ,   replacedList
-        ,   bidxMeta
-        ,   response = options.response
-        ,   conditionalElementArr
-        ;
 
-        bidx.api.call(
-            "entity.fetch"
-        ,   {
-                entityId:          response.entityId
-            ,   groupDomain: bidx.common.groupDomain
-            ,   success:        function( item )
-                {
-                    // now format it into array of objects with value and label
-
-                    if ( !$.isEmptyObject(item) )
-                    {
-
-                        bidxMeta       = bidx.utils.getValue( item, "bidxMeta" );
-
-                        if( bidxMeta && bidxMeta.bidxEntityType === response.entityType )
-                        {
-                            //Increase the constant loadcounter to disable login at the end
-                            CONSTANTS.LOAD_COUNTER ++;
-
-                            //search for placeholders in snippit
-                            replacedList  = replaceStringsCallback( response, item );
-
-                            /*Get the replaced snippit */
-                            $listItem      = replacedList.listItem;
-
-                           /*Get the conditional elemenets to show*/
-                            conditionalElementArr = replacedList.conditionalElementArr;
-
-                            showElements(
-                            {
-                                elementArr: conditionalElementArr
-                            ,   item:       item
-                            ,   listItem:   $listItem
-                            ,   callback:   function( listItem )
-                                {
-                                    $searchList.append( listItem );
-
-                                    if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
-                                    {
-
-                                        if( $.isFunction( options.cb ) )
-                                        {
-                                            options.cb();
-                                        }
-                                    }
-
-                                }
-                            });
-                        }
-                    }
-
-
-                }
-
-            ,   error: function(jqXhr, textStatus)
-                {
-                    var errorSnippit    = $errorListItem.html().replace(/(<!--)*(-->)*/g, "")
-                    ,   status          = bidx.utils.getValue(jqXhr, "status") || textStatus
-                    ;
-
-                    $searchList.append( errorSnippit );
-
-                    CONSTANTS.LOAD_COUNTER ++;
-
-                    if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
-                    {
-                        if( $.isFunction( options.cb ) )
-                        {
-                            options.cb();
-                        }
-                    }
-                }
-            }
-        );
-    }
 
     function showEntity( options )
     {
@@ -2337,98 +2536,6 @@
         }
     }
 
-    function showMemberProfileOld( options )
-    {
-        var $listItem
-        ,   listItem
-        ,   replacedList
-        ,   bidxMeta
-        ,   response = options.response
-        ,   conditionalElementArr
-        ,   personalDetails
-        ;
-
-        bidx.api.call(
-            "member.fetch"
-        ,   {
-                id:          response.ownerId
-            ,   requesteeId: response.ownerId
-            ,   groupDomain: bidx.common.groupDomain
-            ,   success:        function( item )
-                {
-                    // now format it into array of objects with value and label
-
-                    if ( !$.isEmptyObject(item.bidxMemberProfile) )
-                    {
-                        //if( item.bidxEntityType == 'bidxBusinessSummary') {
-                        bidxMeta       = bidx.utils.getValue( item, "bidxMemberProfile.bidxMeta" );
-
-                        if( bidxMeta  )
-                        {
-                            CONSTANTS.LOAD_COUNTER ++;
-
-                            personalDetails = item.bidxMemberProfile.personalDetails;
-
-                            //search for placeholders in snippit
-                            replacedList  = replaceStringsCallback( response, item );
-
-                            /*Get the replaced snippit */
-                            $listItem      = replacedList.listItem;
-
-                           /*Get the conditional elemenets to show*/
-                            conditionalElementArr = replacedList.conditionalElementArr;
-
-                            showElements(
-                            {
-                                elementArr:         conditionalElementArr
-                            ,   item:               personalDetails
-                            ,   listItem:           $listItem
-                            ,   callback:           function( listItem )
-                                                    {
-                                                        $searchList.append( listItem );
-
-                                                        if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
-                                                        {
-                                                            if( $.isFunction( options.cb ) )
-                                                            {
-                                                                options.cb();
-                                                            }
-                                                        }
-
-                                                    }
-                            });
-
-                        }
-
-                    }
-
-                }
-
-            ,   error: function(jqXhr, textStatus)
-                {
-                    var errorSnippit    = $errorListItem.html().replace(/(<!--)*(-->)*/g, "")
-                    ,   status          = bidx.utils.getValue(jqXhr, "status") || textStatus
-                    ;
-
-                    $searchList.append( errorSnippit );
-
-                    CONSTANTS.LOAD_COUNTER ++;
-
-                    if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
-                    {
-                        if( $.isFunction( options.cb ) )
-                        {
-                            options.cb();
-                        }
-                    }
-                }
-            }
-        );
-
-
-    }
-
-
     // ROUTER
     function navigate( options )
     {
@@ -2458,14 +2565,14 @@
                 {
                     params      :   params
                 ,   cb          :   function()
-                                    {
-                                       _hideView( "load" );
-                                       _toggleListLoading( $element );
-                                       tempLimit = CONSTANTS.SEARCH_LIMIT;
-                                       //_showAllView( "pager" );
-                                       _actionBulkActions();
+                    {
+                       _hideView( "load" );
+                       _toggleListLoading( $element );
+                       tempLimit = CONSTANTS.SEARCH_LIMIT;
+                       //_showAllView( "pager" );
+                       _actionBulkActions();
 
-                                    }
+                    }
                 });
 
             break;

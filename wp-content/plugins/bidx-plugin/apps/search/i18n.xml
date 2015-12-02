@@ -16,8 +16,8 @@
     <Item value="country">Country</Item>
     <Item value="language">Language</Item>
     <Item value="entityType">Type</Item>
-    <Item value="memberRoles">Roles</Item>
-    <Item value="memberGender">Gender</Item>
+    <Item value="role">Role</Item>
+    <Item value="gender">Gender</Item>
 
     <Item value="paginationTotal">%num% results</Item>
 

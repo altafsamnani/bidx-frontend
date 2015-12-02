@@ -194,6 +194,7 @@
     <Item value="investor">Investor</Item>
     <Item value="entrepreneur">Entrepreneur</Item>
     <Item value="mentor">Mentor</Item>
+    <Item value="member">Member</Item>
 
     <Item value="facet_industry">Industry</Item>
     <Item value="facet_country">Country</Item>
