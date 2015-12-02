@@ -1290,9 +1290,7 @@
                             }
                         }
 
-                        bidx.utils.log( 'recipients', recipients);
-
-                        //BIDX-3836 $contactsDropdown.append( recipients );
+                        $contactsDropdown.append( recipients );
                         $contactsDropdown.val( isSenderId );
                         $contactsDropdown.bidx_chosen();
 
