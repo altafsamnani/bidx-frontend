@@ -1290,7 +1290,12 @@
                             }
                         }
 
-                        $contactsDropdown.append( recipients );
+                        //BIDX-3836
+                        if (!_isRecipientAdded(isSenderId))
+                        {
+                            $contactsDropdown.append( recipients );
+                        }
+
                         $contactsDropdown.val( isSenderId );
                         $contactsDropdown.bidx_chosen();
 
@@ -1335,6 +1340,20 @@
                 window.bidx.controller.updateHash( "#mail/" + state + "/id=" + id + "&action=" + action, true, false );
             }
 
+        }
+
+        function _isRecipientAdded( val )
+        {
+            var added = false;
+
+            $contactsDropdown.find("option").each(function(){
+                if ( $(this).val() === val.toString() )
+                {
+                    added = true;
+                }
+            });
+
+            return added;
         }
 
         function _removeMailRecipient( val )
