@@ -695,10 +695,11 @@
     function _doRangeFilterListing( options )
     {
         var snippit         = $("#facet-listitem").html().replace(/(<!--)*(-->)*/g, "")
-        ,   subsnippit      = $("#facetsub-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   subsnippit      = $("#facetrange-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $facetType      = $("#facet-type").html().replace(/(<!--)*(-->)*/g, "")
         ,   criteria        = options.criteria
         ,   response        = options.response
+        ,   rangeFilters    = bidx.utils.getValue(response.criteria, 'rangeFilters')
         ,   $mainFacet      = $element.find(".main-facet")
         ,   $resetFacet     = $element.find(".facet-reset")
         ,   $list           = $element.find(".facet-list")
@@ -726,122 +727,82 @@
         ,   industry
         ,   anchorFacet
         ,   isCriteriaSelected
-        ,   facetCriteria = {}
+        ,   facetCriteria   =   {}
+        ,   sliderOptions   =   {}
         ,   filterQuery
+        ,   foundMin
+        ,   foundMax
         ;
 
-        $list.empty();
+        /*$list.empty();
 
-        $filters.empty();
+        $filters.empty();*/
 
-        if ( response && response.facets )
+        if ( response && rangeFilters )
         {
             // Add Default image if there is no image attached to the bs
-            bidx.utils.log('facets', response.facets);
-            $.each( response.facets , function ( idx, facetItems)
+            bidx.utils.log('rangeFilters', rangeFilters);
+            $.each( rangeFilters , function ( facetItem, facetMinMax )
             {
-
-                facetValues     = bidx.utils.getValue( facetItems, "facetValues" );
-                facetLabel      = bidx.i18n.i( facetItems.name, appName );
-
-                if ( !$.isEmptyObject(facetValues) )
+                if ( !$.isEmptyObject(facetItem) )
                 {
+                    foundMin    =   facetMinMax.foundMin;
+                    foundMax    =   facetMinMax.foundMax;
                     listItem    =   snippit
-                                    .replace( /%facets_title%/g, bidx.i18n.i( facetItems.name, appName ) )
-                                     .replace( /%facets_name%/g, facetItems.name  );
+                                    .replace( /%facets_title%/g, bidx.i18n.i( facetItem, appName ) )
+                                    .replace( /%facets_name%/g, facetItem  )
+                                    ;
 
                     $listItem  = listItem;
                     $list.append($listItem );
-                    $currentCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name, appName ) );
+                    $currentCategory = $list.find( ".facet-category-" + facetItem );
 
-                    $.each( facetValues , function ( idx, item )
+                    switch (facetItem)
                     {
+                        /* Slider */
+                        //case 'created':
+                        //case 'modified':
+                        case 'completion':
+                        case 'rating':
 
-                        switch (facetItems.name)
+                        listFacetsItem = subsnippit
+                            .replace( /%facetrange%/g,  facetItem )
+                            .replace( /%facets_min%/g, facetMinMax.foundMin)
+                            .replace( /%facets_max%/g, facetMinMax.foundMax)
+                            ;
+
+                        $listFacetsItem = $( listFacetsItem );
+
+                        $currentCategory.find( ".list-group" ).append($listFacetsItem);
+
+                        bidx.utils.log( 'facetMinMax', facetMinMax);
+                        bidx.utils.log( 'foundMin', facetMinMax.foundMin);
+                        bidx.utils.log( 'foundMax', facetMinMax.foundMax);
+
+                        sliderOptions   =
                         {
-                            case 'entityType':
-                            case 'roles':
+                            step:       1,
+                            min:        foundMin,
+                            max:        foundMax,
+                            value:      [ (25*foundMax)/100, (75*foundMax/100) ],
+                            tooltip:    'show'
+                        };
 
-                            bidx.utils.log('1',facetItems.name, item.name);
-                            facetValName    = bidx.i18n.i( item.name );
+                        $currentCategory.find('.slider-range' ).slider( sliderOptions );
 
-                            break;
-                            case 'country':
-                            facetValName    = bidx.data.i( item.name.toUpperCase(), facetItems.name );
-                            break;
+                        break;
 
-                            case 'industry':
-
-                            bidx.utils.log('3',facetItems.name, item.name.toUpperCase());
-                            facetValName    = bidx.data.i( item.name.toUpperCase(), facetItems.name );
-                            item.name = 0;
-                            break;
-                            default:
-                            bidx.utils.log('2',facetItems.name, item.name);
-                            facetValName    = bidx.data.i( item.name, facetItems.name );
-
-                        }
-
-                        if ( item.name )
-                        {
-                            bidx.utils.log('facetValName', facetValName);
-                            newname = facetValName.replace(/ /g, '');
-
-                            listFacetsItem = subsnippit
-                                .replace( /%facets_title%/g,        item.name           ? newname      :    emptyVal )
-                                .replace( /%facetValues_count%/g,   item.count          ? item.count        :    emptyVal )
-                                .replace( /%facetValues_name%/g,    item.name           ? item.name         :    emptyVal )
-                                .replace( /%filterQuery%/g,         item.filterQuery    ? item.filterQuery  :    emptyVal )
-                                ;
-
-                            // execute cb function
-                            //
-                            $listFacetsItem = $( listFacetsItem );
+                        default:
 
 
-                            // Display Close button for criteria
-                            //
-                            if ( $.inArray( item.filterQuery, criteria.facetFilters ) !== -1 )
-                            {
-                                $viewFacetItem = $listFacetsItem.find('.view');
-                                _showElement('close', $viewFacetItem);
-                                $resetFacet.removeClass( "hide" );
-
-                                if ( $listFacetsItem.find( ".viewClose:visible" ) )
-                                {
-                                    $listFacetsItem.addClass( "list-group-item-success" );
-                                }
-                            }
-
-                            $currentCategory.find( ".list-group" ).append($listFacetsItem);
-                        }
-                    });
-
-                    $advancedSearch.css('display','block');
+                    }
                 }
-
-                // Show the first VISIBLE_FILTER_ITEMS filter items if more than (VISIBLE_FILTER_ITEMS + 3)
-                //
-                if ( facetItems.valueCount > CONSTANTS.VISIBLE_FILTER_ITEMS + 3 )
-                {
-                    $bigCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name, appName ) );
-                    $categoryList = $bigCategory.find( ".list-group" );
-
-                    $categoryList.find( "a.filter:gt("+CONSTANTS.VISIBLE_FILTER_ITEMS+")" ).addClass( "hide toggling" );
-                    $categoryList.append( $( "<a />", { html: bidx.i18n.i( "showMore" ), "class": "list-group-item list-group-item-warning text-center more-less" }) );
-
-                    $categoryList.find( ".more-less" ).on('click', function( e )
-                    {
-                        e.preventDefault();
-                        bidx.common.showMoreLess( $(this).parent().find( ".toggling" ) );
-                    });
-                }
-            });
+            } );
 
 
             // Facet Label Click
             //
-            $listAnchor = $mainFacet.find('.filter');
+            $listAnchor = $mainFacet.find('.filtertest');
 
             $listAnchor.on('click', function( e )
             {
@@ -955,6 +916,7 @@
         ,   listFacetsItem
         ,   facetValues
         ,   facetLabel
+        ,   facetLength
         ,   dataKey
         ,   itemName
         ,   facetValName
@@ -963,6 +925,7 @@
         ,   isCriteriaSelected
         ,   facetCriteria = {}
         ,   filterQuery
+        ,   facetCounter    =   1
         ;
 
         $list.empty();
@@ -973,11 +936,13 @@
         {
             // Add Default image if there is no image attached to the bs
             bidx.utils.log('facets', response.facets);
+            facetLength     =   response.facets.length;
+
             $.each( response.facets , function ( idx, facetItems)
             {
 
-                facetValues     = bidx.utils.getValue( facetItems, "facetValues" );
-                facetLabel      = bidx.i18n.i( facetItems.name, appName );
+                facetValues     =   bidx.utils.getValue( facetItems, "facetValues" );
+                facetLabel      =   bidx.i18n.i( facetItems.name, appName );
 
                 if ( !$.isEmptyObject(facetValues) )
                 {
@@ -987,7 +952,7 @@
 
                     $listItem  = listItem;
                     $list.append($listItem );
-                    $currentCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name, appName ) );
+                    $currentCategory = $list.find( ".facet-category-" + facetItems.name );
 
                     $.each( facetValues , function ( idx, item )
                     {
@@ -996,32 +961,23 @@
                         {
                             case 'entityType':
                             case 'role':
-
                             bidx.utils.log('1',facetItems.name, item.name);
                             facetValName    = bidx.i18n.i( item.name );
-
-                            break;
-                            /*case 'country':
-                            facetValName    = bidx.data.i( item.name, facetItems.name );
                             break;
 
-                            case 'industry':
+                            case 'expertise':
+                            facetValName    = bidx.data.i( item.name, 'mentorExpertise' );
+                            break;
 
-                            bidx.utils.log('3',facetItems.name, item.name.toUpperCase());
-                            facetValName    = bidx.data.i( item.name, facetItems.name );
-                            item.name = 0;
-                            break;*/
                             default:
-                            bidx.utils.log('2',facetItems.name, item.name);
                             facetValName    = bidx.data.i( item.name, facetItems.name );
 
                         }
 
                         if ( item.name )
                         {
-                            bidx.utils.log('facetValName', facetValName);
-                            newname = facetValName.replace(/ /g, '');
-
+                            //newname = facetValName.replace(/ /g, '');
+                            newname = facetValName;
                             listFacetsItem = subsnippit
                                 .replace( /%facets_title%/g,        item.name           ? newname      :    emptyVal )
                                 .replace( /%facetValues_count%/g,   item.count          ? item.count        :    emptyVal )
@@ -1059,7 +1015,7 @@
                 //
                 if ( facetItems.valueCount > CONSTANTS.VISIBLE_FILTER_ITEMS + 3 )
                 {
-                    $bigCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name, appName ) );
+                    $bigCategory = $list.find( ".facet-category-" + facetItems.name );
                     $categoryList = $bigCategory.find( ".list-group" );
 
                     $categoryList.find( "a.filter:gt("+CONSTANTS.VISIBLE_FILTER_ITEMS+")" ).addClass( "hide toggling" );
@@ -1071,6 +1027,17 @@
                         bidx.common.showMoreLess( $(this).parent().find( ".toggling" ) );
                     });
                 }
+
+                bidx.utils.log('facetLength', facetLength);
+                bidx.utils.log('facetCounter', facetCounter);
+                if( ( facetLength === facetCounter ) &&
+                      $.isFunction( options.cb )
+                    )
+                {
+                    options.cb( );
+                }
+
+                facetCounter++;
             });
 
 
@@ -1149,6 +1116,8 @@
                                 }
                 });
             });
+
+
         }
         else
         {
@@ -1342,12 +1311,19 @@
                     ,   q           :   search.q
                     ,   sort        :   search.sort
                     ,   criteria    :   search.criteria
+                    ,   cb          :   function ( )
+                                        {
+                                            _doRangeFilterListing(
+                                            {
+                                                response    :   response
+                                            ,   q           :   search.q
+                                            ,   sort        :   search.sort
+                                            ,   criteria    :   search.criteria
+                                            } );
+                                        }
                     } );
 
-                    /*_doRangeFilterListing(
-                    {
 
-                    } );*/
 
                     _doSorting(
                     {

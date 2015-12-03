@@ -18,6 +18,13 @@
     <Item value="entityType">Type</Item>
     <Item value="role">Role</Item>
     <Item value="gender">Gender</Item>
+    <Item value="expertise">Expertise</Item>
+
+    <!-- Range Filters -->
+    <Item value="created">Created</Item>
+    <Item value="modified">Modified</Item>
+    <Item value="completion">Completion</Item>
+    <Item value="rating">Rating</Item>
 
     <Item value="paginationTotal">%num% results</Item>
 

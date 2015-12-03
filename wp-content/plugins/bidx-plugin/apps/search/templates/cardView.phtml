@@ -132,7 +132,7 @@
 
         <!-- Html Templates for Facet Category -->
         <script type="text/html" id="facet-listitem">
-            <div class="facet-category-%facets_title%">
+            <div class="facet-category-%facets_name%">
                 <h5 data-name="%facets_name%" class="facet-title">%facets_title%</h5>
                 <div class="list-group"></div>
             </div>
@@ -144,6 +144,13 @@
                 <span class="badge">%facetValues_count%</span>
                 %facets_title%
             </a>
+        </script>
+        <!-- Html Templates for Range results -->
+        <script type="text/html" id="facetrange-listitem"> <!--
+            <b>%facets_min%</b>&nbsp;&nbsp;
+                <input type="text" id="slider-range-%facetrange%" class="slider-range"></div>&nbsp;&nbsp;
+            <b>%facets_max%</b>
+        -->
         </script>
 
         <!-- Html Templates for Category results -->

@@ -101,7 +101,7 @@ class BidxShortcode
             if (empty (self::$transalationVars))
             { // First Shortcode
                 self::$transalationVars = $bidxCommonObj->getLocaleTransient (array ($appname), $static = true, $i18nGlobal = true);
-            } 
+            }
             else
             {   // More than 1 shortcode
                 $appTranslationsArr = $bidxCommonObj->getLocaleTransient (array ($appname), $static = false, $i18nGlobal = false);
@@ -111,7 +111,7 @@ class BidxShortcode
                 }
             }
 
-            if ( isset ($atts["hash"] ) ) 
+            if ( isset ($atts["hash"] ) )
             {
                 self::$hash = $atts["hash"];
             }
@@ -223,6 +223,7 @@ class BidxShortcode
             }
 
             wp_register_script ('bootstrap-switch', $vendorDir . "/bootstrap-switch-master/dist/js/bootstrap-switch.min.js", array ('bootstrap', 'jquery'), '3.3.2', TRUE);
+            wp_register_script ('bootstrap-slider', $vendorDir . "/bootstrap-slider-master/dist/bootstrap-slider.min.js", array ('bootstrap', 'jquery'), '3.3.2', TRUE);
 
             wp_register_script ('jquery-fitvids', $bidxJsDir . '/vendor/jquery.fitvids.js', array ('jquery'), '20140321', TRUE);
             wp_register_script ('jquery-event-ue', $bidxJsDir . '/vendor/jquery.event.ue.js', array ('jquery'), '20140325', TRUE);

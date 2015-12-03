@@ -19,8 +19,20 @@ class search {
 	/*static $deps = array('jquery', 'bootstrap', 'bidx-data','bidx-i18n', 'jquery-validation',
             'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'underscore', 'backbone', 'json2', 'bidx-utils', 'bidx-api-core','jquery-fakecrop','bootstrap-paginator');
 */
-	static $deps = array ('underscore','bidx-tagsinput', 'bidx-checkbox', 'bidx-common','bidx-data', 'bidx-i18n', 'bidx-industries', 'jquery-validation',
-      'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods','bidx-chosen', 'jquery-raty' );
+	static $deps = array(	'bootstrap-slider'
+						,   'underscore'
+						,	'bidx-tagsinput'
+						, 	'bidx-checkbox'
+						, 	'bidx-common'
+						,	'bidx-data'
+						, 	'bidx-i18n'
+						, 	'bidx-industries'
+						, 	'jquery-validation'
+						,   'jquery-validation-additional-methods'
+						, 	'jquery-validation-bidx-additional-methods'
+						,	'bidx-chosen'
+						, 	'jquery-raty'
+						);
 	/**
 	 * Constructor
 	 */
@@ -31,7 +43,11 @@ class search {
 	/**
 	 * Registers the search specific javascript and css files
 	 */
-	public function register_search_bidx_ui_libs() {
+	public function register_search_bidx_ui_libs()
+	{
+		wp_enqueue_style('jquery-ui', get_template_directory_uri().'/assets/css/jquery-ui.css');
+		//wp_enqueue_style('jquery-ui',  get_template_directory_uri() . '/../../plugins/bidx-plugin/static/vendor/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css', false, null);
+
 		wp_register_script( 'search', plugins_url( 'static/js/search.js', __FILE__ ),  self :: $deps, '20130501', TRUE );
 	}
 
