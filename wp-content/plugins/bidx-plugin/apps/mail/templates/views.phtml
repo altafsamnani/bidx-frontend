@@ -109,7 +109,11 @@
                 <!-- read view -->
                 <article class="view viewRead">
                     <div class="panel panel-default">
-                        <div class="panel-heading mail-subject">
+                        <div class="panel-heading">
+                            <div><?php _e('Sender: ','bidxplugin')?><strong class="mail-sender"></strong></div>
+                        </div>
+                        <div class="panel-heading">
+                            <?php _e('Subject: ','bidxplugin')?><span class="mail-subject"></span>
                         </div>
                         <div class="panel-body">
                             <!-- TOOLBAR -->

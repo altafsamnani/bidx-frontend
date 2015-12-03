@@ -1995,6 +1995,8 @@
             // insert mail body in to placeholder of the view
             //
             subject = ( message.type === "MAIL_CONTACT_REQUEST" )  ?  bidx.i18n.i( "contactRequest", appName )  : message.subject;
+            
+            $currentView.find( ".mail-sender").html( message.sender.name );
             $currentView.find( ".mail-subject").html( subject );
 
             // insert mail body in to placeholder of the view
