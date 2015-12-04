@@ -11,6 +11,20 @@
     ,   currentLanguage         = ( iclVars.current_language ) ? '/' + iclVars.current_language : '';
     ;
 
+    $tabs.click( function( e )
+    {
+        e.preventDefault();
+
+        var href = $( this ).find('a').attr( "href" );
+
+        if ( href === "#tab-member")
+        {
+            $("#createBusiness").removeClass("hide");
+            $("#createCompany").removeClass("hide");
+        }
+
+    });
+
     $quickActionLinks.click ( function( e )
     {
         e.preventDefault();
@@ -29,6 +43,11 @@
                     .find( "a[href='"+ href +"']" )
                     .parent().addClass( "active" )
                 ;
+
+                $("#createBusiness").addClass("hide");
+                $("#createCompany").addClass("hide");
+
+                window.location = currentLanguage + "/member/#tab-entrepreneur";
             }
             else
             {
@@ -48,6 +67,11 @@
                     .find( "a[href='"+ href +"']" )
                     .parent().addClass( "active" )
                 ;
+
+                $("#createBusiness").addClass("hide");
+                $("#createCompany").addClass("hide");
+
+                window.location = currentLanguage + "/member/#existingCompanies";
             }
             else
             {
@@ -55,10 +79,6 @@
                 window.location = currentLanguage + "/company/#createCompany";
             }
         }
-
-
-
-
 
     } );
 
