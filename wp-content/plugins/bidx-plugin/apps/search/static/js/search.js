@@ -1077,7 +1077,6 @@
         if ( response && response.facets )
         {
             // Add Default image if there is no image attached to the bs
-            bidx.utils.log('facets', response.facets);
             facetLength     =   response.facets.length;
 
             $.each( response.facets , function ( idx, facetItems)
