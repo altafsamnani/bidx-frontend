@@ -1992,6 +1992,11 @@
 
     if ( typeof $.prototype.datepicker === "function" )
     {
+        var isRTL
+        ;
+
+        isRTL   =   ( currentLanguage === 'ar')     ?   true    : false ;
+
         $( "input[data-type=date]" ).datepicker(
         {
             format:                 "d M yyyy"
@@ -2001,6 +2006,8 @@
         ,   todayHighlight:         true
         ,   weekStart:              1
         ,   language:               currentLanguage
+        ,   rtl:                    isRTL
+        ,   autoclose:              true
         } );
     }
 

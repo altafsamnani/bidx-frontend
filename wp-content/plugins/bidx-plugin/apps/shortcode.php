@@ -209,14 +209,14 @@ class BidxShortcode
 
             if( $langLocale )
             {
-                wp_register_script ('bootstrap-datepicker-main', $vendorDir . "/bootstrap-datepicker-1.3.0-rc.2/js/bootstrap-datepicker.js", array ('bootstrap', 'jquery'), '1.3.0-rc.2', TRUE);
-                wp_register_script ('bootstrap-datepicker', $vendorDir . "/bootstrap-datepicker-1.3.0-rc.2/js/locales/bootstrap-datepicker.{$langLocale}.js", array ('bootstrap-datepicker-main'), '1.3.0-rc.2', TRUE);
+                wp_register_script ('bootstrap-datepicker-main', $vendorDir . "/bootstrap-datepicker-1.5.0-dist/js/bootstrap-datepicker.min.js", array ('bootstrap', 'jquery'), '1.5', TRUE);
+                wp_register_script ('bootstrap-datepicker', $vendorDir . "/bootstrap-datepicker-1.5.0-dist/locales/bootstrap-datepicker.{$langLocale}.min.js", array ('bootstrap-datepicker-main'), '1.5', TRUE);
 
                 wp_register_script ('bootstrap-datetimepicker-main', $vendorDir . "/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js", array ('bootstrap', 'jquery'), '1', TRUE);
                 wp_register_script ('bootstrap-datetimepicker', $vendorDir . "/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.{$langLocale}.js", array ('bootstrap-datetimepicker-main'), '1.3.0-rc.2', TRUE);
             } else
             {
-                wp_register_script ('bootstrap-datepicker', $vendorDir . "/bootstrap-datepicker-1.3.0-rc.2/js/bootstrap-datepicker.js", array ('bootstrap', 'jquery'), '1.3.0-rc.2', TRUE);
+                wp_register_script ('bootstrap-datepicker', $vendorDir . "/bootstrap-datepicker-1.5.0-dist/js/bootstrap-datepicker.min.js", array ('bootstrap', 'jquery'), '1.5', TRUE);
 
                 wp_register_script ('bootstrap-datetimepicker', $vendorDir . "/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js", array ('bootstrap', 'jquery'), '1', TRUE);
 

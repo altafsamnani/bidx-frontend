@@ -45,9 +45,6 @@ class search {
 	 */
 	public function register_search_bidx_ui_libs()
 	{
-		wp_enqueue_style('jquery-ui', get_template_directory_uri().'/assets/css/jquery-ui.css');
-		//wp_enqueue_style('jquery-ui',  get_template_directory_uri() . '/../../plugins/bidx-plugin/static/vendor/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css', false, null);
-
 		wp_register_script( 'search', plugins_url( 'static/js/search.js', __FILE__ ),  self :: $deps, '20130501', TRUE );
 	}
 

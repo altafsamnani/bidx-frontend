@@ -12,7 +12,7 @@
  */
 function roots_scripts()
 {
-  wp_enqueue_style('bootstrap-datepicker',        get_template_directory_uri() . '/../../plugins/bidx-plugin/static/vendor/bootstrap-datepicker-1.3.0-rc.2/css/datepicker3.css', false, null);
+  wp_enqueue_style('bootstrap-datepicker',        get_template_directory_uri() . '/../../plugins/bidx-plugin/static/vendor/bootstrap-datepicker-1.5.0-dist/css/bootstrap-datepicker3.min.css', false, null);
   wp_enqueue_style('bootstrap-datetimepicker',    get_template_directory_uri() . '/../../plugins/bidx-plugin/static/vendor/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css', false, null);
 
   wp_register_script( 'bootstrap',                get_template_directory_uri() . '/assets/bootstrap-3.3.2/dist/js/bootstrap.min.js',  array( 'jquery' ),      '3.3.2',            true );

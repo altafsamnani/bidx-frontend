@@ -44,7 +44,12 @@
     ,   $sortView               = $views.find('.viewSort')
     ,   state
     ,   $fakecrop               = $views.find( ".js-fakecrop img" )
+
     ,   languages
+    ,   iclVars                 = window.icl_vars || {}
+    ,   currentLanguageVal      = bidx.utils.getValue( iclVars, "current_language" )
+    ,   currentLanguage         = (currentLanguageVal) ? currentLanguageVal : 'en'
+
     ,   appName                 = "search"
     ,   loggedInMemberId        = bidx.common.getCurrentUserId()
 
@@ -56,6 +61,9 @@
             ,   totalPages:     null
             }
         }
+    ,   date                    =  (new Date)
+    ,   currentYear             =  date.getFullYear()
+    ,   currentDate             =  date.toISOString()
     ;
 
     // Constants
@@ -67,14 +75,21 @@
         ,   LOAD_COUNTER:                       0
         ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
         ,   ENTITY_TYPES:                       [
-                                                    "bdxPlan"
-                                                ,   "bdxMember"
+                                                //    "bdxPlan"
+                                                  "bdxMember"
                                                 ]
         ,   NONTITY_TYPES:                      [
                                                     "bdxPlan"
                                                 ,   "bdxMember"
                                                 ]
         ,   FILTERQUERY:                        []
+        ,   RANGEDEFAULT:                       {
+                                                    rating:             [0, 5]
+                                                ,   completion:         [1,100]
+                                                ,   created:            ["2014-01-01T00:00:00.000Z", currentDate]
+                                                ,   modified:           ["2014-01-01T00:43:43.000Z", currentDate]
+                                                ,   memberDateOfBirth:  [0, 100]
+                                                }
         }
 
     ,   tempLimit               = CONSTANTS.SEARCH_LIMIT
@@ -695,7 +710,6 @@
     function _doRangeFilterListing( options )
     {
         var snippit         = $("#facet-listitem").html().replace(/(<!--)*(-->)*/g, "")
-        ,   subsnippit      = $("#facetrange-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $facetType      = $("#facet-type").html().replace(/(<!--)*(-->)*/g, "")
         ,   criteria        = options.criteria
         ,   response        = options.response
@@ -713,17 +727,8 @@
         ,   $viewFacetItem
         ,   $this
         ,   $currentCategory
-        ,   $bigCategory
-        ,   $categoryList
-        ,   $hiddenItems
-        ,   newname
-        ,   listItem
         ,   listFacetsItem
-        ,   facetValues
-        ,   facetLabel
-        ,   dataKey
-        ,   itemName
-        ,   facetValName
+        ,   listItem
         ,   industry
         ,   anchorFacet
         ,   isCriteriaSelected
@@ -732,6 +737,11 @@
         ,   filterQuery
         ,   foundMin
         ,   foundMax
+        ,   defaultRange
+        ,   minVal
+        ,   maxVal
+        ,   minDateObj
+        ,   maxDateObj
         ;
 
         /*$list.empty();
@@ -746,49 +756,91 @@
             {
                 if ( !$.isEmptyObject(facetItem) )
                 {
-                    foundMin    =   facetMinMax.foundMin;
-                    foundMax    =   facetMinMax.foundMax;
-                    listItem    =   snippit
-                                    .replace( /%facets_title%/g, bidx.i18n.i( facetItem, appName ) )
-                                    .replace( /%facets_name%/g, facetItem  )
-                                    ;
+                    foundMin        =   bidx.utils.getValue(facetMinMax, 'foundMin');
+                    foundMax        =   bidx.utils.getValue(facetMinMax, 'foundMax');
 
-                    $listItem  = listItem;
+                    defaultRange    =   CONSTANTS.RANGEDEFAULT[facetItem];
+                    minVal          =   bidx.utils.getValue(defaultRange, '0');
+                    maxVal          =   bidx.utils.getValue(defaultRange, '1');
+
+                    bidx.utils.log( 'minVal', minVal);
+                    bidx.utils.log( 'maxVal', maxVal);
+
+                    bidx.utils.log( 'foundMin', foundMin);
+                    bidx.utils.log( 'foundMax', foundMax);
+
+
+
+                    listItem        =   snippit
+                                        .replace( /%facets_title%/g, bidx.i18n.i( facetItem, appName ) )
+                                        .replace( /%facets_name%/g, facetItem  )
+                                        ;
+
+                    $listItem       = listItem;
                     $list.append($listItem );
                     $currentCategory = $list.find( ".facet-category-" + facetItem );
 
                     switch (facetItem)
                     {
                         /* Slider */
-                        //case 'created':
-                        //case 'modified':
+                        case 'created':
+                        case 'modified':
+
+                        minVal  =   foundMin ?  foundMin : minVal;
+                        maxVal  =   foundMax ?  foundMax : maxVal;
+
+                        _renderCalendar(
+                        {
+                            facetItem:          facetItem
+                        ,   minVal:             minVal
+                        ,   maxVal:             maxVal
+                        ,   $currentCategory:   $currentCategory
+                        ,   label:              bidx.i18n.i('rangeYearLabel', appName)
+                        });
+
+                        break;
+                        case 'memberDateOfBirth':
+
+                        if( foundMin )
+                        {
+                            minDateObj  =   bidx.utils.parseISODate( foundMin );
+                            maxVal      =   currentYear - minDateObj.y;
+
+                        }
+                        if( foundMax )
+                        {
+                            maxDateObj  =   bidx.utils.parseISODate( foundMax );
+                            minVal      =   currentYear - maxDateObj.y;
+                        }
+
+                        bidx.utils.log( 'bminVal', minVal);
+                        bidx.utils.log( 'bmaxVal', maxVal);
+
+                        _renderSlider(
+                        {
+                            facetItem:          facetItem
+                        ,   minVal:             minVal
+                        ,   maxVal:             maxVal
+                        ,   $currentCategory:   $currentCategory
+                        ,   label:              bidx.i18n.i('rangeYearLabel', appName)
+                        });
+
+                        break;
+
                         case 'completion':
                         case 'rating':
 
-                        listFacetsItem = subsnippit
-                            .replace( /%facetrange%/g,  facetItem )
-                            .replace( /%facets_min%/g, facetMinMax.foundMin)
-                            .replace( /%facets_max%/g, facetMinMax.foundMax)
-                            ;
+                        minVal  =   foundMin ?  foundMin : minVal;
+                        maxVal  =   foundMax ?  foundMax : maxVal;
 
-                        $listFacetsItem = $( listFacetsItem );
-
-                        $currentCategory.find( ".list-group" ).append($listFacetsItem);
-
-                        bidx.utils.log( 'facetMinMax', facetMinMax);
-                        bidx.utils.log( 'foundMin', facetMinMax.foundMin);
-                        bidx.utils.log( 'foundMax', facetMinMax.foundMax);
-
-                        sliderOptions   =
+                        _renderSlider(
                         {
-                            step:       1,
-                            min:        foundMin,
-                            max:        foundMax,
-                            value:      [ (25*foundMax)/100, (75*foundMax/100) ],
-                            tooltip:    'show'
-                        };
-
-                        $currentCategory.find('.slider-range' ).slider( sliderOptions );
+                            facetItem:          facetItem
+                        ,   minVal:             minVal
+                        ,   maxVal:             maxVal
+                        ,   $currentCategory:   $currentCategory
+                        ,   label:              bidx.i18n.i('rangePerLabel', appName)
+                        });
 
                         break;
 
@@ -883,6 +935,93 @@
         }
     }
 
+    function _renderCalendar( options )
+    {
+        var listFacetsItem
+        ,   $listFacetsItem
+        ,   $calendarFrom
+        ,   $calendarTo
+        ,   $currentCategory    =   options.$currentCategory
+        ,   facetItem           =   options.facetItem
+        ,   minVal              =   bidx.utils.parseISODate( options.minVal )
+        ,   maxVal              =   bidx.utils.parseISODate( options.maxVal )
+        ,   minDateObj          =   minVal.y + '-' + minVal.m + '-' + minVal.d
+        ,   maxDateObj          =   maxVal.y + '-' + maxVal.m + '-' + maxVal.d
+        ,   calSnippit          =   $("#facetcalendar-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   isRTL               =   ( currentLanguage === 'ar')     ?   true    : false
+        ,   pickerOptions       =   {
+                                       // format:                 "d M yyyy"
+                                       todayHighlight:         true
+                                    ,   startView:              2
+                                    ,   language:               currentLanguage
+                                    ,   rtl:                    isRTL
+                                    ,   autoclose:              true
+                                    ,   calendarWeeks:          true
+                                    ,   title:                  facetItem
+                                    }
+        ;
+
+
+        listFacetsItem = calSnippit
+                        .replace( /%facetcalendar%/g,   facetItem   )
+                        ;
+
+        $listFacetsItem = $( listFacetsItem );
+
+        $currentCategory.find( ".list-group" ).append($listFacetsItem);
+
+        $calendarFrom   = $currentCategory.find( '#cal-range-from-' + facetItem );
+        $calendarFrom.datepicker( pickerOptions );
+
+        $calendarTo     = $currentCategory.find( '#cal-range-to-' + facetItem );
+        $calendarTo.datepicker( pickerOptions );
+
+    }
+
+    function _renderSlider( options )
+    {
+        var listFacetsItem
+        ,   $listFacetsItem
+        ,   labelMinVal
+        ,   labelMaxVal
+        ,   sliderOptions       =   {}
+        ,   $currentCategory    =   options.$currentCategory
+        ,   facetItem           =   options.facetItem
+        ,   minVal              =   options.minVal
+        ,   maxVal              =   options.maxVal
+        ,   label               =   options.label
+        ,   defaultRange        =   CONSTANTS.RANGEDEFAULT[facetItem]
+        ,   defaultMinVal       =   bidx.utils.getValue(defaultRange, '0')
+        ,   defaultMaxVal       =   bidx.utils.getValue(defaultRange, '1')
+        ,   sliderSnippit       =   $("#facetslider-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ;
+
+        labelMinVal                  =   label.replace(/%num%/g,  defaultMinVal );
+        labelMaxVal                  =   label.replace(/%num%/g,  defaultMaxVal );
+
+        listFacetsItem = sliderSnippit
+                        .replace( /%facetslider%/g,  facetItem )
+                        .replace( /%facets_min%/g,  labelMinVal )
+                        .replace( /%facets_max%/g,  labelMaxVal )
+                        ;
+
+        $listFacetsItem = $( listFacetsItem );
+
+        $currentCategory.find( ".list-group" ).append($listFacetsItem);
+
+        sliderOptions   =
+        {
+            step:       1,
+            min:        defaultMinVal,
+            max:        defaultMaxVal,
+            value:      [minVal, maxVal],
+           // value:      [ (25*foundMax)/100, (75*foundMax/100) ],
+            tooltip:    'show'
+        };
+
+        $currentCategory.find('.slider-range' ).slider( sliderOptions );
+    }
+
     /* Get the search list
     Sample
     bidxBusinessGroup - 8747 - Cleancookstoves
@@ -923,9 +1062,12 @@
         ,   industry
         ,   anchorFacet
         ,   isCriteriaSelected
-        ,   facetCriteria = {}
+        ,   facetCriteria   = {}
         ,   filterQuery
         ,   facetCounter    =   1
+        ,   topFacets       =   []
+        ,   bottomFacets    =   []
+        ,   finalFacets     =   []
         ;
 
         $list.empty();
@@ -940,7 +1082,7 @@
 
             $.each( response.facets , function ( idx, facetItems)
             {
-
+                finalFacets     =   [];
                 facetValues     =   bidx.utils.getValue( facetItems, "facetValues" );
                 facetLabel      =   bidx.i18n.i( facetItems.name, appName );
 
@@ -952,7 +1094,15 @@
 
                     $listItem  = listItem;
                     $list.append($listItem );
-                    $currentCategory = $list.find( ".facet-category-" + facetItems.name );
+                    $currentCategory    = $list.find( ".facet-category-" + facetItems.name );
+                    /* Start from here **********************/
+                   /* topFacets       =   _.filter(facetValues, function(value) { return value.checked; });
+                    bottomFacets    =   _.filter(facetValues, function(value) { return !value.checked; });
+                    finalFacets     =   _.extend(finalFacets, topFacets, bottomFacets);
+
+                    bidx.utils.log('topFacets', topFacets);
+                    bidx.utils.log('bottomFacets', bottomFacets);
+                    bidx.utils.log('finalFacets', finalFacets);*/
 
                     $.each( facetValues , function ( idx, item )
                     {
@@ -992,7 +1142,7 @@
 
                             // Display Close button for criteria
                             //
-                            if ( $.inArray( item.filterQuery, criteria.facetFilters ) !== -1 )
+                            if ( item.checked )
                             {
                                 $viewFacetItem = $listFacetsItem.find('.view');
                                 _showElement('close', $viewFacetItem);
@@ -1054,14 +1204,29 @@
                 filterValue     = $this.data('value');
 
                 var filterValue
+                ,   $facetWrapper       =   $this.parent().parent()
                 ,   facetFilters        =   bidx.utils.getValue( criteria, 'facetFilters')
-                ,   clickedCategory     =   $this.parent().parent().find( ".facet-title" ).data('name')
-                ,   facetFiltersCat     =   ( !$.isEmptyObject( facetFilters ) && !$.isEmptyObject(facetFilters.clickedCategory))   ? facetFilters.clickedCategory : []
+                ,   clickedCategory     =   $facetWrapper.find( ".facet-title" ).data('name')
+                ,   facetFiltersCat     =   []
                 ;
 
+                bidx.utils.log('facetFilters', facetFilters);
                 bidx.utils.log('Criteria before click=', criteria);
-                bidx.utils.log('clickedCategory=', $this.parent().parent().find( ".facet-title" ));
+                bidx.utils.log('clickedCategory=', $facetWrapper.find('.facet-title').data('name'));
                 bidx.utils.log('filterValue=', filterValue);
+                bidx.utils.log('facetFiltersCat=', facetFiltersCat);
+
+               /* if( !$.isEmptyObject( facetFilters ) && !$.isEmptyObject(facetFilters[clickedCategory]))
+                {
+                    bidx.utils.log("I am in if");*/
+                    facetFiltersCat     =   facetFilters[clickedCategory];
+               /* }
+                else
+                {
+                    criteria.facetFilters[clickedCategory] = [];
+                }*/
+
+
 
                 if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterValue, facetFiltersCat ) !== -1)
                 {
@@ -1071,11 +1236,7 @@
                 }
                 else if ( $.inArray(filterValue, facetFiltersCat ) === -1 )
                 {
-                    criteria.facetFilters = ( facetFilters) ? facetFilters : [];
-                    filterQuery[clickedCategory] = [];
-
-                    filterQuery[clickedCategory].push( filterValue );
-                    criteria.facetFilters = filterQuery ;
+                    criteria.facetFilters[clickedCategory].push( filterValue );
                 }
 
                 /*// For search filtering add the current filter
@@ -1310,7 +1471,7 @@
                         response    :   response
                     ,   q           :   search.q
                     ,   sort        :   search.sort
-                    ,   criteria    :   search.criteria
+                    ,   criteria    :   response.criteria
                     ,   cb          :   function ( )
                                         {
                                             _doRangeFilterListing(

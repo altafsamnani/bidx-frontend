@@ -19,13 +19,17 @@
     <Item value="role">Role</Item>
     <Item value="gender">Gender</Item>
     <Item value="expertise">Expertise</Item>
+    <Item value="memberDateOfBirth">Member Age</Item>
 
     <!-- Range Filters -->
     <Item value="created">Created</Item>
     <Item value="modified">Modified</Item>
     <Item value="completion">Completion</Item>
     <Item value="rating">Rating</Item>
+    <Item value="rangeYearLabel">%num% years</Item>
+    <Item value="rangePerLabel">%num% %</Item>
 
     <Item value="paginationTotal">%num% results</Item>
+
 
 </I18N>

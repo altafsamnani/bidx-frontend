@@ -1013,7 +1013,7 @@
 
         $scaleBtns.delegate( ".js-smaller", "click", function()
         {
-            //BIDX-3074 - we need a limit for shrinking the image - if it's shrinked to much image ratio is messed up        
+            //BIDX-3074 - we need a limit for shrinking the image - if it's shrinked to much image ratio is messed up
             if ( $el.width() > 100 && $el.height() > 100 )
             {
                 $el.width( Math.floor( $el.width() * 0.8 ) );
@@ -1044,18 +1044,14 @@
             var $input  = $editForm.find( "[name='personalDetails." + f + "']" )
             ,   value   = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails." + f )
             ;
-            if( f === 'gender')
-            {
-                bidx.utils.log('$input', $input);
-                bidx.utils.log('valueee',value);
 
+            if(f === 'dateOfBirth')
+            {
+                bidx.utils.log('birthdate', value);
             }
+
             $input.each( function()
             {
-                if(f === 'gender')
-                {
-                    bidx.utils.log(' $( this )', $( this ));
-                }
                 bidx.utils.setElementValue( $( this ), value );
             } );
         } );

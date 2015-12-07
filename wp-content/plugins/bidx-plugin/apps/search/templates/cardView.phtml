@@ -145,11 +145,22 @@
                 %facets_title%
             </a>
         </script>
-        <!-- Html Templates for Range results -->
-        <script type="text/html" id="facetrange-listitem"> <!--
-            <b>%facets_min%</b>&nbsp;&nbsp;
-                <input type="text" id="slider-range-%facetrange%" class="slider-range"></div>&nbsp;&nbsp;
+        <!-- Html Templates for Slider Filters -->
+        <script type="text/html" id="facetslider-listitem"> <!--
+            <b>%facets_min%</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" id="slider-range-%facetslider%" class="slider-range"></div>&nbsp;&nbsp;&nbsp;&nbsp;
             <b>%facets_max%</b>
+        -->
+        </script>
+
+        <!-- Html Templates for Datepicker Filters -->
+        <script type="text/html" id="facetcalendar-listitem"> <!--
+
+        <div class="input-group input-daterange">
+            <input type="text" class="form-control facetCalFrom" id="cal-range-from-%facetcalendar%" name="cal-range-from-%facetcalendar%" data-date-end-date="0d">
+            <span class="input-group-addon">to</span>
+            <input type="text" class="form-control facetCalTo" id="cal-range-to-%facetcalendar%" name="cal-range-to-%facetcalendar%" data-date-end-date="0d">
+        </div>
         -->
         </script>
 
