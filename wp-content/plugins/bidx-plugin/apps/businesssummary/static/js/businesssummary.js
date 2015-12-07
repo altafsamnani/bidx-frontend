@@ -488,6 +488,14 @@
                     {
                         required:      true
                     }
+                ,   "focusIndustrySector[0]subSector":
+                    {
+                        required:      true
+                    }
+                ,   "focusIndustrySector[0]endSector":
+                    {
+                        required:      true
+                    }
                 ,   productService:
                     {
                         // required:      true
