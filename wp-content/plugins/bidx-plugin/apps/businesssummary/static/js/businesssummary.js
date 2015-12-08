@@ -25,6 +25,7 @@
 
     ,   $videoWrapper               = $element.find( ".video-wrapper" )
 
+
     ,   $controlsForEdit            = $editControls.find( ".viewEdit" )
     ,   $controlsForError           = $editControls.find( ".viewError" )
 
