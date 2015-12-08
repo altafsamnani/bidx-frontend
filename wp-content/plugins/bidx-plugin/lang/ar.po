@@ -16,8 +16,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: ./../../..\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
-"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
-"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: plugins/bidx-plugin\n"
 "X-Poedit-SearchPath-1: themes/bidx-group\n"
@@ -686,9 +686,9 @@ msgstr "قم بتغيير كلمة مرورك"
 # _e("Here you can change your log in credentials. Please note that if you change your email address, all notifications from the bidX platform or from groups that you are a member of will be forwarded to the new email address.","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid ""
-"Here you can change your log in credentials. Please note that if you change "
-"your email address, all notifications from the bidX platform or from groups "
-"that you are a member of will be forwarded to the new email address."
+"Here you can change your log in credentials. Please note that if you change your "
+"email address, all notifications from the bidX platform or from groups that you "
+"are a member of will be forwarded to the new email address."
 msgstr ""
 "هنا يمكنك تغيير بيانات اعتمادك. يرجى ملاحظة أنك ان قمت بتغيير عنوان بريدك "
 "الالكتروني، كل تنبيهات المنصة وتنبيهات المجموعات المشترك بها سيتم تحويلها "
@@ -1118,8 +1118,8 @@ msgstr "نحن نتطلع الى إتمام إعداداتك حتى تتمكن �
 # Context  Textdomain bidxplugin
 msgid ""
 "Select your main role to create a profile. Once you are logged in, you will be "
-"able to edit your profile details and create another type of profile if you "
-"want to take on different roles."
+"able to edit your profile details and create another type of profile if you want "
+"to take on different roles."
 msgstr ""
 "حدد دورك الرئيسي لإنشاء ملف تعريفي. بمجرد تسجيل الدخول، سوف تتمكن من تعديل "
 "بيانات ملفك الشخصي وانشاء نوع آخر من الملف الشخصي إذا أردت أن تأخذ أدوار مختلفة."
@@ -2836,8 +2836,8 @@ msgstr "(بحد أقصى 300 حرف)"
 # _e("In this section you can link your business to an existing company. If you do not yet have a company, you can skip this step by answering 'No' to the first question. If you already created a company in the past, you can select it from the list","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid ""
-"In this section you can link your business to an existing company. If you do "
-"not yet have a company, you can skip this step by answering 'No' to the first "
+"In this section you can link your business to an existing company. If you do not "
+"yet have a company, you can skip this step by answering 'No' to the first "
 "question. If you already created a company in the past, you can select it from "
 "the list"
 msgstr ""
@@ -3963,8 +3963,8 @@ msgid ""
 "would like participants to know about competition if you only had a few minutes "
 "to explain."
 msgstr ""
-"استخدم هذا القسم لشرح مسابقتك. فكر في المعلومات التي تريد أن يعلمها المشتركين "
-"عن المسابقة لو كان لديك بضعة دقائق فقط للشرح."
+"استخدم هذا القسم لشرح مسابقتك. فكر في المعلومات التي تريد أن يعلمها المشتركين عن "
+"المسابقة لو كان لديك بضعة دقائق فقط للشرح."
 
 # 224) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/competition/templates/competition.phtml -517
 # _e("Competition name","bidxplugin");
@@ -5021,8 +5021,8 @@ msgid ""
 "your group. If you would like to close your group, please contact the bidX "
 "Customer Support"
 msgstr ""
-"تم نشر مجموعتك وهي متاحة للجميع. يمكن للأعضاء الاشتراك أو ترك المجموعة. إذا "
-"أردت أن تكون مغلقة، يرجى الاتصال بدعم العملاء الخاص بـ bidX"
+"تم نشر مجموعتك وهي متاحة للجميع. يمكن للأعضاء الاشتراك أو ترك المجموعة. إذا أردت "
+"أن تكون مغلقة، يرجى الاتصال بدعم العملاء الخاص بـ bidX"
 
 # 548) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/groupowner/monitoring.phtml -26
 # _e("Loading...","bidxplugin");
@@ -5344,9 +5344,9 @@ msgstr "داوم على انشاء خطط جديدة"
 # _e("bidX finds  your best suited plans as soon as these are published. We match your investor profile date with that of new businesses. The section Recommended plans in your dashboard lists the plans that could be interesting for you.","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid ""
-"bidX finds  your best suited plans as soon as these are published. We match "
-"your investor profile date with that of new businesses. The section Recommended "
-"plans in your dashboard lists the plans that could be interesting for you."
+"bidX finds  your best suited plans as soon as these are published. We match your "
+"investor profile date with that of new businesses. The section Recommended plans "
+"in your dashboard lists the plans that could be interesting for you."
 msgstr ""
 "bidX تجد لك أفضل الخطط المناسبة فور نشرها. نلائم بيانات المستثمر الخاصة بك مع "
 "بيانات المشاريع الجديدة. هذا القسم يوصي بالخطط التي يمكن أن تستهويك ويعلمك بها "
@@ -5372,8 +5372,8 @@ msgid ""
 "list of businesses that have been published during the last seven days.  If "
 "during your registration you accepted that we could send you emails to your "
 "personal inbox, you will receive those alerts there too. If you didn’t do so "
-"during your registration, but you would like to receive them now, you can "
-"change that setting at your Account Settings"
+"during your registration, but you would like to receive them now, you can change "
+"that setting at your Account Settings"
 msgstr ""
 "سوف نرسل لك أيضا تحديثات أسبوعية بصندوق الوارد. هذه الرسائل تحتوي على قائمة "
 "المشاريع التي تم نشرها خلال الأيام السبعة الماضية. إذا قبلت خلال تسجيلك أن نرسل "
@@ -5397,9 +5397,9 @@ msgstr "نقرة واحدة، متصل واحد"
 # _e("Invite other members to become your contacts and grow your own network. Click on the Contact link at the member profiles and an invitation to become a contact will be send to them.","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid ""
-"Invite other members to become your contacts and grow your own network. Click "
-"on the Contact link at the member profiles and an invitation to become a "
-"contact will be send to them."
+"Invite other members to become your contacts and grow your own network. Click on "
+"the Contact link at the member profiles and an invitation to become a contact "
+"will be send to them."
 msgstr ""
 " قم بدعوة أعضاء آخرين ليصبحوا بقائمة اتصالك حتى تنمي شبكتك. انقر على رابط "
 "الاتصال بالملفات الشخصية للأعضاء وسيتم ارسال الدعوة إليهم."
@@ -5422,17 +5422,16 @@ msgstr "الوصول الى معلومات كاملة عن المشاريع"
 msgid ""
 "If you see a business that you are interested about, you can request the "
 "entrepreneur to grant you access to view full data of the business. This will "
-"enclose full business and financial plan as well as the CV of the "
-"entrepreneur.  Click the link Request access that you will see on the business "
-"page. A message will be sent to the entrepreneur with your request. Plans you "
-"have requested access to will be listed in the section Contacted businesses in "
-"your dashboard"
+"enclose full business and financial plan as well as the CV of the entrepreneur.  "
+"Click the link Request access that you will see on the business page. A message "
+"will be sent to the entrepreneur with your request. Plans you have requested "
+"access to will be listed in the section Contacted businesses in your dashboard"
 msgstr ""
 "إذا رأيت مشروع مثير للإهتمام، يمكنك طلب اذن بالوصول الى بيانات المشروع من رائد "
 "الأعمال. وسيتضمن هذا مرفقات المشروع الكاملة والخطة المالية فضلاً عن السيرة "
 "الذاتية لرائد الأعمال. انقر على رابط طلب الوصول الموجود بصفحة المشروع. سيتم "
-"إرسال رسالة إلى رائد الأعمال بطلبك. سيتم ادراج الخطط التي طلبت الوصول اليها "
-"بقسم المشاريع التي تم مراسلتها بلوحة إعداداتك."
+"إرسال رسالة إلى رائد الأعمال بطلبك. سيتم ادراج الخطط التي طلبت الوصول اليها بقسم "
+"المشاريع التي تم مراسلتها بلوحة إعداداتك."
 
 # 357) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/investor/help.phtml -49
 # _e("Go to contacted businesses","bidxplugin");
@@ -5451,13 +5450,13 @@ msgstr "اتصل بمشرف مجموعتك"
 # Context  Textdomain bidxplugin
 msgid ""
 "For any additional questions over this group, functionalities, problems or "
-"suggestions, please contact your group moderator. He or she will be delighted "
-"to help you. If you encounter a problem with the platform, the group moderator "
-"will forward it to the bidX technical support."
+"suggestions, please contact your group moderator. He or she will be delighted to "
+"help you. If you encounter a problem with the platform, the group moderator will "
+"forward it to the bidX technical support."
 msgstr ""
-" لأي أسئلة إضافية تخص هذه المجموعة، أدوارها، المشاكل أو الاقتراحات، يرجى "
-"الاتصال بمشرف المجموعة الخاصة بك. سوف يكون سعيداً بمساعدتك. إذا واجهتك مشكلة مع "
-"المنصة، فإن مشرف المجموعة سيحولها إلى الدعم الفني بـ bidX."
+" لأي أسئلة إضافية تخص هذه المجموعة، أدوارها، المشاكل أو الاقتراحات، يرجى الاتصال "
+"بمشرف المجموعة الخاصة بك. سوف يكون سعيداً بمساعدتك. إذا واجهتك مشكلة مع المنصة، "
+"فإن مشرف المجموعة سيحولها إلى الدعم الفني بـ bidX."
 
 # 600) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/group/templates/profile-dropdown.phtml -23
 # _e("Logout","bidxplugin");
@@ -6039,7 +6038,7 @@ msgstr " <أجدد"
 # _e("Older >","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Older >"
-msgstr "  > أقدم"
+msgstr "أقدم> "
 
 # 1053) File -/Users/juliapop/Sites/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/views.phtml -99
 # _e("Loading...","bidxplugin");
@@ -6498,10 +6497,10 @@ msgstr "مستندات أخرى"
 # Context  Textdomain bidxplugin
 msgid ""
 "Complete this short form with information about you as entrepreneur. Be aware "
-"that investors and other members potentially interested in your business will "
-"be very interested to know more about you, your motivation and what makes you "
-"thrive as an entrepreneur. Treat this form as your first contact with, and "
-"pitch to potential investors and business partners."
+"that investors and other members potentially interested in your business will be "
+"very interested to know more about you, your motivation and what makes you "
+"thrive as an entrepreneur. Treat this form as your first contact with, and pitch "
+"to potential investors and business partners."
 msgstr ""
 " اكمل هذا النموذج القصير بمعلومات عنك كرائد أعمال. انتبه أن المستثمرين والأعضاء "
 "الآخرين قد يهتمون بمجال عملك وسوف يهتمون جداً بمعرفة المزيد عنك، وعن دوافعك وما "
@@ -6688,8 +6687,8 @@ msgstr "المراجع"
 # _e("Tell visitors and members of the group how you see yourself as an investor. Give a brief description of your investment interests.","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid ""
-"Tell visitors and members of the group how you see yourself as an investor. "
-"Give a brief description of your investment interests."
+"Tell visitors and members of the group how you see yourself as an investor. Give "
+"a brief description of your investment interests."
 msgstr ""
 " أخبر الزائرين وأعضاء المجموعة كيف ترى نفسك كمستثمر. أضف وصف موجز لاهتمامات "
 "الاستثمار الخاصة بك "
@@ -8295,13 +8294,13 @@ msgstr "اذهب الى تفضيلات المرشد"
 # _e("bidX finds  your best suited plans as soon as these are published. We match your mentor profile data with that of new businesses. The section Recommended plans in your dashboard lists the plans that could be interesting for you.","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid ""
-"bidX finds  your best suited plans as soon as these are published. We match "
-"your mentor profile data with that of new businesses. The section Recommended "
-"plans in your dashboard lists the plans that could be interesting for you."
+"bidX finds  your best suited plans as soon as these are published. We match your "
+"mentor profile data with that of new businesses. The section Recommended plans "
+"in your dashboard lists the plans that could be interesting for you."
 msgstr ""
 " يجد bidX أفضل الخطط المناسبة لك بمجرد نشرهم. نلائم البيانات الشخصية الوارده "
-"بحسابك كمرشد مع بيانات المشاريع الجديدة. يوصي القسم بالخطط التي يمكن أن تحظى "
-"على اهتمامك، من خلال قوائم  بلوحة الإعدادات الخاصة بك."
+"بحسابك كمرشد مع بيانات المشاريع الجديدة. يوصي القسم بالخطط التي يمكن أن تحظى على "
+"اهتمامك، من خلال قوائم  بلوحة الإعدادات الخاصة بك."
 
 # 832) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/main.phtml -7
 # _e("My mentor dashboard","bidxplugin");
@@ -8533,10 +8532,10 @@ msgstr "استعادة كلمة المرور"
 # _e("Currently we are unable to authenticate bidx users using LinkedIn. We will solve this as soon as possible. In the mean time you may login using a password which you can request by submitting your primary LinkedIn email address below. We are sorry for the inconvenience.","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid ""
-"Currently we are unable to authenticate bidx users using LinkedIn. We will "
-"solve this as soon as possible. In the mean time you may login using a password "
-"which you can request by submitting your primary LinkedIn email address below. "
-"We are sorry for the inconvenience."
+"Currently we are unable to authenticate bidx users using LinkedIn. We will solve "
+"this as soon as possible. In the mean time you may login using a password which "
+"you can request by submitting your primary LinkedIn email address below. We are "
+"sorry for the inconvenience."
 msgstr ""
 
 # 316) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/resetpassword/templates/resetpassword.phtml -7
@@ -9234,8 +9233,8 @@ msgstr "انتهت صلاحية رمز التفعيل"
 # _e("Your activation token has expired. You cannot use this account until it has been removed so that you can register again.","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid ""
-"Your activation token has expired. You cannot use this account until it has "
-"been removed so that you can register again."
+"Your activation token has expired. You cannot use this account until it has been "
+"removed so that you can register again."
 msgstr ""
 "انتهت صلاحية رمز التفعيل. لا يمكنك استخدام هذا الحساب حتى يتم إزالته ومن ثم "
 "إعادة التسجيل"
@@ -9272,8 +9271,8 @@ msgstr "اذهب الى ملفك الشخصي"
 # _e("You have successfully set your new password. Click on the button below to select your main role.","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid ""
-"You have successfully set your new password. Click on the button below to "
-"select your main role."
+"You have successfully set your new password. Click on the button below to select "
+"your main role."
 msgstr "لقد قمت باعداد كلمة سر جديدة. انقرعلى الزر أدناه لاختيار دورك الرئيسي"
 
 # 1536) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/support/templates/support.phtml -21
@@ -9490,8 +9489,8 @@ msgid ""
 "Your session expired. Please login again, sorry for any inconvenience and "
 "appreciate your patience."
 msgstr ""
-" انتهت جلسة العمل الخاصة بك. يرجى تسجيل الدخول مرة أخرى، نعتذر عن أي إزعاج "
-"ونقدر صبرك."
+" انتهت جلسة العمل الخاصة بك. يرجى تسجيل الدخول مرة أخرى، نعتذر عن أي إزعاج ونقدر "
+"صبرك."
 
 # 1802) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/lib/custom.php -190
 # _e("Welcome in the group!","bidxplugin");
@@ -9761,8 +9760,8 @@ msgid ""
 "The embed code field is empty. Please insert an <code>iframe</code> from "
 "Youtube, Dailymotion, Vimeo, Vevo, Veoh or Metacafe"
 msgstr ""
-" حقل  الكود فارغة. ادخل كود  <code>iframe</code> من Youtube, Dailymotion, "
-"Vimeo, Vevo, Veoh أو Metacafe    "
+" حقل  الكود فارغة. ادخل كود  <code>iframe</code> من Youtube, Dailymotion, Vimeo, "
+"Vevo, Veoh أو Metacafe    "
 
 # 1868) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group/templates/header.php -129
 # _e("Choose a role","bidxplugin");

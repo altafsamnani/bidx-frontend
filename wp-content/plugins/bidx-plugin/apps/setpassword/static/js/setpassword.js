@@ -3,7 +3,9 @@
 {
     "use strict";
 
-    var $element                    = $( "#setpassword" )       // setpassword form state
+    var iclVars                     = window.icl_vars || {}
+    ,   currentLanguage             = ( iclVars.current_language ) ? '/' + iclVars.current_language : ''
+    ,   $element                    = $( "#setpassword" )       // setpassword form state
     ,   $feedback                   = $( "#feedback" )          // feedback state
     ,   $body                       = $( "body" )
     ,   $views                      = $feedback.find( ".view" )
@@ -125,7 +127,7 @@
                     ;
 
                     reset();
-                    document.location.href= "/setpassword/#setpassword/error";
+                    document.location.href= currentLanguage + "/setpassword/#setpassword/error";
                     _showError( "Something went wrong changing the password: (" + status + ") " + response.code );
                 }
             }
@@ -146,11 +148,11 @@
 
                     if ( $.isEmptyObject(response.entities ) )
                     {
-                        document.location.href= "/setpassword/#setpassword/role";
+                        document.location.href= currentLanguage + "/setpassword/#setpassword/role";
                     }
                     else
                     {
-                        document.location.href= "/setpassword/#setpassword/done";
+                        document.location.href= currentLanguage + "/setpassword/#setpassword/done";
                     }
                 }
             ,   error:          function( jqXhr )
@@ -159,7 +161,7 @@
                     ,   status = bidx.utils.getValue( jqXhr, "status" ) || textStatus
                     ;
 
-                    document.location.href= "/setpassword/#setpassword/error";
+                    document.location.href= currentLanguage + "/setpassword/#setpassword/error";
                     _showError( "Something went wrong changing the password: (" + status + ") " + response.code );
                 }
             }

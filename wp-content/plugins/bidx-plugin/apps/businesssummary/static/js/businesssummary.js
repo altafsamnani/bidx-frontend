@@ -444,11 +444,13 @@
                     }
                 ,   slogan:
                     {
-                        maxlength:              140
+                        required:               true
+                    ,   maxlength:              140
                     }
                 ,   summary:
                     {
-                        maxlength:              900
+                        required:               true
+                    ,   maxlength:              900
                     }
                 ,   equityRetained:
                     {
@@ -482,9 +484,17 @@
             ,   ignore:         ""
             ,   rules:
                 {
-                    industry:
+                    "focusIndustrySector[0]mainSector":
                     {
-                        // required:      true
+                        required:      true
+                    }
+                ,   "focusIndustrySector[0]subSector":
+                    {
+                        required:      true
+                    }
+                ,   "focusIndustrySector[0]endSector":
+                    {
+                        required:      true
                     }
                 ,   productService:
                     {
@@ -492,7 +502,7 @@
                     }
                 ,   countryOperation:
                     {
-                        // required:      true
+                        required:      true
                     }
                 ,   "consumerType[]":
                     {
@@ -548,7 +558,11 @@
                 {
                     yearSalesStarted:
                     {
-                        // required:               true
+                        required:               true
+                    }
+                ,   financeNeeded:
+                    {
+                        required:               true
                     }
                 }
 
@@ -928,8 +942,8 @@
 
                     $input.rules( "add",
                     {
-                        // required:               true
-                        monetaryAmount:         true
+                        required:               true
+                    ,   monetaryAmount:         true
 
                     ,   messages:
                         {

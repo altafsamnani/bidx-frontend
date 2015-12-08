@@ -61,10 +61,10 @@ endif;
 
         <div class="pull-left quick-action-links">
             <?php
-            if ( !empty($this->data->bidxInvestorProfile )  || !empty($this->data->bidxMentorProfile ))
+            if ( !empty($this->data->bidxInvestorProfile )  && !empty($this->data->bidxMentorProfile ))
             { ?>
 
-                    <label class='markLabel hide'><?php _e("Mark for","bidxplugin");?>:</label>
+                    <label class='markLabel hide'><?php _e("Accredit","bidxplugin");?>:</label>
                     <input type="checkbox" name="tag-checkbox" checked data-off-color="warning" data-size="small" data-on-text="<?php _e('Investor', 'bidxplugin');?>" data-off-text="<?php _e('Mentor', 'bidxplugin');?>">
 
 <?php       }

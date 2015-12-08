@@ -388,6 +388,8 @@
         var card
         ,   roles = groupRoles( item.bidxMeta.bidxGroupRoles )
         ,   isAdmin = bidx.common.isGroupAdmin()
+        ,   currentGroupId = bidx.common.getCurrentGroupId()
+        ;
 
         var card =
             $( "<div />", { "class": "cardView", "data-compid": item.bidxMeta.bidxGroupId } )
@@ -396,7 +398,7 @@
                     $( "<div />", { "class": "cardHeader hide-overflow" } )
                     .append
                     (
-                        $( "<a />", { "href": item.bidxMeta.bidxGroupUrl, "class": "btn btn-primary btn-xs pull-right info-action main-margin-half", "html": bidx.i18n.i( "poPortal" ) } )
+                        $( "<a />", { "href": item.bidxMeta.bidxGroupUrl, "class": "btn btn-primary btn-xs pull-right info-action main-margin-half" + (currentGroupId == item.bidxMeta.bidxGroupId ? " hide" : ""), "html": bidx.i18n.i( "poPortal" ) } )
                     )          
                     .append
                     (
