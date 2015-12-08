@@ -75,8 +75,8 @@
         ,   LOAD_COUNTER:                       0
         ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
         ,   ENTITY_TYPES:                       [
-                                                  "bdxPlan"
-                                                  "bdxMember"
+                                                    "bdxPlan"
+                                                ,   "bdxMember"
                                                 ]
         ,   NONTITY_TYPES:                      [
                                                     "bdxPlan"
