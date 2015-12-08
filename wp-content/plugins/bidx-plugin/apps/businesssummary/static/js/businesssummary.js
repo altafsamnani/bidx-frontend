@@ -5,9 +5,7 @@
 
     var $element                    = $( "#businessSummary" )
     ,   $snippets                   = $element.find( ".snippets" )
-
     ,   $views                      = $element.find( ".view" )
-
     ,   $editControls               = $element.find( ".editControls" )
 
     ,   $expertiseNeeded            = $element.find( "[name='expertiseNeeded']" )
@@ -56,7 +54,6 @@
     ,   icl_vars                    = window.icl_vars || {}
     ,   iclLanguage                 = bidx.utils.getValue( icl_vars, "current_language" )
     ,   currentLanguage             = (iclLanguage && iclLanguage !== 'en') ? '/' + iclLanguage : ''
-
 
     ,   forms                       =
         {
