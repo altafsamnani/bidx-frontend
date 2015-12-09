@@ -830,7 +830,7 @@
                     $( "<div />", { "class": "pull-left" } )
                     .append
                     (
-                        $( "<span />", { "class": "alert-message" } )
+                        $( "<div />", { "class": "alert-message" } )  //BIDX-3194
                     )
                 )
             ;
