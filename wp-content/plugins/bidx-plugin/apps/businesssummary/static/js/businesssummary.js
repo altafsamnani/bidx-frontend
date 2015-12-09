@@ -3806,6 +3806,11 @@
             {
                 delete businessSummary.attachment;
             }
+            // BIDX-3524
+            if (businessSummary.managementTeam.length == 0)
+            {
+                delete businessSummary.managementTeam;
+            }
         }
 
         // Make sure the entitytype is set correctly, probably only needed for 'create'
