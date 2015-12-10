@@ -1118,6 +1118,18 @@
                             facetValName    = bidx.data.i( item.name, 'mentorExpertise' );
                             break;
 
+                            case 'planEnvironmentalImpact':
+                            facetValName    = bidx.data.i( item.name, 'envImpact' );
+                            break;
+
+                            case 'planSocialImpact':
+                            facetValName    = bidx.data.i( item.name, 'socialImpact' );
+                            break;
+
+                            case 'planFinanceType':
+                            facetValName    = bidx.data.i( item.name, 'investmentType' );
+                            break;
+
                             default:
                             facetValName    = bidx.data.i( item.name, facetItems.name );
 

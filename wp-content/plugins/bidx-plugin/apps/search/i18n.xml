@@ -20,6 +20,9 @@
     <Item value="gender">Gender</Item>
     <Item value="expertise">Expertise</Item>
     <Item value="memberDateOfBirth">Member Age</Item>
+    <Item value="planEnvironmentalImpact">Environmental Impact</Item>
+    <Item value="planSocialImpact">Social Impact</Item>
+    <Item value="planFinanceType">Investment type</Item>
 
     <!-- Range Filters -->
     <Item value="created">Created</Item>

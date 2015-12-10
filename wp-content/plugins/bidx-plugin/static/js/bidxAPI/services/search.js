@@ -24,7 +24,7 @@
         {
             method:         method
         ,   groupDomain:    params.groupDomain
-        ,   baseUrl:        baseOldUrl
+        ,   baseUrl:        nnSearchUrl
         ,   extraUrlParameters:         params.extraUrlParameters
         ,   success:        function( response, textStatus, jqXhr )
             {
