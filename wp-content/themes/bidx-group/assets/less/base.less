@@ -1894,19 +1894,33 @@ select
         padding: ceil(@font-size-base * 0.65) ceil(@font-size-base * 1.05);
         border-right: 1px solid lighten(@gray-light, 22.5%);
     }
-    @media(max-width: 768px){
-        .info-cell
-        {
-            padding: ceil(@font-size-base * 0.65) ceil(@font-size-base * 1.05);
-            border-right: none;
-        }
-    }
     .cardStatus
     {
         border-right: none;
         border-left: 1px solid lighten(@gray-light, 22.5%);
     }
 }
+
+@media(max-width: @screen-sm-min){
+    .cardHeader
+    {
+        position: relative;
+        .info-cell
+        {
+            padding: ceil(@font-size-base * 0.25) ceil(@font-size-base * 1.05);
+            border-right: none;
+        }
+    }
+    .info-action
+    {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
+
+
+
 .cardInfoText
 {
     margin-right: ceil(@font-size-base * 0.60);
