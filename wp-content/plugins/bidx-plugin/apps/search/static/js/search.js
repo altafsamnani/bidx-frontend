@@ -1313,7 +1313,7 @@
                 options.sort     = [];
                 bidx.controller.updateHash( "#search/list" );
 
-                $resetFacet.addClass( "hide" );
+                //$resetFacet.addClass( "hide" );
 
                 navigate(
                 {
@@ -1321,7 +1321,7 @@
                 ,   params  :   {
                                     q           :   options.q
                                 ,   sort        :   options.sort
-                                ,   facetFilters:   criteria.facetFilters
+                                ,   facetFilters:   {}
                                 // ,   type        :   'facet'
                                 }
                 });
