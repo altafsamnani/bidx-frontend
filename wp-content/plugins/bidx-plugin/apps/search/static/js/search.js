@@ -1237,13 +1237,9 @@
                     criteria.facetFilters[clickedCategory] = [];
                 }*/
 
-
-
                 if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterValue, facetFiltersCat ) !== -1)
                 {
-                    bidx.utils.log('criteria removed' , filterQuery, criteria.facetFilters);
-                    criteria.facetFilters = _.without(criteria.facetFilters, filterQuery); // removed the match value from criteria, using underscore function make sure its included
-
+                    criteria.facetFilters[clickedCategory].pop( filterValue );
                 }
                 else if ( $.inArray(filterValue, facetFiltersCat ) === -1 )
                 {
