@@ -2253,6 +2253,25 @@ label
     color: darken(@brand-primary, 25%);
     background-color: @input-group-addon-bg;
 }
+
+.tooltip-inner
+{
+    color: darken(@brand-primary, 25%) !important;
+    background-color: @input-group-addon-bg !important;
+
+}
+
+.tooltip.top .tooltip-arrow
+{
+    border-top-color: darken(@brand-primary, 25%) !important;
+}
+
+.slider-handle
+{
+    background-color: @brand-primary !important;
+    #gradient > .vertical(@brand-primary, @brand-primary) !important;
+}
+
 // jumbotron.less
 // -------------------------
 

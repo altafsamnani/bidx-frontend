@@ -133,9 +133,11 @@
         <!-- Html Templates for Facet Category -->
         <script type="text/html" id="facet-listitem">
             <div class="facet-category-%facets_name%">
-                <h5 data-name="%facets_name%" class="facet-title">%facets_title%</h5>
+                <h5 data-name="%facets_name%" class="facet-title">%facets_title%
+                 <a class="hide pull-right reset" href="#" name='reset-%facetslider%' id="reset-%facetslider%" ><?php _e('Reset', 'bidxplugin');?></a></h5>
                 <div class="list-group"></div>
             </div>
+
         </script>
         <!-- Html Templates for Category results -->
         <script type="text/html" id="facetsub-listitem">
@@ -146,10 +148,12 @@
             </a>
         </script>
         <!-- Html Templates for Slider Filters -->
-        <script type="text/html" id="facetslider-listitem"> <!--
+        <script type="text/html" id="facetslider-listitem">
+        <!--
             <b>%facets_min%</b>&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="text" id="slider-range-%facetslider%" class="slider-range"></div>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" id="slider-range-%facetslider%" name="slider-range-%facetslider%" data-name="%facetslider%" class="slider-range"></div>&nbsp;&nbsp;&nbsp;&nbsp;
             <b>%facets_max%</b>
+
         -->
         </script>
 
@@ -178,13 +182,13 @@
         <script type="text/html" id="sort-listitem">
             <div class="cardContent main-padding">
                 <div class="row">
-                    <div class="col-sm-1">
+                    <div class="col-sm-1 hide">
                         <div class="checkbox">
                             <input type="checkbox" value="1" id="selectAll" name="selectAll" />
                             <label for="checkbox-%bidxEntityId%"><span></span></label>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 hide">
                         <div class="pull-left">
                             <select name="bulk">
                                 <option value=''><?php _e('  --Select Bulk actions--  ', 'bidxplugin')?> </option>

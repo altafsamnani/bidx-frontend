@@ -89,6 +89,7 @@
                                                 ,   created:            ["2014-01-01T00:00:00.000Z", currentDate]
                                                 ,   modified:           ["2014-01-01T00:43:43.000Z", currentDate]
                                                 ,   memberDateOfBirth:  [0, 100]
+                                                ,   planFinancingNeeded:[0,1000000]
                                                 }
         }
 
@@ -514,10 +515,11 @@
             {
                 state   :   'list'
             ,   params  :   {
-                                q           :   options.q
-                            ,   sort        :   sort
-                            ,   facetFilters     :   criteria.facetFilters
-                            ,   type        :   'sort'
+                                q               :   options.q
+                            ,   sort            :   sort
+                            ,   facetFilters    :   criteria.facetFilters
+                            ,   rangeFilters    :   criteria.rangeFilters
+                            ,   type            :   'sort'
                             }
             });
         });
@@ -735,11 +737,13 @@
         ,   facetCriteria   =   {}
         ,   sliderOptions   =   {}
         ,   filterQuery
+        ,   min
+        ,   max
         ,   foundMin
         ,   foundMax
         ,   defaultRange
-        ,   minVal
-        ,   maxVal
+        ,   defaultMinVal
+        ,   defaultMaxVal
         ,   minDateObj
         ,   maxDateObj
         ;
@@ -756,15 +760,18 @@
             {
                 if ( !$.isEmptyObject(facetItem) )
                 {
+                    min             =   bidx.utils.getValue(facetMinMax, 'min');
+                    max             =   bidx.utils.getValue(facetMinMax, 'max');
+
                     foundMin        =   bidx.utils.getValue(facetMinMax, 'foundMin');
                     foundMax        =   bidx.utils.getValue(facetMinMax, 'foundMax');
 
                     defaultRange    =   CONSTANTS.RANGEDEFAULT[facetItem];
-                    minVal          =   bidx.utils.getValue(defaultRange, '0');
-                    maxVal          =   bidx.utils.getValue(defaultRange, '1');
+                    defaultMinVal   =   bidx.utils.getValue(defaultRange, '0');
+                    defaultMaxVal   =   bidx.utils.getValue(defaultRange, '1');
 
-                    bidx.utils.log( 'minVal', minVal);
-                    bidx.utils.log( 'maxVal', maxVal);
+                    bidx.utils.log( 'defaultMinVal', defaultMinVal);
+                    bidx.utils.log( 'defaultMaxVal', defaultMaxVal);
 
                     bidx.utils.log( 'foundMin', foundMin);
                     bidx.utils.log( 'foundMax', foundMax);
@@ -780,68 +787,77 @@
                     $list.append($listItem );
                     $currentCategory = $list.find( ".facet-category-" + facetItem );
 
+                    // If slider/datepicker was set then show reset button
+                    if( min || max )
+                    {
+                        $currentCategory.find(".reset").removeClass('hide');
+                    }
+
                     switch (facetItem)
                     {
                         /* Slider */
                         case 'created':
                         case 'modified':
 
-                        minVal  =   foundMin ?  foundMin : minVal;
-                        maxVal  =   foundMax ?  foundMax : maxVal;
+                        defaultMinVal  =   foundMin ?  foundMin : defaultMinVal;
+                        defaultMaxVal  =   foundMax ?  foundMax : defaultMaxVal;
 
                         _renderCalendar(
                         {
                             facetItem:          facetItem
-                        ,   minVal:             minVal
-                        ,   maxVal:             maxVal
+                        ,   minVal:             defaultMinVal
+                        ,   maxVal:             defaultMaxVal
                         ,   $currentCategory:   $currentCategory
                         ,   label:              bidx.i18n.i('rangeYearLabel', appName)
+                        ,   options:            options
                         });
-
                         break;
+
                         case 'memberDateOfBirth':
 
                         if( foundMin )
                         {
                             minDateObj  =   bidx.utils.parseISODate( foundMin );
-                            maxVal      =   currentYear - minDateObj.y;
+                            defaultMaxVal      =   currentYear - minDateObj.y;
 
                         }
                         if( foundMax )
                         {
                             maxDateObj  =   bidx.utils.parseISODate( foundMax );
-                            minVal      =   currentYear - maxDateObj.y;
+                            defaultMinVal      =   currentYear - maxDateObj.y;
                         }
-
-                        bidx.utils.log( 'bminVal', minVal);
-                        bidx.utils.log( 'bmaxVal', maxVal);
 
                         _renderSlider(
                         {
                             facetItem:          facetItem
-                        ,   minVal:             minVal
-                        ,   maxVal:             maxVal
+                        ,   minVal:             defaultMinVal
+                        ,   maxVal:             defaultMaxVal
                         ,   $currentCategory:   $currentCategory
-                        ,   label:              bidx.i18n.i('rangeYearLabel', appName)
+                        ,   label:              bidx.i18n.i(facetItem + 'PerLabel', appName)
+                        ,   options:            options
                         });
-
                         break;
 
                         case 'completion':
                         case 'rating':
+                        case 'planFinancingNeeded':
 
-                        minVal  =   foundMin ?  foundMin : minVal;
-                        maxVal  =   foundMax ?  foundMax : maxVal;
+                        //if( foundMin !== foundMax ) //If min and max value are same then dont render it
+                        //{
 
-                        _renderSlider(
-                        {
-                            facetItem:          facetItem
-                        ,   minVal:             minVal
-                        ,   maxVal:             maxVal
-                        ,   $currentCategory:   $currentCategory
-                        ,   label:              bidx.i18n.i('rangePerLabel', appName)
-                        });
+                            defaultMinVal  =   foundMin ?  foundMin : defaultMinVal;
+                            defaultMaxVal  =   foundMax ?  foundMax : defaultMaxVal;
 
+                            _renderSlider(
+                            {
+                                facetItem:          facetItem
+                            ,   minVal:             defaultMinVal
+                            ,   maxVal:             defaultMaxVal
+                            ,   $currentCategory:   $currentCategory
+                            ,   label:              bidx.i18n.i( facetItem + 'PerLabel', appName )
+                            ,   options:            options
+                            });
+                        //}
                         break;
 
                         default:
@@ -978,26 +994,33 @@
 
     }
 
-    function _renderSlider( options )
+    function _renderSlider( params )
     {
         var listFacetsItem
         ,   $listFacetsItem
         ,   labelMinVal
         ,   labelMaxVal
+        ,   intSeconds          =   1
+        ,   refreshId
+        ,   slideStart          =   false
         ,   sliderOptions       =   {}
-        ,   $currentCategory    =   options.$currentCategory
-        ,   facetItem           =   options.facetItem
-        ,   minVal              =   options.minVal
-        ,   maxVal              =   options.maxVal
-        ,   label               =   options.label
+        ,   $currentCategory    =   params.$currentCategory
+        ,   facetItem           =   params.facetItem
+        ,   minVal              =   params.minVal
+        ,   maxVal              =   params.maxVal
+        ,   label               =   params.label
+        ,   options             =   params.options
+        ,   criteria            =   options.criteria
         ,   defaultRange        =   CONSTANTS.RANGEDEFAULT[facetItem]
         ,   defaultMinVal       =   bidx.utils.getValue(defaultRange, '0')
         ,   defaultMaxVal       =   bidx.utils.getValue(defaultRange, '1')
         ,   sliderSnippit       =   $("#facetslider-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $sliderRange
+        ,   testIterator        = 0
         ;
 
-        labelMinVal                  =   label.replace(/%num%/g,  defaultMinVal );
-        labelMaxVal                  =   label.replace(/%num%/g,  defaultMaxVal );
+        labelMinVal                  =   label.replace(/%num%/g,  minVal );
+        labelMaxVal                  =   label.replace(/%num%/g,  maxVal );
 
         listFacetsItem = sliderSnippit
                         .replace( /%facetslider%/g,  facetItem )
@@ -1011,15 +1034,99 @@
 
         sliderOptions   =
         {
-            step:       1,
-            min:        defaultMinVal,
-            max:        defaultMaxVal,
-            value:      [minVal, maxVal],
+            step:       1
+        ,   min:        minVal
+        ,   max:        maxVal
+        ,   value:      [minVal, maxVal]
            // value:      [ (25*foundMax)/100, (75*foundMax/100) ],
-            tooltip:    'show'
+        ,   tooltip:    'always'
+       // ,   tooltip_split: true
         };
 
-        $currentCategory.find('.slider-range' ).slider( sliderOptions );
+        $sliderRange     =   $currentCategory.find('.slider-range' );
+
+        $sliderRange.slider( sliderOptions );
+
+        //set a flag so we know if we're sliding
+        $sliderRange.on('slideStart', function ()
+        {
+            // Set a flag to indicate slide in progress
+            slideStart = true;
+            // Clear the timeout
+            clearInterval( refreshId );
+        });
+
+        $sliderRange.on('slideStop', function ( )
+        {
+            var $this   =   $(this);
+            // Set a flag to indicate slide not in progress
+            slideStart  =   false;
+            // start the timeout
+            refreshId   =   setInterval( function ( )
+            { // saving the timeout
+                sliderSearch( $this );
+
+            },  intSeconds * 3000 );
+        });
+
+         /*Example "rangeFilters": {
+            "completion": {
+              "min": 0,
+              "max": 100,
+              "foundMin": 43,
+              "foundMax": 75
+            },
+            "created": {
+              "foundMin": "2013-06-03T14:39:30Z",
+              "foundMax": "2013-07-31T09:36:16Z"
+            }
+        }*/
+
+        function sliderSearch( $slider )
+        {
+                clearInterval( refreshId );
+
+                var rangeValue      =   $slider.data('value').split(',')
+                ,   min             =   rangeValue[0]
+                ,   max             =   rangeValue[1]
+                ,   rangeName       =   $slider.data('name')
+                ,   rangeFilters    =   bidx.utils.getValue( criteria, 'rangeFilters')
+            //    ,   facetFiltersCat =   []
+                ;
+
+                bidx.utils.log('facetFilters', rangeFilters);
+                bidx.utils.log('Criteria before click=', criteria);
+                bidx.utils.log('rangeName=', rangeName);
+                bidx.utils.log('filterValue=', rangeValue);
+
+                //facetFiltersCat     =   rangeFilters[rangeName];
+
+                criteria.rangeFilters[rangeName].min = min;
+                criteria.rangeFilters[rangeName].max = max;
+
+                //Make offset 0 for filtering so start from begining
+                paging.search.offset = 0;
+
+                //set the max records limit to 10
+                tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+                bidx.utils.log('After RangerFilters', criteria);
+
+
+
+                navigate(
+                {
+                    state   :   'list'
+                ,   params  :   {
+                                    q           :   options.q
+                                ,   sort        :   options.sort
+                                ,   facetFilters:   criteria.facetFilters
+                                ,   rangeFilters:   criteria.rangeFilters
+                                }
+                });
+
+
+        }
     }
 
     /* Get the search list
@@ -1110,7 +1217,6 @@
                         {
                             case 'entityType':
                             case 'role':
-                            bidx.utils.log('1',facetItems.name, item.name);
                             facetValName    = bidx.i18n.i( item.name );
                             break;
 
@@ -1212,7 +1318,6 @@
 
                 $this           = $( this );
                 filterQuery     = {};
-                filterValue     = $this.data('value');
 
                 var filterValue
                 ,   $facetWrapper       =   $this.parent().parent()
@@ -1220,6 +1325,8 @@
                 ,   clickedCategory     =   $facetWrapper.find( ".facet-title" ).data('name')
                 ,   facetFiltersCat     =   []
                 ;
+
+                filterValue             =   $this.data('value');
 
                 bidx.utils.log('facetFilters', facetFilters);
                 bidx.utils.log('Criteria before click=', criteria);
@@ -1280,6 +1387,7 @@
                                     q           :   options.q
                                 ,   sort        :   options.sort
                                 ,   facetFilters:   criteria.facetFilters
+                                ,   rangeFilters:   criteria.rangeFilters
                                 // ,   type        :   'facet'
                                 }
                 });
@@ -1322,6 +1430,7 @@
                                     q           :   options.q
                                 ,   sort        :   options.sort
                                 ,   facetFilters:   {}
+                                ,   rangeFilters:   {}
                                 // ,   type        :   'facet'
                                 }
                 });
@@ -1352,6 +1461,7 @@
         var q
         ,   sort
         ,   facetFilters
+        ,   rangeFilters
         ,   criteria
         ,   criteriaQ
         ,   paramFilter
@@ -1430,7 +1540,7 @@
                                         }
                     };
 
-        // 3. Filter
+        // 3. facetFilters
         // ex facetFilters:["0": "facet_language:fi" ]
         //
 
@@ -1440,6 +1550,17 @@
         {
             criteriaFilters = facetFilters;
             search.criteria.facetFilters    =   criteriaFilters;
+        }
+
+        // 4. RangeFilters
+        // ex RangeFilters:["0": "facet_language:fi" ]
+        //
+
+        rangeFilters = bidx.utils.getValue(params, 'rangeFilters' );
+
+        if(  rangeFilters )
+        {
+            search.criteria.rangeFilters    =  rangeFilters;
         }
 
         return search;
@@ -1486,7 +1607,7 @@
                                                 response    :   response
                                             ,   q           :   search.q
                                             ,   sort        :   search.sort
-                                            ,   criteria    :   search.criteria
+                                            ,   criteria    :   response.criteria
                                             } );
                                         }
                     } );
@@ -1612,6 +1733,7 @@
                                         q           :   options.q
                                     ,   sort        :   options.sort
                                     ,   facetFilters:   criteria.facetFilters
+                                    ,   rangeFilters:   criteria.rangeFilters
                                     }
                     ,   cb      :   function()
                                     {
@@ -2683,7 +2805,7 @@
     // ROUTER
     function navigate( options )
     {
-        bidx.utils.log("[group] navigate", options );
+        bidx.utils.log("[search] navigate", options );
 
         var params = ( $.isEmptyObject( options.params ) ) ? {} : options.params
         ;
