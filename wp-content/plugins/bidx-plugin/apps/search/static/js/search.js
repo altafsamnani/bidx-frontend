@@ -1239,7 +1239,7 @@
 
                 if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterValue, facetFiltersCat ) !== -1)
                 {
-                    criteria.facetFilters[clickedCategory].pop( filterValue );
+                    criteria.facetFilters[clickedCategory] = _.without(facetFiltersCat, filterValue); // removed the match value from criteria, using underscore function make sure its included
                 }
                 else if ( $.inArray(filterValue, facetFiltersCat ) === -1 )
                 {
