@@ -12,7 +12,7 @@
     <Item value="contactRequest">New contact request</Item>
 
     <Item value="groupAdmin">Group admin</Item>
-    <Item value="msgToGroup">Message to group owner</Item>
+    <Item value="msgToGroup">Portal moderator</Item>
     <Item value="trashedFrom">Deleted from</Item>
 
     <Item value="labelUnblock">Unblock</Item>
