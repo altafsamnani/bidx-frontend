@@ -7,6 +7,7 @@
 
 
     <Item value="groupAdmin">Group admin</Item>
+    <Item value="portalModerator">Portal moderator</Item>
     <Item value="groupEntrepreneurs">All Entrepreneurs</Item>
     <Item value="groupInvestors">All Investors</Item>
     <Item value="groupMentors">All Mentors</Item>

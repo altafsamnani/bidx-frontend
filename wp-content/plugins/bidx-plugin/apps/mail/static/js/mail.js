@@ -250,7 +250,7 @@
                 ,  'value' :       groupownerDrpDownDefaultVal
                 } );
 
-                option.text( bidx.i18n.i( "msgToGroup", appName ) );
+                option.text( bidx.i18n.i( "portalModerator", appName ) );
 
                 listItems.push( option );
 
@@ -1389,7 +1389,7 @@
                 ,  'value' :       groupownerDrpDownDefaultVal
                 } );
 
-                option.text( bidx.i18n.i( "msgToGroup", appName ) );
+                option.text( bidx.i18n.i( "portalModerator", appName ) );
 
                 listItems.push( option );
             }
