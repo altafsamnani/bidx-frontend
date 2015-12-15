@@ -206,6 +206,7 @@ class BidxShortcode
             wp_register_script ('bootstrap-paginator', $bidxJsDir . '/vendor/bootstrap-paginator.js', array ('bootstrap', 'jquery'), '20131103', TRUE);
             wp_register_script ('jquery-raty', $vendorDir . '/raty-master/lib/jquery.raty.js', array ('jquery'), '2.7.0', TRUE);
             wp_register_script ('chosen', $vendorDir . '/chosen_v1.0.0/chosen.jquery.js', array ('jquery'), '20131111', TRUE);
+            wp_register_script ('responsive-pagination', $vendorDir . '/responsive-pagination/responsive-paginate.js', array ('jquery'), '20151215', TRUE);
 
             if( $langLocale )
             {

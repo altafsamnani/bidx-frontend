@@ -1759,6 +1759,7 @@
             }
 
             $searchPager.bootstrapPaginator( pagerOptions );
+            $( ".pagination" ).rPage();
 
             // create member listitems
             //
@@ -2873,8 +2874,6 @@
     }
 
     window.bidx.search = search;
-
-
 
     // if hash is empty and there is not path in the uri, load #home
     //
