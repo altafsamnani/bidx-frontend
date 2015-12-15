@@ -158,11 +158,11 @@
                             $rowValues = array (__('E-mail','bidxplugin') => $this->exst ($personalDetails->emailAddress));
                             echo $this->addRowsWithLabelAdjacent ('col-xs-3', 'col-sm-6 margin-both', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
                             $rowValues = array (__('Mobile','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'mobile'));
-                            echo $this->addRowsWithLabelAdjacent ('col-xs-3', 'col-sm-8', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                            echo $this->addRowsWithLabelAdjacent ('col-xs-3', 'col-sm-6 margin-both', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
                             $rowValues = array (__('Fax','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'fax'));
-                            echo $this->addRowsWithLabelAdjacent ('col-xs-3', 'col-sm-8', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                            echo $this->addRowsWithLabelAdjacent ('col-xs-3', 'col-sm-6 margin-both', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
                             $rowValues = array (__('Landline','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'landLine'));
-                            echo $this->addRowsWithLabelAdjacent ('col-xs-3', 'col-sm-8', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                            echo $this->addRowsWithLabelAdjacent ('col-xs-3', 'col-sm-6 margin-both', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
 ?>
                         </div>
 
