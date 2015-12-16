@@ -20,20 +20,22 @@
     <div class="row">
          <section class="views">
             <div class="col-sm-4">
-                <div class="side-bar well sideBar main-facet">
-                    <article class="viewFacet">
-                        <div class="facet-reset">
-                            <a data-filter="save"  class="anchor-save btn btn-block btn-success"><span class="fa fa-plus"></span> <?php _e('Save this search', 'bidxplugin');?></a>
-                            <a data-filter="reset" class="anchor-reset btn btn-block btn-danger"><?php _e("Clear all filters", "bidxplugin");?></a>
+                <form action="" class="filtersform">
+                    <div class="side-bar well sideBar main-facet">
+                        <article class="viewFacet">
+                            <div class="facet-reset">
+                                <a data-filter="save"  class="anchor-save btn btn-block btn-success hide"><span class="fa fa-plus"></span> <?php _e('Save this search', 'bidxplugin');?></a>
+                                <a data-filter="reset" class="anchor-reset btn btn-block btn-danger"><?php _e("Clear all filters", "bidxplugin");?></a>
 
 
-                        </div>
-                         <div class="facet-list">
+                            </div>
+                             <div class="facet-list">
 
-                            <?php _e('Rendering facets...', 'bidxplugin');?>
-                         </div>
-                    </article>
-                </div>
+                                <?php _e('Rendering facets...', 'bidxplugin');?>
+                             </div>
+                        </article>
+                    </div>
+                </form>
             </div>
             <div class="col-sm-8">
                  <div>
@@ -134,7 +136,7 @@
         <script type="text/html" id="facet-listitem">
             <div class="facet-category-%facets_name%">
                 <h5 data-name="%facets_name%" class="facet-title">%facets_title%
-                 <a class="hide pull-right reset" href="#" name='reset-%facetslider%' id="reset-%facetslider%" ><?php _e('Reset', 'bidxplugin');?></a></h5>
+                 <a class="hide pull-right reset" href="#" name='reset-%facetslider%' id="reset-%facetslider%" data-name="%facetslider%"><?php _e('Reset', 'bidxplugin');?></a></h5>
                 <div class="list-group"></div>
             </div>
 
@@ -159,11 +161,12 @@
 
         <!-- Html Templates for Datepicker Filters -->
         <script type="text/html" id="facetcalendar-listitem"> <!--
-
-        <div class="input-group input-daterange">
-            <input type="text" class="form-control facetCalFrom" id="cal-range-from-%facetcalendar%" name="cal-range-from-%facetcalendar%" data-date-end-date="0d">
-            <span class="input-group-addon">to</span>
-            <input type="text" class="form-control facetCalTo" id="cal-range-to-%facetcalendar%" name="cal-range-to-%facetcalendar%" data-date-end-date="0d">
+        <div class="form-group">
+            <div class="input-group input-daterange">
+                <input type="text" class="form-control facetCalFrom facetCalendar" id="cal-range-from-%facetcalendar%" data-name="%facetcalendar%" name="cal-range-from-%facetcalendar%" data-date-end-date="0d">
+                <span class="input-group-addon">to</span>
+                <input type="text" class="form-control facetCalTo facetCalendar" id="cal-range-to-%facetcalendar%" data-name="%facetcalendar%"name="cal-range-to-%facetcalendar%" data-date-end-date="0d">
+            </div>
         </div>
         -->
         </script>

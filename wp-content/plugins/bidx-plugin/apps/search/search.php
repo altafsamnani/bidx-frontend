@@ -21,6 +21,7 @@ class search {
 */
 	static $deps = array(	'bootstrap-slider'
 						,   'underscore'
+						,	'numeral'
 						,	'bidx-tagsinput'
 						, 	'bidx-checkbox'
 						, 	'bidx-common'

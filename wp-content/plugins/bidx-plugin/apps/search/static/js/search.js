@@ -75,12 +75,12 @@
         ,   LOAD_COUNTER:                       0
         ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
         ,   ENTITY_TYPES:                       [
-                                                    "bdxPlan"
-                                                ,   "bdxMember"
+                                                    "bdxmember"
+                                                ,   "bdxplan"
                                                 ]
         ,   NONTITY_TYPES:                      [
-                                                    "bdxPlan"
-                                                ,   "bdxMember"
+                                                    "bdxplan"
+                                                ,   "bdxmember"
                                                 ]
         ,   FILTERQUERY:                        []
         ,   RANGEDEFAULT:                       {
@@ -234,7 +234,7 @@
 
         $frmSearch.validate(
         {
-            /*rules:
+           /*  rules:
             {
                 "q":
                 {
@@ -246,7 +246,7 @@
                 // Anything that is app specific, the general validations should have been set
                 // in common.js already
             }
-        ,   */
+        , */
             submitHandler:  function()
             {
 
@@ -279,6 +279,65 @@
         } );
 
 
+    }
+
+    function _validateDatePickers()
+    {
+        var  $fromFilters   = $element.find( ".filtersform" )
+        ;
+
+        bidx.utils.log(' I am in validate',$fromFilters );
+
+        $fromFilters.validate(
+        {
+            rules:
+            {
+                "cal-range-from-created":
+                {
+                    // TODO: datepicker validation
+                   required:   true
+                }
+            ,   "cal-range-to-created":
+                {
+                    // TODO: datepicker validation
+                }
+            } /*
+        ,   messages:
+            {
+                // Anything that is app specific, the general validations should have been set
+                // in common.js already
+            }
+            */
+        ,    submitHandler:  function()
+            {
+
+                _showAllView( "load" );
+                _showAllView( "searchList" );
+                _showAllView( "pager" );
+                _toggleListLoading( $element );
+                //_hideView( "pager" );
+
+                // load businessSummaries
+                //
+
+                var q          = $frmSearch.find( "[name='q']" ).val();
+
+                _getSearchList(
+                {
+                    params  :   {
+                                    q : q
+                                }
+                ,   cb:   function()
+                        {
+                           _hideView( "load" );
+                           _toggleListLoading( $element );
+                           tempLimit = CONSTANTS.SEARCH_LIMIT;
+                           _actionBulkActions();
+                          //
+                        }
+                });
+            }
+        } );
     }
 
     // generic view function. Hides all views and then shows the requested view. In case State argument is passed in, it will be used to show the title tag of that view
@@ -709,6 +768,105 @@
 
     }
 
+    function _doRangeSliderAction( options )
+    {
+        var $this
+        ,   $listReset
+        ,   criteria        =   options.criteria
+        ,   $mainFacet      =   $element.find(".main-facet")
+        ;
+        // Facet Label Click
+            //
+            $listReset  =   $mainFacet.find('.reset');
+
+            $listReset.on('click', function( e )
+            {
+                e.preventDefault();
+
+                $this           = $( this );
+
+                var filterValue
+                ,   rangeFilters        =   bidx.utils.getValue( criteria, 'rangeFilters')
+                ,   clickedCategory     =   $this.data('name')
+                ,   rangeFiltersCat     =   ( !$.isEmptyObject( rangeFilters ) && !$.isEmptyObject(rangeFilters.clickedCategory))   ? rangeFilters.clickedCategory : []
+                ;
+
+                bidx.utils.log('Criteria before click=', criteria);
+                bidx.utils.log('clickedCategory=', clickedCategory);
+                bidx.utils.log('filterValue=', filterValue);
+
+                if ( rangeFiltersCat )
+                {
+                    bidx.utils.log('criteria removed' , rangeFiltersCat);
+                    delete criteria.rangeFilters[clickedCategory].min;
+                    delete criteria.rangeFilters[clickedCategory].max;
+
+                }
+
+                if ( criteria.rangeFilters.length === 0 )
+                {
+                    $listReset.addClass( "hide" );
+                }
+
+                //Make offset 0 for filtering so start from begining
+                paging.search.offset = 0;
+
+                //set the max records limit to 10
+                tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+                bidx.utils.log('Filter clicked with q=', options.q);
+                bidx.utils.log('Filter sort=', options.sort);
+                bidx.utils.log('Filter criteria=', criteria.rangeFilters);
+
+                navigate(
+                {
+                    state   :   'list'
+                ,   params  :   {
+                                    q           :   options.q
+                                ,   sort        :   options.sort
+                                ,   rangeFilters:   criteria.rangeFilters
+                                // ,   type        :   'facet'
+                                }
+                });
+            });
+
+    }
+
+    function _doRangeCalendarAction()
+    {
+        var $calendar   =   $('.facetCalendar')
+        ;
+
+        _validateDatePickers();
+
+        $calendar.datepicker()
+        .on('changeDate', function(e)
+        {
+            var $input      =   $(this)
+            ,   name        =   $input.data('name')
+            ,   $fromDate   =   $element.find( '[name=cal-range-from-' + name + ']')
+            ,   $toDate     =   $element.find( '[name=cal-range-to-' + name + ']')
+            ,   fromUtc
+            ,   toUtc
+            ,   frmValue    =   bidx.utils.getElementValue( $fromDate )
+            ,   toValue     =   bidx.utils.getElementValue( $toDate )
+            ;
+
+            if( frmValue )
+            {
+                fromUtc     =   $fromDate.datepicker( "getUTCDate" );
+                $toDate.datepicker( "setStartDate", fromUtc );
+            }
+
+            if( toValue )
+            {
+                toUtc       =   $toDate.datepicker( "getUTCDate" );
+                $fromDate.datepicker( "setEndDate", toUtc );
+            }
+
+        });
+    }
+
     function _doRangeFilterListing( options )
     {
         var snippit         = $("#facet-listitem").html().replace(/(<!--)*(-->)*/g, "")
@@ -716,18 +874,14 @@
         ,   criteria        = options.criteria
         ,   response        = options.response
         ,   rangeFilters    = bidx.utils.getValue(response.criteria, 'rangeFilters')
-        ,   $mainFacet      = $element.find(".main-facet")
-        ,   $resetFacet     = $element.find(".facet-reset")
         ,   $list           = $element.find(".facet-list")
         ,   $filters        =  $('.topfilters')
         ,   $advancedSearch =  $('.advancedFilters')
         ,   emptyVal        = ''
         ,   $listItem
         ,   $listFacetsItem
-        ,   $listAnchor
         ,   $listClose
         ,   $viewFacetItem
-        ,   $this
         ,   $currentCategory
         ,   listFacetsItem
         ,   listItem
@@ -746,6 +900,8 @@
         ,   defaultMaxVal
         ,   minDateObj
         ,   maxDateObj
+        ,   isSliderAction      =   true
+        ,   isCalendarAction    =   true
         ;
 
         /*$list.empty();
@@ -755,7 +911,6 @@
         if ( response && rangeFilters )
         {
             // Add Default image if there is no image attached to the bs
-            bidx.utils.log('rangeFilters', rangeFilters);
             $.each( rangeFilters , function ( facetItem, facetMinMax )
             {
                 if ( !$.isEmptyObject(facetItem) )
@@ -777,14 +932,14 @@
                     bidx.utils.log( 'foundMax', foundMax);
 
 
-
                     listItem        =   snippit
                                         .replace( /%facets_title%/g, bidx.i18n.i( facetItem, appName ) )
                                         .replace( /%facets_name%/g, facetItem  )
+                                        .replace( /%facetslider%/g, facetItem  )
                                         ;
 
                     $listItem       = listItem;
-                    $list.append($listItem );
+                    $list.append( $listItem );
                     $currentCategory = $list.find( ".facet-category-" + facetItem );
 
                     // If slider/datepicker was set then show reset button
@@ -798,6 +953,8 @@
                         /* Slider */
                         case 'created':
                         case 'modified':
+
+                        isCalendarAction    =   true;
 
                         defaultMinVal  =   foundMin ?  foundMin : defaultMinVal;
                         defaultMaxVal  =   foundMax ?  foundMax : defaultMaxVal;
@@ -814,6 +971,8 @@
                         break;
 
                         case 'memberDateOfBirth':
+
+                        isSliderAction      =   true;
 
                         if( foundMin )
                         {
@@ -842,11 +1001,13 @@
                         case 'rating':
                         case 'planFinancingNeeded':
 
+                        isSliderAction      =   true;
+
                         //if( foundMin !== foundMax ) //If min and max value are same then dont render it
                         //{
 
-                            defaultMinVal  =   foundMin ?  foundMin : defaultMinVal;
-                            defaultMaxVal  =   foundMax ?  foundMax : defaultMaxVal;
+                            defaultMinVal   =   foundMin ?  foundMin : defaultMinVal;
+                            defaultMaxVal   =   foundMax ?  foundMax : defaultMaxVal;
 
                             _renderSlider(
                             {
@@ -867,82 +1028,16 @@
                 }
             } );
 
-
-            // Facet Label Click
-            //
-            $listAnchor = $mainFacet.find('.filtertest');
-
-            $listAnchor.on('click', function( e )
+            if( isSliderAction )
             {
-                e.preventDefault();
+                _doRangeSliderAction( options );
 
-                $this           = $( this );
-                filterQuery     = {};
-                filterValue     = $this.data('value');
+            }
 
-                var filterValue
-                ,   facetFilters        =   bidx.utils.getValue( criteria, 'facetFilters')
-                ,   clickedCategory     =   $this.parent().parent().find( ".facet-title" ).data('name')
-                ,   facetFiltersCat     =   ( !$.isEmptyObject( facetFilters ) && !$.isEmptyObject(facetFilters.clickedCategory))   ? facetFilters.clickedCategory : []
-                ;
-
-                bidx.utils.log('Criteria before click=', criteria);
-                bidx.utils.log('clickedCategory=', $this.parent().parent().find( ".facet-title" ));
-                bidx.utils.log('filterValue=', filterValue);
-
-                if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterValue, facetFiltersCat ) !== -1)
-                {
-                    bidx.utils.log('criteria removed' , filterQuery, criteria.facetFilters);
-                    criteria.facetFilters = _.without(criteria.facetFilters, filterQuery); // removed the match value from criteria, using underscore function make sure its included
-
-                }
-                else if ( $.inArray(filterValue, facetFiltersCat ) === -1 )
-                {
-                    criteria.facetFilters = ( facetFilters) ? facetFilters : [];
-                    filterQuery[clickedCategory] = [];
-
-                    filterQuery[clickedCategory].push( filterValue );
-                    criteria.facetFilters = filterQuery ;
-                }
-
-                /*// For search filtering add the current filter
-                if( filterQuery === 'reset' && !$resetFacet.hasClass('hide'))
-                {
-                    criteria.facetFilters = [];
-                    options.q        = '';
-                    options.sort     = [];
-                    bidx.controller.updateHash( "#search/list" );
-
-                    $resetFacet.addClass( "hide" );
-                }*/
-
-                if ( criteria.facetFilters.length === 0 )
-                {
-                    $resetFacet.addClass( "hide" );
-                }
-
-                //Make offset 0 for filtering so start from begining
-                paging.search.offset = 0;
-
-                //set the max records limit to 10
-                tempLimit = CONSTANTS.SEARCH_LIMIT;
-
-                bidx.utils.log('Filter clicked ', filterQuery);
-                bidx.utils.log('Filter clicked with q=', options.q);
-                bidx.utils.log('Filter sort=', options.sort);
-                bidx.utils.log('Filter criteria=', criteria.facetFilters);
-
-                navigate(
-                {
-                    state   :   'list'
-                ,   params  :   {
-                                    q           :   options.q
-                                ,   sort        :   options.sort
-                                ,   facetFilters:   criteria.facetFilters
-                                // ,   type        :   'facet'
-                                }
-                });
-            });
+            if( isCalendarAction )
+            {
+                _doRangeCalendarAction( options );
+            }
         }
         else
         {
@@ -966,14 +1061,14 @@
         ,   calSnippit          =   $("#facetcalendar-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   isRTL               =   ( currentLanguage === 'ar')     ?   true    : false
         ,   pickerOptions       =   {
-                                       // format:                 "d M yyyy"
-                                       todayHighlight:         true
-                                    ,   startView:              2
-                                    ,   language:               currentLanguage
-                                    ,   rtl:                    isRTL
+                                        startView:              2
+                                    ,   todayHighlight:         true
                                     ,   autoclose:              true
                                     ,   calendarWeeks:          true
+                                    ,   language:               currentLanguage
+                                    ,   rtl:                    isRTL
                                     ,   title:                  facetItem
+                                    ,   format:                 "d M yyyy"
                                     }
         ;
 
@@ -1000,6 +1095,9 @@
         ,   $listFacetsItem
         ,   labelMinVal
         ,   labelMaxVal
+        ,   total
+        ,   ticks
+        ,   ticksLabels
         ,   intSeconds          =   1
         ,   refreshId
         ,   slideStart          =   false
@@ -1017,10 +1115,40 @@
         ,   sliderSnippit       =   $("#facetslider-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $sliderRange
         ,   testIterator        = 0
+        ,   tick1
+        ,   tick2
+        ,   tick3
+        ,   tick4
         ;
 
         labelMinVal                  =   label.replace(/%num%/g,  minVal );
         labelMaxVal                  =   label.replace(/%num%/g,  maxVal );
+
+        if( (facetItem === 'planFinancingNeeded' ) && ( maxVal > minVal ) )
+        {
+            /*total   =   minVal + maxVal;
+
+            tick1   =   total/4;
+
+            tick2   =   total/2;
+
+            sliderOptions.ticks_labels      =   [ numeral(minVal).format('$0,0a')
+                                                , numeral(tick1).format('$0,0a')
+                                                , numeral(tick2).format('$0,0a')
+                                                , numeral(maxVal).format('$0,0a')
+                                                ];
+            sliderOptions.ticks             =   [ numeral(minVal).format('$0,0')
+                                                , numeral(tick1).format('$0,0')
+                                                , numeral(tick2).format('$0,0')
+                                                , numeral(maxVal).format('$0,0')
+                                                ];
+
+            sliderOptions.ticks_snap_bounds =   30;*/
+
+            labelMinVal     =   numeral(minVal).format('$0,0a');
+
+            labelMaxVal     =   numeral(maxVal).format('$0,0a');
+        }
 
         listFacetsItem = sliderSnippit
                         .replace( /%facetslider%/g,  facetItem )
@@ -1039,9 +1167,11 @@
         ,   max:        maxVal
         ,   value:      [minVal, maxVal]
            // value:      [ (25*foundMax)/100, (75*foundMax/100) ],
-        ,   tooltip:    'always'
+        //,   tooltip:    'always'
        // ,   tooltip_split: true
         };
+
+
 
         $sliderRange     =   $currentCategory.find('.slider-range' );
 
