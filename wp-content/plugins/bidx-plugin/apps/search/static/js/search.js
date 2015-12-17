@@ -1096,8 +1096,8 @@
         ,   $currentCategory    =   params.$currentCategory
         ,   facetItem           =   params.facetItem
         ,   facetMinMax         =   params.facetMinMax
-        ,   min                 =   Number(bidx.utils.getValue( facetMinMax, 'min' ))
-        ,   max                 =   Number(bidx.utils.getValue( facetMinMax, 'max' ))
+        ,   min                 =   bidx.utils.getValue( facetMinMax, 'min' )
+        ,   max                 =   bidx.utils.getValue( facetMinMax, 'max' )
         ,   minDateObj
         ,   maxDateObj
         ,   foundMin            =   bidx.utils.getValue( facetMinMax, 'foundMin')
@@ -1123,6 +1123,10 @@
         min         =   min ? min : foundMin;
 
         max         =   max ? max : foundMax;
+
+        bidx.utils.log( 'min', min);
+
+        bidx.utils.log( 'max', max);
 
 
         if( (foundMin === foundMax) && ( min || max ) )
@@ -1182,7 +1186,7 @@
 
                     minDateObj      =   new Date(min);
                     timeDiff        =   Math.abs(date.getTime() - minDateObj.getTime());
-                    maxAge          =   Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));
+                    maxAge          =   Math.ceil(timeDiff / (1000 * 3600 * 24 * 365)) - 1;
                    // defaultMaxVal   =   maxAge;
                 }
 
@@ -1194,13 +1198,16 @@
 
                     maxDateObj      =   new Date(max);
                     timeDiff        =   Math.abs(date.getTime() - maxDateObj.getTime());
-                    minAge          =   Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));
+                    minAge          =   Math.ceil(timeDiff / (1000 * 3600 * 24 * 365)) - 1;
                    // defaultMinVal   =   minAge;
                 }
 
                 min     =   minAge;
 
                 max     =   maxAge;
+
+                bidx.utils.log('min', minAge);
+                bidx.utils.log('max', maxAge);
 
                 labelMinVal =   label.replace(/%num%/g,  defaultMinVal );
 
@@ -1210,6 +1217,9 @@
             break;
 
             case 'planFinancingNeeded':
+
+                min             =   Number(min);
+                max             =   Number(max);
 
                 defaultMinVal   =  foundMin;
 
