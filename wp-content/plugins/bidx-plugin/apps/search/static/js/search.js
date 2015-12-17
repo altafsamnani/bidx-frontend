@@ -1233,6 +1233,10 @@
 
             default:
 
+
+                min             =   Number(min);
+                max             =   Number(max);
+
             labelMinVal =   label.replace(/%num%/g,  defaultMinVal );
 
             labelMaxVal =   label.replace(/%num%/g,  defaultMaxVal );
