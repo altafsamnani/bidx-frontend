@@ -33,6 +33,7 @@ class search {
 						, 	'jquery-validation-bidx-additional-methods'
 						,	'bidx-chosen'
 						, 	'jquery-raty'
+						,   'responsive-pagination'
 						);
 	/**
 	 * Constructor
