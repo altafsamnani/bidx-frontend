@@ -1045,11 +1045,6 @@
             ,   value   = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails." + f )
             ;
 
-            if(f === 'dateOfBirth')
-            {
-                bidx.utils.log('birthdate', value);
-            }
-
             $input.each( function()
             {
                 bidx.utils.setElementValue( $( this ), value );

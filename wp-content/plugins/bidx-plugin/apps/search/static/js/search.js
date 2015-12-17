@@ -85,7 +85,7 @@
         ,   FILTERQUERY:                        []
         ,   RANGEDEFAULT:                       {
                                                     rating:             [0, 5]
-                                                ,   completion:         [1,100]
+                                                ,   completion:         [0,100]
                                                 ,   created:            ["2014-01-01T00:00:00.000Z", currentDate]
                                                 ,   modified:           ["2014-01-01T00:43:43.000Z", currentDate]
                                                 ,   memberDateOfBirth:  [0, 100]
@@ -279,65 +279,6 @@
         } );
 
 
-    }
-
-    function _validateDatePickers()
-    {
-        var  $fromFilters   = $element.find( ".filtersform" )
-        ;
-
-        bidx.utils.log(' I am in validate',$fromFilters );
-
-        $fromFilters.validate(
-        {
-            rules:
-            {
-                "cal-range-from-created":
-                {
-                    // TODO: datepicker validation
-                   required:   true
-                }
-            ,   "cal-range-to-created":
-                {
-                    // TODO: datepicker validation
-                }
-            } /*
-        ,   messages:
-            {
-                // Anything that is app specific, the general validations should have been set
-                // in common.js already
-            }
-            */
-        ,    submitHandler:  function()
-            {
-
-                _showAllView( "load" );
-                _showAllView( "searchList" );
-                _showAllView( "pager" );
-                _toggleListLoading( $element );
-                //_hideView( "pager" );
-
-                // load businessSummaries
-                //
-
-                var q          = $frmSearch.find( "[name='q']" ).val();
-
-                _getSearchList(
-                {
-                    params  :   {
-                                    q : q
-                                }
-                ,   cb:   function()
-                        {
-                           _hideView( "load" );
-                           _toggleListLoading( $element );
-                           tempLimit = CONSTANTS.SEARCH_LIMIT;
-                           _actionBulkActions();
-                          //
-                        }
-                });
-            }
-        } );
     }
 
     // generic view function. Hides all views and then shows the requested view. In case State argument is passed in, it will be used to show the title tag of that view
@@ -832,36 +773,75 @@
 
     }
 
-    function _doRangeCalendarAction()
+    function _doRangeCalendarAction( options )
     {
-        var $calendar   =   $('.facetCalendar')
+        var criteria    =   options.criteria
+        ,   $calendar   =   $('.facetCalendar')
         ;
-
-        _validateDatePickers();
 
         $calendar.datepicker()
         .on('changeDate', function(e)
         {
             var $input      =   $(this)
-            ,   name        =   $input.data('name')
-            ,   $fromDate   =   $element.find( '[name=cal-range-from-' + name + ']')
-            ,   $toDate     =   $element.find( '[name=cal-range-to-' + name + ']')
-            ,   fromUtc
-            ,   toUtc
-            ,   frmValue    =   bidx.utils.getElementValue( $fromDate )
-            ,   toValue     =   bidx.utils.getElementValue( $toDate )
+            ,   rangeFilters
+            ,   rangeName        =   $input.data('name')
+            ,   $fromDate   =   $element.find( '[name=cal-range-from-' + rangeName + ']')
+            ,   $toDate     =   $element.find( '[name=cal-range-to-' + rangeName + ']')
+            ,   min
+            ,   max
+            ,   frmValue    =   $fromDate.datepicker( "getUTCDate" )
+            ,   toValue     =   $toDate.datepicker( "getUTCDate" )
             ;
-
+            //getISODateTime
             if( frmValue )
             {
-                fromUtc     =   $fromDate.datepicker( "getUTCDate" );
-                $toDate.datepicker( "setStartDate", fromUtc );
+                min     =   bidx.utils.getISODateTime( frmValue  );
+                $toDate.datepicker( "setStartDate", frmValue );
             }
 
             if( toValue )
             {
-                toUtc       =   $toDate.datepicker( "getUTCDate" );
-                $fromDate.datepicker( "setEndDate", toUtc );
+                max       =   bidx.utils.getISODateTime( toValue  );
+                $fromDate.datepicker( "setEndDate", toValue );
+            }
+
+            bidx.utils.log('frmValue', frmValue );
+            bidx.utils.log('toValue', toValue );
+            bidx.utils.log('min', min );
+            bidx.utils.log('max', max );
+
+            if( frmValue && toValue)
+            {
+                rangeFilters    =   bidx.utils.getValue( criteria, 'rangeFilters');
+
+                bidx.utils.log('facetFilters', rangeFilters);
+                bidx.utils.log('Criteria before click=', criteria);
+                bidx.utils.log('rangeName=', rangeName);
+
+
+                criteria.rangeFilters[rangeName].min = min;
+                criteria.rangeFilters[rangeName].max = max;
+
+                //Make offset 0 for filtering so start from begining
+                paging.search.offset = 0;
+
+                //set the max records limit to 10
+                tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+                bidx.utils.log('After RangerFilters', criteria);
+
+
+
+                navigate(
+                {
+                    state   :   'list'
+                ,   params  :   {
+                                    q           :   options.q
+                                ,   sort        :   options.sort
+                                ,   facetFilters:   criteria.facetFilters
+                                ,   rangeFilters:   criteria.rangeFilters
+                                }
+                });
             }
 
         });
@@ -898,6 +878,8 @@
         ,   defaultRange
         ,   defaultMinVal
         ,   defaultMaxVal
+        ,   foundMinObj
+        ,   foundMaxObj
         ,   minDateObj
         ,   maxDateObj
         ,   isSliderAction      =   true
@@ -913,23 +895,18 @@
             // Add Default image if there is no image attached to the bs
             $.each( rangeFilters , function ( facetItem, facetMinMax )
             {
-                if ( !$.isEmptyObject(facetItem) )
+                min             =   bidx.utils.getValue(facetMinMax, 'min');
+
+                 max             =   bidx.utils.getValue(facetMinMax, 'min');
+
+                foundMin        =   bidx.utils.getValue(facetMinMax, 'foundMin');
+
+                foundMax        =   bidx.utils.getValue(facetMinMax, 'foundMax');
+
+                if ( !$.isEmptyObject(facetItem)  &&
+                    ( (foundMin !== foundMax) || min || max )
+                     )
                 {
-                    min             =   bidx.utils.getValue(facetMinMax, 'min');
-                    max             =   bidx.utils.getValue(facetMinMax, 'max');
-
-                    foundMin        =   bidx.utils.getValue(facetMinMax, 'foundMin');
-                    foundMax        =   bidx.utils.getValue(facetMinMax, 'foundMax');
-
-                    defaultRange    =   CONSTANTS.RANGEDEFAULT[facetItem];
-                    defaultMinVal   =   bidx.utils.getValue(defaultRange, '0');
-                    defaultMaxVal   =   bidx.utils.getValue(defaultRange, '1');
-
-                    bidx.utils.log( 'defaultMinVal', defaultMinVal);
-                    bidx.utils.log( 'defaultMaxVal', defaultMaxVal);
-
-                    bidx.utils.log( 'foundMin', foundMin);
-                    bidx.utils.log( 'foundMax', foundMax);
 
 
                     listItem        =   snippit
@@ -943,6 +920,8 @@
                     $currentCategory = $list.find( ".facet-category-" + facetItem );
 
                     // If slider/datepicker was set then show reset button
+
+
                     if( min || max )
                     {
                         $currentCategory.find(".reset").removeClass('hide');
@@ -956,14 +935,10 @@
 
                         isCalendarAction    =   true;
 
-                        defaultMinVal  =   foundMin ?  foundMin : defaultMinVal;
-                        defaultMaxVal  =   foundMax ?  foundMax : defaultMaxVal;
-
                         _renderCalendar(
                         {
                             facetItem:          facetItem
-                        ,   minVal:             defaultMinVal
-                        ,   maxVal:             defaultMaxVal
+                        ,   facetMinMax:        facetMinMax
                         ,   $currentCategory:   $currentCategory
                         ,   label:              bidx.i18n.i('rangeYearLabel', appName)
                         ,   options:            options
@@ -974,23 +949,10 @@
 
                         isSliderAction      =   true;
 
-                        if( foundMin )
-                        {
-                            minDateObj  =   bidx.utils.parseISODate( foundMin );
-                            defaultMaxVal      =   currentYear - minDateObj.y;
-
-                        }
-                        if( foundMax )
-                        {
-                            maxDateObj  =   bidx.utils.parseISODate( foundMax );
-                            defaultMinVal      =   currentYear - maxDateObj.y;
-                        }
-
                         _renderSlider(
                         {
                             facetItem:          facetItem
-                        ,   minVal:             defaultMinVal
-                        ,   maxVal:             defaultMaxVal
+                        ,   facetMinMax:        facetMinMax
                         ,   $currentCategory:   $currentCategory
                         ,   label:              bidx.i18n.i(facetItem + 'PerLabel', appName)
                         ,   options:            options
@@ -1005,19 +967,14 @@
 
                         //if( foundMin !== foundMax ) //If min and max value are same then dont render it
                         //{
-
-                            defaultMinVal   =   foundMin ?  foundMin : defaultMinVal;
-                            defaultMaxVal   =   foundMax ?  foundMax : defaultMaxVal;
-
-                            _renderSlider(
-                            {
-                                facetItem:          facetItem
-                            ,   minVal:             defaultMinVal
-                            ,   maxVal:             defaultMaxVal
-                            ,   $currentCategory:   $currentCategory
-                            ,   label:              bidx.i18n.i( facetItem + 'PerLabel', appName )
-                            ,   options:            options
-                            });
+                        _renderSlider(
+                        {
+                            facetItem:          facetItem
+                        ,   facetMinMax:        facetMinMax
+                        ,   $currentCategory:   $currentCategory
+                        ,   label:              bidx.i18n.i( facetItem + 'PerLabel', appName )
+                        ,   options:            options
+                        });
                         //}
                         break;
 
@@ -1054,10 +1011,20 @@
         ,   $calendarTo
         ,   $currentCategory    =   options.$currentCategory
         ,   facetItem           =   options.facetItem
-        ,   minVal              =   bidx.utils.parseISODate( options.minVal )
-        ,   maxVal              =   bidx.utils.parseISODate( options.maxVal )
-        ,   minDateObj          =   minVal.y + '-' + minVal.m + '-' + minVal.d
-        ,   maxDateObj          =   maxVal.y + '-' + maxVal.m + '-' + maxVal.d
+        ,   facetMinMax         =   options.facetMinMax
+
+        ,   minVal              =   bidx.utils.getValue(facetMinMax, 'min')
+        ,   minObj              =   ( minVal ) ? bidx.utils.parseISODate ( minVal ) : ''
+        ,   min                 =   ( minVal ) ? new Date( minObj.y, minObj.m - 1, minObj.d ) : ''
+
+        ,   maxVal              =   bidx.utils.getValue(facetMinMax, 'max')
+        ,   maxObj              =   ( maxVal ) ? bidx.utils.parseISODate ( maxVal ) : ''
+        ,   max                 =   ( maxVal ) ? new Date( maxObj.y, maxObj.m - 1, maxObj.d ) : ''
+
+        ,   foundMinObj         =   bidx.utils.parseISODate (facetMinMax.foundMin)
+        ,   foundMaxObj         =   bidx.utils.parseISODate (facetMinMax.foundMax)
+        ,   foundMin            =   new Date( foundMinObj.y, foundMinObj.m - 1, foundMinObj.d )
+        ,   foundMax            =   new Date( foundMaxObj.y, foundMaxObj.m - 1, foundMaxObj.d )
         ,   calSnippit          =   $("#facetcalendar-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   isRTL               =   ( currentLanguage === 'ar')     ?   true    : false
         ,   pickerOptions       =   {
@@ -1069,9 +1036,10 @@
                                     ,   rtl:                    isRTL
                                     ,   title:                  facetItem
                                     ,   format:                 "d M yyyy"
+                                    ,   startDate:              (minVal) ?  min : foundMin
+                                    ,   endDate:                (maxVal) ?  max : foundMax // Why because you cant set max date then if returns foundmax value is lower then max
                                     }
         ;
-
 
         listFacetsItem = calSnippit
                         .replace( /%facetcalendar%/g,   facetItem   )
@@ -1081,11 +1049,34 @@
 
         $currentCategory.find( ".list-group" ).append($listFacetsItem);
 
+        bidx.utils.log( 'pickerOptions', pickerOptions);
+
         $calendarFrom   = $currentCategory.find( '#cal-range-from-' + facetItem );
         $calendarFrom.datepicker( pickerOptions );
 
+        if( minVal )
+        {
+
+         //   min     =   bidx.utils.parseISODate ( minVal );
+           // min     =   min.y + '-' + min.m + '-' + min.d ;
+
+           //min          =   minVal.y + '-' + minVal.m + '-' + minVal.d ;
+           bidx.utils.log('minnnnnn', min);
+           $calendarFrom.datepicker( "setDate", min );
+           //bidx.utils.setElementValue( $calendarFrom, min);
+        }
+
         $calendarTo     = $currentCategory.find( '#cal-range-to-' + facetItem );
         $calendarTo.datepicker( pickerOptions );
+
+        if( maxObj )
+        {// max     =   bidx.utils.parseISODate ( maxVal );
+           // max     =   max.y + '-' + max.m + '-' + max.d ;
+
+            bidx.utils.log('maxxxxxxx', max);
+            $calendarTo.datepicker( "setDate", max );
+            //bidx.utils.setElementValue( $calendarTo, maxVal);
+        }
 
     }
 
@@ -1104,8 +1095,15 @@
         ,   sliderOptions       =   {}
         ,   $currentCategory    =   params.$currentCategory
         ,   facetItem           =   params.facetItem
-        ,   minVal              =   params.minVal
-        ,   maxVal              =   params.maxVal
+        ,   facetMinMax         =   params.facetMinMax
+        ,   min                 =   Number(bidx.utils.getValue( facetMinMax, 'min' ))
+        ,   max                 =   Number(bidx.utils.getValue( facetMinMax, 'max' ))
+        ,   minDateObj
+        ,   maxDateObj
+        ,   foundMin            =   bidx.utils.getValue( facetMinMax, 'foundMin')
+        ,   foundMax            =   bidx.utils.getValue( facetMinMax, 'foundMax')
+        ,   foundMinObj
+        ,   foundMaxObj
         ,   label               =   params.label
         ,   options             =   params.options
         ,   criteria            =   options.criteria
@@ -1114,40 +1112,120 @@
         ,   defaultMaxVal       =   bidx.utils.getValue(defaultRange, '1')
         ,   sliderSnippit       =   $("#facetslider-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $sliderRange
-        ,   testIterator        = 0
+        ,   testIterator        =   0
+        ,   enabled             =   true
         ,   tick1
         ,   tick2
         ,   tick3
         ,   tick4
         ;
 
-        labelMinVal                  =   label.replace(/%num%/g,  minVal );
-        labelMaxVal                  =   label.replace(/%num%/g,  maxVal );
+        min         =   min ? min : foundMin;
 
-        if( (facetItem === 'planFinancingNeeded' ) && ( maxVal > minVal ) )
+        max         =   max ? max : foundMax;
+
+
+        if( (foundMin === foundMax) && ( min || max ) )
         {
-            /*total   =   minVal + maxVal;
+            enabled =   false;
+            min     =   foundMin;
+            max     =   foundMin;
+        }
 
-            tick1   =   total/4;
+        switch (facetItem)
+        {
+            case 'memberDateOfBirth':
+                var minAge      =   defaultMinVal
+                ,   maxAge      =   defaultMaxVal
+                ,   foundMinDate
+                ,   foundMaxDate
+                ,   minDate
+                ,   maxDate
+                ,   timeDiff
+                ;
 
-            tick2   =   total/2;
 
-            sliderOptions.ticks_labels      =   [ numeral(minVal).format('$0,0a')
-                                                , numeral(tick1).format('$0,0a')
-                                                , numeral(tick2).format('$0,0a')
-                                                , numeral(maxVal).format('$0,0a')
-                                                ];
-            sliderOptions.ticks             =   [ numeral(minVal).format('$0,0')
-                                                , numeral(tick1).format('$0,0')
-                                                , numeral(tick2).format('$0,0')
-                                                , numeral(maxVal).format('$0,0')
-                                                ];
+                bidx.utils.log( 'minAge', minAge);
 
-            sliderOptions.ticks_snap_bounds =   30;*/
+                bidx.utils.log( 'maxAge', maxAge);
 
-            labelMinVal     =   numeral(minVal).format('$0,0a');
+                if( foundMin )
+                {
+                    //foundMinObj     =   bidx.utils.parseISODate( foundMin );
+                    foundMinObj     =   new Date(foundMin);
+                    timeDiff        = Math.abs(date.getTime() - foundMinObj.getTime());
+                    defaultMaxVal   = Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));
 
-            labelMaxVal     =   numeral(maxVal).format('$0,0a');
+                }
+
+                if( foundMax )
+                {
+                  /*  foundMaxObj     =   bidx.utils.parseISODate( foundMax );
+                    foundMaxDate    =   new Date(date.getFullYear()- foundMaxObj.y, date.getMonth(), date.getDate());
+                    defaultMinVal   =   currentYear - foundMaxDate.getFullYear();*/
+
+                    foundMaxObj     =   new Date(foundMax);
+                    timeDiff        = Math.abs(date.getTime() - foundMaxObj.getTime());
+                    defaultMinVal   = Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));
+
+                }
+
+                bidx.utils.log( 'min', min);
+
+                bidx.utils.log( 'max', max);
+
+                if( min )
+                {
+                   /* minDateObj  =   bidx.utils.parseISODate( min );
+                    minDate     =   new Date(date.getFullYear()- minDateObj.y, date.getMonth(), date.getDate());
+                    maxAge      =   currentYear - minDate.getFullYear();*/
+
+                    minDateObj      =   new Date(min);
+                    timeDiff        =   Math.abs(date.getTime() - minDateObj.getTime());
+                    maxAge          =   Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));
+                    defaultMaxVal   =   maxAge;
+                }
+
+                if( max )
+                {
+                   /* maxDateObj  =   bidx.utils.parseISODate( max );
+                    maxDate     =   new Date(date.getFullYear()- maxDateObj.y, date.getMonth(), date.getDate());
+                    minAge      =   currentYear - maxDate.getFullYear();*/
+
+                    maxDateObj      =   new Date(max);
+                    timeDiff        =   Math.abs(date.getTime() - maxDateObj.getTime());
+                    minAge          =   Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));
+                    defaultMinVal   =   minAge;
+                }
+
+                min     =   minAge;
+
+                max     =   maxAge;
+
+                labelMinVal =   label.replace(/%num%/g,  defaultMinVal );
+
+                labelMaxVal =   label.replace(/%num%/g,  defaultMaxVal );
+
+
+            break;
+
+            case 'planFinancingNeeded':
+
+                defaultMinVal   =  foundMin;
+
+                defaultMaxVal   =  foundMax;
+
+                labelMinVal     =   numeral(foundMin).format('$0,0a');
+
+                labelMaxVal     =   numeral(foundMax).format('$0,0a');
+
+            break;
+
+            default:
+
+            labelMinVal =   label.replace(/%num%/g,  defaultMinVal );
+
+            labelMaxVal =   label.replace(/%num%/g,  defaultMaxVal );
         }
 
         listFacetsItem = sliderSnippit
@@ -1163,12 +1241,12 @@
         sliderOptions   =
         {
             step:       1
-        ,   min:        minVal
-        ,   max:        maxVal
-        ,   value:      [minVal, maxVal]
-           // value:      [ (25*foundMax)/100, (75*foundMax/100) ],
-        //,   tooltip:    'always'
-       // ,   tooltip_split: true
+        ,   min:        defaultMinVal
+        ,   max:        defaultMaxVal
+        ,   value:      [min, max]
+        ,   enabled:    enabled
+        ,   tooltip:    'always'
+        ,   tooltip_split: true
         };
 
 
@@ -1229,6 +1307,20 @@
                 bidx.utils.log('rangeName=', rangeName);
                 bidx.utils.log('filterValue=', rangeValue);
 
+                switch (rangeName)
+                {
+                    case 'memberDateOfBirth':
+                        minAge  =   new Date(date.getFullYear()- max, date.getMonth(), date.getDate());
+
+                        maxAge  =   new Date(date.getFullYear()- min, date.getMonth(), date.getDate());
+
+                        min     =   minAge.toISOString();
+
+                        max     =   maxAge.toISOString();
+
+                    break;
+                }
+
                 //facetFiltersCat     =   rangeFilters[rangeName];
 
                 criteria.rangeFilters[rangeName].min = min;
@@ -1241,8 +1333,6 @@
                 tempLimit = CONSTANTS.SEARCH_LIMIT;
 
                 bidx.utils.log('After RangerFilters', criteria);
-
-
 
                 navigate(
                 {
