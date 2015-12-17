@@ -1152,9 +1152,9 @@
                 if( foundMin )
                 {
                     //foundMinObj     =   bidx.utils.parseISODate( foundMin );
-                    foundMinObj     =   new Date(foundMin);
+                    /*foundMinObj     =   new Date(foundMin);
                     timeDiff        = Math.abs(date.getTime() - foundMinObj.getTime());
-                    defaultMaxVal   = Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));
+                    defaultMaxVal   = Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));*/
 
                 }
 
@@ -1164,9 +1164,9 @@
                     foundMaxDate    =   new Date(date.getFullYear()- foundMaxObj.y, date.getMonth(), date.getDate());
                     defaultMinVal   =   currentYear - foundMaxDate.getFullYear();*/
 
-                    foundMaxObj     =   new Date(foundMax);
+                    /*foundMaxObj     =   new Date(foundMax);
                     timeDiff        = Math.abs(date.getTime() - foundMaxObj.getTime());
-                    defaultMinVal   = Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));
+                    defaultMinVal   = Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));*/
 
                 }
 
@@ -1183,7 +1183,7 @@
                     minDateObj      =   new Date(min);
                     timeDiff        =   Math.abs(date.getTime() - minDateObj.getTime());
                     maxAge          =   Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));
-                    defaultMaxVal   =   maxAge;
+                   // defaultMaxVal   =   maxAge;
                 }
 
                 if( max )
@@ -1195,7 +1195,7 @@
                     maxDateObj      =   new Date(max);
                     timeDiff        =   Math.abs(date.getTime() - maxDateObj.getTime());
                     minAge          =   Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));
-                    defaultMinVal   =   minAge;
+                   // defaultMinVal   =   minAge;
                 }
 
                 min     =   minAge;
