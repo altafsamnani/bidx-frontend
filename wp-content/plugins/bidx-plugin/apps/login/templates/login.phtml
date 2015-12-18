@@ -2,6 +2,10 @@
    <form id="frmLogin" method="post">
         <h1><?php _e('Login','bidxplugin'); ?></h1>
 
+<?php
+    if ($this->socialauth)
+    {
+?>
         <label class="label-center"><?php echo _e('Choose a social network','bidxplugin') ?></label>
         <div class="row">
             <div class="col-sm-6">
@@ -22,6 +26,11 @@
             </div>
         </div>
         <div class="or">&mdash;&nbsp;<?php _e('OR','bidxplugin');?>&nbsp;&mdash;</div>
+
+<?php
+    }
+?>
+
         <div class="form-group">
             <label class=""><?php _e('Email address','bidxplugin');?></label>
             <input type="email" class="form-control" name="log" placeholder="<?php _e('Enter your email address','bidxplugin');?>" />

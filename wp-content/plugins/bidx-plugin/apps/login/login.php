@@ -73,6 +73,9 @@ class login {
             $view->redirectTo = base64_encode(BIDX_OPENID_URL);
         }
 
+        if(isset($atts['socialauth'])){
+            $view->socialauth = $atts['socialauth'];
+        }
 
         // ob_start is necessary to capture the shortcode response. ob_get_Clean returns the captured content
         //

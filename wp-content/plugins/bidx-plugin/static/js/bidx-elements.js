@@ -258,7 +258,7 @@
                     )
                     .append
                     (
-                        $( "<div />", { "class": "info-cell pull-left", "html": bidx.i18n.i( "bsFinanceNeeded" ) + ": " + bidx.utils.formatNumber( item.financingNeeded ) + " USD" } )
+                        $( "<div />", { "class": "info-cell pull-left", "html": bidx.i18n.i( "bsFinanceNeeded" ) + ": " + bidx.utils.formatNumber( item.financingNeeded ) + " " + bidx.i18n.i('usd') } )
                     )
                     .append
                     (
