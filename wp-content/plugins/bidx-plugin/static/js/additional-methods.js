@@ -1,20 +1,5 @@
 (function( $ )
 {
-    $.validator.addMethod( "datepicker", function(value, element, param)
-    {
-        if ( this.optional( element ))
-        {
-            return true;
-        }
-
-        bidx.utils.log('i am validating', value, element, param);
-
-        return true;
-        //return /^[a-z0-9]{5,30}$/i.test( value );
-
-    }, "Not a valid range" );
-
-
      $.validator.addMethod( "tinymceTextarea", function(value, element, param)
     {
         var returnFlag
