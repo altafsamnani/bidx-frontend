@@ -9,6 +9,37 @@
     ,   loggedInMemberId    = bidx.common.getCurrentUserId()
     ;
 
+    var placeGroupThumb = function ( item, size )
+    {
+        var thumb
+        ,   cropDimensions
+        ,   imgSize = {}
+        ;
+
+        if ( size === "sm" )
+        {
+            imgSize.class = "img-cropper-sm pull-left";
+            imgSize.default = "icons-rounded-sm pull-left";
+            cropDimensions = 50;
+        }
+        else
+        {
+            imgSize.class = "img-cropper";
+            imgSize.default = "icons-rounded";
+            cropDimensions = 90;
+        }
+
+        thumb = $( "<div />", { "class": imgSize.default } )
+                    .append
+                    (
+                        $( "<i />", { "class": "fa fa-group text-primary-light" } )
+                    );
+
+        thumb.find( "img" ).fakecrop( {fill: true, wrapperWidth: cropDimensions, wrapperHeight: cropDimensions} );
+
+        return thumb;
+    }
+
     var placeLogoThumb = function( item, size )
     {
         var thumb
@@ -334,6 +365,114 @@
 
         return card;
     };
+
+    var groupRoles = function ()
+    {
+        var roles = ""
+        ,   hasEntrepreneurProfile      = bidx.common.getEntrepreneurProfileId() ? true : false
+        ,   hasInvestorProfile          = bidx.common.getInvestorProfileId() ? true : false
+        ,   hasMentorProfile            = bidx.common.getMentorProfileId() ? true : false
+        ;
+
+        if ( hasEntrepreneurProfile ) { roles = roles + "Entrepreneur, "; }
+        if ( hasInvestorProfile ) { roles = roles + "Investor, "; }
+        if ( hasMentorProfile ) { roles = roles + "Mentor, "}
+
+        roles = roles.substring(0, roles.length - 2);
+
+        return roles;
+    }
+
+    var groupCardView = function (item)
+    {
+        var card
+        ,   roles = groupRoles( item.bidxMeta.bidxGroupRoles )
+        ,   isAdmin = bidx.common.isGroupAdmin()
+        ,   currentGroupId = bidx.common.getCurrentGroupId()
+        ;
+
+        var card =
+            $( "<div />", { "class": "cardView", "data-compid": item.bidxMeta.bidxGroupId } )
+                .append
+                (
+                    $( "<div />", { "class": "cardHeader hide-overflow" } )
+                    .append
+                    (
+                        $( "<a />", { "href": item.bidxMeta.bidxGroupUrl, "class": "btn btn-primary btn-xs pull-right info-action main-margin-half" + (currentGroupId == item.bidxMeta.bidxGroupId ? " hide" : ""), "html": bidx.i18n.i( "poPortal" ) } )
+                    )          
+                    .append
+                    (
+                        $( "<div />", { "class": (isAdmin ? "" : " hide") })
+                        .append
+                        (
+                            $( "<a />", { "href": item.bidxMeta.bidxGroupUrl + "/wp-admin/admin.php?page=getting-started", "class": "btn btn-primary btn-xs pull-right info-action main-margin-half", "html": bidx.i18n.i( "poCustomize" ) } )
+                        )
+                    )
+                )
+                .append
+                (
+                    $( "<div />", { "class": "cardContent main-padding" } )
+                    .append
+                    (
+                        $( "<div />", { "class": "cardTop" } )
+                        .append
+                        (
+                            $( "<div />", { "class": "row" } )
+                            .append
+                            (
+                                $( "<div />", { "class": "col-sm-3" } )
+                                .append
+                                (
+                                    $( "<a />", { "href": item.bidxMeta.bidxGroupUrl, "class": "pull-left main-margin-half", "data-role": "groupImage" } )
+                                    .append
+                                    (
+                                        placeGroupThumb( item )
+                                    )
+                                )
+                            )
+                            .append
+                            (
+                                $( "<div />", { "class": "col-sm-9" } )
+                                .append
+                                (
+                                    $( "<h3 />", { "class": "top-0", "html": item.name } )
+                                )
+                                .append
+                                (
+                                    $( "<h4 />" )
+                                    .append
+                                    (
+                                        $( "<span />", { "class": "bs-slogan", "html": item.slogan } )
+                                    )
+                                )
+                                .append
+                                (
+                                    $( "<table />", { "class": "table table-condensed table-bottom-border" } )
+                                    .append
+                                    (
+                                        $( "<tbody />" )
+                                        .append
+                                        (
+                                            $( "<tr />" )
+                                            .append
+                                            (
+                                                $( "<td />", { "html": bidx.i18n.i( "poRoles" ) })
+                                            )
+                                            .append
+                                            (
+                                                $( "<td />", { "html": roles })
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+                ;
+
+        return card;
+    }
 
     var companyCardView = function ( item )
     {
@@ -691,7 +830,7 @@
                     $( "<div />", { "class": "pull-left" } )
                     .append
                     (
-                        $( "<span />", { "class": "alert-message" } )
+                        $( "<div />", { "class": "alert-message" } )  //BIDX-3194
                     )
                 )
             ;
@@ -1091,6 +1230,7 @@
         businessCardView:          businessCardView
     ,   companyCardView:           companyCardView
     ,   memberCardView:            memberCardView
+    ,   groupCardView:             groupCardView
     ,   actionBox:                 actionBox
     ,   actionButtons:             actionButtons
     ,   memberLink:                memberLink

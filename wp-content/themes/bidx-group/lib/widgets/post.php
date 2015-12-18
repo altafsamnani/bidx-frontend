@@ -151,7 +151,11 @@ class Bidx_Post_Widget extends WP_Widget {
                might reveal Social Sharing buttons and additional whitespace.
             */
             ?>
-            <p><?php echo wpautop($selected_post->post_content, true); ?></p>
+            <p><?php 
+            // BIDX-3807
+            //echo wpautop($selected_post->post_content, true); 
+            echo apply_filters('the_content', $selected_post->post_content);
+            ?></p>
 <?php
         }
         else

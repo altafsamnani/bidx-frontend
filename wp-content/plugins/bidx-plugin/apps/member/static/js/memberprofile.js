@@ -52,6 +52,7 @@
     ,   geocoder
     ,   currentAddressMap
     ,   currentAddressMapOptions
+    ,   marker
 
     ,   member
     ,   memberId
@@ -905,6 +906,7 @@
 
                     currentAddressMap.setZoom( zoom );
                     currentAddressMap.setCenter( response.results.geometry.location );
+                    marker.setPosition( response.results.geometry.location );
 
                     $currentAddressMap.fadeIn( function()
                     {
@@ -1618,6 +1620,13 @@
             if ( $currentAddressMap.length )
             {
                 currentAddressMap       = new google.maps.Map( $currentAddressMap[ 0 ], currentAddressMapOptions );
+
+                marker = new google.maps.Marker({
+                    position: currentAddressMapOptions.center,
+                    map: currentAddressMap
+                });
+
+                marker.setMap(currentAddressMap);
             }
 
             geocoder        = new google.maps.Geocoder();

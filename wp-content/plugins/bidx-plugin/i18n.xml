@@ -162,6 +162,10 @@
     <Item value="cmFLegalFormBusiness">Legal form of business</Item>
     <Item value="cmCompany">View Company</Item>
 
+    <Item value="poPortal">Visit Portal</Item>
+    <Item value="poRoles">Roles</Item>
+    <Item value="poCustomize">Customise Portal</Item>
+
     <!-- Connection details -->
     <Item value="youAreInContact">This user has been added to your contacts</Item>
     <Item value="btnStopConnect">Disconnect</Item>

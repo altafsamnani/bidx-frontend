@@ -2,12 +2,28 @@
 {
     "use strict";
 
-    var $element                = $( "div.member" )
+    var iclVars                 = window.icl_vars || {}
+    ,   $element                = $( "div.member" )
     ,   $quickActionLinks       = $( ".quick-action-links a" )
     ,   $tabs                   = $( ".nav-tabs" )
     ,   $existingBusinesses     = $element.find( "#existingBusinesses" )
     ,   $existingCompanies      = $element.find( "#existingCompanies" )
+    ,   currentLanguage         = ( iclVars.current_language ) ? '/' + iclVars.current_language : '';
     ;
+
+    $tabs.click( function( e )
+    {
+        e.preventDefault();
+
+        var href = $( this ).find('a').attr( "href" );
+
+        if ( href === "#tab-member")
+        {
+            $("#createBusiness").removeClass("hide");
+            $("#createCompany").removeClass("hide");
+        }
+
+    });
 
     $quickActionLinks.click ( function( e )
     {
@@ -27,10 +43,16 @@
                     .find( "a[href='"+ href +"']" )
                     .parent().addClass( "active" )
                 ;
+
+                $("#createBusiness").addClass("hide");
+                $("#createCompany").addClass("hide");
+
+                window.location = currentLanguage + "/member/#tab-entrepreneur";
             }
             else
             {
-                window.location = "/businesssummary/#createBusinessSummary";
+                //BIDX-3851
+                window.location = currentLanguage + "/businesssummary/#createBusinessSummary";
             }
         }
 
@@ -45,16 +67,18 @@
                     .find( "a[href='"+ href +"']" )
                     .parent().addClass( "active" )
                 ;
+
+                $("#createBusiness").addClass("hide");
+                $("#createCompany").addClass("hide");
+
+                window.location = currentLanguage + "/member/#existingCompanies";
             }
             else
             {
-                window.location = "/company/#createCompany";
+                //BIDX-3851
+                window.location = currentLanguage + "/company/#createCompany";
             }
         }
-
-
-
-
 
     } );
 

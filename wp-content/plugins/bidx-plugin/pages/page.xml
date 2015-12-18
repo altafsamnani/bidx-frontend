@@ -19,14 +19,16 @@
             <name>homepage</name>
             <title>Home</title>
             <content>
-            	Welcome to bidx Portals. &lt;br&gt;
-            	How to customize portal ? &lt;br&gt;
+            	A few instructions to get you started:
             	&lt;ul&gt;
-				&lt;li&gt;To Change the frontpage content, please login to wordpress and visit Pages -- Home &lt;/li&gt;
-				&lt;li&gt; You can change the appearance, alignment, color, sider images, background images, please visit Appearance -- Customize or &lt;a href='/wp-admin/customize.php'&gt;Click here!&lt;/a&gt; &lt;/li&gt;
-				&lt;li&gt; You can add widgets to frontpage, please visit Appearance -- Widgets or &lt;a href='/wp-admin/widgets.php'&gt;Click here!&lt;/a&gt; &lt;/li&gt;
-			&lt;/ul&gt;&lt;br/&gt;
-			If you have queries, please contact our customer support at info@bidx.net or call us at +31 202 181 060, For more information please &lt;a href= 'https://bidx.net/contact' &gt;visit this page&lt;/a&gt;, we will try to reply back your query within next 48 hours, Thank you!
+            	&lt;li&gt;Login with your email and password. Make sure you have administrator rights.&lt;/li&gt;
+				&lt;li&gt;In the menu underneath your name you will find the link to WordPress -> bidx&lt;/li&gt;
+				&lt;li&gt;Change the appearance and style of your portal by selecting Appearance -> Customize&lt;/li&gt;
+				&lt;li&gt;Place your content in pages, posts or media.&lt;/li&gt; 
+				&lt;li&gt;The homepage can be adjusted using Appearance -> Widgets.&lt;/li&gt; &lt;/ul&gt;
+				This, and many other aspects are explained in our tutorials: &lt;a href='https://bidx.net/help/'&gt;https://bidx.net/help/&lt;/a&gt;&lt;br&gt;&lt;br&gt;
+				If you have any questions, please do not hesitate to contact us at &lt;a href='mailto:info@bidx.net'&gt;info@bidx.net&lt;/a&gt;.
+				Good luck!
             </content>
             <update>false</update>
             <template>page-intro.php</template>

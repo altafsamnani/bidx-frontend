@@ -242,7 +242,7 @@ class Carousel_Widget extends WP_Widget {
 ?>
                     <div class="carousel-inner">
                         <div class="item active" style="background: url(<?php echo $img_url['path'] ?>) top center no-repeat; height: 250px; ">
-                            <div class="carousel-caption"><?php _e( "Welcome to Bidx Portals, let's get started ", 'bidxplugin') ?></div>
+                            <div class="carousel-caption"><?php _e( "Welcome to your bidx portal, let's get started!", 'bidxplugin') ?></div>
                             <div class="carousel-description"><a href="/wp-admin/widgets.php"><?php _e('Configure theme', 'bidxplugin') ?></a></div>
                         </div>
                     </div>

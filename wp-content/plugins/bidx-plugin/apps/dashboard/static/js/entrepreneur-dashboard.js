@@ -1,11 +1,12 @@
 ;(function($)
 {
     "use strict";
-    var $element            =   $("#entrepreneur-dashboard")
+    var $element            =   $( "#entrepreneur-dashboard" )
     ,   $views              =   $element.find( ".view" )
     ,   $elementHelp        =   $element.find( ".startpage" )
     ,   $tabBusinesses      =   $element.find( "#tab-businesses" )
     ,   $tabCompanies       =   $element.find( "#tab-companies" )
+    ,   $tabGroups          =   $element.find( "#tab-groups" )
     ,   $tabInvestors       =   $element.find( "#tab-interested-investors" )
     ,   $tabMentors         =   $element.find( "#tab-interested-mentors" )
     ,   $firstPage          =   $element.find( "input[name='firstpage']" )
@@ -34,8 +35,21 @@
         }
     };
 
+    var showGroups = function()
+    {
+        var groups = bidxConfig.session.groups
+        ,   tabGroupMsg
+        ;
+
+        for ( var key in groups )
+        {
+            $tabGroups.append(bidx.construct.groupCardView(groups[key]));
+        }
+    }
+
     //public functions
     //
+
     var fetchBusinesses = function ( options )
     {
         var $d = $.Deferred();
@@ -330,6 +344,11 @@
         _showView('loadcompanies', true);
 
         fetchCompanies();
+    }
+
+    if ( $tabGroups.length )
+    {
+        showGroups();
     }
 
     //expose

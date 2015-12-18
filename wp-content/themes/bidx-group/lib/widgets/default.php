@@ -220,14 +220,14 @@ With just a few adjustments, you will be ready to welcome your first members.</p
 
     // Add widget to sidebar:
     //
-    $widget_name = 'start_here_widget';
-    $widgets = get_option('widget_'.$widget_name);
-    $sidebar_options[$add_to_sidebar[2]][] = $widget_name.'-'.$count;
-    $widgets[$count] = array(
-        'title' => 'Start here button',
-    );
-    $count++;
-    update_option('widget_'.$widget_name,$widgets);
+    //$widget_name = 'start_here_widget';
+    //$widgets = get_option('widget_'.$widget_name);
+    //$sidebar_options[$add_to_sidebar[2]][] = $widget_name.'-'.$count;
+    //$widgets[$count] = array(
+    //    'title' => 'Start here button',
+    //);
+    //$count++;
+    //update_option('widget_'.$widget_name,$widgets);
 
     // Add widget to sidebar:
     //

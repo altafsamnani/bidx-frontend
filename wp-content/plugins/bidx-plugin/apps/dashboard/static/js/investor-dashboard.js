@@ -5,6 +5,7 @@
     ,   $views              = $element.find( ".view" )
     ,   $tabRecommended     = $element.find( "#tab-recommended" )
     ,   $tabContacted       = $element.find( "#tab-contacted" )
+    ,   $tabGroups          = $element.find( "#tab-groups" )
     ,   $firstPage          = $element.find( "input[name='firstpage']" )
     ,   emptySnippet        = $("#empty-message").html().replace(/(<!--)*(-->)*/g, "")
     ,   bidx                = window.bidx
@@ -369,6 +370,18 @@
         });
     };
 
+    var showGroups = function()
+    {
+        var groups = bidxConfig.session.groups
+        ,   tabGroupMsg
+        ;
+
+        for ( var key in groups )
+        {
+            $tabGroups.append(bidx.construct.groupCardView(groups[key]));
+        }
+    }
+
     var start = function ()
     {
 
@@ -380,6 +393,10 @@
             if ( $tabRecommended.length )
             {
                 fetchBusinesses();
+            }
+            if ( $tabGroups.length )
+            {
+                showGroups();
             }
         }
     };

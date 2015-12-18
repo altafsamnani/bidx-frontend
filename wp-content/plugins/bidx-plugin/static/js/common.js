@@ -2040,6 +2040,12 @@
         window.location.href = window.location.pathname + editHref;
     });
 
+    //Create Mentor
+    $( ".member" ).on( "click", "button.btncreateMentor", function()
+    {
+        window.location.href = window.location.pathname + "/#createMentor";
+    });
+
     $( "a[data-toggle='tab']" ).click( function( e )
     {
         if ( $(this).attr("href") === "#tab-address" )

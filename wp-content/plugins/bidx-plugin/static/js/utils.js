@@ -232,6 +232,12 @@ function shortenLargeNumber(num, digits) {
             value += "";
         }
 
+        // If valueType === "string" decode string - it may contain special characters - BIDX-2703
+        if ( valueType === "string" )
+        {
+            value = $('<textarea/>').html(value).text()
+        }
+
         // When an data-type is defined on the HTML that has presendence over the handling of regular form inputs
         //
         if ( dataType === "date" )

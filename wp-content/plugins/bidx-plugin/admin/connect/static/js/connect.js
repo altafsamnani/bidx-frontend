@@ -1777,7 +1777,7 @@
                                         contacts[ item.name.toLowerCase() ] =
                                         {
                                             value:      item.id
-                                        ,   label:      item.name + " (" + bidx.i18n.i( "groupAdmin", appName ) + ")"
+                                        ,   label:      item.name + " (" + bidx.i18n.i( "portalModerator", appName ) + ")"
                                         ,   roles:      item.roles
                                         };
                                         sortIndex.push( item.name.toLowerCase() );

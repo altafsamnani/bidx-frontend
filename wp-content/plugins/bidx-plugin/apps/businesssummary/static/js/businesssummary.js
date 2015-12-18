@@ -5,9 +5,7 @@
 
     var $element                    = $( "#businessSummary" )
     ,   $snippets                   = $element.find( ".snippets" )
-
     ,   $views                      = $element.find( ".view" )
-
     ,   $editControls               = $element.find( ".editControls" )
 
     ,   $expertiseNeeded            = $element.find( "[name='expertiseNeeded']" )
@@ -26,6 +24,7 @@
     ,   $bidxAccessRequestPending   = $element.find( ".bidxAccessRequestPending")
 
     ,   $videoWrapper               = $element.find( ".video-wrapper" )
+
 
     ,   $controlsForEdit            = $editControls.find( ".viewEdit" )
     ,   $controlsForError           = $editControls.find( ".viewError" )
@@ -56,7 +55,6 @@
     ,   icl_vars                    = window.icl_vars || {}
     ,   iclLanguage                 = bidx.utils.getValue( icl_vars, "current_language" )
     ,   currentLanguage             = (iclLanguage && iclLanguage !== 'en') ? '/' + iclLanguage : ''
-
 
     ,   forms                       =
         {
@@ -444,11 +442,13 @@
                     }
                 ,   slogan:
                     {
-                        maxlength:              140
+                        required:               true
+                    ,   maxlength:              140
                     }
                 ,   summary:
                     {
-                        maxlength:              900
+                        required:               true
+                    ,   maxlength:              900
                     }
                 ,   equityRetained:
                     {
@@ -482,9 +482,17 @@
             ,   ignore:         ""
             ,   rules:
                 {
-                    industry:
+                    "focusIndustrySector[0]mainSector":
                     {
-                        // required:      true
+                        required:      true
+                    }
+                ,   "focusIndustrySector[0]subSector":
+                    {
+                        required:      true
+                    }
+                ,   "focusIndustrySector[0]endSector":
+                    {
+                        required:      true
                     }
                 ,   productService:
                     {
@@ -492,7 +500,7 @@
                     }
                 ,   countryOperation:
                     {
-                        // required:      true
+                        required:      true
                     }
                 ,   "consumerType[]":
                     {
@@ -548,7 +556,11 @@
                 {
                     yearSalesStarted:
                     {
-                        // required:               true
+                        required:               true
+                    }
+                ,   financeNeeded:
+                    {
+                        required:               true
                     }
                 }
 
@@ -928,8 +940,8 @@
 
                     $input.rules( "add",
                     {
-                        // required:               true
-                        monetaryAmount:         true
+                        required:               true
+                    ,   monetaryAmount:         true
 
                     ,   messages:
                         {
@@ -3777,7 +3789,7 @@
         // Update the business summary object
         //
         _getFormValues();
-
+        
         if ( businessSummary.stageBusiness )
         {
             businessSummary.stageBusiness = businessSummary.stageBusiness.toLowerCase();
@@ -3788,6 +3800,17 @@
         if ( state === "create" )
         {
             businessSummary.periodStartDate = bidx.common.getNow().getFullYear() + "-01-01";
+
+            // BIDX-3838 - If attachment is empty don't send attachment to the API
+            if (businessSummary.attachment.length == 0)
+            {
+                delete businessSummary.attachment;
+            }
+            // BIDX-3524
+            if (businessSummary.managementTeam.length == 0)
+            {
+                delete businessSummary.managementTeam;
+            }
         }
 
         // Make sure the entitytype is set correctly, probably only needed for 'create'

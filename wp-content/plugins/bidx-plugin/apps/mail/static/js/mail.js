@@ -30,6 +30,7 @@
     ,   section
     ,   loggedInMemberId            = bidx.common.getCurrentUserId()
     ,   connectContacts
+    ,   isblockedby //will contain the id's of the members who blocked logged in member             
     ;
 
     // Constants
@@ -53,6 +54,11 @@
             .then( function( contacts )
             {
                 connectContacts = contacts;
+
+                isblockedby = contacts.isblocked;
+                
+                delete contacts.isblocked;
+
                 _initContactListing( contacts );
 
                 if (options && options.callback)
@@ -244,7 +250,7 @@
                 ,  'value' :       groupownerDrpDownDefaultVal
                 } );
 
-                option.text( bidx.i18n.i( "msgToGroup", appName ) );
+                option.text( bidx.i18n.i( "portalModerator", appName ) );
 
                 listItems.push( option );
 
@@ -1284,9 +1290,12 @@
                             }
                         }
 
-                        bidx.utils.log( 'recipients', recipients);
+                        //BIDX-3836
+                        if (!_isRecipientAdded(isSenderId))
+                        {
+                            $contactsDropdown.append( recipients );
+                        }
 
-                        $contactsDropdown.append( recipients );
                         $contactsDropdown.val( isSenderId );
                         $contactsDropdown.bidx_chosen();
 
@@ -1333,6 +1342,20 @@
 
         }
 
+        function _isRecipientAdded( val )
+        {
+            var added = false;
+
+            $contactsDropdown.find("option").each(function(){
+                if ( $(this).val() === val.toString() )
+                {
+                    added = true;
+                }
+            });
+
+            return added;
+        }
+
         function _removeMailRecipient( val )
         {
             $contactsDropdown.find("option[value='" + val + "']").remove();
@@ -1366,7 +1389,7 @@
                 ,  'value' :       groupownerDrpDownDefaultVal
                 } );
 
-                option.text( bidx.i18n.i( "msgToGroup", appName ) );
+                option.text( bidx.i18n.i( "portalModerator", appName ) );
 
                 listItems.push( option );
             }
@@ -1417,6 +1440,8 @@
                 ,   $blockedWrapper     =   $('#blockedRequests .contact-request-list')
                 ,   $badgeblock         =   $('.trigger-blocked-contacts .badge')
                 ,   badgeblockVal       =   parseInt( $badgeblock.text() )
+                ,   $badgeactive         =   $('.trigger-active-contacts .badge')
+                ,   badgeactiveVal       =   parseInt( $badgeactive.text() )
                 ,   contactId           =   $list.attr( "data-requestId" )
                 ,   contactName         =   $list.attr( "data-requestName" )
                 ,   contact             =   parseInt( contactId, 10)
@@ -1444,7 +1469,11 @@
 
                         badgeValue  =   badgeValue - 1;
 
+                        badgeactiveVal = badgeactiveVal - 1;
+
                         $badge.text(badgeValue);
+
+                        $badgeactive.text(badgeactiveVal);
 
                         if( !badgeValue )
                         {
@@ -1966,6 +1995,8 @@
             // insert mail body in to placeholder of the view
             //
             subject = ( message.type === "MAIL_CONTACT_REQUEST" )  ?  bidx.i18n.i( "contactRequest", appName )  : message.subject;
+            
+            $currentView.find( ".mail-sender").html( message.sender.name );
             $currentView.find( ".mail-subject").html( subject );
 
             // insert mail body in to placeholder of the view
@@ -2543,7 +2574,8 @@
             ,   active          =   []
             ,   pending         =   []
             ,   incoming        =   []
-            ,   blocked         =   []
+            ,   blocked         =   []  
+            ,   isblocked       =   []
             ,   $d              =   $.Deferred()
             ;
 
@@ -2589,6 +2621,10 @@
                                             {
                                                 blocked.push( contactsVal );
                                             }
+                                            else 
+                                            {
+                                                isblocked.push( contactsVal );
+                                            }
                                         break;
                                     }
                                 }
@@ -2599,6 +2635,7 @@
                                         ,   pending:    pending
                                         ,   incoming:   incoming
                                         ,   blocked:    blocked
+                                        ,   isblocked:  isblocked
                                         };
                         }
 
@@ -2862,7 +2899,7 @@
                     {
                         var senderId        =   bidx.utils.getValue(message, 'sender.id')
                         ,   blockedContacts =   bidx.utils.getValue(connectContacts, 'blocked')
-                        ,   isUserBlocked   =   _.findWhere(blockedContacts, { id: senderId })
+                        ,   isUserBlocked   =   _.findWhere(blockedContacts, { id: senderId }) || _.findWhere(isblockedby, { id: senderId })
                         ;
 
                         _initEmail( action, message );
@@ -2880,6 +2917,10 @@
                         if( !isUserBlocked )
                         {
                             buttons.push( ".bidx-btn-block" );
+                        }
+                        else 
+                        {
+                            buttons.splice(0, 1); //remove first element which is ".btn-reply"
                         }
 
                         if ( state !== "mbx-sent" )
@@ -3014,7 +3055,7 @@
 
                 ,   onHide: function()
                     {
-                        window.bidx.controller.updateHash( "#mail/compose", true, false );
+                        window.bidx.controller.updateHash( "#mail/mbx-inbox", true, false );
                     }
                 } );
 

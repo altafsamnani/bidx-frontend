@@ -105,12 +105,12 @@ class Competition_Counter_Widget extends WP_Widget {
     function update( $new_instance, $old_instance )
     {
         $instance = $old_instance;
-        $instance['title'] = esc_sql( $new_instance['title']);
-        $instance['competitiontitle'] = esc_sql( $new_instance['competitiontitle'] );
-        $instance['competitiondesc'] = esc_sql( $new_instance['competitiondesc'] );
-        $instance['competitiondate'] = esc_sql( $new_instance['competitiondate'] );
-        $instance['competitionlink'] = esc_sql( $new_instance['competitionlink'] );
-        $instance['style'] = esc_sql( $new_instance['style'] );
+        $instance['title'] =  $new_instance['title'];
+        $instance['competitiontitle'] = $new_instance['competitiontitle'];
+        $instance['competitiondesc'] =  $new_instance['competitiondesc'];
+        $instance['competitiondate'] = $new_instance['competitiondate'];
+        $instance['competitionlink'] = $new_instance['competitionlink'];
+        $instance['style'] = $new_instance['style'];
         return $instance;
     }
 

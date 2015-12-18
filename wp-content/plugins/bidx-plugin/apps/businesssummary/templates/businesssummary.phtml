@@ -34,6 +34,7 @@ $businessSummaryId = $businessSummaryBidxMeta->bidxEntityId;
 //
 $requestStatus = isset( $businessSummary->accessAuthorization ) ? $businessSummary->accessAuthorization : null;
 
+$tmpsummary = $this->exst($businessSummary->summary, null, false);
 
 
 // check, is access granted?
@@ -92,7 +93,7 @@ if ( !empty( $attachment ) )
 
 $hasMentorAdvisory = false;
 
-if ( $businessSummary->mentorAdvisory === TRUE && ( $this->exst ($businessSummary->expertiseNeeded) || $this->exst ($businessSummary->expertiseNeededDetail) ) )
+if ( $businessSummary->mentorAdvisory === TRUE && ( $this->exst ($businessSummary->expertiseNeeded, null, false) || $this->exst ($businessSummary->expertiseNeededDetail, null, false) ) )
 {
     $hasMentorAdvisory = true;
 }
@@ -367,7 +368,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             {
 ?>
                 <h1>
-                    <?php echo $this->exst( $businessSummary->name ); ?>
+                    <?php echo $this->exst( $businessSummary->name , null, false); ?>
                     <small>&nbsp;<?php echo _e( 'by', 'bidxplugin' ); ?>&nbsp;
                         <a href="<?php echo _l('member')."/".$this->exst( $businessSummaryBidxMeta->bidxOwnerId ); ?>"><?php echo $this->exst( $businessSummaryBidxMeta->bidxOwnerDisplayName ); ?></a>
                     </small>
@@ -383,7 +384,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             }
 ?>
 
-            <h4><?php echo $this->exst( $businessSummary->slogan ); ?></h4>
+            <h4><?php echo $this->exst( $businessSummary->slogan, null, false ); ?></h4>
 <?php
             $theVideo = '';
             $videoUrl = $this->exst($businessSummary->externalVideoPitch);
@@ -404,14 +405,14 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             }
 ?>
 <?php
-    if ( $this->exst($businessSummary->summary) )
+    if ( $tmpsummary )
     {
 ?>
         <div class="main-padding-vertical">
             <h3 class="text-uppercase"><?php _e('In a few words', 'bidxplugin')?></h3>
             <div>
 <?php
-                echo $this->exst($businessSummary->summary);
+                echo $tmpsummary;
 ?>
             </div>
         </div>
@@ -497,8 +498,8 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 <?php
             $rowValues = array
             (
-                __('Role of the entrepreneur','bidxplugin') => $this->exst($businessSummary->personalRole),
-                __('Expertise of the entrepreneur','bidxplugin') => $this->exst($businessSummary->personalExpertise)
+                __('Role of the entrepreneur','bidxplugin') => $this->exst($businessSummary->personalRole, null, false),
+                __('Expertise of the entrepreneur','bidxplugin') => $this->exst($businessSummary->personalExpertise, null, false)
             );
 
             if ( $this->checkEmpty( $rowValues ) ) :
@@ -609,8 +610,10 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                     </tr>
 <?php
                     $financialDetails = $this->exst( $businessSummary->financialSummaries );
+                    $sortedfinancialDetails = new ArrayObject($financialDetails);
+                    $sortedfinancialDetails->ksort();
 
-                    foreach ( $financialDetails as $year => $yearDetails )
+                    foreach ( $sortedfinancialDetails as $year => $yearDetails )
                     {
                         if ( $year < $currentYear )
                         {
@@ -758,8 +761,8 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 <?php
                 $rowValues = array
                 (
-                    __('Expertise needed', 'bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->expertiseNeeded), ', ', 'mentorExpertise' ),
-                    __('Expertise needed in detail', 'bidxplugin') => $this->exst($businessSummary->expertiseNeededDetail)
+                    __('Expertise needed', 'bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->expertiseNeeded, null, false), ', ', 'mentorExpertise' ),
+                    __('Expertise needed in detail', 'bidxplugin') => $this->exst($businessSummary->expertiseNeededDetail, null, false)
                 );
 
                 echo $this->tableRow ( $rowValues );
