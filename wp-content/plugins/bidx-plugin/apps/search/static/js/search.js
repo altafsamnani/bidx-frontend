@@ -1756,6 +1756,7 @@
 
        // filters.push('-facet_entityType:bidxEntrepreneurProfile');
 
+
         search =    {
                         q           :   criteriaQ
                     ,   sort        :   sort
@@ -1766,7 +1767,7 @@
                                         ,   "sort"          :   criteriaSort
                                         ,   "maxResult"     :   tempLimit
                                         ,   "offset"        :   paging.search.offset
-                                        ,   "entityTypes"   :   CONSTANTS.ENTITY_TYPES
+                                        ,   "entityType"   :   CONSTANTS.ENTITY_TYPES
                                         //,   "entityTypes"  :   CONSTANTS.NONTITY_TYPES
                                         //  ,   "facetsVisible" :   true
                                         // ,   "scope"         :   "local"
