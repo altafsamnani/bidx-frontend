@@ -1,6 +1,5 @@
 (function( $ )
 {
-
      $.validator.addMethod( "tinymceTextarea", function(value, element, param)
     {
         var returnFlag

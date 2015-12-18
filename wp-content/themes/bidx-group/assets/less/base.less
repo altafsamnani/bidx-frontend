@@ -1900,6 +1900,28 @@ select
         border-left: 1px solid lighten(@gray-light, 22.5%);
     }
 }
+
+@media(max-width: @screen-sm-min){
+    .cardHeader
+    {
+        position: relative;
+        .info-cell
+        {
+            padding: ceil(@font-size-base * 0.25) ceil(@font-size-base * 1.05);
+            border-right: none;
+            width: 100%;
+        }
+    }
+    .info-action
+    {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
+
+
+
 .cardInfoText
 {
     margin-right: ceil(@font-size-base * 0.60);
@@ -2231,6 +2253,30 @@ label
     color: darken(@brand-primary, 25%);
     background-color: @input-group-addon-bg;
 }
+
+.tooltip
+{
+    z-index: 1;
+}
+
+.tooltip-inner
+{
+    color: darken(@brand-primary, 25%) !important;
+    background-color: @input-group-addon-bg !important;
+
+}
+
+.tooltip.top .tooltip-arrow
+{
+    border-top-color: darken(@brand-primary, 25%) !important;
+}
+
+.slider-handle
+{
+    background-color: @brand-primary !important;
+    #gradient > .vertical(@brand-primary, @brand-primary) !important;
+}
+
 // jumbotron.less
 // -------------------------
 

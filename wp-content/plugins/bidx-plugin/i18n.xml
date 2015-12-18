@@ -105,12 +105,6 @@
     <Item value="usernameInvalid">This is not a valid email address</Item>
     <Item value="passwordIncorrect">The password is incorrect</Item>
 
-
-    <!-- Frequent used strings -->
-    <Item value="entrepreneur">Entrepreneur</Item>
-    <Item value="investor">Investor</Item>
-    <Item value="mentor">Mentor</Item>
-
     <!-- Common Mentor strings -->
     <Item value="offerMentoring">Offer Mentoring</Item>
     <Item value="offerMentoringTo">Offer mentoring to</Item>
@@ -195,6 +189,15 @@
 
 
     <!-- Facet Title -->
+    <!-- Facet Entity types -->
+
+    <Item value="bdxmember">Member profile</Item>
+    <Item value="bdxplan">Business summary</Item>
+    <Item value="investor">Investor</Item>
+    <Item value="entrepreneur">Entrepreneur</Item>
+    <Item value="mentor">Mentor</Item>
+    <Item value="member">Member</Item>
+
     <Item value="facet_industry">Industry</Item>
     <Item value="facet_country">Country</Item>
     <Item value="facet_city">City</Item>
@@ -232,6 +235,9 @@
     <Item value="toolTipNextPage">Go to next page</Item>
     <Item value="toolTipLastPage">Go to last page</Item>
     <Item value="toolTipForPage">Go to page %num%</Item>
+
+    <!-- Currency / Other static values -->
+    <Item value="usd">USD</Item>
 
     <!-- Connect / mail Strings -->
     <Item value="Inbox">Inbox</Item>

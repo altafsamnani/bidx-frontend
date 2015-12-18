@@ -16,6 +16,7 @@
     ,   $envImpact              = $element.find( "[name='envImpact']" )
     ,   $expertiseNeeded        = $element.find( "[name='expertiseNeeded']" )
     ,   $reasonForSubmission    = $element.find( "[name='reasonForSubmission']" )
+    ,   $contactsDropdown       = $element.find( "[name=contacts]" )
 
     ,   $focusLanguage          = $element.find( "[name='focusLanguage']" )
     ,   $focusCountry           = $element.find( "[name='focusCountry']" )
@@ -43,7 +44,12 @@
     ,   $sortView               = $views.find('.viewSort')
     ,   state
     ,   $fakecrop               = $views.find( ".js-fakecrop img" )
+
     ,   languages
+    ,   iclVars                 = window.icl_vars || {}
+    ,   currentLanguageVal      = bidx.utils.getValue( iclVars, "current_language" )
+    ,   currentLanguage         = (currentLanguageVal) ? currentLanguageVal : 'en'
+
     ,   appName                 = "search"
     ,   loggedInMemberId        = bidx.common.getCurrentUserId()
 
@@ -55,6 +61,9 @@
             ,   totalPages:     null
             }
         }
+    ,   date                    =  (new Date)
+    ,   currentYear             =  date.getFullYear()
+    ,   currentDate             =  date.toISOString()
     ;
 
     // Constants
@@ -66,24 +75,22 @@
         ,   LOAD_COUNTER:                       0
         ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
         ,   ENTITY_TYPES:                       [
-                                                    {
-                                                        "type": "bidxBusinessSummary"
-                                                    },
-                                                    {
-                                                        "type": "bidxMemberProfile"
-                                                    },
-                                                    {
-                                                        "type": "bidxEntrepreneurProfile"
-                                                    },
-                                                    {
-                                                        "type": "bidxMentorProfile"
-                                                    },
-                                                    // This MUST be the last, as it's removed if applicable
-                                                    {
-                                                        "type": "bidxInvestorProfile"
-                                                    }
-
+                                                    "bdxmember"
+                                                ,   "bdxplan"
                                                 ]
+        ,   NONTITY_TYPES:                      [
+                                                    "bdxplan"
+                                                ,   "bdxmember"
+                                                ]
+        ,   FILTERQUERY:                        []
+        ,   RANGEDEFAULT:                       {
+                                                    rating:             [0, 5]
+                                                ,   completion:         [0,100]
+                                                ,   created:            ["2014-01-01T00:00:00.000Z", currentDate]
+                                                ,   modified:           ["2014-01-01T00:43:43.000Z", currentDate]
+                                                ,   memberDateOfBirth:  [0, 100]
+                                                ,   planFinancingNeeded:[0,1000000]
+                                                }
         }
 
     ,   tempLimit               = CONSTANTS.SEARCH_LIMIT
@@ -213,7 +220,7 @@
     {
         if(!displayInvestorProfile)
         {
-            CONSTANTS.ENTITY_TYPES.pop(); // Removes Investor Profile, not to display
+        //    CONSTANTS.ENTITY_TYPES.pop(); // Removes Investor Profile, not to display
         }
 
         _tabSearch();
@@ -227,7 +234,7 @@
 
         $frmSearch.validate(
         {
-            /*rules:
+           /*  rules:
             {
                 "q":
                 {
@@ -239,7 +246,7 @@
                 // Anything that is app specific, the general validations should have been set
                 // in common.js already
             }
-        ,   */
+        , */
             submitHandler:  function()
             {
 
@@ -264,6 +271,7 @@
                            _hideView( "load" );
                            _toggleListLoading( $element );
                            tempLimit = CONSTANTS.SEARCH_LIMIT;
+                           _actionBulkActions();
                           //
                         }
                 });
@@ -391,7 +399,7 @@
     var showElements = function( options ) {
 
         var elementArr      = options.elementArr // elementArr is used for conditional element display ex. Linkedin exist then only display
-        ,   item            = options.item
+        ,   result          = options.result
         ,   $listItem       = options.listItem
         ,   $listViews      = $listItem.find(".view")
         ,   itemRow
@@ -399,7 +407,7 @@
 
         $.each(elementArr, function(clsKey, clsVal)
         {
-            itemRow = bidx.utils.getValue( item, clsVal );
+            itemRow = bidx.utils.getValue( result, clsVal );
             if ( itemRow )
             {
                 _showElement(clsKey, $listViews); // elementArr is used for conditional element display ex. Linkedin exist then only display
@@ -462,14 +470,18 @@
                                 .replace( /%relevance%/g,   sortRelevance)
                                 .replace( /%industry%/g,    sortIndustry )
                                 .replace( /%country%/g,     sortCountry )
-                                .replace( /%created%/g,      sortDate )
+                                .replace( /%created%/g,     sortDate )
                             ;
 
-        $listSortItem   = $( listSortItem );
+        $listSortItem           =   $( listSortItem );
 
         $list.append( $listSortItem );
 
-        $listAnchor = $list.find('.sort');
+        $listAnchor             =   $list.find('.sort');
+
+        $list.find( "[name='bulk']" ).removeClass('hide').bidx_chosen();
+
+        $list.find( "[name='filterBy']" ).removeClass('hide').bidx_chosen();
 
         $listAnchor.on('click', function( e )
         {
@@ -503,14 +515,172 @@
             {
                 state   :   'list'
             ,   params  :   {
-                                q           :   options.q
-                            ,   sort        :   sort
-                            ,   facetFilters     :   criteria.facetFilters
-                            ,   type        :   'sort'
+                                q               :   options.q
+                            ,   sort            :   sort
+                            ,   facetFilters    :   criteria.facetFilters
+                            ,   rangeFilters    :   criteria.rangeFilters
+                            ,   type            :   'sort'
                             }
             });
         });
     }
+
+    function _removeMailRecipient( val )
+    {
+        $contactsDropdown.find("option[value='" + val + "']").remove();
+
+        $contactsDropdown.bidx_chosen();
+    }
+
+    function _populateMailRecipients( activeContacts, append )
+    {
+        var option
+        ,   $options
+        ,   recipientIds            =   []
+        ,   listItems               =   []
+        ,   $sendMsgEditor          =   $('#sendMessageEditor')
+        ,   $selectRecordCheckbox   =   $element.find( "[name='actionRecord']:checked")
+        ,   sortedContacts
+        ;
+
+        $contactsDropdown.empty();
+
+        $options = $contactsDropdown.find( "option" );
+
+        // Add the real contacts
+        //
+        if ( $selectRecordCheckbox.length )
+        {
+
+            $.each( $selectRecordCheckbox, function( idx, inputRecord )
+            {
+                var $this           =   $(inputRecord)
+                ,   recipientVal    =   $this.val()
+                ;
+
+                bidx.utils.log('selectRecordCheckbox', $this);
+
+                option = $( "<option/>",
+                {
+                    value: recipientVal
+                } );
+
+                option.text( $this.data('name') );
+
+                listItems.push( option );
+
+                recipientIds.push( recipientVal );
+            } );
+
+            // add the options to the select
+            //
+            $contactsDropdown.append( listItems );
+
+            $contactsDropdown.val( recipientIds );
+
+            // init bidx_chosen plugin
+            //
+            $contactsDropdown.bidx_chosen();
+
+            // Remove hide class as same html is used for Send message btn in memberprfile and businesssummary page
+            $sendMsgEditor.find('.recipient').removeClass('hide');
+
+            $sendMsgEditor.modal( );
+        }
+
+
+    }
+
+    function _actionBulkActions()
+    {
+        var selectAllCheckbox
+        ,   $bulk
+        ,   $actionRecord
+        ,   actionRecordLength
+        ,   allChecked
+        ,   $selectAllCheckbox      =   $element.find( "[name='selectAll']" )
+        ,   $selectRecordCheckbox   =   $element.find( "[name='actionRecord']")
+        ,   $btnApply                  =   $element.find( "[name='apply']")
+        ,   lengthActionRecord      =   $selectRecordCheckbox.length
+        ;
+
+        bidx.utils.log('selectRecord', $selectRecordCheckbox);
+
+        $btnApply.click (function ( )
+        {
+            var  bulkValue
+            ;
+
+            $bulk       =   $element.find( "[name='bulk']");
+            bulkValue   =   $bulk.val();
+
+            switch( bulkValue)
+            {
+                case 'sendEmail':
+
+                    _populateMailRecipients( );
+
+                break;
+
+                case '':
+                break;
+
+                default:
+
+            }
+
+        });
+
+        $selectRecordCheckbox.change(function( )
+        {
+            selectAllCheckbox   =   false;
+
+            $actionRecord       =   $( "[name='actionRecord']:checked" );
+
+            actionRecordLength  =   $actionRecord.length;
+
+            if( actionRecordLength )
+            {
+                $btnApply.removeClass('disabled');
+
+                if( lengthActionRecord === actionRecordLength )
+                {
+                    selectAllCheckbox   =   true;
+                }
+            }
+            else
+            {
+                $btnApply.addClass('disabled');
+            }
+
+            $selectAllCheckbox.prop("checked", selectAllCheckbox);
+
+        });
+
+        //Select All Checkbox
+        $selectAllCheckbox.change(function( )
+        {
+            allChecked      =   this.checked;
+
+            $actionRecord   = $( "[name='actionRecord']" );
+
+            $actionRecord.prop("checked", this.checked);
+
+            $selectAllCheckbox.prop("checked", this.checked);
+
+            if(allChecked)
+            {
+                $btnApply.removeClass('disabled');
+            }
+            else
+            {
+                $btnApply.addClass('disabled');
+            }
+
+        });
+
+    }
+
 
     function _addMainSearchFacets( item )
     {
@@ -521,11 +691,11 @@
         ,   subsnippit      = $("#facettop-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ;
 
-        newname = item.name.replace(/ /g, '');
+        //newname = item.name.replace(/ /g, '');
 
         listFacetsItem = subsnippit
                         .replace( /%facetValues_name%/g,    item.name )
-                        .replace( /%facetValues_anchor%/g,  newname )
+                        .replace( /%facetValues_anchor%/g,  item.name )
                         .replace( /%facetValues_count%/g,   item.count )
                         .replace( /%filterQuery%/g,         item.filterQuery )
                         ;
@@ -539,6 +709,660 @@
 
     }
 
+    function _doRangeSliderAction( options )
+    {
+        var $this
+        ,   $listReset
+        ,   criteria        =   options.criteria
+        ,   $mainFacet      =   $element.find(".main-facet")
+        ;
+        // Facet Label Click
+            //
+            $listReset  =   $mainFacet.find('.reset');
+
+            $listReset.on('click', function( e )
+            {
+                e.preventDefault();
+
+                $this           = $( this );
+
+                var filterValue
+                ,   rangeFilters        =   bidx.utils.getValue( criteria, 'rangeFilters')
+                ,   clickedCategory     =   $this.data('name')
+                ,   rangeFiltersCat     =   ( !$.isEmptyObject( rangeFilters ) && !$.isEmptyObject(rangeFilters.clickedCategory))   ? rangeFilters.clickedCategory : []
+                ;
+
+                bidx.utils.log('Criteria before click=', criteria);
+                bidx.utils.log('clickedCategory=', clickedCategory);
+                bidx.utils.log('filterValue=', filterValue);
+
+                if ( rangeFiltersCat )
+                {
+                    bidx.utils.log('criteria removed' , rangeFiltersCat);
+                    delete criteria.rangeFilters[clickedCategory].min;
+                    delete criteria.rangeFilters[clickedCategory].max;
+
+                }
+
+                if ( criteria.rangeFilters.length === 0 )
+                {
+                    $listReset.addClass( "hide" );
+                }
+
+                //Make offset 0 for filtering so start from begining
+                paging.search.offset = 0;
+
+                //set the max records limit to 10
+                tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+                bidx.utils.log('Filter clicked with q=', options.q);
+                bidx.utils.log('Filter sort=', options.sort);
+                bidx.utils.log('Filter criteria=', criteria.rangeFilters);
+
+                navigate(
+                {
+                    state   :   'list'
+                ,   params  :   {
+                                    q           :   options.q
+                                ,   sort        :   options.sort
+                                ,   rangeFilters:   criteria.rangeFilters
+                                // ,   type        :   'facet'
+                                }
+                });
+            });
+
+    }
+
+    function _doRangeCalendarAction( options )
+    {
+        var criteria    =   options.criteria
+        ,   $calendar   =   $('.facetCalendar')
+        ;
+
+        $calendar.datepicker()
+        .on('changeDate', function(e)
+        {
+            var $input      =   $(this)
+            ,   rangeFilters
+            ,   rangeName        =   $input.data('name')
+            ,   $fromDate   =   $element.find( '[name=cal-range-from-' + rangeName + ']')
+            ,   $toDate     =   $element.find( '[name=cal-range-to-' + rangeName + ']')
+            ,   min
+            ,   max
+            ,   frmValue    =   $fromDate.datepicker( "getUTCDate" )
+            ,   toValue     =   $toDate.datepicker( "getUTCDate" )
+            ;
+            //getISODateTime
+            if( frmValue )
+            {
+                min     =   bidx.utils.getISODateTime( frmValue  );
+                $toDate.datepicker( "setStartDate", frmValue );
+            }
+
+            if( toValue )
+            {
+                max       =   bidx.utils.getISODateTime( toValue  );
+                $fromDate.datepicker( "setEndDate", toValue );
+            }
+
+            bidx.utils.log('frmValue', frmValue );
+            bidx.utils.log('toValue', toValue );
+            bidx.utils.log('min', min );
+            bidx.utils.log('max', max );
+
+            if( frmValue && toValue)
+            {
+                rangeFilters    =   bidx.utils.getValue( criteria, 'rangeFilters');
+
+                bidx.utils.log('facetFilters', rangeFilters);
+                bidx.utils.log('Criteria before click=', criteria);
+                bidx.utils.log('rangeName=', rangeName);
+
+
+                criteria.rangeFilters[rangeName].min = min;
+                criteria.rangeFilters[rangeName].max = max;
+
+                //Make offset 0 for filtering so start from begining
+                paging.search.offset = 0;
+
+                //set the max records limit to 10
+                tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+                bidx.utils.log('After RangerFilters', criteria);
+
+
+
+                navigate(
+                {
+                    state   :   'list'
+                ,   params  :   {
+                                    q           :   options.q
+                                ,   sort        :   options.sort
+                                ,   facetFilters:   criteria.facetFilters
+                                ,   rangeFilters:   criteria.rangeFilters
+                                }
+                });
+            }
+
+        });
+    }
+
+    function _doRangeFilterListing( options )
+    {
+        var snippit         = $("#facet-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $facetType      = $("#facet-type").html().replace(/(<!--)*(-->)*/g, "")
+        ,   criteria        = options.criteria
+        ,   response        = options.response
+        ,   rangeFilters    = bidx.utils.getValue(response.criteria, 'rangeFilters')
+        ,   $list           = $element.find(".facet-list")
+        ,   $filters        =  $('.topfilters')
+        ,   $advancedSearch =  $('.advancedFilters')
+        ,   emptyVal        = ''
+        ,   $listItem
+        ,   $listFacetsItem
+        ,   $listClose
+        ,   $viewFacetItem
+        ,   $currentCategory
+        ,   listFacetsItem
+        ,   listItem
+        ,   industry
+        ,   anchorFacet
+        ,   isCriteriaSelected
+        ,   facetCriteria   =   {}
+        ,   sliderOptions   =   {}
+        ,   filterQuery
+        ,   min
+        ,   max
+        ,   foundMin
+        ,   foundMax
+        ,   defaultRange
+        ,   defaultMinVal
+        ,   defaultMaxVal
+        ,   foundMinObj
+        ,   foundMaxObj
+        ,   minDateObj
+        ,   maxDateObj
+        ,   isSliderAction      =   true
+        ,   isCalendarAction    =   true
+        ;
+
+        /*$list.empty();
+
+        $filters.empty();*/
+
+        if ( response && rangeFilters )
+        {
+            // Add Default image if there is no image attached to the bs
+            $.each( rangeFilters , function ( facetItem, facetMinMax )
+            {
+                min             =   bidx.utils.getValue(facetMinMax, 'min');
+
+                 max             =   bidx.utils.getValue(facetMinMax, 'min');
+
+                foundMin        =   bidx.utils.getValue(facetMinMax, 'foundMin');
+
+                foundMax        =   bidx.utils.getValue(facetMinMax, 'foundMax');
+
+                if ( !$.isEmptyObject(facetItem)  &&
+                    ( (foundMin !== foundMax) || min || max )
+                     )
+                {
+
+
+                    listItem        =   snippit
+                                        .replace( /%facets_title%/g, bidx.i18n.i( facetItem, appName ) )
+                                        .replace( /%facets_name%/g, facetItem  )
+                                        .replace( /%facetslider%/g, facetItem  )
+                                        ;
+
+                    $listItem       = listItem;
+                    $list.append( $listItem );
+                    $currentCategory = $list.find( ".facet-category-" + facetItem );
+
+                    // If slider/datepicker was set then show reset button
+
+
+                    if( min || max )
+                    {
+                        $currentCategory.find(".reset").removeClass('hide');
+                    }
+
+                    switch (facetItem)
+                    {
+                        /* Slider */
+                        case 'created':
+                        case 'modified':
+
+                        isCalendarAction    =   true;
+
+                        _renderCalendar(
+                        {
+                            facetItem:          facetItem
+                        ,   facetMinMax:        facetMinMax
+                        ,   $currentCategory:   $currentCategory
+                        ,   label:              bidx.i18n.i('rangeYearLabel', appName)
+                        ,   options:            options
+                        });
+                        break;
+
+                        case 'memberDateOfBirth':
+
+                        isSliderAction      =   true;
+
+                        _renderSlider(
+                        {
+                            facetItem:          facetItem
+                        ,   facetMinMax:        facetMinMax
+                        ,   $currentCategory:   $currentCategory
+                        ,   label:              bidx.i18n.i(facetItem + 'PerLabel', appName)
+                        ,   options:            options
+                        });
+                        break;
+
+                        case 'completion':
+                        case 'rating':
+                        case 'planFinancingNeeded':
+
+                        isSliderAction      =   true;
+
+                        //if( foundMin !== foundMax ) //If min and max value are same then dont render it
+                        //{
+                        _renderSlider(
+                        {
+                            facetItem:          facetItem
+                        ,   facetMinMax:        facetMinMax
+                        ,   $currentCategory:   $currentCategory
+                        ,   label:              bidx.i18n.i( facetItem + 'PerLabel', appName )
+                        ,   options:            options
+                        });
+                        //}
+                        break;
+
+                        default:
+
+
+                    }
+                }
+            } );
+
+            if( isSliderAction )
+            {
+                _doRangeSliderAction( options );
+
+            }
+
+            if( isCalendarAction )
+            {
+                _doRangeCalendarAction( options );
+            }
+        }
+        else
+        {
+
+            $list.append($facetType);
+        }
+    }
+
+    function _renderCalendar( options )
+    {
+        var listFacetsItem
+        ,   $listFacetsItem
+        ,   $calendarFrom
+        ,   $calendarTo
+        ,   $currentCategory    =   options.$currentCategory
+        ,   facetItem           =   options.facetItem
+        ,   facetMinMax         =   options.facetMinMax
+
+        ,   minVal              =   bidx.utils.getValue(facetMinMax, 'min')
+        ,   minObj              =   ( minVal ) ? bidx.utils.parseISODate ( minVal ) : ''
+        ,   min                 =   ( minVal ) ? new Date( minObj.y, minObj.m - 1, minObj.d ) : ''
+
+        ,   maxVal              =   bidx.utils.getValue(facetMinMax, 'max')
+        ,   maxObj              =   ( maxVal ) ? bidx.utils.parseISODate ( maxVal ) : ''
+        ,   max                 =   ( maxVal ) ? new Date( maxObj.y, maxObj.m - 1, maxObj.d ) : ''
+
+        ,   foundMinObj         =   bidx.utils.parseISODate (facetMinMax.foundMin)
+        ,   foundMaxObj         =   bidx.utils.parseISODate (facetMinMax.foundMax)
+        ,   foundMin            =   new Date( foundMinObj.y, foundMinObj.m - 1, foundMinObj.d )
+        ,   foundMax            =   new Date( foundMaxObj.y, foundMaxObj.m - 1, foundMaxObj.d )
+        ,   calSnippit          =   $("#facetcalendar-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   isRTL               =   ( currentLanguage === 'ar')     ?   true    : false
+        ,   pickerOptions       =   {
+                                        startView:              2
+                                    ,   todayHighlight:         true
+                                    ,   autoclose:              true
+                                    ,   calendarWeeks:          true
+                                    ,   language:               currentLanguage
+                                    ,   rtl:                    isRTL
+                                    ,   title:                  facetItem
+                                    ,   format:                 "d M yyyy"
+                                    ,   startDate:              (minVal) ?  min : foundMin
+                                    ,   endDate:                (maxVal) ?  max : foundMax // Why because you cant set max date then if returns foundmax value is lower then max
+                                    }
+        ;
+
+        listFacetsItem = calSnippit
+                        .replace( /%facetcalendar%/g,   facetItem   )
+                        ;
+
+        $listFacetsItem = $( listFacetsItem );
+
+        $currentCategory.find( ".list-group" ).append($listFacetsItem);
+
+        bidx.utils.log( 'pickerOptions', pickerOptions);
+
+        $calendarFrom   = $currentCategory.find( '#cal-range-from-' + facetItem );
+        $calendarFrom.datepicker( pickerOptions );
+
+        if( minVal )
+        {
+
+         //   min     =   bidx.utils.parseISODate ( minVal );
+           // min     =   min.y + '-' + min.m + '-' + min.d ;
+
+           //min          =   minVal.y + '-' + minVal.m + '-' + minVal.d ;
+           bidx.utils.log('minnnnnn', min);
+           $calendarFrom.datepicker( "setDate", min );
+           //bidx.utils.setElementValue( $calendarFrom, min);
+        }
+
+        $calendarTo     = $currentCategory.find( '#cal-range-to-' + facetItem );
+        $calendarTo.datepicker( pickerOptions );
+
+        if( maxObj )
+        {// max     =   bidx.utils.parseISODate ( maxVal );
+           // max     =   max.y + '-' + max.m + '-' + max.d ;
+
+            bidx.utils.log('maxxxxxxx', max);
+            $calendarTo.datepicker( "setDate", max );
+            //bidx.utils.setElementValue( $calendarTo, maxVal);
+        }
+
+    }
+
+    function _renderSlider( params )
+    {
+        var listFacetsItem
+        ,   $listFacetsItem
+        ,   labelMinVal
+        ,   labelMaxVal
+        ,   total
+        ,   ticks
+        ,   ticksLabels
+        ,   intSeconds          =   1
+        ,   refreshId
+        ,   slideStart          =   false
+        ,   sliderOptions       =   {}
+        ,   $currentCategory    =   params.$currentCategory
+        ,   facetItem           =   params.facetItem
+        ,   facetMinMax         =   params.facetMinMax
+        ,   min                 =   bidx.utils.getValue( facetMinMax, 'min' )
+        ,   max                 =   bidx.utils.getValue( facetMinMax, 'max' )
+        ,   minDateObj
+        ,   maxDateObj
+        ,   foundMin            =   bidx.utils.getValue( facetMinMax, 'foundMin')
+        ,   foundMax            =   bidx.utils.getValue( facetMinMax, 'foundMax')
+        ,   foundMinObj
+        ,   foundMaxObj
+        ,   label               =   params.label
+        ,   options             =   params.options
+        ,   criteria            =   options.criteria
+        ,   defaultRange        =   CONSTANTS.RANGEDEFAULT[facetItem]
+        ,   defaultMinVal       =   bidx.utils.getValue(defaultRange, '0')
+        ,   defaultMaxVal       =   bidx.utils.getValue(defaultRange, '1')
+        ,   sliderSnippit       =   $("#facetslider-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $sliderRange
+        ,   testIterator        =   0
+        ,   enabled             =   true
+        ,   tick1
+        ,   tick2
+        ,   tick3
+        ,   tick4
+        ;
+
+        min         =   min ? min : foundMin;
+
+        max         =   max ? max : foundMax;
+
+        bidx.utils.log( 'min', min);
+
+        bidx.utils.log( 'max', max);
+
+
+        if( (foundMin === foundMax) && ( min || max ) )
+        {
+            enabled =   false;
+            min     =   foundMin;
+            max     =   foundMin;
+        }
+
+        switch (facetItem)
+        {
+            case 'memberDateOfBirth':
+                var minAge      =   defaultMinVal
+                ,   maxAge      =   defaultMaxVal
+                ,   foundMinDate
+                ,   foundMaxDate
+                ,   minDate
+                ,   maxDate
+                ,   timeDiff
+                ;
+
+
+                bidx.utils.log( 'minAge', minAge);
+
+                bidx.utils.log( 'maxAge', maxAge);
+
+                if( foundMin )
+                {
+                    //foundMinObj     =   bidx.utils.parseISODate( foundMin );
+                    /*foundMinObj     =   new Date(foundMin);
+                    timeDiff        = Math.abs(date.getTime() - foundMinObj.getTime());
+                    defaultMaxVal   = Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));*/
+
+                }
+
+                if( foundMax )
+                {
+                  /*  foundMaxObj     =   bidx.utils.parseISODate( foundMax );
+                    foundMaxDate    =   new Date(date.getFullYear()- foundMaxObj.y, date.getMonth(), date.getDate());
+                    defaultMinVal   =   currentYear - foundMaxDate.getFullYear();*/
+
+                    /*foundMaxObj     =   new Date(foundMax);
+                    timeDiff        = Math.abs(date.getTime() - foundMaxObj.getTime());
+                    defaultMinVal   = Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));*/
+
+                }
+
+                bidx.utils.log( 'min', min);
+
+                bidx.utils.log( 'max', max);
+
+                if( min )
+                {
+                   /* minDateObj  =   bidx.utils.parseISODate( min );
+                    minDate     =   new Date(date.getFullYear()- minDateObj.y, date.getMonth(), date.getDate());
+                    maxAge      =   currentYear - minDate.getFullYear();*/
+
+                    minDateObj      =   new Date(min);
+                    timeDiff        =   Math.abs(date.getTime() - minDateObj.getTime());
+                    maxAge          =   Math.ceil(timeDiff / (1000 * 3600 * 24 * 365)) - 1;
+                   // defaultMaxVal   =   maxAge;
+                }
+
+                if( max )
+                {
+                   /* maxDateObj  =   bidx.utils.parseISODate( max );
+                    maxDate     =   new Date(date.getFullYear()- maxDateObj.y, date.getMonth(), date.getDate());
+                    minAge      =   currentYear - maxDate.getFullYear();*/
+
+                    maxDateObj      =   new Date(max);
+                    timeDiff        =   Math.abs(date.getTime() - maxDateObj.getTime());
+                    minAge          =   Math.ceil(timeDiff / (1000 * 3600 * 24 * 365)) - 1;
+                   // defaultMinVal   =   minAge;
+                }
+
+                min     =   minAge;
+
+                max     =   maxAge;
+
+                bidx.utils.log('min', minAge);
+                bidx.utils.log('max', maxAge);
+
+                labelMinVal =   label.replace(/%num%/g,  defaultMinVal );
+
+                labelMaxVal =   label.replace(/%num%/g,  defaultMaxVal );
+
+
+            break;
+
+            case 'planFinancingNeeded':
+
+                min             =   Number(min);
+                max             =   Number(max);
+
+                defaultMinVal   =  foundMin;
+
+                defaultMaxVal   =  foundMax;
+
+                labelMinVal     =   numeral(foundMin).format('$0,0a');
+
+                labelMaxVal     =   numeral(foundMax).format('$0,0a');
+
+            break;
+
+            default:
+
+
+                min             =   Number(min);
+                max             =   Number(max);
+
+            labelMinVal =   label.replace(/%num%/g,  defaultMinVal );
+
+            labelMaxVal =   label.replace(/%num%/g,  defaultMaxVal );
+        }
+
+        listFacetsItem = sliderSnippit
+                        .replace( /%facetslider%/g,  facetItem )
+                        .replace( /%facets_min%/g,  labelMinVal )
+                        .replace( /%facets_max%/g,  labelMaxVal )
+                        ;
+
+        $listFacetsItem = $( listFacetsItem );
+
+        $currentCategory.find( ".list-group" ).append($listFacetsItem);
+
+        sliderOptions   =
+        {
+            step:       1
+        ,   min:        defaultMinVal
+        ,   max:        defaultMaxVal
+        ,   value:      [min, max]
+        ,   enabled:    enabled
+        ,   tooltip:    'always'
+        ,   tooltip_split: true
+        };
+
+
+
+        $sliderRange     =   $currentCategory.find('.slider-range' );
+
+        $sliderRange.slider( sliderOptions );
+
+        //set a flag so we know if we're sliding
+        $sliderRange.on('slideStart', function ()
+        {
+            // Set a flag to indicate slide in progress
+            slideStart = true;
+            // Clear the timeout
+            clearInterval( refreshId );
+        });
+
+        $sliderRange.on('slideStop', function ( )
+        {
+            var $this   =   $(this);
+            // Set a flag to indicate slide not in progress
+            slideStart  =   false;
+            // start the timeout
+            refreshId   =   setInterval( function ( )
+            { // saving the timeout
+                sliderSearch( $this );
+
+            },  intSeconds * 3000 );
+        });
+
+         /*Example "rangeFilters": {
+            "completion": {
+              "min": 0,
+              "max": 100,
+              "foundMin": 43,
+              "foundMax": 75
+            },
+            "created": {
+              "foundMin": "2013-06-03T14:39:30Z",
+              "foundMax": "2013-07-31T09:36:16Z"
+            }
+        }*/
+
+        function sliderSearch( $slider )
+        {
+                clearInterval( refreshId );
+
+                var rangeValue      =   $slider.data('value').split(',')
+                ,   min             =   rangeValue[0]
+                ,   max             =   rangeValue[1]
+                ,   rangeName       =   $slider.data('name')
+                ,   rangeFilters    =   bidx.utils.getValue( criteria, 'rangeFilters')
+            //    ,   facetFiltersCat =   []
+                ;
+
+                bidx.utils.log('facetFilters', rangeFilters);
+                bidx.utils.log('Criteria before click=', criteria);
+                bidx.utils.log('rangeName=', rangeName);
+                bidx.utils.log('filterValue=', rangeValue);
+
+                switch (rangeName)
+                {
+                    case 'memberDateOfBirth':
+                        minAge  =   new Date(date.getFullYear()- max, date.getMonth(), date.getDate());
+
+                        maxAge  =   new Date(date.getFullYear()- min, date.getMonth(), date.getDate());
+
+                        min     =   minAge.toISOString();
+
+                        max     =   maxAge.toISOString();
+
+                    break;
+                }
+
+                //facetFiltersCat     =   rangeFilters[rangeName];
+
+                criteria.rangeFilters[rangeName].min = min;
+                criteria.rangeFilters[rangeName].max = max;
+
+                //Make offset 0 for filtering so start from begining
+                paging.search.offset = 0;
+
+                //set the max records limit to 10
+                tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+                bidx.utils.log('After RangerFilters', criteria);
+
+                navigate(
+                {
+                    state   :   'list'
+                ,   params  :   {
+                                    q           :   options.q
+                                ,   sort        :   options.sort
+                                ,   facetFilters:   criteria.facetFilters
+                                ,   rangeFilters:   criteria.rangeFilters
+                                }
+                });
+
+
+        }
+    }
+
     /* Get the search list
     Sample
     bidxBusinessGroup - 8747 - Cleancookstoves
@@ -548,7 +1372,7 @@
     {
         var snippit         = $("#facet-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   subsnippit      = $("#facetsub-listitem").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listEmpty      = $("#error-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $facetType      = $("#facet-type").html().replace(/(<!--)*(-->)*/g, "")
         ,   criteria        = options.criteria
         ,   response        = options.response
         ,   $mainFacet      = $element.find(".main-facet")
@@ -572,13 +1396,19 @@
         ,   listFacetsItem
         ,   facetValues
         ,   facetLabel
+        ,   facetLength
         ,   dataKey
         ,   itemName
+        ,   facetValName
         ,   industry
         ,   anchorFacet
         ,   isCriteriaSelected
-        ,   facetCriteria = {}
+        ,   facetCriteria   = {}
         ,   filterQuery
+        ,   facetCounter    =   1
+        ,   topFacets       =   []
+        ,   bottomFacets    =   []
+        ,   finalFacets     =   []
         ;
 
         $list.empty();
@@ -588,46 +1418,72 @@
         if ( response && response.facets )
         {
             // Add Default image if there is no image attached to the bs
-            bidx.utils.log('facets', response.facets);
+            facetLength     =   response.facets.length;
+
             $.each( response.facets , function ( idx, facetItems)
             {
-
-                facetValues    = bidx.utils.getValue( facetItems, "facetValues" );
-                facetLabel     = bidx.i18n.i( facetItems.name, appName );
+                finalFacets     =   [];
+                facetValues     =   bidx.utils.getValue( facetItems, "facetValues" );
+                facetLabel      =   bidx.i18n.i( facetItems.name, appName );
 
                 if ( !$.isEmptyObject(facetValues) )
                 {
-                    listItem = snippit.replace( /%facets_name%/g, facetItems.name ? bidx.i18n.i( facetItems.name, appName ) : emptyVal );
+                    listItem    =   snippit
+                                    .replace( /%facets_title%/g, bidx.i18n.i( facetItems.name, appName ) )
+                                     .replace( /%facets_name%/g, facetItems.name  );
 
                     $listItem  = listItem;
                     $list.append($listItem );
-                    $currentCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name, appName ) );
+                    $currentCategory    = $list.find( ".facet-category-" + facetItems.name );
+                    /* Start from here **********************/
+                   /* topFacets       =   _.filter(facetValues, function(value) { return value.checked; });
+                    bottomFacets    =   _.filter(facetValues, function(value) { return !value.checked; });
+                    finalFacets     =   _.extend(finalFacets, topFacets, bottomFacets);
+
+                    bidx.utils.log('topFacets', topFacets);
+                    bidx.utils.log('bottomFacets', bottomFacets);
+                    bidx.utils.log('finalFacets', finalFacets);*/
 
                     $.each( facetValues , function ( idx, item )
                     {
 
-                        if ( facetItems.name !== 'facet_entityType' )
+                        switch (facetItems.name)
                         {
-                            dataKey      = facetItems.name.replace(/facet_/g, '');
+                            case 'entityType':
+                            case 'role':
+                            facetValName    = bidx.i18n.i( item.name );
+                            break;
 
-                            item.name    = bidx.data.i( item.name, dataKey );  // ict.services in industry
-                        }
-                        else
-                        {
-                            item.name    = bidx.i18n.i( item.name, appName );
+                            case 'expertise':
+                            facetValName    = bidx.data.i( item.name, 'mentorExpertise' );
+                            break;
 
-                            _addMainSearchFacets( item );
+                            case 'planEnvironmentalImpact':
+                            facetValName    = bidx.data.i( item.name, 'envImpact' );
+                            break;
+
+                            case 'planSocialImpact':
+                            facetValName    = bidx.data.i( item.name, 'socialImpact' );
+                            break;
+
+                            case 'planFinanceType':
+                            facetValName    = bidx.data.i( item.name, 'investmentType' );
+                            break;
+
+                            default:
+                            facetValName    = bidx.data.i( item.name, facetItems.name );
+
                         }
 
                         if ( item.name )
                         {
-                            newname = item.name.replace(/ /g, '');
-
+                            //newname = facetValName.replace(/ /g, '');
+                            newname = facetValName;
                             listFacetsItem = subsnippit
-                                .replace( /%facetValues_name%/g,    item.name           ? item.name        :    emptyVal )
-                                .replace( /%facetValues_anchor%/g,  item.name           ? newname          :    emptyVal )
-                                .replace( /%facetValues_count%/g,   item.count          ? item.count       :    emptyVal )
-                                .replace( /%filterQuery%/g,         item.filterQuery    ? item.filterQuery :    emptyVal )
+                                .replace( /%facets_title%/g,        item.name           ? newname      :    emptyVal )
+                                .replace( /%facetValues_count%/g,   item.count          ? item.count        :    emptyVal )
+                                .replace( /%facetValues_name%/g,    item.name           ? item.name         :    emptyVal )
+                                .replace( /%filterQuery%/g,         item.filterQuery    ? item.filterQuery  :    emptyVal )
                                 ;
 
                             // execute cb function
@@ -637,7 +1493,7 @@
 
                             // Display Close button for criteria
                             //
-                            if ( $.inArray( item.filterQuery, criteria.facetFilters ) !== -1 )
+                            if ( item.checked )
                             {
                                 $viewFacetItem = $listFacetsItem.find('.view');
                                 _showElement('close', $viewFacetItem);
@@ -660,7 +1516,7 @@
                 //
                 if ( facetItems.valueCount > CONSTANTS.VISIBLE_FILTER_ITEMS + 3 )
                 {
-                    $bigCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name, appName ) );
+                    $bigCategory = $list.find( ".facet-category-" + facetItems.name );
                     $categoryList = $bigCategory.find( ".list-group" );
 
                     $categoryList.find( "a.filter:gt("+CONSTANTS.VISIBLE_FILTER_ITEMS+")" ).addClass( "hide toggling" );
@@ -672,6 +1528,17 @@
                         bidx.common.showMoreLess( $(this).parent().find( ".toggling" ) );
                     });
                 }
+
+                bidx.utils.log('facetLength', facetLength);
+                bidx.utils.log('facetCounter', facetCounter);
+                if( ( facetLength === facetCounter ) &&
+                      $.isFunction( options.cb )
+                    )
+                {
+                    options.cb( );
+                }
+
+                facetCounter++;
             });
 
 
@@ -683,20 +1550,41 @@
             {
                 e.preventDefault();
 
-                bidx.utils.log('Criteria before click=', criteria);
-
                 $this           = $( this );
-                filterQuery     = $this.data('filter');
+                filterQuery     = {};
 
-                if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterQuery, criteria.facetFilters ) !== -1)
+                var filterValue
+                ,   $facetWrapper       =   $this.parent().parent()
+                ,   facetFilters        =   bidx.utils.getValue( criteria, 'facetFilters')
+                ,   clickedCategory     =   $facetWrapper.find( ".facet-title" ).data('name')
+                ,   facetFiltersCat     =   []
+                ;
+
+                filterValue             =   $this.data('value');
+
+                bidx.utils.log('facetFilters', facetFilters);
+                bidx.utils.log('Criteria before click=', criteria);
+                bidx.utils.log('clickedCategory=', $facetWrapper.find('.facet-title').data('name'));
+                bidx.utils.log('filterValue=', filterValue);
+                bidx.utils.log('facetFiltersCat=', facetFiltersCat);
+
+               /* if( !$.isEmptyObject( facetFilters ) && !$.isEmptyObject(facetFilters[clickedCategory]))
                 {
-                    bidx.utils.log('criteria removed' , filterQuery, criteria.facetFilters);
-                    criteria.facetFilters = _.without(criteria.facetFilters, filterQuery); // removed the match value from criteria, using underscore function make sure its included
+                    bidx.utils.log("I am in if");*/
+                    facetFiltersCat     =   facetFilters[clickedCategory];
+               /* }
+                else
+                {
+                    criteria.facetFilters[clickedCategory] = [];
+                }*/
 
+                if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterValue, facetFiltersCat ) !== -1)
+                {
+                    criteria.facetFilters[clickedCategory] = _.without(facetFiltersCat, filterValue); // removed the match value from criteria, using underscore function make sure its included
                 }
-                else if ( $.inArray(filterQuery, criteria.facetFilters ) === -1)
+                else if ( $.inArray(filterValue, facetFiltersCat ) === -1 )
                 {
-                    criteria.facetFilters.push( filterQuery );
+                    criteria.facetFilters[clickedCategory].push( filterValue );
                 }
 
                 /*// For search filtering add the current filter
@@ -733,14 +1621,18 @@
                                     q           :   options.q
                                 ,   sort        :   options.sort
                                 ,   facetFilters:   criteria.facetFilters
+                                ,   rangeFilters:   criteria.rangeFilters
                                 // ,   type        :   'facet'
                                 }
                 });
             });
+
+
         }
         else
         {
-            $list.append($listEmpty);
+
+            $list.append($facetType);
         }
     }
 
@@ -763,7 +1655,7 @@
                 options.sort     = [];
                 bidx.controller.updateHash( "#search/list" );
 
-                $resetFacet.addClass( "hide" );
+                //$resetFacet.addClass( "hide" );
 
                 navigate(
                 {
@@ -771,7 +1663,8 @@
                 ,   params  :   {
                                     q           :   options.q
                                 ,   sort        :   options.sort
-                                ,   facetFilters:   criteria.facetFilters
+                                ,   facetFilters:   {}
+                                ,   rangeFilters:   {}
                                 // ,   type        :   'facet'
                                 }
                 });
@@ -802,6 +1695,7 @@
         var q
         ,   sort
         ,   facetFilters
+        ,   rangeFilters
         ,   criteria
         ,   criteriaQ
         ,   paramFilter
@@ -833,7 +1727,7 @@
             $body.find(".form-q").val(q);
         }
 
-        criteriaQ = (q) ? q : '*';
+        criteriaQ = (q) ? q  : '*';
 
         // 2. Sort criteria
         // ex sort:["field":"entity", "order": asc ]
@@ -853,20 +1747,12 @@
         else
         {
             criteriaSort.push( {
-                                            "field" : "created"
+                                            "field" : "modified"
                                         ,   "order":  "desc"
                                     });
         }
 
-        // 3. Filter
-        // ex facetFilters:["0": "facet_language:fi" ]
-        //
 
-        facetFilters = bidx.utils.getValue(params, 'facetFilters' );
-        if(  facetFilters )
-        {
-            criteriaFilters = facetFilters;
-        }
 
        // filters.push('-facet_entityType:bidxEntrepreneurProfile');
 
@@ -875,23 +1761,47 @@
                     ,   sort        :   sort
                     ,   facetFilters:   facetFilters
                     ,   criteria    :   {
-                                            "searchTerm"    :   "text:" + criteriaQ
-                                        ,   "facetFilters"  :   criteriaFilters
+                                            "searchTerm"    :   "basic:" + criteriaQ
+                                       // ,   "facetFilters"  :   criteriaFilters
                                         ,   "sort"          :   criteriaSort
                                         ,   "maxResult"     :   tempLimit
                                         ,   "offset"        :   paging.search.offset
                                         ,   "entityTypes"   :   CONSTANTS.ENTITY_TYPES
-                                        ,   "facetsVisible" :   true
-                                        ,   "scope"         :   "local"
-                                        ,   "filters"       :   filters
+                                        //,   "entityTypes"  :   CONSTANTS.NONTITY_TYPES
+                                        //  ,   "facetsVisible" :   true
+                                        // ,   "scope"         :   "local"
+                                        //,   "filters"       :   filters
                                         }
                     };
 
+        // 3. facetFilters
+        // ex facetFilters:["0": "facet_language:fi" ]
+        //
 
+        facetFilters = bidx.utils.getValue(params, 'facetFilters' );
+
+        if(  facetFilters )
+        {
+            criteriaFilters = facetFilters;
+            search.criteria.facetFilters    =   criteriaFilters;
+        }
+
+        // 4. RangeFilters
+        // ex RangeFilters:["0": "facet_language:fi" ]
+        //
+
+        rangeFilters = bidx.utils.getValue(params, 'rangeFilters' );
+
+        if(  rangeFilters )
+        {
+            search.criteria.rangeFilters    =  rangeFilters;
+        }
 
         return search;
 
     }
+
+
     function _getSearchList( options )
     {
         var search
@@ -899,11 +1809,20 @@
 
         search          =   _getSearchCriteria( options.params );
 
+        /*var extraUrlParameters =
+        [
+            {
+                label :     "searchTerm",
+                value :     "$SIM"
+            }
+        ];*/
+
         bidx.api.call(
-            "search.get"
+            "search.found"
         ,   {
                 groupDomain:          bidx.common.groupDomain
             ,   data:                 search.criteria
+          //  ,   extraUrlParameters:   extraUrlParameters
 
             ,   success: function( response )
                 {
@@ -914,8 +1833,20 @@
                         response    :   response
                     ,   q           :   search.q
                     ,   sort        :   search.sort
-                    ,   criteria    :   search.criteria
+                    ,   criteria    :   response.criteria
+                    ,   cb          :   function ( )
+                                        {
+                                            _doRangeFilterListing(
+                                            {
+                                                response    :   response
+                                            ,   q           :   search.q
+                                            ,   sort        :   search.sort
+                                            ,   criteria    :   response.criteria
+                                            } );
+                                        }
                     } );
+
+
 
                     _doSorting(
                     {
@@ -997,7 +1928,7 @@
 
         bidx.utils.log("[data] retrieved results ", data );
 
-        if ( data.docs && data.docs.length )
+        if ( data.total )
         {
             // if ( response.totalMembers > currentPage size  --> show paging)
             //
@@ -1006,7 +1937,7 @@
             pagerOptions  =
             {
                 currentPage:            ( paging.search.offset / tempLimit  + 1 ) // correct for api value which starts with 0
-            ,   totalPages:             Math.ceil( data.numFound / tempLimit )
+            ,   totalPages:             Math.ceil( data.total / tempLimit )
             ,   numberOfPages:          CONSTANTS.NUMBER_OF_PAGES_IN_PAGINATOR
             ,   useBootstrapTooltip:    true
 
@@ -1036,6 +1967,7 @@
                                         q           :   options.q
                                     ,   sort        :   options.sort
                                     ,   facetFilters:   criteria.facetFilters
+                                    ,   rangeFilters:   criteria.rangeFilters
                                     }
                     ,   cb      :   function()
                                     {
@@ -1044,153 +1976,124 @@
                                         _showAllView( "pager" );
                                         _showAllView( "sort" );
                                         tempLimit = CONSTANTS.SEARCH_LIMIT;
+                                        _actionBulkActions();
                                     }
                     });
                 }
             };
 
-            tempLimit = data.docs.length;
+            tempLimit = _.size( data.found );
 
             bidx.utils.log("pagerOptions", pagerOptions);
 
-            if( data.numFound ) {
+            if( data.total )
+            {
 
-                $searchPagerContainer.find('.pagerTotal').empty().append('<h5>' + data.numFound + ' ' + bidx.i18n.i( 'resultsLabel', appName ) + ':</h5>');
+                $searchPagerContainer.find('.pagerTotal').empty().append('<h5>' + data.total + ' ' + bidx.i18n.i( 'resultsLabel', appName ) + ':</h5>');
             }
 
             $searchPager.bootstrapPaginator( pagerOptions );
+            $( ".pagination" ).rPage();
 
             // create member listitems
             //
-            $.each( data.docs, function( idx, response )
+            if( tempLimit )
             {
-                initialLoad = false;
-
-                switch( response.entityType )
+                $.each( data.found, function( idx, response )
                 {
-                    case 'bidxMemberProfile':
+                    initialLoad = ( data.offset ) ? false: true;
 
-                        showMemberProfile(
-                        {
-                            response : response
-                       // ,   criteria : data.criteria
-                        ,   cb       : options.cb
-                        } );
+                    switch( response.entityType )
+                    {
+                        case 'bdxMember':
 
-                    break;
-                    /* Initial load exclude investor,entrprneur and mentor profile so profile display is not duplicated , ex Altaf is member , entrprenneur and mentor too so dont need to display mentor/entrepreneur profile
-                       Or first time only it returned one result of entrprneeur, Ex search on summary thats written in entrpreneur profile so it returns entpreneur profile and it should be displyaed*/
-                    case 'bidxInvestorProfile':
-                        //response.entityType = 'bidxMemberProfile';
-                        if ( options.criteria.facetFilters.length !== 0 || data.numFound === 1 )
-                        {
                             showMemberProfile(
-                            {
-                                response : response
-                            //,   criteria : data.criteria
-                            ,   cb       : options.cb
-                            } );
-                        }
-                        else
-                        {
-                            initialLoad = true;
-                        }
+                                {
+                                    response : response
+                               // ,   criteria : data.criteria
+                                ,   cb       : options.cb
+                                } );
 
-                    break;
+                        break;
 
-                    case 'bidxEntrepreneurProfile':
+                        case 'bdxPlan':
 
-                        //response.entityType = 'bidxMemberProfile';
-                        if ( options.criteria.facetFilters.length !== 0 || data.numFound === 1)
-                        {
-                            showMemberProfile(
-                            {
-                                response : response
-                            //,   criteria : data.criteria
-                            ,   cb       : options.cb
-                            } );
-                        }
-                        else
-                        {
-                            initialLoad = true;
-                        }
-
-
-                    break;
-
-                    case 'bidxMentorProfile':
-                        //response.entityType = 'bidxMemberProfile';
-                        if ( options.criteria.facetFilters.length !== 0 || data.numFound === 1 )
-                        {
-                            showMemberProfile(
+                            showEntity(
                             {
                                 response : response
                            // ,   criteria : data.criteria
                             ,   cb       : options.cb
+
                             } );
-                        }
-                        else
-                        {
-                            initialLoad = true;
-                        }
+
+                        break;
+
+                        /* Initial load exclude investor,entrprneur and mentor profile so profile display is not duplicated , ex Altaf is member , entrprenneur and mentor too so dont need to display mentor/entrepreneur profile
+                           Or first time only it returned one result of entrprneeur, Ex search on summary thats written in entrpreneur profile so it returns entpreneur profile and it should be displyaed*/
+                        case 'bidxInvestorProfile':
+                            //response.entityType = 'bidxMemberProfile';
+                            if ( options.criteria.facetFilters.length !== 0 || data.total === 1 )
+                            {
+                                showMemberProfile(
+                                {
+                                    response : response
+                                //,   criteria : data.criteria
+                                ,   cb       : options.cb
+                                } );
+                            }
+                            else
+                            {
+                                initialLoad = true;
+                            }
+
+                        break;
 
 
-                    break;
 
-                    case 'bidxBusinessSummary':
 
-                        showEntity(
-                        {
-                            response : response
-                       // ,   criteria : data.criteria
-                        ,   cb       : options.cb
+                        case 'bidxCompany':
 
-                        } );
+                           showEntity(
+                            {
+                                response : response
+                            //,   criteria : data.criteria
+                            ,   cb       : options.cb
 
-                    break;
+                            } );
 
-                    case 'bidxCompany':
+                        break;
 
-                       showEntity(
-                        {
-                            response : response
-                        //,   criteria : data.criteria
-                        ,   cb       : options.cb
+                        case 'bidxBusinessGroup':
 
-                        } );
+                           showEntity(
+                            {
+                                response : response
+                           // ,   criteria : data.criteria
+                            ,   cb       : options.cb
 
-                    break;
+                            } );
 
-                    case 'bidxBusinessGroup':
+                        break;
 
-                       showEntity(
-                        {
-                            response : response
-                       // ,   criteria : data.criteria
-                        ,   cb       : options.cb
+                        default:
 
-                        } );
-
-                    break;
-
-                    default:
-
-                    break;
-                }
-
-                if ( initialLoad )
-                {
-                    CONSTANTS.LOAD_COUNTER ++;
-
-                    if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
-                    {
-                        if( $.isFunction( options.cb ) )
-                        {
-                            options.cb();
-                        }
+                        break;
                     }
-                }
-            });
+
+                    /*if ( initialLoad )
+                    {
+                        CONSTANTS.LOAD_COUNTER ++;
+
+                        if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
+                        {
+                            if( $.isFunction( options.cb ) )
+                            {
+                                options.cb();
+                            }
+                        }
+                    }*/
+                });
+            }
         }
         else
         {
@@ -1203,6 +2106,7 @@
                 options.cb();
             }
             _hideView( "pager" );
+            _hideView( "sort" );
         }
 
         // execute cb function
@@ -1210,7 +2114,347 @@
 
     }
 
-    function replaceStringsCallback( response, i18nItem )
+    function replaceStringsCallback( response )
+    {
+        //if( item.bidxEntityType == 'bidxBusinessSummary') {
+
+        var $listItem
+        ,   listItem
+        ,   replacedList
+        ,   externalVideoPitch
+        ,   $entityElement
+        ,   snippit
+        ,   i18nItem
+        ,   emptyVal                =   ''
+        ,   conditionalElementArr   =   { }
+        ,   entityType              =   response.entityType
+        ;
+
+        switch( entityType )
+        {
+            case 'bdxPlan'  :
+                var countryOperation
+                ,   entrpreneurIndustry
+                ,   entrpreneurReason
+                ,   $el
+                ,   $raty
+                ,   $ratingWrapper
+                ,   logo
+                ,   logoDocument
+                ,   cover
+                ,   coverDocument
+                ;
+
+                i18nItem            =   response.plan;
+                $entityElement      =   $("#businesssummary-listitem");
+                snippit             =   $entityElement.html().replace(/(<!--)*(-->)*/g, "");
+                countryOperation    =   bidx.utils.getValue( i18nItem, "country");
+
+                if(countryOperation)
+                {
+
+                    bidx.data.getItem(countryOperation, 'country', function(err, labelCountry)
+                    {
+                        country    =   labelCountry;
+                    });
+                }
+
+                entrpreneurIndustry = bidx.utils.getValue( i18nItem, "industry");
+
+                if(entrpreneurIndustry)
+                {
+                    bidx.data.getItem(entrpreneurIndustry, 'industry', function(err, labelIndustry)
+                    {
+                       industry = labelIndustry;
+                    });
+                }
+
+                entrpreneurReason = bidx.utils.getValue( i18nItem, "reasonForSubmission");
+
+                if(entrpreneurReason)
+                {
+                    bidx.data.getItem(entrpreneurReason, 'reasonForSubmission', function(err, labelReason)
+                    {
+                       reason = labelReason;
+                    });
+                }
+
+                // search for placeholders in snippit
+                //
+                listItem = snippit
+                    .replace( /%entityId%/g,            response.entityId )
+                    .replace( /%userId%/g,              i18nItem.owner.userId )
+                    .replace( /%title%/g,               i18nItem.title   ? i18nItem.title : emptyVal )
+                    .replace( /%name%/g,                i18nItem.owner.name )
+                    .replace( /%slogan%/g,              i18nItem.slogan   ? i18nItem.slogan : emptyVal )
+                    .replace( /%modified%/g,            i18nItem.modified  ? bidx.utils.parseTimestampToDateTime(i18nItem.modified, "date") : emptyVal )
+                    .replace( /%country%/g,             country )
+                    .replace( /%industry%/g,            industry )
+                    .replace( /%reasonForSubmission%/g, reason )
+                    .replace( /%financingNeeded%/g,     bidx.utils.formatNumber(i18nItem.financingNeeded)   ? bidx.utils.formatNumber(i18nItem.financingNeeded) + " " + bidx.i18n.i('usd') : emptyVal )
+                    .replace( /%stageOfBusines%/g,      i18nItem.stageOfBusines )
+                    .replace( /%yearSalesStarted%/g,    i18nItem.yearSalesStarted )
+                    .replace( /%completeness%/g,        i18nItem.completion ? i18nItem.completion + '%' : '' )
+                    ;
+
+                $listItem = $(listItem);
+
+                /* Displaying Rating Star Logic */
+                $ratingWrapper              = $listItem.find( ".rating-wrapper" );
+                $raty                       = $ratingWrapper.find( ".raty" );
+
+                $raty.raty({
+                    starType: 'i',
+                    readOnly: true,
+                    // TODO Arjan remove or translate?
+                    hints:  ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent'],
+                    score:  i18nItem.rating.toFixed(1)
+
+                });
+
+                logo = bidx.utils.getValue( i18nItem, "logo");
+                logoDocument = bidx.utils.getValue( i18nItem, "logo.url");
+
+                cover = bidx.utils.getValue( i18nItem, "cover");
+                coverDocument = bidx.utils.getValue( i18nItem, "cover.url");
+
+
+                if ( logo && logoDocument )
+                {
+                    placeBusinessThumb( $listItem, logoDocument );
+                }
+                else if ( cover && coverDocument )
+                {
+                    placeBusinessThumb( $listItem, coverDocument );
+                }
+
+                // externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
+                // if ( externalVideoPitch )
+                // {
+                //     $el         = $listItem.find("[data-role='businessImage']");
+                //     _addVideoThumb( externalVideoPitch, $el );
+                // }
+
+                conditionalElementArr =
+                {
+                   'industry'           :   "industry"
+                ,  'financingNeeded'    :   "financingNeeded"
+                ,  'reasonForSubmission':   'reasonForSubmission'
+                ,  'country'            :   'country'
+                ,  'stageOfBusines'     :   'stageOfBusines'
+                ,  'yearSalesStarted'   :   'yearSalesStarted'
+                };
+
+            break;
+
+            case 'bdxMember' :
+
+                var $elImage
+                ,   allLanguages     = ''
+                ,   montherLanguage  = ''
+                ,   country          = ''
+                ,   industry         = ''
+                ,   reason           = ''
+                ,   isGroupAdmin     = bidx.common.isGroupAdmin()
+                ,   image
+                ,   imageWidth
+                ,   imageLeft
+                ,   imageTop
+                ,   personalDetails
+                ,   highestEducation
+                ,   gender
+                ,   isEntrepreneur
+                ,   isInvestor
+                ,   investorMemberId
+                ,   isMentor
+                ,   cityTown
+                ,   sepCountry
+                ,   memberCountry
+                ,   entrpreneurFocusIndustry
+                ,   tagging
+                ,   taggingMentor
+                ,   taggingInvestor
+                ,   mentorTaggingId
+                ,   investorTaggingId
+                ;
+
+                i18nItem        =   response.member;
+                $entityElement  = $("#member-profile-listitem");
+                snippit         = $entityElement.html().replace(/(<!--)*(-->)*/g, "");
+                $elImage        = $entityElement.find( "[data-role = 'memberImage']" );
+
+                roles           = bidx.utils.getValue( i18nItem, "roles" );
+                isEntrepreneur  = ( $.inArray("entrepreneur", roles) !== -1 || $.inArray("entrepreneur", roles) !== -1 ) ? true : false;
+                isMentor        = ( $.inArray("mentor", roles) !== -1 || $.inArray("mentor", roles) !== -1 ) ? true : false;
+                isInvestor      = ( $.inArray("investor", roles) !== -1 || $.inArray("investor", roles) !== -1 ) ? true : false;
+
+                investorMemberId = bidx.utils.getValue( i18nItem, "userId" );
+
+               // cityTown         = bidx.utils.getValue( i18nItem, "cityTown");
+                memberCountry    = bidx.utils.getValue( i18nItem, "country");
+                tagging          = bidx.common.getAccreditation( i18nItem );
+
+                // Member Role
+                //
+                if(i18nItem.highestEducation)
+                {
+                    bidx.data.getItem(i18nItem.highestEducation, 'education', function(err, label)
+                    {
+                       highestEducation = label;
+                    });
+                }
+                if(i18nItem.gender)
+                {
+
+                    bidx.data.getItem(i18nItem.gender, 'gender', function(err, labelGender)
+                    {
+                       gender = labelGender;
+                    });
+                }
+                if(memberCountry)
+                {
+
+                    bidx.data.getItem(memberCountry, 'country', function(err, labelCountry)
+                    {
+                        sepCountry =  (cityTown) ? ', ' : '';
+                        country    =  sepCountry + labelCountry;
+                    });
+                }
+
+                // Language is handled specially
+                //
+                var languageDetail      = bidx.utils.getValue( i18nItem, "language", true );
+
+                if ( languageDetail )
+                {
+                    var     sep             = ''
+                        ,   sepMotherLang   = ''
+                        ,   langLength      = languageDetail.length
+                        ,   langLabel       = ''
+                        ,   langCount       = 1
+                        ;
+
+                    $.each( languageDetail, function( i, langObj )
+                    {
+                        langCount++;
+                        langLabel = _getLanguageLabelByValue( langObj );
+                        allLanguages +=  sep + langLabel;
+                        sep           = (langCount !== langLength) ? ', ' : ' and ';
+
+                    } );
+                }
+                if(i18nItem.motherLanguage)
+                {
+                    montherLanguage =  _getLanguageLabelByValue( i18nItem.motherLanguage );
+                }
+
+                entrpreneurFocusIndustry = bidx.utils.getValue( i18nItem, "bidxEntrepreneurProfile.focusIndustry");
+                if(entrpreneurFocusIndustry)
+                {
+                    bidx.data.getItem(entrpreneurFocusIndustry, 'industry', function(err, focusIndustry)
+                    {
+                       industry = bidx.i18n.i( 'interestedIn', appName ) + ': ' + focusIndustry;
+                    });
+                }
+
+                // search for placeholders in snippit
+                //
+                listItem = snippit
+                    .replace( /%userId%/g,              i18nItem.userId )
+                    .replace( /%name%/g,                i18nItem.name )
+                    .replace( /%modified%/g,            i18nItem.modified  ? bidx.utils.parseTimestampToDateTime(i18nItem.modified, "date") : emptyVal )
+                    .replace( /%professionalTitle%/g,   i18nItem.title   ? i18nItem.title     : emptyVal )
+                    .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
+                    .replace( /%role_investor%/g,       ( isInvestor && displayInvestorProfile )      ? bidx.i18n.i( 'investor' )   : '' )
+                    .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
+                    .replace( /%gender%/g,              i18nItem.gender   ? gender    : emptyVal )
+                    .replace( /%highestEducation%/g,    i18nItem.highestEducation   ? highestEducation    : emptyVal )
+                    .replace( /%language%/g,            allLanguages )
+                    .replace( /%mothertongue%/g,        montherLanguage )
+                    .replace( /%city%/g,                ( cityTown ) ? cityTown : emptyVal )
+                    .replace( /%country%/g,             ( country )  ? country : emptyVal )
+                    .replace( /%interest%/g,            industry )
+                    .replace( /%completionMesh%/g,      i18nItem.completion + '%' )
+                    //.replace( /%rating%/g,              response.rating + '%')
+                    ;
+
+                $listItem     = $(listItem);
+
+                var roleLabel = $listItem.find( ".bidx-label" );
+                $.each( roleLabel, function( index, val )
+                {
+                    if ( $(this).text() === "" )
+                    {
+                        $(this).remove();
+                    }
+                });
+
+                /* tagging */
+                if(isMentor)
+                {
+                    mentorTaggingId     =   'hide';
+                    taggingMentor       =   bidx.utils.getValue(tagging, 'mentor' );
+
+                    if( !_.isUndefined(taggingMentor) )
+                    {
+                        mentorTaggingId     =   (taggingMentor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
+                    }
+
+                    $listItem.find('.fa-mentor').addClass( mentorTaggingId );
+                }
+                if( ( isInvestor && isGroupAdmin) || ( investorMemberId === loggedInMemberId ) )
+                {
+                    investorTaggingId   =   'hide';
+                    taggingInvestor     =   bidx.utils.getValue(tagging, 'investor' );
+
+                    if( !_.isUndefined(taggingInvestor) )
+                    {
+                        investorTaggingId   =   (taggingInvestor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
+                    }
+
+                    $listItem.find('.fa-investor').addClass( investorTaggingId );
+                }
+
+                // Member Image
+                //
+                image       = bidx.utils.getValue( i18nItem, "picture.url" );
+
+                if (image)
+                {
+                    imageWidth  = bidx.utils.getValue( i18nItem, "picture.width" );
+                    imageLeft   = bidx.utils.getValue( i18nItem, "picture.left" );
+                    imageTop    = bidx.utils.getValue( i18nItem, "picture.top" );
+                    $listItem.find( "[data-role = 'memberImage']" ).html( '<div class="img-cropper"><img src="' + image + '" style="width:'+ imageWidth +'px; left:-'+ imageLeft +'px; top:-'+ imageTop +'px;" alt="" /></div>' );
+
+                }
+
+                conditionalElementArr =
+                {
+                    'professionalTitle' :   'title'
+                ,   'gender'            :   'gender'
+                ,   'motherTongue'    :     'motherLanguage'
+                ,   'langauge'          :   'language'
+                ,   'highestEducation'  :   'highestEducation'
+                ,   'country'           :   'country'
+                };
+
+            break;
+
+            default:
+            break;
+        }
+
+        replacedList =
+        {
+            listItem              : $listItem
+        ,   conditionalElementArr : conditionalElementArr
+        }
+        ;
+
+        return replacedList;
+    }
+
+    function replaceStringsCallback_Old( response, i18nItem )
     {
         //if( item.bidxEntityType == 'bidxBusinessSummary') {
 
@@ -1568,19 +2812,19 @@
                     $.each( languageDetail, function( i, langObj )
                     {
                         langCount++;
-                        langLabel = _getLanguageLabelByValue( langObj.language );
+                        langLabel = _getLanguageLabelByValue( langObj );
                         allLanguages +=  sep + langLabel;
                         sep           = (langCount !== langLength) ? ', ' : ' and ';
-
-                        if(langObj.motherLanguage)
-                        {
-                            montherLanguage +=  sepMotherLang + langLabel;
-                            sepMotherLang  = ', ';
-                        }
 
                     } );
 
                 }
+
+                if(langObj.motherLanguage)
+                        {
+                            montherLanguage +=  sepMotherLang + langLabel;
+                            sepMotherLang  = ', ';
+                        }
 
                 entrpreneurFocusIndustry = bidx.utils.getValue( i18nItem, "bidxEntrepreneurProfile.focusIndustry");
                 if(entrpreneurFocusIndustry)
@@ -1700,79 +2944,41 @@
         return replacedList;
     }
 
+
+
     function showEntity( options )
     {
         var $listItem
         ,   listItem
         ,   replacedList
-        ,   bidxMeta
-        ,   response = options.response
         ,   conditionalElementArr
+        ,   personalDetails
+        ,   response        =   options.response
         ;
 
-        bidx.api.call(
-            "entity.fetch"
-        ,   {
-                entityId:          response.entityId
-            ,   groupDomain: bidx.common.groupDomain
-            ,   success:        function( item )
+        bidx.utils.log('response', response);
+        // now format it into array of objects with value and label
+        if ( !$.isEmptyObject(response.plan) )
+        {
+            CONSTANTS.LOAD_COUNTER ++;
+
+            //search for placeholders in snippit
+            replacedList  = replaceStringsCallback( response );
+
+            /*Get the replaced snippit */
+            $listItem      = replacedList.listItem;
+
+           /*Get the conditional elemenets to show*/
+            conditionalElementArr = replacedList.conditionalElementArr;
+
+            showElements(
+            {
+                elementArr: conditionalElementArr
+            ,   result:     response.plan
+            ,   listItem:   $listItem
+            ,   callback:   function( listItem )
                 {
-                    // now format it into array of objects with value and label
-
-                    if ( !$.isEmptyObject(item) )
-                    {
-
-                        bidxMeta       = bidx.utils.getValue( item, "bidxMeta" );
-
-                        if( bidxMeta && bidxMeta.bidxEntityType === response.entityType )
-                        {
-                            //Increase the constant loadcounter to disable login at the end
-                            CONSTANTS.LOAD_COUNTER ++;
-
-                            //search for placeholders in snippit
-                            replacedList  = replaceStringsCallback( response, item );
-
-                            /*Get the replaced snippit */
-                            $listItem      = replacedList.listItem;
-
-
-                           /*Get the conditional elemenets to show*/
-                            conditionalElementArr = replacedList.conditionalElementArr;
-                            showElements(
-                            {
-                                elementArr:         conditionalElementArr
-                            ,   item:               item
-                            ,   listItem:           $listItem
-                            ,   callback:           function( listItem )
-                                                    {
-                                                        $searchList.append( listItem );
-
-                                                        if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
-                                                        {
-
-                                                            if( $.isFunction( options.cb ) )
-                                                            {
-                                                                options.cb();
-                                                            }
-                                                        }
-
-                                                    }
-                            });
-                        }
-                    }
-
-
-                }
-
-            ,   error: function(jqXhr, textStatus)
-                {
-                    var errorSnippit    = $errorListItem.html().replace(/(<!--)*(-->)*/g, "")
-                    ,   status          = bidx.utils.getValue(jqXhr, "status") || textStatus
-                    ;
-
-                    $searchList.append( errorSnippit );
-
-                    CONSTANTS.LOAD_COUNTER ++;
+                    $searchList.append( listItem );
 
                     if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
                     {
@@ -1782,89 +2988,42 @@
                         }
                     }
                 }
-            }
-        );
-
-
+            });
+        }
     }
-
 
     function showMemberProfile( options )
     {
         var $listItem
         ,   listItem
         ,   replacedList
-        ,   bidxMeta
-        ,   response = options.response
         ,   conditionalElementArr
         ,   personalDetails
+        ,   response        =   options.response
         ;
 
-        bidx.api.call(
-            "member.fetch"
-        ,   {
-                id:          response.ownerId
-            ,   requesteeId: response.ownerId
-            ,   groupDomain: bidx.common.groupDomain
-            ,   success:        function( item )
+        // now format it into array of objects with value and label
+        if ( !$.isEmptyObject(response.member) )
+        {
+            CONSTANTS.LOAD_COUNTER ++;
+
+            //search for placeholders in snippit
+            replacedList  = replaceStringsCallback( response );
+
+            /*Get the replaced snippit */
+            $listItem      = replacedList.listItem;
+
+           /*Get the conditional elemenets to show*/
+            conditionalElementArr = replacedList.conditionalElementArr;
+
+            showElements(
+            {
+                elementArr: conditionalElementArr
+            ,   result:     response.member
+            ,   listItem:   $listItem
+            ,   callback:   function( listItem )
                 {
-                    // now format it into array of objects with value and label
-
-                    if ( !$.isEmptyObject(item.bidxMemberProfile) )
-                    {
-                        //if( item.bidxEntityType == 'bidxBusinessSummary') {
-                        bidxMeta       = bidx.utils.getValue( item, "bidxMemberProfile.bidxMeta" );
-
-                        if( bidxMeta  )
-                        {
-                            CONSTANTS.LOAD_COUNTER ++;
-
-                            personalDetails = item.bidxMemberProfile.personalDetails;
-
-                            //search for placeholders in snippit
-                            replacedList  = replaceStringsCallback( response, item );
-
-                            /*Get the replaced snippit */
-                            $listItem      = replacedList.listItem;
-
-                           /*Get the conditional elemenets to show*/
-                            conditionalElementArr = replacedList.conditionalElementArr;
-
-                            showElements(
-                            {
-                                elementArr:         conditionalElementArr
-                            ,   item:               personalDetails
-                            ,   listItem:           $listItem
-                            ,   callback:           function( listItem )
-                                                    {
-                                                        $searchList.append( listItem );
-
-                                                        if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
-                                                        {
-                                                            if( $.isFunction( options.cb ) )
-                                                            {
-                                                                options.cb();
-                                                            }
-                                                        }
-
-                                                    }
-                            });
-
-                        }
-
-                    }
-
-                }
-
-            ,   error: function(jqXhr, textStatus)
-                {
-                    var errorSnippit    = $errorListItem.html().replace(/(<!--)*(-->)*/g, "")
-                    ,   status          = bidx.utils.getValue(jqXhr, "status") || textStatus
-                    ;
-
-                    $searchList.append( errorSnippit );
-
-                    CONSTANTS.LOAD_COUNTER ++;
+                    $searchList.append( listItem );
 
                     if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
                     {
@@ -1874,17 +3033,14 @@
                         }
                     }
                 }
-            }
-        );
-
-
+            });
+        }
     }
-
 
     // ROUTER
     function navigate( options )
     {
-        bidx.utils.log("[group] navigate", options );
+        bidx.utils.log("[search] navigate", options );
 
         var params = ( $.isEmptyObject( options.params ) ) ? {} : options.params
         ;
@@ -1910,13 +3066,14 @@
                 {
                     params      :   params
                 ,   cb          :   function()
-                                    {
-                                       _hideView( "load" );
-                                       _toggleListLoading( $element );
-                                       tempLimit = CONSTANTS.SEARCH_LIMIT;
-                                       //_showAllView( "pager" );
+                    {
+                       _hideView( "load" );
+                       _toggleListLoading( $element );
+                       tempLimit = CONSTANTS.SEARCH_LIMIT;
+                       //_showAllView( "pager" );
+                       _actionBulkActions();
 
-                                    }
+                    }
                 });
 
             break;
@@ -1951,8 +3108,6 @@
     }
 
     window.bidx.search = search;
-
-
 
     // if hash is empty and there is not path in the uri, load #home
     //
