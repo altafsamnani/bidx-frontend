@@ -115,7 +115,7 @@
     };
 
     // Various checks for the mentor relationship
-    var checkMentoringRelationship = function ( result, reason, databsids )
+    var checkMentoringRelationship = function ( result, reason, databsids, authItems )
     {
         var bsid
         ,   summary
@@ -305,12 +305,12 @@
                     )
                     .done( function ()
                     {
-                        generateRequests();
+                        generateRequests( authItems );
                     } );
             }
             else
             {
-                generateRequests();
+                generateRequests( authItems );
             }
 
             businessesDataId = []; // Empty the "businessesDataId" array
@@ -318,11 +318,14 @@
         }
     };
 
-    var generateRequests = function ()
+    var generateRequests = function ( authItems )
     {
+        var auth;
+
         $.each( requests, function( i, req )
         {
-            constructMentorBox( req );
+            auth = bidx.common.getAccreditationAuthItems( req, authItems );
+            constructMentorBox( req, auth );
         });
 
         requests = {}; // Empty the "requests" object
@@ -360,7 +363,7 @@
         ownBs = []; // Empty the "ownBs" array
     };
 
-    var constructMentorBox = function ( req )
+    var constructMentorBox = function ( req, auth )
     {
         var $bsEl
         ,   memberLink  =   ''
@@ -423,7 +426,7 @@
                     )
                     .append
                     (
-                        bidx.construct.memberLink( memberInfo.id ) , " "
+                        bidx.construct.memberLink( memberInfo.id, auth ) , " "
                     ,   bidx.construct.actionMessage( req )
                     ,   bidx.construct.businessLink( req.relChecks.businessId )
                     );
@@ -457,7 +460,7 @@
                     .append
                     (
                         bidx.construct.actionMessage( req )
-                    ,   bidx.construct.memberLink( memberInfo.id )
+                    ,   bidx.construct.memberLink( memberInfo.id, auth )
                     );
                 }
                 else if ( req.relChecks.isTheMentor
@@ -475,7 +478,7 @@
                     .append
                     (
                         bidx.construct.actionMessage( req )
-                    ,   bidx.construct.memberLink( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
+                    ,   bidx.construct.memberLink( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId, auth )
                     );
                 }
                 else if ( req.relChecks.isTheInitiator
@@ -505,7 +508,7 @@
                    memberId       =   req.request.initiatorId;
                     if(req.request.status !== "accepted")
                     {
-                        memberLink  =   bidx.construct.memberLink( memberId );
+                        memberLink  =   bidx.construct.memberLink( memberId, auth );
                     }
                     else
                     {
@@ -533,7 +536,7 @@
                         || ( req.relChecks.isTheInitiator && !req.relChecks.isTheMentor))
                     {
 
-                        memberLink  =   bidx.construct.memberLink( memberId );
+                        memberLink  =   bidx.construct.memberLink( memberId, auth );
                     }
                     $bsEl.last().find( ".alert-message" ).last()
                     .prepend
