@@ -158,6 +158,24 @@
         return existingTags;
     }
 
+    function getAccreditationAuthItems( req, authItems )
+    {
+        var tmp;
+
+        $.each( authItems, function( id, item )
+        {
+            $.each( item.authorizations, function( id, auth )
+            {
+                if ( req.request.mentorId === auth.user.id )
+                {
+                    tmp = auth.user;
+                }
+            });
+        });
+
+        return tmp;
+    }
+
     // Convenience function for retrieving the id of the current group
     //
     function getCurrentGroupId()
@@ -1952,6 +1970,7 @@
     ,   getMemberInfo:                  getMemberInfo
     ,   getMembersSummaries:            getMembersSummaries
     ,   getAccreditation:               getAccreditation
+    ,   getAccreditationAuthItems:      getAccreditationAuthItems
     ,   isGroupAdmin:                   isGroupAdmin
     ,   getSessionValue:                getSessionValue
     ,   getNow:                         getNow

@@ -9,78 +9,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.6.4\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-# 61) File -/var/www/html/wp-content/themes/bidx-group/lib/widgets/video.php -105
-# _e("The embed code field is empty. Please insert an <code>iframe</code> from Youtube, Dailymotion, Vimeo, Vevo, Veoh or Metacafe","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid ""
-"The embed code field is empty. Please insert an <code>iframe</code> from "
-"Youtube, Dailymotion, Vimeo, Vevo, Veoh or Metacafe"
-msgstr ""
-"Le champ code d'intégration est vide. Veuillez insérer un <code> iframe </"
-"code> de Youtube, Dailymotion, Vimeo, Vevo, Veoh ou Metacafe"
-
-# 59) File -/var/www/html/wp-content/themes/bidx-group/lib/widgets/multicolumn.php -318
-# _e("Sidebar","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Sidebar"
-msgstr "Encadré   "
-
-# 60) File -/var/www/html/wp-content/themes/bidx-group/lib/widgets/multicolumn.php -321
-# _e("Widget","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Widget"
-msgstr "Widget"
-
-# 58) File -/var/www/html/wp-content/themes/bidx-group/lib/widgets/multicolumn.php -314
-# _e("One or more columns are empty","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "One or more columns are empty"
-msgstr "Une ou plusieurs colonnes sont vides"
-
-# 65) File -/var/www/html/wp-content/themes/bidx-group/lib/widgets/promo.php -178
-# _e("Sidebar","bidxtheme");
-# Context  Textdomain bidxtheme
-# Already exists, doesnt need translation.
-# 66) File -/var/www/html/wp-content/themes/bidx-group/lib/widgets/promo.php -181
-# _e("Widget","bidxtheme");
-# Context  Textdomain bidxtheme
-# Already exists, doesnt need translation.
-# 67) File -/var/www/html/wp-content/themes/bidx-group/lib/widgets/post.php -151
-# _e("No posts available, please create a post from Posts section ","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "No posts available, please create a post from Posts section "
-msgstr "Aucun post disponible. Veuillez créer un post depuis la section Posts"
 
 # 7) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -446
 # _e("Favicon","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Favicon"
 msgstr "Favicon"
-
-# 8) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -453
-# _e("Favicon","bidxtheme");
-# Context  Textdomain bidxtheme
-# Already exists, doesnt need translation.
-# 9) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-clients.php -36
-# _e("Contact us to get started","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Contact us to get started"
-msgstr "Contactez-nous pour commencer"
-
-# 10) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-clients.php -38
-# _e("Contact Us","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Contact Us"
-msgstr "Contactez-nous"
-
-# 11) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-clients.php -39
-# _e("Pricing","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Pricing"
-msgstr "Tarifs"
 
 # 12) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-get-started.php -37
 # _e("Contact us to get started","bidxtheme");
@@ -142,70 +78,6 @@ msgstr "Vie privée "
 msgid "Terms and Conditions"
 msgstr "Termes et Conditions"
 
-# 25) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -20
-# _e("Get a 6 month free trial","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Get a 6 month free trial"
-msgstr "Essai gratuit pour 6 mois"
-
-# 26) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -21
-# _e("Annual subscription starting at $1.999","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Annual subscription starting at $1.999"
-msgstr "Souscription annuelle à partir de $1.999"
-
-# 27) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -23
-# _e("I want to try","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "I want to try"
-msgstr "Je veux essayer"
-
-# 28) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -24
-# _e("All Packages","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "All Packages"
-msgstr "Tous les packets"
-
-# 30) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -38
-# _e("Get Started","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Get Started"
-msgstr "Commencer"
-
-# 31) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -329
-# _e("All Packages","bidxtheme");
-# Context  Textdomain bidxtheme
-# Already exists, doesnt need translation.
-# 32) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -16
-# _e("Requires a Portal Package","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Requires a Portal Package"
-msgstr "Requiert un packet avec portail"
-
-# 33) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -23
-# _e("Easy and Simple","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Easy and Simple"
-msgstr "Simple et facile"
-
-# 34) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -24
-# _e("Monthly $299 - Annually $1.999","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Monthly $299 - Annually $1.999"
-msgstr " $299 par mois - $1.999 par année"
-
-# 35) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -29
-# _e("Extensive and Detailed","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Extensive and Detailed"
-msgstr "Complet et détaillé"
-
-# 36) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -30
-# _e("Annually $9.999","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Annually $9.999"
-msgstr "$9.999 par année"
-
 # 37) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -37
 # _e("I want to try","bidxtheme");
 # Context  Textdomain bidxtheme
@@ -249,6 +121,12 @@ msgstr ""
 "                   avec des investisseurs, des mentors et des partenaires "
 "d'affaires."
 
+# 14) File -/Users/juliapop/Sites/bidx/wp-content/themes/bidx.net/front-page.php -43
+# _e("View Active Portals","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "View Active Portals"
+msgstr "Voir nos portails "
+
 # 45) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -47
 # _e("Grow your community of","bidxtheme");
 # Context  Textdomain bidxtheme
@@ -281,11 +159,11 @@ msgstr ""
 "Connectez vos entrepreneurs avec des investisseurs et des mentors. Un "
 "portail de votre marque et en votre langue. "
 
-# 50) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -62
-# _e("6 month free trial","bidxtheme");
+# 21) File -/Users/juliapop/Sites/bidx/wp-content/themes/bidx.net/front-page.php -70
+# _e("3 month free trial","bidxtheme");
 # Context  Textdomain bidxtheme
-msgid "6 month free trial"
-msgstr "Essai gratuit pour 6 mois"
+msgid "3 month free trial"
+msgstr "Période d'essai gratuite de trois mois"
 
 # 51) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -68
 # _e("Hotline","bidxtheme");
@@ -378,6 +256,116 @@ msgstr " ONG EN DEVELOPPEMENT "
 # Context  Textdomain bidxtheme
 msgid "Our Founders"
 msgstr "Nos fondateurs"
+
+# 8) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -453
+# _e("Favicon","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 9) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-clients.php -36
+# _e("Contact us to get started","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Contact us to get started"
+msgstr "Contactez-nous pour commencer"
+
+# 10) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-clients.php -38
+# _e("Contact Us","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Contact Us"
+msgstr "Contactez-nous"
+
+# 11) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-clients.php -39
+# _e("Pricing","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Pricing"
+msgstr "Tarifs"
+
+# 31) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -329
+# _e("All Packages","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 32) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -16
+# _e("Requires a Portal Package","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Requires a Portal Package"
+msgstr "Requiert un packet avec portail"
+
+# 33) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -23
+# _e("Easy and Simple","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Easy and Simple"
+msgstr "Simple et facile"
+
+# 41) File -/Users/juliapop/Sites/bidx/wp-content/themes/bidx.net/page-competitions.php -24
+# _e("Monthly $299 - Annually $1999","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Monthly $299 - Annually $1999"
+msgstr "$299 par mois - $1999 par an"
+
+# 35) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -29
+# _e("Extensive and Detailed","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Extensive and Detailed"
+msgstr "Complet et détaillé"
+
+# 43) File -/Users/juliapop/Sites/bidx/wp-content/themes/bidx.net/page-competitions.php -30
+# _e("Annually $9999","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Annually $9999"
+msgstr "$9999 par an"
+
+# 27) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -23
+# _e("I want to try","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "I want to try"
+msgstr "Je veux essayer"
+
+# 28) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -24
+# _e("All Packages","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "All Packages"
+msgstr "Tous les packets"
+
+# 30) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -38
+# _e("Get Started","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Get Started"
+msgstr "Commencer"
+
+# 48) File -/Users/juliapop/Sites/bidx/wp-content/themes/bidx.net/page-competitions.php -71
+# _e("All Packages","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 49) File -/Users/juliapop/Sites/bidx/wp-content/themes/bidx.net/page-ecosystems.php -37
+# _e("Contact us to get started","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 50) File -/Users/juliapop/Sites/bidx/wp-content/themes/bidx.net/page-ecosystems.php -39
+# _e("Contact Us","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 51) File -/Users/juliapop/Sites/bidx/wp-content/themes/bidx.net/page-ecosystems.php -40
+# _e("Pricing","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 52) File -/Users/juliapop/Sites/bidx/wp-content/themes/bidx.net/page-get-started.php -37
+# _e("Contact us to get started","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 53) File -/Users/juliapop/Sites/bidx/wp-content/themes/bidx.net/page-get-started.php -39
+# _e("Contact Us","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 54) File -/Users/juliapop/Sites/bidx/wp-content/themes/bidx.net/page-groups.php -20
+# _e("Get a 3 month free trial","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Get a 3 month free trial"
+msgstr "Profitez d'une période d'essai gratuite de trois mois"
+
+# 55) File -/Users/juliapop/Sites/bidx/wp-content/themes/bidx.net/page-groups.php -21
+# _e("Annual subscription starting at $1999","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Annual subscription starting at $1999"
+msgstr "Abonnement annuel à partir de $1999"
 
 # 65) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-hotline.php -19
 # _e("First campaign 1 month free","bidxtheme");

@@ -2249,6 +2249,8 @@
                     bidx.data.getItem(countryOperation, 'country', function(err, labelCountry)
                     {
                         country    =   labelCountry;
+                        country = country.toString();
+                        country = country.replace(/,/g, ", ");
                     });
                 }
 

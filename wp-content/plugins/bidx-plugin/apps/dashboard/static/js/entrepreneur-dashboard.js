@@ -182,7 +182,7 @@
                             )
                             .append
                             (
-                                bidx.construct.memberLink( auth.user.id )
+                                bidx.construct.memberLink( auth.user.id, auth.user )
                             ,   bidx.construct.actionMessage( auth, "investor" )
                             );
                     }
@@ -333,7 +333,7 @@
                 bidx.commonmentordashboard.getMentoringRequest()
                 .then( function (requests )
                 {
-                    bidx.commonmentordashboard.checkMentoringRelationship( requests, "mentor", userBsArray );
+                    bidx.commonmentordashboard.checkMentoringRelationship( requests, "mentor", userBsArray, authItems );
                 });
             });
         });

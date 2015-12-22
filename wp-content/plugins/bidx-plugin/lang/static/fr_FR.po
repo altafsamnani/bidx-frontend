@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-Bookmarks: -1,-1,1126,-1,-1,-1,-1,-1,-1,-1\n"
 
 # Language fr
@@ -1050,19 +1050,6 @@ msgstr "Université - Masters"
 msgctxt "universityPostgraduate"
 msgid "University - Postgraduate"
 msgstr "Université - Diplomé"
-
-# 6 emailTemplateType
-#  _x("Invite non Bidx-user to group", "email-invitedNonRegisteredUserGroup", "static");
-# Context email-invitedNonRegisteredUserGroup Textdomain static
-msgctxt "email-invitedNonRegisteredUserGroup"
-msgid "Invite non Bidx-user to group"
-msgstr "Inviter des utilisateurs non-bidx au groupe"
-
-#  _x("Invite Bidx member to group", "email-invitedRegisteredUserGroup", "static");
-# Context email-invitedRegisteredUserGroup Textdomain static
-msgctxt "email-invitedRegisteredUserGroup"
-msgid "Invite Bidx member to group"
-msgstr "Inviter des utilisateurs bidx au groupe"
 
 # 7 legalForm
 #  _x("Sole trader", "soletrader", "static");
@@ -6128,11 +6115,11 @@ msgctxt "sales"
 msgid "Sales"
 msgstr "Ventes"
 
-#  _x("Social & environmental impact & CSR", "impact.csr", "static");
+#  _x("Parties & environmental impact & CSR", "impact.csr", "static");
 # Context impact.csr Textdomain static
 msgctxt "impact.csr"
-msgid "Social & environmental impact & CSR"
-msgstr "Impact social et environnemental, responsabilité sociale"
+msgid "Parties & environmental impact & CSR"
+msgstr "Impact environnemental & RSE"
 
 #  _x("Strategy, leadership", "strategy", "static");
 # Context strategy Textdomain static
@@ -6168,10 +6155,9 @@ msgstr "Pas sur"
 # 21 stageBusiness
 #  _x("Start-up Business", "startup", "static");
 # Context startup Textdomain static
-#, fuzzy
 msgctxt "startup"
 msgid "Start-up"
-msgstr "Création d'entreprise"
+msgstr "Start-up"
 
 #  _x("Established", "established", "static");
 # Context established Textdomain static
@@ -8067,10 +8053,9 @@ msgstr "Cubain"
 
 #  _x("CuraÃ§ao", "CW", "static");
 # Context CW Textdomain static
-#, fuzzy
 msgctxt "cw"
 msgid "Curaçaoan"
-msgstr "Curaçao"
+msgstr "de Curaçao "
 
 #  _x("Cypriot", "cy", "static");
 # Context cy Textdomain static
@@ -8785,16 +8770,15 @@ msgstr "Rwandais"
 
 #  _x("Saint BarthÃ©lemy", "BL", "static");
 # Context BL Textdomain static
-#, fuzzy
 msgctxt "bl"
 msgid "of Saint Barthélemy"
-msgstr "Saint Barthélemy"
+msgstr "de Saint Barthélemy"
 
 #  _x("of Ascension and Tristan da Cunha", "sh", "static");
 # Context sh Textdomain static
 msgctxt "sh"
 msgid "of Ascension and Tristan da Cunha"
-msgstr ""
+msgstr "de l'Ascension et Tristan da Cunha"
 
 #  _x("Kittsian / Nevisian", "kn", "static");
 # Context kn Textdomain static
@@ -8840,10 +8824,9 @@ msgstr "Saint-Marinais"
 
 #  _x("S?úo Tom??an", "st", "static");
 # Context st Textdomain static
-#, fuzzy
 msgctxt "st"
 msgid "São Toméan"
-msgstr "Santoméen"
+msgstr "Santoméen "
 
 #  _x("Saudi Arabian", "sa", "static");
 # Context sa Textdomain static
@@ -9335,6 +9318,79 @@ msgstr "E-mail et message"
 msgctxt "message"
 msgid "telephone"
 msgstr "Téléphone"
+
+# 26 month
+#  _x("January", "1", "static");
+# Context 1 Textdomain static
+msgctxt "1"
+msgid "January"
+msgstr "Janvier"
+
+#  _x("February", "2", "static");
+# Context 2 Textdomain static
+msgctxt "2"
+msgid "February"
+msgstr "Février"
+
+#  _x("March", "3", "static");
+# Context 3 Textdomain static
+msgctxt "3"
+msgid "March"
+msgstr "Mars"
+
+#  _x("April", "4", "static");
+# Context 4 Textdomain static
+msgctxt "4"
+msgid "April"
+msgstr "Avril"
+
+#  _x("May", "5", "static");
+# Context 5 Textdomain static
+msgctxt "5"
+msgid "May"
+msgstr "Mai"
+
+#  _x("June", "6", "static");
+# Context 6 Textdomain static
+msgctxt "6"
+msgid "June"
+msgstr "Juin"
+
+#  _x("July", "7", "static");
+# Context 7 Textdomain static
+msgctxt "7"
+msgid "July"
+msgstr "Juillet"
+
+#  _x("August", "8", "static");
+# Context 8 Textdomain static
+msgctxt "8"
+msgid "August"
+msgstr "Août "
+
+#  _x("September", "9", "static");
+# Context 9 Textdomain static
+msgctxt "9"
+msgid "September"
+msgstr "Septembre"
+
+#  _x("October", "10", "static");
+# Context 10 Textdomain static
+msgctxt "10"
+msgid "October"
+msgstr "Octobre"
+
+#  _x("November", "11", "static");
+# Context 11 Textdomain static
+msgctxt "11"
+msgid "November"
+msgstr "Novembre"
+
+#  _x("December", "12", "static");
+# Context 12 Textdomain static
+msgctxt "12"
+msgid "December"
+msgstr "Décembre"
 
 # 28 languageRating
 #  _x("fluent", "fluent", "static");

@@ -1018,15 +1018,44 @@
         return $html;
     };
 
-    var memberLink = function ( memberid )
+    var memberLink = function ( memberid, auth )
     {
-        var $memberLink;
+        var $memberLink
+        ,   accreditation
+        ,   myclass
+        ,   mystyle = "margin-left: 3px;"
+        ;
+
+        if (auth && !$.isEmptyObject(auth.investor) )
+        { 
+            accreditation = auth.investor.tagAssignmentSummary[0].tagId;
+        }
+        if (auth && !$.isEmptyObject(auth.mentor) )
+        { 
+            accreditation = auth.mentor.tagAssignmentSummary[0].tagId;
+        }
+
+        switch (accreditation){
+            case "accredited":
+                myclass = "fa fa-bookmark";
+                break;
+            case "accreditation_refused":
+                myclass = "fa fa-ban";
+                break;
+            default:
+                myclass = "";
+                mystyle = "";
+        }
 
         $memberLink =
             $( "<a />", { "href": bidx.common.url('member') + memberid } )
             .append
             (
                 $( "<strong />", { "html": bidx.common.tmpData.members[memberid].name } )
+            )
+            .append
+            (
+                $( "<i />", { "class" : myclass, "style" : mystyle })
             )
         ;
 
