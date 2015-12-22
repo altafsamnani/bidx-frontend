@@ -884,11 +884,10 @@ function shortenLargeNumber(num, digits) {
         ,   d      = new Date( obj.y, obj.m, obj.d )
         ,   result
         ;
-
         switch( format )
         {
             case "date":
-                result = d.getDate() + " " + months[ d.getMonth() ] + " " + d.getFullYear();
+                result = d.getDate() + " " + months[ d.getMonth() -1 ] + " " + d.getFullYear();
             break;
 
             case "time":
@@ -896,11 +895,11 @@ function shortenLargeNumber(num, digits) {
             break;
 
             case "datetimepicker":
-                result = d.getDate() + " " + months[ d.getMonth() ] + " " + d.getFullYear() + " - " + obj.h + ":" + obj.n ;
+                result = d.getDate() + " " + months[ d.getMonth() -1 ] + " " + d.getFullYear() + " - " + obj.h + ":" + obj.n ;
             break;
 
             default:
-                result = d.getDate() + " " + months[ d.getMonth() ] + " " + d.getFullYear() + " " + obj.h + ":" + obj.n + ":" + obj.s;
+                result = d.getDate() + " " + months[ d.getMonth() -1] + " " + d.getFullYear() + " " + obj.h + ":" + obj.n + ":" + obj.s;
         }
 
         return result;

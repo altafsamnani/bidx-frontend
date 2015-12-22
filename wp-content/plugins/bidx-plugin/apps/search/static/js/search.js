@@ -71,17 +71,18 @@
     var CONSTANTS =
         {
             SEARCH_LIMIT:                       10
-        ,   NUMBER_OF_PAGES_IN_PAGINATOR:       10
+        ,   NUMBER_OF_PAGES_IN_PAGINATOR:       8
         ,   LOAD_COUNTER:                       0
         ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
         ,   ENTITY_TYPES:                       [
                                                     "bdxmember"
-                                                ,   "bdxplan"
+                                               // ,   "bdxplan"
                                                 ]
         ,   NONTITY_TYPES:                      [
                                                     "bdxplan"
                                                 ,   "bdxmember"
                                                 ]
+        ,   RELEVANCE:                          [ 'selectDesc', 'selectAsc' ]
         ,   FILTERQUERY:                        []
         ,   RANGEDEFAULT:                       {
                                                     rating:             [0, 5]
@@ -423,19 +424,42 @@
 
     };
 
+    function _doBulk( options )
+    {
+        var snippitBulk =   $("#bulk-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $list       =   $element.find(".bulk-list")
+        ,   $listBulkItem
+        ;
+
+        $list.empty();
+
+        $listBulkItem   =   $( snippitBulk );
+
+        $list.append( $listBulkItem );
+
+        bidx.utils.log('snippitSort', snippitBulk);
+
+        $list.find( "[name='bulk']" ).removeClass('hide').bidx_chosen();
+
+    }
+
     function _doSorting( options )
     {
-        var snippit    = $("#sort-listitem").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $list           = $element.find(".sort-list")
-        ,   criteria        = options.criteria
-        ,   originalSort    = options.sort
+        var $sortDropdown
+        ,   $orderDropdown
+        ,   $list               =   $element.find(".orderFiltering")
+        ,   response            =   options.response
+        ,   originalSort        =   response.sort
+        ,   criteria            =   response.criteria
+        ,   sortOptions         =   response.sortOptions
+        ,   relevance           =   CONSTANTS.RELEVANCE
         ,   listSortItem
         ,   sortValue
         ,   $this
         ,   $listSortItem
         ,   $listAnchor
         ,   $originalList
-        ,   sort            = { }
+        ,   sort                =   { }
         ,   sortField
         ,   sortOrder
         ,   sortType
@@ -446,15 +470,85 @@
         ,   sortCountry
         ,   sortIndustry
         ,   sortRelevance
+        ,   sortLabel
+        ,   sortFieldName
+        ,   option
+        ,   optionRel
+        ,   sortItems       =   [ ]
+        ,   relItems        =   [ ]
         ;
 
         $originalList = $list;
 
-        $list.empty();
+
+        $.each( sortOptions, function( idx, sortValue )
+        {
+            sortLabel       =   sortValue.label;
+            sortFieldName   =   sortValue.fieldName;
+
+            option = $( "<option/>",
+            {
+                value: sortFieldName
+            } );
+
+            option.text( bidx.i18n.i(sortFieldName ,appName) );
+
+            sortItems.push( option );
+        } );
+
+        /*listSortItem    =   snippitSort
+                                .replace( /%relevance%/g,   sortRelevance)
+                                .replace( /%industry%/g,    sortIndustry )
+                                .replace( /%country%/g,     sortCountry )
+                                .replace( /%created%/g,     sortDate )
+                            ;*/
+
+        //$listSortItem   =   $( snippitSort );
+
+        //$list.append( $listSortItem );
+
+        $sortDropdown   =   $list.find( ".filterBy" );
+
+        $sortDropdown.empty();
+
+        // add the options to the select
+        $sortDropdown.append( sortItems );
+
+        // init bidx_chosen plugin
+        $sortDropdown.bidx_chosen();
+
+        $sortDropdown.removeClass('hide');
+
+        $.each( relevance, function( idx, relevanceLbl )
+        {
+            optionRel = $( "<option/>",
+            {
+                value: relevanceLbl
+            } );
+
+            optionRel.text( bidx.i18n.i(relevanceLbl) );
+
+            relItems.push( optionRel );
+        } );
+
+        $orderDropdown  =   $list.find( ".orderBy" );
+
+        $orderDropdown.empty();
+
+        bidx.utils.log('orderDropdown', $orderDropdown);
+
+        // add the options to the select
+        $orderDropdown.append( relItems );
+
+        $orderDropdown.bidx_chosen();
+
+        $orderDropdown.removeClass('hide');
+
+        //$list.find( "[name='bulk']" ).removeClass('hide').bidx_chosen();
 
         // Adjusting Sort asc/desc values
         //
-        sortRelevance   =   bidx.utils.getValue( originalSort, 'relevance' );
+        /*sortRelevance   =   bidx.utils.getValue( originalSort, 'relevance' );
         sortRelevance   =   ( sortRelevance && sortRelevance === 'asc')   ? 'desc'     : 'asc';
 
         sortIndustry    =   bidx.utils.getValue( originalSort, 'industry' );
@@ -478,11 +572,6 @@
         $list.append( $listSortItem );
 
         $listAnchor             =   $list.find('.sort');
-
-        $list.find( "[name='bulk']" ).removeClass('hide').bidx_chosen();
-
-        $list.find( "[name='filterBy']" ).removeClass('hide').bidx_chosen();
-
         $listAnchor.on('click', function( e )
         {
             e.preventDefault();
@@ -522,7 +611,8 @@
                             ,   type            :   'sort'
                             }
             });
-        });
+        });*/
+
     }
 
     function _removeMailRecipient( val )
@@ -600,7 +690,7 @@
         ,   allChecked
         ,   $selectAllCheckbox      =   $element.find( "[name='selectAll']" )
         ,   $selectRecordCheckbox   =   $element.find( "[name='actionRecord']")
-        ,   $btnApply                  =   $element.find( "[name='apply']")
+        ,   $btnApply               =   $element.find( "[name='apply']")
         ,   lengthActionRecord      =   $selectRecordCheckbox.length
         ;
 
@@ -1847,14 +1937,16 @@
                                         }
                     } );
 
-
-
                     _doSorting(
                     {
                         response    :   response
                     ,   q           :   search.q
-                    ,   sort        :   search.sort
-                    ,   criteria    :   search.criteria
+                    } );
+
+                    _doBulk(
+                    {
+                        response    :   response
+                    ,   q           :   search.q
                     } );
 
                     _doSearchListing(
@@ -2188,7 +2280,7 @@
                     .replace( /%title%/g,               i18nItem.title   ? i18nItem.title : emptyVal )
                     .replace( /%name%/g,                i18nItem.owner.name )
                     .replace( /%slogan%/g,              i18nItem.slogan   ? i18nItem.slogan : emptyVal )
-                    .replace( /%modified%/g,            i18nItem.modified  ? bidx.utils.parseTimestampToDateTime(i18nItem.modified, "date") : emptyVal )
+                    .replace( /%modified%/g,            i18nItem.modified  ? bidx.utils.parseISODateTime(i18nItem.modified, "date") : emptyVal )
                     .replace( /%country%/g,             country )
                     .replace( /%industry%/g,            industry )
                     .replace( /%reasonForSubmission%/g, reason )
@@ -2363,7 +2455,7 @@
                 listItem = snippit
                     .replace( /%userId%/g,              i18nItem.userId )
                     .replace( /%name%/g,                i18nItem.name )
-                    .replace( /%modified%/g,            i18nItem.modified  ? bidx.utils.parseTimestampToDateTime(i18nItem.modified, "date") : emptyVal )
+                    .replace( /%modified%/g,            i18nItem.modified  ? bidx.utils.parseISODateTime(i18nItem.modified, "date") : emptyVal )
                     .replace( /%professionalTitle%/g,   i18nItem.title   ? i18nItem.title     : emptyVal )
                     .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
                     .replace( /%role_investor%/g,       ( isInvestor && displayInvestorProfile )      ? bidx.i18n.i( 'investor' )   : '' )

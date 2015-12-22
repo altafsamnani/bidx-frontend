@@ -47,21 +47,27 @@
                             <article class="view viewSearchList">
                                 <div class="view viewPager" >
                                     <div class="pagerContainer">
-                                        <div class="row bulkAction">
+                                        <div class="row pagerAction">
                                             <div class="col-sm-2 col-sm-offset">
                                                     <div class="pagerTotal pull-left"></div>
                                             </div>
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-5">
                                                     <ul class="pager"></ul>
+                                            </div>
+                                            <div class="col-sm-5 orderFiltering">
+                                                <div class="pull-right">
+                                                    <select name="orderBy" class="orderBy hide"></select>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <select name="filterBy" class="filterBy hide"></select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="view viewSort">
-                                   <div class="media-list sort-list">
-                                        <?php _e('Rendering sort...', 'bidxplugin');?>
+                                <div class="view viewBulk">
+                                   <div class="media-list bulk-list">
                                     </div>
-
                                 </div>
                                  <br/>
                                 <div class="view viewLoad alert alert-info text-center">
@@ -70,19 +76,26 @@
                                  <ul class="media-list search-list">
                                     <!-- Results will be loaded here through js -->
                                 </ul>
-                                <div class="view viewSort">
-                                   <div class="media-list sort-list">
-                                        <?php _e('Rendering sort...', 'bidxplugin');?>
+                                <div class="view viewBulk">
+                                   <div class="media-list bulk-list">
                                     </div>
                                 </div>
                                 <div class="view viewPager" >
                                     <div class="pagerContainer">
-                                        <div class="row bulkAction">
+                                        <div class="row pagerAction">
                                             <div class="col-sm-2 col-sm-offset">
                                                     <div class="pagerTotal pull-left"></div>
                                             </div>
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-5">
                                                     <ul class="pager"></ul>
+                                            </div>
+                                            <div class="col-sm-5 orderFiltering">
+                                                <div class="pull-right">
+                                                    <select name="orderBy" class="orderBy hide"></select>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <select name="filterBy" class="filterBy hide"></select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -182,7 +195,7 @@
         </script>
 
         <!-- Html Template for Sort -->
-        <script type="text/html" id="sort-listitem">
+        <script type="text/html" id="bulk-listitem">
             <div class="cardContent main-padding">
                 <div class="row">
                     <div class="col-sm-1 hide">
@@ -191,7 +204,7 @@
                             <label for="checkbox-%bidxEntityId%"><span></span></label>
                         </div>
                     </div>
-                    <div class="col-sm-6 hide">
+                     <div class="col-sm-6 hide">
                         <div class="pull-left">
                             <select name="bulk">
                                 <option value=''><?php _e('  --Select Bulk actions--  ', 'bidxplugin')?> </option>
@@ -200,26 +213,6 @@
                             </select>
                         </div>
                         <a data-status="APPLIED" class="btn btn-lg btn-primary btn-apply disabled" name='apply'>Apply</a>
-                    </div>
-                    <div class="col-sm-3 pull-right">
-                        <select name="filterBy" class="hide">
-                            <option value=''><?php _e('Default order', 'bidxplugin')?> </option>
-                            <option value='latest'><?php _e('Latest registered', 'bidxplugin')?> </option>
-                            <option value='completeness'><?php _e('By completeness', 'bidxplugin')?> </option>
-                        </select>
-                    </div>
-
-                    <div class="col-sm-2 pull-right hide">
-                        <a data-type='created' data-order = '%created%' class="sort sorting_%created% created btn-link"><h6><?php _e('Created', 'bidxplugin');?></h6></a>
-                    </div>
-                    <div class="col-sm-2 hide">
-                        <h6><a data-type='relevance' data-order = '%relevance%' class="sort relevance btn-link"><?php _e('Relevance', 'bidxplugin');?></a></h6>
-                    </div>
-                    <div class="col-sm-2 hide">
-                        <h6><a data-type='country'  data-order = '%country%' class="sort country btn-link"><?php _e('Country', 'bidxplugin');?></a></h6>
-                    </div>
-                    <div class="col-sm-2 hide">
-                        <h6><a data-type='industry' data-order = '%industry%' class="sort industry btn-link"><?php _e('Industry', 'bidxplugin');?></a></h6>
                     </div>
                 </div>
             </div>
@@ -237,7 +230,7 @@
                 <div class="cardContent main-padding">
                     <div class="cardTop">
                         <div class="row">
-                            <div class="col-sm-1">
+                            <div class="col-sm-1 hide">
                                 <div class="checkbox">
                                     <input type="checkbox" data-name = "%name%" value="%userId%" id="checkbox_%userId%" name="actionRecord" />
                                     <label for="checkbox-%userId%"><span></span></label>
@@ -290,7 +283,7 @@
                 <div class="cardContent main-padding">
                     <div class="cardTop">
                         <div class="row">
-                            <div class="col-sm-1">
+                            <div class="col-sm-1 hide">
                                 <div class="checkbox">
                                     <input type="checkbox" data-name = "%name%" value="%userId%" id="checkbox-%userId%" name="actionRecord" />
                                     <label for="checkbox-%userId%"><span></span></label>
@@ -329,9 +322,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="cardFooter">
-
-                </div>
+                <div class="cardFooter"></div>
             </div>
             -->
         </script>
@@ -388,8 +379,6 @@
             </li>
             -->
         </script>
-
-
 
         <!-- 4. Business group snippet -->
         <script type="text/html" id="group-listitem">
