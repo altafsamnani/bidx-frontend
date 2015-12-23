@@ -8,6 +8,7 @@
     ,   iclVars             = window.icl_vars || {}
     ,   currentLanguage     = ( iclVars.current_language ) ? iclVars.current_language : 'en'
     ,   rtlLangArr             = ['ar']
+    ,   accentLang          = ['mz', 'sp']
     ;
 
         // Internal administration of cached items, let's keep it for now in an object, maybe later sync it to localstorage
@@ -53,17 +54,17 @@
                 //result[ idx ] = bidx.utils.getValue( items, context + ".byKey." + k  + ".label" );
                 label           =   ( items[ context ].byKey[ k ] || {} ).label;
 
-                result[ idx ]   =   ( currentLanguage === 'mz' || $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent( escape( label ) ) : label;
+                result[ idx ]   =   ( $.inArray( currentLanguage, accentLang ) === -1 || $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent( escape( label ) ) : label;
 
             } );
         }
         else
         {
             //result = bidx.utils.getValue( items, context + ".byKey." + key  + ".label" );
+
             label           =   ( items[ context ].byKey[ key ] || {} ).label;
 
-            result          =   ( currentLanguage === 'mz' || $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent( escape( label ) ) : label;
-
+            result          =   ( $.inArray( currentLanguage, accentLang ) === -1 || $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent( escape( label ) ) : label;
         }
 
         return result;
@@ -324,7 +325,7 @@
             }
 
             //label           =   ( currentLanguage === 'mz' || $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent(escape(label)) : label;
-            label           =   ( currentLanguage === 'mz' || $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent(label) : label;
+            label           =   ( $.inArray( currentLanguage, accentLang ) === -1 || $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent(label) : label;
 
             $el.text( label );
 
