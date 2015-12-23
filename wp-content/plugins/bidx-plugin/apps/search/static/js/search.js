@@ -82,7 +82,7 @@
                                                     "bdxplan"
                                                 ,   "bdxmember"
                                                 ]
-        ,   RELEVANCE:                          [ 'selectDesc', 'selectAsc' ]
+        ,   RELEVANCE:                          [ 'desc', 'asc' ]
         ,   FILTERQUERY:                        []
         ,   RANGEDEFAULT:                       {
                                                     rating:             [0, 5]
@@ -437,29 +437,27 @@
 
         $list.append( $listBulkItem );
 
-        bidx.utils.log('snippitSort', snippitBulk);
-
         $list.find( "[name='bulk']" ).removeClass('hide').bidx_chosen();
 
     }
 
     function _doSorting( options )
     {
-        var $sortDropdown
-        ,   $orderDropdown
-        ,   $list               =   $element.find(".orderFiltering")
+        var $list               =   $element.find(".orderFiltering")
+        ,   $filterDropdown     =   $list.find( ".filterBy" )
+        ,   $orderDropdown      =   $list.find( ".orderBy" )
         ,   response            =   options.response
-        ,   originalSort        =   response.sort
         ,   criteria            =   response.criteria
+        ,   originalSort        =   criteria.sort
         ,   sortOptions         =   response.sortOptions
         ,   relevance           =   CONSTANTS.RELEVANCE
         ,   listSortItem
         ,   sortValue
         ,   $this
         ,   $listSortItem
-        ,   $listAnchor
+        ,   $listSort
         ,   $originalList
-        ,   sort                =   { }
+        ,   sort
         ,   sortField
         ,   sortOrder
         ,   sortType
@@ -476,10 +474,11 @@
         ,   optionRel
         ,   sortItems       =   [ ]
         ,   relItems        =   [ ]
+        ,   isSortSelected
         ;
 
-        $originalList = $list;
 
+        $filterDropdown.empty();
 
         $.each( sortOptions, function( idx, sortValue )
         {
@@ -488,99 +487,60 @@
 
             option = $( "<option/>",
             {
-                value: sortFieldName
+                value:      sortFieldName
+            ,   text:       bidx.i18n.i(sortFieldName ,appName)
             } );
-
-            option.text( bidx.i18n.i(sortFieldName ,appName) );
 
             sortItems.push( option );
         } );
 
-        /*listSortItem    =   snippitSort
-                                .replace( /%relevance%/g,   sortRelevance)
-                                .replace( /%industry%/g,    sortIndustry )
-                                .replace( /%country%/g,     sortCountry )
-                                .replace( /%created%/g,     sortDate )
-                            ;*/
-
-        //$listSortItem   =   $( snippitSort );
-
-        //$list.append( $listSortItem );
-
-        $sortDropdown   =   $list.find( ".filterBy" );
-
-        $sortDropdown.empty();
-
         // add the options to the select
-        $sortDropdown.append( sortItems );
+        $filterDropdown.append( sortItems );
 
-        // init bidx_chosen plugin
-        $sortDropdown.bidx_chosen();
-
-        $sortDropdown.removeClass('hide');
+        $orderDropdown.empty();
 
         $.each( relevance, function( idx, relevanceLbl )
         {
             optionRel = $( "<option/>",
             {
                 value: relevanceLbl
+            ,   text:  bidx.i18n.i(relevanceLbl)
             } );
-
-            optionRel.text( bidx.i18n.i(relevanceLbl) );
 
             relItems.push( optionRel );
         } );
 
-        $orderDropdown  =   $list.find( ".orderBy" );
-
-        $orderDropdown.empty();
-
-        bidx.utils.log('orderDropdown', $orderDropdown);
-
         // add the options to the select
         $orderDropdown.append( relItems );
 
-        $orderDropdown.bidx_chosen();
+        isSortSelected  =   originalSort[0];
+
+        if (!_.isEmpty( isSortSelected ) )
+        {
+
+            $filterDropdown.val( isSortSelected.field );
+
+            $orderDropdown.val( isSortSelected.order);
+        }
+
+        // init bidx_chosen plugin
+        $filterDropdown.bidx_chosen();
+
+        $orderDropdown.bidx_chosen( );
+
+        //Remove hide classes to display dropdowns
+        $filterDropdown.removeClass('hide');
 
         $orderDropdown.removeClass('hide');
 
-        //$list.find( "[name='bulk']" ).removeClass('hide').bidx_chosen();
+        $listSort   =   $list.find("[name=orderBy], [name=filterBy]");
 
-        // Adjusting Sort asc/desc values
-        //
-        /*sortRelevance   =   bidx.utils.getValue( originalSort, 'relevance' );
-        sortRelevance   =   ( sortRelevance && sortRelevance === 'asc')   ? 'desc'     : 'asc';
 
-        sortIndustry    =   bidx.utils.getValue( originalSort, 'industry' );
-        sortIndustry    =   ( sortIndustry  && sortIndustry === 'asc')    ? 'desc'     : 'asc';
-
-        sortCountry     =   bidx.utils.getValue( originalSort, 'country' );
-        sortCountry     =   ( sortCountry   && sortCountry === 'asc')     ? 'desc'     : 'asc';
-
-        sortDate        =   bidx.utils.getValue( originalSort, 'created' );
-        sortDate        =   ( sortDate      && sortDate === 'asc')    ? 'desc'     : 'asc' ;
-
-        listSortItem    =   snippit
-                                .replace( /%relevance%/g,   sortRelevance)
-                                .replace( /%industry%/g,    sortIndustry )
-                                .replace( /%country%/g,     sortCountry )
-                                .replace( /%created%/g,     sortDate )
-                            ;
-
-        $listSortItem           =   $( listSortItem );
-
-        $list.append( $listSortItem );
-
-        $listAnchor             =   $list.find('.sort');
-        $listAnchor.on('click', function( e )
+        $listSort.on('change', function(evt, params)
         {
-            e.preventDefault();
-
-            //origSortOrder   =   $originalList.find("[data-type = " + sortField + "]").data('sort');
-            //newSortOrder    =   (sortOrder === 'asc') ? 'desc' : 'asc';
-            $this = $( this );
-            sortField       =   $this.data('type');
-            sortOrder       =   $this.data('order');
+            sort        =   { };
+            sortField   =   $filterDropdown.val();
+            sortOrder   =   $orderDropdown.val();
 
 
             bidx.utils.log('Sort clicked on sortField =', sortField);
@@ -598,8 +558,6 @@
 
             bidx.utils.log('After sort criteria=', sort);
 
-
-
             navigate(
             {
                 state   :   'list'
@@ -611,7 +569,10 @@
                             ,   type            :   'sort'
                             }
             });
-        });*/
+
+        });
+
+        //$list.find( "[name='bulk']" ).removeClass('hide').bidx_chosen();
 
     }
 
@@ -647,8 +608,6 @@
                 var $this           =   $(inputRecord)
                 ,   recipientVal    =   $this.val()
                 ;
-
-                bidx.utils.log('selectRecordCheckbox', $this);
 
                 option = $( "<option/>",
                 {
@@ -693,8 +652,6 @@
         ,   $btnApply               =   $element.find( "[name='apply']")
         ,   lengthActionRecord      =   $selectRecordCheckbox.length
         ;
-
-        bidx.utils.log('selectRecord', $selectRecordCheckbox);
 
         $btnApply.click (function ( )
         {
@@ -1139,33 +1096,20 @@
 
         $currentCategory.find( ".list-group" ).append($listFacetsItem);
 
-        bidx.utils.log( 'pickerOptions', pickerOptions);
-
         $calendarFrom   = $currentCategory.find( '#cal-range-from-' + facetItem );
         $calendarFrom.datepicker( pickerOptions );
 
         if( minVal )
         {
-
-         //   min     =   bidx.utils.parseISODate ( minVal );
-           // min     =   min.y + '-' + min.m + '-' + min.d ;
-
-           //min          =   minVal.y + '-' + minVal.m + '-' + minVal.d ;
-           bidx.utils.log('minnnnnn', min);
            $calendarFrom.datepicker( "setDate", min );
-           //bidx.utils.setElementValue( $calendarFrom, min);
         }
 
         $calendarTo     = $currentCategory.find( '#cal-range-to-' + facetItem );
         $calendarTo.datepicker( pickerOptions );
 
         if( maxObj )
-        {// max     =   bidx.utils.parseISODate ( maxVal );
-           // max     =   max.y + '-' + max.m + '-' + max.d ;
-
-            bidx.utils.log('maxxxxxxx', max);
+        {
             $calendarTo.datepicker( "setDate", max );
-            //bidx.utils.setElementValue( $calendarTo, maxVal);
         }
 
     }
@@ -1214,11 +1158,6 @@
 
         max         =   max ? max : foundMax;
 
-        bidx.utils.log( 'min', min);
-
-        bidx.utils.log( 'max', max);
-
-
         if( (foundMin === foundMax) && ( min || max ) )
         {
             enabled =   false;
@@ -1238,66 +1177,23 @@
                 ,   timeDiff
                 ;
 
-
-                bidx.utils.log( 'minAge', minAge);
-
-                bidx.utils.log( 'maxAge', maxAge);
-
-                if( foundMin )
-                {
-                    //foundMinObj     =   bidx.utils.parseISODate( foundMin );
-                    /*foundMinObj     =   new Date(foundMin);
-                    timeDiff        = Math.abs(date.getTime() - foundMinObj.getTime());
-                    defaultMaxVal   = Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));*/
-
-                }
-
-                if( foundMax )
-                {
-                  /*  foundMaxObj     =   bidx.utils.parseISODate( foundMax );
-                    foundMaxDate    =   new Date(date.getFullYear()- foundMaxObj.y, date.getMonth(), date.getDate());
-                    defaultMinVal   =   currentYear - foundMaxDate.getFullYear();*/
-
-                    /*foundMaxObj     =   new Date(foundMax);
-                    timeDiff        = Math.abs(date.getTime() - foundMaxObj.getTime());
-                    defaultMinVal   = Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));*/
-
-                }
-
-                bidx.utils.log( 'min', min);
-
-                bidx.utils.log( 'max', max);
-
                 if( min )
                 {
-                   /* minDateObj  =   bidx.utils.parseISODate( min );
-                    minDate     =   new Date(date.getFullYear()- minDateObj.y, date.getMonth(), date.getDate());
-                    maxAge      =   currentYear - minDate.getFullYear();*/
-
                     minDateObj      =   new Date(min);
                     timeDiff        =   Math.abs(date.getTime() - minDateObj.getTime());
                     maxAge          =   Math.ceil(timeDiff / (1000 * 3600 * 24 * 365)) - 1;
-                   // defaultMaxVal   =   maxAge;
                 }
 
                 if( max )
                 {
-                   /* maxDateObj  =   bidx.utils.parseISODate( max );
-                    maxDate     =   new Date(date.getFullYear()- maxDateObj.y, date.getMonth(), date.getDate());
-                    minAge      =   currentYear - maxDate.getFullYear();*/
-
                     maxDateObj      =   new Date(max);
                     timeDiff        =   Math.abs(date.getTime() - maxDateObj.getTime());
                     minAge          =   Math.ceil(timeDiff / (1000 * 3600 * 24 * 365)) - 1;
-                   // defaultMinVal   =   minAge;
                 }
 
                 min     =   minAge;
 
                 max     =   maxAge;
-
-                bidx.utils.log('min', minAge);
-                bidx.utils.log('max', maxAge);
 
                 labelMinVal =   label.replace(/%num%/g,  defaultMinVal );
 
@@ -1619,8 +1515,6 @@
                     });
                 }
 
-                bidx.utils.log('facetLength', facetLength);
-                bidx.utils.log('facetCounter', facetCounter);
                 if( ( facetLength === facetCounter ) &&
                       $.isFunction( options.cb )
                     )
@@ -1917,8 +1811,6 @@
 
             ,   success: function( response )
                 {
-                    bidx.utils.log("[searchList] retrieved results ", response );
-
                     _doFacetListing(
                     {
                         response    :   response
@@ -2019,8 +1911,6 @@
         ,   $listEmpty      = $("#search-empty").html().replace(/(<!--)*(-->)*/g, "")
         ;
 
-        bidx.utils.log("[data] retrieved results ", data );
-
         if ( data.total )
         {
             // if ( response.totalMembers > currentPage size  --> show paging)
@@ -2077,8 +1967,6 @@
 
             tempLimit = _.size( data.found );
 
-            bidx.utils.log("pagerOptions", pagerOptions);
-
             if( data.total )
             {
 
@@ -2098,7 +1986,7 @@
 
                     switch( response.entityType )
                     {
-                        case 'bdxMember':
+                        case 'bdxmember':
 
                             showMemberProfile(
                                 {
@@ -2109,7 +1997,7 @@
 
                         break;
 
-                        case 'bdxPlan':
+                        case 'bdxplan':
 
                             showEntity(
                             {
@@ -2225,7 +2113,7 @@
 
         switch( entityType )
         {
-            case 'bdxPlan'  :
+            case 'bdxplan'  :
                 var countryOperation
                 ,   entrpreneurIndustry
                 ,   entrpreneurReason
@@ -2342,7 +2230,7 @@
 
             break;
 
-            case 'bdxMember' :
+            case 'bdxmember' :
 
                 var $elImage
                 ,   allLanguages     = ''
@@ -2372,6 +2260,8 @@
                 ,   mentorTaggingId
                 ,   investorTaggingId
                 ;
+
+                bidx.utils.log('member', response.member);
 
                 i18nItem        =   response.member;
                 $entityElement  = $("#member-profile-listitem");
@@ -2549,498 +2439,6 @@
         return replacedList;
     }
 
-    function replaceStringsCallback_Old( response, i18nItem )
-    {
-        //if( item.bidxEntityType == 'bidxBusinessSummary') {
-
-        var $listItem
-        ,   listItem
-        ,   conditionalElementArr
-        ,   bidxMeta    = bidx.utils.getValue( i18nItem, "bidxMeta" )
-        ,   replacedList
-        ,   externalVideoPitch
-        ,   $entityElement
-        ,   snippit
-        ,   emptyVal = ''
-        ,   entityType = response.entityType
-        ;
-
-        switch( entityType )
-        {
-            case 'bidxCompany'  :
-                var statutoryCountry
-                ,   statutoryCity
-                ,   imageWidthStyle
-                ,   imageLeftStyle
-                ,   imageTopStyle
-                ;
-
-                $entityElement      = $("#company-listitem");
-                snippit             = $entityElement.html().replace(/(<!--)*(-->)*/g, "");
-                statutoryCountry    = bidx.utils.getValue( i18nItem, "statutoryAddress.country");
-                statutoryCity       = bidx.utils.getValue( i18nItem, "statutoryAddress.cityTown");
-
-                if(statutoryCountry)
-                {
-
-                    bidx.data.getItem(statutoryCountry, 'country', function(err, labelCountry)
-                    {
-                        country    =   labelCountry;
-                    });
-                }
-
-
-                //search for placeholders in snippit
-                //
-                listItem = snippit
-                    .replace( /%entityId%/g,    bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : emptyVal )
-                    .replace( /%name%/g,        i18nItem.name           ? i18nItem.name     : emptyVal )
-                    .replace( /%website%/g,     i18nItem.website        ? i18nItem.website     : emptyVal )
-                    .replace( /%country%/g,     country )
-                    .replace( /%cityTown%/g,    statutoryCity           ? statutoryCity     : emptyVal )
-                    .replace( /%registered%/g,  i18nItem.registered     ? bidx.i18n.i( 'registered', appName )     : '' )
-                   ;
-
-                $listItem = $(listItem);
-
-                // Company Image
-                //
-                image       = bidx.utils.getValue( i18nItem, "logo" );
-
-                if (image)
-                {
-                    imageWidth      = bidx.utils.getValue( image, "width" );
-                    imageLeft       = bidx.utils.getValue( image, "left" );
-                    imageTop        = bidx.utils.getValue( image, "top" );
-
-                    imageWidthStyle = ( imageWidth ) ? 'width: ' + imageWidth + 'px' : '';
-                    imageLeftStyle  = ( imageLeft ) ? 'left: ' + imageLeft + 'px': '';
-                    imageTopStyle   = ( imageTop ) ? 'top: ' + imageTop + 'px': '';
-
-
-
-                    $listItem.find( "[data-role = 'companyImage']" ).html( '<div class="img-cropper"><img src="' + image.document + '" style=' + imageWidthStyle + imageLeftStyle + imageTopStyle + '" alt="" /></div>' );
-
-                }
-
-                conditionalElementArr =
-                {
-                    'website'       :'website'
-                ,   'country'       :'statutoryAddress.country'
-                ,   'cityTown'      :'statutoryAddress.cityTown'
-                }
-                ;
-
-            break;
-
-            case 'bidxBusinessSummary'  :
-                var countryOperation
-                ,   entrpreneurIndustry
-                ,   entrpreneurReason
-                ,   $el
-                ,   logo
-                ,   logoDocument
-                ,   cover
-                ,   coverDocument
-                ;
-
-                $entityElement   = $("#businesssummary-listitem");
-                snippit          = $entityElement.html().replace(/(<!--)*(-->)*/g, "");
-                countryOperation  = bidx.utils.getValue( i18nItem, "countryOperation");
-
-                if(countryOperation)
-                {
-
-                    bidx.data.getItem(countryOperation, 'country', function(err, labelCountry)
-                    {
-                        country    =   labelCountry;
-                    });
-                }
-
-                entrpreneurIndustry = bidx.utils.getValue( i18nItem, "industry");
-
-                if(entrpreneurIndustry)
-                {
-                    bidx.data.getItem(entrpreneurIndustry, 'industry', function(err, labelIndustry)
-                    {
-                       industry = labelIndustry;
-                    });
-                }
-
-                entrpreneurReason = bidx.utils.getValue( i18nItem, "reasonForSubmission");
-
-                if(entrpreneurReason)
-                {
-                    bidx.data.getItem(entrpreneurReason, 'reasonForSubmission', function(err, labelReason)
-                    {
-                       reason = labelReason;
-                    });
-                }
-
-
-
-                // search for placeholders in snippit
-                //
-                listItem = snippit
-                    .replace( /%entityId%/g,                    bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : emptyVal )
-                    .replace( /%name%/g,                        i18nItem.name   ? i18nItem.name     : emptyVal )
-                    .replace( /%summary%/g,                     i18nItem.summary   ? i18nItem.summary     : emptyVal )
-                    .replace( /%bidxCreationDateTime%/g,        bidxMeta.bidxCreationDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxCreationDateTime) : emptyVal )
-                    .replace( /%countryOperation%/g,            country )
-                    .replace( /%industry%/g,                    industry )
-                    .replace( /%reasonForSubmission%/g,         reason )
-                    .replace( /%financingNeeded%/g,             bidx.utils.formatNumber(i18nItem.financingNeeded)   ? bidx.utils.formatNumber(i18nItem.financingNeeded) : emptyVal )
-                    ;
-
-                $listItem = $(listItem);
-
-                logo = bidx.utils.getValue( i18nItem, "logo");
-                logoDocument = bidx.utils.getValue( i18nItem, "logo.document");
-
-                cover = bidx.utils.getValue( i18nItem, "cover");
-                coverDocument = bidx.utils.getValue( i18nItem, "cover.document");
-
-
-                if ( logo && logoDocument )
-                {
-                    placeBusinessThumb( $listItem, logoDocument );
-                }
-                else if ( cover && coverDocument )
-                {
-                    placeBusinessThumb( $listItem, coverDocument );
-                }
-
-                // externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
-                // if ( externalVideoPitch )
-                // {
-                //     $el         = $listItem.find("[data-role='businessImage']");
-                //     _addVideoThumb( externalVideoPitch, $el );
-                // }
-
-                conditionalElementArr =
-                {
-                    'lastupdate'    :'bidxMeta.bidxCreationDateTime'
-                ,   'industry'      :"industry"
-                ,   'finance'       :"financingNeeded"
-                ,   'reason'        :'reasonForSubmission'
-                ,   'country'       :'countryOperation'
-                ,   'summary'       :'summary'
-                }
-                ;
-
-            break;
-
-            case 'bidxBusinessGroup'  :
-                var focusCountry
-                ,   focusIndustry
-                ,   focusSocialImpact
-                ,   socialImpact
-                ,   focusEnvImpact
-                ,   envImpact
-                ;
-
-
-                $entityElement   = $("#group-listitem");
-                snippit          = $entityElement.html().replace(/(<!--)*(-->)*/g, "");
-
-
-                focusCountry  = bidx.utils.getValue( i18nItem, "focusCountry");
-
-                if(focusCountry)
-                {
-
-                    bidx.data.getItem(focusCountry, 'country', function(err, labelCountry)
-                    {
-                        country    =   labelCountry;
-                    });
-                }
-
-                focusIndustry = bidx.utils.getValue( i18nItem, "focusIndustry");
-
-                if(focusIndustry)
-                {
-                    bidx.data.getItem(focusIndustry, 'industry', function(err, labelIndustry)
-                    {
-                       industry = labelIndustry;
-                    });
-                }
-
-                focusSocialImpact = bidx.utils.getValue( i18nItem, "focusSocialImpact");
-
-                if(focusSocialImpact)
-                {
-                    bidx.data.getItem(focusSocialImpact, 'socialImpact', function(err, labelSocialImpact)
-                    {
-                       socialImpact = labelSocialImpact;
-                    });
-                }
-
-                focusEnvImpact = bidx.utils.getValue( i18nItem, "focusEnvImpact");
-
-                if(focusEnvImpact)
-                {
-                    bidx.data.getItem(focusEnvImpact, 'envImpact', function(err, labelEnvImpact)
-                    {
-                       envImpact = labelEnvImpact;
-                    });
-                }
-
-
-
-                // search for placeholders in snippit
-                //
-                listItem = snippit
-                    .replace( /%entityId%/g,                    bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : emptyVal )
-                    .replace( /%name%/g,                        i18nItem.name   ? i18nItem.name     : emptyVal )
-                    .replace( /%bidxWebsiteName%/g,             response.domains )
-                    .replace( /%website%/g,                     i18nItem.website   ? i18nItem.website     : emptyVal )
-                    .replace( /%summary%/g,                     i18nItem.summary   ? i18nItem.summary     : emptyVal )
-                    .replace( /%bidxCreationDateTime%/g,      bidxMeta.bidxCreationDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxCreationDateTime) : emptyVal )
-                    .replace( /%focusCountry%/g,                country )
-                    .replace( /%focusIndustry%/g,               industry )
-                    .replace( /%focusSocialImpact%/g,           socialImpact )
-                    .replace( /%focusEnvImpact%/g,              envImpact )
-                    ;
-
-                $listItem = $(listItem);
-
-                conditionalElementArr =
-                {
-                    'lastupdate'        :'bidxMeta.bidxCreationDateTime'
-                ,   'focusCountry'      :'focusCountry'
-                ,   'focusIndustry'     :'focusIndustry'
-                ,   'focusSocialImpact' :'focusSocialImpact'
-                ,   'focusEnvImpact'    :'focusEnvImpact'
-                ,   'summary'           :'summary'
-                ,   'website'           :'website'
-                }
-                ;
-
-            break;
-
-            case 'bidxMemberProfile'        :
-            case 'bidxInvestorProfile'      :
-            case 'bidxEntrepreneurProfile'  :
-            case 'bidxMentorProfile'        :
-
-                var $elImage
-                ,   allLanguages     = ''
-                ,   montherLanguage  = ''
-                ,   country          = ''
-                ,   industry         = ''
-                ,   reason           = ''
-                ,   isGroupAdmin     = bidx.common.isGroupAdmin()
-                ,   image
-                ,   imageWidth
-                ,   imageLeft
-                ,   imageTop
-                ,    personalDetails
-                ,   highestEducation
-                ,   gender
-                ,   isEntrepreneur
-                ,   isInvestor
-                ,   investorMemberId
-                ,   isMentor
-                ,   cityTown
-                ,   sepCountry
-                ,   memberCountry
-                ,   entrpreneurFocusIndustry
-                ,   tagging
-                ,   taggingMentor
-                ,   taggingInvestor
-                ,   mentorTaggingId
-                ,   investorTaggingId
-                ;
-
-                $entityElement   = $("#member-profile-listitem");
-                snippit          = $entityElement.html().replace(/(<!--)*(-->)*/g, "");
-                $elImage         = $entityElement.find( "[data-role = 'memberImage']" );
-                bidxMeta         = bidx.utils.getValue( i18nItem, "bidxMemberProfile.bidxMeta" );
-                isEntrepreneur   = bidx.utils.getValue( i18nItem, "bidxEntrepreneurProfile" );
-                isInvestor       = bidx.utils.getValue( i18nItem, "bidxInvestorProfile" );
-                investorMemberId = bidx.utils.getValue( isInvestor, "bidxMeta.bidxOwnerId" );
-                isMentor         = bidx.utils.getValue( i18nItem, "bidxMentorProfile" );
-                personalDetails  = i18nItem.bidxMemberProfile.personalDetails;
-                cityTown         = bidx.utils.getValue( personalDetails, "address.0.cityTown");
-                memberCountry    = bidx.utils.getValue( personalDetails, "address.0.country");
-                tagging          = bidx.common.getAccreditation( i18nItem );
-
-                // Member Role
-                //
-                if(personalDetails.highestEducation)
-                {
-                    bidx.data.getItem(personalDetails.highestEducation, 'education', function(err, label)
-                    {
-                       highestEducation = label;
-                    });
-                }
-                if(personalDetails.gender)
-                {
-                    bidx.data.getItem(personalDetails.gender, 'gender', function(err, labelGender)
-                    {
-                       gender = labelGender;
-                    });
-                }
-                if(memberCountry)
-                {
-
-                    bidx.data.getItem(memberCountry, 'country', function(err, labelCountry)
-                    {
-                        sepCountry =  (cityTown) ? ', ' : '';
-                        country    =  sepCountry + labelCountry;
-                    });
-                }
-
-                // Language is handled specially
-                //
-                var languageDetail      = bidx.utils.getValue( personalDetails, "languageDetail", true );
-
-                if ( languageDetail )
-                {
-                    var     sep             = ''
-                        ,   sepMotherLang   = ''
-                        ,   langLength      = languageDetail.length
-                        ,   langLabel       = ''
-                        ,   langCount       = 1
-                        ;
-
-                    $.each( languageDetail, function( i, langObj )
-                    {
-                        langCount++;
-                        langLabel = _getLanguageLabelByValue( langObj );
-                        allLanguages +=  sep + langLabel;
-                        sep           = (langCount !== langLength) ? ', ' : ' and ';
-
-                    } );
-
-                }
-
-                if(langObj.motherLanguage)
-                        {
-                            montherLanguage +=  sepMotherLang + langLabel;
-                            sepMotherLang  = ', ';
-                        }
-
-                entrpreneurFocusIndustry = bidx.utils.getValue( i18nItem, "bidxEntrepreneurProfile.focusIndustry");
-                if(entrpreneurFocusIndustry)
-                {
-                    bidx.data.getItem(entrpreneurFocusIndustry, 'industry', function(err, focusIndustry)
-                    {
-                       industry = bidx.i18n.i( 'interestedIn', appName ) + ': ' + focusIndustry;
-                    });
-                }
-
-                // search for placeholders in snippit
-                //
-                listItem = snippit
-                    .replace( /%memberId%/g,            bidxMeta.bidxOwnerId   ? bidxMeta.bidxOwnerId     : emptyVal )
-                    .replace( /%firstName%/g,           personalDetails.firstName   ? personalDetails.firstName     : emptyVal )
-                    .replace( /%lastName%/g,            personalDetails.lastName   ? personalDetails.lastName    : emptyVal )
-                    .replace( /%bidxCreationDateTime%/g, bidxMeta.bidxCreationDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxCreationDateTime) : emptyVal )
-                    .replace( /%professionalTitle%/g,   personalDetails.professionalTitle   ? personalDetails.professionalTitle     : emptyVal )
-                    .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
-                    .replace( /%role_investor%/g,       ( isInvestor && displayInvestorProfile )      ? bidx.i18n.i( 'investor' )   : '' )
-                    .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
-                    .replace( /%gender%/g,              personalDetails.gender   ? gender    : emptyVal )
-                    .replace( /%dateOfBirth%/g,         personalDetails.dateOfBirth   ? bidx.utils.parseISODateTime( personalDetails.dateOfBirth, 'date' )    : emptyVal )
-                    .replace( /%highestEducation%/g,    personalDetails.highestEducation   ? highestEducation    : emptyVal )
-                    .replace( /%language%/g,            allLanguages )
-                    .replace( /%motherLanguage%/g,      montherLanguage )
-                    .replace( /%city%/g,                ( cityTown ) ? cityTown : emptyVal )
-                    .replace( /%country%/g,             ( country )  ? country : emptyVal )
-                    .replace( /%interest%/g,             industry )
-                    .replace( /%emailAddress%/g,        personalDetails.emailAddress   ? personalDetails.emailAddress  : emptyVal )
-                    .replace( /%mobile%/g,              (!$.isEmptyObject(personalDetails.contactDetail))   ? bidx.utils.getValue( personalDetails, "contactDetail.0.mobile")    : emptyVal )
-                    .replace( /%landLine%/g,            (!$.isEmptyObject(personalDetails.contactDetail))   ? bidx.utils.getValue( personalDetails, "contactDetail.0.landLine")     : emptyVal )
-                    .replace( /%facebook%/g,            personalDetails.facebook   ? personalDetails.facebook    : emptyVal )
-                    .replace( /%twitter%/g,             personalDetails.twitter   ? personalDetails.twitter    : emptyVal )
-                    .replace( /%fa-user%/g,             (entityType === 'bidxInvestorProfile') ? 'fa-user' : 'fa-user')
-                    ;
-
-                $listItem     = $(listItem);
-
-                var roleLabel = $listItem.find( ".bidx-label" );
-                $.each( roleLabel, function( index, val )
-                {
-                    if ( $(this).text() === "" )
-                    {
-                        $(this).remove();
-                    }
-                });
-
-                if( currentUserId === bidxMeta.bidxOwnerId )
-                {
-                    $listItem.find('.btn-connect').addClass('hide');
-                }
-
-                /* tagging */
-                if(isMentor)
-                {
-                    mentorTaggingId     =   'hide';
-                    taggingMentor       =   bidx.utils.getValue(tagging, 'mentor' );
-
-                    if( !_.isUndefined(taggingMentor) )
-                    {
-                        mentorTaggingId     =   (taggingMentor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
-                    }
-
-                    $listItem.find('.fa-mentor').addClass( mentorTaggingId );
-                }
-                if( ( isInvestor && isGroupAdmin) || ( investorMemberId === loggedInMemberId ) )
-                {
-                    investorTaggingId   =   'hide';
-                    taggingInvestor     =   bidx.utils.getValue(tagging, 'investor' );
-
-                    if( !_.isUndefined(taggingInvestor) )
-                    {
-                        investorTaggingId   =   (taggingInvestor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
-                    }
-
-                    $listItem.find('.fa-investor').addClass( investorTaggingId );
-                }
-
-                // Member Image
-                //
-                image       = bidx.utils.getValue( personalDetails, "profilePicture" );
-
-                if (image && image.document)
-                {
-                    imageWidth  = bidx.utils.getValue( image, "width" );
-                    imageLeft   = bidx.utils.getValue( image, "left" );
-                    imageTop    = bidx.utils.getValue( image, "top" );
-                    $listItem.find( "[data-role = 'memberImage']" ).html( '<div class="img-cropper"><img src="' + image.document + '" style="width:'+ imageWidth +'px; left:-'+ imageLeft +'px; top:-'+ imageTop +'px;" alt="" /></div>' );
-
-                }
-
-                conditionalElementArr =
-                {
-                    'emailAddress'  :'emailAddress'
-                ,   'mobile'        :"contactDetail.0.mobile"
-                ,   'landline'      :"contactDetail.0.landLine"
-                ,   'facebook'      :'facebook'
-                ,   'twitter'       :'twitter'
-                }
-                ;
-
-            break;
-
-            default:
-
-            break;
-        }
-
-        replacedList =
-        {
-            listItem              : $listItem
-        ,   conditionalElementArr : conditionalElementArr
-        }
-        ;
-
-        return replacedList;
-    }
-
-
-
     function showEntity( options )
     {
         var $listItem
@@ -3139,7 +2537,6 @@
 
         var params = ( $.isEmptyObject( options.params ) ) ? {} : options.params
         ;
-        bidx.utils.log('params', params);
 
         switch ( options.state )
         {

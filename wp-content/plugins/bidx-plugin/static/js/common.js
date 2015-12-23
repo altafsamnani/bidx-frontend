@@ -154,7 +154,7 @@
                                         return _.indexOf(tag.groups, currentGroup) !== -1;
                                     });
         }
-        bidx.utils.log('existingTags', existingTags);
+
         return existingTags;
     }
 
