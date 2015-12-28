@@ -901,27 +901,21 @@
     function _doBooleanAction( options )
     {
         var criteria    =   options.criteria
-        ,   $booleanSel =   $('input:radio[id^=radioBoolean]')
+        ,   $booleanSel =   $('input:radio[id^="radioBoolean-"]')
         ;
         bidx.utils.log('booleansel', $booleanSel);
 
-        /*$booleanSel.change( function( e )
+        $booleanSel.change( function( e )
         {
-            //e.stopPropagation();
-            //e.preventDefault();
-
-
-
-            var $input      =   $(this)
+            var $input          =   $(this)
             ,   genericFilters
-            ,   booleanName        =   $input.data('name')
-            ,   booleanVal         =   $input.val()
+            ,   booleanName     =   $input.data('name')
+            ,   booleanVal      =   $input.val()
             ;
 
-            bidx.utils.log( 'I am hereee', booleanVal );
-
-            if( booleanVal )
+            if( booleanVal && $input.is(':checked'))
             {
+                bidx.utils.log( 'I am hereee', booleanVal );
                 genericFilters    =   bidx.utils.getValue( criteria, 'genericFilters');
 
                 bidx.utils.log('genericFilters', genericFilters);
@@ -930,7 +924,7 @@
 
                 if( booleanVal === 'both')
                 {
-                    delete criteria.genericFilters;
+                    delete criteria.genericFilters[ booleanName ];
                 }
                 else
                 {
@@ -959,7 +953,7 @@
             }
 
 
-        });*/
+        });
     }
 
 
@@ -970,6 +964,7 @@
         ,   $facetType      = $("#facet-type").html().replace(/(<!--)*(-->)*/g, "")
         ,   response        = options.response
         ,   criteria        = response.criteria
+        ,   genericFilters  = criteria.genericFilters
         ,   booleanOptions  = bidx.utils.getValue(response, 'booleanOptions')
         ,   $list           = $element.find(".facet-list")
         ,   $filters        =  $('.topfilters')
@@ -980,6 +975,7 @@
         ,   $listClose
         ,   $viewFacetItem
         ,   $currentCategory
+        ,   $inputBoolean
         ,   listFacetsItem
         ,   listItem
         ,   industry
@@ -1001,6 +997,7 @@
         ,   maxDateObj
         ,   isSliderAction      =   true
         ,   isCalendarAction    =   true
+        ,   genericFieldVal
         ;
 
         /*$list.empty();
@@ -1012,15 +1009,27 @@
             // Add Default image if there is no image attached to the bs
             $.each( booleanOptions , function ( idx, facetItem )
             {
-
-                listItem        =   snippit
+                listItem            =   snippit
                                         .replace( /%facetBooleanLabel%/g, bidx.i18n.i( facetItem.fieldName, appName) )
                                         .replace( /%facetBooleanName%/g, facetItem.fieldName   )
                                         ;
 
-                $listItem       = listItem;
+                $listItem           =   listItem;
 
                 $list.append( $listItem );
+
+                genericFieldVal     =   bidx.utils.getValue( genericFilters, facetItem.fieldName );
+
+                if( !genericFieldVal )
+                {
+                    genericFieldVal =  'both';
+                }
+
+                $inputBoolean       =   $list.find("input[name='"+facetItem.fieldName+"'][value='"+genericFieldVal+"']");
+
+                $inputBoolean.prop( 'checked', true );
+
+                $inputBoolean.parent().addClass('checked');
             } );
 
             _doBooleanAction( options );
