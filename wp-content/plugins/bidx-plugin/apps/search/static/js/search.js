@@ -566,6 +566,7 @@
                             ,   sort            :   sort
                             ,   facetFilters    :   criteria.facetFilters
                             ,   rangeFilters    :   criteria.rangeFilters
+                            ,   genericFilters  :   criteria.genericFilters
                             ,   type            :   'sort'
                             }
             });
@@ -810,9 +811,11 @@
                 {
                     state   :   'list'
                 ,   params  :   {
-                                    q           :   options.q
-                                ,   sort        :   options.sort
-                                ,   rangeFilters:   criteria.rangeFilters
+                                    q               :   options.q
+                                ,   sort            :   options.sort
+                                ,   rangeFilters    :   criteria.rangeFilters
+                                ,   facetFilters    :   criteria.facetFilters
+                                ,   genericFilters  :   criteria.genericFilters
                                 // ,   type        :   'facet'
                                 }
                 });
@@ -883,10 +886,11 @@
                 {
                     state   :   'list'
                 ,   params  :   {
-                                    q           :   options.q
-                                ,   sort        :   options.sort
-                                ,   facetFilters:   criteria.facetFilters
-                                ,   rangeFilters:   criteria.rangeFilters
+                                    q               :   options.q
+                                ,   sort            :   options.sort
+                                ,   facetFilters    :   criteria.facetFilters
+                                ,   rangeFilters    :   criteria.rangeFilters
+                                ,   genericFilters  :   criteria.genericFilters
                                 }
                 });
             }
@@ -894,12 +898,146 @@
         });
     }
 
+    function _doBooleanAction( options )
+    {
+        var criteria    =   options.criteria
+        ,   $booleanSel =   $('input:radio[id^=radioBoolean]')
+        ;
+        bidx.utils.log('booleansel', $booleanSel);
+
+        /*$booleanSel.change( function( e )
+        {
+            //e.stopPropagation();
+            //e.preventDefault();
+
+
+
+            var $input      =   $(this)
+            ,   genericFilters
+            ,   booleanName        =   $input.data('name')
+            ,   booleanVal         =   $input.val()
+            ;
+
+            bidx.utils.log( 'I am hereee', booleanVal );
+
+            if( booleanVal )
+            {
+                genericFilters    =   bidx.utils.getValue( criteria, 'genericFilters');
+
+                bidx.utils.log('genericFilters', genericFilters);
+                bidx.utils.log('Criteria before click=', criteria);
+                bidx.utils.log('rangeName=', booleanName);
+
+                if( booleanVal === 'both')
+                {
+                    delete criteria.genericFilters;
+                }
+                else
+                {
+                    criteria.genericFilters[booleanName ] = booleanVal;
+                }
+
+                //Make offset 0 for filtering so start from begining
+                paging.search.offset = 0;
+
+                //set the max records limit to 10
+                tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+                bidx.utils.log('After genericFilters', criteria);
+
+                navigate(
+                {
+                    state   :   'list'
+                ,   params  :   {
+                                    q               :   options.q
+                                ,   sort            :   options.sort
+                                ,   facetFilters    :   criteria.facetFilters
+                                ,   rangeFilters    :   criteria.rangeFilters
+                                ,   genericFilters  :   criteria.genericFilters
+                                }
+                });
+            }
+
+
+        });*/
+    }
+
+
+
+    function _doBooleanFilterListing( options )
+    {
+        var snippit         = $("#facetboolean-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $facetType      = $("#facet-type").html().replace(/(<!--)*(-->)*/g, "")
+        ,   response        = options.response
+        ,   criteria        = response.criteria
+        ,   booleanOptions  = bidx.utils.getValue(response, 'booleanOptions')
+        ,   $list           = $element.find(".facet-list")
+        ,   $filters        =  $('.topfilters')
+        ,   $advancedSearch =  $('.advancedFilters')
+        ,   emptyVal        = ''
+        ,   $listItem
+        ,   $listFacetsItem
+        ,   $listClose
+        ,   $viewFacetItem
+        ,   $currentCategory
+        ,   listFacetsItem
+        ,   listItem
+        ,   industry
+        ,   anchorFacet
+        ,   isCriteriaSelected
+        ,   facetCriteria   =   {}
+        ,   sliderOptions   =   {}
+        ,   filterQuery
+        ,   min
+        ,   max
+        ,   foundMin
+        ,   foundMax
+        ,   defaultRange
+        ,   defaultMinVal
+        ,   defaultMaxVal
+        ,   foundMinObj
+        ,   foundMaxObj
+        ,   minDateObj
+        ,   maxDateObj
+        ,   isSliderAction      =   true
+        ,   isCalendarAction    =   true
+        ;
+
+        /*$list.empty();
+
+        $filters.empty();*/
+
+        if ( response && booleanOptions )
+        {
+            // Add Default image if there is no image attached to the bs
+            $.each( booleanOptions , function ( idx, facetItem )
+            {
+
+                listItem        =   snippit
+                                        .replace( /%facetBooleanLabel%/g, bidx.i18n.i( facetItem.fieldName, appName) )
+                                        .replace( /%facetBooleanName%/g, facetItem.fieldName   )
+                                        ;
+
+                $listItem       = listItem;
+
+                $list.append( $listItem );
+            } );
+
+            _doBooleanAction( options );
+        }
+        else
+        {
+
+            $list.append($facetType);
+        }
+    }
+
     function _doRangeFilterListing( options )
     {
         var snippit         = $("#facet-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $facetType      = $("#facet-type").html().replace(/(<!--)*(-->)*/g, "")
-        ,   criteria        = options.criteria
         ,   response        = options.response
+        ,   criteria        = response.criteria
         ,   rangeFilters    = bidx.utils.getValue(response.criteria, 'rangeFilters')
         ,   $list           = $element.find(".facet-list")
         ,   $filters        =  $('.topfilters')
@@ -944,7 +1082,7 @@
             {
                 min             =   bidx.utils.getValue(facetMinMax, 'min');
 
-                 max             =   bidx.utils.getValue(facetMinMax, 'min');
+                max             =   bidx.utils.getValue(facetMinMax, 'min');
 
                 foundMin        =   bidx.utils.getValue(facetMinMax, 'foundMin');
 
@@ -1041,6 +1179,11 @@
             if( isCalendarAction )
             {
                 _doRangeCalendarAction( options );
+            }
+
+            if( $.isFunction( options.cb ) )
+            {
+                options.cb( );
             }
         }
         else
@@ -1338,10 +1481,11 @@
                 {
                     state   :   'list'
                 ,   params  :   {
-                                    q           :   options.q
-                                ,   sort        :   options.sort
-                                ,   facetFilters:   criteria.facetFilters
-                                ,   rangeFilters:   criteria.rangeFilters
+                                    q               :   options.q
+                                ,   sort            :   options.sort
+                                ,   facetFilters    :   criteria.facetFilters
+                                ,   rangeFilters    :   criteria.rangeFilters
+                                ,   genericFilters  :   criteria.genericFilters
                                 }
                 });
 
@@ -1602,10 +1746,11 @@
                 {
                     state   :   'list'
                 ,   params  :   {
-                                    q           :   options.q
-                                ,   sort        :   options.sort
-                                ,   facetFilters:   criteria.facetFilters
-                                ,   rangeFilters:   criteria.rangeFilters
+                                    q               :   options.q
+                                ,   sort            :   options.sort
+                                ,   facetFilters    :   criteria.facetFilters
+                                ,   rangeFilters    :   criteria.rangeFilters
+                                ,   genericFilters  :   criteria.genericFilters
                                 // ,   type        :   'facet'
                                 }
                 });
@@ -1645,10 +1790,11 @@
                 {
                     state   :   'list'
                 ,   params  :   {
-                                    q           :   options.q
-                                ,   sort        :   options.sort
-                                ,   facetFilters:   {}
-                                ,   rangeFilters:   {}
+                                    q               :   options.q
+                                ,   sort            :   options.sort
+                                ,   facetFilters    :   {}
+                                ,   rangeFilters    :   {}
+                                ,   genericFilters  :   {}
                                 // ,   type        :   'facet'
                                 }
                 });
@@ -1680,6 +1826,7 @@
         ,   sort
         ,   facetFilters
         ,   rangeFilters
+        ,   genericFilters
         ,   criteria
         ,   criteriaQ
         ,   paramFilter
@@ -1782,6 +1929,13 @@
             search.criteria.rangeFilters    =  rangeFilters;
         }
 
+        genericFilters = bidx.utils.getValue(params, 'genericFilters' );
+
+        if(  genericFilters )
+        {
+            search.criteria.genericFilters    =  genericFilters;
+        }
+
         return search;
 
     }
@@ -1825,6 +1979,16 @@
                                             ,   q           :   search.q
                                             ,   sort        :   search.sort
                                             ,   criteria    :   response.criteria
+                                            ,   cb          :   function ()
+                                                                {
+                                                                    _doBooleanFilterListing(
+                                                                    {
+                                                                        response    :   response
+                                                                    ,   q           :   search.q
+                                                                    ,   sort        :   search.sort
+                                                                    ,   criteria    :   response.criteria
+                                                                    })
+                                                                }
                                             } );
                                         }
                     } );
@@ -1947,10 +2111,11 @@
                      _getSearchList(
                     {
                         params  :   {
-                                        q           :   options.q
-                                    ,   sort        :   options.sort
-                                    ,   facetFilters:   criteria.facetFilters
-                                    ,   rangeFilters:   criteria.rangeFilters
+                                        q               :   options.q
+                                    ,   sort            :   options.sort
+                                    ,   facetFilters    :   criteria.facetFilters
+                                    ,   rangeFilters    :   criteria.rangeFilters
+                                    ,   genericFilters  :   criteria.genericFilters
                                     }
                     ,   cb      :   function()
                                     {
