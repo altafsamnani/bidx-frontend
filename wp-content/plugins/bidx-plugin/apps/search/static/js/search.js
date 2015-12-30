@@ -1720,6 +1720,12 @@
                 }
                 else if ( $.inArray(filterValue, facetFiltersCat ) === -1 )
                 {
+                    if( clickedCategory === 'entityType' ) //Exception for entityType to give radio button effect and backend cant handle it
+                    {
+                        globalCriteria.facetFilters[clickedCategory]    =   [];
+                        globalCriteria.entityType = [ filterValue ]; // Empty entityType in criteria and add new data
+                    }
+
                     globalCriteria.facetFilters[clickedCategory].push( filterValue );
                 }
 
@@ -1745,10 +1751,7 @@
                 //set the max records limit to 10
                 tempLimit = CONSTANTS.SEARCH_LIMIT;
 
-                bidx.utils.log('Filter clicked ', filterQuery);
-                bidx.utils.log('Filter clicked with q=', options.q);
-                bidx.utils.log('Filter sort=', options.sort);
-                bidx.utils.log('Filter criteria=', globalCriteria.facetFilters);
+                bidx.utils.log('Filter criteria=', globalCriteria);
 
                 navigate(
                 {
@@ -1835,7 +1838,10 @@
         ,   globalFacetFilters
         ,   globalRangeFilters
         ,   globalGenericFilters
+        ,   globalEntityType
+
         ,   sort
+        ,   entityType
 
         ,   genericFilters
         ,   criteria
@@ -1876,16 +1882,18 @@
         // 2. Sort criteria
         // ex sort:["field":"entity", "order": asc ]
         //
-        globalSort = bidx.utils.getValue( globalCriteria, 'sort' );
+        globalSort          =   bidx.utils.getValue( globalCriteria, 'sort' );
+        sort                =   ( globalSort )  ?   globalSort  :   CONSTANTS.SORTDEFAULT;
 
-        sort    =   ( globalSort )  ?   globalSort  :   CONSTANTS.SORTDEFAULT;
+        globalEntityType    =   bidx.utils.getValue( globalCriteria, 'entityType' );
+        entityType          =  ( globalEntityType )  ?   globalEntityType  :   CONSTANTS.ENTITY_TYPES;
 
         searchCriteria  =   {
                                 searchTerm  :   "basic:" + searchTerm
+                            ,   entityType  :   entityType
                             ,   sort        :   sort
                             ,   maxResult   :   tempLimit
                             ,   offset      :   paging.search.offset
-                            ,   entityType  :   CONSTANTS.ENTITY_TYPES
                             };
 
         // 3. facetFilters
@@ -1894,9 +1902,17 @@
 
         globalFacetFilters = bidx.utils.getValue(globalCriteria, 'facetFilters' );
 
+
+
         if(  globalFacetFilters )
         {
             searchCriteria.facetFilters    =   globalFacetFilters;
+        }
+        else
+        {
+            searchCriteria.facetFilters     = {
+                                    entityType: entityType
+                                };// Hack: To select the facet ;)
         }
 
         // 4. RangeFilters
