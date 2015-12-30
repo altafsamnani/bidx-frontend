@@ -52,6 +52,7 @@
 
     ,   appName                 = "search"
     ,   loggedInMemberId        = bidx.common.getCurrentUserId()
+    ,   globalCriteria
 
     ,   paging                  =
         {
@@ -92,6 +93,12 @@
                                                 ,   memberDateOfBirth:  [0, 100]
                                                 ,   planFinancingNeeded:[0,1000000]
                                                 }
+        ,   SORTDEFAULT:                        [
+                                                    {
+                                                        "field" : "modified"
+                                                    ,   "order":  "desc"
+                                                    }
+                                                ]
         }
 
     ,   tempLimit               = CONSTANTS.SEARCH_LIMIT
@@ -217,6 +224,64 @@
 
     }
 
+    function _doSortingAction()
+    {
+        var $listSort
+        ,   sort
+        ,   sortField
+        ,   sortOrder
+        ,   $list               =   $element.find(".orderFiltering")
+        ,   $filterDropdown     =   $list.find( ".filterBy" )
+        ,   $orderDropdown      =   $list.find( ".orderBy" )
+        ;
+
+        $listSort   =   $list.find("[name=orderBy], [name=filterBy]");
+
+
+        $listSort.on('change', function(evt, params)
+        {
+            sort        =   [];
+            sortField   =   $filterDropdown.val();
+            sortOrder   =   $orderDropdown.val();
+
+
+            bidx.utils.log('Sort clicked on sortField =', sortField);
+            bidx.utils.log('Sort Order', sortOrder);
+            bidx.utils.log('Original sort criteria=', globalCriteria);
+
+            //For search filtering add the current filter
+            //sort [ sortField ] = sortOrder;
+
+            globalCriteria.sort     =
+            [{
+                field:  sortField
+            ,   order:  sortOrder
+            }];
+
+            //Make offset 0 for filtering so start from begining
+            paging.search.offset = 0;
+
+            //set the max records limit to 10
+            tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+            bidx.utils.log('After sort criteria=', sort);
+
+            navigate(
+            {
+                state   :   'list'
+            /*,   params  :   {
+                                q               :   globalCriteria.searchTerm
+                            ,   sort            :   sort
+                            ,   facetFilters    :   globalCriteria.facetFilters
+                            ,   rangeFilters    :   globalCriteria.rangeFilters
+                            ,   genericFilters  :   globalCriteria.genericFilters
+                            ,   type            :   'sort'
+                            }*/
+            });
+
+        });
+    }
+
     function _oneTimeSetup()
     {
         if(!displayInvestorProfile)
@@ -227,6 +292,7 @@
         _tabSearch();
         _languages();
         _advancedFilters();
+        _doSortingAction();
 
         if ( $fakecrop )
         {
@@ -250,6 +316,8 @@
         , */
             submitHandler:  function()
             {
+                var searchTerm          = $frmSearch.find( "[name='q']" ).val()
+                ;
 
                 _showAllView( "load" );
                 _showAllView( "searchList" );
@@ -260,14 +328,14 @@
                 // load businessSummaries
                 //
 
-                var q          = $frmSearch.find( "[name='q']" ).val();
+
+
+                globalCriteria.searchTerm   =   searchTerm;
+
 
                 _getSearchList(
                 {
-                    params  :   {
-                                    q : q
-                                }
-                ,   cb:   function()
+                    cb:   function()
                         {
                            _hideView( "load" );
                            _toggleListLoading( $element );
@@ -446,28 +514,9 @@
         var $list               =   $element.find(".orderFiltering")
         ,   $filterDropdown     =   $list.find( ".filterBy" )
         ,   $orderDropdown      =   $list.find( ".orderBy" )
-        ,   response            =   options.response
-        ,   criteria            =   response.criteria
-        ,   originalSort        =   criteria.sort
-        ,   sortOptions         =   response.sortOptions
+        ,   originalSort        =   globalCriteria.sort
+        ,   sortOptions         =   options.sortOptions
         ,   relevance           =   CONSTANTS.RELEVANCE
-        ,   listSortItem
-        ,   sortValue
-        ,   $this
-        ,   $listSortItem
-        ,   $listSort
-        ,   $originalList
-        ,   sort
-        ,   sortField
-        ,   sortOrder
-        ,   sortType
-        ,   newSortOrder
-        ,   origSortOrder
-        ,   criteriaSort
-        ,   sortDate
-        ,   sortCountry
-        ,   sortIndustry
-        ,   sortRelevance
         ,   sortLabel
         ,   sortFieldName
         ,   option
@@ -517,7 +566,6 @@
 
         if (!_.isEmpty( isSortSelected ) )
         {
-
             $filterDropdown.val( isSortSelected.field );
 
             $orderDropdown.val( isSortSelected.order);
@@ -532,46 +580,6 @@
         $filterDropdown.removeClass('hide');
 
         $orderDropdown.removeClass('hide');
-
-        $listSort   =   $list.find("[name=orderBy], [name=filterBy]");
-
-
-        $listSort.on('change', function(evt, params)
-        {
-            sort        =   { };
-            sortField   =   $filterDropdown.val();
-            sortOrder   =   $orderDropdown.val();
-
-
-            bidx.utils.log('Sort clicked on sortField =', sortField);
-            bidx.utils.log('Sort Order', sortOrder);
-            bidx.utils.log('Original sort criteria=', criteria);
-
-            //For search filtering add the current filter
-            sort [ sortField ] = sortOrder;
-
-            //Make offset 0 for filtering so start from begining
-            paging.search.offset = 0;
-
-            //set the max records limit to 10
-            tempLimit = CONSTANTS.SEARCH_LIMIT;
-
-            bidx.utils.log('After sort criteria=', sort);
-
-            navigate(
-            {
-                state   :   'list'
-            ,   params  :   {
-                                q               :   options.q
-                            ,   sort            :   sort
-                            ,   facetFilters    :   criteria.facetFilters
-                            ,   rangeFilters    :   criteria.rangeFilters
-                            ,   genericFilters  :   criteria.genericFilters
-                            ,   type            :   'sort'
-                            }
-            });
-
-        });
 
         //$list.find( "[name='bulk']" ).removeClass('hide').bidx_chosen();
 
@@ -757,11 +765,10 @@
 
     }
 
-    function _doRangeSliderAction( options )
+    function _doRangeSliderAction(  )
     {
         var $this
         ,   $listReset
-        ,   criteria        =   options.criteria
         ,   $mainFacet      =   $element.find(".main-facet")
         ;
         // Facet Label Click
@@ -775,24 +782,24 @@
                 $this           = $( this );
 
                 var filterValue
-                ,   rangeFilters        =   bidx.utils.getValue( criteria, 'rangeFilters')
+                ,   rangeFilters        =   bidx.utils.getValue( globalCriteria, 'rangeFilters')
                 ,   clickedCategory     =   $this.data('name')
                 ,   rangeFiltersCat     =   ( !$.isEmptyObject( rangeFilters ) && !$.isEmptyObject(rangeFilters.clickedCategory))   ? rangeFilters.clickedCategory : []
                 ;
 
-                bidx.utils.log('Criteria before click=', criteria);
+                bidx.utils.log('Criteria before click=', globalCriteria);
                 bidx.utils.log('clickedCategory=', clickedCategory);
                 bidx.utils.log('filterValue=', filterValue);
 
                 if ( rangeFiltersCat )
                 {
                     bidx.utils.log('criteria removed' , rangeFiltersCat);
-                    delete criteria.rangeFilters[clickedCategory].min;
-                    delete criteria.rangeFilters[clickedCategory].max;
+                    delete globalCriteria.rangeFilters[clickedCategory].min;
+                    delete globalCriteria.rangeFilters[clickedCategory].max;
 
                 }
 
-                if ( criteria.rangeFilters.length === 0 )
+                if ( globalCriteria.rangeFilters.length === 0 )
                 {
                     $listReset.addClass( "hide" );
                 }
@@ -803,30 +810,29 @@
                 //set the max records limit to 10
                 tempLimit = CONSTANTS.SEARCH_LIMIT;
 
-                bidx.utils.log('Filter clicked with q=', options.q);
-                bidx.utils.log('Filter sort=', options.sort);
-                bidx.utils.log('Filter criteria=', criteria.rangeFilters);
+                bidx.utils.log('Filter clicked with q=', globalCriteria.searchTerm);
+                bidx.utils.log('Filter sort=', globalCriteria.sort);
+                bidx.utils.log('Filter criteria=', globalCriteria.rangeFilters);
 
                 navigate(
                 {
                     state   :   'list'
-                ,   params  :   {
-                                    q               :   options.q
-                                ,   sort            :   options.sort
+                /*,   params  :   {
+                                    q               :   criteria.searchTerm
+                                ,   sort            :   criteria.sort
                                 ,   rangeFilters    :   criteria.rangeFilters
                                 ,   facetFilters    :   criteria.facetFilters
                                 ,   genericFilters  :   criteria.genericFilters
                                 // ,   type        :   'facet'
-                                }
+                                }*/
                 });
             });
 
     }
 
-    function _doRangeCalendarAction( options )
+    function _doRangeCalendarAction( )
     {
-        var criteria    =   options.criteria
-        ,   $calendar   =   $('.facetCalendar')
+        var $calendar   =   $('.facetCalendar')
         ;
 
         $calendar.datepicker()
@@ -862,15 +868,15 @@
 
             if( frmValue && toValue)
             {
-                rangeFilters    =   bidx.utils.getValue( criteria, 'rangeFilters');
+                rangeFilters    =   bidx.utils.getValue( globalCriteria, 'rangeFilters');
 
                 bidx.utils.log('facetFilters', rangeFilters);
-                bidx.utils.log('Criteria before click=', criteria);
+                bidx.utils.log('Criteria before click=', globalCriteria);
                 bidx.utils.log('rangeName=', rangeName);
 
 
-                criteria.rangeFilters[rangeName].min = min;
-                criteria.rangeFilters[rangeName].max = max;
+                globalCriteria.rangeFilters[rangeName].min = min;
+                globalCriteria.rangeFilters[rangeName].max = max;
 
                 //Make offset 0 for filtering so start from begining
                 paging.search.offset = 0;
@@ -878,31 +884,31 @@
                 //set the max records limit to 10
                 tempLimit = CONSTANTS.SEARCH_LIMIT;
 
-                bidx.utils.log('After RangerFilters', criteria);
+                bidx.utils.log('After RangerFilters', globalCriteria);
 
 
 
                 navigate(
                 {
                     state   :   'list'
-                ,   params  :   {
-                                    q               :   options.q
-                                ,   sort            :   options.sort
+                /*,   params  :   {
+                                    q               :   criteria.searchTerm
+                                ,   sort            :   criteria.sort
                                 ,   facetFilters    :   criteria.facetFilters
                                 ,   rangeFilters    :   criteria.rangeFilters
                                 ,   genericFilters  :   criteria.genericFilters
-                                }
+                                }*/
                 });
             }
 
         });
     }
 
-    function _doBooleanAction( options )
+    function _doBooleanAction(  )
     {
-        var criteria    =   options.criteria
-        ,   $booleanSel =   $('input:radio[id^="radioBoolean-"]')
+        var $booleanSel =   $('input:radio[id^="radioBoolean-"]')
         ;
+
         bidx.utils.log('booleansel', $booleanSel);
 
         $booleanSel.change( function( e )
@@ -916,19 +922,19 @@
             if( booleanVal && $input.is(':checked'))
             {
                 bidx.utils.log( 'I am hereee', booleanVal );
-                genericFilters    =   bidx.utils.getValue( criteria, 'genericFilters');
+                genericFilters    =   bidx.utils.getValue( globalCriteria, 'genericFilters');
 
                 bidx.utils.log('genericFilters', genericFilters);
-                bidx.utils.log('Criteria before click=', criteria);
+                bidx.utils.log('Criteria before click=', globalCriteria);
                 bidx.utils.log('rangeName=', booleanName);
 
                 if( booleanVal === 'both')
                 {
-                    delete criteria.genericFilters[ booleanName ];
+                    delete globalCriteria.genericFilters[ booleanName ];
                 }
                 else
                 {
-                    criteria.genericFilters[booleanName ] = booleanVal;
+                    globalCriteria.genericFilters[booleanName ] = booleanVal;
                 }
 
                 //Make offset 0 for filtering so start from begining
@@ -937,18 +943,18 @@
                 //set the max records limit to 10
                 tempLimit = CONSTANTS.SEARCH_LIMIT;
 
-                bidx.utils.log('After genericFilters', criteria);
+                bidx.utils.log('After genericFilters', globalCriteria);
 
                 navigate(
                 {
                     state   :   'list'
-                ,   params  :   {
-                                    q               :   options.q
-                                ,   sort            :   options.sort
+               /* ,   params  :   {
+                                    q               :   criteria.searchTerm
+                                ,   sort            :   criteria.sort
                                 ,   facetFilters    :   criteria.facetFilters
                                 ,   rangeFilters    :   criteria.rangeFilters
                                 ,   genericFilters  :   criteria.genericFilters
-                                }
+                                }*/
                 });
             }
 
@@ -962,10 +968,9 @@
     {
         var snippit         = $("#facetboolean-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $facetType      = $("#facet-type").html().replace(/(<!--)*(-->)*/g, "")
-        ,   response        = options.response
-        ,   criteria        = response.criteria
-        ,   genericFilters  = criteria.genericFilters
-        ,   booleanOptions  = bidx.utils.getValue(response, 'booleanOptions')
+       // ,   criteria        = globalCriteria
+        ,   genericFilters  = globalCriteria.genericFilters
+        ,   booleanOptions  = options.booleanOptions
         ,   $list           = $element.find(".facet-list")
         ,   $filters        =  $('.topfilters')
         ,   $advancedSearch =  $('.advancedFilters')
@@ -1004,7 +1009,7 @@
 
         $filters.empty();*/
 
-        if ( response && booleanOptions )
+        if ( booleanOptions )
         {
             // Add Default image if there is no image attached to the bs
             $.each( booleanOptions , function ( idx, facetItem )
@@ -1032,7 +1037,7 @@
                 $inputBoolean.parent().addClass('checked');
             } );
 
-            _doBooleanAction( options );
+            _doBooleanAction( );
         }
         else
         {
@@ -1045,9 +1050,8 @@
     {
         var snippit         = $("#facet-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $facetType      = $("#facet-type").html().replace(/(<!--)*(-->)*/g, "")
-        ,   response        = options.response
-        ,   criteria        = response.criteria
-        ,   rangeFilters    = bidx.utils.getValue(response.criteria, 'rangeFilters')
+        ,   criteria        = globalCriteria
+        ,   rangeFilters    = bidx.utils.getValue(globalCriteria, 'rangeFilters')
         ,   $list           = $element.find(".facet-list")
         ,   $filters        =  $('.topfilters')
         ,   $advancedSearch =  $('.advancedFilters')
@@ -1084,7 +1088,7 @@
 
         $filters.empty();*/
 
-        if ( response && rangeFilters )
+        if ( rangeFilters )
         {
             // Add Default image if there is no image attached to the bs
             $.each( rangeFilters , function ( facetItem, facetMinMax )
@@ -1135,7 +1139,6 @@
                         ,   facetMinMax:        facetMinMax
                         ,   $currentCategory:   $currentCategory
                         ,   label:              bidx.i18n.i('rangeYearLabel', appName)
-                        ,   options:            options
                         });
                         break;
 
@@ -1149,7 +1152,6 @@
                         ,   facetMinMax:        facetMinMax
                         ,   $currentCategory:   $currentCategory
                         ,   label:              bidx.i18n.i(facetItem + 'PerLabel', appName)
-                        ,   options:            options
                         });
                         break;
 
@@ -1167,7 +1169,6 @@
                         ,   facetMinMax:        facetMinMax
                         ,   $currentCategory:   $currentCategory
                         ,   label:              bidx.i18n.i( facetItem + 'PerLabel', appName )
-                        ,   options:            options
                         });
                         //}
                         break;
@@ -1181,13 +1182,13 @@
 
             if( isSliderAction )
             {
-                _doRangeSliderAction( options );
+                _doRangeSliderAction(  );
 
             }
 
             if( isCalendarAction )
             {
-                _doRangeCalendarAction( options );
+                _doRangeCalendarAction( criteria );
             }
 
             if( $.isFunction( options.cb ) )
@@ -1291,8 +1292,7 @@
         ,   foundMinObj
         ,   foundMaxObj
         ,   label               =   params.label
-        ,   options             =   params.options
-        ,   criteria            =   options.criteria
+        //,   criteria            =   params.criteria
         ,   defaultRange        =   CONSTANTS.RANGEDEFAULT[facetItem]
         ,   defaultMinVal       =   bidx.utils.getValue(defaultRange, '0')
         ,   defaultMaxVal       =   bidx.utils.getValue(defaultRange, '1')
@@ -1450,12 +1450,12 @@
                 ,   min             =   rangeValue[0]
                 ,   max             =   rangeValue[1]
                 ,   rangeName       =   $slider.data('name')
-                ,   rangeFilters    =   bidx.utils.getValue( criteria, 'rangeFilters')
+                ,   rangeFilters    =   bidx.utils.getValue( globalCriteria, 'rangeFilters')
             //    ,   facetFiltersCat =   []
                 ;
 
                 bidx.utils.log('facetFilters', rangeFilters);
-                bidx.utils.log('Criteria before click=', criteria);
+                bidx.utils.log('Criteria before click=', globalCriteria);
                 bidx.utils.log('rangeName=', rangeName);
                 bidx.utils.log('filterValue=', rangeValue);
 
@@ -1475,8 +1475,8 @@
 
                 //facetFiltersCat     =   rangeFilters[rangeName];
 
-                criteria.rangeFilters[rangeName].min = min;
-                criteria.rangeFilters[rangeName].max = max;
+                globalCriteria.rangeFilters[rangeName].min = min;
+                globalCriteria.rangeFilters[rangeName].max = max;
 
                 //Make offset 0 for filtering so start from begining
                 paging.search.offset = 0;
@@ -1484,18 +1484,18 @@
                 //set the max records limit to 10
                 tempLimit = CONSTANTS.SEARCH_LIMIT;
 
-                bidx.utils.log('After RangerFilters', criteria);
+                bidx.utils.log('After RangerFilters', globalCriteria);
 
                 navigate(
                 {
                     state   :   'list'
-                ,   params  :   {
-                                    q               :   options.q
-                                ,   sort            :   options.sort
+                /*,   params  :   {
+                                    q               :   criteria.searchTerm
+                                ,   sort            :   criteria.sort
                                 ,   facetFilters    :   criteria.facetFilters
                                 ,   rangeFilters    :   criteria.rangeFilters
                                 ,   genericFilters  :   criteria.genericFilters
-                                }
+                                }*/
                 });
 
 
@@ -1507,13 +1507,12 @@
     bidxBusinessGroup - 8747 - Cleancookstoves
     */
 
-    function _doFacetListing(options)
+    function _doFacetListing( options )
     {
         var snippit         = $("#facet-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   subsnippit      = $("#facetsub-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $facetType      = $("#facet-type").html().replace(/(<!--)*(-->)*/g, "")
-        ,   criteria        = options.criteria
-        ,   response        = options.response
+        ,   facets          = options.facets
         ,   $mainFacet      = $element.find(".main-facet")
         ,   $resetFacet     = $element.find(".facet-reset")
         ,   $list           = $element.find(".facet-list")
@@ -1554,12 +1553,12 @@
 
         $filters.empty();
 
-        if ( response && response.facets )
+        if ( facets )
         {
             // Add Default image if there is no image attached to the bs
-            facetLength     =   response.facets.length;
+            facetLength     =   facets.length;
 
-            $.each( response.facets , function ( idx, facetItems)
+            $.each( facets , function ( idx, facetItems)
             {
                 finalFacets     =   [];
                 facetValues     =   bidx.utils.getValue( facetItems, "facetValues" );
@@ -1692,7 +1691,7 @@
 
                 var filterValue
                 ,   $facetWrapper       =   $this.parent().parent()
-                ,   facetFilters        =   bidx.utils.getValue( criteria, 'facetFilters')
+                ,   facetFilters        =   bidx.utils.getValue( globalCriteria, 'facetFilters')
                 ,   clickedCategory     =   $facetWrapper.find( ".facet-title" ).data('name')
                 ,   facetFiltersCat     =   []
                 ;
@@ -1700,7 +1699,7 @@
                 filterValue             =   $this.data('value');
 
                 bidx.utils.log('facetFilters', facetFilters);
-                bidx.utils.log('Criteria before click=', criteria);
+                bidx.utils.log('Criteria before click=', globalCriteria);
                 bidx.utils.log('clickedCategory=', $facetWrapper.find('.facet-title').data('name'));
                 bidx.utils.log('filterValue=', filterValue);
                 bidx.utils.log('facetFiltersCat=', facetFiltersCat);
@@ -1712,16 +1711,16 @@
                /* }
                 else
                 {
-                    criteria.facetFilters[clickedCategory] = [];
+                    globalCriteria.facetFilters[clickedCategory] = [];
                 }*/
 
                 if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterValue, facetFiltersCat ) !== -1)
                 {
-                    criteria.facetFilters[clickedCategory] = _.without(facetFiltersCat, filterValue); // removed the match value from criteria, using underscore function make sure its included
+                    globalCriteria.facetFilters[clickedCategory] = _.without(facetFiltersCat, filterValue); // removed the match value from globalCriteria, using underscore function make sure its included
                 }
                 else if ( $.inArray(filterValue, facetFiltersCat ) === -1 )
                 {
-                    criteria.facetFilters[clickedCategory].push( filterValue );
+                    globalCriteria.facetFilters[clickedCategory].push( filterValue );
                 }
 
                 /*// For search filtering add the current filter
@@ -1735,7 +1734,7 @@
                     $resetFacet.addClass( "hide" );
                 }*/
 
-                if ( criteria.facetFilters.length === 0 )
+                if ( globalCriteria.facetFilters.length === 0 )
                 {
                     $resetFacet.addClass( "hide" );
                 }
@@ -1749,17 +1748,17 @@
                 bidx.utils.log('Filter clicked ', filterQuery);
                 bidx.utils.log('Filter clicked with q=', options.q);
                 bidx.utils.log('Filter sort=', options.sort);
-                bidx.utils.log('Filter criteria=', criteria.facetFilters);
+                bidx.utils.log('Filter criteria=', globalCriteria.facetFilters);
 
                 navigate(
                 {
                     state   :   'list'
                 ,   params  :   {
-                                    q               :   options.q
-                                ,   sort            :   options.sort
+                                    /*q               :   criteria.searchTerm
+                                ,   sort            :   criteria.sort
                                 ,   facetFilters    :   criteria.facetFilters
                                 ,   rangeFilters    :   criteria.rangeFilters
-                                ,   genericFilters  :   criteria.genericFilters
+                                ,   genericFilters  :   criteria.genericFilters*/
                                 // ,   type        :   'facet'
                                 }
                 });
@@ -1829,22 +1828,23 @@
     };
 
 
-    function _getSearchCriteria ( params ) {
+    function _getSearchCriteria ( urlParam ) {
 
-        var q
+        var globalSearchTerm
+        ,   globalSort
+        ,   globalFacetFilters
+        ,   globalRangeFilters
+        ,   globalGenericFilters
         ,   sort
-        ,   facetFilters
-        ,   rangeFilters
+
         ,   genericFilters
         ,   criteria
-        ,   criteriaQ
+        ,   searchTerm
         ,   paramFilter
         ,   search
-        ,   sortQuery       = []
-        ,   criteriaFilters = []
-        ,   criteriaSort    = []
+        ,   qString
         ,   filters         = []
-        ,   urlParam        = params.urlParam
+        ,   searchCriteria  = {}
         ;
 
         // 1. Search paramete
@@ -1852,110 +1852,83 @@
         //
         // See if its coming from the search page itself(if) or from the top(else)
         //
-        q = bidx.utils.getValue( params, 'q' );
+        globalSearchTerm = bidx.utils.getValue( globalCriteria, 'searchTerm' );
 
-        if ( !q && urlParam)
+        if ( !globalSearchTerm && urlParam)
         {
+
             var url = document.location.href.split( "#" ).shift();
-            q = bidx.utils.getQueryParameter( "q", url );
+            globalSearchTerm = bidx.utils.getQueryParameter( "q", url );
 
         }
 
-        if ( q !== '*')
+        qString =   globalSearchTerm.replace("basic:", ""); // 'get the string after basic: ex testdata in basic:testdata'
+
+        if ( qString !== '*')
         {
             //$frmSearch.find( "[name='q']" ).val(q);
-            $body.find(".form-q").val(q);
+            $body.find(".form-q").val( qString );
         }
 
-        criteriaQ = (q) ? q  : '*';
+        searchTerm = (qString) ? qString  : '*';
+
 
         // 2. Sort criteria
         // ex sort:["field":"entity", "order": asc ]
         //
-        sort = bidx.utils.getValue( params, 'sort' );
+        globalSort = bidx.utils.getValue( globalCriteria, 'sort' );
 
-        if( sort )
-        {
-            $.each( sort, function( sortField, sortOrder )
-            {
-                criteriaSort.push( {
-                                            "field" : sortField
-                                        ,   "order":  sortOrder
-                                    });
-            } );
-        }
-        else
-        {
-            criteriaSort.push( {
-                                            "field" : "modified"
-                                        ,   "order":  "desc"
-                                    });
-        }
+        sort    =   ( globalSort )  ?   globalSort  :   CONSTANTS.SORTDEFAULT;
 
-
-
-       // filters.push('-facet_entityType:bidxEntrepreneurProfile');
-
-
-        search =    {
-                        q           :   criteriaQ
-                    ,   sort        :   sort
-                    ,   facetFilters:   facetFilters
-                    ,   criteria    :   {
-                                            "searchTerm"    :   "basic:" + criteriaQ
-                                       // ,   "facetFilters"  :   criteriaFilters
-                                        ,   "sort"          :   criteriaSort
-                                        ,   "maxResult"     :   tempLimit
-                                        ,   "offset"        :   paging.search.offset
-                                        ,   "entityType"   :   CONSTANTS.ENTITY_TYPES
-                                        //,   "entityTypes"  :   CONSTANTS.NONTITY_TYPES
-                                        //  ,   "facetsVisible" :   true
-                                        // ,   "scope"         :   "local"
-                                        //,   "filters"       :   filters
-                                        }
-                    };
+        searchCriteria  =   {
+                                searchTerm  :   "basic:" + searchTerm
+                            ,   sort        :   sort
+                            ,   maxResult   :   tempLimit
+                            ,   offset      :   paging.search.offset
+                            ,   entityType  :   CONSTANTS.ENTITY_TYPES
+                            };
 
         // 3. facetFilters
         // ex facetFilters:["0": "facet_language:fi" ]
         //
 
-        facetFilters = bidx.utils.getValue(params, 'facetFilters' );
+        globalFacetFilters = bidx.utils.getValue(globalCriteria, 'facetFilters' );
 
-        if(  facetFilters )
+        if(  globalFacetFilters )
         {
-            criteriaFilters = facetFilters;
-            search.criteria.facetFilters    =   criteriaFilters;
+            searchCriteria.facetFilters    =   globalFacetFilters;
         }
 
         // 4. RangeFilters
         // ex RangeFilters:["0": "facet_language:fi" ]
         //
 
-        rangeFilters = bidx.utils.getValue(params, 'rangeFilters' );
+        globalRangeFilters = bidx.utils.getValue(globalCriteria, 'rangeFilters' );
 
-        if(  rangeFilters )
+        if(  globalRangeFilters )
         {
-            search.criteria.rangeFilters    =  rangeFilters;
+            searchCriteria.rangeFilters    =  globalRangeFilters;
         }
 
-        genericFilters = bidx.utils.getValue(params, 'genericFilters' );
+        globalGenericFilters = bidx.utils.getValue(globalCriteria, 'genericFilters' );
 
-        if(  genericFilters )
+        if(  globalGenericFilters )
         {
-            search.criteria.genericFilters    =  genericFilters;
+            searchCriteria.genericFilters    =  globalGenericFilters;
         }
 
-        return search;
+       // filters.push('-facet_entityType:bidxEntrepreneurProfile');
+
+        return searchCriteria;
 
     }
 
 
     function _getSearchList( options )
     {
-        var search
+        var searchCriteria      =   _getSearchCriteria( options.urlParam )
         ;
 
-        search          =   _getSearchCriteria( options.params );
 
         /*var extraUrlParameters =
         [
@@ -1969,57 +1942,44 @@
             "search.found"
         ,   {
                 groupDomain:          bidx.common.groupDomain
-            ,   data:                 search.criteria
-          //  ,   extraUrlParameters:   extraUrlParameters
-
+            ,   data:                 searchCriteria
             ,   success: function( response )
                 {
+                    var facets          =   bidx.utils.getValue(response, 'facets')
+                    ,   booleanOptions  =   bidx.utils.getValue(response, 'booleanOptions')
+                    ,   sortOptions     =   bidx.utils.getValue(response, 'sortOptions')
+                    ;
+
+                    globalCriteria      =   bidx.utils.getValue(response, 'criteria');
+
                     _doFacetListing(
                     {
-                        response    :   response
-                    ,   q           :   search.q
-                    ,   sort        :   search.sort
-                    ,   criteria    :   response.criteria
+                        facets      :   facets
                     ,   cb          :   function ( )
-                                        {
-                                            _doRangeFilterListing(
-                                            {
-                                                response    :   response
-                                            ,   q           :   search.q
-                                            ,   sort        :   search.sort
-                                            ,   criteria    :   response.criteria
-                                            ,   cb          :   function ()
-                                                                {
-                                                                    _doBooleanFilterListing(
-                                                                    {
-                                                                        response    :   response
-                                                                    ,   q           :   search.q
-                                                                    ,   sort        :   search.sort
-                                                                    ,   criteria    :   response.criteria
-                                                                    })
-                                                                }
-                                            } );
-                                        }
+                        {
+                            _doRangeFilterListing(
+                            {
+                                cb          :   function ( )
+                                                {
+                                                    _doBooleanFilterListing(
+                                                    {
+                                                        booleanOptions: booleanOptions
+                                                    });
+                                                }
+                            } );
+                        }
                     } );
 
                     _doSorting(
                     {
-                        response    :   response
-                    ,   q           :   search.q
+                        sortOptions:    sortOptions
                     } );
 
-                    _doBulk(
-                    {
-                        response    :   response
-                    ,   q           :   search.q
-                    } );
+                    _doBulk( );
 
                     _doSearchListing(
                     {
                         response    :   response
-                    ,   q           :   search.q
-                    ,   sort        :   search.sort
-                    ,   criteria    :   search.criteria
                     ,   cb          :   options.cb
                     } );
 
@@ -2078,7 +2038,7 @@
         ,   initialLoad
         ,   fullName
         ,   nextPageStart
-        ,   criteria        = options.criteria
+        //,   criteria        = options.criteria
         ,   data            = options.response
         ,   $list           = $views.find( ".search-list" )
         ,   $listEmpty      = $("#search-empty").html().replace(/(<!--)*(-->)*/g, "")
@@ -2119,14 +2079,14 @@
 
                      _getSearchList(
                     {
-                        params  :   {
+                        /*params  :   {
                                         q               :   options.q
                                     ,   sort            :   options.sort
                                     ,   facetFilters    :   criteria.facetFilters
                                     ,   rangeFilters    :   criteria.rangeFilters
                                     ,   genericFilters  :   criteria.genericFilters
-                                    }
-                    ,   cb      :   function()
+                                    }*/
+                        cb      :   function()
                                     {
                                         _toggleListLoading( $element );
                                         _hideView( "load" );
@@ -2165,7 +2125,6 @@
                             showMemberProfile(
                                 {
                                     response : response
-                               // ,   criteria : data.criteria
                                 ,   cb       : options.cb
                                 } );
 
@@ -2176,54 +2135,6 @@
                             showEntity(
                             {
                                 response : response
-                           // ,   criteria : data.criteria
-                            ,   cb       : options.cb
-
-                            } );
-
-                        break;
-
-                        /* Initial load exclude investor,entrprneur and mentor profile so profile display is not duplicated , ex Altaf is member , entrprenneur and mentor too so dont need to display mentor/entrepreneur profile
-                           Or first time only it returned one result of entrprneeur, Ex search on summary thats written in entrpreneur profile so it returns entpreneur profile and it should be displyaed*/
-                        case 'bidxInvestorProfile':
-                            //response.entityType = 'bidxMemberProfile';
-                            if ( options.criteria.facetFilters.length !== 0 || data.total === 1 )
-                            {
-                                showMemberProfile(
-                                {
-                                    response : response
-                                //,   criteria : data.criteria
-                                ,   cb       : options.cb
-                                } );
-                            }
-                            else
-                            {
-                                initialLoad = true;
-                            }
-
-                        break;
-
-
-
-
-                        case 'bidxCompany':
-
-                           showEntity(
-                            {
-                                response : response
-                            //,   criteria : data.criteria
-                            ,   cb       : options.cb
-
-                            } );
-
-                        break;
-
-                        case 'bidxBusinessGroup':
-
-                           showEntity(
-                            {
-                                response : response
-                           // ,   criteria : data.criteria
                             ,   cb       : options.cb
 
                             } );
@@ -2234,19 +2145,6 @@
 
                         break;
                     }
-
-                    /*if ( initialLoad )
-                    {
-                        CONSTANTS.LOAD_COUNTER ++;
-
-                        if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
-                        {
-                            if( $.isFunction( options.cb ) )
-                            {
-                                options.cb();
-                            }
-                        }
-                    }*/
                 });
             }
         }
@@ -2723,14 +2621,14 @@
                 _showAllView( "sort" );
                 _toggleListLoading( $element );
 
-                bidx.utils.setValue( params, 'urlParam', true );
+               // bidx.utils.setValue( params, 'urlParam', true );
 
                 // load businessSummaries
                 //
                 _init();
                 _getSearchList(
                 {
-                    params      :   params
+                    urlParam      :   true
                 ,   cb          :   function()
                     {
                        _hideView( "load" );
