@@ -2,42 +2,39 @@
 
 <div id="searchHome" class="top-margin-lineheight">
 
-    <div class="searchcontrol bg-primary-darker">
-        <div class="search">
-            <form action="" class="searchform">
-                <div class="input-group">
-                    <input type="text" class="form-control form-q" name="q" placeholder="<?php _e("Search","bidxplugin");?>" value="">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <div class="row">
          <section class="views">
             <div class="col-sm-4">
                 <form action="" class="filtersform">
                     <div class="side-bar well sideBar main-facet">
                         <article class="viewFacet">
-                            <div class="facet-reset">
-                                <a data-filter="save"  class="anchor-save btn btn-block btn-success hide"><span class="fa fa-plus"></span> <?php _e('Save this search', 'bidxplugin');?></a>
-                                <a data-filter="reset" class="anchor-reset btn btn-block btn-danger"><?php _e("Clear all filters", "bidxplugin");?></a>
-
-
-                            </div>
                              <div class="facet-list">
-
                                 <?php _e('Rendering facets...', 'bidxplugin');?>
                              </div>
+                             <div class="facet-reset">
+                                <a data-filter="save"  class="clearboth anchor-save btn btn-block btn-success hide"><span class="fa fa-plus"></span> <?php _e('Save this search', 'bidxplugin');?></a>
+                                <a data-filter="reset" class="clearboth anchor-reset btn btn-block btn-danger"><?php _e("Clear all filters", "bidxplugin");?></a>
+                            </div>
                         </article>
                     </div>
                 </form>
             </div>
+
             <div class="col-sm-8">
+                <div class="searchcontrol bg-primary-darker">
+                    <div class="search">
+                        <form action="" class="searchform">
+                            <div class="input-group">
+                                <input type="text" class="form-control form-q" name="q" placeholder="<?php _e("Search","bidxplugin");?>" value="">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                  <div>
                     <!-- Tab panes -->
                     <div class="tab-content">
@@ -156,7 +153,7 @@
         </script>
         <!-- Html Templates for Category results -->
         <script type="text/html" id="facetsub-listitem">
-            <a data-value="%facetValues_name%" data-filter="%filterQuery%" class="list-group-item filter">
+            <a data-value="%facetValues_name%" data-filter="%filterQuery%" class="list-group-item filter facetsub-%facetValues_name%">
                 <span class="view viewClose"><i class="fa fa-times text-success"></i></span>
                 <span class="badge">%facetValues_count%</span>
                 %facets_title%

@@ -1547,6 +1547,7 @@
         ,   topFacets       =   []
         ,   bottomFacets    =   []
         ,   finalFacets     =   []
+        ,   tempFacetValues =   []
         ;
 
         $list.empty();
@@ -1563,6 +1564,13 @@
                 finalFacets     =   [];
                 facetValues     =   bidx.utils.getValue( facetItems, "facetValues" );
                 facetLabel      =   bidx.i18n.i( facetItems.name, appName );
+
+                if( facetItems.name === 'entityType')
+                {
+                    tempFacetValues[0]     =   _.findWhere( facetValues, { name: 'bdxplan'} );
+                    tempFacetValues[1]     =   _.findWhere( facetValues, { name: 'bdxmember'} );
+                    facetValues            =   tempFacetValues;
+                }
 
                 if ( !$.isEmptyObject(facetValues) )
                 {
