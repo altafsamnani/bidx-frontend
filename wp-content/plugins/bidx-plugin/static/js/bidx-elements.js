@@ -1067,7 +1067,7 @@
         var $businessLink;
 
         $businessLink =
-            $( "<a />", { "href": bidx.common.url('member') + entityid } )
+            $( "<a />", { "href": bidx.common.url('businesssummary') + entityid } )
             .append
             (
                 $( "<strong />", { "html": bidx.common.tmpData.businesses[entityid].name } )

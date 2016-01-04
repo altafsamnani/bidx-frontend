@@ -1,3 +1,4 @@
+
 ;( function ( $ )
 {
     "use strict";
@@ -331,12 +332,22 @@
         requests = {}; // Empty the "requests" object
     };
 
-    var showUserBusinesses = function ( ownBs )
+    var showUserBusinesses = function ( ownBs, id)
     {
+        var $el;
+
+        if (id)
+        {   
+            var selector = "#js-activities-" + id;
+            $el = $( selector ).first();
+        }
+        else 
+        {
+            $el = $( ".js-activities" ).first();
+        }
+
         $.each( ownBs, function( i, bs )
         {
-            var $el = $( ".js-activities" ).first();
-
             $el
                 .append
                 (
@@ -357,7 +368,6 @@
                     bidx.construct.actionMessage( bidx.common.tmpData.businesses[bs], "business" )
                 ,   bidx.construct.businessLink( bidx.common.tmpData.businesses[bs].bidxMeta.bidxEntityId )
                 );
-
         });
 
         ownBs = []; // Empty the "ownBs" array

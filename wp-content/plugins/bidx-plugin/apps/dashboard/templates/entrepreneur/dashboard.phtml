@@ -11,14 +11,21 @@
             <div class="col-sm-3 tabs-nav">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs tabs-left">
-                    <li class="active"><a href="#tab-businesses" data-toggle="tab"><?php _e('My business plan','bidxplugin');?></a></li>
+                    <li class="active"><a href="#tab-recommended-mentors" data-toggle="tab"><?php _e('Recommended mentors','bidxplugin');?></a></li>
+                    <li><a href="#tab-businesses" data-toggle="tab"><?php _e('My business plan','bidxplugin');?></a></li>
                     <li><a href="#tab-companies" data-toggle="tab"><?php _e('My Companies','bidxplugin');?></a></li>
                     <li><a href="#tab-groups" data-toggle="tab"><?php _e('Joined Portals','bidxplugin');?></a></li>
                 </ul>
             </div>
             <div class="col-sm-9 tabs-content">
                 <div class="tab-content">
-                    <div class="tab-pane active" id="tab-businesses">
+                    <div class="tab-pane active" id="tab-recommended-mentors">
+                        <div class="view viewLoadrecmentors alert alert-info text-center">
+                            <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Loading', 'bidxplugin') ?>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="tab-businesses">
                         <div class="view viewLoad alert alert-info text-center">
                             <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Loading', 'bidxplugin') ?>
                         </div>
@@ -31,7 +38,7 @@
                     </div>
 
                     <div class="tab-pane" id="tab-groups">
-                        <div class="view viewLoadGroups alert alert-info text-center">
+                        <div class="view viewLoadgroups alert alert-info text-center">
                             <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Loading', 'bidxplugin') ?>
                         </div>
                     </div>
@@ -40,6 +47,63 @@
         </div>
     </div>
 </div>
+
+
+        <script type="text/html" id="member-profile-listitem">   <!--
+            <div class="cardView">
+                <div class="cardHeader hide-overflow">
+                    <div class="info-cell pull-left"><?php echo _e( 'Last update', 'bidxplugin' ); ?>: %modified%</div>
+                    <button class="btn btn-mentor btn-xs pull-right info-action main-margin-half" data-btn="requestMentoringRec" id="%userId%" data-ownerid="%userId%"><i class="fa fa-compass"></i><?php _e('Request mentoring','bidxplugin');?></button>
+                    <a href="<?php echo _l('member');?>/%userId%" class="btn btn-primary btn-xs pull-right info-action main-margin-half"><?php echo _e( 'View Member', 'bidxplugin' ); ?> </a>
+                </div>
+                <div class="cardContent main-padding">
+                    <div class="cardTop">
+                        <div class="row">
+                            <div class="col-sm-1 hide">
+                                <div class="checkbox">
+                                    <input type="checkbox" data-name = "%name%" value="%userId%" id="checkbox-%userId%" name="actionRecord" />
+                                    <label for="checkbox-%userId%"><span></span></label>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="pull-left main-margin-half" href="<?php echo _l('member');?>/%userId%" data-role='memberImage'>
+                                    <div class="icons-rounded"><i class="fa fa-user text-primary-light"></i></div>
+                                </a>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h3 class="top-0 pull-left">%name%</h3>
+                                        <div class="">
+                                            <span class="label bidx-label bidx-entrepreneur">%role_entrepreneur%</span>
+                                            <span class="label bidx-label bidx-mentor">%role_mentor%</span><i class="fa fa-mentor"></i>
+                                            <span class="label bidx-label bidx-investor">%role_investor%</span><i class="fa fa-investor"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="view viewProfessionalTitle"><span class="bs-slogan">%professionalTitle%</span></h4>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-condensed table-bottom-border">
+                                            <tbody>
+                                                <tr class="view viewMotherTongue"><td><?php _e('Mothertongue', 'bidxplugin');?></td><td>%mothertongue%</td></tr>
+                                                <tr class="view viewLangauge"><td><?php _e('Languages spoken', 'bidxplugin');?></td><td>%language%</td></tr>
+                                                <tr class="view viewHighestEducation"><td><?php _e('Highest education', 'bidxplugin');?></td><td>%highestEducation%</td></tr>
+                                                <tr class="view viewCountry"><td><?php _e('Place', 'bidxplugin');?></td><td>%city%%country%</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="js-activities-%userId%"></div>
+                <div class="cardFooter"></div>
+            </div>
+            -->
+        </script>
+
 
 <script type="text/html" id="entrepreneur-investorsitem">
     <!--

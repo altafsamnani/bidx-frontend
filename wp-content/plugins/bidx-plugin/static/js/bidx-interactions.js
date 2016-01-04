@@ -382,6 +382,40 @@
         } );
     });
 
+    $(document).on('click', '*[data-btn="requestMentoringRec"]', function ( e )
+    {
+        var $el = $( this )
+        ,   ownBs = []
+        ,   id = Number(this.id)
+        ;
+
+        $el.addClass( "disabled" );
+
+        $.each( ownedBusinesses, function( i, bs )
+        {
+            if ( bidx.common.checkBusinessExists( bs ) )
+            {
+                ownBs.push( bs );
+            }
+        });
+
+        if ( ownBs.length )
+        {
+            //we use global data saved previously in entrepreneur-dashboard.js
+            $.each( bidx.common.mentoringrequests, function ( i, res )
+            {
+                if (  $.inArray( res.entityId, ownBs) !== -1 && ( res.initiatorId === id || res.mentorId === id ) )
+                {
+                    ownBs.splice($.inArray(res.entityId, ownBs),1);
+                }
+            });
+
+            bidx.commonmentordashboard.showUserBusinesses( ownBs, id );
+            bidx.commonmentordashboard.checkForActivities();
+        }
+
+    });
+
     $(document).on('click', '*[data-btn="requestMentoring"]', function ( e )
     {
         var $el = $( this )
@@ -432,6 +466,14 @@
         params.entityId = getBsId( this );
         params.initiatorId = parseInt(currentUserId, 10);
         params.mentorId = ownerId;
+
+        //if we request mentoring from entr dashboard, get the mentor id from the disabled button
+        if (!params.mentorId)
+        {
+            params.mentorId = $(".btn.btn-mentor.disabled").attr("id");
+        }
+
+        bidx.utils.log("params!!! ", params);
 
         bidx.commonmentordashboard.doCreateMentorRequest(
         {

@@ -176,6 +176,30 @@
         return tmp;
     }
 
+    // Convenience function for translating a language key to it's description
+    //
+    function getLanguageLabelByValue( value )
+    {
+        var label
+        ,   languages
+        ;
+
+        bidx.data.getContext( "language", function( err, data )
+        {
+            languages = data;
+        });
+
+        $.each( languages, function( i, item )
+        {
+            if ( item.value === value )
+            {
+                label = item.label;
+            }
+        } );
+
+        return label;
+    }
+
     // Convenience function for retrieving the id of the current group
     //
     function getCurrentGroupId()
@@ -1971,6 +1995,7 @@
     ,   getMembersSummaries:            getMembersSummaries
     ,   getAccreditation:               getAccreditation
     ,   getAccreditationAuthItems:      getAccreditationAuthItems
+    ,   getLanguageLabelByValue:        getLanguageLabelByValue
     ,   isGroupAdmin:                   isGroupAdmin
     ,   getSessionValue:                getSessionValue
     ,   getNow:                         getNow
