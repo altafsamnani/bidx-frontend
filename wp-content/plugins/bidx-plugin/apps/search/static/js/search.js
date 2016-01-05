@@ -1697,29 +1697,28 @@
                 $this           = $( this );
                 filterQuery     = {};
 
-                var filterValue
+                var filterValue         =   $this.data('value')
                 ,   $facetWrapper       =   $this.parent().parent()
                 ,   facetFilters        =   bidx.utils.getValue( globalCriteria, 'facetFilters')
                 ,   clickedCategory     =   $facetWrapper.find( ".facet-title" ).data('name')
                 ,   facetFiltersCat     =   []
+                ,   callSearchAction    =   true
                 ;
 
-                filterValue             =   $this.data('value');
-
-                bidx.utils.log('facetFilters', facetFilters);
-                bidx.utils.log('Criteria before click=', globalCriteria);
-                bidx.utils.log('clickedCategory=', $facetWrapper.find('.facet-title').data('name'));
-                bidx.utils.log('filterValue=', filterValue);
-                bidx.utils.log('facetFiltersCat=', facetFiltersCat);
+                bidx.utils.log('globalCriteria before click=', globalCriteria);
 
                 facetFiltersCat     =   facetFilters[clickedCategory];
 
-
-                if ( $this.hasClass( "list-group-item-success" ) &&
-                     $.inArray( filterValue, facetFiltersCat ) !== -1 &&
-                     clickedCategory !== 'entityType' )
+                if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterValue, facetFiltersCat ) !== -1)
                 {
-                    globalCriteria.facetFilters[clickedCategory] = _.without(facetFiltersCat, filterValue); // removed the match value from globalCriteria, using underscore function make sure its included
+                    if( clickedCategory !== 'entityType' )
+                    {
+                        globalCriteria.facetFilters[clickedCategory] = _.without(facetFiltersCat, filterValue); // removed the match value from globalCriteria, using underscore function make sure its included
+                    }
+                    else
+                    {
+                        callSearchAction    =    false; //To radio button effect and already selected so disable click
+                    }
                 }
                 else if ( $.inArray(filterValue, facetFiltersCat ) === -1 )
                 {
@@ -1732,42 +1731,35 @@
                     globalCriteria.facetFilters[clickedCategory].push( filterValue );
                 }
 
-                /*// For search filtering add the current filter
-                if( filterQuery === 'reset' && !$resetFacet.hasClass('hide'))
+                if( callSearchAction )
                 {
-                    criteria.facetFilters = [];
-                    options.q        = '';
-                    options.sort     = [];
-                    bidx.controller.updateHash( "#search/list" );
+                    if ( globalCriteria.facetFilters.length === 0 )
+                    {
+                        $resetFacet.addClass( "hide" );
+                    }
 
-                    $resetFacet.addClass( "hide" );
-                }*/
+                    //Make offset 0 for filtering so start from begining
+                    paging.search.offset = 0;
 
-                if ( globalCriteria.facetFilters.length === 0 && clickedCategory !== 'entityType')
-                {
-                    $resetFacet.addClass( "hide" );
+                    //set the max records limit to 10
+                    tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+                    bidx.utils.log('Filter criteria=', globalCriteria);
+
+                    navigate(
+                    {
+                        state   :   'list'
+                    ,   params  :   {
+                                        /*q               :   criteria.searchTerm
+                                    ,   sort            :   criteria.sort
+                                    ,   facetFilters    :   criteria.facetFilters
+                                    ,   rangeFilters    :   criteria.rangeFilters
+                                    ,   genericFilters  :   criteria.genericFilters*/
+                                    // ,   type        :   'facet'
+                                    }
+                    });
                 }
 
-                //Make offset 0 for filtering so start from begining
-                paging.search.offset = 0;
-
-                //set the max records limit to 10
-                tempLimit = CONSTANTS.SEARCH_LIMIT;
-
-                bidx.utils.log('Filter criteria=', globalCriteria);
-
-                navigate(
-                {
-                    state   :   'list'
-                ,   params  :   {
-                                    /*q               :   criteria.searchTerm
-                                ,   sort            :   criteria.sort
-                                ,   facetFilters    :   criteria.facetFilters
-                                ,   rangeFilters    :   criteria.rangeFilters
-                                ,   genericFilters  :   criteria.genericFilters*/
-                                // ,   type        :   'facet'
-                                }
-                });
             });
 
 
