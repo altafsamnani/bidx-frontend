@@ -154,8 +154,50 @@
                                         return _.indexOf(tag.groups, currentGroup) !== -1;
                                     });
         }
-        bidx.utils.log('existingTags', existingTags);
+
         return existingTags;
+    }
+
+    function getAccreditationAuthItems( req, authItems )
+    {
+        var tmp;
+
+        $.each( authItems, function( id, item )
+        {
+            $.each( item.authorizations, function( id, auth )
+            {
+                if ( req.request.mentorId === auth.user.id )
+                {
+                    tmp = auth.user;
+                }
+            });
+        });
+
+        return tmp;
+    }
+
+    // Convenience function for translating a language key to it's description
+    //
+    function getLanguageLabelByValue( value )
+    {
+        var label
+        ,   languages
+        ;
+
+        bidx.data.getContext( "language", function( err, data )
+        {
+            languages = data;
+        });
+
+        $.each( languages, function( i, item )
+        {
+            if ( item.value === value )
+            {
+                label = item.label;
+            }
+        } );
+
+        return label;
     }
 
     // Convenience function for retrieving the id of the current group
@@ -1952,6 +1994,8 @@
     ,   getMemberInfo:                  getMemberInfo
     ,   getMembersSummaries:            getMembersSummaries
     ,   getAccreditation:               getAccreditation
+    ,   getAccreditationAuthItems:      getAccreditationAuthItems
+    ,   getLanguageLabelByValue:        getLanguageLabelByValue
     ,   isGroupAdmin:                   isGroupAdmin
     ,   getSessionValue:                getSessionValue
     ,   getNow:                         getNow

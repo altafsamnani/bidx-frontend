@@ -7,6 +7,7 @@
     ,   $tabBusinesses      =   $element.find( "#tab-businesses" )
     ,   $tabCompanies       =   $element.find( "#tab-companies" )
     ,   $tabGroups          =   $element.find( "#tab-groups" )
+    ,   $tabRecMentors      =   $element.find( "#tab-recommended-mentors" )
     ,   $tabInvestors       =   $element.find( "#tab-interested-investors" )
     ,   $tabMentors         =   $element.find( "#tab-interested-mentors" )
     ,   $firstPage          =   $element.find( "input[name='firstpage']" )
@@ -35,6 +36,245 @@
         }
     };
 
+    var populateRecMentors = function ( response )
+    {
+        var $listItem
+        ,   listItem
+        ,   conditionalElementArr
+        ,   $entityElement          = $("#member-profile-listitem")
+        ,   snippit                 = $entityElement.html().replace(/(<!--)*(-->)*/g, "")
+        ,   i18nItem
+        ,   emptyVal                =   ''
+        ,   $elImage                = $entityElement.find( "[data-role = 'memberImage']" )
+        ,   allLanguages            = ''
+        ,   montherLanguage         = ''
+        ,   country                 = ''
+        ,   industry                = ''
+        ,   isGroupAdmin            = bidx.common.isGroupAdmin()
+        ,   image
+        ,   imageWidth
+        ,   imageLeft
+        ,   imageTop
+        ,   highestEducation
+        ,   gender
+        ,   isEntrepreneur
+        ,   isInvestor
+        ,   investorMemberId
+        ,   isMentor
+        ,   cityTown
+        ,   sepCountry
+        ,   memberCountry
+        ,   entrpreneurFocusIndustry
+        ,   tagging
+        ,   taggingMentor
+        ,   taggingInvestor
+        ,   mentorTaggingId
+        ,   investorTaggingId
+        ,   roles
+        ,   loggedInMemberId = bidx.common.getCurrentUserId()
+        ,   currentInvestorId = bidx.common.getInvestorProfileId()
+        ,   displayInvestorProfile  = ( $.inArray("GroupOwner", roles) !== -1 || $.inArray("GroupAdmin", roles) !== -1 || currentInvestorId ) ? true : false
+        ;
+
+        $.each (response.found, function(i, item){
+
+            i18nItem        =   item.member;
+            roles           = bidx.utils.getValue( i18nItem, "roles" );
+            isEntrepreneur  = ( $.inArray("entrepreneur", roles) !== -1 ) ? true : false;
+            isMentor        = ( $.inArray("mentor", roles) !== -1 ) ? true : false;
+            isInvestor      = ( $.inArray("investor", roles) !== -1 ) ? true : false;
+
+            investorMemberId = bidx.utils.getValue( i18nItem, "userId" );
+            // cityTown         = bidx.utils.getValue( i18nItem, "cityTown");
+            memberCountry    = bidx.utils.getValue( i18nItem, "country");
+            tagging          = bidx.common.getAccreditation( i18nItem );
+
+            // Member Role
+            //
+            if(i18nItem.highestEducation)
+            {
+                bidx.data.getItem(i18nItem.highestEducation, 'education', function(err, label)
+                {
+                    highestEducation = label;
+                });
+            }
+            if(i18nItem.gender)
+            {
+
+                bidx.data.getItem(i18nItem.gender, 'gender', function(err, labelGender)
+                {
+                    gender = labelGender;
+                });
+            }
+            if(memberCountry)
+            {
+
+                bidx.data.getItem(memberCountry, 'country', function(err, labelCountry)
+                {
+                    sepCountry =  (cityTown) ? ', ' : '';
+                    country    =  sepCountry + labelCountry;
+                });
+            }
+
+            // Language is handled specially
+            //
+            var languageDetail      = bidx.utils.getValue( i18nItem, "language", true );
+
+    
+            if ( languageDetail )
+            {
+                var     sep             = ''
+                ,   langLength      = languageDetail.length
+                ,   langLabel       = ''
+                ,   langCount       = 1
+                ;
+
+                $.each( languageDetail, function( i, langObj )
+                {
+                    langCount++;
+                    langLabel = bidx.common.getLanguageLabelByValue( langObj );
+                    allLanguages +=  sep + langLabel;
+                    sep           = (langCount !== langLength) ? ', ' : ' and ';
+
+                } );
+            }
+
+            if(i18nItem.motherLanguage)
+            {
+                montherLanguage =  bidx.common.getLanguageLabelByValue( i18nItem.motherLanguage );
+            }
+    
+            entrpreneurFocusIndustry = bidx.utils.getValue( i18nItem, "bidxEntrepreneurProfile.focusIndustry");
+            if(entrpreneurFocusIndustry)
+            {
+                bidx.data.getItem(entrpreneurFocusIndustry, 'industry', function(err, focusIndustry)
+                {
+                    industry = bidx.i18n.i( 'interestedIn', appName ) + ': ' + focusIndustry;
+                });
+            }
+
+            // search for placeholders in snippit
+            //
+            listItem = snippit
+                .replace( /%userId%/g,              i18nItem.userId )
+                .replace( /%name%/g,                i18nItem.name )
+                .replace( /%modified%/g,            i18nItem.modified  ? bidx.utils.parseISODateTime(i18nItem.modified, "date") : emptyVal )
+                .replace( /%professionalTitle%/g,   i18nItem.title   ? i18nItem.title     : emptyVal )
+                .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
+                .replace( /%role_investor%/g,       ( isInvestor && displayInvestorProfile )      ? bidx.i18n.i( 'investor' )   : '' )
+                .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
+                .replace( /%gender%/g,              i18nItem.gender   ? gender    : emptyVal )
+                .replace( /%highestEducation%/g,    i18nItem.highestEducation   ? highestEducation    : emptyVal )
+                .replace( /%language%/g,            allLanguages )
+                .replace( /%mothertongue%/g,        montherLanguage )
+                .replace( /%city%/g,                ( cityTown ) ? cityTown : emptyVal )
+                .replace( /%country%/g,             ( country )  ? country : emptyVal )
+                .replace( /%interest%/g,            industry )
+                ;
+
+            $listItem     = $(listItem);
+
+            var roleLabel = $listItem.find( ".bidx-label" );
+            $.each( roleLabel, function( index, val )
+            {
+                if ( $(this).text() === "" )
+                {
+                    $(this).remove();
+                }
+            });
+
+            /* tagging */
+            if(isMentor)
+            {
+                mentorTaggingId     =   'hide';
+                taggingMentor       =   bidx.utils.getValue(tagging, 'mentor' );
+
+                if( !_.isUndefined(taggingMentor) )
+                {
+                    mentorTaggingId     =   (taggingMentor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
+                }
+
+                $listItem.find('.fa-mentor').addClass( mentorTaggingId );
+            }
+            if( ( isInvestor && isGroupAdmin) || ( investorMemberId === loggedInMemberId ) )
+            {
+                investorTaggingId   =   'hide';
+                taggingInvestor     =   bidx.utils.getValue(tagging, 'investor' );
+
+                if( !_.isUndefined(taggingInvestor) )
+                {
+                    investorTaggingId   =   (taggingInvestor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
+                }
+
+                $listItem.find('.fa-investor').addClass( investorTaggingId );
+            }
+
+            // Member Image
+            //
+            image       = bidx.utils.getValue( i18nItem, "picture.url" );
+
+            if (image)
+            {
+                imageWidth  = bidx.utils.getValue( i18nItem, "picture.width" );
+                imageLeft   = bidx.utils.getValue( i18nItem, "picture.left" );
+                imageTop    = bidx.utils.getValue( i18nItem, "picture.top" );
+                $listItem.find( "[data-role = 'memberImage']" ).html( '<div class="img-cropper"><img src="' + image + '" style="width:'+ imageWidth +'px; left:-'+ imageLeft +'px; top:-'+ imageTop +'px;" alt="" /></div>' );
+
+            }
+
+            conditionalElementArr =
+            {
+                'professionalTitle' :   'title'
+            ,   'gender'            :   'gender'
+            ,   'motherTongue'      :   'motherLanguage'
+            ,   'langauge'          :   'language'
+            ,   'highestEducation'  :   'highestEducation'
+            ,   'country'           :   'country'
+            };
+
+            $.each(conditionalElementArr, function(clsKey, clsVal)
+            {
+                var itemRow = bidx.utils.getValue( i18nItem, clsVal );
+                if ( itemRow )
+                {
+                    $listItem.find(bidx.utils.getViewName(clsKey)).show();
+                }
+            });
+
+            $tabRecMentors.append( $listItem );
+        });
+
+        _hideView('loadrecmentors');
+
+    }
+
+    var showRecMentors = function()
+    {
+        var item;
+
+        bidx.api.call(
+            "search.found"
+        ,   {
+                groupDomain: bidx.common.groupDomain
+            ,   data: {
+                          "searchTerm"    :   "basic: \"roberts\""
+                      ,   "sort"          :   []
+                      ,   "maxResult"     :   10
+                      ,   "offset"        :   0
+                      ,   "entityType"    :   ["bdxmember"]
+                      }
+            ,   success: function(response)
+                {
+                    populateRecMentors(response);
+                }
+            ,   error: function(jqXhr, textStatus)
+                {
+                    bidx.utils.log("error", jqXhr);
+                }
+            }
+        );
+    }
+
     var showGroups = function()
     {
         var groups = bidxConfig.session.groups
@@ -45,6 +285,8 @@
         {
             $tabGroups.append(bidx.construct.groupCardView(groups[key]));
         }
+
+        _hideView('loadgroups');
     }
 
     //public functions
@@ -128,8 +370,6 @@
 
                     }
 
-
-
                     _hideView('loadcompanies');
                 }
 
@@ -182,7 +422,7 @@
                             )
                             .append
                             (
-                                bidx.construct.memberLink( auth.user.id )
+                                bidx.construct.memberLink( auth.user.id, auth.user )
                             ,   bidx.construct.actionMessage( auth, "investor" )
                             );
                     }
@@ -254,18 +494,18 @@
 
     var _showView = function(view, showAll)
     {
-
         //  show title of the view if available
         if (!showAll)
         {
             $views.hide();
         }
-         var $view = $views.filter(bidx.utils.getViewName(view)).show();
+
+        var $view = $views.filter(bidx.utils.getViewName( view )).show();
     };
 
     var _hideView = function(view, showAll)
     {
-         var $view = $views.filter(bidx.utils.getViewName(view)).hide();
+        var $view = $views.filter(bidx.utils.getViewName(view)).hide();
     };
 
     // var _showMainView = function(view, hideview)
@@ -333,7 +573,8 @@
                 bidx.commonmentordashboard.getMentoringRequest()
                 .then( function (requests )
                 {
-                    bidx.commonmentordashboard.checkMentoringRelationship( requests, "mentor", userBsArray );
+                    bidx.common.mentoringrequests = requests;
+                    bidx.commonmentordashboard.checkMentoringRelationship( requests, "mentor", userBsArray, authItems );
                 });
             });
         });
@@ -346,8 +587,17 @@
         fetchCompanies();
     }
 
+    if ( $tabRecMentors.length )
+    {
+        _showView('loadrecmentors', true);
+
+        showRecMentors();
+    }
+
     if ( $tabGroups.length )
     {
+        _showView('loadgroups', true);
+
         showGroups();
     }
 

@@ -1,24 +1,22 @@
-# _e("","i18n");
-# Context  Textdomain i18n
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: P4\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Altaf <altaf@bidx.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=UTF-8\nÓ
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.5\n"
+"X-Generator: Poedit 1.6.4\n"
 
 # Language Original
 # _x("Select the reason for submission", "businesssummary","i18n");
 # Context businesssummary TextDomain i18n
 msgctxt "auth"
 msgid "Select what best matches your reason for submission"
-msgstr "SÃ©lectionner la raison pour laquelle vous soumissionnez "
+msgstr "Sélectionner la raison pour laquelle vous soumissionnez "
 
 # _x("Please check one of the above", "member","i18n");
 # Context member TextDomain i18n
@@ -30,13 +28,13 @@ msgstr "Veuillez cocher une des cases ci-dessus"
 # Context member TextDomain i18n
 msgctxt "auth"
 msgid "Select an Option"
-msgstr "SÃ©lectionner une option"
+msgstr "Sélectionner une option"
 
 # _x("Current year", "businesssummary","i18n");
 # Context businesssummary TextDomain i18n
 msgctxt "businesssummary"
 msgid "Current year"
-msgstr "AnnÃ©e courante"
+msgstr "Année courante"
 
 # _x("Actuals", "businesssummary","i18n");
 # Context businesssummary TextDomain i18n
@@ -54,7 +52,7 @@ msgstr "Projection"
 # Context businesssummary TextDomain i18n
 msgctxt "businesssummary"
 msgid "%count% matches found"
-msgstr "%count% rÃ©sultats trouvÃ©s"
+msgstr "%count% résultats trouvés"
 
 # _x("Rating (%d vote)", "businesssummary","i18n");
 # Context businesssummary TextDomain i18n
@@ -72,7 +70,7 @@ msgstr "Evaluation (%d votes)"
 # Context businesssummary TextDomain i18n
 msgctxt "businesssummary"
 msgid "Your rating"
-msgstr "Votre Ã©valuation"
+msgstr "Votre évaluation"
 
 # _x("Rate this plan", "businesssummary","i18n");
 # Context businesssummary TextDomain i18n
@@ -87,26 +85,26 @@ msgid ""
 "You are about to delete this business and lose all its content. This action "
 "is irreversible. Are you sure?"
 msgstr ""
-"Vous Ãªtes sur le point de supprimer ce / ces message(s). ÃŠtes-vous sÃ»r de "
+"Vous êtes sur le point de supprimer ce / ces message(s). Êtes-vous sûr de "
 "vouloir le faire ?"
 
 # _x("Comment saved", "commenting","i18n");
 # Context commenting TextDomain i18n
 msgctxt "commenting"
 msgid "Comment saved"
-msgstr "Commentaire enregistrÃ©"
+msgstr "Commentaire enregistré"
 
 # _x("General", "mentor","i18n");
 # Context TextDomain i18n
 msgctxt "commenting"
 msgid "General comment"
-msgstr "Observation gÃ©nÃ©rale"
+msgstr "Observation générale"
 
 # _x("General overview section", "mentor","i18n");
 # Context  TextDomain i18n
 msgctxt "commenting"
 msgid "General overview section"
-msgstr "Section des prÃ©sentations gÃ©nÃ©rales"
+msgstr "Section des présentations générales"
 
 # _x("About the business section", "mentor","i18n");
 # Context  TextDomain i18n
@@ -118,25 +116,25 @@ msgstr "A propos de l'affaire"
 # Context  TextDomain i18n
 msgctxt "commenting"
 msgid "About the team section"
-msgstr "A propos de l'Ã©quipe"
+msgstr "A propos de l'équipe"
 
 # _x("Financial section", "mentor","i18n");
 # Context  TextDomain i18n
 msgctxt "commenting"
 msgid "Financial section"
-msgstr "Section des dÃ©tails financiers"
+msgstr "Section des détails financiers"
 
 # _x("Company section", "mentor","i18n");
 # Context  TextDomain i18n
 msgctxt "commenting"
 msgid "Company section"
-msgstr "Section des dÃ©tails concernant l'entreprise"
+msgstr "Section des détails concernant l'entreprise"
 
 # _x("Mentoring section", "mentor","i18n");
 # Context  TextDomain i18n
 msgctxt "commenting"
 msgid "Mentoring section"
-msgstr "Section des dÃ©tails de mentorat"
+msgstr "Section des détails de mentorat"
 
 # _x("Document section", "mentor","i18n");
 # Context  TextDomain i18n
@@ -148,7 +146,7 @@ msgstr "Section des documents"
 # Context commenting TextDomain i18n
 msgctxt "commenting"
 msgid "Private note (just for you)"
-msgstr "Evaluation privÃ©e (pour vous)"
+msgstr "Evaluation privée (pour vous)"
 
 # _x("Administrative note (for all group admins)", "commenting","i18n");
 # Context commenting TextDomain i18n
@@ -180,19 +178,19 @@ msgstr "Les commentaires du public (pour tout le monde)"
 # Context company TextDomain i18n
 msgctxt "company"
 msgid "Select country"
-msgstr "SÃ©lectionner pays"
+msgstr "Sélectionner pays"
 
 # _x("Select licenses obtained", "company","i18n");
 # Context company TextDomain i18n
 msgctxt "company"
 msgid "Select licenses obtained"
-msgstr "SÃ©lectionner les licences obtenues"
+msgstr "Sélectionner les licences obtenues"
 
 # _x("Select the legal form of your company", "company","i18n");
 # Context company TextDomain i18n
 msgctxt "company"
 msgid "Select the legal form of your company"
-msgstr "SÃ©lectionner la forme lÃ©gale de votre entreprise"
+msgstr "Sélectionner la forme légale de votre entreprise"
 
 # _x("You are about to delete this/these message(s). Are you sure?", "connect","i18n");
 # Context connect TextDomain i18n
@@ -201,7 +199,7 @@ msgid ""
 "You are about to delete this company and lose all its content. This action "
 "is irreversible. Are you sure?"
 msgstr ""
-"Vous Ãªtes sur le point de supprimer ce / ces message(s). ÃŠtes-vous sÃ»r de "
+"Vous êtes sur le point de supprimer ce / ces message(s). Êtes-vous sûr de "
 "vouloir le faire ?"
 
 # _x("Add company", "company","i18n");
@@ -232,25 +230,25 @@ msgstr "En attente "
 # Context businesssummary TextDomain i18n
 msgctxt "competition"
 msgid "Current year"
-msgstr "AnnÃ©e courante"
+msgstr "Année courante"
 
 # _x("Actuals", "businesssummary","i18n");
 # Context businesssummary TextDomain i18n
 msgctxt "competition"
 msgid "Actuals"
-msgstr "RÃ©els"
+msgstr "Réels"
 
 # _x("Forecast", "businesssummary","i18n");
 # Context businesssummary TextDomain i18n
 msgctxt "competition"
 msgid "Forecast"
-msgstr "PrÃ©vision"
+msgstr "Prévision"
 
 # _x("%count% matches found", "businesssummary","i18n");
 # Context businesssummary TextDomain i18n
 msgctxt "competition"
 msgid "%count% matches found"
-msgstr "%count% rÃ©sultats trouvÃ©s"
+msgstr "%count% résultats trouvés"
 
 # _x("Rating (%d vote)", "businesssummary","i18n");
 # Context businesssummary TextDomain i18n
@@ -268,13 +266,13 @@ msgstr "Evaluation (%d votes)"
 # Context businesssummary TextDomain i18n
 msgctxt "competition"
 msgid "Your rating"
-msgstr "Votre Ã©valuation"
+msgstr "Votre évaluation"
 
 # _x("Rate this plan", "businesssummary","i18n");
 # Context businesssummary TextDomain i18n
 msgctxt "competition"
 msgid "Rate this plan"
-msgstr "Ã‰valuez ce plan"
+msgstr "Évaluez ce plan"
 
 # _x("Public", "competition","i18n");
 # Context competition TextDomain i18n
@@ -286,37 +284,37 @@ msgstr "Public"
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "Closed"
-msgstr "FermÃ©e"
+msgstr "Fermée"
 
 # _x("Invited persons", "competition","i18n");
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "Invited persons"
-msgstr "Personnes invitÃ©es"
+msgstr "Personnes invitées"
 
 # _x("Applied", "competition","i18n");
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "Applied"
-msgstr "PrÃ©sentÃ©e"
+msgstr "Présentée"
 
 # _e("Submit feedback", "i18n");
 # Context  TextDomain i18n
 msgctxt "competition"
 msgid "Submitted"
-msgstr "PrÃ©sentÃ©"
+msgstr "Présenté"
 
 # _x("Withdrawn", "competition","i18n");
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "Withdrawn"
-msgstr "RetirÃ©"
+msgstr "Retiré"
 
 # _e("Request sent", "i18n");
 # Context  TextDomain i18n
 msgctxt "competition"
 msgid "Rejected"
-msgstr "RejetÃ©e"
+msgstr "Rejetée"
 
 # _x("Not a finalist", "competition","i18n");
 # Context competition TextDomain i18n
@@ -346,7 +344,7 @@ msgstr "Gagnant"
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "Assessor's recommendation"
-msgstr "Recommendations de l'Ã©valuateur"
+msgstr "Recommendations de l'évaluateur"
 
 # _x("You are updating this competition to the Judging phase. The status of all submissions will be updated according to your recommendation. All participants will receive a notification of this change in status.  Are you sure you want to proceed? ", "competition","i18n");
 # Context competition TextDomain i18n
@@ -357,10 +355,10 @@ msgid ""
 "participants will receive a notification of this change in status.  Are you "
 "sure you want to proceed? "
 msgstr ""
-"Vous Ãªtes sur le point de passer Ã  la phase de jugement. Le status de toutes "
-"les soumission sera mis Ã  jour d'aprÃ¨s vos recommendations. Tous les "
+"Vous êtes sur le point de passer à la phase de jugement. Le status de toutes "
+"les soumission sera mis à jour d'après vos recommendations. Tous les "
 "participants recevront une notification du changement du statut de leur "
-"soumission.  ÃŠtes-vous sÃ»r de vouloir le faire ?"
+"soumission.  Êtes-vous sûr de vouloir le faire ?"
 
 # _x("By declaring the winner(s), you are closing this competition. All participants will receive a notification of this change in status. Are you sure you want to proceed?", "competition","i18n");
 # Context competition TextDomain i18n
@@ -371,8 +369,8 @@ msgid ""
 "sure you want to proceed?"
 msgstr ""
 "En proclamant les gagnants, vous terminez ce concours. Tous les participants "
-"recevront une notification du changement du statut de leur soumission.  ÃŠtes-"
-"vous sÃ»r de vouloir le faire ?"
+"recevront une notification du changement du statut de leur soumission.  Êtes-"
+"vous sûr de vouloir le faire ?"
 
 # _x("You have successfully applied for this competition. Thank you for participating! Please note: Your application is now in draft status, you can still review and edit your business plan. If you are ready to have your application reviewed by the competition assessors, please submit your application by clicking on the Submit button", "competition","i18n");
 # Context competition TextDomain i18n
@@ -384,10 +382,10 @@ msgid ""
 "application reviewed by the competition assessors, please submit your "
 "application by clicking on the Submit button"
 msgstr ""
-"Vous vous Ãªtes inscrit dans ce concours avec succÃ¨s. Merci de participer! "
-"Veuillez noter que votre soumission n'est pas encore prÃ©sentÃ©e. Vous pouvez "
-"encore reviser et changer votre plan d'affaires. Si vous Ãªetes prÃªt Ã  le "
-"prÃ©senter Ã  nos Ã©valuateurs, veuillez cliquer sur le bouton PrÃ©senter "
+"Vous vous êtes inscrit dans ce concours avec succès. Merci de participer! "
+"Veuillez noter que votre soumission n'est pas encore présentée. Vous pouvez "
+"encore reviser et changer votre plan d'affaires. Si vous êetes prêt à le "
+"présenter à nos évaluateurs, veuillez cliquer sur le bouton Présenter "
 "soumission. "
 
 # _x("You have successfully submitted your application. Thank you for participating! Your submission will now be reviewed by our competition assessors. Good luck!", "competition","i18n");
@@ -398,8 +396,8 @@ msgid ""
 "participating! Your submission will now be reviewed by our competition "
 "assessors. Good luck!"
 msgstr ""
-"Vous avez prÃ©sentÃ© votre soumissions avec succÃ¨s. Merci de votre "
-"participation! Votre soumission sera rÃ©visÃ©e par nos Ã©valuateurs. Bonne "
+"Vous avez présenté votre soumissions avec succès. Merci de votre "
+"participation! Votre soumission sera révisée par nos évaluateurs. Bonne "
 "chance!"
 
 # _x("You have successfully withdrawn your application from this competition. Please feel free to join future competitions. We wish you the best of luck! ", "competition","i18n");
@@ -409,7 +407,7 @@ msgid ""
 "You have successfully withdrawn your application from this competition. "
 "Please feel free to join future competitions. We wish you the best of luck! "
 msgstr ""
-"Vous avez retirÃ© votre soumission de ce concours. N'hÃ©sitez pas Ã  participer "
+"Vous avez retiré votre soumission de ce concours. N'hésitez pas à participer "
 "dans d'autres concours dans l'avenir! "
 
 # _x("You have successfully rejected this submission. A notification has been sent out to the participant", "competition","i18n");
@@ -419,7 +417,7 @@ msgid ""
 "You have successfully submitted this application. A notification has been "
 "sent out to the participant"
 msgstr ""
-"Vous avez rejetÃ© cette soumission avec succÃ¨s. Une notification sera envoyÃ©e "
+"Vous avez rejeté cette soumission avec succès. Une notification sera envoyée "
 "au participant."
 
 # _x("You have successfully rejected this submission. A notification has been sent out to the participant", "competition","i18n");
@@ -429,74 +427,74 @@ msgid ""
 "You have successfully rejected this submission. A notification has been sent "
 "out to the participant"
 msgstr ""
-"Vous avez rejetÃ© cette soumission avec succÃ¨s. Une notification sera envoyÃ©e "
+"Vous avez rejeté cette soumission avec succès. Une notification sera envoyée "
 "au participant."
 
 # _x("This submission is qualified as a finalist! ", "competition","i18n");
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "This submission is qualified as a finalist! "
-msgstr "Cette soumission a Ã©tÃ© qualifiÃ©e comme finaliste"
+msgstr "Cette soumission a été qualifiée comme finaliste"
 
 # _x("This submission is qualified as not a finalist", "competition","i18n");
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "This submission is qualified as not a finalist"
-msgstr "Cette soumission a Ã©tÃ© qualifiÃ©e comme non finaliste"
+msgstr "Cette soumission a été qualifiée comme non finaliste"
 
 # _x("This submission has been declared a winner!", "competition","i18n");
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "This submission has been declared a winner!"
-msgstr "Cette soumission a Ã©tÃ© proclamÃ© gagnant!"
+msgstr "Cette soumission a été proclamé gagnant!"
 
 # _x("This submission has not been declared a winner", "competition","i18n");
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "This submission has not been declared a winner"
-msgstr "Cette soumission n'a pas Ã©tÃ© proclamÃ© gagnant"
+msgstr "Cette soumission n'a pas été proclamé gagnant"
 
 # _e("You have successfully ignored the request", "i18n");
 # Context  TextDomain i18n
 msgctxt "competition"
 msgid "You have successfully assigned assessors to this submission. "
-msgstr "Vous avez attribuÃ© des Ã©valuateurs Ã  cette soumission."
+msgstr "Vous avez attribué des évaluateurs à cette soumission."
 
 # _e("You have successfully ignored the request", "i18n");
 # Context  TextDomain i18n
 msgctxt "competition"
 msgid "You have successfully assigned judges for this submission. "
-msgstr "Vous avez attribuÃ© des juges Ã  cette soumission."
+msgstr "Vous avez attribué des juges à cette soumission."
 
 # _x("You have recommended this plan as a finalist", "competition","i18n");
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "You have recommended this plan as a finalist"
-msgstr "Vous avez recommandÃ© que ce plan soit finaliste"
+msgstr "Vous avez recommandé que ce plan soit finaliste"
 
 # _x("You have recommended this plan as not a finalist", "competition","i18n");
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "You have recommended this plan as not a finalist"
-msgstr "Vous avez recommandÃ© que ce plan ne soit pas finaliste"
+msgstr "Vous avez recommandé que ce plan ne soit pas finaliste"
 
 # _x("You have recommended this plan as a Winner", "competition","i18n");
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "You have recommended this plan as a Winner"
-msgstr "Vous avez recommandÃ© que ce plan soit gagnant"
+msgstr "Vous avez recommandé que ce plan soit gagnant"
 
 # _x("You have recommended this plan as not a winner", "competition","i18n");
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "You have recommended this plan as not a winner"
-msgstr "Vous avez recommandÃ© que ce plan ne soit pas gagnant"
+msgstr "Vous avez recommandé que ce plan ne soit pas gagnant"
 
 # _e("You have successfully accepted the request", "i18n");
 # Context  TextDomain i18n
 msgctxt "competition"
 msgid "You have successfully rejected this submission"
-msgstr "Vous avez rejetÃ© la soumission avec succÃ¨s"
+msgstr "Vous avez rejeté la soumission avec succès"
 
 # _x("Something went wrong", "competition","i18n");
 # Context competition TextDomain i18n
@@ -514,13 +512,13 @@ msgstr "Aucune observation "
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "Apply to the competition"
-msgstr ""
+msgstr "Participer à la compétition"
 
 # _x("Submit your business plan", "competition","i18n");
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "Submit your business plan"
-msgstr "PrÃ©senter votre plan d'affaires"
+msgstr "Présenter votre plan d'affaires"
 
 # _x("Withdraw your business plan", "competition","i18n");
 # Context competition TextDomain i18n
@@ -532,14 +530,14 @@ msgstr "Retirer votre plan d'affaires"
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid "Please wait while we are updating phase of the competition"
-msgstr ""
+msgstr " Actualization en cours, veuillez attendre"
 
 # _x("Congratulations, you have successfully updated the phase of this competition", "competition","i18n");
 # Context competition TextDomain i18n
 msgctxt "competition"
 msgid ""
 "Congratulations, you have successfully updated the phase of this competition"
-msgstr ""
+msgstr "La compétition a été mis a jour correctement"
 
 # _x("Before moving to the next phase, all applications need a competition administrator review", "competition","i18n");
 # Context competition TextDomain i18n
@@ -548,18 +546,44 @@ msgid ""
 "Before moving to the next phase, all applications need a competition "
 "administrator review"
 msgstr ""
+"Avant de continuer à la phase suivante, veuillez vous assurer que toutes les "
+"applications ont été révisées"
+
+# _x("You have no companies", "dashboard","i18n");
+# Context dashboard TextDomain i18n
+msgctxt "dashboard"
+msgid "You have no companies"
+msgstr "Vous n' avez pas encore ajouté d'entreprises"
+
+# _x("You have no business summaries", "dashboard","i18n");
+# Context dashboard TextDomain i18n
+msgctxt "dashboard"
+msgid "You have no business summaries"
+msgstr "Vous n'avez pas encore ajouté votre plan d'affaires"
+
+# _x("Add new business plan", "dashboard","i18n");
+# Context dashboard TextDomain i18n
+msgctxt "dashboard"
+msgid "Add new business plan"
+msgstr "Ajouter un plan d'affaires"
+
+# _x("Add new company", "dashboard","i18n");
+# Context dashboard TextDomain i18n
+msgctxt "dashboard"
+msgid "Add new company"
+msgstr "Ajouter une entreprise"
 
 # _x("On %date% at %time%, %sender% wrote:", "mail","i18n");
 # Context mail TextDomain i18n
 msgctxt "mail"
 msgid "On %date% at %time%, %sender% wrote:"
-msgstr "Le %date% Ã  %heure%, %expÃ©diteur% Ã  Ã©crit: "
+msgstr "Le %date% à %heure%, %expéditeur% à écrit: "
 
 # _x("Forwarded message", "mail","i18n");
 # Context mail TextDomain i18n
 msgctxt "mail"
 msgid "Forwarded message"
-msgstr "Message transfÃ©rÃ©"
+msgstr "Message transféré"
 
 # _x("Sending message", "mail","i18n");
 # Context mail TextDomain i18n
@@ -571,7 +595,7 @@ msgstr "Envoi de message"
 # Context mail TextDomain i18n
 msgctxt "mail"
 msgid "Incoming contact requests"
-msgstr "Demandes de contact reÃ§ues"
+msgstr "Demandes de contact reçues"
 
 # _x("Pending contact requests", "mail","i18n");
 # Context mail TextDomain i18n
@@ -583,7 +607,7 @@ msgstr "Demandes de contact en attente"
 # Context mail TextDomain i18n
 msgctxt "mail"
 msgid "New contact request has been sent to"
-msgstr "Une nouvelle demande de contact a Ã©tÃ© envoyÃ©e"
+msgstr "Une nouvelle demande de contact a été envoyée"
 
 # _x("Active contacts", "mail","i18n");
 # Context mail TextDomain i18n
@@ -595,7 +619,7 @@ msgstr "Contacts actifs"
 # Context mail TextDomain i18n
 msgctxt "mail"
 msgid "Blocked contacts"
-msgstr ""
+msgstr "Contacts bloqués"
 
 # _x("New contact request", "mail","i18n");
 # Context mail TextDomain i18n
@@ -607,37 +631,37 @@ msgstr "Nouvelle demande de contact"
 # Context mail TextDomain i18n
 msgctxt "mail"
 msgid "Group admin"
-msgstr "ModÃ©rateur du groupe"
+msgstr "Modérateur du groupe"
 
 # _x("Message to group owner", "mail","i18n");
 # Context mail TextDomain i18n
 msgctxt "mail"
 msgid "Message to group owner"
-msgstr "Message au propriÃ©taire du groupe"
+msgstr "Message au propriétaire du groupe"
 
 # _x("Trash", "mail","i18n");
 # Context mail TextDomain i18n
 msgctxt "mail"
 msgid "Deleted from"
-msgstr "SupprimÃ© de"
+msgstr "Supprimé de"
 
 # _x("Unblock", "mail","i18n");
 # Context mail TextDomain i18n
 msgctxt "mail"
 msgid "Unblock"
-msgstr ""
+msgstr "Débloquer"
 
 # _x("You cannot trash a system mail this way", "mail","i18n");
 # Context mail TextDomain i18n
 msgctxt "mail"
 msgid "You cannot trash a system mail this way"
-msgstr ""
+msgstr "Il est impossile de supprimer un courrier automatique de cette manière"
 
 # _x("Select the outcome of this business", "member","i18n");
 # Context member TextDomain i18n
 msgctxt "member"
 msgid "Select the outcome of this business"
-msgstr "SÃ©lectionner le rÃ©sultat de cette entreprise"
+msgstr "Sélectionner le résultat de cette entreprise"
 
 # _x("Enter the focus industry", "member","i18n");
 # Context member TextDomain i18n
@@ -649,31 +673,31 @@ msgstr "Entrer l'industrie cible"
 # Context member TextDomain i18n
 msgctxt "member"
 msgid "Select investment type"
-msgstr "SÃ©lectionner le type d'investissement"
+msgstr "Sélectionner le type d'investissement"
 
 # _x("Select your investor", "member","i18n");
 # Context member TextDomain i18n
 msgctxt "member"
 msgid "Select your investor"
-msgstr "SÃ©lectionner votre investisseur"
+msgstr "Sélectionner votre investisseur"
 
 # _x("Select country", "member","i18n");
 # Context member TextDomain i18n
 msgctxt "member"
 msgid "Select country"
-msgstr "SÃ©lectionner le pays"
+msgstr "Sélectionner le pays"
 
 # _x("Select your nationality", "member","i18n");
 # Context member TextDomain i18n
 msgctxt "member"
 msgid "Select your nationality"
-msgstr "SÃ©lectionner votre nationalitÃ©"
+msgstr "Sélectionner votre nationalité"
 
 # _x("Select your highest level of education", "member","i18n");
 # Context member TextDomain i18n
 msgctxt "member"
 msgid "Select your highest level of education"
-msgstr "SÃ©lectionner votre niveau d'enseignement le plus Ã©levÃ©"
+msgstr "Sélectionner votre niveau d'enseignement le plus élevé"
 
 # _x("CV is required", "member","i18n");
 # Context member TextDomain i18n
@@ -700,7 +724,7 @@ msgid ""
 "You are about to delete this item and lose all its content. This action is "
 "irreversible. Are you sure?"
 msgstr ""
-"Vous Ãªtes sur le point de supprimer ce / ces message(s). ÃŠtes-vous sÃ»r de "
+"Vous êtes sur le point de supprimer ce / ces message(s). Êtes-vous sûr de "
 "vouloir le faire ?"
 
 # _x("Mentoring request pending", "mentor","i18n");
@@ -713,7 +737,7 @@ msgstr "Demande de mentorat en attente"
 # Context  TextDomain i18n
 msgctxt "mentor"
 msgid "Received request"
-msgstr "Demande reÃ§ue"
+msgstr "Demande reçue"
 
 # _x("Ongoing", "mentor","i18n");
 # Context mentor TextDomain i18n
@@ -725,13 +749,13 @@ msgstr "En cours"
 # Context mentor TextDomain i18n
 msgctxt "mentor"
 msgid "%count% matches found"
-msgstr "%count% rÃ©sultats trouvÃ©s"
+msgstr "%count% résultats trouvés"
 
 # _x("Please select a location from the dropdown", "register","i18n");
 # Context register TextDomain i18n
 msgctxt "register"
 msgid "Please select a location from the dropdown"
-msgstr "PriÃ¨re de sÃ©lectionner un emplacement Ã  partir de la liste dÃ©roulante"
+msgstr "Prière de sélectionner un emplacement à partir de la liste déroulante"
 
 # _x("This email address is not registered with us", "resetpassword","i18n");
 # Context resetpassword TextDomain i18n
@@ -743,19 +767,19 @@ msgstr "L'adresse e-mail n'est pas reconnue "
 # Context search TextDomain i18n
 msgctxt "search"
 msgid "Interested in"
-msgstr "IntÃ©ressÃ© par"
+msgstr "Intéressé par"
 
 # _x("Registered", "search","i18n");
 # Context search TextDomain i18n
 msgctxt "search"
 msgid "Registered"
-msgstr "EnregistrÃ©"
+msgstr "Enregistré"
 
 # _x("%num% results", "search","i18n");
 # Context search TextDomain i18n
 msgctxt "search"
 msgid "results"
-msgstr "%num% rÃ©sultats"
+msgstr "%num% résultats"
 
 # _e("Save profile", "i18n");
 # Context  TextDomain i18n
@@ -767,7 +791,7 @@ msgstr "Profil de membre"
 # Context search TextDomain i18n
 msgctxt "search"
 msgid "Business summary"
-msgstr "RÃ©sumÃ© d'affaires"
+msgstr "Résumé d'affaires"
 
 # _e("Investor", "i18n");
 # Context  TextDomain i18n
@@ -827,19 +851,19 @@ msgstr "Type"
 # Context search TextDomain i18n
 msgctxt "search"
 msgid "%num% results"
-msgstr "%num% rÃ©sultats"
+msgstr "%num% résultats"
 
 # _x("On %date% at %time%, %sender% wrote:", "mail","i18n");
 # Context mail TextDomain i18n
 msgctxt "connect"
 msgid "On %date% at %time%, %sender% wrote:"
-msgstr "Le %date% Ã  %heure%, %expÃ©diteur% Ã  Ã©crit : "
+msgstr "Le %date% à %heure%, %expéditeur% à écrit : "
 
 # _x("Forwarded message", "mail","i18n");
 # Context mail TextDomain i18n
 msgctxt "connect"
 msgid "Forwarded message"
-msgstr "Message transfÃ©rÃ©"
+msgstr "Message transféré"
 
 # _x("Sending message", "mail","i18n");
 # Context mail TextDomain i18n
@@ -851,13 +875,13 @@ msgstr "Envoi de message"
 # Context mail TextDomain i18n
 msgctxt "connect"
 msgid "Message sent"
-msgstr "Message envoyÃ©"
+msgstr "Message envoyé"
 
 # _x("Group admin", "mail","i18n");
 # Context mail TextDomain i18n
 msgctxt "connect"
 msgid "Group admin"
-msgstr "ModÃ©rateur du groupe"
+msgstr "Modérateur du groupe"
 
 # _e("Entrepreneur", "i18n");
 # Context  TextDomain i18n
@@ -893,26 +917,26 @@ msgstr "Membre seulement"
 # Context  TextDomain i18n
 msgctxt "connect"
 msgid "Please select sender group"
-msgstr "PriÃ¨re de sÃ©lectionner un groupe d'expÃ©diteur"
+msgstr "Prière de sélectionner un groupe d'expéditeur"
 
 # _e("You request has been sent successfully", "i18n");
 # Context  TextDomain i18n
 msgctxt "connect"
 msgid "Your email has been sent successfully"
-msgstr "Votre e-mail a Ã©tÃ© envoyÃ© avec succÃ¨s "
+msgstr "Votre e-mail a été envoyé avec succès "
 
 # _x("Move message to folder", "connect","i18n");
 # Context connect TextDomain i18n
 msgctxt "connect"
 msgid "Move message to folder"
-msgstr "DÃ©placer le message vers le dossier"
+msgstr "Déplacer le message vers le dossier"
 
 # _x("You are about to delete this/these message(s). Are you sure?", "connect","i18n");
 # Context connect TextDomain i18n
 msgctxt "connect"
 msgid "You are about to delete this/these message(s). Are you sure?"
 msgstr ""
-"Vous Ãªtes sur le point de supprimer ce / ces message(s). ÃŠtes-vous sÃ»r de "
+"Vous êtes sur le point de supprimer ce / ces message(s). Êtes-vous sûr de "
 "vouloir le faire ?"
 
 # _x("You are about to discard this message. Are you sure?", "connect","i18n");
@@ -920,7 +944,7 @@ msgstr ""
 msgctxt "connect"
 msgid "You are about to discard this message. Are you sure?"
 msgstr ""
-"Vous Ãªtes sur le point d'ignorer ce message. ÃŠtes-vous sÃ»r de vouloir le "
+"Vous êtes sur le point d'ignorer ce message. Êtes-vous sûr de vouloir le "
 "faire ?"
 
 # _x("You have not selected any message, please click on checkbox to make selection", "connect","i18n");
@@ -929,14 +953,14 @@ msgctxt "connect"
 msgid ""
 "You have not selected any message, please click on checkbox to make selection"
 msgstr ""
-"Vous n'avez sÃ©lectionnÃ© aucun message. Veuillez cliquer sur la case Ã  cocher "
-"pour effectuer la sÃ©lection"
+"Vous n'avez sélectionné aucun message. Veuillez cliquer sur la case à cocher "
+"pour effectuer la sélection"
 
 # _x("Trash", "mail","i18n");
 # Context mail TextDomain i18n
 msgctxt "connect"
 msgid "Deleted from"
-msgstr "SupprimÃ© de"
+msgstr "Supprimé de"
 
 # _x("Rolewise division of Users", "monitoring","i18n");
 # Context monitoring TextDomain i18n
@@ -948,7 +972,7 @@ msgstr "Division Rolewise des utilisateurs"
 # Context monitoring TextDomain i18n
 msgctxt "monitoring"
 msgid "Loading Data Error"
-msgstr "Erreur de chargement des donnÃ©es"
+msgstr "Erreur de chargement des données"
 
 # _x("Loading ...", "monitoring","i18n");
 # Context monitoring TextDomain i18n
@@ -960,7 +984,7 @@ msgstr "Chargement en cours ..."
 # Context monitoring TextDomain i18n
 msgctxt "monitoring"
 msgid "No data found! How is it possible ?"
-msgstr "Aucune donnÃ©e trouvÃ©e ! Comment est-ce possible ?"
+msgstr "Aucune donnée trouvée ! Comment est-ce possible ?"
 
 # _e("Save profile", "i18n");
 # Context  TextDomain i18n
@@ -972,7 +996,7 @@ msgstr "Profil de membre"
 # Context search TextDomain i18n
 msgctxt "monitoring"
 msgid "Business summary"
-msgstr "RÃ©sumÃ© d'affaires"
+msgstr "Résumé d'affaires"
 
 # _e("Investor", "i18n");
 # Context  TextDomain i18n
@@ -1068,13 +1092,13 @@ msgstr "Portable"
 # Context monitoring TextDomain i18n
 msgctxt "monitoring"
 msgid "Landline"
-msgstr "NumÃ©ro fixe"
+msgstr "Numéro fixe"
 
 # _x("Language", "search","i18n");
 # Context search TextDomain i18n
 msgctxt "monitoring"
 msgid "Languages Spoken"
-msgstr "Langues parlÃ©es"
+msgstr "Langues parlées"
 
 # _x("Mothertongue", "monitoring","i18n");
 # Context monitoring TextDomain i18n
@@ -1086,13 +1110,13 @@ msgstr "Langue maternelle"
 # Context monitoring TextDomain i18n
 msgctxt "monitoring"
 msgid "Summary"
-msgstr "RÃ©sumÃ©"
+msgstr "Résumé"
 
 # _x("Interested in", "search","i18n");
 # Context search TextDomain i18n
 msgctxt "monitoring"
 msgid "Interested in"
-msgstr "IntÃ©ressÃ© par"
+msgstr "Intéressé par"
 
 # _e("Investor", "i18n");
 # Context  TextDomain i18n
@@ -1109,12 +1133,12 @@ msgstr "Une erreur est survenue"
 # _e("You do not have the rights to edit this profile", "i18n");
 # Context  TextDomain i18n
 msgid "You do not have the rights to edit this profile"
-msgstr "Vous n'avez pas les droits nÃ©cessaires pour Ã©diter ce profil"
+msgstr "Vous n'avez pas les droits nécessaires pour éditer ce profil"
 
 # _e("You do not have the rights to edit this", "i18n");
 # Context  TextDomain i18n
 msgid "You do not have the rights to edit this"
-msgstr "Vous n'avez pas les droits nÃ©cessaires pour Ã©diter ceci"
+msgstr "Vous n'avez pas les droits nécessaires pour éditer ceci"
 
 # _e("Your changes have not yet been saved. Are you sure you want to navigate away from this page and lose your pending changes?", "i18n");
 # Context  TextDomain i18n
@@ -1122,13 +1146,13 @@ msgid ""
 "Your changes have not yet been saved. Are you sure you want to navigate away "
 "from this page and lose your pending changes?"
 msgstr ""
-"Vos changements ne sont pas encore enregistrÃ©s. ÃŠtes-vous sur de vouloir "
+"Vos changements ne sont pas encore enregistrés. Êtes-vous sur de vouloir "
 "quitter cette page et perdre les changements ? "
 
 # _e("Please wait while you are redirected", "i18n");
 # Context  TextDomain i18n
 msgid "Please wait while you are redirected"
-msgstr "Vous allez Ãªtre redirigÃ©, veuillez patienter"
+msgstr "Vous allez être redirigé, veuillez patienter"
 
 # _e("Processing request", "i18n");
 # Context  TextDomain i18n
@@ -1143,7 +1167,7 @@ msgstr "En attente "
 # _e("This document has been removed from your media library.", "i18n");
 # Context  TextDomain i18n
 msgid "This document has been removed from your media library."
-msgstr "Ce document a Ã©tÃ© effacÃ© de votre liste multimÃ©dia."
+msgstr "Ce document a été effacé de votre liste multimédia."
 
 # _e("Yes", "i18n");
 # Context  TextDomain i18n
@@ -1158,27 +1182,27 @@ msgstr "Non"
 # _e("Select type", "i18n");
 # Context  TextDomain i18n
 msgid "Select type"
-msgstr "SÃ©lectionner un type"
+msgstr "Sélectionner un type"
 
 # _e("Attachment deleted", "i18n");
 # Context  TextDomain i18n
 msgid "Attachment deleted"
-msgstr "PiÃ¨ce jointe effacÃ©e"
+msgstr "Pièce jointe effacée"
 
 # _e("Attachment upload done", "i18n");
 # Context  TextDomain i18n
 msgid "Attachment upload done"
-msgstr "Chargement de la piÃ¨ce jointe effectuÃ© "
+msgstr "Chargement de la pièce jointe effectué "
 
 # _e("Problem uploading attachment", "i18n");
 # Context  TextDomain i18n
 msgid "Problem uploading attachment"
-msgstr "ProblÃ¨me lors du chargement de la piÃ¨ce jointe "
+msgstr "Problème lors du chargement de la pièce jointe "
 
 # _e("Problems deleting attachment", "i18n");
 # Context  TextDomain i18n
 msgid "Problems deleting attachment"
-msgstr "ProblÃ¨me lors de l'effacement de la piÃ¨ce jointe"
+msgstr "Problème lors de l'effacement de la pièce jointe"
 
 # _e("Next", "i18n");
 # Context  TextDomain i18n
@@ -1193,7 +1217,7 @@ msgstr "Annuler"
 # _e("Ok", "i18n");
 # Context  TextDomain i18n
 msgid "Ok"
-msgstr ""
+msgstr "OK"
 
 # _e("Save", "i18n");
 # Context  TextDomain i18n
@@ -1213,12 +1237,12 @@ msgstr "Sauvegarder le profil"
 # _e("Create & view", "i18n");
 # Context  TextDomain i18n
 msgid "Create & view"
-msgstr "CrÃ©er et consulter"
+msgstr "Créer et consulter"
 
 # _e("Are you sure?", "i18n");
 # Context  TextDomain i18n
 msgid "Are you sure?"
-msgstr "ÃŠtes-vous sÃ»r ? "
+msgstr "Êtes-vous sûr ? "
 
 # _e("Please wait...", "i18n");
 # Context  TextDomain i18n
@@ -1233,27 +1257,27 @@ msgstr "Essayez encore"
 # _e("Request sent", "i18n");
 # Context  TextDomain i18n
 msgid "Request sent"
-msgstr "Demande envoyÃ©e"
+msgstr "Demande envoyée"
 
 # _e("Request sent", "i18n");
 # Context  TextDomain i18n
 msgid "Request received"
-msgstr "Demande envoyÃ©e"
+msgstr "Demande envoyée"
 
 # _e("Request sent", "i18n");
 # Context  TextDomain i18n
 msgid "Request ongoing"
-msgstr "Demande envoyÃ©e"
+msgstr "Demande envoyée"
 
 # _e("Request sent", "i18n");
 # Context  TextDomain i18n
 msgid "Request rejected"
-msgstr "Demande rejetÃ©e"
+msgstr "Demande rejetée"
 
 # _e("Rejected by mentor", "i18n");
 # Context  TextDomain i18n
 msgid "Rejected by mentor"
-msgstr "RejetÃ© par le mentor"
+msgstr "Rejeté par le mentor"
 
 # _e("Entrepreneur", "i18n");
 # Context  TextDomain i18n
@@ -1263,22 +1287,22 @@ msgstr "Entrepreneur"
 # _e("Request sent", "i18n");
 # Context  TextDomain i18n
 msgid "Request accepted"
-msgstr "Demande acceptÃ©e"
+msgstr "Demande acceptée"
 
 # _e("View Profile", "i18n");
 # Context  TextDomain i18n
 msgid "View Profile"
-msgstr ""
+msgstr "Voir profile"
 
 # _e("Create business proposal", "i18n");
 # Context  TextDomain i18n
 msgid "Create business proposal"
-msgstr "CrÃ©ez votre proposition d'affaires"
+msgstr "Créez votre proposition d'affaires"
 
 # _e("Create company profile", "i18n");
 # Context  TextDomain i18n
 msgid "Create company profile"
-msgstr "CrÃ©ez le profil de votre entreprise"
+msgstr "Créez le profil de votre entreprise"
 
 # _e("Yes, lose changes", "i18n");
 # Context  TextDomain i18n
@@ -1293,47 +1317,47 @@ msgstr "Non, retourner"
 # _e("You request has been sent successfully", "i18n");
 # Context  TextDomain i18n
 msgid "You request has been sent successfully"
-msgstr "Votre demande a Ã©tÃ© transmise avec succÃ¨s "
+msgstr "Votre demande a été transmise avec succès "
 
 # _e("You have successfully accepted the request", "i18n");
 # Context  TextDomain i18n
 msgid "You have successfully accepted the request"
-msgstr "Vous avez acceptÃ© la demande avec succÃ¨s"
+msgstr "Vous avez accepté la demande avec succès"
 
 # _e("You have successfully ignored the request", "i18n");
 # Context  TextDomain i18n
 msgid "You have successfully ignored the request"
-msgstr "Vous avez ignorÃ© la demande avec succÃ¨s"
+msgstr "Vous avez ignoré la demande avec succès"
 
 # _e("You have successfully stopped the mentoring", "i18n");
 # Context  TextDomain i18n
 msgid "You have successfully stopped the mentoring"
-msgstr "Vous avez arrÃªtÃ© le mentorat avec succÃ¨s"
+msgstr "Vous avez arrêté le mentorat avec succès"
 
 # _e("Something went wrong while creating a relationship:", "i18n");
 # Context  TextDomain i18n
 msgid "Something went wrong while creating a relationship:"
-msgstr "Une erreur est survenue lors de la crÃ©ation de la relation :"
+msgstr "Une erreur est survenue lors de la création de la relation :"
 
 # _e("No results match", "i18n");
 # Context  TextDomain i18n
 msgid "No results match"
-msgstr ""
+msgstr "Aucun résultat"
 
 # _x("Select your nationality", "member","i18n");
 # Context member TextDomain i18n
 msgid "Select an Option"
-msgstr "SÃ©lectionner une option"
+msgstr "Sélectionner une option"
 
 # _x("Select your nationality", "member","i18n");
 # Context member TextDomain i18n
 msgid "Select Some Options"
-msgstr "SÃ©lectionnez des options"
+msgstr "Sélectionnez des options"
 
 # _e("Select what best matches your reason for submission", "i18n");
 # Context  TextDomain i18n
 msgid "Select what best matches your reason for submission"
-msgstr ""
+msgstr "Sélectionnez la raison pour laquelle vous soumissionnez"
 
 # _e("This field is required", "i18n");
 # Context  TextDomain i18n
@@ -1343,82 +1367,82 @@ msgstr "Ce champs est requis "
 # _e("Please select an item", "i18n");
 # Context  TextDomain i18n
 msgid "Please select an item"
-msgstr "PriÃ¨re de sÃ©lectionner un Ã©lÃ©ment"
+msgstr "Prière de sélectionner un élément"
 
 # _e("Please enter a valid date", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter a valid date"
-msgstr "PriÃ¨re de saisir une date valide"
+msgstr "Prière de saisir une date valide"
 
 # _e("Please enter a valid e-mail address", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter a valid e-mail address"
-msgstr "PriÃ¨re de saisir une adresse e-mail valide "
+msgstr "Prière de saisir une adresse e-mail valide "
 
 # _e("Please enter a valid url", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter a valid password"
-msgstr "PriÃ¨re de saisir une adresse url valide"
+msgstr "Prière de saisir une adresse url valide"
 
 # _e("Please enter a valid Skype username", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter a valid Skype username"
-msgstr "PriÃ¨re de saisir un nom d'utilisateur Skype valide"
+msgstr "Prière de saisir un nom d'utilisateur Skype valide"
 
 # _e("Please enter a valid LinkedIn username", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter a valid LinkedIn username"
-msgstr "PriÃ¨re de saisir un nom d'utilisateur LinkedIn valide"
+msgstr "Prière de saisir un nom d'utilisateur LinkedIn valide"
 
 # _e("Please enter a valid Facebook username", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter a valid Facebook username"
-msgstr "PriÃ¨re de saisir un nom d'utilisateur Facebook valide"
+msgstr "Prière de saisir un nom d'utilisateur Facebook valide"
 
 # _e("Please enter a valid Twitter username", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter a valid Twitter username"
-msgstr "PriÃ¨re de saisir un nom d'utilisateur Twitter valide"
+msgstr "Prière de saisir un nom d'utilisateur Twitter valide"
 
 # _e("Please enter a valid url", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter a valid url"
-msgstr "PriÃ¨re de saisir une adresse url valide"
+msgstr "Prière de saisir une adresse url valide"
 
 # _e("Please enter a valid amount", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter a valid amount"
-msgstr "PriÃ¨re de saisir un montant valide"
+msgstr "Prière de saisir un montant valide"
 
 # _e("Please give at least {0} items", "i18n");
 # Context  TextDomain i18n
 msgid "Please give at least {0} items"
-msgstr "PriÃ¨re de fournir au moins {0} Ã©lÃ©ments "
+msgstr "Prière de fournir au moins {0} éléments "
 
 # _e("Please enter a value greater than or equal to {0}", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter a value greater than or equal to {0}"
-msgstr "PriÃ¨re de saisir une valeur supÃ©rieure ou Ã©gale Ã  {0}"
+msgstr "Prière de saisir une valeur supérieure ou égale à {0}"
 
 # _e("Please enter a value less than or equal to {0}", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter a value less than or equal to {0}"
-msgstr "PriÃ¨re de saisir une valeur infÃ©rieure ou Ã©gale Ã  {0}"
+msgstr "Prière de saisir une valeur inférieure ou égale à {0}"
 
 # _e("Please provide a positive number", "i18n");
 # Context  TextDomain i18n
 msgid "Please provide a positive number"
-msgstr "PriÃ¨re de fournir un nombre positive"
+msgstr "Prière de fournir un nombre positive"
 
 # _e("Please provide no more than maximum {0} characters", "i18n");
 # Context  TextDomain i18n
 msgid "Please provide no more than maximum {0} characters"
-msgstr "PriÃ¨re de ne fournir qu'un maximum de {0} caractÃ¨res"
+msgstr "Prière de ne fournir qu'un maximum de {0} caractères"
 
 # _e("Please enter at least {0} characters", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter at least {0} characters"
-msgstr "PriÃ¨re de fournir au moins {0} caractÃ¨res"
+msgstr "Prière de fournir au moins {0} caractères"
 
 # _e("Please fill all the required fields", "i18n");
 # Context  TextDomain i18n
@@ -1433,33 +1457,33 @@ msgstr "Remplissez tous les champs obligatoires"
 # _e("Please enter a valid url", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter a valid number."
-msgstr "PriÃ¨re de saisir une adresse url valide"
+msgstr "Prière de saisir une adresse url valide"
 
 # _e("Please enter a valid date", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter a valid credit card number."
-msgstr "PriÃ¨re de saisir une date valide"
+msgstr "Prière de saisir une date valide"
 
 # _e("Please enter a valid amount", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter the same value again."
-msgstr "PriÃ¨re de saisir un montant valide"
+msgstr "Prière de saisir un montant valide"
 
 # _e("Please enter at least {0} characters", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter a value between {0} and {1} characters long."
 msgstr ""
-"S'il vous plaÃ®t entrer une valeur comprise entre {0} et {1} caractÃ¨res."
+"S'il vous plaît entrer une valeur comprise entre {0} et {1} caractères."
 
 # _e("Please enter a value less than or equal to {0}", "i18n");
 # Context  TextDomain i18n
 msgid "Please enter a value between {0} and {1}."
-msgstr "S'il vous plaÃ®t entrer une valeur comprise entre {0} et {1}."
+msgstr "S'il vous plaît entrer une valeur comprise entre {0} et {1}."
 
 # _e("This email address is already in use", "i18n");
 # Context  TextDomain i18n
 msgid "This email address is already in use"
-msgstr "Cet e-mail est dÃ©jÃ  utilisÃ©"
+msgstr "Cet e-mail est déjà utilisé"
 
 # _e("This is not a valid email address", "i18n");
 # Context  TextDomain i18n
@@ -1489,192 +1513,197 @@ msgstr "Mentor"
 # _e("Offer Mentoring", "i18n");
 # Context  TextDomain i18n
 msgid "Offer Mentoring"
-msgstr ""
+msgstr "Offrir mentorat"
 
 # _e("Offer mentoring to", "i18n");
 # Context  TextDomain i18n
 msgid "Offer mentoring to"
-msgstr ""
+msgstr "Offrir mentorat à"
 
 # _e("Request Mentoring", "i18n");
 # Context  TextDomain i18n
 msgid "Request Mentoring"
-msgstr ""
+msgstr "Demander mentorat"
 
 # _e("Request Mentoring for ", "i18n");
 # Context  TextDomain i18n
 msgid "Request Mentoring for "
-msgstr ""
+msgstr "Demander mentorat pour"
 
 # _e("You have a mentor request from", "i18n");
 # Context  TextDomain i18n
 msgid "You have a mentor request from"
-msgstr ""
+msgstr "Vous avez reçu une demande de mentorat de"
 
 # _e("Your mentor request is pending", "i18n");
 # Context  TextDomain i18n
 msgid "Your mentor request is pending"
-msgstr ""
+msgstr "Votre demande de mentorat est en attente de réponse"
 
 # _e("You are mentoring this business", "i18n");
 # Context  TextDomain i18n
 msgid "You are mentoring this business"
-msgstr ""
+msgstr "Vous êtes le mentor pour ce plan d'affaire"
 
 # _e("has offered to be your mentor", "i18n");
 # Context  TextDomain i18n
 msgid "has offered to be your mentor"
-msgstr ""
+msgstr "a offert d' être votre mentor"
 
 # _e("has requested you to mentor this business", "i18n");
 # Context  TextDomain i18n
 msgid "has requested you to mentor this business"
-msgstr ""
+msgstr "vous demande d' être son mentor pour ce plan d'affaire"
 
 # _e("is mentoring your business", "i18n");
 # Context  TextDomain i18n
 msgid "is mentoring your business"
-msgstr ""
+msgstr "est votre mentor pour le plan d'affaire"
+
+# _e("You are mentoring this business by ", "i18n");
+# Context  TextDomain i18n
+msgid "You are mentoring this business by "
+msgstr "Vous êtes le mentor pour ce plan d'affaire de"
 
 # _e("You cancelled your mentor request", "i18n");
 # Context  TextDomain i18n
 msgid "You cancelled your mentor request"
-msgstr ""
+msgstr "Vous avez annulé votre demande de mentorat"
 
 # _e("You offered to mentor this business", "i18n");
 # Context  TextDomain i18n
 msgid "You offered to mentor this business"
-msgstr ""
+msgstr "Vous avez offert d'être le mentor pour ce plan d'affaire"
 
 # _e("You offered to mentor this business by", "i18n");
 # Context  TextDomain i18n
 msgid "You offered to mentor this business by"
-msgstr ""
+msgstr "Vous avez offert d'être le mentor pour ce plan d'affaire de"
 
 # _e("You requested mentoring for", "i18n");
 # Context  TextDomain i18n
 msgid "You requested mentoring for"
-msgstr ""
+msgstr "Vous avez demandé du mentorat pour"
 
 # _e("You requested mentoring from", "i18n");
 # Context  TextDomain i18n
 msgid "You requested mentoring from"
-msgstr ""
+msgstr "Vous avez demandé du mentorat à"
 
 # _e("You cancelled your offer to mentor this business", "i18n");
 # Context  TextDomain i18n
 msgid "You cancelled your offer to mentor this business"
-msgstr ""
+msgstr "Vous avez annulé votre offre de mentorat"
 
 # _e("You cancelled your mentor request for", "i18n");
 # Context  TextDomain i18n
 msgid "You cancelled your mentor request for"
-msgstr ""
+msgstr "Vous avez annulé votre demande de mentorat à "
 
 # _e("Stop Mentoring", "i18n");
 # Context  TextDomain i18n
 msgid "Stop Mentoring"
-msgstr ""
+msgstr "Arrêter montorat"
 
-# _e("You have cancelled the mentor request of", "i18n");
+# _e("You have cancelled the mentor request ", "i18n");
 # Context  TextDomain i18n
-msgid "You have cancelled the mentor request of"
-msgstr ""
+msgid "You have cancelled the mentor request "
+msgstr "Vous avez annulé votre demande de mentorat"
 
 # _e("Remove", "i18n");
 # Context  TextDomain i18n
 msgid "Remove"
-msgstr ""
+msgstr "Supprimer"
 
 # _e("Request", "i18n");
 # Context  TextDomain i18n
 msgid "Request"
-msgstr ""
+msgstr "Demander"
 
 # _e("Reject", "i18n");
 # Context  TextDomain i18n
 msgid "Reject"
-msgstr ""
+msgstr "Rejeter"
 
 # _e("Accept", "i18n");
 # Context  TextDomain i18n
 msgid "Accept"
-msgstr ""
+msgstr "Accepter"
 
 # _e("Send a Reminder", "i18n");
 # Context  TextDomain i18n
 msgid "Send a Reminder"
-msgstr ""
+msgstr "Envoyer un rappel"
 
 # _e("Cancel Request", "i18n");
 # Context  TextDomain i18n
 msgid "Cancel Request"
-msgstr ""
+msgstr "Annuler la demande"
 
 # _e("Remove Access", "i18n");
 # Context  TextDomain i18n
 msgid "Remove Access"
-msgstr ""
+msgstr "Supprimez l'accès"
 
 # _e("Dismiss", "i18n");
 # Context  TextDomain i18n
 msgid "Dismiss"
-msgstr ""
+msgstr "Ignorer"
 
 # _e("requests access", "i18n");
 # Context  TextDomain i18n
 msgid "requests access"
-msgstr ""
+msgstr "demande accès"
 
 # _e("has access", "i18n");
 # Context  TextDomain i18n
 msgid "has access"
-msgstr ""
+msgstr "a accès"
 
 # _e("has been rejected", "i18n");
 # Context  TextDomain i18n
 msgid "has been rejected"
-msgstr ""
+msgstr "a été rejeté"
 
 # _e("Request access from", "i18n");
 # Context  TextDomain i18n
 msgid "Request access from"
-msgstr ""
+msgstr " Demande accès à "
 
 # _e("Requests Access", "i18n");
 # Context  TextDomain i18n
 msgid "Requests Access"
-msgstr ""
+msgstr "Demande accès"
 
 # _e("You have requested access from", "i18n");
 # Context  TextDomain i18n
 msgid "You have requested access from"
-msgstr ""
+msgstr "Vous avez demandé accès à"
 
 # _e("You have been granted full access by", "i18n");
 # Context  TextDomain i18n
 msgid "You have been granted full access by"
-msgstr ""
+msgstr "L'accès vous a été donné par"
 
 # _e("Completed", "i18n");
 # Context  TextDomain i18n
 msgid "Completed"
-msgstr ""
+msgstr "Complété"
 
 # _e("Finance Needed", "i18n");
 # Context  TextDomain i18n
 msgid "Finance Needed"
-msgstr ""
+msgstr "Financement nécessaire"
 
 # _e("Business stage", "i18n");
 # Context  TextDomain i18n
 msgid "Business stage"
-msgstr ""
+msgstr "Phase de développement de l'entreprise"
 
 # _e("Year sales started", "i18n");
 # Context  TextDomain i18n
 msgid "Year sales started"
-msgstr ""
+msgstr "Année du début de ventes"
 
 # _x("Industry", "search","i18n");
 # Context search TextDomain i18n
@@ -1684,105 +1713,105 @@ msgstr "Industrie"
 # _e("Country of business", "i18n");
 # Context  TextDomain i18n
 msgid "Country of business"
-msgstr ""
+msgstr "Pays de l' entreprise"
 
 # _e("View Business", "i18n");
 # Context  TextDomain i18n
 msgid "View Business"
-msgstr ""
+msgstr "Voir entreprise"
 
 # _e("Date of registration", "i18n");
 # Context  TextDomain i18n
 msgid "Date of registration"
-msgstr ""
+msgstr "Date de l'enregistrement "
 
 # _e("Registration number", "i18n");
 # Context  TextDomain i18n
 msgid "Registration number"
-msgstr ""
+msgstr "Numéro de l'enregistrement "
 
 # _e("Fiscal number", "i18n");
 # Context  TextDomain i18n
 msgid "Fiscal number"
-msgstr ""
+msgstr "Numéro fiscal"
 
 # _e("Legal form of business", "i18n");
 # Context  TextDomain i18n
 msgid "Legal form of business"
-msgstr ""
+msgstr "Forme juridique de l'entreprise"
 
 # _e("View Company", "i18n");
 # Context  TextDomain i18n
 msgid "View Company"
-msgstr ""
+msgstr "Voir société"
 
 # _e("This user has been added to your contacts", "i18n");
 # Context  TextDomain i18n
 msgid "This user has been added to your contacts"
-msgstr ""
+msgstr "Ce membre a été ajouté à vos contacts"
 
 # _e("Disconnect", "i18n");
 # Context  TextDomain i18n
 msgid "Disconnect"
-msgstr ""
+msgstr "Déconnecter"
 
 # _e("You have successfully sent a contact request to this user", "i18n");
 # Context  TextDomain i18n
 msgid "You have successfully sent a contact request to this user"
-msgstr ""
+msgstr " Vous avez envoyé une demade de contact à ce membre"
 
 # _e("wants to connect with you", "i18n");
 # Context  TextDomain i18n
 msgid "wants to connect with you"
-msgstr ""
+msgstr "veut se connecter avec vous"
 
 # _e("You are about to send the request. Are you sure?", "i18n");
 # Context  TextDomain i18n
 msgid "You are about to send request. Are you sure?"
 msgstr ""
-"Vous Ãªtes sur le point d'envoyer la demande. ÃŠtes-vous sÃ»r de vouloir le "
+"Vous êtes sur le point d'envoyer la demande. Êtes-vous sûr de vouloir le "
 "faire ?"
 
 # _e("You are about to send the request. Are you sure?", "i18n");
 # Context  TextDomain i18n
 msgid "You are about to send the request. Are you sure?"
 msgstr ""
-"Vous Ãªtes sur le point d'envoyer la demande. ÃŠtes-vous sÃ»r de vouloir le "
+"Vous êtes sur le point d'envoyer la demande. Êtes-vous sûr de vouloir le "
 "faire ?"
 
 # _e("You are about to accept the request. Are you sure?", "i18n");
 # Context  TextDomain i18n
 msgid "You are about to accept the request. Are you sure?"
 msgstr ""
-"Vous Ãªtes sur le point d'accepter la demande. ÃŠtes-vous sÃ»r de vouloir le "
+"Vous êtes sur le point d'accepter la demande. Êtes-vous sûr de vouloir le "
 "faire ?"
 
 # _e("You are about to ignore the request. Are you sure?", "i18n");
 # Context  TextDomain i18n
 msgid "You are about to ignore the request. Are you sure?"
 msgstr ""
-"Vous Ãªtes sur le point d'ignorer la demande. ÃŠtes-vous sÃ»r de vouloir le "
+"Vous êtes sur le point d'ignorer la demande. Êtes-vous sûr de vouloir le "
 "faire ?"
 
 # _e("You are about to cancel the request. Are you sure?", "i18n");
 # Context  TextDomain i18n
 msgid "You are about to cancel the request. Are you sure?"
 msgstr ""
-"Vous Ãªtes sur le point d'annuler la demande. ÃŠtes-vous sÃ»r de vouloir le "
+"Vous êtes sur le point d'annuler la demande. Êtes-vous sûr de vouloir le "
 "faire ?"
 
 # _e("You are about to cancel the request. Are you sure?", "i18n");
 # Context  TextDomain i18n
 msgid "You are about to cancel request. Are you sure?"
 msgstr ""
-"Vous Ãªtes sur le point d'annuler la demande. ÃŠtes-vous sÃ»r de vouloir le "
+"Vous êtes sur le point d'annuler la demande. Êtes-vous sûr de vouloir le "
 "faire ?"
 
 # _e("You are about to stop the mentoring. Are you sure?", "i18n");
 # Context  TextDomain i18n
 msgid "You are about to stop the mentoring. Are you sure?"
 msgstr ""
-"Vous Ãªtes sur le point d'arrÃªter le mentorat. ÃŠtes-vous sÃ»r de vouloir le "
+"Vous êtes sur le point d'arrêter le mentorat. Êtes-vous sûr de vouloir le "
 "faire ?"
 
 # _e("Processing request", "i18n");
@@ -1818,7 +1847,7 @@ msgstr "Annuler la demande de mentorat"
 # _e("Stop mentoring", "i18n");
 # Context  TextDomain i18n
 msgid "Stop mentoring"
-msgstr "ArrÃªter le mentorat"
+msgstr "Arrêter le mentorat"
 
 # _x("Country", "search","i18n");
 # Context search TextDomain i18n
@@ -1828,7 +1857,7 @@ msgstr "Pays"
 # _e("City", "i18n");
 # Context  TextDomain i18n
 msgid "City"
-msgstr ""
+msgstr "Ville"
 
 # _x("Language", "search","i18n");
 # Context search TextDomain i18n
@@ -1869,28 +1898,28 @@ msgstr "Ajouter un nouveau commentaire"
 # Context  TextDomain i18n
 msgid "This will delete this feedback. Are you sure?"
 msgstr ""
-"Cette opÃ©ration va supprimer ce commentaire. ÃŠtes-vous sÃ»r de vouloir le "
+"Cette opération va supprimer ce commentaire. Êtes-vous sûr de vouloir le "
 "faire ?"
 
 # _e("Feedback added successfully", "i18n");
 # Context  TextDomain i18n
 msgid "Feedback added successfully"
-msgstr "Commentaire ajoutÃ© avec succÃ¨s"
+msgstr "Commentaire ajouté avec succès"
 
 # _e("Feedback updated successfully", "i18n");
 # Context  TextDomain i18n
 msgid "Feedback updated successfully"
-msgstr "Commentaire mis Ã  jour avec succÃ¨s"
+msgstr "Commentaire mis à jour avec succès"
 
 # _e("Feedback deleted successfully", "i18n");
 # Context  TextDomain i18n
 msgid "Feedback deleted successfully"
-msgstr "Commentaire supprimÃ© avec succÃ¨s"
+msgstr "Commentaire supprimé avec succès"
 
 # _e("Error occured, try again", "i18n");
 # Context  TextDomain i18n
 msgid "Error occured, try again"
-msgstr "Une erreur est survenue, veuillez rÃ©essayer"
+msgstr "Une erreur est survenue, veuillez réessayer"
 
 # _e("Clear", "i18n");
 # Context  TextDomain i18n
@@ -1920,57 +1949,57 @@ msgstr "Tout le monde"
 # _x("Group admin", "mail","i18n");
 # Context mail TextDomain i18n
 msgid "Group admin"
-msgstr "ModÃ©rateur du groupe"
+msgstr "Modérateur du groupe"
 
 # _x("Select your nationality", "member","i18n");
 # Context member TextDomain i18n
 msgid "Select Main Sector"
-msgstr "SÃ©lectionner le secteur principal"
+msgstr "Sélectionner le secteur principal"
 
 # _x("Select your investor", "member","i18n");
 # Context member TextDomain i18n
 msgid "Select Sub Sector"
-msgstr "SÃ©lectionner le sous-secteur"
+msgstr "Sélectionner le sous-secteur"
 
 # _x("Select your nationality", "member","i18n");
 # Context member TextDomain i18n
 msgid "Select End Sector"
-msgstr "SÃ©lectionner le secteur final"
+msgstr "Sélectionner le secteur final"
 
 # _e("Go to first page", "i18n");
 # Context  TextDomain i18n
 msgid "Go to first page"
-msgstr "Allez Ã  la premiÃ¨re page"
+msgstr "Allez à la première page"
 
 # _e("Go to previous page", "i18n");
 # Context  TextDomain i18n
 msgid "Go to previous page"
-msgstr "Allez Ã  la page antÃ©rieure"
+msgstr "Allez à la page antérieure"
 
 # _e("Go to next page", "i18n");
 # Context  TextDomain i18n
 msgid "Go to next page"
-msgstr "Allez Ã  la page suivante"
+msgstr "Allez à la page suivante"
 
 # _e("Go to last page", "i18n");
 # Context  TextDomain i18n
 msgid "Go to last page"
-msgstr "Allez Ã  la derniÃ¨re page"
+msgstr "Allez à la dernière page"
 
 # _e("Go to page %num%", "i18n");
 # Context  TextDomain i18n
 msgid "Go to page %num%"
-msgstr "Allez Ã  la page %num%"
+msgstr "Allez à la page %num%"
 
 # _e("Inbox", "i18n");
 # Context  TextDomain i18n
 msgid "Inbox"
-msgstr "ReÃ§us"
+msgstr "Reçus"
 
 # _e("Sent", "i18n");
 # Context  TextDomain i18n
 msgid "Sent"
-msgstr "EnvoyÃ©s"
+msgstr "Envoyés"
 
 # _e("Deleted", "i18n");
 # Context  TextDomain i18n
@@ -2000,7 +2029,7 @@ msgstr "De"
 # _e("To", "i18n");
 # Context  TextDomain i18n
 msgid "To"
-msgstr "Ã€"
+msgstr "À"
 
 # _e("new", "i18n");
 # Context  TextDomain i18n
@@ -2010,12 +2039,12 @@ msgstr "Nouveau"
 # _e("More", "i18n");
 # Context  TextDomain i18n
 msgid "More"
-msgstr ""
+msgstr "Plus"
 
 # _e("Less", "i18n");
 # Context  TextDomain i18n
 msgid "Less"
-msgstr ""
+msgstr "Moins"
 
 # _x("Loading ...", "monitoring","i18n");
 # Context monitoring TextDomain i18n
@@ -2025,96 +2054,96 @@ msgstr "Chargement en cours ..."
 # _e("User not found.", "i18n");
 # Context  TextDomain i18n
 msgid "User not found."
-msgstr ""
+msgstr "Utilisateur non trouvé"
 
 # _e("Invalid username or password.", "i18n");
 # Context  TextDomain i18n
 msgid "Invalid username or password."
-msgstr ""
+msgstr "Votre nom d'utilisateur ou votre mot de passe est invalide"
 
 # _e("Please log out of wordpress administrator.", "i18n");
 # Context  TextDomain i18n
 msgid "Please log out of wordpress administrator."
-msgstr ""
+msgstr "Veuillez vous déconnecter de wordpress administrator"
 
 # _e("All", "i18n");
 # Context  TextDomain i18n
 msgid "All"
-msgstr ""
+msgstr "Tous"
 
 # _e("Mark as:", "i18n");
 # Context  TextDomain i18n
 msgid "Mark as:"
-msgstr ""
+msgstr "Marquer comme:"
 
 # _e("Marked as ", "i18n");
 # Context  TextDomain i18n
 msgid "Marked as "
-msgstr ""
+msgstr "Marqué comme"
 
 # _e("Accredited", "i18n");
 # Context  TextDomain i18n
 msgid "Accredited"
-msgstr ""
+msgstr "Accredité"
 
 # _e("Not Accredited", "i18n");
 # Context  TextDomain i18n
 msgid "Not Accredited"
-msgstr ""
+msgstr "Non accredité"
 
 # _e("Pending Accreditation", "i18n");
 # Context  TextDomain i18n
 msgid "Pending Accreditation"
-msgstr ""
+msgstr "Accréditation en attente"
 
 # _e("Assignment is not allowed for tags:", "i18n");
 # Context  TextDomain i18n
 msgid "Assignment is not allowed for tags:"
-msgstr ""
+msgstr "Tache non autorisée pour:"
 
 # _e("EntityId is not specified", "i18n");
 # Context  TextDomain i18n
 msgid "EntityId is not specified"
-msgstr ""
+msgstr "EntityID non précisé"
 
 # _e("Connect", "i18n");
 # Context  TextDomain i18n
 msgid "Connect"
-msgstr ""
+msgstr "Connecter"
 
 # _e("Message sent", "i18n");
 # Context  TextDomain i18n
 msgid "Message sent"
-msgstr ""
+msgstr "Message envoyé"
 
 # _e("Reminder sent", "i18n");
 # Context  TextDomain i18n
 msgid "Reminder sent"
-msgstr ""
+msgstr "Rappel envoyé"
 
 # _e("Send Message", "i18n");
 # Context  TextDomain i18n
 msgid "Send Message"
-msgstr ""
+msgstr "Envoyer message"
 
 # Language Original
 # _x("Select the reason for submission", "businesssummary","i18n");
 # Context businesssummary TextDomain i18n
 #~ msgctxt "businesssummary"
 #~ msgid "Select what best matches your reason for submission"
-#~ msgstr "SÃ©lectionner la raison pour laquelle vous soumissionnez "
+#~ msgstr "Sélectionner la raison pour laquelle vous soumissionnez "
 
 # _x("Message sent", "mail","i18n");
 # Context mail TextDomain i18n
 #~ msgctxt "mail"
 #~ msgid "Message sent"
-#~ msgstr "Message envoyÃ©"
+#~ msgstr "Message envoyé"
 
 # _x("Ignored contacts", "mail","i18n");
 # Context mail TextDomain i18n
 #~ msgctxt "mail"
 #~ msgid "Ignored contacts"
-#~ msgstr "Contacts ignorÃ©s"
+#~ msgstr "Contacts ignorés"
 
 # _x("More", "search","i18n");
 # Context search TextDomain i18n
@@ -2132,19 +2161,19 @@ msgstr ""
 # Context mail TextDomain i18n
 #~ msgctxt "connect"
 #~ msgid "Inbox"
-#~ msgstr "ReÃ§us"
+#~ msgstr "Reçus"
 
 # _x("Sent", "mail","i18n");
 # Context mail TextDomain i18n
 #~ msgctxt "connect"
 #~ msgid "Sent"
-#~ msgstr "EnvoyÃ©s"
+#~ msgstr "Envoyés"
 
 # _x("Trash", "mail","i18n");
 # Context mail TextDomain i18n
 #~ msgctxt "connect"
 #~ msgid "Deleted"
-#~ msgstr "SupprimÃ©s"
+#~ msgstr "Supprimés"
 
 # _x("Trash", "connect","i18n");
 # Context connect TextDomain i18n
@@ -2174,7 +2203,7 @@ msgstr ""
 # Context connect TextDomain i18n
 #~ msgctxt "connect"
 #~ msgid "To"
-#~ msgstr "Ã€"
+#~ msgstr "À"
 
 # _x("new", "mail","i18n");
 # Context mail TextDomain i18n
@@ -2186,7 +2215,7 @@ msgstr ""
 # Context monitoring TextDomain i18n
 #~ msgctxt "monitoring"
 #~ msgid "Showing records %from% to %to% of total %total%"
-#~ msgstr "RÃ©sultats %from% Ã  %to% du total %total%"
+#~ msgstr "Résultats %from% à %to% du total %total%"
 
 # _x("new", "mentor","i18n");
 # Context mentor TextDomain i18n

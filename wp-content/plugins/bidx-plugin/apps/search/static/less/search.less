@@ -5,11 +5,17 @@
 
 #searchHome
 {
+    .radio
+    {
+        float:  left;
+        margin-top: 0px !important;
+    }
+
     .searchBTitle
     {
         width:100%;
     }
-    .facet-category-Roles
+    .facet-category-role
     {
         .facet-title
         {
@@ -23,12 +29,33 @@
 
     }
 
-    .facet-category-Type
+    .facet-category-entityType
     {
+        .facet-title
+        {
+            display:none;
+        }
+
         .list-group
         {
             margin-bottom:0px;
         }
+
+        .fa-times:before
+        {
+            content:"";
+        }
+    }
+
+    .facetsub-entrepreneur
+    {
+        margin-top: -1px;
+        border-top-left-radius: 6px;
+    }
+
+    .facetsub-member
+    {
+        display:none;
     }
 
     .sort-list
@@ -62,6 +89,7 @@
     {
         border-radius: 6px;
         padding: 20px 20px 20px 20px;
+        margin-bottom: 20px;
     }
     .search-sm-6
     {

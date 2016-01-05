@@ -64,6 +64,8 @@
     <Item value="selectSingleOption">Select an Option</Item>
     <Item value="selectMultipleOptions">Select Some Options</Item>
     <Item value="selectReasonForSubmission">Select what best matches your reason for submission</Item>
+    <Item value="desc">Desc</Item>
+    <Item value="asc">Asc</Item>
 
 
     <!--
@@ -195,8 +197,8 @@
     <!-- Facet Title -->
     <!-- Facet Entity types -->
 
-    <Item value="bdxmember">Member profile</Item>
-    <Item value="bdxplan">Business summary</Item>
+    <Item value="bdxmember">Member</Item>
+    <Item value="bdxplan">Business plan</Item>
     <Item value="investor">Investor</Item>
     <Item value="entrepreneur">Entrepreneur</Item>
     <Item value="mentor">Mentor</Item>
