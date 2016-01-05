@@ -1712,17 +1712,12 @@
                 bidx.utils.log('filterValue=', filterValue);
                 bidx.utils.log('facetFiltersCat=', facetFiltersCat);
 
-               /* if( !$.isEmptyObject( facetFilters ) && !$.isEmptyObject(facetFilters[clickedCategory]))
-                {
-                    bidx.utils.log("I am in if");*/
-                    facetFiltersCat     =   facetFilters[clickedCategory];
-               /* }
-                else
-                {
-                    globalCriteria.facetFilters[clickedCategory] = [];
-                }*/
+                facetFiltersCat     =   facetFilters[clickedCategory];
 
-                if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterValue, facetFiltersCat ) !== -1)
+
+                if ( $this.hasClass( "list-group-item-success" ) &&
+                     $.inArray( filterValue, facetFiltersCat ) !== -1 &&
+                     clickedCategory !== 'entityType' )
                 {
                     globalCriteria.facetFilters[clickedCategory] = _.without(facetFiltersCat, filterValue); // removed the match value from globalCriteria, using underscore function make sure its included
                 }
@@ -1748,7 +1743,7 @@
                     $resetFacet.addClass( "hide" );
                 }*/
 
-                if ( globalCriteria.facetFilters.length === 0 )
+                if ( globalCriteria.facetFilters.length === 0 && clickedCategory !== 'entityType')
                 {
                     $resetFacet.addClass( "hide" );
                 }
