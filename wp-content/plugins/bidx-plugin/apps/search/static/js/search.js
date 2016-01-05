@@ -909,8 +909,6 @@
         var $booleanSel =   $('input:radio[id^="radioBoolean-"]')
         ;
 
-        bidx.utils.log('booleansel', $booleanSel);
-
         $booleanSel.change( function( e )
         {
             var $input          =   $(this)
@@ -921,12 +919,7 @@
 
             if( booleanVal && $input.is(':checked'))
             {
-                bidx.utils.log( 'I am hereee', booleanVal );
                 genericFilters    =   bidx.utils.getValue( globalCriteria, 'genericFilters');
-
-                bidx.utils.log('genericFilters', genericFilters);
-                bidx.utils.log('Criteria before click=', globalCriteria);
-                bidx.utils.log('rangeName=', booleanName);
 
                 if( booleanVal === 'both')
                 {
@@ -2344,8 +2337,6 @@
                 ,   investorTaggingId
                 ;
 
-                bidx.utils.log('member', response.member);
-
                 i18nItem        =   response.member;
                 $entityElement  = $("#member-profile-listitem");
                 snippit         = $entityElement.html().replace(/(<!--)*(-->)*/g, "");
@@ -2532,7 +2523,6 @@
         ,   response        =   options.response
         ;
 
-        bidx.utils.log('response', response);
         // now format it into array of objects with value and label
         if ( !$.isEmptyObject(response.plan) )
         {
