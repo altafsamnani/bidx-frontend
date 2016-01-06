@@ -52,8 +52,8 @@
                 <div class="<?php echo $rightSideFooterColSm;?> text-right">
                     <div class="copyright">&copy; <?php echo date("Y") ?> bidx.net  <?php _e( 'All rights reserved','bidxplugin' ) ?></div>
                     <div class="inline-list footer-menu">
-                        <div><a href="<?php echo _l('terms-of-service');?>" target="_blank"><?php _e('Terms of service','bidxplugin')?></a></div>
-                        <div><a href="<?php echo _l('privacy');?>"><?php _e('Privacy','bidxplugin')?></a></div>
+                        <div><a href="<?php echo _wl('terms-of-service');?>" target="_blank"><?php _e('Terms of service','bidxplugin')?></a></div>
+                        <div><a href="<?php echo _wl('privacy');?>"><?php _e('Privacy','bidxplugin')?></a></div>
                     </div>
                 </div>
             </div>
