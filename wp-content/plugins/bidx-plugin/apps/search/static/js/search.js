@@ -2079,6 +2079,7 @@
                     paging.search.offset = ( page - 1 ) * tempLimit;
 
                     _toggleListLoading( $element );
+                    _hideView( "pager" );
                     _showAllView( "load" );
 
                      _getSearchList(
@@ -2615,11 +2616,10 @@
         {
             case "list":
 
-
+                _hideView( "pager" );
                 _showAllView( "load" );
                 _showAllView( "searchList" );
-                _showAllView( "pager" );
-                _showAllView( "sort" );
+
                 _toggleListLoading( $element );
 
                // bidx.utils.setValue( params, 'urlParam', true );
@@ -2632,11 +2632,13 @@
                     urlParam      :   true
                 ,   cb          :   function()
                     {
-                       _hideView( "load" );
-                       _toggleListLoading( $element );
-                       tempLimit = CONSTANTS.SEARCH_LIMIT;
-                       //_showAllView( "pager" );
-                       _actionBulkActions();
+                        _hideView( "load" );
+                        _showAllView( "pager" );
+                        _showAllView( "sort" );
+                        _toggleListLoading( $element );
+                        tempLimit = CONSTANTS.SEARCH_LIMIT;
+                        //_showAllView( "pager" );
+                        _actionBulkActions();
 
                     }
                 });
