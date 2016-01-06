@@ -50,16 +50,12 @@
         ,   montherLanguage         = ''
         ,   country                 = ''
         ,   industry                = ''
-        ,   isGroupAdmin            = bidx.common.isGroupAdmin()
         ,   image
         ,   imageWidth
         ,   imageLeft
         ,   imageTop
         ,   highestEducation
         ,   gender
-        ,   isEntrepreneur
-        ,   isInvestor
-        ,   investorMemberId
         ,   isMentor
         ,   cityTown
         ,   sepCountry
@@ -67,24 +63,15 @@
         ,   entrpreneurFocusIndustry
         ,   tagging
         ,   taggingMentor
-        ,   taggingInvestor
         ,   mentorTaggingId
-        ,   investorTaggingId
-        ,   roles
         ,   loggedInMemberId = bidx.common.getCurrentUserId()
-        ,   currentInvestorId = bidx.common.getInvestorProfileId()
-        ,   displayInvestorProfile  = ( $.inArray("GroupOwner", roles) !== -1 || $.inArray("GroupAdmin", roles) !== -1 || currentInvestorId ) ? true : false
         ;
 
         $.each (response.found, function(i, item){
 
             i18nItem        =   item.member;
-            roles           = bidx.utils.getValue( i18nItem, "roles" );
-            isEntrepreneur  = ( $.inArray("entrepreneur", roles) !== -1 ) ? true : false;
-            isMentor        = ( $.inArray("mentor", roles) !== -1 ) ? true : false;
-            isInvestor      = ( $.inArray("investor", roles) !== -1 ) ? true : false;
+            isMentor        = true;
 
-            investorMemberId = bidx.utils.getValue( i18nItem, "userId" );
             // cityTown         = bidx.utils.getValue( i18nItem, "cityTown");
             memberCountry    = bidx.utils.getValue( i18nItem, "country");
             tagging          = bidx.common.getAccreditation( i18nItem );
@@ -160,8 +147,6 @@
                 .replace( /%name%/g,                i18nItem.name )
                 .replace( /%modified%/g,            i18nItem.modified  ? bidx.utils.parseISODateTime(i18nItem.modified, "date") : emptyVal )
                 .replace( /%professionalTitle%/g,   i18nItem.title   ? i18nItem.title     : emptyVal )
-                .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
-                .replace( /%role_investor%/g,       ( isInvestor && displayInvestorProfile )      ? bidx.i18n.i( 'investor' )   : '' )
                 .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
                 .replace( /%gender%/g,              i18nItem.gender   ? gender    : emptyVal )
                 .replace( /%highestEducation%/g,    i18nItem.highestEducation   ? highestEducation    : emptyVal )
@@ -184,30 +169,15 @@
             });
 
             /* tagging */
-            if(isMentor)
+            mentorTaggingId     =   'hide';
+            taggingMentor       =   bidx.utils.getValue(tagging, 'mentor' );
+
+            if( !_.isUndefined(taggingMentor) )
             {
-                mentorTaggingId     =   'hide';
-                taggingMentor       =   bidx.utils.getValue(tagging, 'mentor' );
-
-                if( !_.isUndefined(taggingMentor) )
-                {
-                    mentorTaggingId     =   (taggingMentor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
-                }
-
-                $listItem.find('.fa-mentor').addClass( mentorTaggingId );
+                mentorTaggingId     =   (taggingMentor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
             }
-            if( ( isInvestor && isGroupAdmin) || ( investorMemberId === loggedInMemberId ) )
-            {
-                investorTaggingId   =   'hide';
-                taggingInvestor     =   bidx.utils.getValue(tagging, 'investor' );
 
-                if( !_.isUndefined(taggingInvestor) )
-                {
-                    investorTaggingId   =   (taggingInvestor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
-                }
-
-                $listItem.find('.fa-investor').addClass( investorTaggingId );
-            }
+            $listItem.find('.fa-mentor').addClass( mentorTaggingId );
 
             // Member Image
             //
@@ -257,7 +227,7 @@
         ,   {
                 groupDomain: bidx.common.groupDomain
             ,   data: {
-                          "searchTerm"    :   "basic: \"roberts\""
+                          "searchTerm"    :   "basic: *"
                       ,   "sort"          :   []
                       ,   "maxResult"     :   10
                       ,   "offset"        :   0
