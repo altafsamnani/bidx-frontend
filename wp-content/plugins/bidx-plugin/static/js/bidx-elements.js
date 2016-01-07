@@ -366,27 +366,10 @@
         return card;
     };
 
-    var groupRoles = function ()
-    {
-        var roles = ""
-        ,   hasEntrepreneurProfile      = bidx.common.getEntrepreneurProfileId() ? true : false
-        ,   hasInvestorProfile          = bidx.common.getInvestorProfileId() ? true : false
-        ,   hasMentorProfile            = bidx.common.getMentorProfileId() ? true : false
-        ;
-
-        if ( hasEntrepreneurProfile ) { roles = roles + "Entrepreneur, "; }
-        if ( hasInvestorProfile ) { roles = roles + "Investor, "; }
-        if ( hasMentorProfile ) { roles = roles + "Mentor, "}
-
-        roles = roles.substring(0, roles.length - 2);
-
-        return roles;
-    }
-
     var groupCardView = function (item)
     {
         var card
-        ,   roles = groupRoles( item.bidxMeta.bidxGroupRoles )
+        ,   roles = bidx.common.groupRoles( item.bidxMeta.bidxGroupRoles )
         ,   isAdmin = bidx.common.isGroupAdmin()
         ,   currentGroupId = bidx.common.getCurrentGroupId()
         ;
@@ -398,7 +381,7 @@
                     $( "<div />", { "class": "cardHeader hide-overflow" } )
                     .append
                     (
-                        $( "<a />", { "href": item.bidxMeta.bidxGroupUrl, "class": "btn btn-primary btn-xs pull-right info-action main-margin-half" + (currentGroupId == item.bidxMeta.bidxGroupId ? " hide" : ""), "html": bidx.i18n.i( "poPortal" ) } )
+                        $( "<a />", { "href": item.bidxMeta.bidxGroupUrl + "/" + bidx.common.getCurrentLanguage(), "class": "btn btn-primary btn-xs pull-right info-action main-margin-half" + (currentGroupId == item.bidxMeta.bidxGroupId ? " hide" : ""), "html": bidx.i18n.i( "poPortal" ) } )
                     )          
                     .append
                     (
