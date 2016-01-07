@@ -244,7 +244,7 @@
                     <div class="info-cell pull-left"><?php echo _e( 'Completed', 'bidxplugin' ); ?>: %completeness%</div>
                     <div class="info-cell pull-left"><?php echo _e( 'Finance Needed', 'bidxplugin' ); ?>: %financingNeeded%</div>
                     <div class="info-cell pull-left"><?php echo _e( 'Last update', 'bidxplugin' ); ?>: %modified%</div>
-                    <a href="/businesssummary/%entityId%" class="btn btn-primary btn-xs pull-right info-action main-margin-half"><?php echo _e( 'View Business', 'bidxplugin' ); ?> </a>
+                    <a href="<?php echo _l('businesssummary');?>/%entityId%" class="btn btn-primary btn-xs pull-right info-action main-margin-half"><?php echo _e( 'View Business', 'bidxplugin' ); ?> </a>
                 </div>
                 <div class="cardContent main-padding">
                     <div class="cardTop">
@@ -256,7 +256,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-2">
-                                <a class="pull-left main-margin-half" href="/businesssummary/%entityId%" data-role='businessImage'>
+                                <a class="pull-left main-margin-half" href="<?php echo _l('businesssummary');?>/%entityId%" data-role='businessImage'>
                                     <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
                                 </a>
                             </div>
