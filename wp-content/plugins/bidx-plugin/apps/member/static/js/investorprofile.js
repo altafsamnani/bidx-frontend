@@ -1429,7 +1429,7 @@
                                             {
                                                 return $editForm.find( "[name='minInvestment']" ).val()
                                                        ? $editForm.find( "[name='minInvestment']" ).val()
-                                                       : 0;
+                                                       : $editForm.find( "[name='maxInvestment']" ).val();
                                             }
                 }
             ,   "focusSocialImpact":
