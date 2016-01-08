@@ -202,7 +202,14 @@ class Competition_Counter_Widget extends WP_Widget {
                     <div class="alert alert-warning">
                         <strong><i class="fa fa-exclamation-triangle"></i> <?php _e( 'This competition has expired','bidxplugin' ); ?></strong>
                     </div>
-                    <!-- <a class="btn btn-secondary btn-block" href="/competition/<?php echo $competitionlink; ?>/"><?php _e( 'Visit our competition overview','bidxplugin' ); ?> </a> -->
+<?php
+                    if ( $competitionlink ):
+?>
+                        <a class="btn btn-secondary btn-block" href="<?php echo $competitionlink; ?>"><?php _e( 'View','bidxplugin' ); ?></a>
+<?php
+                    endif;
+?>
+                  
 <?php
                 }
                 else
