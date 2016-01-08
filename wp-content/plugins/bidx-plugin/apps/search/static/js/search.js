@@ -861,19 +861,9 @@
                 $fromDate.datepicker( "setEndDate", toValue );
             }
 
-            bidx.utils.log('frmValue', frmValue );
-            bidx.utils.log('toValue', toValue );
-            bidx.utils.log('min', min );
-            bidx.utils.log('max', max );
-
             if( frmValue && toValue)
             {
                 rangeFilters    =   bidx.utils.getValue( globalCriteria, 'rangeFilters');
-
-                bidx.utils.log('facetFilters', rangeFilters);
-                bidx.utils.log('Criteria before click=', globalCriteria);
-                bidx.utils.log('rangeName=', rangeName);
-
 
                 globalCriteria.rangeFilters[rangeName].min = min;
                 globalCriteria.rangeFilters[rangeName].max = max;
@@ -1243,6 +1233,14 @@
         $currentCategory.find( ".list-group" ).append($listFacetsItem);
 
         $calendarFrom   = $currentCategory.find( '#cal-range-from-' + facetItem );
+
+        if( isRTL )
+        {
+           //  pickerOptions.container     =   '#picker-container-from-' + facetItem;
+        }
+
+        bidx.utils.log('pickerOptions', pickerOptions);
+
         $calendarFrom.datepicker( pickerOptions );
 
         if( minVal )
@@ -1250,7 +1248,13 @@
            $calendarFrom.datepicker( "setDate", min );
         }
 
-        $calendarTo     = $currentCategory.find( '#cal-range-to-' + facetItem );
+        $calendarTo                 =   $currentCategory.find( '#cal-range-to-' + facetItem );
+
+        if( isRTL )
+        {
+            // pickerOptions.container     =   '#picker-container-to-' + facetItem;
+        }
+
         $calendarTo.datepicker( pickerOptions );
 
         if( maxObj )
