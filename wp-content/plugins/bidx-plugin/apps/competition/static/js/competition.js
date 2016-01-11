@@ -175,7 +175,7 @@
     //
     var CONSTANTS =
         {
-            SEARCH_LIMIT:   4
+            SEARCH_LIMIT:   100
         ,   OFFSET:         0
         }
 
@@ -783,59 +783,6 @@
             $bscompetitionLogoModal.modal();
         } );
 
-        function _getSearchCriteria ( params )
-        {
-
-            var q
-            ,   sort
-            ,   facetFilters
-            ,   criteria
-            ,   criteriaQ
-            ,   paramFilter
-            ,   search
-            ,   sortQuery       = []
-            ,   criteriaFilters = []
-            ,   criteriaSort    = []
-            ,   filters         = []
-            ,   urlParam        = params.urlParam
-            ;
-
-            // 1. Search paramete
-            // ex searchTerm:text:altaf
-            //
-            // See if its coming from the search page itself(if) or from the top(else)
-            //
-            q = bidx.utils.getValue( params, 'q' );
-
-            criteriaQ = (q) ? q : '*';
-
-            search  =
-            [
-                {
-                    label: "search"
-                ,   value: criteriaQ
-                }
-            ,   {
-                    label: "limit"
-                ,   value: CONSTANTS.SEARCH_LIMIT
-
-                }
-            ,   {
-                    label: "offset"
-                ,   value: CONSTANTS.OFFSET
-
-                }
-            ,   {
-                    label: "scope"
-                ,   value: "local"
-                }
-            ];
-
-
-            return search;
-
-        }
-
         function _getMemberforActorRole( params)
         {
             var criteria
@@ -855,8 +802,8 @@
                 ,   data: {
                                 "searchTerm"    :   "basic:" + criteriaQ
                             ,   "sort"          :   []
-                            ,   "maxResult"     :   100
-                            ,   "offset"        :   0
+                            ,   "maxResult"     :   CONSTANTS.SEARCH_LIMIT
+                            ,   "offset"        :   CONSTANTS.OFFSET
                             ,   "entityType"    :   ["bdxmember"]
                             ,   "scope"         :   "LOCAL"
                     }
