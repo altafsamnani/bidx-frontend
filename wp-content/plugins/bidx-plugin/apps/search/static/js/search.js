@@ -1562,21 +1562,24 @@
                 facetValues     =   bidx.utils.getValue( facetItems, "facetValues" );
                 facetLabel      =   bidx.i18n.i( facetItems.name, appName );
 
-                if( facetItems.name === 'entityType')
-                {
-                    tempFacetValues[0]     =   _.findWhere( facetValues, { name: 'bdxplan'} );
-                    tempFacetValues[1]     =   _.findWhere( facetValues, { name: 'bdxmember'} );
-                    facetValues            =   tempFacetValues;
-                }
 
                 if ( !$.isEmptyObject(facetValues) )
                 {
+                    if( facetItems.name === 'entityType')
+                    {
+                        tempFacetValues[0]     =   _.findWhere( facetValues, { name: 'bdxplan'} );
+                        tempFacetValues[1]     =   _.findWhere( facetValues, { name: 'bdxmember'} );
+                        facetValues            =   tempFacetValues;
+                    }
+
                     listItem    =   snippit
                                     .replace( /%facets_title%/g, bidx.i18n.i( facetItems.name, appName ) )
                                      .replace( /%facets_name%/g, facetItems.name  );
 
                     $listItem  = listItem;
+
                     $list.append($listItem );
+
                     $currentCategory    = $list.find( ".facet-category-" + facetItems.name );
                     /* Start from here **********************/
                    /* topFacets       =   _.filter(facetValues, function(value) { return value.checked; });
@@ -1652,7 +1655,7 @@
                         }
                     });
 
-                    $advancedSearch.css('display','block');
+                    //$advancedSearch.css('display','block');
                 }
 
                 // Show the first VISIBLE_FILTER_ITEMS filter items if more than (VISIBLE_FILTER_ITEMS + 3)
@@ -1886,6 +1889,7 @@
                             ,   sort        :   sort
                             ,   maxResult   :   tempLimit
                             ,   offset      :   paging.search.offset
+                            ,   scope       :   'LOCAL'
                             };
 
         // 3. facetFilters
