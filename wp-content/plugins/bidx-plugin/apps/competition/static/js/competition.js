@@ -841,29 +841,38 @@
             var criteria
             ,   $d      = $.Deferred()
             ,   matches = []
+            ,   q
+            ,   criteriaQ
             ;
 
-            criteria          =   _getSearchCriteria( params );
+            q = bidx.utils.getValue( params, 'q' );
+            criteriaQ = (q) ? q : '*';
 
             bidx.api.call(
-                "search.members"
+                "search.found"
             ,   {
-                    groupDomain:          bidx.common.groupDomain
-                ,   extraUrlParameters:   criteria
-
+                    groupDomain: bidx.common.groupDomain
+                ,   data: {
+                                "searchTerm"    :   "basic:" + criteriaQ
+                            ,   "sort"          :   []
+                            ,   "maxResult"     :   100
+                            ,   "offset"        :   0
+                            ,   "entityType"    :   ["bdxmember"]
+                            ,   "scope"         :   "LOCAL"
+                    }
                 ,   success: function( response )
                     {
                         bidx.utils.log( "[Member List for Criteria] ", params.q,  response );
 
-                        $.each( response, function( idx, data )
+                        $.each( response.found, function( id, item )
                         {
                             matches.push(
                             {
-                                value: data.name
-                            ,   id:    data.id
+                                value: item.member.name
+                            ,   id:    item.member.userId
                             });
 
-                            actorArr[data.id] = data; // Store at global array for later use
+                            actorArr[item.member.userId] = item.member; // Store at global array for later use
                         });
 
                         $d.resolve( matches  );
@@ -1007,7 +1016,7 @@
             {
 
                 listItem    =   snippet
-                                .replace( /%userId%/g,    data.id  )
+                                .replace( /%userId%/g,    data.userId  )
                                 .replace( /%memberName%/g,  data.name )
                                 ;
 
