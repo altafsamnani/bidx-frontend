@@ -7857,10 +7857,10 @@ msgstr "Utilice esta sesión para definir sus preferencias como mentor"
 # Context  Textdomain bidxplugin
 # Already exists, doesnt need translation.
 # 1070) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/member/templates/edit-mentor.phtml -270
-# _e("Keywords in a Business Proposal (max. 400 characters)","bidxplugin");
+# _e("Keywords in a Business Proposal","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Keywords in a Business Proposal"
-msgstr "Palabras claves en una Propuesta de negocio (máx. 400 caracteres)"
+msgstr "Palabras claves en una Propuesta de negocio"
 
 # 217) File -/var/www/html/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -80
 # _e("Define your group (max. 140 characters)","bidxplugin");
