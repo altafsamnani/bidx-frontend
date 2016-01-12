@@ -33,6 +33,8 @@
     ,   $btnCreateBp                = $element.find( ".btn-business")
     ,   $btnApply                   = $element.find( ".btn-apply")
 
+    ,   $appliedCount               = $element.find( "#appliedcount" )
+
     ,   $btnPhase                   = $element.find( ".btn-phase" )
     ,   $btnEndPhase                = $element.find( ".endPhase" )
     ,   $btnJudgePhase              = $element.find( ".judgePhase" )
@@ -239,6 +241,7 @@
 
                             _hideView('apply');
                             $successLabel.empty().i18nText('SUCCESS_APPLIED', appName);
+                            $appliedCount.text( parseInt($appliedCount.html(), 10) + 1 );
                             _showAllView('participate');
                             _showAllView('success');
 
