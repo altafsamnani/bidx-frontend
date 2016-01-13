@@ -7,8 +7,8 @@
     ,   g                   = "__global"
     ,   iclVars             = window.icl_vars || {}
     ,   currentLanguage     = ( iclVars.current_language ) ? iclVars.current_language : 'en'
-    ,   rtlLangArr             = ['ar']
-    ,   accentLang          = ['mz', 'sp']
+    ,   rtlLangArr          = ['ar']
+    ,   accentLang          = ['sp', 'fr']
     ;
 
         // Internal administration of cached items, let's keep it for now in an object, maybe later sync it to localstorage

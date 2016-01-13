@@ -66,7 +66,7 @@ class Competition_Counter_Widget extends WP_Widget {
             <textarea class="widefat" id="<?php echo $this->get_field_id('competitiondesc'); ?>" name="<?php echo $this->get_field_name('competitiondesc'); ?>" value="<?php echo $competitiondesc; ?>"><?php echo $competitiondesc; ?></textarea>
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id('competitiondate'); ?>"><?php _e('End Date and Time: (required)', 'wp_widget_plugin'); ?></label>
+            <label for="<?php echo $this->get_field_id('competitiondate'); ?>"><?php _e('End Date and Time: (required, format e.g.: 2015-03-19T00:00:00Z)', 'wp_widget_plugin'); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id('competitiondate'); ?>" name="<?php echo $this->get_field_name('competitiondate'); ?>" type="text" placeholder="2015-03-19T00:00:00Z" value="<?php echo $competitiondate; ?>" />
         </p>
         <p>
@@ -202,7 +202,14 @@ class Competition_Counter_Widget extends WP_Widget {
                     <div class="alert alert-warning">
                         <strong><i class="fa fa-exclamation-triangle"></i> <?php _e( 'This competition has expired','bidxplugin' ); ?></strong>
                     </div>
-                    <!-- <a class="btn btn-secondary btn-block" href="/competition/<?php echo $competitionlink; ?>/"><?php _e( 'Visit our competition overview','bidxplugin' ); ?> </a> -->
+<?php
+                    if ( $competitionlink ):
+?>
+                        <a class="btn btn-secondary btn-block" href="<?php echo $competitionlink; ?>"><?php _e( 'View','bidxplugin' ); ?></a>
+<?php
+                    endif;
+?>
+                  
 <?php
                 }
                 else

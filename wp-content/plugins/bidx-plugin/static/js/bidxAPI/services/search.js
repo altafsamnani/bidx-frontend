@@ -10,7 +10,7 @@
     ,   nnSearchUrl     = "/api/v1/nnsearch"
     ,   baseUrl         = "/api/v1/nsearch"
     ,   baseOldUrl      = "/api/v1/search"
-    ,   baseMemberUrl   = "/api/v1/nsearch/members"
+    ,   baseMemberUrl   = "/api/v1/nnsearch"
     ,   params          = []
     ;
 

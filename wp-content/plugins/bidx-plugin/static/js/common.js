@@ -1345,6 +1345,24 @@
         } );
     };
 
+    function groupRoles()
+    {
+        var roles = ""
+        ,   hasEntrepreneurProfile      = bidx.common.getEntrepreneurProfileId() ? true : false
+        ,   hasInvestorProfile          = bidx.common.getInvestorProfileId() ? true : false
+        ,   hasMentorProfile            = bidx.common.getMentorProfileId() ? true : false
+        ;
+
+        if ( hasEntrepreneurProfile ) { roles = roles + "Entrepreneur, "; }
+        if ( hasInvestorProfile ) { roles = roles + "Investor, "; }
+        if ( hasMentorProfile ) { roles = roles + "Mentor, "}
+
+        roles = roles.substring(0, roles.length - 2);
+
+        return roles;
+    }
+
+
     // Convenience function for retrieving the id of the current group
     //
     function getCurrentLanguage()
@@ -2000,6 +2018,7 @@
     ,   getSessionValue:                getSessionValue
     ,   getNow:                         getNow
     ,   getCurrentLanguage:             getCurrentLanguage
+    ,   groupRoles:                     groupRoles
 
     ,   addAppWithPendingChanges:       addAppWithPendingChanges
     ,   removeAppWithPendingChanges:    removeAppWithPendingChanges

@@ -82,7 +82,7 @@
 
                                     <!-- trash only buttons -->
                                     <a class="btn btn-small btn-primary bidx-btn-undelete" href="#"><?php _e('Undelete','bidxplugin')?></a>
-                                    <a class="btn btn-small btn-primary bidx-btn-empty-trash-confirm" href="/mail/#mail/empty-trash-confirm"><?php _e('Empty trash','bidxplugin')?></a>
+                                    <a class="btn btn-small btn-primary bidx-btn-empty-trash-confirm" href="<?php echo _l('/mail/#mail/empty-trash-confirm');?>"><?php _e('Empty trash','bidxplugin')?></a>
                             </div>
                             <div class="pull-right">
                                 <a class="btn btn-small btn-primary bidx-btn-mail-prev" href="#"><?php _e('< Newer', 'bidxplugin')?></a>
@@ -119,8 +119,8 @@
                             <!-- TOOLBAR -->
                             <nav class="mail-toolbar bg-primary-dark">
                                 <div class="btn-group btn-sender btn-toolbar" data-requestId="%senderid%" data-requestName="%sendername%">
-                                    <a class="btn btn-small btn-primary btn-reply" href="#" data-href="/mail/#mail/%state%/action=reply&id=%id%"><?php _e('Reply','bidxplugin')?></a>
-                                    <a class="btn btn-small btn-primary btn-forward" href="#" data-href="/mail/#mail/%state%/action=forward&id=%id%"><?php _e('Forward','bidxplugin')?></a>
+                                    <a class="btn btn-small btn-primary btn-reply" href="#" data-href="<?php echo _l('/mail/#mail');?>/%state%/action=reply&id=%id%"><?php _e('Reply','bidxplugin')?></a>
+                                    <a class="btn btn-small btn-primary btn-forward" href="#" data-href="<?php echo _l('/mail/#mail');?>/%state%/action=forward&id=%id%"><?php _e('Forward','bidxplugin')?></a>
                                     <a class="btn btn-small btn-primary bidx-btn-delete" href="#"><?php _e('Delete','bidxplugin')?></a>
                                     <a class="btn btn-small btn-primary bidx-btn-undelete" href="#"><?php _e('Undelete','bidxplugin')?></a>
                                     <div class="btn-group btngroup-move-to-folder">
@@ -173,7 +173,7 @@
                             </div>
 
                             <div class="pull-left">
-                                <a href="/mail/#mail/discardConfirm" class="btn btn-danger compose-cancel">
+                                <a href="<?php echo _l('/mail/#mail/discardConfirm');?>" class="btn btn-danger compose-cancel">
                                     <i class="fa fa-trash-o"></i>
                                     <?php _e('Discard message','bidxplugin')?>
                                 </a>
@@ -251,7 +251,7 @@
 
                                 <div class="modal-footer">
                                     <button class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Cancel','bidxplugin')?></button>
-                                    <a class="btn bidx-default-button" href="#" data-href="/mail/#mail/inbox"><?php _e('Discard message')?></a>
+                                    <a class="btn bidx-default-button" href="#" data-href="<?php echo _l('/mail/#mail/inbox');?>"><?php _e('Discard message')?></a>
                                 </div>
                             </div>
                         </div>
@@ -275,7 +275,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <a class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Cancel','bidxplugin')?></a>
-                                    <a class="btn bidx-default-button" href="#" data-href="/mail/#mail/%state%/action=doEmptyTrash"><?php _e('Empty trash','bidxplugin')?></a>
+                                    <a class="btn bidx-default-button" href="#" data-href="<?php echo _l('/mail/#mail');?>/%state%/action=doEmptyTrash"><?php _e('Empty trash','bidxplugin')?></a>
                                 </div>
                             </div>
                         </div>
@@ -433,15 +433,15 @@
 <script type="text/html" id="contact-request-incoming">
 <!--
   <li class="list-group-item" data-requestId = "%contactId%" data-requestName="%contactName%">
-    <a href="/member/%contactId%">%contactName%</a>
+    <a href="<?php echo _l('/member');?>/%contactId%">%contactName%</a>
     <div class="btn-group pull-right">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <i class="fa fa-chevron-down"></i>
         </button>
         <ul class="dropdown-menu box-border" role="menu">
-            <li><a href="/member/%contactId%">View</a></li>
-            <li class='cancelRequest'><a data-btn="connectcancel">Cancel request</a></li>
-            <li class='blockProfile'><a class='blockLink' data-btn="connectblock">Block</a></li>
+            <li><a href="<?php echo _l('/member');?>/%contactId%"><?php _e('View','bidxplugin')?></a></li>
+            <li class='cancelRequest'><a data-btn="connectcancel"><?php _e('Cancel request','bidxplugin')?></a></li>
+            <li class='blockProfile'><a class='blockLink' data-btn="connectblock"><?php _e('Block','bidxplugin')?></a></li>
         </ul>
     </div>
     <div class="row contact-request-buttons">
@@ -459,14 +459,14 @@
 <script type="text/html" id="contact-request-pending">
 <!--
   <li class="list-group-item" data-requestId = "%contactId%" data-requestName="%contactName%">
-    <a href="/member/%contactId%">%contactName%</a>
+    <a href="<?php echo _l('/member');?>/%contactId%">%contactName%</a>
     <div class="btn-group pull-right">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <i class="fa fa-chevron-down"></i>
         </button>
         <ul class="dropdown-menu box-border" role="menu">
-            <li><a href="/member/%contactId%">View</a></li>
-            <li class='cancelRequest'><a data-btn="connectcancel">Cancel request</a></li>
+            <li><a href="<?php echo _l('/member');?>/%contactId%"><?php _e('View','bidxplugin')?></a></li>
+            <li class='cancelRequest'><a data-btn="connectcancel"><?php _e('Cancel request','bidxplugin')?></a></li>
         </ul>
     </div>
   </li>
@@ -476,14 +476,14 @@
 <script type="text/html" id="contact-request-active">
 <!--
   <li class="list-group-item" data-requestId = "%contactId%" data-requestName="%contactName%">
-    <a href="/member/%contactId%">%contactName%</a>
+    <a href="<?php echo _l('/member');?>/%contactId%">%contactName%</a>
     <div class="btn-group pull-right">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <i class="fa fa-chevron-down"></i>
         </button>
         <ul class="dropdown-menu box-border" role="menu">
-            <li><a href="/member/%contactId%">View</a></li>
-            <li class='cancelRequest'><a data-btn="connectcancel">Disconnect</a></li>
+            <li><a href="<?php echo _l('/member');?>/%contactId%"><?php _e('View','bidxplugin')?></a></li>
+            <li class='cancelRequest'><a data-btn="connectcancel"><?php _e('Disconnect','bidxplugin')?></a></li>
         </ul>
     </div>
   </li>
@@ -493,13 +493,13 @@
 <script type="text/html" id="contact-request-blocked">
 <!--
   <li class="list-group-item" data-requestId = "%contactId%" data-requestName="%contactName%">
-    <a href="/member/%contactId%">%contactName%</a>
+    <a href="<?php echo _l('/member');?>/%contactId%">%contactName%</a>
     <div class="btn-group pull-right">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <i class="fa fa-chevron-down"></i>
         </button>
         <ul class="dropdown-menu box-border" role="menu">
-            <li class='unblockProfile'><a data-btn="connectunblock">Unblock</a></li>
+            <li class='unblockProfile'><a data-btn="connectunblock"><?php _e('Unblock','bidxplugin')?></a></li>
         </ul>
     </div>
   </li>
@@ -530,7 +530,7 @@
         <div class="col-sm-6">
             <div>
                 <p>
-                    <a href="/member/%contactId%">%contactName% </a><?php _e( 'wants to add you as connection', 'bidxplugin' ); ?>
+                    <a href="<?php echo _l('/member');?>/%contactId%">%contactName% </a><?php _e( 'wants to add you as connection', 'bidxplugin' ); ?>
                 </p>
             </div>
             <div class="well">

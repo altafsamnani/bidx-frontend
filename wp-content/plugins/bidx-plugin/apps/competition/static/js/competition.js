@@ -33,6 +33,8 @@
     ,   $btnCreateBp                = $element.find( ".btn-business")
     ,   $btnApply                   = $element.find( ".btn-apply")
 
+    ,   $appliedCount               = $element.find( "#appliedcount" )
+
     ,   $btnPhase                   = $element.find( ".btn-phase" )
     ,   $btnEndPhase                = $element.find( ".endPhase" )
     ,   $btnJudgePhase              = $element.find( ".judgePhase" )
@@ -175,7 +177,7 @@
     //
     var CONSTANTS =
         {
-            SEARCH_LIMIT:   4
+            SEARCH_LIMIT:   100
         ,   OFFSET:         0
         }
 
@@ -239,6 +241,7 @@
 
                             _hideView('apply');
                             $successLabel.empty().i18nText('SUCCESS_APPLIED', appName);
+                            $appliedCount.text( parseInt($appliedCount.html(), 10) + 1 );
                             _showAllView('participate');
                             _showAllView('success');
 
@@ -783,87 +786,43 @@
             $bscompetitionLogoModal.modal();
         } );
 
-        function _getSearchCriteria ( params )
-        {
-
-            var q
-            ,   sort
-            ,   facetFilters
-            ,   criteria
-            ,   criteriaQ
-            ,   paramFilter
-            ,   search
-            ,   sortQuery       = []
-            ,   criteriaFilters = []
-            ,   criteriaSort    = []
-            ,   filters         = []
-            ,   urlParam        = params.urlParam
-            ;
-
-            // 1. Search paramete
-            // ex searchTerm:text:altaf
-            //
-            // See if its coming from the search page itself(if) or from the top(else)
-            //
-            q = bidx.utils.getValue( params, 'q' );
-
-            criteriaQ = (q) ? q : '*';
-
-            search  =
-            [
-                {
-                    label: "search"
-                ,   value: criteriaQ
-                }
-            ,   {
-                    label: "limit"
-                ,   value: CONSTANTS.SEARCH_LIMIT
-
-                }
-            ,   {
-                    label: "offset"
-                ,   value: CONSTANTS.OFFSET
-
-                }
-            ,   {
-                    label: "scope"
-                ,   value: "local"
-                }
-            ];
-
-
-            return search;
-
-        }
-
         function _getMemberforActorRole( params)
         {
             var criteria
             ,   $d      = $.Deferred()
             ,   matches = []
+            ,   q
+            ,   criteriaQ
             ;
 
-            criteria          =   _getSearchCriteria( params );
+            q = bidx.utils.getValue( params, 'q' );
+            criteriaQ = (q) ? q : '*';
 
             bidx.api.call(
-                "search.members"
+                "search.found"
             ,   {
-                    groupDomain:          bidx.common.groupDomain
-                ,   extraUrlParameters:   criteria
-
+                    groupDomain: bidx.common.groupDomain
+                ,   data: {
+                                "searchTerm"    :   "basic:" + criteriaQ
+                            ,   "sort"          :   []
+                            ,   "maxResult"     :   CONSTANTS.SEARCH_LIMIT
+                            ,   "offset"        :   CONSTANTS.OFFSET
+                            ,   "entityType"    :   ["bdxmember"]
+                            ,   "scope"         :   "LOCAL"
+                    }
                 ,   success: function( response )
                     {
                         bidx.utils.log( "[Member List for Criteria] ", params.q,  response );
 
-                        $.each( response, function( idx, data )
+                        $.each( response.found, function( id, item )
                         {
                             matches.push(
                             {
-                                value: data.name
-                            ,   id:    data.id
+                                value: item.member.name
+                            ,   id:    item.member.userId
                             });
 
-                            actorArr[data.id] = data; // Store at global array for later use
+                            actorArr[item.member.userId] = item.member; // Store at global array for later use
                         });
 
                         $d.resolve( matches  );
@@ -1007,7 +966,7 @@
             {
 
                 listItem    =   snippet
-                                .replace( /%userId%/g,    data.id  )
+                                .replace( /%userId%/g,    data.userId  )
                                 .replace( /%memberName%/g,  data.name )
                                 ;
 
