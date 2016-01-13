@@ -93,6 +93,38 @@
                                                 ,   memberDateOfBirth:  [0, 100]
                                                 ,   planFinancingNeeded:[0,1000000]
                                                 }
+        ,   FILTERSORDER:                       [
+                                                    "entityType"
+                                                ,   "language"
+                                                ,   "country"
+                                                ,   "gender"
+                                                ,   "industry"
+                                                ,   "planEnvironmentalImpact"
+                                                ,   "planSocialImpact"
+                                                ,   "planFinanceType"
+
+                                                ,   "memberHasProfilePicture"
+                                                ,   "hasAttachment"
+                                                ,   "memberHasFacebook"
+                                                ,   "memberHasLinkedin"
+                                                ,   "planHasAudioPitch"
+                                                ,   "planHasVideoPitch"
+                                                ,   "planHasLogo"
+                                                ,   "planMentorRequired"
+                                                ,   "completion"
+                                                ,   "modified"
+                                                ,   "memberCreated"
+                                                ,   "sortMemberLastName"
+                                                ,   "sortMemberFirstName"
+                                                ,   "sortPlanTitle"
+
+                                                ,   "created"
+                                                ,   "planFinancingNeeded"
+                                                ,   "rating"
+                                                ,   "completion"
+                                                ,   "memberDateOfBirth"
+                                                ,   "modified"
+                                                ]
         ,   SORTDEFAULT:                        [
                                                     {
                                                         "field" : "modified"
@@ -1574,7 +1606,7 @@
 
                     listItem    =   snippit
                                     .replace( /%facets_title%/g, bidx.i18n.i( facetItems.name, appName ) )
-                                     .replace( /%facets_name%/g, facetItems.name  );
+                                    .replace( /%facets_name%/g, facetItems.name  );
 
                     $listItem  = listItem;
 
@@ -1785,24 +1817,26 @@
             {
                 e.preventDefault();
 
-                criteria.facetFilters = [];
-                options.q        = '';
-                options.sort     = [];
+                criteria.facetFilters   =   [];
+                options.q               =   '';
+                options.sort            =   [];
+                globalCriteria          =   {};
+                paging.search.offset    =   0;
                 bidx.controller.updateHash( "#search/list" );
 
                 //$resetFacet.addClass( "hide" );
+                //
 
                 navigate(
                 {
                     state   :   'list'
-                ,   params  :   {
+                /*,   params  :   {
                                     q               :   options.q
                                 ,   sort            :   options.sort
                                 ,   facetFilters    :   {}
                                 ,   rangeFilters    :   {}
                                 ,   genericFilters  :   {}
-                                // ,   type        :   'facet'
-                                }
+                                }*/
                 });
 
             });
@@ -1936,6 +1970,7 @@
     }
 
 
+
     function _getSearchList( options )
     {
         var searchCriteria      =   _getSearchCriteria( options.urlParam )
@@ -1960,16 +1995,21 @@
                     var facets          =   bidx.utils.getValue(response, 'facets')
                     ,   booleanOptions  =   bidx.utils.getValue(response, 'booleanOptions')
                     ,   sortOptions     =   bidx.utils.getValue(response, 'sortOptions')
+                    ,   filterOptions   =   CONSTANTS.FILTERSORDER
                     ;
 
                     globalCriteria      =   bidx.utils.getValue(response, 'criteria');
+
+                    //_doListing( response );
+
+
 
                     _doFacetListing(
                     {
                         facets      :   facets
                     ,   cb          :   function ( )
                         {
-                            _doRangeFilterListing(
+                            /*_doRangeFilterListing(
                             {
                                 cb          :   function ( )
                                                 {
@@ -1978,7 +2018,7 @@
                                                         booleanOptions: booleanOptions
                                                     });
                                                 }
-                            } );
+                            } );*/
                         }
                     } );
 
@@ -2658,7 +2698,7 @@
     function reset()
     {
         // call navigate function so it will default to home view
-        //
+
         navigate({});
 
         //maybe clear $searchList variables too, here?
