@@ -557,12 +557,13 @@
         fetchCompanies();
     }
 
-    if ( $tabRecMentors.length )
+    // Commented out until back-end service ready
+    /*if ( $tabRecMentors.length )
     {
         _showView('loadrecmentors', true);
 
         showRecMentors();
-    }
+    }*/
 
     if ( $tabGroups.length )
     {
