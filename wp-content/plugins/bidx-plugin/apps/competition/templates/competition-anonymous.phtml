@@ -4,7 +4,6 @@ $winnerDisplay     =   '';
 $snippet        =   "<tr>
                         <td><a href='/businesssummary/%entityId%' target='_blank'>%bidxEntityDisplayName%</a></td>
                         <td> <a href='/member/%bidxOwnerId%'>%bidxOwnerDisplayName%</a> </td>
-                        <td> %bidxRatingAverage% </td>
                     </tr>";
 $competition    = $this->data;
 // d($competition);
@@ -23,7 +22,6 @@ foreach($competition->applications as $application)
         $winnerHtml =  str_replace("%bidxEntityDisplayName%", $bidxMeta->bidxEntityDisplayName , $winnerHtml);
         $winnerHtml =  str_replace("%bidxOwnerId%", $bidxMeta->bidxOwnerId , $winnerHtml);
         $winnerHtml =  str_replace("%bidxOwnerDisplayName%", $bidxMeta->bidxOwnerDisplayName , $winnerHtml);
-        $winnerHtml =  str_replace("%bidxRatingAverage%", round($bidxMeta->bidxRatingAverage,2) , $winnerHtml);
 
         $winnerDisplay .= $winnerHtml;
     }
@@ -34,13 +32,10 @@ foreach($competition->applications as $application)
         $finalistHtml =  str_replace("%bidxEntityDisplayName%", $bidxMeta->bidxEntityDisplayName , $finalistHtml);
         $finalistHtml =  str_replace("%bidxOwnerId%", $bidxMeta->bidxOwnerId , $finalistHtml);
         $finalistHtml =  str_replace("%bidxOwnerDisplayName%", $bidxMeta->bidxOwnerDisplayName , $finalistHtml);
-        $finalistHtml =  str_replace("%bidxRatingAverage%", round($bidxMeta->bidxRatingAverage,2) , $finalistHtml);
 
         $finalistDisplay .= $finalistHtml;
     }
 }
-
-
 
 $canEdit        = $this->exst($competitionBidxMeta->bidxCanEdit, false);
 
@@ -200,7 +195,6 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                         <tr>
                             <th><?php _e('Business','bidxplugin');?></th>
                             <th><?php _e('Entrepreneur','bidxplugin');?></th>
-                            <th><?php _e('Score','bidxplugin');?></th>
                         </tr>
                     </thead>
                         <tbody class='winnerDisplay'>
@@ -223,7 +217,6 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                             <tr>
                                 <th><?php _e('Business','bidxplugin');?></th>
                                 <th><?php _e('Entrepreneur','bidxplugin');?></th>
-                                <th><?php _e('Score','bidxplugin');?></th>
                             </tr>
                         </thead>
                             <tbody class='finalistDisplay'>
