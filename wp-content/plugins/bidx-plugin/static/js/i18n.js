@@ -325,7 +325,7 @@
             }
 
             //label           =   ( currentLanguage === 'mz' || $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent(escape(label)) : label;
-            label           =   ( $.inArray( currentLanguage, accentLang ) === -1 || $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent(label) : label;
+            label           =   ( $.inArray( currentLanguage, accentLang ) === -1 || $.inArray( currentLanguage, rtlLangArr ) !== -1) ? decodeURIComponent(escape(label)) : label;
 
             $el.text( label );
 
