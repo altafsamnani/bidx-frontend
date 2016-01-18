@@ -112,7 +112,7 @@
             <!-- Controls -->
         </div>
         <div class="row">
-            <div class="col-xs-12 col-sm-3">
+            <div class="col-xs-12 col-sm-4">
                 <a target="_blank" href="http://demogroup.demo.bidx.net" class="btn btn-block flat flat-clients">
                     <div class="service">
                         <div class="handicon handicon-12"></div>
@@ -120,7 +120,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-xs-12 col-sm-3">
+            <div class="col-xs-12 col-sm-4">
                 <a href="/demo-videos" class="btn btn-block flat flat-clients">
                     <div class="service">
                         <div class="handicon handicon-20"></div>
@@ -128,15 +128,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-xs-12 col-sm-3">
-                <a href="tel:+31-85-888-1340" class="btn btn-block flat flat-clients">
-                    <div class="service">
-                        <div class="handicon handicon-25"></div>
-                        <p><?php _e('Call Hotline','bidxtheme');?></p>
-                    </div>
-                </a>
-            </div>
-            <div target="_blank" class="col-xs-12 col-sm-3">
+            <div target="_blank" class="col-xs-12 col-sm-4">
                 <a href="http://ivr.bidx.net/calls" class="btn btn-block flat flat-clients">
                     <div class="service">
                         <div class="handicon handicon-9"></div>
