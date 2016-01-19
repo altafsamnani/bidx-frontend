@@ -1959,7 +1959,7 @@
 
                     break;
 
-                    case _.isObject(isRangeFilter):
+                    /*case _.isObject(isRangeFilter):
                         bidx.utils.log('In Range');
 
                         isRangeRendered     =   true;
@@ -1979,7 +1979,7 @@
 
                         _doBooleanFilterListing( isBoolean );
 
-                    break;
+                    break;*/
 
                     default:
 
@@ -2254,11 +2254,10 @@
                                 );
 
                     lbl         =   errorMsg.replace( "%count%", $empty[0].outerHTML );
+
+                    $listEmpty.find('.errormsg').empty().append( lbl );
                 }
 
-                $listEmpty.find('.errormsg').empty().append( lbl );
-
-                bidx.utils.log('$listEmpty', $listEmpty);
             }
 
 
