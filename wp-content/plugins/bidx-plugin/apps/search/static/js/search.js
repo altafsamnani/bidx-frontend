@@ -2080,7 +2080,8 @@
                     if ( jqXhr.status >= 500 && jqXhr.status < 600)
                     {
                         bidx.utils.error( "Internal Server error occured", response );
-                        _showError( "Something went wrong while retrieving the members relationships: " + responseText );
+                        _showError("An error occured processing your searchrequest.");
+                        //_showError( "Something went wrong while retrieving the members relationships: " + responseText );
                     }
 
                 }
