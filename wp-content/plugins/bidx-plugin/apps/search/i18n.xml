@@ -59,5 +59,8 @@
 
     <Item value="paginationTotal">%num% results</Item>
 
+    <Item value="searchError">There are no results for you search request</Item>
+    <Item value="bdxmemberError">There are no results for you search request but we found %count% matching member/s</Item>
+    <Item value="bdxplanError">There are no results for you search request but we found %count% matching business plan/s</Item>
 
 </I18N>
