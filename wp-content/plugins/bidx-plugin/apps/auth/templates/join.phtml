@@ -11,6 +11,10 @@
                 <div class="well">
                     <h1><?php echo _e('Join', 'bidxplugin'); ?>&nbsp;<?php echo $groupData->group->name; ?></h1>
                     <blockquote class="alert-info"><?php echo _e('To get started, create your member account here.', 'bidxplugin'); ?></blockquote>
+<?php
+    if ($groupData->group->socialAuthEnabled)
+    {
+?>
                     <div class="info-linkedin alert alert-info hide">
                         <i class='fa fa-linkedin-square'></i> <?php _e('Authentication using LinkedIn is currently not possible. If you are a returning LinkedIn user please request a password using the form below. This will allow you to log into your existing account using your LinkedIn email address. If you are a new user please register here as a new user using any email address you like. We are working on a solution to re-enable authentication using LinkedIn and are sorry for the inconvenience.','bidxplugin'); ?>
                     </div>
@@ -37,6 +41,9 @@
                     <br>
                     <label class="label-center"><?php echo _e('Or manually','bidxplugin') ?></label>
                     <br>
+<?php
+    }
+?>
                     <div class="row">
                         <div class="col-sm-5 col-sm-offset-1">
                             <a href="#join/register" class="btn btn-secondary btn-block btn-lg" role="button"><i class="fa fa-check"></i> <?php _e('Register','bidxplugin'); ?></a>

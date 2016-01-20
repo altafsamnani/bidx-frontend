@@ -887,9 +887,11 @@ function shortenLargeNumber(num, digits) {
         ,   result
         ;
 
-        monthInt    =   ( monthInt === -1 ) ? '11' : monthInt;
-
-        if ( monthInt == 11 ) yearInt = d.getFullYear() -1;
+        if ( monthInt === -1 )
+        {
+            monthInt = 11;
+            yearInt = d.getFullYear() -1;
+        }
 
         switch( format )
         {
