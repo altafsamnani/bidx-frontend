@@ -284,6 +284,13 @@
 
                             });
                         }
+                        if ( response && response.data && response.data.requested )
+                        {
+                            $.each( response.data.requested, function( id, item )
+                            {
+                                authItems.push( item );
+                            });
+                        }
                         $d.resolve( );
                     }
 

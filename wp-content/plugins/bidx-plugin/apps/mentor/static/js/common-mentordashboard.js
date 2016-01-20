@@ -505,7 +505,7 @@
                     .append
                     (
                         bidx.construct.actionMessage( req )
-                    ,   bidx.construct.memberLink( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId )
+                    ,   bidx.construct.memberLink( bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId, auth )
                     );
                 }
                 else if ( req.relChecks.isTheMentor
