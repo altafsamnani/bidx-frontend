@@ -966,7 +966,7 @@
             {
 
                 listItem    =   snippet
-                                .replace( /%userId%/g,    data.userId  )
+                                .replace( /%userId%/g,    data.id )
                                 .replace( /%memberName%/g,  data.name )
                                 ;
 
