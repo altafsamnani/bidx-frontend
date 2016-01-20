@@ -914,7 +914,7 @@
                             if( !actorExist )
                             {
                                 data    =   {
-                                                id:         actorData.userId
+                                                userId:     actorData.userId
                                             ,   name:       actorData.userDisplayName
                                             };
 
@@ -966,7 +966,7 @@
             {
 
                 listItem    =   snippet
-                                .replace( /%userId%/g,    data.userId  )
+                                .replace( /%userId%/g,    data.userId )
                                 .replace( /%memberName%/g,  data.name )
                                 ;
 
