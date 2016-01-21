@@ -369,7 +369,7 @@
     var groupCardView = function (item)
     {
         var card
-        ,   roles = bidx.common.groupRoles( item.bidxMeta.bidxGroupRoles )
+        ,   roles = bidx.commonmentordashboard.groupRoles( item.bidxMeta.bidxGroupRoles )
         ,   isAdmin = bidx.common.isGroupAdmin()
         ,   currentGroupId = bidx.common.getCurrentGroupId()
         ;
