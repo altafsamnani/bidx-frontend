@@ -34,6 +34,7 @@
     ,   $btnApply                   = $element.find( ".btn-apply")
 
     ,   $appliedCount               = $element.find( "#appliedcount" )
+    ,   $submittedCount             = $element.find( "#submittedcount" )
 
     ,   $btnPhase                   = $element.find( ".btn-phase" )
     ,   $btnEndPhase                = $element.find( ".endPhase" )
@@ -3513,7 +3514,6 @@ function _competitionTimer (  )
                             _displayButtonsAccordingToStatus( $listItem, response.data, row );
 
                             _loadActorDropdownAccordingToStatus( $listItem, response.data);
-
                         }
         });
 
@@ -3746,7 +3746,6 @@ function _competitionTimer (  )
                             $cardHeaderStatus.i18nText(status, appName);
 
                              _showAllView('successCard' + entityId );
-
                         }
         });
 
@@ -3782,6 +3781,8 @@ function _competitionTimer (  )
                             $cardInfoText.i18nText('withdrawText', appName);
 
                             $cardHeaderStatus.i18nText(status, appName);
+
+                            $submittedCount.text( parseInt($submittedCount.html(), 10) + 1 );
 
                             _showAllView('successCard' + entityId );
                         }
@@ -3822,6 +3823,7 @@ function _competitionTimer (  )
 
                             _showAllView('successCard' + entityId );
 
+                            $submittedCount.text( parseInt($submittedCount.html(), 10) - 1 );
                         }
         });
     }

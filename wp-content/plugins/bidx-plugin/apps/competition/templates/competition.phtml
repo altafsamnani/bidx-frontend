@@ -138,7 +138,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                                 <h3><?php _e('Check the file you want to use as your cover', 'bidxplugin' ); ?></h3>
                             </div>
                             <div class="modal-body">
@@ -172,7 +172,7 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
                         <div class="participants-state"><?php echo _e( 'Participants', 'bidxplugin' ); ?></div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="participants-number"><?php echo $competition->submittedCount;?></div>
+                        <div class="participants-number" id="submittedcount"><?php echo $competition->submittedCount;?></div>
                         <div class="participants-state"><?php echo _e( 'Submitted', 'bidxplugin' ); ?></div>
                     </div>
                     <div class="col-sm-3">
