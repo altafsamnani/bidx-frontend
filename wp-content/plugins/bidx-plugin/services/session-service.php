@@ -105,7 +105,7 @@ class SessionService extends APIBridge {
 
     	$result = array();
         $sessionData = BidxCommon::$staticSession;
-        if ( property_exists( $sessionData, 'data' ) ) { //validate if the data is there
+        if ( isset( $sessionData->data ) ) { //validate if the data is there
 	        $groups = $sessionData->data->groups;
 		    if (! empty ( $groups ) ) {
 		        foreach ( $groups as $key => $value ) {
