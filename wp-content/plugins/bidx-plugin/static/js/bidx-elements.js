@@ -1006,7 +1006,6 @@
         var $memberLink
         ,   accreditation
         ,   myclass
-        ,   mystyle = "margin-left: 3px;"
         ;
 
         if (auth && !$.isEmptyObject(auth.investor) )
@@ -1020,14 +1019,13 @@
 
         switch (accreditation){
             case "accredited":
-                myclass = "fa fa-bookmark";
+                myclass = "fa fa-bookmark fa-margin";
                 break;
             case "accreditation_refused":
-                myclass = "fa fa-ban";
+                myclass = "fa fa-ban fa-margin";
                 break;
             default:
                 myclass = "";
-                mystyle = "";
         }
 
         $memberLink =
@@ -1038,7 +1036,7 @@
             )
             .append
             (
-                $( "<i />", { "class" : myclass, "style" : mystyle })
+                $( "<i />", { "class" : myclass })
             )
         ;
 
