@@ -125,6 +125,14 @@ class businesssummary
             $template = 'businesssummary.phtml';
         }
 
+        //HACK for SEO
+        /*$mystring = ob_get_contents();
+        ob_end_clean();
+
+        $mystring = preg_replace('/(<title>)(.*?)(<\/title>)/', '$1' . $businessSummaryData->data->name . '$3', $mystring);
+
+        echo $mystring;*/
+
         $view->render( $template );
     }
 }
