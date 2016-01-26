@@ -237,7 +237,7 @@ class Competition_Counter_Widget extends WP_Widget {
 <?php
                     if ( $competitionlink ):
 ?>
-                        <a class="btn btn-secondary btn-block" href="<?php echo $competitionlink; ?>"><?php _e( 'View Now','bidxplugin' ); ?></a>
+                        <a class="btn btn-secondary btn-block" href="<?php echo _l($competitionlink); ?>"><?php _e( 'View Now','bidxplugin' ); ?></a>
 <?php
                     endif;
                 }
