@@ -2210,11 +2210,10 @@
             {
                 $.each( data.found, function( idx, response )
                 {
-                    bidx.utils.log('idxss', idx);
-                    entityType          =   idx.split('_');
-                    response.entityType =   entityType[0];
+                    /*entityType          =   idx.split('_');
+                    response.entityType =   entityType[0];*/
 
-                    switch( response.entityType )
+                    switch( response.type )
                     {
                         case 'member':
 
@@ -2226,7 +2225,7 @@
 
                         break;
 
-                        case 'bdxplan':
+                        case 'plan':
 
                             showEntity(
                             {
@@ -2333,14 +2332,14 @@
         ,   i18nItem
         ,   emptyVal                =   ''
         ,   conditionalElementArr   =   { }
-        ,   entityType              =   response.entityType
+        ,   type                    =   response.type
         ;
 
-        bidx.utils.log('entityType', entityType);
+        bidx.utils.log('entityType', type);
 
-        switch( entityType )
+        switch( type )
         {
-            case 'bdxplan'  :
+            case 'plan'  :
                 var countryOperation
                 ,   entrpreneurIndustry
                 ,   entrpreneurReason
