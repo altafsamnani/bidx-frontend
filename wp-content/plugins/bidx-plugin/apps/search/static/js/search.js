@@ -95,6 +95,7 @@
                                                 }
         ,   FILTERSORDER:                       [
                                                     "entityType"
+                                                ,   "role"
 
 
                                                 ,   "language" //Facets
@@ -1621,6 +1622,7 @@
 
                         if ( facetValueName )
                         {
+
                             //newname = facetValName.replace(/ /g, '');
                             newname = facetValName;
                             listFacetsItem = subsnippit
