@@ -804,7 +804,7 @@
             ,   {
                     groupDomain: bidx.common.groupDomain
                 ,   data: {
-                                "searchTerm"    :   "basic:" + criteriaQ
+                                "searchTerm"    :   "basic:" + criteriaQ + "*"
                             ,   "sort"          :   []
                             ,   "maxResult"     :   CONSTANTS.SEARCH_LIMIT
                             ,   "offset"        :   CONSTANTS.OFFSET
@@ -819,11 +819,11 @@
                         {
                             matches.push(
                             {
-                                value: item.member.name
-                            ,   id:    item.member.userId
+                                value: item.properties.name
+                            ,   id:    item.properties.userId
                             });
 
-                            actorArr[item.member.userId] = item.member; // Store at global array for later use
+                            actorArr[item.properties.userId] = item.member; // Store at global array for later use
                         });
 
                         $d.resolve( matches  );
