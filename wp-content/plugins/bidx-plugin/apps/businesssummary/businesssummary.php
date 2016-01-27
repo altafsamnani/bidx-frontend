@@ -75,7 +75,19 @@ class businesssummary
             /* 3. Render Services for Initial View Display */
             $businessSummaryData    = $businessSummaryObj->getSummaryDetails( $businessSummaryId );
 
-            $competitionData        = $businessSummaryObj->isHavingCompetitionRole( $businessSummaryData->data );
+            $competitionIds = $businessSummaryData->data->bidxMeta->bidxCompetitionIds;
+
+            $competitionDataArray = array();
+
+            require_once( BIDX_PLUGIN_DIR .'/../services/competition-service.php' );
+            foreach( $competitionIds as $id )
+            {
+                $competitionObj = new CompetitionService( );
+                $competitionData = $competitionObj->getCompetitionDetails( $id );
+                array_push($competitionDataArray, $competitionData->data);
+            }
+
+            $competitionData        = $competitionObj->isHavingCompetitionRole( $competitionDataArray );
 
             $view->data             = $businessSummaryData->data;
 

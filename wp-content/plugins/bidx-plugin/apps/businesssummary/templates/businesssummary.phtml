@@ -41,8 +41,10 @@ $tmpsummary = $this->exst($businessSummary->summary, null, false);
 $hasAccess = false;
 
 if (    $canEdit ||  $requestStatus === "granted"
+     ||  $competitionData['competitionRoles']['loggedInUserIsCompetitionAssessor' ]
      ||  $competitionData['competitionRoles']['loggedInUserIsCompetitionJudge' ]
      ||  $competitionData['competitionRoles']['loggedInUserIsBpAssessor' ]
+     ||  $competitionData['competitionRoles']['loggedInUserIsBpJudge' ]
     )
 {
     $hasAccess = true;
