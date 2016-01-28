@@ -77,17 +77,20 @@ class businesssummary
 
             $competitionIds = $businessSummaryData->data->bidxMeta->bidxCompetitionIds;
 
-            $competitionDataArray = array();
-
-            require_once( BIDX_PLUGIN_DIR .'/../services/competition-service.php' );
-            foreach( $competitionIds as $id )
+            if (!empty($competitionIds))
             {
-                $competitionObj = new CompetitionService( );
-                $competitionData = $competitionObj->getCompetitionDetails( $id );
-                array_push($competitionDataArray, $competitionData->data);
-            }
+                $competitionDataArray = array();
 
-            $competitionData        = $competitionObj->isHavingCompetitionRole( $competitionDataArray );
+                require_once( BIDX_PLUGIN_DIR .'/../services/competition-service.php' );
+                foreach( $competitionIds as $id )
+                {
+                    $competitionObj = new CompetitionService( );
+                    $competitionData = $competitionObj->getCompetitionDetails( $id );
+                    array_push($competitionDataArray, $competitionData->data);
+                }
+
+                $competitionData        = $competitionObj->isHavingCompetitionRole( $competitionDataArray );
+            }
 
             $view->data             = $businessSummaryData->data;
 
