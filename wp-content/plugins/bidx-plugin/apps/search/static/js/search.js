@@ -1590,7 +1590,7 @@
 
                     $.each( facetValues , function ( idx, item )
                     {
-                        facetValueName  =   item.option;
+                        facetValueName  =   bidx.utils.getValue(item, 'option');
 
                         switch (facetItems.field)
                         {
@@ -1772,10 +1772,9 @@
 
         if ( !globalSearchTerm && urlParam)
         {
-
-            var url = document.location.href.split( "#" ).shift();
-            globalSearchTerm = bidx.utils.getQueryParameter( "q", url );
-
+            var url             =   document.location.href.split( "#" ).shift();
+            globalSearchTerm    =   bidx.utils.getQueryParameter( "q", url );
+            globalSearchTerm    =   (globalSearchTerm) ? globalSearchTerm : "*";
         }
 
         qString =   globalSearchTerm.replace("basic:", ""); // 'get the string after basic: ex testdata in basic:testdata'
@@ -2250,40 +2249,48 @@
             ,   entityValues
             ,   checkedEntity
             ,   unCheckedEntity
+            ,   unCheckedOption
             ,   errorMsg
             ,   lbl
             ,   $empty
             ;
 
-            entityFacet     =   _.findWhere(facets, { name:  'entityType' });
+            bidx.utils.log('facets', facets);
 
-            entityValues    =   entityFacet.facetValues;
+            entityFacet     =   _.findWhere(facets, { field:  'entityType' });
+
+            bidx.utils.log('entityFacet', entityFacet);
+
+
+            entityValues    =   entityFacet.values;
 
             checkedEntity   =   _.findWhere(entityValues, { checked:    true });
 
-            if( checkedEntity.count === 0 )
+            if( !checkedEntity || checkedEntity.count === 0 )
             {
                 unCheckedEntity  =   _.findWhere(entityValues, {   checked:  false  });
 
                 if( unCheckedEntity.count )
                 {
+                    unCheckedOption     =   unCheckedEntity.option;
+
                     if( urlParam )
                     {
-                        globalCriteria.facetFilters['entityType']    =   [ unCheckedEntity.name ];
+                        globalCriteria.facetFilters['entityType']    =   [ unCheckedOption ];
 
-                        globalCriteria.entityType = [ unCheckedEntity.name ]; // Empty entityType in criteria and add new data
+                        globalCriteria.entityType = [ unCheckedOption ]; // Empty entityType in criteria and add new data
 
                         _callSearchAction( );
                     }
                     else
                     {
                         assignActions   =   true;
-                        errorMsg        =   bidx.i18n.i( unCheckedEntity.name + 'Error' , 'search' );
+                        errorMsg        =   bidx.i18n.i( unCheckedOption + 'Error' , 'search' );
 
                         $empty          =   $(  "<a />"
                                             ,   {
                                                     "class":        "filter"
-                                                ,   "data-value":   unCheckedEntity.name
+                                                ,   "data-value":   unCheckedOption
                                             } )
                                             .append
                                             (
