@@ -2362,7 +2362,7 @@
                 ,   owner
                 ;
 
-                i18nItem            =   response.properties;
+                i18nItem            =   bidx.utils.getValue( response, 'properties' );
                 owner               =   bidx.utils.getValue( response, 'owner.properties');
                 $entityElement      =   $("#businesssummary-listitem");
                 snippit             =   $entityElement.html().replace(/(<!--)*(-->)*/g, "");
@@ -2402,7 +2402,7 @@
                 // search for placeholders in snippit
                 //
                 listItem = snippit
-                    .replace( /%entityId%/g,            response.entityId )
+                    .replace( /%entityId%/g,            i18nItem.id )
                     .replace( /%userId%/g,              owner.userId )
                     .replace( /%title%/g,               i18nItem.title   ? i18nItem.title : emptyVal )
                     .replace( /%name%/g,                owner.name )
