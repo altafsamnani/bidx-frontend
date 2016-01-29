@@ -21,21 +21,19 @@
         ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
         ,   ENTITY_TYPES:                       [
                                                     {
-                                                        "type": "bidxMemberProfile"
-                                                    },
-                                                    {
-                                                        "type": "bidxEntrepreneurProfile"
-                                                    },
-                                                    {
-                                                        "type": "bidxBusinessSummary"
-                                                    },
-                                                    {
-                                                        "type": "bidxMentorProfile"
-                                                    },
-                                                    {
-                                                        "type": "bidxInvestorProfile"
+                                                        "type": "bdxMember"
                                                     }
-
+                                                ]
+        ,   ROLES:                              [
+                                                    {
+                                                        "role": "mentor"
+                                                    },
+                                                    {
+                                                        "role": "investor"
+                                                    },
+                                                    {
+                                                        "role": "entrepreneur"
+                                                    }
                                                 ]
         }
 
@@ -122,28 +120,67 @@
                     ['Pepperoni', 2]
                     ]);
     */
-    function _createRolesChart( response, type )
+    function _createRolesChart( response )
     {
         // Create the data table.
         var label
+        ,   members
         ,   labelNoCount
-        ,   memberProfileCount  =   0
-        ,   roleProfilecount    =   0
+        ,   memberProfileCount   =   0
+        ,   mentorProfileCount   =   0
+        ,   investorProfileCount =   0
+        ,   entrProfileCount     =   0
+        ,   roleProfilecount     =   0
         ,   noRoleProfileCount
-        ,   facets              =   []
-        ,   listItem            =   []
-        ,   facetList           =   {}
-        ,   data                =   new google.visualization.DataTable()
-        ,   userRoles           =   [ 'bidxEntrepreneurProfile', 'bidxMentorProfile', 'bidxInvestorProfile', 'bidxMemberProfile']
+        ,   listItem             =   []
+        ,   data                 =   new google.visualization.DataTable()
+        ,   userRoles            =   [ 'entrepreneur', 'mentor', 'investor', 'member' ]
         ;
 
         data.addColumn('string', 'Roles');
         data.addColumn('number', 'Users');
 
+        if (response.found && response.total > 0)
+        {
+            members = response.found;
+
+            $.each( members, function(id, item)
+            {
+                $.each( item.roles, function(id, role)
+                {
+                    switch(role)
+                    {
+                        case 'investor':
+                            investorProfileCount++;
+                        break;
+                        case 'mentor':
+                            mentorProfileCount++;
+                        break;
+                        case 'entrepreneur':
+                            entrProfileCount++;
+                        break;
+                        default:
+                            memberProfileCount++;
+                    };
+                });
+            });
+        }
+
+        listItem.push( [ "Investor", investorProfileCount] );
+        listItem.push( [ "Mentor", mentorProfileCount] );
+        listItem.push( [ "Entrepreneur", entrProfileCount] );
+        listItem.push( [ "Member", memberProfileCount] );
+
+        /*
         if ( response.facets && response.facets.length )
         {
             facets      =   response.facets;
-            facetList   =   _.findWhere( facets, { name :   type });
+
+            bidx.utils.log("facets ", facets);
+
+            facetList   =   _.findWhere( facets, { field :   type });
+
+            bidx.utils.log("facet list ", facetList);
 
             $.each( facetList.facetValues, function( idx, item )
             {
@@ -165,7 +202,7 @@
                 }
             } );
 
-            /* No Profile Count */
+            /* No Profile Count 
             labelNoCount        =   bidx.i18n.i( 'memberOnlyLbl', appName );
             noRoleProfileCount  =   memberProfileCount - roleProfilecount;
             if( noRoleProfileCount > 0)
@@ -174,13 +211,12 @@
             }
 
             data.addRows( listItem );
+            */
 
-            _showView("approx", true );
-        }
+            //_showView("approx", true );
+        //}
 
-
-        // Set chart option
-
+        data.addRows( listItem );
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('role_pie_chart'));
@@ -439,7 +475,7 @@
     function _getSearchCriteria ( criteria  )
     {
         var  search
-        ,    entityTypes    =   bidx.utils.getValue(criteria, 'entityTypes')
+        ,    entityType     =   bidx.utils.getValue(criteria, 'entityType')
         ,    filters        =   bidx.utils.getValue(criteria, 'filters')
         ,    maxResult      =   bidx.utils.getValue(criteria, 'maxResult')
         ,    facetsVisible  =   bidx.utils.getValue(criteria, 'facetsVisible')
@@ -451,13 +487,13 @@
 
         search =    {
                     criteria    :   {
-                                        "searchTerm"    :   "text:" + q
+                                        "searchTerm"    :   "basic:" + q
                                     ,   "facetsVisible" :   facetsVisible
                                     ,   "offset"        :   paging.search.offset
                                     ,   "maxResult"     :   (maxResult)     ? maxResult     : tempLimit
-                                    ,   "entityTypes"   :   (entityTypes)   ? entityTypes   : CONSTANTS.ENTITY_TYPES
-                                    ,   "scope"         :   "local"
-                                    ,   "filters"       :   (filters)       ? filters       : []
+                                    ,   "entityType"    :   (entityType)    ? entityType    : CONSTANTS.ENTITY_TYPES
+                                    ,   "scope"         :   "LOCAL"
+                                    //,   "rangeFilters"  :   (filters)       ? filters       : []
                                     ,   "sort"          :   (sort)          ? sort          : []
                                     }
                     };
@@ -473,19 +509,17 @@
         ,   responseLength
         ,   responseDocs
         ,   numFound
-        ,   page            =   bidx.utils.getValue(options, 'page')
+        //,   page            =   bidx.utils.getValue(options, 'page')
         ,   counter         =   1
         ,   $d              =   $.Deferred()
         ,   fromTime        =   bidx.utils.toTimeStamp('Fri, 18 Jul 2014 09:41:42')
         ,   displayStartRow =   paging.search.offset
         ,   loadStartRow    =   paging.search.offset
         ,   criteria        =   {
-                                    entityTypes     :   [
-                                                            {
-                                                                "type": "bidxMemberProfile"
-                                                            }
-                                                        ]
-                                ,   facetsVisible   :   false
+                                    "entityType": [
+                                                            "bdxMember"
+                                                  ]
+                                ,   facetOptionsEnable   :   false
 
                                 }
         ;
@@ -571,9 +605,9 @@
                         ,   "createdRow":           function( row, data, dataIndex )
                                                     {
                                                         var ownerId             =   $( row ).data( 'ownerId' )
-                                                        ,   existedItemMember   =   bidx.utils.getValue( listMember, ownerId); // Check if it was already fetched then render it directly
+                                                        ,   existedItemMember   =   $.inArray( listMember, ownerId); // Check if it was already fetched then render it directly
 
-                                                        if( existedItemMember )
+                                                        if( existedItemMember != -1)
                                                         {
                                                             data.item   = existedItemMember; // itemmember-->row Data to get values when click on + through td.details-control
 
@@ -590,7 +624,6 @@
                                                                 ownerId     :   ownerId
                                                             ,   callback    :   function ( itemMember )
                                                                                 {
-
                                                                                     data.item  = itemMember; // itemmember-->row Data to get values when click on + through td.details-control
 
                                                                                     if( itemMember )
@@ -617,7 +650,7 @@
                                                     }
                         ,   "ajax":
                             {
-                                 "url":             bidx.api.getUrl("/api/v1/nsearch",false,bidx.common.groupDomain)
+                                 "url":             bidx.api.getUrl("/api/v1/nnsearch",false,bidx.common.groupDomain)
                             ,    "type":            "POST"
                             ,    "contentType":     "application/json; charset=utf-8"
                             ,    "dataType":        "json"
@@ -630,8 +663,6 @@
                                                         search      = _buildUserListingSearchCriteria( data, criteria );
 
                                                         data        =  { };
-
-                                                        bidx.utils.log('search.criteria',search.criteria);
 
                                                         $.each( search.criteria , function ( criteriaKey, criteriaVal)
                                                         {
@@ -648,13 +679,14 @@
                                                         ,   resultArr   = []
                                                         ,   ownerId
                                                         ,   defaultValue
-                                                        ,   docs        = json.data.docs
+                                                        ,   docs        = json.data
                                                         ;
-                                                        if( docs.length )
+
+                                                        if( docs.total > 0 )
                                                         {
-                                                            $.each( docs , function ( docsKey, docsValue)
+                                                            $.each( docs.found , function ( docsKey, docsValue)
                                                             {
-                                                                ownerId     =   docsValue.ownerId;
+                                                                ownerId     =   docsValue.properties.userId;
                                                                 //resultArr.push( [json.data.docs[i].ownerId,  json.data.docs[i].modified,  json.data.docs[i].entityType ] );
 
                                                                 //resultArr.push(['Loading']);
@@ -679,7 +711,7 @@
                                                             });
                                                         }
 
-                                                        totalRow = json.data.numFound;
+                                                        totalRow = json.data.found;
 
                                                         return resultArr;
                                                     }
@@ -1202,15 +1234,17 @@
 
 
 
+        //HERE
         function _buildUserListingSearchCriteria ( data, criteria )
         {
             var search
-            ,   entityTypes     =   bidx.utils.getValue(criteria, 'entityTypes')
+            ,   entityType      =   bidx.utils.getValue(criteria, 'entityType')
             ,   filters         =   bidx.utils.getValue(criteria, 'filters')
+            ,   genericFilters  =   bidx.utils.getValue(criteria, 'genericFilters')
             ,   maxResult       =   bidx.utils.getValue(criteria, 'maxResult')
             ,   facetsVisible   =   bidx.utils.getValue(criteria, 'facetsVisible')
             ,   filterEntity    =   $('.entity_type').val()
-            //,   sort            =   bidx.utils.getValue(criteria, 'sort')
+            ,   sort            =   bidx.utils.getValue(criteria, 'sort')
             ,   order           =   data.order
             ,   orderIndex
             ,   sortArr         =   []
@@ -1234,12 +1268,7 @@
 
             if( filterEntity )
             {
-
-                entityTypes =   [
-                                    {
-                                        "type": filterEntity
-                                    }
-                                ];
+                genericFilters  =   {"role" : filterEntity};
             }
 
              bidx.utils.log( 'sort', sortArr);
@@ -1252,14 +1281,15 @@
 
             search =    {
                         criteria    :   {
-                                            "searchTerm"    :   "text:" + q
+                                            "searchTerm"    :   "basic:" + q
                                         ,   "facetsVisible" :   facetsVisible
                                         ,   "offset"        :   data.start
                                         ,   "maxResult"     :   data.length
-                                        ,   "entityTypes"   :   (entityTypes)       ? entityTypes   : CONSTANTS.ENTITY_TYPES
-                                        ,   "scope"         :   "local"
-                                        ,   "filters"       :   (filters)           ? filters       : []
-                                        ,   "sort"          :   (sortArr.length)    ? sortArr       : []
+                                        ,   "entityType"    :   ["bdxMember"]
+                                        ,   "scope"         :   "LOCAL"
+                                        //,   "filters"       :   (filters)           ? filters       : []
+                                        ,   "sort"          :   (sortArr.length)    ? sortArr        : []
+                                        ,   "genericFilters":   (genericFilters)    ? genericFilters : {}
                                         }
                         };
 
@@ -1390,14 +1420,15 @@
         var search
         ,   criteria    =   {
                                 maxResult : 0
-                            ,   facetsVisible: true
+                            ,   facetOptionsEnable: true
+                            ,   "entityType": [ "bdxMember" ]
                             }
         ;
 
         search = _getSearchCriteria( criteria );
 
         bidx.api.call(
-            "search.get"
+            "search.found"
         ,   {
                     groupDomain:        bidx.common.groupDomain
                 ,   data:               search.criteria
@@ -1405,10 +1436,12 @@
                     {
                         bidx.utils.log("[searchList] retrieved results ", response );
 
-                        // Set a callback to run when the Google Visualization API is loaded.
-                        _createRolesChart( response, 'facet_entityType' );
+                        //HEREHERE
 
-                        _createRegionsMap( response, 'facet_country');
+                        // Set a callback to run when the Google Visualization API is loaded.
+                        _createRolesChart( response );
+
+                        //_createRegionsMap( response, 'country');
 
                         if (options && options.callback)
                         {
