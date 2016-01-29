@@ -218,6 +218,13 @@
             <mapping>(.*)competition</mapping>
             <content>[bidx app="competition"]</content>
         </post>
+        <post>
+            <post_id>32</post_id>
+            <name>expressform</name>
+            <title>Expressform</title>
+            <mapping>(.*)expressform</mapping>
+            <content>[bidx app="expressform"]</content>
+        </post>
     </posts>
 
     <widgets>

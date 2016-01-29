@@ -61,8 +61,8 @@ if (!BidxCommon :: isWPInternalFunction ()) {
       'setpassword',
       'content',
       'mentor',
-      'competition'
-
+      'competition',
+      'expressform'
     );
     $shortcode = new BidxShortCode();
     $shortcode->addMappingArray ($ruleitems);
