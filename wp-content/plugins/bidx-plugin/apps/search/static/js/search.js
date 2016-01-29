@@ -1658,7 +1658,7 @@
 
                 // Show the first VISIBLE_FILTER_ITEMS filter items if more than (VISIBLE_FILTER_ITEMS + 3)
                 //
-                if ( facetItems.valueCount > CONSTANTS.VISIBLE_FILTER_ITEMS + 3 )
+                if ( facetItems.count > CONSTANTS.VISIBLE_FILTER_ITEMS + 3 )
                 {
                     $bigCategory = $list.find( ".facet-category-" + facetItems.field );
                     $categoryList = $bigCategory.find( ".list-group" );
