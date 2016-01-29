@@ -1428,6 +1428,7 @@
             $listItem.on('click', '*[data-btn="connectblock"]', function ( e )
             {
                 var contacts
+                ,   myindex
                 ,   items               =   []
                 ,   item                =   this
                 ,   $this               =   $(this)
@@ -1487,9 +1488,10 @@
 
                         badgeblockVal =    badgeblockVal + 1;
 
-                        connectContacts.blocked.push( contacts[0]);
+                        connectContacts.blocked.push(contacts[0]);
 
-                        bidx.utils.log('connectContacts', connectContacts);
+                        myindex = $.inArray(contacts[0], connectContacts.active);
+                        connectContacts.active.splice(myindex, 1);
 
                         _createListItems(
                         {
