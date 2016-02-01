@@ -13,80 +13,121 @@
                                 ,   title:          bidx.i18n.i('userRolesTitle', appName)
                                 ,   is3D:           true
                                 }
-    ,   MAX_RESULT           = 3000
+    ,   MAX_RESULT           = 10
     ;
 
 
-    function _createRolesChart( response )
+    function _createRegionsMap( response, type )
     {
         // Create the data table.
         var label
-        ,   members
+        ,   chart
+        ,   options
+        ,   facets          =   []
+        ,   listItem        =   []
+        ,   facetList       =   {}
+        ,   data
+        ,   countryLabel    =   bidx.i18n.i('facet_country',appName)
+        ,   growthLabel     =   bidx.i18n.i('chart_growth', appName)
+        ,   countryNameLabel =  bidx.i18n.i('name', appName)
+        ,   labelName
+        ;
+
+        if ( response.facets && response.facets.length )
+        {
+            facets      =   response.facets;
+            facetList   =   _.findWhere( facets, { field :   type });
+
+            listItem.push( [countryLabel, countryNameLabel, growthLabel ] );
+
+            $.each( facetList.values, function( idx, item )
+            {
+                labelName   =   bidx.data.i( item.option, "country" );
+                label       =   item.option;
+
+                listItem.push( [ label, labelName, item.count] );
+
+            } );
+
+            data = google.visualization.arrayToDataTable( listItem );
+        }
+
+
+        // Set chart option
+
+        options     =   {
+                            title   :               bidx.i18n.i('regionTitle', appName)
+                        };
+                        //,   sizeAxis:             { minValue: 0, maxValue: 100 }
+                        //,   magnifyingGlass:        {enable: true, zoomFactor: 5.0}
+                        //,   displayMode:          'markers'
+                        //,   colorAxis:            {colors: ['#e7711c', '#4374e0']} // orange to blue
+                        //,   colorAxis:              {colors: ['#00853f', '#000000', '#e31b23']}
+                        //,   colorAxis:              {minValue: 0,  colors: ['#FF0000', '#00FF00']}
+                        //,   backgroundColor:        '#FFFFF'
+                        //,   datalessRegionColor:    '#ecf1ee'
+
+
+        chart = new google.visualization.GeoChart(document.getElementById('country_geo_chart'));
+
+        chart.draw(data, options);
+    }
+
+
+    function _createRolesChart( response, type )
+    {
+        // Create the data table.
+        var label
         ,   labelNoCount
-        ,   memberProfileCount   =   0
-        ,   mentorProfileCount   =   0
-        ,   investorProfileCount =   0
-        ,   entrProfileCount     =   0
-        ,   roleProfilecount     =   0
+        ,   memberProfileCount  =   0
+        ,   roleProfilecount    =   0
         ,   noRoleProfileCount
-        ,   listItem             =   []
-        ,   data                 =   new google.visualization.DataTable()
-        ,   userRoles            =   [ 'entrepreneur', 'mentor', 'investor', 'member' ]
+        ,   facets              =   []
+        ,   listItem            =   []
+        ,   facetList           =   {}
+        ,   data                =   new google.visualization.DataTable()
+        ,   userRoles           =   [ 'entrepreneur', 'mentor', 'investor', 'member']
         ;
 
         data.addColumn('string', 'Roles');
         data.addColumn('number', 'Users');
 
-        if (response.found && response.total > 0)
+        if ( response.facets && response.facets.length )
         {
-            members = response.found;
+            facets      =   response.facets;
+            facetList   =   _.findWhere( facets, { field :   type });
 
-            $.each( members, function(id, item)
+            $.each( facetList.values, function( idx, item )
             {
-                //if roles array is 1 long the member has only member profile
-                if (item.roles.length == 1)
+                if( $.inArray( item.option, userRoles ) !== -1 )
                 {
-                    memberProfileCount++;
-                } 
-                else
-                {
-                    roleProfilecount++;
-
-                    $.each( item.roles, function(id, role)
+                    if ( item.option === 'member' )
                     {
-                        switch(role)
-                        {
-                            case 'investor':
-                                investorProfileCount++;
-                            break;
-                            case 'mentor':
-                                mentorProfileCount++;
-                            break;
-                            case 'entrepreneur':
-                                entrProfileCount++;
-                            break;     
-                            default:
-                                //even if it has a role or multiple roles, the member has member profile
-                                memberProfileCount++;                           
-                        };
-                    });
+                        memberProfileCount = item.count;
+                    }
+                    else
+                    {
+                        label   =   bidx.i18n.i( item.option, appName );
+
+                        listItem.push( [ label, item.count] );
+
+                        roleProfilecount = roleProfilecount + item.count;
+                    }
                 }
-            });
+            } );
+
+            /* No Profile Count */
+            labelNoCount        =   bidx.i18n.i( 'memberOnlyLbl', appName );
+            noRoleProfileCount  =   memberProfileCount - roleProfilecount;
+            if( noRoleProfileCount > 0)
+            {
+                listItem.push( [ labelNoCount, noRoleProfileCount] );
+            }
+
+            data.addRows( listItem );
+
+            _showView("approx", true );
         }
-
-        listItem.push( [ bidx.i18n.i( "bidxInvestorProfile", appName ), investorProfileCount] );
-        listItem.push( [ bidx.i18n.i( "bidxMentorProfile", appName ), mentorProfileCount] );
-        listItem.push( [ bidx.i18n.i( "bidxEntrepreneurProfile", appName ), entrProfileCount] );
-
-
-        labelNoCount        =   bidx.i18n.i( 'memberOnlyLbl', appName );
-        noRoleProfileCount  =   memberProfileCount - roleProfilecount;
-        if( noRoleProfileCount > 0)
-        {
-            listItem.push( [ labelNoCount, noRoleProfileCount] );
-        }
- 
-        data.addRows( listItem );
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('role_pie_chart'));
@@ -99,8 +140,7 @@
         var criteria    =   {
                                 "searchTerm": "basic:*",
                                 "entityType": ["bdxmember"],
-                                "scope": "LOCAL",
-                                "maxResult": MAX_RESULT,
+                                "scope": "LOCAL"
                             };
 
         bidx.api.call(
@@ -113,9 +153,9 @@
                         bidx.utils.log("[searchList] retrieved results ", response );
 
                         // Set a callback to run when the Google Visualization API is loaded.
-                        _createRolesChart( response );
+                        _createRolesChart( response, "role" );
 
-                        //_createRegionsMap( response, 'country');
+                        _createRegionsMap( response, "country" );
 
                         if (options && options.callback)
                         {
