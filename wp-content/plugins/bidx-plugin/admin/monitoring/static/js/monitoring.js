@@ -538,7 +538,6 @@
                 genericFilters  =   {"role" : filterEntity};
             }
 
-             bidx.utils.log( 'sort', sortArr);
             /*sort            :   [
                                                             {
                                                                 "field": "created"
@@ -588,8 +587,6 @@
                             spanLabel       = "<span class='label bidx-label bidx-" + roleName + "'>" +  bidx.i18n.i( bidxXmlLabel, appName )  + "</span>";
                             return spanLabel;
                         });
-
-            bidx.utils.log("roleNames ", roleNames);
 
             result  =   {
                             firstName   :   "<a target='_blank' href='/member/" + item.member.bidxMeta.bidxMemberId    +   "'>" + item.bidxMemberProfile.personalDetails.firstName +"</a>"
@@ -690,9 +687,9 @@
                         ,   "dom":                  'l<"toolbar">frtip'
                         ,   "order":                [[4, 'desc']] // Default Sorting
                         ,   "columnDefs":           [
-                                                       // { "targets": 1, "orderable": false }
-                                                    //,   { "targets": 2, "orderable": false }
-                                                       { "targets": 3, "orderable": false }
+                                                        { "targets": 1, "orderable": false }
+                                                    ,   { "targets": 2, "orderable": false }
+                                                    ,   { "targets": 3, "orderable": false }
                                                     ] // Disable sorting
                         ,   "columns":              $.merge ( [
                                                     {
