@@ -1188,10 +1188,11 @@
         ,   graphData   =   []
         ,   options     =   {
                                 title: 'Weekly performance'
-                            ,   vAxis: {title: 'Day',  titleTextStyle: {color: 'red'}}
-                            ,   width: 600
-                            ,   height: 400
                             }
+                            //,   vAxis: {title: 'Day',  titleTextStyle: {color: 'red'}}
+                            //,   width: 600
+                            //,   height: 400
+                            //}
         ;
 
         graphData.push( ['Day', 'New Business Summaries'] );
