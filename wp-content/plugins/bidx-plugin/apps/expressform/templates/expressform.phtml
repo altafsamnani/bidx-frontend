@@ -1,198 +1,218 @@
 <div id="expressform" class="col-sm-6 col-sm-offset-3 well">
 	<form id="formexpressform">
 
-        <div class="form-group">
-            <label><?php echo _e('First name','bidxplugin') ?></label>
-            <input type="text" class="form-control" name="firstName" placeholder="<?php echo _e('Enter your first name','bidxplugin') ?>"/>
-        </div>
-
-        <div class="form-group">
-            <label><?php echo _e('Last name','bidxplugin') ?></label>
-            <input type="text" class="form-control" name="lastName" placeholder="<?php echo _e('Enter your last name','bidxplugin') ?>"/>
-        </div>
-
-        <div class="form-group">
-            <label><?php _e('Gender','bidxplugin'); ?></label>
-        	<div class="radio">
-                <input type="radio" value="m" id="radio-personalDetailsM" name="gender" data-toggle="radio">
-                    <label for="radio-personalDetailsM"><span></span>Male</label>
-            </div>
-
-            <div class="radio checked">
-                <input type="radio" value="f" id="radio-personalDetailsF" name="gender" data-toggle="radio" checked="checked">
-                    <label for="radio-personalDetailsF"><span></span>Female</label>
-            </div>
-        </div>
-
-        <div class="form-group">
-        	<label><?php echo _e('Mobile number','bidxplugin') ?></label>
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-tablet"></i></span>
-                <input type="tel" class="form-control" name="phone" placeholder="<?php echo _e('Enter your mobile number','bidxplugin') ?>"/>
-            </div>
-        </div>
-
-
-        <div class="form-group">                                
-            <!-- Logo -->
-            <div class="col-sm-6 bsLogo">
-                <label><?php _e('Logo','bidxplugin'); ?></label>
-                <div class="logoContainer">
-                    <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
+        <fieldset>
+            <legend><?php echo _e('Personal details', 'bidxplugin')?></legend>
+            <div>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <label><?php echo _e('First name','bidxplugin') ?></label>
+                    <input type="text" class="form-control" name="firstName" placeholder="<?php echo _e('Enter your first name','bidxplugin') ?>"/>
                 </div>
+            </div>
 
-                <br>
-                <div class="logoBtns">
-                    <a href="#addLogo" data-toggle="modal" class="btn btn-primary"><?php _e('Select'); ?></a>
-                    <a href="#removeLogo" class="btn btn-primary hide"><?php _e('Remove'); ?></a>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <label><?php echo _e('Last name','bidxplugin') ?></label>
+                    <input type="text" class="form-control" name="lastName" placeholder="<?php echo _e('Enter your last name','bidxplugin') ?>"/>
                 </div>
+            </div>
 
-                <div class="addLogoImage modal fade">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h3><?php _e('Check the file you want to use as your Logo', 'bidxplugin' ); ?></h3>
-                            </div>
+            <div class="form-group clear-both">
+                <div class="col-sm-6">
+                    <label><?php _e('Gender','bidxplugin'); ?></label>
+                    <div class="radio">
+                        <input type="radio" value="m" id="radio-personalDetailsM" name="gender" data-toggle="radio">
+                            <label for="radio-personalDetailsM"><span></span>Male</label>
+                    </div>
 
-                            <div class="modal-body">
-                        <?php
-                            echo do_shortcode( '[bidx app="media"]' );
-                        ?>
-                            </div>
-                                            
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></button>
-                                <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
+                    <div class="radio checked">
+                        <input type="radio" value="f" id="radio-personalDetailsF" name="gender" data-toggle="radio" checked="checked">
+                            <label for="radio-personalDetailsF"><span></span>Female</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-6">
+                	<label><?php echo _e('Mobile number','bidxplugin') ?></label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-tablet"></i></span>
+                        <input type="tel" class="form-control" name="phone" placeholder="<?php echo _e('Enter your mobile number','bidxplugin') ?>"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </fieldset>
+
+        <br>
+        <fieldset>
+            <legend><?php echo _e('Business details','bidxplugin') ?></legend>
+            <div class="form-group">                                
+                <!-- Logo -->
+                <div class="col-sm-6 bsLogo">
+                    <label><?php _e('Logo','bidxplugin'); ?></label>
+                    <div class="logoContainer">
+                        <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
+                    </div>
+
+                    <br>
+                    <div class="logoBtns">
+                        <a href="#addLogo" data-toggle="modal" class="btn btn-primary"><?php _e('Select'); ?></a>
+                        <a href="#removeLogo" class="btn btn-primary hide"><?php _e('Remove'); ?></a>
+                    </div>
+
+                    <div class="addLogoImage modal fade">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h3><?php _e('Check the file you want to use as your Logo', 'bidxplugin' ); ?></h3>
+                                </div>
+
+                                <div class="modal-body">
+                            <?php
+                                echo do_shortcode( '[bidx app="media"]' );
+                            ?>
+                                </div>
+                                                
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></button>
+                                    <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-        </div>
-        
-        <!-- Name -->
-        <div class="form-group">
-            <div class="col-sm-6">
-                <label><?php _e('Name of your business','bidxplugin'); ?></label>
-                <input type="text" class="form-control" name="bpname">
             </div>
-        </div>
-
-        <div class="form-group clear-both">
-            <label><?php _e('Describe your business ','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 900 characters)','bidxplugin'); ?></small></label>
-            <textarea name="description" class="form-control"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label><?php _e('City','bidxplugin'); ?></label>
-            <input type="text" class="form-control" name="city">
-        </div>
-
-        <div id="industrySectors">
-            <label><?php _e('Select the industries that apply to your business','bidxplugin');?></label>
-        </div>
-
-        <div class="form-group">
-            <label><?php _e('Financing needed','bidxplugin'); ?></label>
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                <input type="text" name="financingNeeded" class="form-control">
-            </div>
-        </div>
-
-        <div class="form-group clear-both">
-        	<label><?php echo _e('Revenues','bidxplugin') ?></label><br>
-
-            <div class="col-sm-4 form-group">
-                <label>2012</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                    <input type="text" class="form-control text-center valid" name="salesRevenue_2012">
-                </div>
-            </div>
-
-            <div class="col-sm-4 form-group">
-                <label>2013</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                    <input type="text" class="form-control text-center valid" name="salesRevenue_2013">
-                </div>
-            </div>
-
-            <div class="col-sm-4 form-group">
-                <label>2014</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                    <input type="text" class="form-control text-center valid" name="salesRevenue_2014">
-                </div>
-            </div>
-
-            <div class="col-sm-4 form-group">
-                <label>2015</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                    <input type="text" class="form-control text-center valid" name="salesRevenue_2015">
-                </div>
-            </div>
-
-            <div class="col-sm-4 form-group">
-                <label>2016</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                    <input type="text" class="form-control text-center valid" name="salesRevenue_2016">
-                </div>
-            </div>
-        </div>
-        <div class="form-group clear-both">
-        	<label><?php echo _e('Employees','bidxplugin') ?></label><br>
             
-            <div class="col-sm-4 form-group">
-                <label>2012</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" class="form-control text-center valid" name="employees_2012">
+            <!-- Name -->
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <label><?php _e('Name of your business','bidxplugin'); ?></label>
+                    <input type="text" class="form-control" name="bpname">
                 </div>
             </div>
 
-            <div class="col-sm-4 form-group">
-        	    <label>2013</label>
+            <div class="form-group clear-both">
+                <label><?php _e('Describe your business ','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 900 characters)','bidxplugin'); ?></small></label>
+                <textarea name="description" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label><?php _e('City','bidxplugin'); ?></label>
+                <input type="text" class="form-control" name="city">
+            </div>
+
+            <div id="industrySectors">
+                <label><?php _e('Select the industries that apply to your business','bidxplugin');?></label>
+            </div>
+
+            <div class="form-group">
+                <label><?php _e('Financing needed','bidxplugin'); ?></label>
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" class="form-control text-center valid" name="employees_2013">
+                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <input type="text" name="financingNeeded" class="form-control">
                 </div>
             </div>
 
-            <div class="col-sm-4 form-group">
-                <label>2014</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" class="form-control text-center valid" name="employees_2014">
+            <div class="form-group clear-both">
+                <div class="col-sm-6">
+                	<label><?php echo _e('Revenues','bidxplugin') ?></label><br>
+
+                    <div class="form-group">
+                        <label>2012</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                            <input type="text" class="form-control text-center valid" name="salesRevenue_2012">
+                        </div>
+                    </div>
+
+                    <div class="form-group clear-both">
+                        <label>2013</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                            <input type="text" class="form-control text-center valid" name="salesRevenue_2013">
+                        </div>
+                    </div>
+
+                    <div class="form-group clear-both">
+                        <label>2014</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                            <input type="text" class="form-control text-center valid" name="salesRevenue_2014">
+                        </div>
+                    </div>
+
+                    <div class="form-group clear-both">
+                        <label>2015</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                            <input type="text" class="form-control text-center valid" name="salesRevenue_2015">
+                        </div>
+                    </div>
+
+                    <div class="form-group clear-both">
+                        <label>2016</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                            <input type="text" class="form-control text-center valid" name="salesRevenue_2016">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6">
+                	<label><?php echo _e('Employees','bidxplugin') ?></label><br>
+                    
+                    <div class="form-group">
+                        <label>2012</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control text-center valid" name="employees_2012">
+                        </div>
+                    </div>
+
+                    <div class="form-group clear-both">
+                	    <label>2013</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control text-center valid" name="employees_2013">
+                        </div>
+                    </div>
+
+                    <div class="form-group clear-both">
+                        <label>2014</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control text-center valid" name="employees_2014">
+                        </div>
+                    </div>
+
+                    <div class="form-group clear-both">
+                        <label>2015</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control text-center valid" name="employees_2015">
+                        </div>
+                    </div>
+
+                    <div class="form-group clear-both">
+                        <label>2016</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control text-center valid" name="employees_2016">
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-sm-4 form-group">
-                <label>2015</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" class="form-control text-center valid" name="employees_2015">
-                </div>
+            <div class="form-group clear-both">
+            	<label><?php echo _e('Video','bidxplugin') ?></label>
+            	<input type="file" name="video" accept="video/*" capture>
+              	<input type="submit" value="Upload">
             </div>
 
-            <div class="col-sm-4 form-group">
-                <label>2016</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" class="form-control text-center valid" name="employees_2016">
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group clear-both">
-        	<label><?php echo _e('Video','bidxplugin') ?></label>
-        	<input type="file" name="video" accept="video/*" capture>
-          	<input type="submit" value="Upload">
-        </div>
-
+        </legend>
 
         <br>
         <button id="submitform" type="submit" class="btn btn-primary" style="display: block;"><?php _e('Submit application','bidxplugin');?></button>
