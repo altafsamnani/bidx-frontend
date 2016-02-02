@@ -8,11 +8,11 @@
 	 <!-- Facet Entity types -->
     <Item value="bidxMemberProfile">Member profile</Item>
     <Item value="bidxBusinessSummary">Business summary</Item>
-    <Item value="bidxInvestorProfile">Investor</Item>
-    <Item value="bidxEntrepreneurProfile">Entrepreneur</Item>
+    <Item value="investor">Investor</Item>
+    <Item value="entrepreneur">Entrepreneur</Item>
     <Item value="bidxBusinessGroup">Group</Item>
     <Item value="bidxCompany">Company</Item>
-    <Item value="bidxMentorProfile">Mentor</Item>
+    <Item value="mentor">Mentor</Item>
 
     <!-- Facet Title -->
     <Item value="facet_industry">Industry</Item>
