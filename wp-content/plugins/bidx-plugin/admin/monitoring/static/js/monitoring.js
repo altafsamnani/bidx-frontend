@@ -3,8 +3,8 @@
 {
     "use strict";
 
-    var responseFacets
-    ,   $element             =  $(".monitoring")
+    //global parameters
+    var $element             =  $(".monitoring")
     ,   $views               =  $element.find(".view")
     ,   $userTableSelector   =  $element.find(".user-table")
     ,   tableData
@@ -21,27 +21,25 @@
         ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
         ,   ENTITY_TYPES:                       [
                                                     {
-                                                        "type": "bidxMemberProfile"
-                                                    },
-                                                    {
-                                                        "type": "bidxEntrepreneurProfile"
-                                                    },
-                                                    {
-                                                        "type": "bidxBusinessSummary"
-                                                    },
-                                                    {
-                                                        "type": "bidxMentorProfile"
-                                                    },
-                                                    {
-                                                        "type": "bidxInvestorProfile"
+                                                        "type": "bdxMember"
                                                     }
-
+                                                ]
+        ,   ROLES:                              [
+                                                    {
+                                                        "role": "mentor"
+                                                    },
+                                                    {
+                                                        "role": "investor"
+                                                    },
+                                                    {
+                                                        "role": "entrepreneur"
+                                                    }
                                                 ]
         }
 
     ,   tempLimit           =   CONSTANTS.SEARCH_LIMIT
-    ,   appName             =   'monitoring'
-    ,   paging                  =
+    ,   appName              =   'monitoring'
+    ,   paging               =
         {
             search:
             {
@@ -63,708 +61,17 @@
                                     "data"  : "created"
                                 }
                             ]
-
-
-    ,   PIECHARTOPTIONS =   {
-                                chartArea:      {'left': '0'}
-                            ,   legend:         { 'position': 'labeled'}
-                            ,   title:          bidx.i18n.i('userRolesTitle', appName)
-                            ,   is3D:           true
-                            }
-
+    ,   PIECHARTOPTIONS      =  {
+                                    chartArea:      {'left': '0'}
+                                ,   legend:         { 'position': 'labeled'}
+                                ,   title:          bidx.i18n.i('userRolesTitle', appName)
+                                ,   is3D:           true
+                                }
+    ,   MAX_RESULT           = 10
     ;
 
-
-    function _addVideoThumb( url, element )
+    function _getLanguageLabelByValue( value )
     {
-        // This may fail if the URL is not actually a URL, or an unsupported video URL.
-        var matches     = url.match(/(http|https):\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be))\/(video\/|embed\/|watch\?v=)?([A-Za-z0-9._%-]*)(\&\S+)?/)
-        ,   provider    = bidx.utils.getValue(matches, "3")
-        ,   id          = bidx.utils.getValue(matches, "6")
-        ,   $el         = element
-        ;
-
-        if ( provider === "vimeo.com" )
-        {
-            var videoUrl = "http://vimeo.com/api/v2/video/" + id + ".json?callback=?";
-            $.getJSON( videoUrl, function(data)
-                {
-                    if ( data )
-                    {
-                        $el.find( ".icons-rounded" ).remove();
-                        $el.append( $( "<div />", { "class": "img-cropper" } ) );
-                        $el.find( ".img-cropper" ).append( $( "<img />", { "src": data[0].thumbnail_large } ) );
-                        $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
-                    }
-                }
-            );
-        }
-        else if ( provider === "youtube.com" )
-        {
-            $el.find( ".icons-rounded" ).remove();
-            $el.append( $( "<div />", { "class": "img-cropper" } ) );
-            $el.find( ".img-cropper" ).append( $( "<img />", { "src": "http://img.youtube.com/vi/"+ id +"/0.jpg" } ) );
-            $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
-        }
-        else
-        {
-            bidx.utils.log('_addVideoThumb:: ', 'No matches' + matches );
-        }
-    }
-
-    /*
-        Example
-        data.addRows([
-                    ['Mushrooms', 3],
-                    ['Onions', 1],
-                    ['Olives', 1],
-                    ['Zucchini', 1],
-                    ['Pepperoni', 2]
-                    ]);
-    */
-    function _createRolesChart( response, type )
-    {
-        // Create the data table.
-        var label
-        ,   labelNoCount
-        ,   memberProfileCount  =   0
-        ,   roleProfilecount    =   0
-        ,   noRoleProfileCount
-        ,   facets              =   []
-        ,   listItem            =   []
-        ,   facetList           =   {}
-        ,   data                =   new google.visualization.DataTable()
-        ,   userRoles           =   [ 'bidxEntrepreneurProfile', 'bidxMentorProfile', 'bidxInvestorProfile', 'bidxMemberProfile']
-        ;
-
-        data.addColumn('string', 'Roles');
-        data.addColumn('number', 'Users');
-
-        if ( response.facets && response.facets.length )
-        {
-            facets      =   response.facets;
-            facetList   =   _.findWhere( facets, { name :   type });
-
-            $.each( facetList.facetValues, function( idx, item )
-            {
-
-                if( $.inArray( item.name, userRoles ) !== -1 )
-                {
-                    if ( item.name === 'bidxMemberProfile' )
-                    {
-                        memberProfileCount = item.count;
-                    }
-                    else
-                    {
-                        label   =   bidx.i18n.i( item.name, appName );
-
-                        listItem.push( [ label, item.count] );
-
-                        roleProfilecount = roleProfilecount + item.count;
-                    }
-                }
-            } );
-
-            /* No Profile Count */
-            labelNoCount        =   bidx.i18n.i( 'memberOnlyLbl', appName );
-            noRoleProfileCount  =   memberProfileCount - roleProfilecount;
-            if( noRoleProfileCount > 0)
-            {
-                listItem.push( [ labelNoCount, noRoleProfileCount] );
-            }
-
-            data.addRows( listItem );
-
-            _showView("approx", true );
-        }
-
-
-        // Set chart option
-
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('role_pie_chart'));
-
-        chart.draw(data, PIECHARTOPTIONS);
-    }
-
-    function _createRegionsMap( response, type )
-    {
-        // Create the data table.
-        var label
-        ,   chart
-        ,   options
-        ,   facets          =   []
-        ,   listItem        =   []
-        ,   facetList       =   {}
-        ,   data
-        ,   countryLabel    =   bidx.i18n.i('facet_country',appName)
-        ,   growthLabel     =   bidx.i18n.i('chart_growth', appName)
-        ,   countryNameLabel =  bidx.i18n.i('name', appName)
-        ,   labelName
-        ;
-
-        if ( response.facets && response.facets.length )
-        {
-            facets      =   response.facets;
-            facetList   =   _.findWhere( facets, { name :   type });
-
-            listItem.push( [countryLabel, countryNameLabel, growthLabel ] );
-
-
-            $.each( facetList.facetValues, function( idx, item )
-            {
-                labelName   =   bidx.data.i( item.name, "country" );
-                label       =   item.name;
-
-                listItem.push( [ label, labelName, item.count] );
-
-            } );
-
-            data = google.visualization.arrayToDataTable( listItem );
-        }
-
-
-        // Set chart option
-
-        options     =   {
-                            title   :               bidx.i18n.i('regionTitle', appName)
-                        };
-                        //,   sizeAxis:             { minValue: 0, maxValue: 100 }
-                        //,   magnifyingGlass:        {enable: true, zoomFactor: 5.0}
-                        //,   displayMode:          'markers'
-                        //,   colorAxis:            {colors: ['#e7711c', '#4374e0']} // orange to blue
-                        //,   colorAxis:              {colors: ['#00853f', '#000000', '#e31b23']}
-                        //,   colorAxis:              {minValue: 0,  colors: ['#FF0000', '#00FF00']}
-                        //,   backgroundColor:        '#FFFFF'
-                        //,   datalessRegionColor:    '#ecf1ee'
-
-
-        chart = new google.visualization.GeoChart(document.getElementById('country_geo_chart'));
-
-        chart.draw(data, options);
-    }
-
-
-  /*
-    var data = google.visualization.arrayToDataTable([
-          ['Day', 'New users', 'Logins/day'],
-          ['Day 1',  1000,      400],
-          ['Day 2',  1170,      460],
-          ['Day 3',  660,       1120],
-          ['Day 4',  1030,      540],
-          ['Day 5',  1030,      540],
-          ['Day 6',  1030,      540],
-          ['Day 7',  1030,      540],
-        ]);
-  */
-
-
-    function _createUsersLineChart( params )
-    {
-        var data
-        ,   chart
-        ,   newUser
-        ,   login
-        ,   dateSplit
-        ,   formattedDate
-        ,   $container      =   document.getElementById('user_line_chart')
-        ,   graphData       =   []
-        ,   eventRegister   =   bidx.utils.getValue(params.responseRegister,   'events')
-        ,   eventLogin      =   bidx.utils.getValue(params.responseLogin,      'events')
-        ,   keysRegister    =   _.keys( eventRegister ) // Keys of registrations ex 2014-02-02
-        ,   keysLogin       =   _.keys( eventLogin )     // Keys of Login ex 2014-02-02
-        ,   alldateKeys     =   _.union( keysRegister, keysLogin).reverse() // Common keys for iteration
-        ,   options         =   {
-                                    title: 'Weekly logins'
-                                }
-        ;
-
-        if ( alldateKeys.length )
-        {
-            /* Old Registration + Logins
-            graphData.push( ['Day', 'New Users', 'Logins'] );*/
-            graphData.push( ['Day', 'Logins'] );
-
-            $.each( alldateKeys, function( idx, date )
-            {
-                // newUser    =   ($.isEmptyObject(eventRegister[date])) ? eventRegister[date] : 0;
-                // login      =   ($.isEmptyObject(eventLogin[date])) ? eventLogin[date] : 0;
-
-                 newUser        =   bidx.utils.getValue(eventRegister, date);
-                 login          =   bidx.utils.getValue(eventLogin, date);
-                 login          =   ( login ) ? login : 0;
-                 newUser        =   ( newUser ) ? newUser : 0;
-                 dateSplit      = date.split("-");
-                 formattedDate  = dateSplit.reverse().join('-');
-
-                 /* Old Registration + Logins
-                 graphData.push( [formattedDate, newUser, login] );*/
-                 graphData.push( [formattedDate, login] );
-            } );
-
-            data = google.visualization.arrayToDataTable(graphData);
-
-            chart = new google.visualization.LineChart($container);
-
-            chart.draw(data, options);
-        }
-        else
-        {
-           $container.innerHTML =  bidx.i18n.i('noData', appName);
-        }
-
-
-    }
-
-    /*var data = google.visualization.arrayToDataTable([
-          ['Day', 'New Business Summaries'],
-          ['Day 1',  100    ],
-          ['Day 2',  117    ],
-          ['Day 3',  660    ],
-          ['Day 4',  103    ],
-          ['Day 5',  103    ],
-          ['Day 6',  103    ],
-          ['Day 7',  103    ],
-        ]);*/
-    function _createBpBarChart( response, type )
-    {
-        var data
-        ,   chart
-        ,   $container  =   document.getElementById('bp_bar_chart')
-        ,   eventData   =   response.events
-        ,   graphData   =   []
-        ,   options     =   {
-                                title: 'Weekly performance'
-                            ,   vAxis: {title: 'Day',  titleTextStyle: {color: 'red'}}
-                            ,   width: 600
-                            ,   height: 400
-                            }
-        ;
-
-        graphData.push( ['Day', 'New Business Summaries'] );
-
-        if(!$.isEmptyObject(eventData) )
-        {
-
-            $.each( eventData, function( date, count )
-            {
-                graphData.push( [date, count] );
-            });
-
-            data    = google.visualization.arrayToDataTable(graphData);
-
-            chart   = new google.visualization.BarChart($container);
-
-            chart.draw(data, options);
-        }
-        else
-        {
-           $container.innerHTML = bidx.i18n.i('noData', appName);
-        }
-
-    }
-
-    function showMemberProfile( options )
-    {
-        var bidxMeta
-        ;
-
-        bidx.api.call(
-            "member.fetch"
-        ,   {
-                id:          options.ownerId
-            ,   requesteeId: options.ownerId
-            ,   groupDomain: bidx.common.groupDomain
-            ,   success:        function( item )
-                {
-                    // now format it into array of objects with value and label
-
-                    if ( !$.isEmptyObject(item.bidxMemberProfile) )
-                    {
-                        //if( item.bidxEntityType == 'bidxBusinessSummary') {
-                        bidxMeta       = bidx.utils.getValue( item, "bidxMemberProfile.bidxMeta" );
-
-                        if( bidxMeta  )
-                        {
-                            //  execute callback if provided
-                            if (options && options.callback)
-                            {
-                                options.callback( item );
-                            }
-                        }
-
-                    }
-
-                }
-            ,   error: function(jqXhr, textStatus)
-                {
-                    //  execute callback if provided
-                    if (options && options.error)
-                    {
-                        options.error( );
-                    }
-                    return false;
-                }
-            }
-        );
-    }
-
-     /*
-        {
-        "searchTerm": "text:*",
-        "entityTypes": [
-          {
-            "type": "bidxMemberProfile"
-            },
-            {
-                "type": "bidxEntrepreneurProfile"
-            },
-            {
-                "type": "bidxBusinessSummary"
-            },
-            {
-                "type": "bidxMentorProfile"
-            },
-            {
-                "type": "bidxInvestorProfile"
-            }
-        ],
-        "maxResult": 0,
-        "facetsVisible": true,
-        "scope": "local"
-
-      }
-      */
-    function _getSearchCriteria ( criteria  )
-    {
-        var  search
-        ,    entityTypes    =   bidx.utils.getValue(criteria, 'entityTypes')
-        ,    filters        =   bidx.utils.getValue(criteria, 'filters')
-        ,    maxResult      =   bidx.utils.getValue(criteria, 'maxResult')
-        ,    facetsVisible  =   bidx.utils.getValue(criteria, 'facetsVisible')
-        ,    sort           =   bidx.utils.getValue(criteria, 'sort')
-        ,    offset         =   bidx.utils.getValue(criteria, 'offset')
-        ,    criteriaQ      =   bidx.utils.getValue(criteria, 'q')
-        ,    q              =   (criteriaQ) ? criteriaQ : '*'
-        ;
-
-        search =    {
-                    criteria    :   {
-                                        "searchTerm"    :   "text:" + q
-                                    ,   "facetsVisible" :   facetsVisible
-                                    ,   "offset"        :   paging.search.offset
-                                    ,   "maxResult"     :   (maxResult)     ? maxResult     : tempLimit
-                                    ,   "entityTypes"   :   (entityTypes)   ? entityTypes   : CONSTANTS.ENTITY_TYPES
-                                    ,   "scope"         :   "local"
-                                    ,   "filters"       :   (filters)       ? filters       : []
-                                    ,   "sort"          :   (sort)          ? sort          : []
-                                    }
-                    };
-
-        return search;
-    }
-
-    function _getLatestUsers ( options )
-    {
-        var search
-        ,   $entityDiv
-        ,   snippitEntity
-        ,   responseLength
-        ,   responseDocs
-        ,   numFound
-        ,   page            =   bidx.utils.getValue(options, 'page')
-        ,   counter         =   1
-        ,   $d              =   $.Deferred()
-        ,   fromTime        =   bidx.utils.toTimeStamp('Fri, 18 Jul 2014 09:41:42')
-        ,   displayStartRow =   paging.search.offset
-        ,   loadStartRow    =   paging.search.offset
-        ,   criteria        =   {
-                                    entityTypes     :   [
-                                                            {
-                                                                "type": "bidxMemberProfile"
-                                                            }
-                                                        ]
-                                ,   facetsVisible   :   false
-
-                                }
-        ;
-
-
-
-        userTable   =   $userTableSelector.DataTable (
-                        {
-                            "processing":           true
-                        ,   "serverSide":           true
-                        ,   "deferRender":          false
-                        ,   "bDeferRender":         false
-                        //, "bPaginate":            false
-                        ,   "bLengthChange":        true
-                       // , "bStateSave":           true
-                     //   , "stripeClasses":        [ 'strip1', 'strip2', 'strip3' ]
-                        ,   "pageLength":           CONSTANTS.SEARCH_LIMIT
-                        ,   "pagingType":           "full_numbers"
-                        //, "iDeferLoading":        20
-                        ,   "dom":                  'l<"toolbar">frtip'
-                        ,   "order":                [[4, 'desc']] // Default Sorting
-                        ,   "columnDefs":           [
-                                                       // { "targets": 1, "orderable": false }
-                                                    //,   { "targets": 2, "orderable": false }
-                                                       { "targets": 3, "orderable": false }
-                                                    ] // Disable sorting
-                        ,   "columns":              $.merge ( [
-                                                    {
-                                                        "class":          'details-control',
-                                                        "orderable":      false,
-                                                        "data":           null,
-                                                        "defaultContent": ''
-                                                    }], tableHeader)
-                        ,   "fnPreDrawCallback" :   function(oSettings)
-                                                    {
-                                                        //To enable next/last button its needed
-                                                        //why start,end is not done here because it depends on the click and those value we get in fnInfoCallback not here!!
-                                                        oSettings._iRecordsTotal    =   totalRow;
-                                                        oSettings._iRecordsDisplay  =   totalRow;
-
-                                                    }
-                        /*, "language":             {
-                                                        "infoFiltered": " - filtering from _MAX_ records"
-                                                        ,   "infoEmpty":    "No entries to show"
-                                                        ,   "info":         "Showing page _PAGE_ of _PAGES_"
-                                                        ,   "paginate":     {
-                                                                                "first"     :   "First"
-                                                                            ,   "last"      :   "Last"
-                                                                            ,   "previous"  :   "Previous"
-                                                                            ,   "next"      :   "Next"
-                                                                            }
-                                                    }*/
-                        /*, "fnDrawCallback":       function(oSettings)
-                                                    {
-                                                        bidx.utils.log('oSettings',oSettings);
-                                                        oSettings._iRecordsTotal = 100;
-
-                                                        return oSettings;
-                                                    }*/
-                        ,   "fnInfoCallback":       function( oSettings, iStart, iEnd, iMax, iTotal, sPre )
-                                                    {
-                                                        var jsonStart       =   iStart
-                                                        ,   jsonEnd         =   iStart + oSettings._iDisplayLength - 1
-                                                        ,   bottomMsg
-                                                        ,   snippitBottom   =   bidx.i18n.i('paginationSnippit', appName)
-                                                        ;
-
-                                                        if( jsonEnd > totalRow)
-                                                        {
-                                                            jsonEnd = totalRow;
-                                                        }
-
-                                                        oSettings._iDisplayStart    =   jsonStart - 1;
-                                                        //oSettings._iDisplayLength   =   CONSTANTS.SEARCH_LIMIT;
-                                                        bottomMsg = snippitBottom
-                                                                    .replace( /%from%/g,    iStart )
-                                                                    .replace( /%to%/g,      jsonEnd )
-                                                                    .replace( /%total%/g,   totalRow )
-                                                                    ;
-
-                                                        return bottomMsg;
-                                                    }
-                        ,   "createdRow":           function( row, data, dataIndex )
-                                                    {
-                                                        var ownerId             =   $( row ).data( 'ownerId' )
-                                                        ,   existedItemMember   =   bidx.utils.getValue( listMember, ownerId); // Check if it was already fetched then render it directly
-
-                                                        if( existedItemMember )
-                                                        {
-                                                            data.item   = existedItemMember; // itemmember-->row Data to get values when click on + through td.details-control
-
-                                                            data.result =   _addMemberDataToTable(
-                                                                                                    {
-                                                                                                        item:   existedItemMember
-                                                                                                    ,   row:    row
-                                                                                                    });
-                                                        }
-                                                        else
-                                                        {
-                                                            showMemberProfile(
-                                                            {
-                                                                ownerId     :   ownerId
-                                                            ,   callback    :   function ( itemMember )
-                                                                                {
-
-                                                                                    data.item  = itemMember; // itemmember-->row Data to get values when click on + through td.details-control
-
-                                                                                    if( itemMember )
-                                                                                    {
-
-                                                                                        listMember[ ownerId ] = itemMember;
-                                                                                    }
-
-                                                                                    data.result =   _addMemberDataToTable(
-                                                                                                    {
-                                                                                                        item:   itemMember
-                                                                                                    ,   row:    row
-                                                                                                    });
-                                                                                }
-
-                                                            ,   error       :   function (  )
-                                                                                {
-                                                                                    $( row ).addClass('error');
-                                                                                    $('td:eq(1)', row).removeClass().html( 'Error loading the data' );
-
-                                                                                }
-                                                            } );
-                                                        }
-                                                    }
-                        ,   "ajax":
-                            {
-                                 "url":             bidx.api.getUrl("/api/v1/nsearch",false,bidx.common.groupDomain)
-                            ,    "type":            "POST"
-                            ,    "contentType":     "application/json; charset=utf-8"
-                            ,    "dataType":        "json"
-
-                            ,    "data":            function ( data )
-                                                    {
-
-                                                        bidx.utils.log('data-for-server',data);
-
-                                                        search      = _buildUserListingSearchCriteria( data, criteria );
-
-                                                        data        =  { };
-
-                                                        bidx.utils.log('search.criteria',search.criteria);
-
-                                                        $.each( search.criteria , function ( criteriaKey, criteriaVal)
-                                                        {
-                                                            data[criteriaKey] = criteriaVal;
-                                                        });
-
-                                                        return JSON.stringify( data );
-                                                    }
-
-                            ,    "dataSrc":         function ( json )
-                                                    {
-                                                        bidx.utils.log('data-response',json);
-                                                        var result      = { }
-                                                        ,   resultArr   = []
-                                                        ,   ownerId
-                                                        ,   defaultValue
-                                                        ,   docs        = json.data.docs
-                                                        ;
-                                                        if( docs.length )
-                                                        {
-                                                            $.each( docs , function ( docsKey, docsValue)
-                                                            {
-                                                                ownerId     =   docsValue.ownerId;
-                                                                //resultArr.push( [json.data.docs[i].ownerId,  json.data.docs[i].modified,  json.data.docs[i].entityType ] );
-
-                                                                //resultArr.push(['Loading']);
-                                                                result  =   {
-                                                                                "DT_RowData"    :   { 'ownerId' :  ownerId } // It wont be visible in HTML but its set
-                                                                            ,   "DT_RowClass"   :   'row_' + ownerId
-                                                                            };
-
-                                                                $.each( tableHeader , function ( indexLabel, objLabel)
-                                                                {
-                                                                    defaultValue    =   '';
-
-                                                                    if(objLabel.data === 'firstName')
-                                                                    {
-                                                                        defaultValue = 'Loading';
-                                                                    }
-
-                                                                    result[ objLabel.data ] = defaultValue;
-                                                                });
-
-                                                                resultArr.push( result );
-                                                            });
-                                                        }
-
-                                                        totalRow = json.data.numFound;
-
-                                                        return resultArr;
-                                                    }
-                            }
-                        });
-
-        /********** Filter Handling *************/
-        $entityDiv      =   $element.find( "#entity-listitem" );
-        snippitEntity   =   $entityDiv.html().replace(/(<!--)*(-->)*/g, "");
-        $element.find("div.toolbar").html(snippitEntity);
-        $element.find('.entity_type').on('click', function( e )
-        {
-            e.preventDefault();
-            userTable.draw();
-        } );
-
-        $userTableSelector.find('tbody').on('click', 'td.details-control', function ( )
-        {
-            var personalInfo    = ''
-            ,   entrepeneurInfo = ''
-            ,   mentorInfo      = ''
-            ,   investorInfo
-            ,   allInfo
-            ,   isMember
-            ,   isEntrepreneur
-            ,   isInvestor
-            ,   isMentor
-            ,   tr                  =   $(this).closest('tr')
-            ,   row                 =   userTable.row( tr )
-            ,   data                =   row.data()
-            ,   item                =   data.item
-            ,   $allInfo            =   $('<div>')
-            ;
-
-            if ( row.child.isShown() )
-            {
-                // This row is already open - close it
-                row.child.hide();
-
-                tr.removeClass('shown');
-            }
-            else
-            {
-                // Open this row
-                isMember            =   bidx.utils.getValue( item, "bidxMemberProfile" );
-                isEntrepreneur      =   bidx.utils.getValue( item, "bidxEntrepreneurProfile" );
-                isInvestor          =   bidx.utils.getValue( item, "bidxInvestorProfile" );
-                isMentor            =   bidx.utils.getValue( item, "bidxMentorProfile" );
-
-                if ( isMember )
-                {
-                    personalInfo    =    _addDetailedInfo('Personal', data );
-                }
-
-                if ( isEntrepreneur )
-                {
-                   entrepeneurInfo  =  _addDetailedInfo('Entrepreneur', data );
-                }
-
-                if( isMentor )
-                {
-                    mentorInfo      =   _addDetailedInfo('Mentor', data );
-                }
-
-                if( isInvestor )
-                {
-                    investorInfo    =   _addDetailedInfo('Investor', data );
-                }
-
-                $allInfo.append (   personalInfo
-                                ,   entrepeneurInfo
-                                ,   mentorInfo
-                                ,   investorInfo
-                                );
-
-                row.child(  $allInfo ).show();
-
-                tr.addClass('shown');
-            }
-        } );
-
-        // Convenience function for translating a language key to it's description
-        //
-        function _getLanguageLabelByValue( value )
-        {
             var label
             ,   languages;
 
@@ -784,12 +91,10 @@
             } );
 
             return label;
-        }
+    }
 
-
-
-        function _addDetailedInfo ( type, data )
-        {
+    function _addDetailedInfo ( type, data )
+    {
             bidx.utils.log('onClick +',data);
 
             var result
@@ -1179,11 +484,10 @@
             }
 
             return $listItem;
-        }
+    }
 
-
-        function _renderTableRow( label, value)
-        {
+    function _renderTableRow( label, value)
+    {
             var tdHtml = ''
             ;
             if( value && value !== 'undefined')
@@ -1196,21 +500,18 @@
             }
 
             return tdHtml;
-        }
+    }
 
-
-
-
-
-        function _buildUserListingSearchCriteria ( data, criteria )
-        {
+    function _buildUserListingSearchCriteria ( data, criteria )
+    {
             var search
-            ,   entityTypes     =   bidx.utils.getValue(criteria, 'entityTypes')
+            ,   entityType      =   bidx.utils.getValue(criteria, 'entityType')
             ,   filters         =   bidx.utils.getValue(criteria, 'filters')
+            ,   genericFilters  =   bidx.utils.getValue(criteria, 'genericFilters')
             ,   maxResult       =   bidx.utils.getValue(criteria, 'maxResult')
             ,   facetsVisible   =   bidx.utils.getValue(criteria, 'facetsVisible')
             ,   filterEntity    =   $('.entity_type').val()
-            //,   sort            =   bidx.utils.getValue(criteria, 'sort')
+            ,   sort            =   bidx.utils.getValue(criteria, 'sort')
             ,   order           =   data.order
             ,   orderIndex
             ,   sortArr         =   []
@@ -1234,15 +535,9 @@
 
             if( filterEntity )
             {
-
-                entityTypes =   [
-                                    {
-                                        "type": filterEntity
-                                    }
-                                ];
+                genericFilters  =   {"role" : filterEntity};
             }
 
-             bidx.utils.log( 'sort', sortArr);
             /*sort            :   [
                                                             {
                                                                 "field": "created"
@@ -1252,23 +547,23 @@
 
             search =    {
                         criteria    :   {
-                                            "searchTerm"    :   "text:" + q
+                                            "searchTerm"    :   "basic:" + q
                                         ,   "facetsVisible" :   facetsVisible
                                         ,   "offset"        :   data.start
                                         ,   "maxResult"     :   data.length
-                                        ,   "entityTypes"   :   (entityTypes)       ? entityTypes   : CONSTANTS.ENTITY_TYPES
-                                        ,   "scope"         :   "local"
-                                        ,   "filters"       :   (filters)           ? filters       : []
-                                        ,   "sort"          :   (sortArr.length)    ? sortArr       : []
+                                        ,   "entityType"    :   ["bdxMember"]
+                                        ,   "scope"         :   "LOCAL"
+                                        //,   "filters"       :   (filters)           ? filters       : []
+                                        ,   "sort"          :   (sortArr.length)    ? sortArr        : []
+                                        ,   "genericFilters":   (genericFilters)    ? genericFilters : {}
                                         }
                         };
 
             return search;
-        }
+    }
 
-
-        function _addMemberDataToTable( options )
-        {
+    function _addMemberDataToTable( options )
+    {
             var item            =   options.item
             ,   row             =   options.row
             ,   dateTime        =   bidx.utils.getValue(item, 'bidxMemberProfile.bidxMeta.bidxCreationDateTime')
@@ -1288,11 +583,10 @@
             roleNames = _.map(roles, function(roleName)
                         {
                             formatRole      =   roleName.substring(0,1).toUpperCase() + roleName.substring(1);
-                            bidxXmlLabel    =   'bidx' + formatRole + 'Profile';
+                            bidxXmlLabel    =   roleName;
                             spanLabel       = "<span class='label bidx-label bidx-" + roleName + "'>" +  bidx.i18n.i( bidxXmlLabel, appName )  + "</span>";
                             return spanLabel;
                         });
-
 
             result  =   {
                             firstName   :   "<a target='_blank' href='/member/" + item.member.bidxMeta.bidxMemberId    +   "'>" + item.bidxMemberProfile.personalDetails.firstName +"</a>"
@@ -1310,13 +604,618 @@
             });
 
             return result;
-        }
+    }
+
+    function showMemberProfile( options )
+    {
+        var bidxMeta
+        ;
+
+        bidx.api.call(
+            "member.fetch"
+        ,   {
+                id:          options.ownerId
+            ,   requesteeId: options.ownerId
+            ,   groupDomain: bidx.common.groupDomain
+            ,   success:        function( item )
+                {
+                    // now format it into array of objects with value and label
+
+                    if ( !$.isEmptyObject(item.bidxMemberProfile) )
+                    {
+                        //if( item.bidxEntityType == 'bidxBusinessSummary') {
+                        bidxMeta       = bidx.utils.getValue( item, "bidxMemberProfile.bidxMeta" );
+
+                        if( bidxMeta  )
+                        {
+                            //  execute callback if provided
+                            if (options && options.callback)
+                            {
+                                options.callback( item );
+                            }
+                        }
+
+                    }
+
+                }
+            ,   error: function(jqXhr, textStatus)
+                {
+                    //  execute callback if provided
+                    if (options && options.error)
+                    {
+                        options.error( );
+                    }
+                    return false;
+                }
+            }
+        );
+    }
+
+    function _getLatestUsers ( options )
+    {
+        var search
+        ,   $entityDiv
+        ,   snippitEntity
+        ,   responseLength
+        ,   responseDocs
+        ,   numFound
+        ,   page            =   bidx.utils.getValue(options, 'page')
+        ,   counter         =   1
+        ,   $d              =   $.Deferred()
+        ,   fromTime        =   bidx.utils.toTimeStamp('Fri, 18 Jul 2014 09:41:42')
+        ,   displayStartRow =   paging.search.offset
+        ,   loadStartRow    =   paging.search.offset
+        ,   criteria        =   {
+                                    "entityType": ["bdxMember"]
+                                ,   facetOptionsEnable   :   false
+                                }
+        ;
+
+        userTable   =   $userTableSelector.DataTable (
+                        {
+                            "processing":           true
+                        ,   "serverSide":           true
+                        ,   "deferRender":          false
+                        ,   "bDeferRender":         false
+                        //, "bPaginate":            false
+                        ,   "bLengthChange":        true
+                       // , "bStateSave":           true
+                     //   , "stripeClasses":        [ 'strip1', 'strip2', 'strip3' ]
+                        ,   "pageLength":           CONSTANTS.SEARCH_LIMIT
+                        ,   "pagingType":           "full_numbers"
+                        //, "iDeferLoading":        20
+                        ,   "dom":                  'l<"toolbar">frtip'
+                        ,   "order":                [[4, 'desc']] // Default Sorting
+                        ,   "columnDefs":           [
+                                                        { "targets": 1, "orderable": false }
+                                                    ,   { "targets": 2, "orderable": false }
+                                                    ,   { "targets": 3, "orderable": false }
+                                                    ] // Disable sorting
+                        ,   "columns":              $.merge ( [
+                                                    {
+                                                        "class":          'details-control',
+                                                        "orderable":      false,
+                                                        "data":           null,
+                                                        "defaultContent": ''
+                                                    }], tableHeader)
+                        ,   "fnPreDrawCallback" :   function(oSettings)
+                                                    {
+                                                        //To enable next/last button its needed
+                                                        //why start,end is not done here because it depends on the click and those value we get in fnInfoCallback not here!!
+                                                        oSettings._iRecordsTotal    =   totalRow;
+                                                        oSettings._iRecordsDisplay  =   totalRow;
+
+                                                    }
+                        /*, "language":             {
+                                                        "infoFiltered": " - filtering from _MAX_ records"
+                                                        ,   "infoEmpty":    "No entries to show"
+                                                        ,   "info":         "Showing page _PAGE_ of _PAGES_"
+                                                        ,   "paginate":     {
+                                                                                "first"     :   "First"
+                                                                            ,   "last"      :   "Last"
+                                                                            ,   "previous"  :   "Previous"
+                                                                            ,   "next"      :   "Next"
+                                                                            }
+                                                    }*/
+                        /*, "fnDrawCallback":       function(oSettings)
+                                                    {
+                                                        bidx.utils.log('oSettings',oSettings);
+                                                        oSettings._iRecordsTotal = 100;
+
+                                                        return oSettings;
+                                                    }*/
+                        ,   "fnInfoCallback":       function( oSettings, iStart, iEnd, iMax, iTotal, sPre )
+                                                    {
+                                                        var jsonStart       =   iStart
+                                                        ,   jsonEnd         =   iStart + oSettings._iDisplayLength - 1
+                                                        ,   bottomMsg
+                                                        ,   snippitBottom   =   bidx.i18n.i('paginationSnippit', appName)
+                                                        ;
+
+                                                        if( jsonEnd > totalRow)
+                                                        {
+                                                            jsonEnd = totalRow;
+                                                        }
+
+                                                        oSettings._iDisplayStart    =   jsonStart - 1;
+                                                        //oSettings._iDisplayLength   =   CONSTANTS.SEARCH_LIMIT;
+                                                        bottomMsg = snippitBottom
+                                                                    .replace( /%from%/g,    iStart )
+                                                                    .replace( /%to%/g,      jsonEnd )
+                                                                    .replace( /%total%/g,   totalRow )
+                                                                    ;
+
+                                                        return bottomMsg;
+                                                    }
+                        ,   "createdRow":           function( row, data, dataIndex )
+                                                    {
+                                                        var ownerId             =   $( row ).data( 'ownerId' )
+                                                        ,   existedItemMember   =   $.inArray( listMember, ownerId); // Check if it was already fetched then render it directly
+
+                                                        if( existedItemMember != -1)
+                                                        {
+                                                            data.item   = existedItemMember; // itemmember-->row Data to get values when click on + through td.details-control
+
+                                                            data.result =   _addMemberDataToTable(
+                                                                                                    {
+                                                                                                        item:   existedItemMember
+                                                                                                    ,   row:    row
+                                                                                                    });
+                                                        }
+                                                        else
+                                                        {
+                                                            showMemberProfile(
+                                                            {
+                                                                ownerId     :   ownerId
+                                                            ,   callback    :   function ( itemMember )
+                                                                                {
+                                                                                    data.item  = itemMember; // itemmember-->row Data to get values when click on + through td.details-control
+
+                                                                                    if( itemMember )
+                                                                                    {
+
+                                                                                        listMember[ ownerId ] = itemMember;
+                                                                                    }
+
+                                                                                    data.result =   _addMemberDataToTable(
+                                                                                                    {
+                                                                                                        item:   itemMember
+                                                                                                    ,   row:    row
+                                                                                                    });
+                                                                                }
+
+                                                            ,   error       :   function (  )
+                                                                                {
+                                                                                    $( row ).addClass('error');
+                                                                                    $('td:eq(1)', row).removeClass().html( 'Error loading the data' );
+
+                                                                                }
+                                                            } );
+                                                        }
+                                                    }
+                        ,   "ajax":
+                            {
+                                 "url":             bidx.api.getUrl("/api/v1/nnsearch",false,bidx.common.groupDomain)
+                            ,    "type":            "POST"
+                            ,    "contentType":     "application/json; charset=utf-8"
+                            ,    "dataType":        "json"
+
+                            ,    "data":            function ( data )
+                                                    {
+
+                                                        bidx.utils.log('data-for-server',data);
+
+                                                        search      = _buildUserListingSearchCriteria( data, criteria );
+
+                                                        data        =  { };
+
+                                                        $.each( search.criteria , function ( criteriaKey, criteriaVal)
+                                                        {
+                                                            data[criteriaKey] = criteriaVal;
+                                                        });
+
+                                                        return JSON.stringify( data );
+                                                    }
+
+                            ,    "dataSrc":         function ( json )
+                                                    {
+                                                        bidx.utils.log('data-response',json);
+                                                        var result      = { }
+                                                        ,   resultArr   = []
+                                                        ,   ownerId
+                                                        ,   defaultValue
+                                                        ,   docs        = json.data
+                                                        ;
+                                                        if( docs.total > 0 )
+                                                        {
+                                                            $.each( docs.found , function ( docsKey, docsValue)
+                                                            {
+                                                                ownerId     =   docsValue.properties.userId;
+                                                                //resultArr.push( [json.data.docs[i].ownerId,  json.data.docs[i].modified,  json.data.docs[i].entityType ] );
+
+                                                                //resultArr.push(['Loading']);
+                                                                result  =   {
+                                                                                "DT_RowData"    :   { 'ownerId' :  ownerId } // It wont be visible in HTML but its set
+                                                                            ,   "DT_RowClass"   :   'row_' + ownerId
+                                                                            };
+
+                                                                $.each( tableHeader , function ( indexLabel, objLabel)
+                                                                {
+                                                                    defaultValue    =   '';
+
+                                                                    if(objLabel.data === 'firstName')
+                                                                    {
+                                                                        defaultValue = 'Loading';
+                                                                    }
+
+                                                                    result[ objLabel.data ] = defaultValue;
+                                                                });
+
+                                                                resultArr.push( result );
+                                                            });
+                                                        }
+
+                                                        totalRow = json.data.numFound;
+
+                                                        return resultArr;
+                                                    }
+                            }
+                        });
+
+        /********** Filter Handling *************/
+        $entityDiv      =   $element.find( "#entity-listitem" );
+        snippitEntity   =   $entityDiv.html().replace(/(<!--)*(-->)*/g, "");
+        $element.find("div.toolbar").html(snippitEntity);
+        $element.find('.entity_type').on('click', function( e )
+        {
+            e.preventDefault();
+            userTable.draw();
+        } );
+
+        $userTableSelector.find('tbody').on('click', 'td.details-control', function ( )
+        {
+            var personalInfo    = ''
+            ,   entrepeneurInfo = ''
+            ,   mentorInfo      = ''
+            ,   investorInfo
+            ,   allInfo
+            ,   isMember
+            ,   isEntrepreneur
+            ,   isInvestor
+            ,   isMentor
+            ,   tr                  =   $(this).closest('tr')
+            ,   row                 =   userTable.row( tr )
+            ,   data                =   row.data()
+            ,   item                =   data.item
+            ,   $allInfo            =   $('<div>')
+            ;
+
+            if ( row.child.isShown() )
+            {
+                // This row is already open - close it
+                row.child.hide();
+
+                tr.removeClass('shown');
+            }
+            else
+            {
+                // Open this row
+                isMember            =   bidx.utils.getValue( item, "bidxMemberProfile" );
+                isEntrepreneur      =   bidx.utils.getValue( item, "bidxEntrepreneurProfile" );
+                isInvestor          =   bidx.utils.getValue( item, "bidxInvestorProfile" );
+                isMentor            =   bidx.utils.getValue( item, "bidxMentorProfile" );
+
+                if ( isMember )
+                {
+                    personalInfo    =    _addDetailedInfo('Personal', data );
+                }
+
+                if ( isEntrepreneur )
+                {
+                   entrepeneurInfo  =  _addDetailedInfo('Entrepreneur', data );
+                }
+
+                if( isMentor )
+                {
+                    mentorInfo      =   _addDetailedInfo('Mentor', data );
+                }
+
+                if( isInvestor )
+                {
+                    investorInfo    =   _addDetailedInfo('Investor', data );
+                }
+
+                $allInfo.append (   personalInfo
+                                ,   entrepeneurInfo
+                                ,   mentorInfo
+                                ,   investorInfo
+                                );
+
+                row.child(  $allInfo ).show();
+
+                tr.addClass('shown');
+            }
+        } );
 
         $d.resolve();
 
         return $d.promise();
     }
 
+
+    function _createRegionsMap( response, type )
+    {
+        // Create the data table.
+        var label
+        ,   chart
+        ,   options
+        ,   facets          =   []
+        ,   listItem        =   []
+        ,   facetList       =   {}
+        ,   data
+        ,   countryLabel    =   bidx.i18n.i('facet_country',appName)
+        ,   growthLabel     =   bidx.i18n.i('chart_growth', appName)
+        ,   countryNameLabel =  bidx.i18n.i('name', appName)
+        ,   labelName
+        ;
+
+        if ( response.facets && response.facets.length )
+        {
+            facets      =   response.facets;
+            facetList   =   _.findWhere( facets, { field :   type });
+
+            listItem.push( [countryLabel, countryNameLabel, growthLabel ] );
+
+            $.each( facetList.values, function( idx, item )
+            {
+                labelName   =   bidx.data.i( item.option, "country" );
+                label       =   item.option;
+
+                listItem.push( [ label, labelName, item.count] );
+
+            } );
+
+            data = google.visualization.arrayToDataTable( listItem );
+        }
+
+
+        // Set chart option
+
+        options     =   {
+                            title   :               bidx.i18n.i('regionTitle', appName)
+                        };
+                        //,   sizeAxis:             { minValue: 0, maxValue: 100 }
+                        //,   magnifyingGlass:        {enable: true, zoomFactor: 5.0}
+                        //,   displayMode:          'markers'
+                        //,   colorAxis:            {colors: ['#e7711c', '#4374e0']} // orange to blue
+                        //,   colorAxis:              {colors: ['#00853f', '#000000', '#e31b23']}
+                        //,   colorAxis:              {minValue: 0,  colors: ['#FF0000', '#00FF00']}
+                        //,   backgroundColor:        '#FFFFF'
+                        //,   datalessRegionColor:    '#ecf1ee'
+
+
+        chart = new google.visualization.GeoChart(document.getElementById('country_geo_chart'));
+
+        chart.draw(data, options);
+    }
+
+    function _createRolesChart( response, type )
+    {
+        // Create the data table.
+        var label
+        ,   labelNoCount
+        ,   memberProfileCount  =   0
+        ,   roleProfilecount    =   0
+        ,   noRoleProfileCount
+        ,   facets              =   []
+        ,   listItem            =   []
+        ,   facetList           =   {}
+        ,   data                =   new google.visualization.DataTable()
+        ,   userRoles           =   [ 'entrepreneur', 'mentor', 'investor', 'member']
+        ;
+
+        data.addColumn('string', 'Roles');
+        data.addColumn('number', 'Users');
+
+        if ( response.facets && response.facets.length )
+        {
+            facets      =   response.facets;
+            facetList   =   _.findWhere( facets, { field :   type });
+
+            $.each( facetList.values, function( idx, item )
+            {
+                if( $.inArray( item.option, userRoles ) !== -1 )
+                {
+                    if ( item.option === 'member' )
+                    {
+                        memberProfileCount = item.count;
+                    }
+                    else
+                    {
+                        label   =   bidx.i18n.i( item.option, appName );
+
+                        listItem.push( [ label, item.count] );
+
+                        roleProfilecount = roleProfilecount + item.count;
+                    }
+                }
+            } );
+
+            /* No Profile Count */
+            labelNoCount        =   bidx.i18n.i( 'memberOnlyLbl', appName );
+            noRoleProfileCount  =   memberProfileCount - roleProfilecount;
+            if( noRoleProfileCount > 0)
+            {
+                listItem.push( [ labelNoCount, noRoleProfileCount] );
+            }
+
+            data.addRows( listItem );
+
+            _showView("approx", true );
+        }
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('role_pie_chart'));
+
+        chart.draw(data, PIECHARTOPTIONS);
+    }
+
+    function _getSearchTotals( options )
+    {
+        var criteria    =   {
+                                "searchTerm": "basic:*",
+                                "entityType": ["bdxmember"],
+                                "scope": "LOCAL"
+                            };
+
+        bidx.api.call(
+            "search.found"
+        ,   {
+                    groupDomain:        bidx.common.groupDomain
+                ,   data:               criteria
+                ,   success: function( response )
+                    {
+                        bidx.utils.log("[searchList] retrieved results ", response );
+
+                        // Set a callback to run when the Google Visualization API is loaded.
+                        _createRolesChart( response, "role" );
+
+                        _createRegionsMap( response, "country" );
+
+                        if (options && options.callback)
+                        {
+                            options.callback(  );
+                        }
+
+                    }
+                    ,
+                    error: function( jqXhr, textStatus )
+                    {
+
+                        var response = $.parseJSON( jqXhr.responseText)
+                        ,   responseText = response && response.text ? response.text : "Status code " + jqXhr.status
+                        ;
+
+                        // 400 errors are Client errors
+                        //
+                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                        {
+                            bidx.utils.error( "Client  error occured", response );
+                            if (options && options.error)
+                            {
+                                options.error( responseText );
+                            }
+                        }
+                        // 500 erors are Server errors
+                        //
+                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                        {
+                            bidx.utils.error( "Internal Server error occured", response );
+                            if (options && options.error)
+                            {
+                                options.error( responseText );
+                            }
+                        }
+
+                    }
+            }
+        );
+
+        return ;
+    }
+
+    function _createUsersLineChart( params )
+    {
+        var data
+        ,   chart
+        ,   newUser
+        ,   login
+        ,   dateSplit
+        ,   formattedDate
+        ,   $container      =   document.getElementById('user_line_chart')
+        ,   graphData       =   []
+        ,   eventRegister   =   bidx.utils.getValue(params.responseRegister,   'events')
+        ,   eventLogin      =   bidx.utils.getValue(params.responseLogin,      'events')
+        ,   keysRegister    =   _.keys( eventRegister ) // Keys of registrations ex 2014-02-02
+        ,   keysLogin       =   _.keys( eventLogin )     // Keys of Login ex 2014-02-02
+        ,   alldateKeys     =   _.union( keysRegister, keysLogin).reverse() // Common keys for iteration
+        ,   options         =   {
+                                    title: 'Weekly logins'
+                                }
+        ;
+
+        if ( alldateKeys.length )
+        {
+            /* Old Registration + Logins
+            graphData.push( ['Day', 'New Users', 'Logins'] );*/
+            graphData.push( ['Day', 'Logins'] );
+
+            $.each( alldateKeys, function( idx, date )
+            {
+                // newUser    =   ($.isEmptyObject(eventRegister[date])) ? eventRegister[date] : 0;
+                // login      =   ($.isEmptyObject(eventLogin[date])) ? eventLogin[date] : 0;
+
+                 newUser        =   bidx.utils.getValue(eventRegister, date);
+                 login          =   bidx.utils.getValue(eventLogin, date);
+                 login          =   ( login ) ? login : 0;
+                 newUser        =   ( newUser ) ? newUser : 0;
+                 dateSplit      = date.split("-");
+                 formattedDate  = dateSplit.reverse().join('-');
+
+                 /* Old Registration + Logins
+                 graphData.push( [formattedDate, newUser, login] );*/
+                 graphData.push( [formattedDate, login] );
+            } );
+
+            data = google.visualization.arrayToDataTable(graphData);
+
+            chart = new google.visualization.LineChart($container);
+
+            chart.draw(data, options);
+        }
+        else
+        {
+           $container.innerHTML =  bidx.i18n.i('noData', appName);
+        }
+    }
+
+    function _createBpBarChart( response, type )
+    {
+        var data
+        ,   chart
+        ,   $container  =   document.getElementById('bp_bar_chart')
+        ,   eventData   =   response.events
+        ,   graphData   =   []
+        ,   options     =   {
+                                title: 'Weekly performance'
+                            }
+                            //,   vAxis: {title: 'Day',  titleTextStyle: {color: 'red'}}
+                            //,   width: 600
+                            //,   height: 400
+                            //}
+        ;
+
+        graphData.push( ['Day', 'New Business Summaries'] );
+
+        if(!$.isEmptyObject(eventData) )
+        {
+
+            $.each( eventData, function( date, count )
+            {
+                graphData.push( [date, count] );
+            });
+
+            data    = google.visualization.arrayToDataTable(graphData);
+
+            chart   = new google.visualization.BarChart($container);
+
+            chart.draw(data, options);
+        }
+        else
+        {
+           $container.innerHTML = bidx.i18n.i('noData', appName);
+        }
+    }
 
     function _getStatistics ( options )
     {
@@ -1384,84 +1283,14 @@
         return ;
     }
 
-    function _getSearchFacets( options )
-    {
-
-        var search
-        ,   criteria    =   {
-                                maxResult : 0
-                            ,   facetsVisible: true
-                            }
-        ;
-
-        search = _getSearchCriteria( criteria );
-
-        bidx.api.call(
-            "search.get"
-        ,   {
-                    groupDomain:        bidx.common.groupDomain
-                ,   data:               search.criteria
-                ,   success: function( response )
-                    {
-                        bidx.utils.log("[searchList] retrieved results ", response );
-
-                        // Set a callback to run when the Google Visualization API is loaded.
-                        _createRolesChart( response, 'facet_entityType' );
-
-                        _createRegionsMap( response, 'facet_country');
-
-                        if (options && options.callback)
-                        {
-                            options.callback(  );
-                        }
-
-                    }
-                    ,
-                    error: function( jqXhr, textStatus )
-                    {
-
-                        var response = $.parseJSON( jqXhr.responseText)
-                        ,   responseText = response && response.text ? response.text : "Status code " + jqXhr.status
-                        ;
-
-                        // 400 errors are Client errors
-                        //
-                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                        {
-                            bidx.utils.error( "Client  error occured", response );
-                            if (options && options.error)
-                            {
-                                options.error( responseText );
-                            }
-                        }
-                        // 500 erors are Server errors
-                        //
-                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                        {
-                            bidx.utils.error( "Internal Server error occured", response );
-                            if (options && options.error)
-                            {
-                                options.error( responseText );
-                            }
-                        }
-
-                    }
-            }
-        );
-
-        return ;
-    }
-
     function _getData ()
     {
-        var options
-        ;
         // 1. Load Country Geo Chart & Load User Role Pie Chart
         _showView("loadcountrygeochart", true );
 
         _showView("loaduserrolepiechart", true );
 
-        _getSearchFacets(
+        _getSearchTotals(
         {
             callback :  function( )
                         {
@@ -1477,7 +1306,22 @@
                         }
         });
 
-        // 2. Load Business Summary Chart
+
+        // 2. Load Latest uers  in Table
+        _showView("loadusertablechart", true );
+
+        _getLatestUsers( )
+        .done( function( )
+        {
+            _hideView("loadusertablechart");
+        })
+        .fail( function ( responseText )
+        {
+            _hideView("loadusertablechart");
+            _showError( 'userTableError', responseText );
+        });
+
+        // 3. Load Business Summary Chart
         _showView("loadbpbarchart", true );
         _getStatistics(
         {
@@ -1497,7 +1341,7 @@
                         }
         });
 
-        // 3. Load Login and Registered users Chart
+        // 4. Load Login and Registered users Chart
         _showView("loaduserlinechart", true );
         _getStatistics(
         {
@@ -1535,21 +1379,6 @@
 
                             }
         });
-
-        // 4. Load Latest uers  in Table
-        _showView("loadusertablechart", true );
-
-        _getLatestUsers( )
-        .done( function( listArr, numFound )
-        {
-            _hideView("loadusertablechart");
-            //_createUserTables ( listArr, numFound );
-        })
-        .fail( function ( responseText )
-        {
-            _hideView("loadusertablechart");
-            _showError( 'userTableError', responseText );
-        });
     }
 
     var _showView = function(view, showAll)
@@ -1561,12 +1390,12 @@
             $views.hide();
         }
          var $view = $views.filter(bidx.utils.getViewName(view)).show();
-    };
+    }
 
     var _hideView = function( hideview )
     {
         $views.filter(bidx.utils.getViewName(hideview)).hide();
-    };
+    }
 
     function _showError( view, msg )
     {
@@ -1579,19 +1408,6 @@
         google.load("visualization", "1.0", {packages:["corechart","table"]});
 
         google.setOnLoadCallback(_getData);
-
-        /*Commented because currently there is no functinality to fetch stats on date and nsearch
-        $element.find('.monitoring-date').datepicker({
-            dateFormat : 'dd-mm-yy'
-        });
-
-        $element('.monitoring-submit').on('click', function( e )
-        {
-            e.preventDefault();
-            _getData( );
-        } ); */
-
-
     }
 
     _init();

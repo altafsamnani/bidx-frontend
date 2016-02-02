@@ -1417,9 +1417,11 @@
                     monetaryAmount:         true
                 ,   max:                    function()
                                             {
-                                                return $editForm.find( "[name='maxInvestment']" ).val()
+                                                var maxval = $editForm.find( "[name='maxInvestment']" ).val()
                                                        ? $editForm.find( "[name='maxInvestment']" ).val()
                                                        : $editForm.find( "[name='minInvestment']" ).val();
+                                            
+                                                return parseInt(maxval);
                                             }
                 }
             ,   "maxInvestment":
@@ -1427,9 +1429,11 @@
                     monetaryAmount:         true
                 ,   min:                    function()
                                             {
-                                                return $editForm.find( "[name='minInvestment']" ).val()
+                                                var minval = $editForm.find( "[name='minInvestment']" ).val()
                                                        ? $editForm.find( "[name='minInvestment']" ).val()
                                                        : $editForm.find( "[name='maxInvestment']" ).val();
+
+                                                return parseInt(minval);
                                             }
                 }
             ,   "focusSocialImpact":
