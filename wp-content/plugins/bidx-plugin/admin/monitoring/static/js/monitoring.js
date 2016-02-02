@@ -830,7 +830,7 @@
                                                         {
                                                             $.each( docs.found , function ( docsKey, docsValue)
                                                             {
-                                                                ownerId     =   docsValue.entityId;
+                                                                ownerId     =   docsValue.member.userId;
 
                                                                 bidx.utils.log("owner id ", ownerId);
                                                                 //resultArr.push( [json.data.docs[i].ownerId,  json.data.docs[i].modified,  json.data.docs[i].entityType ] );
