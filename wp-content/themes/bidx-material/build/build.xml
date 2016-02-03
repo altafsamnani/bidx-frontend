@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Jun 20, 2013 1:16:00 PM                                                        
+
+     BidX Group Theme for Wordpress    
+                   
+     Author: Jaap Gorjup                                                                
+     ====================================================================== -->
+<project name="BidX Group Theme for Wordpress" default="default">
+    <description>
+            
+    </description>
+
+    <!-- ================================= 
+          target: default              
+         ================================= -->
+    <target name="default" depends="depends" description="" >
+  		
+    	
+        <zip destfile="bidx-group-theme.zip" update="false" basedir=".." excludes="**/build/**, *.zip, .*/**">
+        </zip>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: depends                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="depends">
+    </target>
+
+</project>

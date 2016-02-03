@@ -1,0 +1,676 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Bidx Group\n"
+"POT-Creation-Date: 2014-06-10 21:11+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Jaap Gorjup <jaap@bidx.net>\n"
+"Language-Team: Bidx Development <devteam@bidx.net>\n"
+"Language: id_ID\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2\n"
+"X-Poedit-Basepath: ../\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ./lib\n"
+"X-Poedit-SearchPath-2: ./templates\n"
+
+#: 404.php:4
+msgid "Sorry, but the page you were trying to view does not exist."
+msgstr "Maaf, situs ini tidak mendapatkan alamat yang anda minta."
+
+#: 404.php:7
+msgid "It looks like this was the result of either:"
+msgstr "Sepertinya ini disebabkan oleh hal di bawah ini:"
+
+#: 404.php:9
+msgid "a mistyped address"
+msgstr "kesalahan alamat"
+
+#: 404.php:10
+msgid "an out-of-date link"
+msgstr "link yang sudah kadaluarsa"
+
+#: base.php:49
+msgid ""
+"You are using an <strong>outdated</strong> browser. Please <a href=\"http://"
+"browsehappy.com/\">upgrade your browser</a> to improve your experience."
+msgstr ""
+"Anda sedang menggunakan browser <strong><abbr title=\"Jaman Dulu\">Jadul</"
+"abbr></strong>. Silahkan <a href=\"http://browsehappy.com/\">memperbaharui "
+"browser anda</a>"
+
+#: index.php:5
+msgid "Sorry, no results were found."
+msgstr "Maaf, tidak ada hasil yang ditemukan."
+
+#: lib/activation.php:37 lib/activation.php:38
+msgid "Theme Activation"
+msgstr "Aktivasi Tema"
+
+#: lib/activation.php:74
+#, php-format
+msgid "%s Theme Activation"
+msgstr "Aktivasi Tema %s"
+
+#: lib/activation.php:89 lib/activation.php:91
+msgid "Create static front page?"
+msgstr "Buat halaman statis pada halaman depan?"
+
+#: lib/activation.php:93 lib/activation.php:106 lib/activation.php:119
+#: lib/activation.php:132 lib/activation.php:145
+msgid "Yes"
+msgstr "Ya"
+
+#: lib/activation.php:94 lib/activation.php:107 lib/activation.php:120
+#: lib/activation.php:133 lib/activation.php:146
+msgid "No"
+msgstr "Tidak"
+
+#: lib/activation.php:97
+msgid "Create a page called Home and set it to be the static front page"
+msgstr ""
+"Buat halaman dengan judul Home dan tentukan sebagai halaman statis di "
+"halaman depan"
+
+#: lib/activation.php:102
+msgid "Change permalink structure?"
+msgstr "Ganti struktur permalink?"
+
+#: lib/activation.php:104
+msgid "Update permalink structure?"
+msgstr "Perbaharui struktur permalink?"
+
+#: lib/activation.php:110
+msgid "Change permalink structure to /&#37;postname&#37;/"
+msgstr "Ganti struktur permalink menjadi /&#37;postname&#37;/"
+
+#: lib/activation.php:115
+msgid "Change uploads folder?"
+msgstr "Ganti folder uploads"
+
+#: lib/activation.php:117
+msgid "Update uploads folder?"
+msgstr "Perbaharui folder uploads"
+
+#: lib/activation.php:123
+#, fuzzy
+msgid "Change uploads folder to /assets/ instead of /wp-content/uploads/"
+msgstr "Ganti folder uploads dari /wp-content/uploads/ ke /media/"
+
+#: lib/activation.php:128 lib/activation.php:130
+msgid "Create navigation menu?"
+msgstr "Buat menu navigasi?"
+
+#: lib/activation.php:136
+msgid "Create the Primary Navigation menu and set the location"
+msgstr "Buat menu Navigasi Utama dan tentukan lokasinya"
+
+#: lib/activation.php:141 lib/activation.php:143
+msgid "Add pages to menu?"
+msgstr "Tambah halaman ke menu?"
+
+#: lib/activation.php:149
+msgid "Add all current published pages to the Primary Navigation"
+msgstr "Tambah semua halaman terbit ke Navigasi Utama"
+
+#: lib/cleanup.php:188
+msgid "Continued"
+msgstr "Lanjutan"
+
+#: lib/customizer.php:55
+msgid "Logo Settings"
+msgstr ""
+
+#: lib/customizer.php:56
+msgid "Configure logo images here."
+msgstr ""
+
+#: lib/customizer.php:66 lib/customizer.php:183
+msgid "Upload your main logo"
+msgstr ""
+
+#: lib/customizer.php:79
+msgid "Upload your mobile logo"
+msgstr ""
+
+#: lib/customizer.php:92
+msgid "Upload your favicon"
+msgstr ""
+
+#: lib/customizer.php:111
+msgid "Color Settings"
+msgstr ""
+
+#: lib/customizer.php:112
+msgid "Configure colors here."
+msgstr ""
+
+#: lib/customizer.php:126
+msgid "Main Color"
+msgstr ""
+
+#: lib/customizer.php:141
+msgid "Secondary Color"
+msgstr ""
+
+#: lib/customizer.php:156
+msgid "Background Color"
+msgstr ""
+
+#: lib/customizer.php:170
+msgid "Background Image"
+msgstr ""
+
+#: lib/customizer.php:201
+msgid "Fullscreen or Pattern (needs a Background Image)"
+msgstr ""
+
+#: lib/customizer.php:206
+msgid "Fullscreen background image"
+msgstr ""
+
+#: lib/customizer.php:207
+msgid "Pattern background image"
+msgstr ""
+
+#: lib/customizer.php:218
+msgid "Invert Main Menu colors"
+msgstr ""
+
+#: lib/customizer.php:249
+msgid "Font Settings"
+msgstr ""
+
+#: lib/customizer.php:250
+msgid "Configure fonts here."
+msgstr ""
+
+#: lib/customizer.php:266
+msgid "Font Size"
+msgstr ""
+
+#: lib/customizer.php:271
+msgid "Large"
+msgstr ""
+
+#: lib/customizer.php:272
+msgid "Medium"
+msgstr ""
+
+#: lib/customizer.php:273
+msgid "Small"
+msgstr ""
+
+#: lib/customizer.php:323 lib/customizer.php:413 lib/customizer.php:504
+msgid "Font Family"
+msgstr ""
+
+#: lib/customizer.php:526
+msgid "Alignment Settings"
+msgstr ""
+
+#: lib/customizer.php:527
+msgid "Alignment of your elements."
+msgstr ""
+
+#: lib/customizer.php:540
+msgid "Page Width"
+msgstr ""
+
+#: lib/customizer.php:545
+msgid "Full"
+msgstr ""
+
+#: lib/customizer.php:546
+msgid "1040px"
+msgstr ""
+
+#: lib/customizer.php:547
+msgid "940px"
+msgstr ""
+
+#: lib/customizer.php:565
+msgid "Logo Alignment"
+msgstr ""
+
+#: lib/customizer.php:570 lib/customizer.php:594 lib/widgets/button.php:99
+#: lib/widgets/promo.php:79
+msgid "Left"
+msgstr ""
+
+#: lib/customizer.php:571
+msgid "Middle"
+msgstr ""
+
+#: lib/customizer.php:572 lib/customizer.php:595 lib/widgets/button.php:117
+#: lib/widgets/promo.php:97
+msgid "Right"
+msgstr ""
+
+#: lib/customizer.php:589
+msgid "Sidebar alignment"
+msgstr ""
+
+#: lib/customizer.php:606
+msgid "Fixed Width Front Top"
+msgstr ""
+
+#: lib/customizer.php:620
+msgid "Fixed Width Front Bottom"
+msgstr ""
+
+#: lib/customizer.php:641
+msgid "Social Network"
+msgstr ""
+
+#: lib/customizer.php:642
+msgid "Configure your social networks"
+msgstr ""
+
+#: lib/customizer.php:652
+msgid "Facebook URL"
+msgstr ""
+
+#: lib/customizer.php:665
+msgid "LinkedIN URL"
+msgstr ""
+
+#: lib/customizer.php:678
+msgid "Twitter Handle"
+msgstr ""
+
+#: lib/customizer.php:700
+msgid "Analytics Settings"
+msgstr ""
+
+#: lib/customizer.php:701
+msgid "Configure your online analytics here"
+msgstr ""
+
+#: lib/customizer.php:711
+msgid "Google Analytics code"
+msgstr ""
+
+#: lib/init.php:11
+msgid "Primary Navigation"
+msgstr "Navigasi Utama"
+
+#: lib/titles.php:10
+msgid "Latest Posts"
+msgstr "Post Terbaru"
+
+#: lib/titles.php:19
+#, php-format
+msgid "Daily Archives: %s"
+msgstr "Arsip Harian: %s"
+
+#: lib/titles.php:21
+#, php-format
+msgid "Monthly Archives: %s"
+msgstr "Arsip Bulanan: %s"
+
+#: lib/titles.php:23
+#, php-format
+msgid "Yearly Archives: %s"
+msgstr "Arsip Tahunan: %s"
+
+#: lib/titles.php:26
+#, php-format
+msgid "Author Archives: %s"
+msgstr "Arsip Penulis: %s"
+
+#: lib/titles.php:31
+#, php-format
+msgid "Search Results for %s"
+msgstr "Hasil Pencarian untuk %s"
+
+#: lib/titles.php:33
+msgid "Not Found"
+msgstr "Tidak Ditemukan"
+
+#: lib/utils.php:9
+#, php-format
+msgid "Please make sure your <a href=\"%s\">.htaccess</a> file is writable "
+msgstr ""
+
+#: lib/widgets.php:21
+msgid "Public Front Top"
+msgstr ""
+
+#: lib/widgets.php:29
+msgid "Public Front Body"
+msgstr ""
+
+#: lib/widgets.php:37
+msgid "Public Front Sidebar"
+msgstr ""
+
+#: lib/widgets.php:45
+msgid "Public Front Bottom"
+msgstr ""
+
+#: lib/widgets.php:53
+msgid "Public Member Sidebar"
+msgstr ""
+
+#: lib/widgets.php:65
+msgid "Private Front Top"
+msgstr ""
+
+#: lib/widgets.php:73
+msgid "Private Front Body"
+msgstr ""
+
+#: lib/widgets.php:81
+msgid "Private Front Sidebar"
+msgstr ""
+
+#: lib/widgets.php:89
+msgid "Private Front Bottom"
+msgstr ""
+
+#: lib/widgets.php:97
+msgid "Private Member Sidebar"
+msgstr ""
+
+#: lib/widgets/button.php:18 lib/widgets/carousel.php:18
+#: lib/widgets/latest_businesses.php:18 lib/widgets/latest_members.php:18
+#: lib/widgets/latest_posts.php:18 lib/widgets/promo.php:18
+#: lib/widgets/sponsors.php:18 lib/widgets/starthere.php:19
+msgid "Carousel"
+msgstr ""
+
+#: lib/widgets/button.php:23
+#, fuzzy
+msgid "Use this widget add a button."
+msgstr "Gunakan widget ini untuk menambahkan vCard"
+
+#: lib/widgets/button.php:58 lib/widgets/carousel.php:47
+#: lib/widgets/latest_businesses.php:46 lib/widgets/latest_members.php:46
+#: lib/widgets/latest_posts.php:46 lib/widgets/multicolumn.php:65
+#: lib/widgets/post.php:68 lib/widgets/promo.php:54
+#: lib/widgets/sponsors.php:47 lib/widgets/starthere.php:47
+msgid "Widget Title:"
+msgstr ""
+
+#: lib/widgets/button.php:62 lib/widgets/multicolumn.php:69
+#, fuzzy
+msgid "Text: (required)"
+msgstr " (wajib)"
+
+#: lib/widgets/button.php:66
+#, fuzzy
+msgid "Link: (required)"
+msgstr " (wajib)"
+
+#: lib/widgets/button.php:70 lib/widgets/promo.php:66
+msgid "Style"
+msgstr ""
+
+#: lib/widgets/button.php:78
+msgid "Primary"
+msgstr "Utama"
+
+#: lib/widgets/button.php:87
+msgid "Secondary"
+msgstr ""
+
+#: lib/widgets/button.php:91 lib/widgets/promo.php:71
+msgid "Alignment"
+msgstr ""
+
+#: lib/widgets/button.php:108 lib/widgets/promo.php:88
+msgid "Center"
+msgstr ""
+
+#: lib/widgets/button.php:121
+msgid "Size"
+msgstr ""
+
+#: lib/widgets/button.php:129
+msgid "XS"
+msgstr ""
+
+#: lib/widgets/button.php:138
+msgid "SM"
+msgstr ""
+
+#: lib/widgets/button.php:147
+msgid "Normal"
+msgstr ""
+
+#: lib/widgets/button.php:156
+msgid "LG"
+msgstr ""
+
+#: lib/widgets/button.php:161
+msgid "Block button"
+msgstr ""
+
+#: lib/widgets/button.php:243
+msgid "Please add text and a link"
+msgstr ""
+
+#: lib/widgets/carousel.php:23
+msgid "Use this widget to choose images to show in a carousel."
+msgstr ""
+
+#: lib/widgets/carousel.php:190
+msgid ""
+"Please select the images you want to show to this carousel from the widget"
+msgstr ""
+
+#: lib/widgets/latest_businesses.php:23
+msgid "Use this widget add a block of the latest businesses."
+msgstr ""
+
+#: lib/widgets/latest_members.php:23
+#, fuzzy
+msgid "Use this widget add a block of the latest members."
+msgstr "Gunakan widget ini untuk menambahkan vCard"
+
+#: lib/widgets/latest_posts.php:23
+msgid "Use this widget add a block of the latest posts."
+msgstr ""
+
+#: lib/widgets/multicolumn.php:33
+msgid "Multicolumn Widget"
+msgstr ""
+
+#: lib/widgets/multicolumn.php:38
+msgid "Allows you to create multiple widget columns."
+msgstr ""
+
+#: lib/widgets/post.php:24
+msgid "Post Widget"
+msgstr ""
+
+#: lib/widgets/post.php:29
+msgid "Allows you to select an existing post."
+msgstr ""
+
+#: lib/widgets/post.php:72
+#, fuzzy
+msgid "Post: (required)"
+msgstr " (wajib)"
+
+#: lib/widgets/promo.php:23
+#, fuzzy
+msgid "Use this widget add a promotinal text."
+msgstr "Gunakan widget ini untuk menambahkan vCard"
+
+#: lib/widgets/promo.php:58
+msgid "Text:"
+msgstr ""
+
+#: lib/widgets/promo.php:62
+msgid "Link: (optional)"
+msgstr ""
+
+#: lib/widgets/promo.php:68
+msgid "Bold text"
+msgstr ""
+
+#: lib/widgets/promo.php:178
+msgid "Please add text and an optional link"
+msgstr ""
+
+#: lib/widgets/sponsors.php:23
+msgid "Use this widget to choose images to show in a sponsors facet."
+msgstr ""
+
+#: lib/widgets/sponsors.php:182
+msgid "Please select the images you want to show to this sponsors widget"
+msgstr ""
+
+#: lib/widgets/starthere.php:24
+msgid "Use this widget add the START HERE button."
+msgstr ""
+
+#: lib/widgets/starthere.php:93
+msgid "Start Here"
+msgstr ""
+
+#: templates/comment.php:4
+#, php-format
+msgid "%1$s"
+msgstr "%1$s"
+
+#: templates/comment.php:5
+msgid "(Edit)"
+msgstr "(Sunting)"
+
+#: templates/comment.php:9
+msgid "Your comment is awaiting moderation."
+msgstr "Komentar anda sedang menunggu untuk dimoderasi."
+
+#: templates/comments.php:8
+#, php-format
+msgid "One Response to &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s Responses to &ldquo;%2$s&rdquo;"
+msgstr[0] "Satu Balasan untuk &ldquo;%2$s&rdquo;"
+msgstr[1] "%1$s Balasan untuk &ldquo;%2$s&rdquo;"
+
+#: templates/comments.php:18
+msgid "&larr; Older comments"
+msgstr "&larr; Komentar sebelumnya"
+
+#: templates/comments.php:21
+msgid "Newer comments &rarr;"
+msgstr "Komentar selanjutnya &rarr;"
+
+#: templates/comments.php:29 templates/comments.php:38
+msgid "Comments are closed."
+msgstr "Komentar ditutup."
+
+#: templates/comments.php:45
+msgid "Leave a Reply"
+msgstr "Tinggalkan Balasan"
+
+#: templates/comments.php:45
+#, php-format
+msgid "Leave a Reply to %s"
+msgstr "Tinggalkan balasan untuk %s"
+
+#: templates/comments.php:48
+#, php-format
+msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
+msgstr "Anda diwajibkan <a href=\"%s\">login</a> untuk membuat Komentar."
+
+#: templates/comments.php:53
+#, php-format
+msgid "Logged in as <a href=\"%s/wp-admin/profile.php\">%s</a>."
+msgstr "Login sebagai <a href=\"%s/wp-admin/profile.php\">%s</a>."
+
+#: templates/comments.php:54
+msgid "Log out of this account"
+msgstr "Logout dari akun ini."
+
+#: templates/comments.php:54
+msgid "Log out &raquo;"
+msgstr "Logout &raquo;"
+
+#: templates/comments.php:58
+msgid "Name"
+msgstr "Nama"
+
+#: templates/comments.php:58 templates/comments.php:62
+msgid " (required)"
+msgstr " (wajib)"
+
+#: templates/comments.php:62
+msgid "Email (will not be published)"
+msgstr "Email (tidak dipublikasikan)"
+
+#: templates/comments.php:66
+msgid "Website"
+msgstr "Website"
+
+#: templates/comments.php:71
+msgid "Comment"
+msgstr "Komentar"
+
+#: templates/comments.php:74
+msgid "Submit Comment"
+msgstr "Kirim Komentar"
+
+#: templates/content-homepage.php:45
+msgid "No posts assigned to this homepage."
+msgstr ""
+
+#: templates/content-single.php:11
+msgid "Pages:"
+msgstr "Halaman:"
+
+#: templates/entry-meta.php:2
+msgid "By"
+msgstr "Oleh"
+
+#: templates/footer.php:17
+msgid "Follow us"
+msgstr ""
+
+#: templates/footer.php:49
+msgid "All rights reserved"
+msgstr ""
+
+#: templates/footer.php:51
+msgid "Terms and service"
+msgstr ""
+
+#: templates/footer.php:52
+msgid "Privacy"
+msgstr ""
+
+#: templates/header-top-navbar.php:17
+msgid "Menu"
+msgstr ""
+
+#: templates/header.php:95
+msgid "Start here"
+msgstr ""
+
+#: templates/searchform.php:3
+msgid "Search"
+msgstr "Cari"
+
+#~ msgid "&larr; Older posts"
+#~ msgstr "&larr; Post sebelumnya"
+
+#~ msgid "Newer posts &rarr;"
+#~ msgstr "Post berikutnya&rarr;"
+
+#~ msgid "Footer"
+#~ msgstr "Footer"
+
+#~ msgid "Roots: vCard"
+#~ msgstr "Roots: vCard"
+
+#~ msgid "vCard"
+#~ msgstr "vCard"
+
+#~ msgid "Search for:"
+#~ msgstr "Pencarian untuk:"
