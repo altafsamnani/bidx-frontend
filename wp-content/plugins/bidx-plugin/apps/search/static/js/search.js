@@ -53,6 +53,10 @@
     ,   appName                 = "search"
     ,   loggedInMemberId        = bidx.common.getCurrentUserId()
     ,   globalCriteria
+<<<<<<< HEAD
+=======
+    ,   selectedMembers         = []
+>>>>>>> remotes/origin/develop
 
     ,   paging                  =
         {
@@ -627,11 +631,13 @@
     function _populateMailRecipients( activeContacts, append )
     {
         var option
+        ,   recipientId
+        ,   recipientName
         ,   $options
         ,   recipientIds            =   []
         ,   listItems               =   []
         ,   $sendMsgEditor          =   $('#sendMessageEditor')
-        ,   $selectRecordCheckbox   =   $element.find( "[name='actionRecord']:checked")
+        //,   $selectRecordCheckbox   =   $element.find( "[name='actionRecord']:checked")
         ,   sortedContacts
         ;
 
@@ -639,27 +645,29 @@
 
         $options = $contactsDropdown.find( "option" );
 
+        bidx.utils.log('selectedMembers', selectedMembers);
+
         // Add the real contacts
         //
-        if ( $selectRecordCheckbox.length )
+        if ( selectedMembers.length )
         {
 
-            $.each( $selectRecordCheckbox, function( idx, inputRecord )
+            $.each( selectedMembers, function( idx, recipient )
             {
-                var $this           =   $(inputRecord)
-                ,   recipientVal    =   $this.val()
-                ;
+                recipientId     =   recipient.id;
+
+                recipientName   =   recipient.name;
 
                 option = $( "<option/>",
                 {
-                    value: recipientVal
+                    value: recipientId
                 } );
 
-                option.text( $this.data('name') );
+                option.text( recipientName );
 
                 listItems.push( option );
 
-                recipientIds.push( recipientVal );
+                recipientIds.push( recipientId );
             } );
 
             // add the options to the select
@@ -692,6 +700,16 @@
         ,   $selectRecordCheckbox   =   $element.find( "[name='actionRecord']")
         ,   $btnApply               =   $element.find( "[name='apply']")
         ,   lengthActionRecord      =   $selectRecordCheckbox.length
+        ,   $this
+        ,   recipientVal
+        ,   recipientName
+        ,   isChecked
+        ,   memberExists
+        ,   selectedMember          =   {}
+        ,   checkMember
+        ,   lengthResult
+        ,   countResult
+        ,   findMember
         ;
 
         $btnApply.click (function ( )
@@ -721,15 +739,47 @@
 
         $selectRecordCheckbox.change(function( )
         {
+            checkMember         =   true;
+
             selectAllCheckbox   =   false;
 
             $actionRecord       =   $( "[name='actionRecord']:checked" );
 
+            bidx.utils.log('actionRecord', $actionRecord);
+
             actionRecordLength  =   $actionRecord.length;
 
-            if( actionRecordLength )
+
+            $this           =   $(this);
+            recipientVal    =   parseInt( $this.val( ) );
+            recipientName   =   $this.data('name');
+            isChecked       =   $this.is(":checked");
+            selectedMember  =   {
+                                    id:     recipientVal
+                                ,   name:   recipientName
+                                };
+            findMember      =   _.findWhere(selectedMembers, {id: recipientVal});
+
+            if( isChecked )
             {
+<<<<<<< HEAD
                 $btnApply.removeClass('disabled');
+=======
+                bidx.utils.log('recipientVal', recipientVal);
+                bidx.utils.log('recipientName', recipientName);
+
+
+                selectedMembers.push( selectedMember );
+            }
+            else
+            {
+                selectedMembers = _.without(selectedMembers, findMember );
+            }
+
+            if( lengthActionRecord )
+            {
+                bidx.utils.log('selectedMembers', selectedMembers);
+>>>>>>> remotes/origin/develop
 
                 if( lengthActionRecord === actionRecordLength )
                 {
@@ -750,11 +800,12 @@
         {
             allChecked      =   this.checked;
 
-            $actionRecord   = $( "[name='actionRecord']" );
+            $actionRecord   =   $( "[name='actionRecord']" );
 
-            $actionRecord.prop("checked", this.checked);
+            lengthResult    =   $actionRecord.length;
 
-            $selectAllCheckbox.prop("checked", this.checked);
+            countResult     =   1;
+            var testCount  =1;
 
             if(allChecked)
             {
@@ -765,6 +816,50 @@
                 $btnApply.addClass('disabled');
             }
 
+            $.each( $actionRecord, function( idx, inputRecord )
+            {
+                $this           =   $(inputRecord);
+                recipientVal    =   $this.val();
+                recipientName   =   $this.data('name');
+                findMember      =   _.findWhere(selectedMembers, {id: recipientVal});
+
+                bidx.utils.log( 'isChecked', isChecked);
+                if( allChecked )
+                {
+                    isChecked       =   $this.is(":checked");
+
+                    if( !isChecked )
+                    {
+                        selectedMember  =   {
+                                                id:     recipientVal
+                                            ,   name:   recipientName
+                                            };
+
+                        selectedMembers.push( selectedMember );
+                        testCount++;
+                    }
+                }
+                else
+                {
+                    selectedMembers = _.without(selectedMembers, );
+                }
+
+                bidx.utils.log('lengthResult', lengthResult);
+                bidx.utils.log( 'countResult', countResult);
+
+                if( lengthResult === countResult )
+                {
+                    $actionRecord.prop("checked", allChecked);
+
+                    $selectAllCheckbox.prop("checked", allChecked);
+                }
+
+                countResult++;
+            });
+
+
+            bidx.utils.log('testCount', testCount);
+            bidx.utils.log('selectedMembers', selectedMembers);
         });
 
     }
