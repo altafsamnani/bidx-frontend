@@ -1005,61 +1005,72 @@
         // Create the data table.
         var label
         ,   labelNoCount
-        ,   memberProfileCount  =   0
+        ,   memberCount  =   0
         ,   roleProfilecount    =   0
         ,   noRoleProfileCount
-        ,   entrProfileCount    =   0
-        ,   mentorProfileCount  =   0
-        ,   invProfileCount     =   0
+        ,   entrepreneurCount    =   0
+        ,   mentorCount  =   0
+        ,   investorCount     =   0
         ,   roles
+        ,   role
         ,   listItem            =   []
         ,   data                =   new google.visualization.DataTable()
+        ,   roleValues
+        ,   memberRole
+        ,   entrepreneurRole
+        ,   mentorRole
+        ,   investorRole
         ,   userRoles           =   [ 'entrepreneur', 'mentor', 'investor', 'member']
+        ,   facets              =   bidx.utils.getValue(response, 'facets')
         ;
 
         data.addColumn('string', 'Roles');
         data.addColumn('number', 'Users');
 
-        if ( response.found && response.total > 0 )
+        if ( facets && response.total > 0 )
         {
-            $.each( response.found, function( idx, item )
+            role    =   _.findWhere(facets, { name: "role" } );
+
+            if( role )
             {
-                roles = item.member.roles;
+                roleValues          =   bidx.utils.getValue( role, 'facetValues');
 
-                if (roles.length === 1)
-                {
-                    memberProfileCount++;
-                }
-                else
-                {
-                    roleProfilecount++;
-                    $.each( roles, function( id, role ){
+                memberRole          =   _.findWhere(roleValues, { name: "member" } );
 
-                        switch(role) {
-                            case "entrepreneur":
-                                entrProfileCount++;
-                            break;
-                            case "investor":
-                                invProfileCount++;
-                            break;
-                            case "mentor":
-                                mentorProfileCount++;
-                            break;
-                            default:
-                                memberProfileCount++;
-                        }                        
-                    });
-                }
-            });
+                memberCount         =   bidx.utils.getValue( memberRole, 'count');
+
+                memberCount         =   ( memberCount ) ? memberCount : 0;
+
+                entrepreneurRole    =   _.findWhere(roleValues, { name: "entrepreneur" } );
+
+                entrepreneurCount   =   bidx.utils.getValue( entrepreneurRole, 'count');
+
+                entrepreneurCount         =   ( entrepreneurCount ) ? entrepreneurCount : 0;
+
+                mentorRole          =   _.findWhere(roleValues, { name: "mentor" } );
+
+                mentorCount         =   bidx.utils.getValue( mentorRole, 'count');
+
+                mentorCount         =   ( mentorCount ) ? mentorCount : 0;
+
+                investorRole        =   _.findWhere(roleValues, { name: "investor" } );
+
+                investorCount       =   bidx.utils.getValue( investorRole, 'count');
+
+                investorCount         =   ( investorCount ) ? investorCount : 0;
+
+                roleProfilecount    =  entrepreneurCount + mentorCount + investorCount;
+
+            }
         }
 
-        listItem.push( [ bidx.i18n.i( 'entrepreneur', appName ), entrProfileCount] );
-        listItem.push( [ bidx.i18n.i( 'investor', appName ), invProfileCount] );
-        listItem.push( [ bidx.i18n.i( 'mentor', appName ), mentorProfileCount] );
+        listItem.push( [ bidx.i18n.i( 'entrepreneur', appName ), entrepreneurCount] );
+        listItem.push( [ bidx.i18n.i( 'investor', appName ), investorCount] );
+        listItem.push( [ bidx.i18n.i( 'mentor', appName ), mentorCount] );
 
         /* No Profile Count */
         labelNoCount        =   bidx.i18n.i( 'memberOnlyLbl', appName );
-        noRoleProfileCount  =   memberProfileCount - roleProfilecount;
+        noRoleProfileCount  =   memberCount - roleProfilecount;
         if( noRoleProfileCount > 0)
         {
             listItem.push( [ labelNoCount, noRoleProfileCount] );
@@ -1081,7 +1092,7 @@
                                 "searchTerm": "basic:*",
                                 "entityType": ["bdxmember"],
                                 "scope": "LOCAL",
-                                "maxResult": "2000"
+                                "maxResult": "0"
                             };
 
         bidx.api.call(
