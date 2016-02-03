@@ -830,8 +830,7 @@
                                                         {
                                                             $.each( docs.found , function ( docsKey, docsValue)
                                                             {
-                                                                ownerId     =   docsValue.member.userId;
-
+                                                                ownerId     =   docsValue.properties.userId;
                                                                 //resultArr.push( [json.data.docs[i].ownerId,  json.data.docs[i].modified,  json.data.docs[i].entityType ] );
 
                                                                 //resultArr.push(['Loading']);
@@ -963,14 +962,14 @@
         if ( response.facets && response.facets.length )
         {
             facets      =   response.facets;
-            facetList   =   _.findWhere( facets, { name :   type });
+            facetList   =   _.findWhere( facets, { field :   type });
 
             listItem.push( [countryLabel, countryNameLabel, growthLabel ] );
 
-            $.each( facetList.facetValues, function( idx, item )
+            $.each( facetList.values, function( idx, item )
             {
-                labelName   =   bidx.data.i( item.name, "country" );
-                label       =   item.name;
+                labelName   =   bidx.data.i( item.option, "country" );
+                label       =   item.option;
 
                 listItem.push( [ label, labelName, item.count] );
 
@@ -1005,80 +1004,55 @@
         // Create the data table.
         var label
         ,   labelNoCount
-        ,   memberCount  =   0
+        ,   memberProfileCount  =   0
         ,   roleProfilecount    =   0
         ,   noRoleProfileCount
-        ,   entrepreneurCount    =   0
-        ,   mentorCount  =   0
-        ,   investorCount     =   0
-        ,   roles
-        ,   role
+        ,   facets              =   []
         ,   listItem            =   []
+        ,   facetList           =   {}
         ,   data                =   new google.visualization.DataTable()
-        ,   roleValues
-        ,   memberRole
-        ,   entrepreneurRole
-        ,   mentorRole
-        ,   investorRole
         ,   userRoles           =   [ 'entrepreneur', 'mentor', 'investor', 'member']
-        ,   facets              =   bidx.utils.getValue(response, 'facets')
         ;
 
         data.addColumn('string', 'Roles');
         data.addColumn('number', 'Users');
 
-        if ( facets && response.total > 0 )
+        if ( response.facets && response.facets.length )
         {
-            role    =   _.findWhere(facets, { name: "role" } );
+            facets      =   response.facets;
+            facetList   =   _.findWhere( facets, { field :   type });
 
-            if( role )
+            $.each( facetList.values, function( idx, item )
             {
-                roleValues          =   bidx.utils.getValue( role, 'facetValues');
+                if( $.inArray( item.option, userRoles ) !== -1 )
+                {
+                    if ( item.option === 'member' )
+                    {
+                        memberProfileCount = item.count;
+                    }
+                    else
+                    {
+                        label   =   bidx.i18n.i( item.option, appName );
 
-                memberRole          =   _.findWhere(roleValues, { name: "member" } );
+                        listItem.push( [ label, item.count] );
 
-                memberCount         =   bidx.utils.getValue( memberRole, 'count');
+                        roleProfilecount = roleProfilecount + item.count;
+                    }
+                }
+            } );
 
-                memberCount         =   ( memberCount ) ? memberCount : 0;
-
-                entrepreneurRole    =   _.findWhere(roleValues, { name: "entrepreneur" } );
-
-                entrepreneurCount   =   bidx.utils.getValue( entrepreneurRole, 'count');
-
-                entrepreneurCount         =   ( entrepreneurCount ) ? entrepreneurCount : 0;
-
-                mentorRole          =   _.findWhere(roleValues, { name: "mentor" } );
-
-                mentorCount         =   bidx.utils.getValue( mentorRole, 'count');
-
-                mentorCount         =   ( mentorCount ) ? mentorCount : 0;
-
-                investorRole        =   _.findWhere(roleValues, { name: "investor" } );
-
-                investorCount       =   bidx.utils.getValue( investorRole, 'count');
-
-                investorCount         =   ( investorCount ) ? investorCount : 0;
-
-                roleProfilecount    =  entrepreneurCount + mentorCount + investorCount;
-
+            /* No Profile Count */
+            labelNoCount        =   bidx.i18n.i( 'memberOnlyLbl', appName );
+            noRoleProfileCount  =   memberProfileCount - roleProfilecount;
+            if( noRoleProfileCount > 0)
+            {
+                listItem.push( [ labelNoCount, noRoleProfileCount] );
             }
+
+            data.addRows( listItem );
+
+            _showView("approx", true );
         }
-
-        listItem.push( [ bidx.i18n.i( 'entrepreneur', appName ), entrepreneurCount] );
-        listItem.push( [ bidx.i18n.i( 'investor', appName ), investorCount] );
-        listItem.push( [ bidx.i18n.i( 'mentor', appName ), mentorCount] );
-
-        /* No Profile Count */
-        labelNoCount        =   bidx.i18n.i( 'memberOnlyLbl', appName );
-        noRoleProfileCount  =   memberCount - roleProfilecount;
-        if( noRoleProfileCount > 0)
-        {
-            listItem.push( [ labelNoCount, noRoleProfileCount] );
-        }
-
-        data.addRows( listItem );
-
-        _showView("approx", true );
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('role_pie_chart'));
@@ -1091,8 +1065,7 @@
         var criteria    =   {
                                 "searchTerm": "basic:*",
                                 "entityType": ["bdxmember"],
-                                "scope": "LOCAL",
-                                "maxResult": "0"
+                                "scope": "LOCAL"
                             };
 
         bidx.api.call(
