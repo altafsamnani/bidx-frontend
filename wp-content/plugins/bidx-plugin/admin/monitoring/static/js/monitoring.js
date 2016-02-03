@@ -969,8 +969,8 @@
 
             $.each( facetList.facetValues, function( idx, item )
             {
-                labelName   =   bidx.data.i( item.option, "country" );
-                label       =   item.option;
+                labelName   =   bidx.data.i( item.name, "country" );
+                label       =   item.name;
 
                 listItem.push( [ label, labelName, item.count] );
 
@@ -1080,7 +1080,8 @@
         var criteria    =   {
                                 "searchTerm": "basic:*",
                                 "entityType": ["bdxmember"],
-                                "scope": "LOCAL"
+                                "scope": "LOCAL",
+                                "maxResult": "2000"
                             };
 
         bidx.api.call(
