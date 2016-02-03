@@ -53,6 +53,7 @@
     ,   appName                 = "search"
     ,   loggedInMemberId        = bidx.common.getCurrentUserId()
     ,   globalCriteria
+    ,   selectedMembers         = { }
 
     ,   paging                  =
         {
@@ -797,6 +798,16 @@
 
             if( actionRecordLength )
             {
+                $.each( $actionRecord, function( idx, inputRecord )
+                {
+                    var $this           =   $(inputRecord)
+                    ,   recipientVal    =   $this.val()
+                    ,   recipientName   =   $this.data('name')
+                    ;
+
+                    selectedMembers[ recipientVal ] = recipientName;
+                });
+
                 $btnApply.removeClass('disabled');
 
                 if( lengthActionRecord === actionRecordLength )
@@ -807,6 +818,7 @@
             else
             {
                 $btnApply.addClass('disabled');
+               // _.omit( selectedMembers,);
             }
 
             $selectAllCheckbox.prop("checked", selectAllCheckbox);
