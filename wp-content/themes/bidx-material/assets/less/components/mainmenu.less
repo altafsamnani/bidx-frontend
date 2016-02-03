@@ -1,0 +1,261 @@
+.nav-main
+{
+    background-color: @brand-primary;
+    .main-menu
+    {
+        .nav
+        {
+            > li
+            {
+                .transition-all;
+                margin-right: 0;
+                padding: 0;
+                float: none;
+                display: inline-block;
+                &.active
+                {
+                    background-color: darken( @brand-primary, 15%);
+                }
+                &.active.menu-sub
+                {
+                    background-color: @brand-primary;
+                }
+                &:last-child
+                {
+                    margin-right: 0;
+                }
+                .dropdown-menu
+                {
+                    .opacity(0);
+                    .rounded(0);
+                    display: block;
+                    visibility: hidden;
+                    margin: 0;
+                    background-color: darken(@brand-primary, 15%);
+                    li
+                    {
+                        a
+                        {
+                            padding: floor(@font-size-base * 0.25) (@padding-large-vertical * 1.5);
+                            &:hover
+                            {
+                                background-color: @brand-primary;
+                            }
+                        }
+                        .dropdown-menu
+                        {
+                            width: 100%;
+                        }
+                    }
+                }
+                > a
+                {
+                    .rounded(0);
+                    color: @brand-primary;
+                    padding: @padding-large-vertical ( @padding-large-vertical * 1.5);
+                    font-size: floor(@font-size-base * 1.45);
+                    font-family: "@{menu-font}", sans-serif;
+                    font-weight: normal;
+                    &:hover
+                    {
+                        background-color: transparent;
+                        color: @brand-primary;
+                    }
+                    & when (lightness(@brand-primary) > 31%)
+                    {
+                        color: @white;
+                    }
+                }
+                &:hover
+                {
+                    background-color: darken(@brand-primary, 15%);
+                    a
+                    {
+                        color: @white;
+                    }
+                }
+                &.open
+                {
+                    background-color: darken(@brand-primary, 15%);
+                    a
+                    {
+                        color: @white;
+                        background-color: darken(@brand-primary, 15%);
+                    }
+                    ul.dropdown-menu
+                    {
+                        .transition-all;
+                        .opacity(1);
+                        display: block;
+                        visibility: visible;
+                    }
+                }
+            }
+        }
+    }
+    &.mobile-menu
+    {
+        font-family: "@{menu-font}", sans-serif;
+        a
+        {
+            color: @white;
+
+        }
+        button
+        {
+            span
+            {
+                background-color: @white;
+            }
+        }
+        .navbar-collapse
+        {
+            background-color: darken(@brand-primary, 15%);
+            border-top: none;
+            padding: 0;
+            a
+            {
+                &:hover
+                {
+                    background-color: @brand-primary;
+                }
+                &:focus
+                {
+                    background-color: @brand-primary;
+                }
+            }
+        }
+        li.dropdown
+        {
+            clear: both;
+            &.open
+            {
+                a
+                {
+                    color: @white;
+                    background-color: darken(@brand-primary, 15%);
+                }
+                .dropdown-menu
+                {
+                    display: block;
+                }
+            }
+            .dropdown-menu
+            {
+                position: relative;
+                width: 100%;
+                margin: 0;
+                li
+                {
+                    padding: 0;
+                    a
+                    {
+                        padding: 10px 20px 10px 30px;
+                    }
+                }
+            }
+        }
+    }
+    &.inverted-menu
+    {
+        @brand-primary: @brand-secondary;
+        background-color: @brand-secondary;
+        .main-menu
+        {
+            .nav
+            {
+                > li
+                {
+                    &.active
+                    {
+                        background-color: darken( @brand-primary, 15%);
+                    }
+                    .dropdown-menu
+                    {
+                        background-color: darken(@brand-primary, 15%);
+                        li
+                        {
+                            a
+                            {
+                                &:hover
+                                {
+                                    background-color: @brand-primary;
+                                }
+                            }
+                        }
+                    }
+                    > a
+                    {
+                        color: @brand-primary;
+                        &:hover
+                        {
+                            background-color: transparent;
+                            color: @brand-primary;
+                        }
+                        & when (lightness(@brand-primary) > 31%)
+                        {
+                            color: @white;
+                        }
+                    }
+                    &:hover
+                    {
+                        background-color: darken(@brand-primary, 15%);
+                        a
+                        {
+                            color: @white;
+                        }
+                    }
+                    &.open
+                    {
+                        background-color: darken(@brand-primary, 15%);
+                        a
+                        {
+                            color: @white;
+                            background-color: darken(@brand-primary, 15%);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.inverted-menu.mobile-menu
+    {
+        @brand-primary: @brand-secondary;
+        background-color: @brand-secondary;
+        font-family: "@{menu-font}", sans-serif;
+        a
+        {
+            color: @white;
+
+        }
+        button
+        {
+            span
+            {
+                background-color: @white;
+            }
+        }
+        .navbar-collapse
+        {
+            background-color: darken(@brand-primary, 15%);
+            a
+            {
+                &:hover
+                {
+                    background-color: @brand-primary;
+                }
+            }
+        }
+        li.dropdown
+        {
+            &.open
+            {
+                a
+                {
+                    color: @white;
+                    background-color: darken(@brand-primary, 15%);
+                }
+            }
+        }
+    }
+}

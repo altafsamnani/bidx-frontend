@@ -1,0 +1,19 @@
+.widget .promo
+{
+    font-weight: 100;
+    font-size: floor(@font-size-base * 3.5);
+    line-height: 1.1;
+    @media (max-width: @screen-md-max)
+    {
+        font-size: floor(@font-size-base * 3.0);
+    }
+    @media (max-width: @screen-sm-max)
+    {
+        font-size: floor(@font-size-base * 2.5);
+    }
+    @media (max-width: @screen-xs-max)
+    {
+        font-weight: 300;
+        font-size: floor(@font-size-base * 1.75);
+    }
+}

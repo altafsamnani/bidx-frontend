@@ -1,0 +1,203 @@
+//RTL overwrites few classes to make Arabic work , mostly it comes from bootstrap-rtl.less
+@import "../bootstrap-3.3.2/less/variables.less";
+@import "elements.less";
+@import "basevars.less";
+.rtl
+{
+    .pull-right,
+    .logo-right a
+    {
+        float:left !important;
+    }
+
+    .pull-left,
+    .logo-left a
+    {
+        float:right !important;
+    }
+
+    label.inline
+    {
+        margin: 10px 0px 10px 10px;
+        float: right;
+    }
+
+    .inline-radio
+    {
+        float:  right;
+    }
+
+    .radio, .checkbox
+    {
+        padding-right: 0;
+
+    }
+
+    .radio label, .checkbox label
+    {
+        padding-left:initial;
+        padding-right:20px;
+    }
+
+    .text-right
+    {
+        text-align:left !important;
+    }
+
+    .text-left
+    {
+        text-align:right !important;
+    }
+
+    .carousel-description
+    {
+        left:8%;
+        right:52%;
+    }
+    .carousel-caption
+    {
+        left:52%;
+        right:8%;
+    }
+
+    .navbar
+    {
+        .search .input-group
+        {
+            .form-control
+            {
+                .rounded(0 4px 4px 0);
+            }
+            .btn
+            {
+                .rounded(4px 0 0 4px);
+                padding: 5px 8px;
+            }
+        }
+        .fa-home
+        {
+            margin-left:7px;
+            margin-right:0px !important;
+        }
+    }
+
+    .nav-tabs > li,
+    .tabs-right > li
+    {
+        float:none !important;
+    }
+
+    .icons-rounded-sm, .img-cropper-sm
+    {
+        margin-left: 10px;
+    }
+
+    .logoImage
+    {
+        left:0px !important;
+        right:50px;
+    }
+
+    .language-switcher #lang_sel_click a.lang_sel_sel:after
+    {
+        left:initial !important;
+        right:10px;
+    }
+
+    .language-switcher #lang_sel_click a
+    {
+        padding: 10px 24px 10px 12px !important;
+    }
+
+    .tabs-vertical .tabs-content
+    {
+        padding-right:  0px;
+        padding-left:   15px !important;
+    }
+
+    .tabs-nav
+    {
+        padding-left:   0px;
+        padding-right:  15px !important;
+    }
+
+   .tabs-left
+    {
+        > li
+        {
+            > a
+            {
+                .border-radius(4px, 4px, 0, 0);
+                margin-left:    2px;
+                margin-right:   0px !important;
+                @media (max-width: @screen-sm-min)
+                {
+                    margin-right: 0;
+                    .border-radius(4px, 4px, 4px, 4px);
+                }
+                border: none;
+            }
+            &.active
+            {
+                margin-left: -5px;
+                margin-right: 0px;
+                > a
+                {
+                    border: none;
+                    &:focus
+                    {
+                        border: none;
+                    }
+                    &:hover
+                    {
+                        border: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .col-pull
+    {
+        margin-right: 15px !important;
+        margin-left: -15px !important;
+    }
+
+    .industryRowItem .industryActions
+    {
+        float: right;
+    }
+
+    .fa-arrow-circle-left:before
+    {
+        content: "\f0a9" !important;
+    }
+
+    .fa-arrow-circle-right:before
+    {
+        content: "\f0a8" !important;
+    }
+
+    .datepicker-dropdown
+    {
+        left: initial !important;
+    }
+
+    .dataTables_paginate
+    {
+        left:initial !important;
+        right:50%;
+    }
+
+    .dataTables_paginate a
+    {
+        float:right !important;
+        left:initial !important;
+        right:-50%;
+    }
+
+    .editBS
+    {
+        margin-left: 10px;
+    }
+}

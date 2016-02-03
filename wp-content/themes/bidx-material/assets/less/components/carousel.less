@@ -1,0 +1,202 @@
+.carousel-inner
+{
+  > .item
+  {
+    > img,
+    > a > img
+    {
+        width: 100%;
+    }
+  }
+}
+
+// Left/right controls for nav
+.carousel-control
+{
+    width: 5%;
+    // Toggles
+    .fa-chevron-left,
+    .fa-chevron-right
+    {
+        position: absolute;
+        top: 48%;
+        z-index: 5;
+        display: inline-block;
+        font-size: floor(@font-size-base * 3);
+    }
+    .fa-chevron-left
+    {
+        left: 30%;
+    }
+    .fa-chevron-right
+    {
+        right: 30%;
+    }
+    // Set gradients for backgrounds
+    &.left
+    {
+        background: transparent;
+    }
+    &.right
+    {
+    left: auto;
+    right: 0;
+        background: transparent;
+    }
+}
+
+
+
+
+// Optional captions
+// -----------------------------
+// Hidden by default for smaller viewports
+.carousel-caption
+{
+    position: absolute;
+    left: 8%;
+    right: 52%;
+    top: 10%;
+    bottom: auto;
+    z-index: 10;
+    padding: 0;
+    color: @carousel-caption-color;
+    text-align: left;
+    text-shadow: @carousel-text-shadow;
+    font-weight: 100;
+    font-size: floor(@font-size-base * 3.4);
+    line-height: 1;
+    & .btn
+    {
+        text-shadow: none; // No shadow for button elements in carousel-caption
+    }
+    @media (max-width: @screen-sm-max)
+    {
+        font-size: floor(@font-size-base * 2.5);
+    }
+    @media (max-width: @screen-xs-max)
+    {
+        font-weight: 300;
+        font-size: floor(@font-size-base * 2.0);
+    }
+}
+
+.carousel-description
+{
+    position: absolute;
+    top: 10%;
+    left: 52%;
+    right: 8%;
+    a
+    {
+        display: inline-block;
+        padding: (@padding-large-vertical * 1.5) (@padding-large-horizontal * 1.5);
+        color: @white;
+        float: right;
+        line-height: 20px;
+        background-color: darken(@brand-secondary, 20%);
+        text-transform: uppercase;
+        font-weight: 100;
+        font-size: floor(@font-size-base * 2.5);
+        @media (max-width: @screen-md-max)
+        {
+            padding: (@padding-large-vertical * 1.2) (@padding-large-horizontal * 1.2);
+            font-size: floor(@font-size-base * 1.6);
+        }
+        @media (max-width: @screen-sm-max)
+        {
+            padding: (@padding-large-vertical * 1.2) (@padding-large-horizontal * 1.2);
+            font-size: floor(@font-size-base * 1.6);
+        }
+        @media (max-width: @screen-xs-max)
+        {
+            font-weight: 300;
+            padding: (@padding-large-vertical * 1.0) (@padding-large-horizontal * 1.0);
+            font-size: floor(@font-size-base * 1.2);
+        }
+        line-height: 1.2;
+        text-align: center;
+        .rounded(4px);
+        &:hover {
+            color: @white;
+            text-decoration: none;
+            background-color: darken(@brand-secondary, 30%);
+        }
+    }
+}
+.carousel-indicators
+{
+    bottom: 0;
+}
+
+.region-side
+{
+    .carousel-caption
+    {
+        left: 15%;
+        right: 15%;
+        padding: 0;
+        text-align: center;
+        font-weight: 100;
+        font-size: floor(@font-size-base * 2.2);
+            @media (max-width: @screen-md-max)
+            {
+                font-size: floor(@font-size-base * 2.0);
+            }
+            @media (max-width: @screen-sm-max)
+            {
+                font-size: floor(@font-size-base * 1.6);
+            }
+            @media (max-width: @screen-xs-max)
+            {
+                font-weight: 300;
+                font-size: floor(@font-size-base * 2.0);
+            }
+        line-height: 1;
+    }
+    .carousel-description
+    {
+        position: absolute;
+        top: auto;
+        bottom: 10%;
+        left: 15%;
+        right: 15%;
+        a
+        {
+            display: inline-block;
+            padding: (@padding-large-vertical * 1.5) (@padding-large-horizontal * 1.5);
+            color: @white;
+            float: none;
+            width: 100%;
+            line-height: 20px;
+            background-color: darken(@brand-secondary, 20%);
+            text-transform: uppercase;
+            font-weight: 100;
+            font-size: floor(@font-size-base * 2.1);
+            line-height: 1.2;
+            text-align: center;
+            @media (max-width: @screen-md-max)
+            {
+                padding: (@padding-large-vertical * 1.2) (@padding-large-horizontal * 1.2);
+                font-size: floor(@font-size-base * 1.6);
+            }
+            @media (max-width: @screen-sm-max)
+            {
+                padding: (@padding-large-vertical * 1.2) (@padding-large-horizontal * 1.2);
+                font-size: floor(@font-size-base * 1.2);
+            }
+            @media (max-width: @screen-xs-max)
+            {
+                font-weight: 300;
+                padding: (@padding-large-vertical * 1.0) (@padding-large-horizontal * 1.0);
+                font-size: floor(@font-size-base * 1.2);
+            }
+            .rounded(4px);
+            &:hover {
+                color: @white;
+                text-decoration: none;
+                background-color: darken(@brand-secondary, 30%);
+            }
+        }
+    }
+}
