@@ -49,7 +49,7 @@ function theme_enqueue_styles()
 
   $baseLessFileName = 'base.less';
 
-  $appLessFileName  = 'bidx_newtheme.less';
+  $appLessFileName  = 'bidx_material.less';
 
   $isWpAdminPage    = false;
 
