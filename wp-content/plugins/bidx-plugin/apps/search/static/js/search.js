@@ -53,10 +53,7 @@
     ,   appName                 = "search"
     ,   loggedInMemberId        = bidx.common.getCurrentUserId()
     ,   globalCriteria
-<<<<<<< HEAD
-=======
     ,   selectedMembers         = []
->>>>>>> remotes/origin/develop
 
     ,   paging                  =
         {
@@ -99,6 +96,7 @@
                                                 }
         ,   FILTERSORDER:                       [
                                                     "entityType"
+                                                ,   "role"
 
 
                                                 ,   "language" //Facets
@@ -266,6 +264,7 @@
         ,   sort
         ,   sortField
         ,   sortOrder
+        ,   $this
         ,   $list               =   $element.find(".orderFiltering")
         ,   $filterDropdown     =   $list.find( ".filterBy" )
         ,   $orderDropdown      =   $list.find( ".orderBy" )
@@ -276,11 +275,14 @@
 
         $listSort.on('change', function(evt, params)
         {
-            sort        =   [];
-            sortField   =   $filterDropdown.val();
-            sortOrder   =   $orderDropdown.val();
+            sort            =   [];
+            $this           =   $(this).parent().parent();
+            $filterDropdown =   $this.find( ".filterBy" );
+            $orderDropdown  =   $this.find( ".orderBy" );
+            sortField       =   $filterDropdown.val();
+            sortOrder       =   $orderDropdown.val();
 
-
+            bidx.utils.log('$this =', $this);
             bidx.utils.log('Sort clicked on sortField =', sortField);
             bidx.utils.log('Sort Order', sortOrder);
             bidx.utils.log('Original sort criteria=', globalCriteria);
@@ -302,19 +304,32 @@
 
             bidx.utils.log('After sort criteria=', sort);
 
-            navigate(
+            _callSearchAction();
+           /* navigate(
             {
                 state   :   'list'
-            /*,   params  :   {
-                                q               :   globalCriteria.searchTerm
-                            ,   sort            :   sort
-                            ,   facetFilters    :   globalCriteria.facetFilters
-                            ,   rangeFilters    :   globalCriteria.rangeFilters
-                            ,   genericFilters  :   globalCriteria.genericFilters
-                            ,   type            :   'sort'
-                            }*/
-            });
+            });*/
 
+        });
+    }
+
+    function _callSearchAction( )
+    {
+        _showAllView( "load" );
+        _showAllView( "searchList" );
+        _showAllView( "pager" );
+        _toggleListLoading( $element );
+
+         _getSearchList(
+        {
+            cb:   function()
+                {
+                   _hideView( "load" );
+                   _toggleListLoading( $element );
+                   tempLimit = CONSTANTS.SEARCH_LIMIT;
+                   _actionBulkActions();
+                  //
+                }
         });
     }
 
@@ -352,34 +367,9 @@
         , */
             submitHandler:  function()
             {
-                var searchTerm          = $frmSearch.find( "[name='q']" ).val()
-                ;
+                globalCriteria.searchTerm   = $frmSearch.find( "[name='q']" ).val();
 
-                _showAllView( "load" );
-                _showAllView( "searchList" );
-                _showAllView( "pager" );
-                _toggleListLoading( $element );
-                //_hideView( "pager" );
-
-                // load businessSummaries
-                //
-
-
-
-                globalCriteria.searchTerm   =   searchTerm;
-
-
-                _getSearchList(
-                {
-                    cb:   function()
-                        {
-                           _hideView( "load" );
-                           _toggleListLoading( $element );
-                           tempLimit = CONSTANTS.SEARCH_LIMIT;
-                           _actionBulkActions();
-                          //
-                        }
-                });
+                _callSearchAction();
             }
         } );
 
@@ -541,8 +531,9 @@
 
         $list.append( $listBulkItem );
 
-        $list.find( "[name='bulk']" ).removeClass('hide').bidx_chosen();
+        $list.find( "[name='bulk']" ).bidx_chosen();
 
+        _showAllView( "bulk" );
     }
 
     function _doSorting( options )
@@ -568,7 +559,7 @@
         $.each( sortOptions, function( idx, sortValue )
         {
             sortLabel       =   sortValue.label;
-            sortFieldName   =   sortValue.fieldName;
+            sortFieldName   =   sortValue.field;
 
             option = $( "<option/>",
             {
@@ -628,6 +619,79 @@
         $contactsDropdown.bidx_chosen();
     }
 
+    function _sendBulkMail( )
+    {
+        var message             =   {}
+        ,   userIds             =   []
+        ,   $sendInMailWrapper  =   $('.sendMessageWrapper')
+        ,   $sendMessageEditor  =   $('#sendMessageEditor')
+        ,   $frmCompose         =   $sendMessageEditor.find("form")
+        ,   $containerBody      =   $sendMessageEditor.find('.container-modal-body')
+        ,   $inMailSubmit       =   $containerBody.find('.inmail-submit')
+        ,   $btnComposeSubmit   =   $frmCompose.find(".compose-submit")
+        ,   $btnComposeCancel   =   $frmCompose.find(".compose-cancel")
+        ;
+
+        $frmCompose.validate(
+        {
+            rules:
+            {
+                "subject":
+                {
+                    required:               true
+                }
+            ,   "content":
+                {
+                    required:               true
+                }
+            }
+        ,   submitHandler:  function()
+            {
+                if ( $btnComposeSubmit.hasClass( "disabled" ) )
+                {
+                    return;
+                }
+
+                $btnComposeSubmit.addClass( "disabled" );
+
+                userIds     =   $contactsDropdown.val();
+
+                var uniquid = _.uniq(userIds);
+
+                bidx.utils.setValue( message, "userIds", userIds );
+                bidx.utils.setValue( message, "uniquid", uniquid );
+                bidx.utils.setValue( message, "subject", $frmCompose.find( "[name=subject]" ).val() );
+                bidx.utils.setValue( message, "content", $frmCompose.find( "[name=content]" ).val() );
+
+                bidx.utils.log('messageee', message);
+
+
+                /*bidx.common.doMailSend(
+                {
+                    message:    message
+                ,   success:    function( response )
+                    {
+                        $sendMessageEditor.modal('hide');
+
+                        $btnComposeSubmit.removeClass( "disabled" );
+
+                        $btnComposeCancel.removeClass( "disabled" );
+
+                        $frmCompose.find( ":input" ).val("");
+
+                        $frmCompose.validate().resetForm();
+                    }
+                ,   error:      function( jqXhr )
+                    {
+                        $btnComposeSubmit.removeClass( "disabled" );
+
+                        $btnComposeCancel.removeClass( "disabled" );
+                    }
+                } );*/
+            }
+        } );
+    }
+
     function _populateMailRecipients( activeContacts, append )
     {
         var option
@@ -684,9 +748,10 @@
             $sendMsgEditor.find('.recipient').removeClass('hide');
 
             $sendMsgEditor.modal( );
+
+            _sendBulkMail( );
+
         }
-
-
     }
 
     function _actionBulkActions()
@@ -762,9 +827,6 @@
 
             if( isChecked )
             {
-<<<<<<< HEAD
-                $btnApply.removeClass('disabled');
-=======
                 bidx.utils.log('recipientVal', recipientVal);
                 bidx.utils.log('recipientName', recipientName);
 
@@ -779,7 +841,6 @@
             if( lengthActionRecord )
             {
                 bidx.utils.log('selectedMembers', selectedMembers);
->>>>>>> remotes/origin/develop
 
                 if( lengthActionRecord === actionRecordLength )
                 {
@@ -841,6 +902,7 @@
                 }
                 else
                 {
+                    //Adding extra commit
                     selectedMembers = _.without(selectedMembers, );
                 }
 
@@ -914,18 +976,11 @@
                 bidx.utils.log('Filter sort=', globalCriteria.sort);
                 bidx.utils.log('Filter criteria=', globalCriteria.rangeFilters);
 
-                navigate(
+                _callSearchAction();
+               /* navigate(
                 {
                     state   :   'list'
-                /*,   params  :   {
-                                    q               :   criteria.searchTerm
-                                ,   sort            :   criteria.sort
-                                ,   rangeFilters    :   criteria.rangeFilters
-                                ,   facetFilters    :   criteria.facetFilters
-                                ,   genericFilters  :   criteria.genericFilters
-                                // ,   type        :   'facet'
-                                }*/
-                });
+                });*/
             });
 
     }
@@ -978,17 +1033,11 @@
 
 
 
-                navigate(
+                _callSearchAction();
+               /* navigate(
                 {
                     state   :   'list'
-                /*,   params  :   {
-                                    q               :   criteria.searchTerm
-                                ,   sort            :   criteria.sort
-                                ,   facetFilters    :   criteria.facetFilters
-                                ,   rangeFilters    :   criteria.rangeFilters
-                                ,   genericFilters  :   criteria.genericFilters
-                                }*/
-                });
+                });*/
             }
 
         });
@@ -1028,20 +1077,12 @@
 
                 bidx.utils.log('After genericFilters', globalCriteria);
 
-                navigate(
+                _callSearchAction();
+               /* navigate(
                 {
                     state   :   'list'
-               /* ,   params  :   {
-                                    q               :   criteria.searchTerm
-                                ,   sort            :   criteria.sort
-                                ,   facetFilters    :   criteria.facetFilters
-                                ,   rangeFilters    :   criteria.rangeFilters
-                                ,   genericFilters  :   criteria.genericFilters
-                                }*/
-                });
+                });*/
             }
-
-
         });
     }
 
@@ -1080,6 +1121,7 @@
         ,   foundMaxObj
         ,   minDateObj
         ,   maxDateObj
+        ,   fieldName
         ,   isSliderAction      =   true
         ,   isCalendarAction    =   true
         ,   genericFieldVal
@@ -1090,23 +1132,25 @@
             // Add Default image if there is no image attached to the bs
             //$.each( booleanOptions , function ( idx, facetItem )
             //{
+                fieldName           =   facetItem.field;
+
                 listItem            =   snippit
-                                        .replace( /%facetBooleanLabel%/g, bidx.i18n.i( facetItem.fieldName, appName) )
-                                        .replace( /%facetBooleanName%/g, facetItem.fieldName   )
+                                        .replace( /%facetBooleanLabel%/g, bidx.i18n.i( fieldName, appName) )
+                                        .replace( /%facetBooleanName%/g, fieldName   )
                                         ;
 
                 $listItem           =   listItem;
 
                 $list.append( $listItem );
 
-                genericFieldVal     =   bidx.utils.getValue( genericFilters, facetItem.fieldName );
+                genericFieldVal     =   bidx.utils.getValue( genericFilters, fieldName );
 
                 if( !genericFieldVal )
                 {
                     genericFieldVal =  'both';
                 }
 
-                $inputBoolean       =   $list.find("input[name='"+facetItem.fieldName+"'][value='"+genericFieldVal+"']");
+                $inputBoolean       =   $list.find("input[name='" + fieldName + "'][value='" + genericFieldVal + "']");
 
                 $inputBoolean.prop( 'checked', true );
 
@@ -1545,19 +1589,11 @@
 
                 bidx.utils.log('After RangerFilters', globalCriteria);
 
-                navigate(
+                _callSearchAction();
+               /* navigate(
                 {
                     state   :   'list'
-                /*,   params  :   {
-                                    q               :   criteria.searchTerm
-                                ,   sort            :   criteria.sort
-                                ,   facetFilters    :   criteria.facetFilters
-                                ,   rangeFilters    :   criteria.rangeFilters
-                                ,   genericFilters  :   criteria.genericFilters
-                                }*/
-                });
-
-
+                });*/
         }
     }
 
@@ -1600,6 +1636,7 @@
         ,   isCriteriaSelected
         ,   facetCriteria   = {}
         ,   filterQuery
+        ,   facetValueName
         ,   facetCounter    =   1
         ,   topFacets       =   []
         ,   bottomFacets    =   []
@@ -1617,76 +1654,70 @@
            // $.each( facets , function ( idx, facetItems)
            // {
                 finalFacets     =   [];
-                facetValues     =   bidx.utils.getValue( facetItems, "facetValues" );
-                facetLabel      =   bidx.i18n.i( facetItems.name, appName );
+                facetValues     =   bidx.utils.getValue( facetItems, "values" );
+                facetLabel      =   bidx.i18n.i( facetItems.field, appName );
 
 
                 if ( !$.isEmptyObject(facetValues) )
                 {
-                    if( facetItems.name === 'entityType')
+                    if( facetItems.field === 'entityType')
                     {
-                        tempFacetValues[0]     =   _.findWhere( facetValues, { name: 'bdxplan'} );
-                        tempFacetValues[1]     =   _.findWhere( facetValues, { name: 'bdxmember'} );
+                        tempFacetValues[0]     =   _.findWhere( facetValues, { option: 'bdxplan'} );
+                        tempFacetValues[1]     =   _.findWhere( facetValues, { option: 'bdxmember'} );
                         facetValues            =   tempFacetValues;
                     }
 
                     listItem    =   snippit
-                                    .replace( /%facets_title%/g, bidx.i18n.i( facetItems.name, appName ) )
-                                    .replace( /%facets_name%/g, facetItems.name  );
+                                    .replace( /%facets_title%/g, bidx.i18n.i( facetItems.field, appName ) )
+                                    .replace( /%facets_name%/g, facetItems.field  );
 
                     $listItem  = listItem;
 
                     $list.append($listItem );
 
-                    $currentCategory    = $list.find( ".facet-category-" + facetItems.name );
-                    /* Start from here **********************/
-                   /* topFacets       =   _.filter(facetValues, function(value) { return value.checked; });
-                    bottomFacets    =   _.filter(facetValues, function(value) { return !value.checked; });
-                    finalFacets     =   _.extend(finalFacets, topFacets, bottomFacets);
-
-                    bidx.utils.log('topFacets', topFacets);
-                    bidx.utils.log('bottomFacets', bottomFacets);
-                    bidx.utils.log('finalFacets', finalFacets);*/
+                    $currentCategory    = $list.find( ".facet-category-" + facetItems.field );
 
                     $.each( facetValues , function ( idx, item )
                     {
+                        facetValueName  =   bidx.utils.getValue(item, 'option');
 
-                        switch (facetItems.name)
+                        switch (facetItems.field)
                         {
                             case 'entityType':
                             case 'role':
-                            facetValName    = bidx.i18n.i( item.name );
+                            facetValName    = bidx.i18n.i( facetValueName );
                             break;
 
                             case 'expertise':
-                            facetValName    = bidx.data.i( item.name, 'mentorExpertise' );
+                            facetValName    = bidx.data.i( facetValueName, 'mentorExpertise' );
                             break;
 
                             case 'planEnvironmentalImpact':
-                            facetValName    = bidx.data.i( item.name, 'envImpact' );
+                            facetValName    = bidx.data.i( facetValueName, 'envImpact' );
                             break;
 
                             case 'planSocialImpact':
-                            facetValName    = bidx.data.i( item.name, 'socialImpact' );
+                            facetValName    = bidx.data.i( facetValueName, 'socialImpact' );
                             break;
 
                             case 'planFinanceType':
-                            facetValName    = bidx.data.i( item.name, 'investmentType' );
+                            facetValName    = bidx.data.i( facetValueName, 'investmentType' );
                             break;
 
                             default:
-                            facetValName    = bidx.data.i( item.name, facetItems.name );
+                            facetValName    = bidx.data.i( facetValueName, facetItems.field );
 
                         }
 
-                        if ( item.name )
+                        if ( facetValueName )
                         {
+
                             //newname = facetValName.replace(/ /g, '');
                             newname = facetValName;
                             listFacetsItem = subsnippit
-                                .replace( /%facets_title%/g,        item.name           ? newname      :    emptyVal )
+                                .replace( /%facets_title%/g,        facetValueName      ? newname           :    emptyVal )
                                 .replace( /%facetValues_count%/g,   item.count          ? item.count        :    emptyVal )
-                                .replace( /%facetValues_name%/g,    item.name           ? item.name         :    emptyVal )
+                                .replace( /%facetValues_name%/g,    facetValueName      ? facetValueName    :    emptyVal )
                                 .replace( /%filterQuery%/g,         item.filterQuery    ? item.filterQuery  :    emptyVal )
                                 ;
 
@@ -1716,9 +1747,9 @@
 
                 // Show the first VISIBLE_FILTER_ITEMS filter items if more than (VISIBLE_FILTER_ITEMS + 3)
                 //
-                if ( facetItems.valueCount > CONSTANTS.VISIBLE_FILTER_ITEMS + 3 )
+                if ( facetItems.count > CONSTANTS.VISIBLE_FILTER_ITEMS + 3 )
                 {
-                    $bigCategory = $list.find( ".facet-category-" + facetItems.name );
+                    $bigCategory = $list.find( ".facet-category-" + facetItems.field );
                     $categoryList = $bigCategory.find( ".list-group" );
 
                     $categoryList.find( "a.filter:gt("+CONSTANTS.VISIBLE_FILTER_ITEMS+")" ).addClass( "hide toggling" );
@@ -1729,13 +1760,6 @@
                         e.preventDefault();
                         bidx.common.showMoreLess( $(this).parent().find( ".toggling" ) );
                     });
-                }
-
-                if( ( facetLength === facetCounter ) &&
-                      $.isFunction( options.cb )
-                    )
-                {
-                    options.cb( );
                 }
 
                 facetCounter++;
@@ -1837,10 +1861,9 @@
 
         if ( !globalSearchTerm && urlParam)
         {
-
-            var url = document.location.href.split( "#" ).shift();
-            globalSearchTerm = bidx.utils.getQueryParameter( "q", url );
-
+            var url             =   document.location.href.split( "#" ).shift();
+            globalSearchTerm    =   bidx.utils.getQueryParameter( "q", url );
+            globalSearchTerm    =   (globalSearchTerm) ? globalSearchTerm : "*";
         }
 
         qString =   globalSearchTerm.replace("basic:", ""); // 'get the string after basic: ex testdata in basic:testdata'
@@ -1983,18 +2006,12 @@
 
                 bidx.utils.log('Filter criteria=', globalCriteria);
 
-                navigate(
+                _callSearchAction();
+
+                /*navigate(
                 {
                     state   :   'list'
-                ,   params  :   {
-                                    /*q               :   criteria.searchTerm
-                                ,   sort            :   criteria.sort
-                                ,   facetFilters    :   criteria.facetFilters
-                                ,   rangeFilters    :   criteria.rangeFilters
-                                ,   genericFilters  :   criteria.genericFilters*/
-                                // ,   type        :   'facet'
-                                }
-                });
+                });*/
             }
 
         });
@@ -2026,22 +2043,15 @@
             {
                 isFacet         =    _.findWhere(facets,
                                     {
-                                        name:  filterOrderingItem
+                                        field:  filterOrderingItem
                                     });
 
                 isRangeFilter   =   bidx.utils.getValue( rangeFilters, filterOrderingItem );
 
                 isBoolean       =   _.findWhere(booleanOptions,
                                     {
-                                        fieldName:  filterOrderingItem
+                                        field:  filterOrderingItem
                                     });
-
-                bidx.utils.log('filterOrderingItem', filterOrderingItem);
-                bidx.utils.log('isFacet', isFacet);
-                bidx.utils.log('isRangeFilter', isRangeFilter);
-                bidx.utils.log('isBoolean', isBoolean);
-
-
 
                 switch(true)
                 {
@@ -2054,7 +2064,7 @@
 
                     break;
 
-                    /*case _.isObject(isRangeFilter):
+                    case _.isObject(isRangeFilter):
                         bidx.utils.log('In Range');
 
                         isRangeRendered     =   true;
@@ -2074,7 +2084,7 @@
 
                         _doBooleanFilterListing( isBoolean );
 
-                    break;*/
+                    break;
 
                     default:
 
@@ -2094,9 +2104,9 @@
 
     function _doFilterEvents( options )
     {
-        var isFacetRendered  =   options.isFacetRendered
-        ,   isRangeRendered  =   options.isRangeRendered
-        ,   isBoolRendered   =   options.isBoolRendered
+        var isFacetRendered  =   bidx.utils.getValue(options, 'isFacetRendered')
+        ,   isRangeRendered  =   bidx.utils.getValue(options, 'isRangeRendered')
+        ,   isBoolRendered   =   bidx.utils.getValue(options, 'isBoolRendered')
         ;
 
          //On Click events
@@ -2134,27 +2144,32 @@
             ,   data:                 searchCriteria
             ,   success: function( response )
                 {
-                    var sortOptions     =   bidx.utils.getValue(response, 'sortOptions')
+                    var responseLength  =   _.size( response.found )
+                    ,   sortOptions     =   bidx.utils.getValue(response, 'sortOptions')
                     ;
 
+                    //Store received response to Global criteria inorder to use for subsequent calls
                     globalCriteria      =   bidx.utils.getValue(response, 'criteria');
 
-                    filterDisplay       =   _doListing( response );
-
-                    _doSorting(
+                    if( ( !options.urlParam ) || ( options.urlParam && responseLength ) )
                     {
-                        sortOptions:    sortOptions
-                    } );
+                        filterDisplay       =   _doListing( response );
 
-                    _doBulk( );
+                        _doSorting(
+                        {
+                            sortOptions:    sortOptions
+                        } );
+
+                        _doBulk( );
+                    }
 
                     _doSearchListing(
                     {
-                        response    :   response
-                    ,   cb          :   options.cb
+                        filterDisplay:  filterDisplay
+                    ,   response:       response
+                    ,   options:        options
                     } );
 
-                    _doFilterEvents( filterDisplay );
                 }
             ,   error: function( jqXhr, textStatus )
                 {
@@ -2201,16 +2216,18 @@
         return label;
     }
 
-    function _doSearchListing( options )
+    function _doSearchListing( params )
     {
-        var items           =   []
+        var entityType
+        ,   items           =   []
         ,   pagerOptions    =   {}
-        ,   loadedEntity    =   {}
-        ,   initialLoad
-        ,   fullName
         ,   nextPageStart
         //,   criteria        = options.criteria
-        ,   data            =   options.response
+        ,   options         =   params.options
+        ,   urlParam        =   options.urlParam
+        ,   assignActions   =   false
+        ,   filterDisplay   =   params.filterDisplay
+        ,   data            =   params.response
         ,   facets          =   bidx.utils.getValue(data, 'facets')
         ,   $list           =   $views.find( ".search-list" )
         ,   $listEmpty      =   $($("#search-empty").html().replace(/(<!--)*(-->)*/g, ""))
@@ -2218,6 +2235,7 @@
 
         if ( data.total )
         {
+            assignActions   =   true;
             // if ( response.totalMembers > currentPage size  --> show paging)
             //
             $list.empty();
@@ -2282,27 +2300,27 @@
             {
                 $.each( data.found, function( idx, response )
                 {
-                    initialLoad = ( data.offset ) ? false: true;
+                    /*entityType          =   idx.split('_');
+                    response.entityType =   entityType[0];*/
 
-                    switch( response.entityType )
+                    switch( response.type )
                     {
-                        case 'bdxmember':
+                        case 'member':
 
                             showMemberProfile(
-                                {
-                                    response : response
-                                ,   cb       : options.cb
-                                } );
+                            {
+                                response : response
+                            ,   cb       : options.cb
+                            } );
 
                         break;
 
-                        case 'bdxplan':
+                        case 'plan':
 
                             showEntity(
                             {
                                 response : response
                             ,   cb       : options.cb
-
                             } );
 
                         break;
@@ -2320,59 +2338,83 @@
             ,   entityValues
             ,   checkedEntity
             ,   unCheckedEntity
+            ,   unCheckedOption
             ,   errorMsg
             ,   lbl
             ,   $empty
             ;
 
-            entityFacet     =   _.findWhere(facets, { name:  'entityType' });
+            bidx.utils.log('facets', facets);
 
-            entityValues    =   entityFacet.facetValues;
+            entityFacet     =   _.findWhere(facets, { field:  'entityType' });
+
+            bidx.utils.log('entityFacet', entityFacet);
+
+
+            entityValues    =   entityFacet.values;
 
             checkedEntity   =   _.findWhere(entityValues, { checked:    true });
 
-            if( checkedEntity.count === 0 )
+            if( !checkedEntity || checkedEntity.count === 0 )
             {
                 unCheckedEntity  =   _.findWhere(entityValues, {   checked:  false  });
 
                 if( unCheckedEntity.count )
                 {
-                    errorMsg    =   bidx.i18n.i( unCheckedEntity.name + 'Error' , 'search' );
+                    unCheckedOption     =   unCheckedEntity.option;
 
-                    $empty  =   $(  "<a />"
-                            ,   {
-                                    "class":        "filter"
-                                ,   "data-value":   unCheckedEntity.name
-                                } )
-                                .append
-                                (
-                                    $( "<span class='tagLabel'>" +  unCheckedEntity.count + "</span>")
-                                );
+                    if( urlParam )
+                    {
+                        globalCriteria.facetFilters['entityType']    =   [ unCheckedOption ];
 
-                    lbl         =   errorMsg.replace( "%count%", $empty[0].outerHTML );
+                        globalCriteria.entityType = [ unCheckedOption ]; // Empty entityType in criteria and add new data
 
-                    $listEmpty.find('.errormsg').empty().append( lbl );
+                        _callSearchAction( );
+                    }
+                    else
+                    {
+                        assignActions   =   true;
+                        errorMsg        =   bidx.i18n.i( unCheckedOption + 'Error' , 'search' );
+
+                        $empty          =   $(  "<a />"
+                                            ,   {
+                                                    "class":        "filter"
+                                                ,   "data-value":   unCheckedOption
+                                            } )
+                                            .append
+                                            (
+                                                $( "<span class='tagLabel'>" +  unCheckedEntity.count + "</span>")
+                                            );
+
+                        lbl             =   errorMsg.replace( "%count%", $empty[0].outerHTML );
+
+                        $listEmpty.find('.errormsg').empty().append( lbl );
+                    }
                 }
 
             }
 
-
-
-            $list.empty();
-
-            $list.append($listEmpty);
-
-            if( $.isFunction( options.cb ) )
+            if(!urlParam)
             {
-                options.cb();
+                $list.empty();
+
+                $list.append($listEmpty);
+
+                if( $.isFunction( options.cb ) )
+                {
+                    options.cb();
+                }
             }
             _hideView( "pager" );
             _hideView( "sort" );
         }
 
+        if( assignActions  || true)
+        {
+            _doFilterEvents( filterDisplay );
+        }
         // execute cb function
         //
-
     }
 
     function replaceStringsCallback( response )
@@ -2388,12 +2430,14 @@
         ,   i18nItem
         ,   emptyVal                =   ''
         ,   conditionalElementArr   =   { }
-        ,   entityType              =   response.entityType
+        ,   type                    =   response.type
         ;
 
-        switch( entityType )
+        bidx.utils.log('entityType', type);
+
+        switch( type )
         {
-            case 'bdxplan'  :
+            case 'plan'  :
                 var countryOperation
                 ,   entrpreneurIndustry
                 ,   entrpreneurReason
@@ -2404,9 +2448,11 @@
                 ,   logoDocument
                 ,   cover
                 ,   coverDocument
+                ,   owner
                 ;
 
-                i18nItem            =   response.plan;
+                i18nItem            =   bidx.utils.getValue( response, 'properties' );
+                owner               =   bidx.utils.getValue( response, 'owner.properties');
                 $entityElement      =   $("#businesssummary-listitem");
                 snippit             =   $entityElement.html().replace(/(<!--)*(-->)*/g, "");
                 countryOperation    =   bidx.utils.getValue( i18nItem, "country");
@@ -2445,10 +2491,10 @@
                 // search for placeholders in snippit
                 //
                 listItem = snippit
-                    .replace( /%entityId%/g,            response.entityId )
-                    .replace( /%userId%/g,              i18nItem.owner.userId )
+                    .replace( /%entityId%/g,            i18nItem.id )
+                    .replace( /%userId%/g,              owner.userId )
                     .replace( /%title%/g,               i18nItem.title   ? i18nItem.title : emptyVal )
-                    .replace( /%name%/g,                i18nItem.owner.name )
+                    .replace( /%name%/g,                owner.name )
                     .replace( /%slogan%/g,              i18nItem.slogan   ? i18nItem.slogan : emptyVal )
                     .replace( /%modified%/g,            i18nItem.modified  ? bidx.utils.parseISODateTime(i18nItem.modified, "date") : emptyVal )
                     .replace( /%country%/g,             country )
@@ -2510,7 +2556,7 @@
 
             break;
 
-            case 'bdxmember' :
+            case 'member' :
 
                 var $elImage
                 ,   allLanguages     = ''
@@ -2541,12 +2587,12 @@
                 ,   investorTaggingId
                 ;
 
-                i18nItem        =   response.member;
+                i18nItem        = response.properties;
                 $entityElement  = $("#member-profile-listitem");
                 snippit         = $entityElement.html().replace(/(<!--)*(-->)*/g, "");
                 $elImage        = $entityElement.find( "[data-role = 'memberImage']" );
 
-                roles           = bidx.utils.getValue( i18nItem, "roles" );
+                roles           = bidx.utils.getValue( response, "roles" );
                 isEntrepreneur  = ( $.inArray("entrepreneur", roles) !== -1 || $.inArray("entrepreneur", roles) !== -1 ) ? true : false;
                 isMentor        = ( $.inArray("mentor", roles) !== -1 || $.inArray("mentor", roles) !== -1 ) ? true : false;
                 isInvestor      = ( $.inArray("investor", roles) !== -1 || $.inArray("investor", roles) !== -1 ) ? true : false;
@@ -2557,6 +2603,7 @@
                 memberCountry    = bidx.utils.getValue( i18nItem, "country");
                 tagging          = bidx.common.getAccreditation( i18nItem );
 
+                bidx.utils.log('i18ntime', i18nItem);
                 // Member Role
                 //
                 if(i18nItem.highestEducation)
@@ -2728,7 +2775,7 @@
         ;
 
         // now format it into array of objects with value and label
-        if ( !$.isEmptyObject(response.plan) )
+        if ( !$.isEmptyObject(response.properties) )
         {
             CONSTANTS.LOAD_COUNTER ++;
 
@@ -2744,7 +2791,7 @@
             showElements(
             {
                 elementArr: conditionalElementArr
-            ,   result:     response.plan
+            ,   result:     response.properties
             ,   listItem:   $listItem
             ,   callback:   function( listItem )
                 {
@@ -2773,7 +2820,7 @@
         ;
 
         // now format it into array of objects with value and label
-        if ( !$.isEmptyObject(response.member) )
+        if ( !$.isEmptyObject(response.properties) )
         {
             CONSTANTS.LOAD_COUNTER ++;
 
@@ -2789,7 +2836,7 @@
             showElements(
             {
                 elementArr: conditionalElementArr
-            ,   result:     response.member
+            ,   result:     response.properties
             ,   listItem:   $listItem
             ,   callback:   function( listItem )
                 {
