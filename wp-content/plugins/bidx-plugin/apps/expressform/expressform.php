@@ -9,7 +9,7 @@ class expressform {
      * Also registers the scripts for expressform.
      */
 
-    static $deps = array ('jquery', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-utils', 'bidx-industries', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
+    static $deps = array ('facebook-campaign', 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-utils', 'bidx-industries', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
                         'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
 
 
@@ -23,7 +23,8 @@ class expressform {
      */
     function set_expressform_bidx_ui_libs()
     {
-        wp_register_script( 'expressform', plugins_url( 'static/js/expressform.js', __FILE__ ), self::$deps, '20130501', TRUE );
+        wp_register_script ('facebook-campaign', plugins_url( 'static/js/facebook.js', __FILE__ ), array(), '20160202', TRUE );
+        wp_register_script( 'expressform', plugins_url( 'static/js/expressform.js', __FILE__ ), self::$deps, '20160202', TRUE );
     }
 
     /**
