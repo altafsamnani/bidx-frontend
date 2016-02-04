@@ -2392,7 +2392,7 @@
             {
                 unCheckedEntity  =   _.findWhere(entityValues, {   checked:  false  });
 
-                if( unCheckedEntity.count )
+                if( unCheckedEntity && unCheckedEntity.count )
                 {
                     unCheckedOption     =   unCheckedEntity.option;
 
@@ -2639,7 +2639,6 @@
 
                // cityTown         = bidx.utils.getValue( i18nItem, "cityTown");
                 memberCountry    = bidx.utils.getValue( i18nItem, "country");
-                tagging          = bidx.common.getAccreditation( i18nItem );
 
                 bidx.utils.log('i18ntime', i18nItem);
                 // Member Role
@@ -2741,11 +2740,19 @@
                 if(isMentor)
                 {
                     mentorTaggingId     =   'hide';
-                    taggingMentor       =   bidx.utils.getValue(tagging, 'mentor' );
+
+                    taggingMentor       =   bidx.utils.getValue(response, 'mentor.tags' );
 
                     if( !_.isUndefined(taggingMentor) )
                     {
-                        mentorTaggingId     =   (taggingMentor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
+                        if( _.indexOf(taggingMentor, "accredited") !== -1 )
+                        {
+                            mentorTaggingId     =   'fa-bookmark';
+                        }
+                        else if( _.indexOf(taggingMentor, "accreditation_refused") !== -1 )
+                        {
+                            mentorTaggingId     =   'fa-ban';
+                        }
                     }
 
                     $listItem.find('.fa-mentor').addClass( mentorTaggingId );
@@ -2753,11 +2760,19 @@
                 if( ( isInvestor && isGroupAdmin) || ( investorMemberId === loggedInMemberId ) )
                 {
                     investorTaggingId   =   'hide';
-                    taggingInvestor     =   bidx.utils.getValue(tagging, 'investor' );
+
+                    taggingInvestor     =   bidx.utils.getValue(response, 'investor.tags' );
 
                     if( !_.isUndefined(taggingInvestor) )
                     {
-                        investorTaggingId   =   (taggingInvestor.tagId === 'accredited' ) ? 'fa-bookmark'  :   'fa-ban';
+                        if( _.indexOf(taggingInvestor, "accredited") !== -1 )
+                        {
+                            investorTaggingId     =   'fa-bookmark';
+                        }
+                        else if( _.indexOf(taggingInvestor, "accreditation_refused") !== -1 )
+                        {
+                            investorTaggingId     =   'fa-ban';
+                        }
                     }
 
                     $listItem.find('.fa-investor').addClass( investorTaggingId );
