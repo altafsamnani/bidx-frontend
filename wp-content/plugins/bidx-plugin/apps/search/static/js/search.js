@@ -139,6 +139,7 @@
     ,   currentInvestorId       = bidx.common.getInvestorProfileId()
     ,   currentUserId           = bidx.common.getCurrentUserId( )
     ,   roles                   = bidx.utils.getValue( bidxConfig.session, "roles" )
+    ,   isGroupAdminOwner       = $.inArray("GroupAdmin", roles) !== -1 ? true : false
     // If current user is not investor or group admin then don't allow access to investor profiles
     ,   displayInvestorProfile  = ( $.inArray("GroupOwner", roles) !== -1 || $.inArray("GroupAdmin", roles) !== -1 || currentInvestorId ) ? true : false
     ;
@@ -520,20 +521,26 @@
 
     function _doBulk( options )
     {
-        var snippitBulk =   $("#bulk-listitem").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $list       =   $element.find(".bulk-list")
-        ,   $listBulkItem
-        ;
+        if( isGroupAdminOwner )
+        {
+            var snippitBulk =   $("#bulk-listitem").html().replace(/(<!--)*(-->)*/g, "")
+            ,   $list       =   $element.find(".bulk-list")
+            ,   $checkBoxes =   $element.find(".checkboxBulk")
+            ,   $listBulkItem
+            ;
 
-        $list.empty();
+            $list.empty();
 
-        $listBulkItem   =   $( snippitBulk );
+            $listBulkItem   =   $( snippitBulk );
 
-        $list.append( $listBulkItem );
+            $list.append( $listBulkItem );
 
-        $list.find( "[name='bulk']" ).bidx_chosen();
+            $list.find( "[name='bulk']" ).bidx_chosen();
 
-        _showAllView( "bulk" );
+            _showAllView( "bulk" );
+
+
+        }
     }
 
     function _doSorting( options )
@@ -623,6 +630,7 @@
     {
         var message             =   {}
         ,   userIds             =   []
+        ,   uniquids            =   []
         ,   $sendInMailWrapper  =   $('.sendMessageWrapper')
         ,   $sendMessageEditor  =   $('#sendMessageEditor')
         ,   $frmCompose         =   $sendMessageEditor.find("form")
@@ -656,21 +664,27 @@
 
                 userIds     =   $contactsDropdown.val();
 
-                var uniquid = _.uniq(userIds);
+                uniquids = _.uniq(userIds);
 
-                bidx.utils.setValue( message, "userIds", userIds );
-                bidx.utils.setValue( message, "uniquid", uniquid );
+                //bidx.utils.setValue( message, "userIds", userIds );
+                bidx.utils.setValue( message, "userIds", uniquids );
                 bidx.utils.setValue( message, "subject", $frmCompose.find( "[name=subject]" ).val() );
                 bidx.utils.setValue( message, "content", $frmCompose.find( "[name=content]" ).val() );
 
                 bidx.utils.log('messageee', message);
 
 
-                /*bidx.common.doMailSend(
+                bidx.common.doMailSend(
                 {
                     message:    message
                 ,   success:    function( response )
                     {
+                        var $selectAllCheckbox  =   $element.find( "[name='selectAll']" )
+                        ,   $actionRecord       =   $element.find( "[name='actionRecord']")
+                        ;
+
+                        selectedMembers     =   [];  //Clear the send email recipient cache
+
                         $sendMessageEditor.modal('hide');
 
                         $btnComposeSubmit.removeClass( "disabled" );
@@ -680,6 +694,10 @@
                         $frmCompose.find( ":input" ).val("");
 
                         $frmCompose.validate().resetForm();
+
+                        $actionRecord.prop("checked", false);
+
+                        $selectAllCheckbox.prop("checked", false);
                     }
                 ,   error:      function( jqXhr )
                     {
@@ -687,7 +705,7 @@
 
                         $btnComposeCancel.removeClass( "disabled" );
                     }
-                } );*/
+                } );
             }
         } );
     }
@@ -720,18 +738,22 @@
             {
                 recipientId     =   recipient.id;
 
-                recipientName   =   recipient.name;
-
-                option = $( "<option/>",
+                if( _.indexOf( recipientIds, recipientId ) === -1 )
                 {
-                    value: recipientId
-                } );
 
-                option.text( recipientName );
+                    recipientName   =   recipient.name;
 
-                listItems.push( option );
+                    option = $( "<option/>",
+                    {
+                        value: recipientId
+                    } );
 
-                recipientIds.push( recipientId );
+                    option.text( recipientName );
+
+                    listItems.push( option );
+
+                    recipientIds.push( recipientId );
+                }
             } );
 
             // add the options to the select
@@ -810,8 +832,6 @@
 
             $actionRecord       =   $( "[name='actionRecord']:checked" );
 
-            bidx.utils.log('actionRecord', $actionRecord);
-
             actionRecordLength  =   $actionRecord.length;
 
 
@@ -827,9 +847,6 @@
 
             if( isChecked )
             {
-                bidx.utils.log('recipientVal', recipientVal);
-                bidx.utils.log('recipientName', recipientName);
-
 
                 selectedMembers.push( selectedMember );
             }
@@ -840,16 +857,19 @@
 
             if( lengthActionRecord )
             {
-                bidx.utils.log('selectedMembers', selectedMembers);
-
-                if( lengthActionRecord === actionRecordLength )
+                if( actionRecordLength )
                 {
-                    selectAllCheckbox   =   true;
+                    if( lengthActionRecord === actionRecordLength )
+                    {
+                        selectAllCheckbox   =   true;
+                    }
+
+                    $btnApply.removeClass('disabled');
                 }
-            }
-            else
-            {
-                $btnApply.addClass('disabled');
+                else
+                {
+                    $btnApply.addClass('disabled');
+                }
             }
 
             $selectAllCheckbox.prop("checked", selectAllCheckbox);
@@ -877,16 +897,18 @@
                 $btnApply.addClass('disabled');
             }
 
+
             $.each( $actionRecord, function( idx, inputRecord )
             {
                 $this           =   $(inputRecord);
-                recipientVal    =   $this.val();
+                recipientVal    =   parseInt( $this.val( ) );
                 recipientName   =   $this.data('name');
                 findMember      =   _.findWhere(selectedMembers, {id: recipientVal});
 
-                bidx.utils.log( 'isChecked', isChecked);
+
                 if( allChecked )
                 {
+                    bidx.utils.log( 'Checked', selectedMembers);
                     isChecked       =   $this.is(":checked");
 
                     if( !isChecked )
@@ -902,8 +924,12 @@
                 }
                 else
                 {
+
+                    bidx.utils.log( 'Uncheck box', findMember);
+                    bidx.utils.log('selectedMembers' , selectedMembers);
+                    bidx.utils.log('recipientVal' , recipientVal);
                     //Adding extra commit
-                    selectedMembers = _.without(selectedMembers, );
+                    selectedMembers = _.without(selectedMembers, findMember);
                 }
 
                 bidx.utils.log('lengthResult', lengthResult);
@@ -940,6 +966,8 @@
             $listReset.on('click', function( e )
             {
                 e.preventDefault();
+
+                selectedMembers     =   [];  //Clear the send email recipient cache
 
                 $this           = $( this );
 
@@ -1018,6 +1046,8 @@
 
             if( frmValue && toValue)
             {
+                selectedMembers     =   [];  //Clear the send email recipient cache
+
                 rangeFilters    =   bidx.utils.getValue( globalCriteria, 'rangeFilters');
 
                 globalCriteria.rangeFilters[rangeName].min = min;
@@ -1055,6 +1085,8 @@
             ,   booleanName     =   $input.data('name')
             ,   booleanVal      =   $input.val()
             ;
+
+            selectedMembers     =   [];  //Clear the send email recipient cache
 
             if( booleanVal && $input.is(':checked'))
             {
@@ -1954,15 +1986,16 @@
             e.preventDefault();
 
             var $this           = $( this )
-            ,   filterQuery     = {};
-
-            var filterValue         =   $this.data('value')
+            ,   filterQuery     = {}
+            ,   filterValue         =   $this.data('value')
             ,   $facetWrapper       =   $this.parent().parent()
             ,   facetFilters        =   bidx.utils.getValue( globalCriteria, 'facetFilters')
             ,   clickedCategory     =   $facetWrapper.find( ".facet-title" ).data('name')
             ,   facetFiltersCat     =   []
             ,   callSearchAction    =   true
             ;
+
+            selectedMembers     =   [];  //Clear the send email recipient cache
 
             bidx.utils.log('globalCriteria before click=', globalCriteria);
             bidx.utils.log('$facetWrapper=', $facetWrapper);
@@ -2537,6 +2570,11 @@
                     placeBusinessThumb( $listItem, coverDocument );
                 }
 
+                if( isGroupAdminOwner )
+                {
+                    $listItem.find('.checkboxBulk').removeClass( 'hide' );
+                }
+
                 // externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
                 // if ( externalVideoPitch )
                 // {
@@ -2723,6 +2761,11 @@
                     }
 
                     $listItem.find('.fa-investor').addClass( investorTaggingId );
+                }
+
+                if( isGroupAdminOwner )
+                {
+                    $listItem.find('.checkboxBulk').removeClass( 'hide' );
                 }
 
                 // Member Image
