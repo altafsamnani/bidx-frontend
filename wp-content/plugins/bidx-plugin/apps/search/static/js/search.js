@@ -2623,6 +2623,8 @@
                 ,   taggingInvestor
                 ,   mentorTaggingId
                 ,   investorTaggingId
+                ,   roleLabel
+                ,   contactStatus
                 ;
 
                 i18nItem        = response.properties;
@@ -2634,6 +2636,7 @@
                 isEntrepreneur  = ( $.inArray("entrepreneur", roles) !== -1 || $.inArray("entrepreneur", roles) !== -1 ) ? true : false;
                 isMentor        = ( $.inArray("mentor", roles) !== -1 || $.inArray("mentor", roles) !== -1 ) ? true : false;
                 isInvestor      = ( $.inArray("investor", roles) !== -1 || $.inArray("investor", roles) !== -1 ) ? true : false;
+                contactStatus   = bidx.utils.getValue( response, 'contact.status');
 
                 investorMemberId = bidx.utils.getValue( i18nItem, "userId" );
 
@@ -2709,12 +2712,13 @@
                 listItem = snippit
                     .replace( /%userId%/g,              i18nItem.userId )
                     .replace( /%name%/g,                i18nItem.name )
-                    .replace( /%modified%/g,            i18nItem.modified  ? bidx.utils.parseISODateTime(i18nItem.modified, "date") : emptyVal )
-                    .replace( /%professionalTitle%/g,   i18nItem.title   ? i18nItem.title     : emptyVal )
+                    .replace( /%modified%/g,            i18nItem.modified   ? bidx.utils.parseISODateTime(i18nItem.modified, "date") : emptyVal )
+                    .replace( /%professionalTitle%/g,   i18nItem.title      ? i18nItem.title     : emptyVal )
                     .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
-                    .replace( /%role_investor%/g,       ( isInvestor && displayInvestorProfile )      ? bidx.i18n.i( 'investor' )   : '' )
+                    .replace( /%role_investor%/g,       ( isInvestor && displayInvestorProfile )    ? bidx.i18n.i( 'investor' )   : '' )
                     .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
-                    .replace( /%gender%/g,              i18nItem.gender   ? gender    : emptyVal )
+                    .replace( /%contact%/g,             ( contactStatus === 'CONNECTED' )  ? bidx.i18n.i( 'connected' )   : '' )
+                    .replace( /%gender%/g,              i18nItem.gender     ? gender    : emptyVal )
                     .replace( /%highestEducation%/g,    i18nItem.highestEducation   ? highestEducation    : emptyVal )
                     .replace( /%language%/g,            allLanguages )
                     .replace( /%mothertongue%/g,        montherLanguage )
@@ -2727,7 +2731,7 @@
 
                 $listItem     = $(listItem);
 
-                var roleLabel = $listItem.find( ".bidx-label" );
+                roleLabel = $listItem.find( ".bidx-label" );
                 $.each( roleLabel, function( index, val )
                 {
                     if ( $(this).text() === "" )
