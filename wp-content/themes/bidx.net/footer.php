@@ -127,7 +127,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-6 footer-info-wrapper">
-                <span><?php _e('bidx.net © 2015. All Rights Reserved.','bidxtheme');?></span>
+                <span><?php _e(sprintf('bidx.net © %s. All Rights Reserved.', date('Y')),'bidxtheme');?></span>
             </div>
             <!-- /.footer-info-wrapper -->
             <div class="col-xs-12 col-sm-6 footer-links-wrapper">
