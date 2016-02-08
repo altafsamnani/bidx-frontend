@@ -30,25 +30,7 @@
     <div class="bg-primary-darker navbar navbar-fixed-top">
         <div class="container">
             <div class="row">
-                <div class="search col-xs-6">
-                    <a class="home-btn navbar-left flip" href="<?php echo getLangPrefix('/');?>"><i class="fa fa-home"></i></a>
-<?php
-                    get_template_part('templates/searchform');
-?>
-                </div>
                 <div class="col-xs-6">
-<?php
-                    echo do_shortcode( '[bidx app="group" view="navbarshort"]' );
-?>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <header role="banner">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
 <?php
                     // Default logo position
                     $logo_alignment = 'logo-left';
@@ -97,55 +79,18 @@
                             <span class='site-title visible-xs'><a href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'><?php bloginfo( 'name' ); ?></a></span>
 <?php
                         }
-
-                        // Add slogan and start here button if logo alignment is left or right
-
-                        if ( $option_logo_alignment === 'left' || $option_logo_alignment === 'right' )
-                        {
-
-                            $kickoff_alignment = ($option_logo_alignment === 'left') ? 'pull-right' : 'pull-left';
-
-
-?>
-                            <div class="kickoff <?php echo $kickoff_alignment; ?>">
-<?php
-                            if( !$authenticated )
-                            {
-?>
-                                <a href="<?php echo _l('join');?>" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Start Here','bidxplugin'); ?></a>
-<?php
-                            }
-                            if( $authenticated && !$hasRole )
-                            {
-?>
-                                <a href="<?php echo _l('join');?>" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Choose a role','bidxplugin'); ?></a>
-<?php
-                            }
-?>
-                                <div class="lead pull-right tagline">
-<?php
-                                    echo get_theme_mod( 'slogan' ) ;
-?>
-                                </div>
-                            </div>
-<?php
-                        }
-
-                        if ( $option_logo_alignment === 'middle' )
-                        {
-                            if( $authenticated && !$hasRole )
-                            {
-?>
-                                <a href="<?php echo _l('join');?>" class="btn btn-secondary btn-lg start-btn choose-role"><?php _e('Choose a role','bidxplugin'); ?></a>
-<?php
-                            }
-                        }
 ?>
                     </div>
                 </div>
+                <div class="col-xs-6">
+<?php
+                    echo do_shortcode( '[bidx app="group" view="navbarshort"]' );
+?>
+                </div>
             </div>
         </div>
-    </header>
+    </div>
+
 
 <?php
     if (has_nav_menu('primary_navigation')) :
