@@ -25,8 +25,15 @@ $hasAccess = false;
 //
 $company    = $this->exst ($businessSummary->company);
 $attachment = $this->exst ($businessSummary->attachment);
-
+$tmpsummary = $this->exst($businessSummary->summary, null, false);
 $currentYear = date("Y");
+
+/*test data
+$businessSummary->socialImpact = ["education"];
+$businessSummary->envImpact = ["climateChangeReduction"];
+$businessSummary->personalRole = "CEO";
+$businessSummary->personalExpertise = "CEO stuff";
+test data*/
 
 ?>
 <div class="businessSummary anonymous">
@@ -108,7 +115,25 @@ $currentYear = date("Y");
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
             <h4><?php echo $this->exst( $businessSummary->slogan, null, false ); ?></h4>
+        </div>    
+    </div>
+    <div class="row">
+<?php
+    if ( $tmpsummary )
+    {
+?>
+        <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+            <h3 class="text-uppercase"><?php _e('In a few words', 'bidxplugin')?></h3>
+            <div>
+<?php
+                echo $tmpsummary;
+?>
+            </div>
         </div>
+
+<?php
+    }
+?>  
     </div>
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
@@ -143,8 +168,11 @@ $currentYear = date("Y");
                     => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' ),
 
                 __('Industry','bidxplugin')
-                    => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry')
+                    => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry'),
 
+                __('Social impact','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->socialImpact), ', ', 'socialImpact' ),
+                    
+                __('Environmental impact','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->envImpact), ', ', 'envImpact' )
             );
 ?>
 
@@ -158,6 +186,160 @@ $currentYear = date("Y");
                 <h4>Has attachment</h4>
 <?php
             }
+?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+<?php
+            $rowValues = array
+            (
+                __('Role of the entrepreneur','bidxplugin') => $this->exst($businessSummary->personalRole, null, false),
+                __('Expertise of the entrepreneur','bidxplugin') => $this->exst($businessSummary->personalExpertise, null, false)
+            );
+
+            if ( $this->checkEmpty( $rowValues ) ) :
+?>
+                <h3 class="text-uppercase"><?php _e('The Team', 'bidxplugin')?></h3>
+<?php
+                echo $this->tableRow ( $rowValues );
+            endif;
+
+            if ( $this->exst( $businessSummary->managementTeam ) ) :
+?>
+            <h4 class="text-uppercase"><?php echo _e('Supporting members of management team', 'bidxplugin')?></h4>
+            <table class="table table-bottom-border">
+<?php
+            foreach ( $businessSummary->managementTeam as $key => $member)
+            {
+?>
+                <tr><td>
+                <div class="media team-member">
+<?php
+                    if ( $member->profilePicture->document )
+                    {
+?>
+                        <div class="bidx-profilepicture pull-left team-picture">
+                            <div class="img-cropper">
+                                <img src="<?php echo $member->profilePicture->document ?>" alt="">
+                            </div>
+                        </div>
+<?php
+                    }
+                    else
+                    {
+?>
+                        <div class="pull-left">
+                            <div class="icons-rounded pull-left"><i class="fa fa-user text-primary-light"></i></div>
+                        </div>
+<?php
+                    }
+?>
+                    <div class="media-body">
+                        <div class="media-heading">
+                            <strong><?php echo $member->firstName . ' ' . $member->lastName; ?></strong>
+<?php
+                            if ( $member->linkedIn ) :
+?>
+                                <div class="team-linkedin pull-right">
+                                    <a target="_blank" class="btn btn-linkedin btn-xs" href="<?php echo $member->linkedIn; ?>">
+                                        <i class="fa fa-linkedin-square"></i>
+                                        <?php echo _e('LinkedIn', 'bidxplugin')?> </a>
+                                </div>
+<?php
+                            endif;
+?>
+                        </div>
+                        <div class="media-body">
+                            <div class="team-role">
+                                <em><?php echo $member->role; ?></em>
+                            </div>
+                            <div class="team-expert">
+                                <?php echo $member->expertise; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </td></tr>
+<?php
+            }
+?>
+            </table>
+<?php
+            endif;
+?>
+        </div>
+    </div>
+
+    <div class="row">
+<?php
+        if ( $this->exst( $company )) 
+        {
+        $countryOperationSpecifics = isset ($company->countryOperationSpecifics) ? $company->countryOperationSpecifics : NULL;
+?>
+        <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+            <h3 class="text-uppercase"><?php _e('Company Details', 'bidxplugin')?></h3>
+<?php
+                $companyWebsite = null;
+
+                if ( $this->exst( $company->website ) ) {
+                    $companyWebsite = sprintf( '<a href="%1$s" target="_blank">%1$s</a>', $this->exst($company->website) );
+                }
+
+                if ( !empty( $company->registered ) )
+                {
+                    $statutoryAddress = $this->exst( $company->statutoryAddress );
+
+                    $arStatutoryAddress = array();
+                    if ( $this->exst( $statutoryAddress->streetNumber ) ) { $arStatutoryAddress[] = $statutoryAddress->streetNumber; }
+                    if ( $this->exst( $statutoryAddress->street ) )       { $arStatutoryAddress[] = $statutoryAddress->street . ', '; }
+                    if ( $this->exst( $statutoryAddress->postalCode ) )   { $arStatutoryAddress[] = $statutoryAddress->postalCode; }
+                    if ( $this->exst( $statutoryAddress->neighborhood ) ) { $arStatutoryAddress[] = $statutoryAddress->neighborhood; }
+
+                    $arStatutoryCityCountry = array();
+                    if ( $this->exst( $statutoryAddress->country ) )      { $arStatutoryCityCountry[] = $this->getStaticVal( 'country', $statutoryAddress->country ); }
+                    if ( $this->exst( $statutoryAddress->cityTown ) )     { $arStatutoryCityCountry[] = $statutoryAddress->cityTown; }
+
+                }
+
+            $rowValues = array
+            (
+                __('Company name','bidxplugin') => $this->exst($company->name),
+                __('Company website','bidxplugin') => $companyWebsite,
+                __('Registered','bidxplugin') => $this->exst($company->registered) == true ? __('Yes','bidxplugin') : __('No','bidxplugin'),
+                __('Legal form of business','bidxplugin') => $this->getStaticVal( 'legalForm', $this->exst($company->legalFormBusiness) ),
+                __('Registration number','bidxplugin') => $this->exst($company->registrationNumber),
+                __('Fiscal number','bidxplugin') => $this->exst($company->fiscalNumber),
+                __('Date of registration','bidxplugin') => $this->exst($company->dateCompanyEstab),
+                __('Permanent female employees','bidxplugin') => $this->exst($company->numPermFemaleEmpl ),
+                __('Permanent male employees','bidxplugin') => $this->exst($company->numPermMaleEmpl ),
+                __('Temporary female employees','bidxplugin') => $this->exst($company->numTempFemaleEmpl ),
+                __('Temporary male employees','bidxplugin') => $this->exst($company->numTempMaleEmpl ),
+                __('Statutory country, city','bidxplugin') => $arStatutoryCityCountry ? implode( ', ', $arStatutoryCityCountry ) : NULL,
+                __('Statutory address','bidxplugin') => $arStatutoryAddress ? implode( ' ', $arStatutoryAddress ) : NULL
+            );
+
+            if ( $this->checkEmpty( $rowValues ) ) :
+                echo $this->tableRow ( $rowValues );
+            endif;
+
+            if ( $countryOperationSpecifics )
+            {
+                $header = array (
+                    __('Country','bidxplugin') => 'country',
+                    __('Company trade name','bidxplugin') => 'companyTradeName',
+                    __('Permit or licences','bidxplugin') => 'permitsLicencesObtained',
+                    __('Company Address','bidxplugin') => 'companyAddress'
+                );
+
+                $countryOperationSpecificsHtml = $this->addTableRows( $header, $countryOperationSpecifics, 'table table-bordered table-company', '', array('permitsLicencesObtained' => 'hidden-xs'), array( 'permitsLicencesObtained', 'country', 'companyAddress' ) );
+
+                $rowValues = array ( __('Country Operation Specifics','bidxplugin') => $countryOperationSpecificsHtml );
+
+                echo $this->addRowsWithLabelBelow ( 'col-sm-12', 'col-sm-12', $rowValues, array ( 'tag_label' => 'h4', 'class_label' => 'text-uppercase' ) );
+            }
+        }
 ?>
         </div>
     </div>
