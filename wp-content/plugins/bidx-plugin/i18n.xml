@@ -203,6 +203,7 @@
     <Item value="entrepreneur">Entrepreneur</Item>
     <Item value="mentor">Mentor</Item>
     <Item value="member">Member</Item>
+    <Item value="connected"> Connected </Item>
 
     <Item value="facet_industry">Industry</Item>
     <Item value="facet_country">Country</Item>

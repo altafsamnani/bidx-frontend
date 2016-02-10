@@ -855,7 +855,7 @@
                                                             });
                                                         }
 
-                                                        totalRow = json.data.numFound;
+                                                        totalRow = docs.total;
 
                                                         return resultArr;
                                                     }
@@ -1039,7 +1039,7 @@
                         roleProfilecount = roleProfilecount + item.count;
                     }
                 }
-            } );
+            });
 
             /* No Profile Count */
             labelNoCount        =   bidx.i18n.i( 'memberOnlyLbl', appName );

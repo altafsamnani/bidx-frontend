@@ -1,46 +1,38 @@
 <div id="expressform" class="col-sm-6 col-sm-offset-3 well">
-	<form id="formexpressform">
+<form id="formexpressform">
 
         <fieldset>
             <legend><?php echo _e('Personal details', 'bidxplugin')?></legend>
             <div>
             <h1 id="fb-welcome"></h1>
-            <div class="form-group">
-                <div class="col-sm-6">
+            <div class="form-group col-sm-6">
                     <label><?php echo _e('First name','bidxplugin') ?></label>
                     <input type="text" class="form-control" name="firstName" placeholder="<?php echo _e('Enter your first name','bidxplugin') ?>"/>
-                </div>
             </div>
 
-            <div class="form-group">
-                <div class="col-sm-6">
+            <div class="form-group col-sm-6">
                     <label><?php echo _e('Last name','bidxplugin') ?></label>
                     <input type="text" class="form-control" name="lastName" placeholder="<?php echo _e('Enter your last name','bidxplugin') ?>"/>
+            </div>
+
+            <div class="form-group col-sm-6 clear-both">
+                <label><?php _e('Gender','bidxplugin'); ?></label>
+                <div class="radio">
+                    <input type="radio" value="m" id="radio-personalDetailsM" name="gender" data-toggle="radio">
+                    <label for="radio-personalDetailsM"><span></span>Male</label>
+                </div>
+
+                <div class="radio checked">
+                    <input type="radio" value="f" id="radio-personalDetailsF" name="gender" data-toggle="radio" checked="checked">
+                    <label for="radio-personalDetailsF"><span></span>Female</label>
                 </div>
             </div>
 
-            <div class="form-group clear-both">
-                <div class="col-sm-6">
-                    <label><?php _e('Gender','bidxplugin'); ?></label>
-                    <div class="radio">
-                        <input type="radio" value="m" id="radio-personalDetailsM" name="gender" data-toggle="radio">
-                            <label for="radio-personalDetailsM"><span></span>Male</label>
-                    </div>
-
-                    <div class="radio checked">
-                        <input type="radio" value="f" id="radio-personalDetailsF" name="gender" data-toggle="radio" checked="checked">
-                            <label for="radio-personalDetailsF"><span></span>Female</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-sm-6">
-                	<label><?php echo _e('Mobile number','bidxplugin') ?></label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-tablet"></i></span>
-                        <input type="tel" class="form-control" name="phone" placeholder="<?php echo _e('Enter your mobile number','bidxplugin') ?>"/>
-                    </div>
+            <div class="form-group col-sm-6">
+                <label><?php echo _e('Mobile number','bidxplugin') ?></label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-tablet"></i></span>
+                    <input type="tel" class="form-control" name="phone" placeholder="<?php echo _e('Enter your mobile number','bidxplugin') ?>"/>
                 </div>
             </div>
         </div>
@@ -49,7 +41,8 @@
         <br>
         <fieldset>
             <legend><?php echo _e('Business details','bidxplugin') ?></legend>
-            <div class="form-group">
+
+            <div class="form-group">                                
                 <!-- Logo -->
                 <div class="col-sm-6 bsLogo">
                     <label><?php _e('Logo','bidxplugin'); ?></label>
@@ -76,7 +69,7 @@
                                 echo do_shortcode( '[bidx app="media"]' );
                             ?>
                                 </div>
-
+                                                
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></button>
                                     <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
@@ -85,23 +78,21 @@
                         </div>
                     </div>
             </div>
-
+            
             <!-- Name -->
-            <div class="form-group">
-                <div class="col-sm-6">
-                    <label><?php _e('Name of your business','bidxplugin'); ?></label>
-                    <input type="text" class="form-control" name="bpname">
-                </div>
+            <div class="form-group clear-both">
+                <label><?php _e('Name of your business','bidxplugin'); ?></label>
+                <input type="text" class="form-control" name="bpname" placeholder="<?php echo _e('Enter the name of your business', 'bidxplugin') ?>">
             </div>
 
             <div class="form-group clear-both">
                 <label><?php _e('Describe your business ','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 900 characters)','bidxplugin'); ?></small></label>
-                <textarea name="description" class="form-control"></textarea>
+                <textarea name="description" class="form-control" placeholder="<?php echo _e('Enter the description of your business', 'bidxplugin'); ?>"></textarea>
             </div>
 
             <div class="form-group">
                 <label><?php _e('City','bidxplugin'); ?></label>
-                <input type="text" class="form-control" name="city">
+                <input type="text" class="form-control" name="city" placeholder="<?php echo _e('Enter the location of your business', 'bidxplugin') ?>">
             </div>
 
             <div id="industrySectors">
@@ -116,9 +107,9 @@
                 </div>
             </div>
 
-            <div class="form-group clear-both">
+            <div class="clear-both">
                 <div class="col-sm-6">
-                	<label><?php echo _e('Revenues','bidxplugin') ?></label><br>
+                <label><?php echo _e('Revenues','bidxplugin') ?></label><br>
 
                     <div class="form-group">
                         <label>2012</label>
@@ -161,10 +152,10 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
+            <div>
                 <div class="col-sm-6">
-                	<label><?php echo _e('Employees','bidxplugin') ?></label><br>
-
+                <label><?php echo _e('Employees','bidxplugin') ?></label><br>
+                    
                     <div class="form-group">
                         <label>2012</label>
                         <div class="input-group">
@@ -174,7 +165,7 @@
                     </div>
 
                     <div class="form-group clear-both">
-                	    <label>2013</label>
+                   <label>2013</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user"></i></span>
                             <input type="text" class="form-control text-center valid" name="employees_2013">
@@ -208,14 +199,14 @@
             </div>
 
             <div class="form-group clear-both">
-            	<label><?php echo _e('Video','bidxplugin') ?></label>
-            	<input type="file" name="video" accept="video/*" capture>
-              	<input type="submit" value="Upload">
+            <label><?php echo _e('Video','bidxplugin') ?></label>
+            <input type="file" name="video" accept="video/*" capture>
+              <input type="submit" value="Upload">
             </div>
 
         </legend>
 
         <br>
         <button id="submitform" type="submit" class="btn btn-primary" style="display: block;"><?php _e('Submit application','bidxplugin');?></button>
-	</form>
+</form>
 </div>

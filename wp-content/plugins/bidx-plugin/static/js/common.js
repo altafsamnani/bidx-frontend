@@ -2102,14 +2102,14 @@
     $( ".member" ).on( "click", "button.editProfile", function()
     {
         var editHref = $(".tab-pane.active a[href*='#edit']").first().attr( "href" );
-
+        
         window.location.href = window.location.pathname + editHref;
     });
 
     //Create Mentor
     $( ".member" ).on( "click", "button.btncreateMentor", function()
     {
-        window.location.href = window.location.pathname + "/#createMentor";
+        window.location.href = window.location.pathname + "#createMentor";
     });
 
     $( "a[data-toggle='tab']" ).click( function( e )

@@ -35,5 +35,5 @@
     <Item value="summary">Summary</Item>
     <Item value="interestedIn">Interested in</Item>
     <Item value="investorType">Investor Type</Item>
-    <Item value="paginationSnippit">Something went wrong while applying while assigning for entityId</Item>
+    <Item value="paginationSnippit">Showing records %from% to %to% of total %total%</Item>
 </I18N>
