@@ -309,13 +309,6 @@ test data*/
                 __('Company website','bidxplugin') => $companyWebsite,
                 __('Registered','bidxplugin') => $this->exst($company->registered) == true ? __('Yes','bidxplugin') : __('No','bidxplugin'),
                 __('Legal form of business','bidxplugin') => $this->getStaticVal( 'legalForm', $this->exst($company->legalFormBusiness) ),
-                __('Registration number','bidxplugin') => $this->exst($company->registrationNumber),
-                __('Fiscal number','bidxplugin') => $this->exst($company->fiscalNumber),
-                __('Date of registration','bidxplugin') => $this->exst($company->dateCompanyEstab),
-                __('Permanent female employees','bidxplugin') => $this->exst($company->numPermFemaleEmpl ),
-                __('Permanent male employees','bidxplugin') => $this->exst($company->numPermMaleEmpl ),
-                __('Temporary female employees','bidxplugin') => $this->exst($company->numTempFemaleEmpl ),
-                __('Temporary male employees','bidxplugin') => $this->exst($company->numTempMaleEmpl ),
                 __('Statutory country, city','bidxplugin') => $arStatutoryCityCountry ? implode( ', ', $arStatutoryCityCountry ) : NULL,
                 __('Statutory address','bidxplugin') => $arStatutoryAddress ? implode( ' ', $arStatutoryAddress ) : NULL
             );
