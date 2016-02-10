@@ -252,7 +252,7 @@
                 ,   labelClass:         'investorTaggingLabel'
                 ,   labelSectionClass:  'investorSectionTaggingLabel'
                 ,   buttonClass:        'investorTaggingButton'
-                ,   visibility:         'CONTACTS'
+                ,   visibility:         'GROUP_CONTACTS'
                 } );
     }
 
@@ -266,7 +266,7 @@
                 ,   labelClass:         'mentorTaggingLabel'
                 ,   labelSectionClass:  'mentorSectionTaggingLabel'
                 ,   buttonClass:        'mentorTaggingButton'
-                ,   visibility:         'MEMBERS'
+                ,   visibility:         'GROUP_MEMBERS'
                 } );
     }
 
