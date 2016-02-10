@@ -6,7 +6,7 @@
 	 <Item value="noData">No data found! How is it possible ?</Item>
 
 	 <!-- Facet Entity types -->
-    <Item value="bidxMemberProfile">Member profile</Item>
+    <Item value="member">Member profile</Item>
     <Item value="bidxBusinessSummary">Business summary</Item>
     <Item value="investor">Investor</Item>
     <Item value="entrepreneur">Entrepreneur</Item>

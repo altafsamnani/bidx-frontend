@@ -75,7 +75,22 @@ class businesssummary
             /* 3. Render Services for Initial View Display */
             $businessSummaryData    = $businessSummaryObj->getSummaryDetails( $businessSummaryId );
 
-            $competitionData        = $businessSummaryObj->isHavingCompetitionRole( $businessSummaryData->data );
+            $competitionIds = $businessSummaryData->data->bidxMeta->bidxCompetitionIds;
+
+            if (!empty($competitionIds))
+            {
+                $competitionDataArray = array();
+
+                require_once( BIDX_PLUGIN_DIR .'/../services/competition-service.php' );
+                foreach( $competitionIds as $id )
+                {
+                    $competitionObj = new CompetitionService( );
+                    $competitionData = $competitionObj->getCompetitionDetails( $id );
+                    array_push($competitionDataArray, $competitionData->data);
+                }
+
+                $competitionData        = $competitionObj->isHavingCompetitionRole( $competitionDataArray );
+            }
 
             $view->data             = $businessSummaryData->data;
 
@@ -124,6 +139,14 @@ class businesssummary
         {
             $template = 'businesssummary.phtml';
         }
+
+        //HACK for SEO
+        /*$mystring = ob_get_contents();
+        ob_end_clean();
+
+        $mystring = preg_replace('/(<title>)(.*?)(<\/title>)/', '$1' . $businessSummaryData->data->name . '$3', $mystring);
+
+        echo $mystring;*/
 
         $view->render( $template );
     }

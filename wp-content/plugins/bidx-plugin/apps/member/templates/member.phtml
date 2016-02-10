@@ -20,6 +20,8 @@ $isEntrepreneur                 = isset( $data->bidxEntrepreneurProfile ) ? $dat
 $isInvestor                     = isset( $data->bidxInvestorProfile ) ? $data->bidxInvestorProfile : NULL;
 $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bidxMentorProfile : NULL;
 $hasAccessToInvestorProfile     = ( $isInvestor && $isLoggedinMemberIsInvestor && $ownProfile ) || ( $isInvestor && $this->isLoggedInGroupOwner ) ? true : false;
+$visitedId                      = $data->member->bidxMeta->bidxMemberId;
+$showAccredit                   = ( !empty( $data->bidxInvestorProfile )  && !empty( $data->bidxMentorProfile ) && ( $visitedId !== $loggedInMemberId ) );
 // d($data);
 
 // Authorized Entrepreneur
@@ -35,8 +37,6 @@ if ( $isLoggedinMemberIsEntrepreneur && $data->authorizedBusinessSummaries ) :
         endif;
     }
 endif;
-
-
 
 ?>
 <div class="member box-border top-margin-lineheight" data-ownerid="<?php echo $memberId; ?>" >
@@ -61,7 +61,7 @@ endif;
 
         <div class="pull-left quick-action-links">
             <?php
-            if ( !empty($this->data->bidxInvestorProfile )  && !empty($this->data->bidxMentorProfile ))
+            if ( $showAccredit )
             { ?>
 
                     <label class='markLabel hide'><?php _e("Accredit","bidxplugin");?>:</label>

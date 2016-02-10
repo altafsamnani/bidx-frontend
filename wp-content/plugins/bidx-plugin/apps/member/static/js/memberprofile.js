@@ -1405,7 +1405,7 @@
 
         bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture.width", profilePictureWidth );
 
-        if ( profilePictureWidth > 90)
+        if ( profilePictureWidth >= 90)
         {
             bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture.left", cropPosition.left );
             bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture.top", cropPosition.top );

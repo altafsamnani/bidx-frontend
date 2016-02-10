@@ -1024,6 +1024,23 @@
         );
     };
 
+    var groupRoles = function()
+    {
+        var roles = ""
+        ,   hasEntrepreneurProfile      = bidx.common.getEntrepreneurProfileId() ? true : false
+        ,   hasInvestorProfile          = bidx.common.getInvestorProfileId() ? true : false
+        ,   hasMentorProfile            = bidx.common.getMentorProfileId() ? true : false
+        ;
+
+        if ( hasEntrepreneurProfile ) { roles = roles + bidx.i18n.i( "strEntrepreneur" ); }
+        if ( hasInvestorProfile ) { roles = roles + bidx.i18n.i( "strInvestor" ); }
+        if ( hasMentorProfile ) { roles = roles + bidx.i18n.i( "strMentor" ); }
+
+        roles = roles.substring(0, roles.length - 2);
+
+        return roles;
+    }
+
     _oneTimeSetup();
 
     //expose
@@ -1041,6 +1058,7 @@
                 ,   delegateActions:                    delegateActions
                 ,   checkForActivities:                 checkForActivities
                 ,   showUserBusinesses:                 showUserBusinesses
+                ,   groupRoles:                         groupRoles
                 ,   start:                              start
             };
 

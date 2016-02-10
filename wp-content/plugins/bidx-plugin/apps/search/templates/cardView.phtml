@@ -217,13 +217,13 @@
         <script type="text/html" id="bulk-listitem">
             <div class="cardContent main-padding">
                 <div class="row">
-                    <div class="col-sm-1 hide">
+                    <div class="col-sm-1">
                         <div class="checkbox">
                             <input type="checkbox" value="1" id="selectAll" name="selectAll" />
                             <label for="checkbox-%bidxEntityId%"><span></span></label>
                         </div>
                     </div>
-                     <div class="col-sm-6 hide">
+                     <div class="col-sm-6">
                         <div class="pull-left">
                             <select name="bulk">
                                 <option value=''><?php _e('  --Select Bulk actions--  ', 'bidxplugin')?> </option>
@@ -250,7 +250,6 @@
                     <div class="cardTop">
                         <div class="row">
                             <div class="col-sm-1 checkboxBulk hide">
-
                                 <div class="checkbox">
                                     <input type="checkbox" data-name = "%name%" value="%userId%" id="checkbox_%userId%" name="actionRecord" />
                                     <label for="checkbox-%userId%"><span></span></label>
@@ -264,7 +263,8 @@
 
                             <div class="col-sm-9">
                                 <div class="pull-left searchBTitle">
-                                    <h3 class="top-0 pull-left">%title%
+                                    <h3 class="top-0 pull-left">
+                                        <a href="<?php echo _l('businesssummary');?>/%entityId%">%title%</a>
                                         <small>&nbsp; <?php _e('by', 'bidxplugin');?>&nbsp;<a href="<?php echo _l('member');?>/%userId%">%name%</a></small>
                                     </h3>
                                     <div class="rating-wrapper pull-right">
@@ -304,7 +304,6 @@
                     <div class="cardTop">
                         <div class="row">
                             <div class="col-sm-1 checkboxBulk hide">
-
                                 <div class="checkbox">
                                     <input type="checkbox" data-name = "%name%" value="%userId%" id="checkbox-%userId%" name="actionRecord" />
                                     <label for="checkbox-%userId%"><span></span></label>
@@ -318,7 +317,9 @@
                             <div class="col-sm-9">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <h3 class="top-0 pull-left">%name%</h3>
+                                        <h3 class="top-0 pull-left">
+                                            <a href="<?php echo _l('member');?>/%userId%">%name%</a>
+                                        </h3>
                                         <div class="">
                                             <span class="label bidx-label bidx-entrepreneur">%role_entrepreneur%</span>
                                             <span class="label bidx-label bidx-mentor">%role_mentor%</span><i class="fa fa-mentor"></i>

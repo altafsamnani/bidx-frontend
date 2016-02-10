@@ -122,6 +122,7 @@ class BidxShortcode
 
             $exec = self::$mapping[$appname];
             Logger :: getLogger ('shortcode')->trace ("Invoking bidX app '" . $appname . "'.");
+
             return $exec -> load ($atts);
         } else {
             Logger :: getLogger ('shortcode')->trace ("bidX app '" . $appname . "' does not exist.");

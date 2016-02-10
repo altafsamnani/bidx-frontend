@@ -162,19 +162,16 @@
     {
         var tmp;
 
-        if (authItems)
+        $.each( authItems, function( id, item )
         {
-            $.each( authItems, function( id, item )
+            $.each( item.authorizations, function( id, auth )
             {
-                $.each( item.authorizations, function( id, auth )
+                if ( req.request.mentorId === auth.user.id )
                 {
-                    if ( req.request.mentorId === auth.user.id )
-                    {
-                        tmp = auth.user;
-                    }
-                });
+                    tmp = auth.user;
+                }
             });
-        }
+        });
 
         return tmp;
     }
@@ -1348,23 +1345,6 @@
         } );
     };
 
-    function groupRoles()
-    {
-        var roles = ""
-        ,   hasEntrepreneurProfile      = bidx.common.getEntrepreneurProfileId() ? true : false
-        ,   hasInvestorProfile          = bidx.common.getInvestorProfileId() ? true : false
-        ,   hasMentorProfile            = bidx.common.getMentorProfileId() ? true : false
-        ;
-
-        if ( hasEntrepreneurProfile ) { roles = roles + "Entrepreneur, "; }
-        if ( hasInvestorProfile ) { roles = roles + "Investor, "; }
-        if ( hasMentorProfile ) { roles = roles + "Mentor, "}
-
-        roles = roles.substring(0, roles.length - 2);
-
-        return roles;
-    }
-
 
     // Convenience function for retrieving the id of the current group
     //
@@ -2021,7 +2001,6 @@
     ,   getSessionValue:                getSessionValue
     ,   getNow:                         getNow
     ,   getCurrentLanguage:             getCurrentLanguage
-    ,   groupRoles:                     groupRoles
 
     ,   addAppWithPendingChanges:       addAppWithPendingChanges
     ,   removeAppWithPendingChanges:    removeAppWithPendingChanges

@@ -34,6 +34,7 @@
     ,   $btnApply                   = $element.find( ".btn-apply")
 
     ,   $appliedCount               = $element.find( "#appliedcount" )
+    ,   $submittedCount             = $element.find( "#submittedcount" )
 
     ,   $btnPhase                   = $element.find( ".btn-phase" )
     ,   $btnEndPhase                = $element.find( ".endPhase" )
@@ -803,7 +804,7 @@
             ,   {
                     groupDomain: bidx.common.groupDomain
                 ,   data: {
-                                "searchTerm"    :   "basic:" + criteriaQ
+                                "searchTerm"    :   "basic:" + criteriaQ + "*"
                             ,   "sort"          :   []
                             ,   "maxResult"     :   CONSTANTS.SEARCH_LIMIT
                             ,   "offset"        :   CONSTANTS.OFFSET
@@ -818,11 +819,11 @@
                         {
                             matches.push(
                             {
-                                value: item.member.name
-                            ,   id:    item.member.userId
+                                value: item.properties.name
+                            ,   id:    item.properties.userId
                             });
 
-                            actorArr[item.member.userId] = item.member; // Store at global array for later use
+                            actorArr[item.properties.userId] = item.member; // Store at global array for later use
                         });
 
                         $d.resolve( matches  );
@@ -3513,7 +3514,6 @@ function _competitionTimer (  )
                             _displayButtonsAccordingToStatus( $listItem, response.data, row );
 
                             _loadActorDropdownAccordingToStatus( $listItem, response.data);
-
                         }
         });
 
@@ -3746,7 +3746,6 @@ function _competitionTimer (  )
                             $cardHeaderStatus.i18nText(status, appName);
 
                              _showAllView('successCard' + entityId );
-
                         }
         });
 
@@ -3782,6 +3781,8 @@ function _competitionTimer (  )
                             $cardInfoText.i18nText('withdrawText', appName);
 
                             $cardHeaderStatus.i18nText(status, appName);
+
+                            $submittedCount.text( parseInt($submittedCount.html(), 10) + 1 );
 
                             _showAllView('successCard' + entityId );
                         }
@@ -3822,6 +3823,7 @@ function _competitionTimer (  )
 
                             _showAllView('successCard' + entityId );
 
+                            $submittedCount.text( parseInt($submittedCount.html(), 10) - 1 );
                         }
         });
     }

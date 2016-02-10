@@ -11,29 +11,31 @@ $competition    = $this->data;
 $competitionBidxMeta = isset($competition->bidxMeta)
     ? $competition->bidxMeta
     : null;
-
-foreach($competition->applications as $application)
+if( isset( $competition->applications ) )
 {
-    $bidxMeta   =   $application->bidxMeta;
-
-    if( $application->status === 'WINNER')
+    foreach($competition->applications as $application)
     {
-        $winnerHtml =  str_replace("%entityId%", $application->id , $snippet);
-        $winnerHtml =  str_replace("%bidxEntityDisplayName%", $bidxMeta->bidxEntityDisplayName , $winnerHtml);
-        $winnerHtml =  str_replace("%bidxOwnerId%", $bidxMeta->bidxOwnerId , $winnerHtml);
-        $winnerHtml =  str_replace("%bidxOwnerDisplayName%", $bidxMeta->bidxOwnerDisplayName , $winnerHtml);
+        $bidxMeta   =   $application->bidxMeta;
 
-        $winnerDisplay .= $winnerHtml;
-    }
+        if( $application->status === 'WINNER')
+        {
+            $winnerHtml =  str_replace("%entityId%", $application->id , $snippet);
+            $winnerHtml =  str_replace("%bidxEntityDisplayName%", $bidxMeta->bidxEntityDisplayName , $winnerHtml);
+            $winnerHtml =  str_replace("%bidxOwnerId%", $bidxMeta->bidxOwnerId , $winnerHtml);
+            $winnerHtml =  str_replace("%bidxOwnerDisplayName%", $bidxMeta->bidxOwnerDisplayName , $winnerHtml);
 
-    if( $application->status === 'FINALIST')
-    {
-        $finalistHtml =  str_replace("%entityId%", $application->id , $snippet);
-        $finalistHtml =  str_replace("%bidxEntityDisplayName%", $bidxMeta->bidxEntityDisplayName , $finalistHtml);
-        $finalistHtml =  str_replace("%bidxOwnerId%", $bidxMeta->bidxOwnerId , $finalistHtml);
-        $finalistHtml =  str_replace("%bidxOwnerDisplayName%", $bidxMeta->bidxOwnerDisplayName , $finalistHtml);
+            $winnerDisplay .= $winnerHtml;
+        }
 
-        $finalistDisplay .= $finalistHtml;
+        if( $application->status === 'FINALIST')
+        {
+            $finalistHtml =  str_replace("%entityId%", $application->id , $snippet);
+            $finalistHtml =  str_replace("%bidxEntityDisplayName%", $bidxMeta->bidxEntityDisplayName , $finalistHtml);
+            $finalistHtml =  str_replace("%bidxOwnerId%", $bidxMeta->bidxOwnerId , $finalistHtml);
+            $finalistHtml =  str_replace("%bidxOwnerDisplayName%", $bidxMeta->bidxOwnerDisplayName , $finalistHtml);
+
+            $finalistDisplay .= $finalistHtml;
+        }
     }
 }
 
@@ -101,11 +103,11 @@ if ( !(isset($competition->competitionLogo) && isset($competition->competitionLo
             }
 ?>
                 <div class="col-sm-3">
-                    <div class="participants-number"><?php echo $competition->finalistCount == null ? "-" : $competition->finalistCount ;?></div>
+                    <div class="participants-number"><?php echo !isset($competition->finalistCount) ? "-" : $competition->finalistCount ;?></div>
                     <div class="participants-state"><?php echo _e( 'Finalists', 'bidxplugin' ); ?></div>
                 </div>
                 <div class="col-sm-3">
-                    <div class="participants-number"><?php echo $competition->winnerCount == null ? "-" : $competition->winnerCount ;?></div>
+                    <div class="participants-number"><?php echo !isset($competition->winnerCount) ? "-" : $competition->winnerCount ;?></div>
                     <div class="participants-state"><?php echo _e( 'Winners', 'bidxplugin' ); ?></div>
                 </div>
             </div>
