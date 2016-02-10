@@ -2624,26 +2624,28 @@
                 ,   mentorTaggingId
                 ,   investorTaggingId
                 ,   roleLabel
+                ,   contact
                 ,   contactStatus
                 ;
 
-                i18nItem        = response.properties;
-                $entityElement  = $("#member-profile-listitem");
-                snippit         = $entityElement.html().replace(/(<!--)*(-->)*/g, "");
-                $elImage        = $entityElement.find( "[data-role = 'memberImage']" );
+                i18nItem        =   response.properties;
+                $entityElement  =   $("#member-profile-listitem");
+                snippit         =   $entityElement.html().replace(/(<!--)*(-->)*/g, "");
+                $elImage        =   $entityElement.find( "[data-role = 'memberImage']" );
 
-                roles           = bidx.utils.getValue( response, "roles" );
-                isEntrepreneur  = ( $.inArray("entrepreneur", roles) !== -1 || $.inArray("entrepreneur", roles) !== -1 ) ? true : false;
-                isMentor        = ( $.inArray("mentor", roles) !== -1 || $.inArray("mentor", roles) !== -1 ) ? true : false;
-                isInvestor      = ( $.inArray("investor", roles) !== -1 || $.inArray("investor", roles) !== -1 ) ? true : false;
-                contactStatus   = bidx.utils.getValue( response, 'contact.status');
+                roles           =   bidx.utils.getValue( response, "roles" );
+                isEntrepreneur  =   ( $.inArray("entrepreneur", roles) !== -1 || $.inArray("entrepreneur", roles) !== -1 ) ? true : false;
+                isMentor        =   ( $.inArray("mentor", roles) !== -1 || $.inArray("mentor", roles) !== -1 ) ? true : false;
+                isInvestor      =   ( $.inArray("investor", roles) !== -1 || $.inArray("investor", roles) !== -1 ) ? true : false;
+                contact         =   bidx.utils.getValue( response, 'contact');
+                contactStatus   =   bidx.utils.getValue( contact, 'status');
 
-                investorMemberId = bidx.utils.getValue( i18nItem, "userId" );
+                investorMemberId =  bidx.utils.getValue( i18nItem, "userId" );
 
                // cityTown         = bidx.utils.getValue( i18nItem, "cityTown");
-                memberCountry    = bidx.utils.getValue( i18nItem, "country");
+                memberCountry    =  bidx.utils.getValue( i18nItem, "country");
 
-                bidx.utils.log('i18ntime', i18nItem);
+                bidx.utils.log('contactStatus', contactStatus);
                 // Member Role
                 //
                 if(i18nItem.highestEducation)
@@ -2717,7 +2719,7 @@
                     .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
                     .replace( /%role_investor%/g,       ( isInvestor && displayInvestorProfile )    ? bidx.i18n.i( 'investor' )   : '' )
                     .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
-                    .replace( /%contact%/g,             ( contactStatus === 'CONNECTED' )  ? bidx.i18n.i( 'connected' )   : '' )
+                    .replace( /%contact%/g,             ( contactStatus )   ? bidx.i18n.i( contactStatus ) : ''  )
                     .replace( /%gender%/g,              i18nItem.gender     ? gender    : emptyVal )
                     .replace( /%highestEducation%/g,    i18nItem.highestEducation   ? highestEducation    : emptyVal )
                     .replace( /%language%/g,            allLanguages )
