@@ -25,7 +25,6 @@
     ,   $referencesContainer            = $editForm.find( ".referencesContainer" )
     ,   $btnSave
     ,   $btnCancel
-
         // Attachnents
         //
     ,   $attachmentsControl                 = $editForm.find( ".attachmentsControl" )
