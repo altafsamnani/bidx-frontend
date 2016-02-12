@@ -1850,7 +1850,7 @@
             bidx.controller.updateHash( "#search/list" );
 
             //Disregard any keyword typed in inputbox
-            bidx.utils.setValue( globalCriteria, 'searchTerm', 'basic:*' );
+            bidx.utils.setValue( globalCriteria, 'searchTerm', '*' );
 
             $body.find(".form-q").val('');
 
@@ -1947,7 +1947,7 @@
         entityType          =  ( globalEntityType )  ?   globalEntityType  :   CONSTANTS.ENTITY_TYPES;
 
         searchCriteria  =   {
-                                searchTerm  :   "basic:" + searchTerm
+                                searchTerm  :   searchTerm
                             ,   entityType  :   entityType
                             ,   sort        :   sort
                             ,   maxResult   :   tempLimit
@@ -2051,7 +2051,7 @@
 
                     if( !total  ) // If there is no result found then clear the input text value clear it and reset the search
                     {
-                        bidx.utils.setValue( globalCriteria, 'searchTerm', 'basic:*' );
+                        bidx.utils.setValue( globalCriteria, 'searchTerm', '*' );
 
                         $body.find(".form-q").val('');
                     }
