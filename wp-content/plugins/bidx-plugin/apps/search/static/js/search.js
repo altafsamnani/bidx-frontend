@@ -111,6 +111,7 @@
                                                 ,   "planFinancingNeeded" // Range filters
 
                                                 ,   "memberHasProfilePicture" // Boolean options
+                                                ,   "memberHasAttachment"
                                                 ,   "planMentorRequired" // Boolean options
                                                 ,   "memberHasFacebook" // Boolean options
                                                 ,   "memberHasLinkedin" // Boolean options
@@ -122,6 +123,7 @@
                                                 ,   "created"   // Range filters
                                                 ,   "modified" // Range filters
                                                 ,   "planHasLogo" // Boolean options
+                                                ,   "planHasAttachment" // Boolean options
                                                 ,   "planHasVideoPitch" // Boolean options
                                                 ,   "planHasAudioPitch" // Boolean options
                                                 ,   "hasAttachment" // Boolean options
@@ -519,17 +521,24 @@
 
     };
 
-    function _doBulk( options )
+    function _doBulk( response )
     {
-        if( isGroupAdminOwner )
+        var responseLength  =   _.size( response.found )
+        ;
+
+        if( isGroupAdminOwner && responseLength )
         {
-            var snippitBulk =   $("#bulk-listitem").html().replace(/(<!--)*(-->)*/g, "")
+            var snippitBulk
+            ,   snippit     =   $("#bulk-listitem").html().replace(/(<!--)*(-->)*/g, "")
             ,   $list       =   $element.find(".bulk-list")
             ,   $checkBoxes =   $element.find(".checkboxBulk")
             ,   $listBulkItem
+            ,   isTop       =   $list.hasClass('top')
             ;
-
+            bidx.utils.log('responseLength', responseLength );
             $list.empty();
+
+            snippitBulk     =   snippit.replace( /%pos%/g, (isTop) ? 'top' : 'bottom' );
 
             $listBulkItem   =   $( snippitBulk );
 
@@ -538,8 +547,10 @@
             $list.find( "[name='bulk']" ).bidx_chosen();
 
             _showAllView( "bulk" );
-
-
+        }
+        else
+        {
+            _hideView( "bulk" );
         }
     }
 
@@ -786,6 +797,7 @@
         ,   $selectAllCheckbox      =   $element.find( "[name='selectAll']" )
         ,   $selectRecordCheckbox   =   $element.find( "[name='actionRecord']")
         ,   $btnApply               =   $element.find( "[name='apply']")
+        ,   $btnBulk                =   $element.find( "[name='bulk']")
         ,   lengthActionRecord      =   $selectRecordCheckbox.length
         ,   $this
         ,   recipientVal
@@ -797,6 +809,7 @@
         ,   lengthResult
         ,   countResult
         ,   findMember
+        ,   btnBulkValue
         ;
 
         $btnApply.click (function ( )
@@ -824,26 +837,51 @@
 
         });
 
+        $btnBulk.change(function( )
+        {
+            $this               =   $(this);
+            btnBulkValue        =    $this.val();
+            $btnBulk.val( btnBulkValue );
+            $btnBulk.bidx_chosen();
+            $actionRecord       =   $( "[name='actionRecord']:checked" );
+            actionRecordLength  =   $actionRecord.length;
+
+            if( actionRecordLength && btnBulkValue)
+            {
+                $btnApply.removeClass('disabled');
+            }
+            else
+            {
+                $btnApply.addClass('disabled');
+            }
+        });
+
+
         $selectRecordCheckbox.change(function( )
         {
             checkMember         =   true;
 
             selectAllCheckbox   =   false;
 
+            btnBulkValue        =   $btnBulk.val();
+
             $actionRecord       =   $( "[name='actionRecord']:checked" );
 
             actionRecordLength  =   $actionRecord.length;
 
+            $this               =   $(this);
 
-            $this           =   $(this);
-            recipientVal    =   parseInt( $this.val( ) );
-            recipientName   =   $this.data('name');
-            isChecked       =   $this.is(":checked");
-            selectedMember  =   {
-                                    id:     recipientVal
-                                ,   name:   recipientName
-                                };
-            findMember      =   _.findWhere(selectedMembers, {id: recipientVal});
+            recipientVal        =   parseInt( $this.val( ) );
+
+            recipientName       =   $this.data('name');
+
+            isChecked           =   $this.is(":checked");
+
+            selectedMember      =   {
+                                        id:     recipientVal
+                                    ,   name:   recipientName
+                                    };
+            findMember          =   _.findWhere(selectedMembers, {id: recipientVal});
 
             if( isChecked )
             {
@@ -864,7 +902,10 @@
                         selectAllCheckbox   =   true;
                     }
 
-                    $btnApply.removeClass('disabled');
+                    if (btnBulkValue)
+                    {
+                        $btnApply.removeClass('disabled');
+                    }
                 }
                 else
                 {
@@ -885,10 +926,11 @@
 
             lengthResult    =   $actionRecord.length;
 
-            countResult     =   1;
-            var testCount  =1;
+            btnBulkValue    =   $btnBulk.val();
 
-            if(allChecked)
+            countResult     =   1;
+
+            if(allChecked && btnBulkValue)
             {
                 $btnApply.removeClass('disabled');
             }
@@ -919,7 +961,6 @@
                                             };
 
                         selectedMembers.push( selectedMember );
-                        testCount++;
                     }
                 }
                 else
@@ -944,10 +985,6 @@
 
                 countResult++;
             });
-
-
-            bidx.utils.log('testCount', testCount);
-            bidx.utils.log('selectedMembers', selectedMembers);
         });
 
     }
@@ -977,13 +1014,8 @@
                 ,   rangeFiltersCat     =   ( !$.isEmptyObject( rangeFilters ) && !$.isEmptyObject(rangeFilters.clickedCategory))   ? rangeFilters.clickedCategory : []
                 ;
 
-                bidx.utils.log('Criteria before click=', globalCriteria);
-                bidx.utils.log('clickedCategory=', clickedCategory);
-                bidx.utils.log('filterValue=', filterValue);
-
                 if ( rangeFiltersCat )
                 {
-                    bidx.utils.log('criteria removed' , rangeFiltersCat);
                     delete globalCriteria.rangeFilters[clickedCategory].min;
                     delete globalCriteria.rangeFilters[clickedCategory].max;
 
@@ -999,10 +1031,6 @@
 
                 //set the max records limit to 10
                 tempLimit = CONSTANTS.SEARCH_LIMIT;
-
-                bidx.utils.log('Filter clicked with q=', globalCriteria.searchTerm);
-                bidx.utils.log('Filter sort=', globalCriteria.sort);
-                bidx.utils.log('Filter criteria=', globalCriteria.rangeFilters);
 
                 _callSearchAction();
                /* navigate(
@@ -1376,8 +1404,6 @@
         {
            //  pickerOptions.container     =   '#picker-container-from-' + facetItem;
         }
-
-        bidx.utils.log('pickerOptions', pickerOptions);
 
         $calendarFrom.datepicker( pickerOptions );
 
@@ -1805,43 +1831,45 @@
         }
     }
 
+    function _reset( $listAnchor )
+    {
+        var criteria    =   {}
+        ,   options     =   {}
+        ;
+
+        //$resetFacet.addClass( "hide" );
+        //
+        $listAnchor.unbind("click").on('click', function( e )
+        {
+            e.preventDefault();
+            criteria.facetFilters   =   [];
+            options.q               =   '';
+            options.sort            =   [];
+            globalCriteria          =   {};
+            paging.search.offset    =   0;
+            bidx.controller.updateHash( "#search/list" );
+
+            //Disregard any keyword typed in inputbox
+            bidx.utils.setValue( globalCriteria, 'searchTerm', 'basic:*' );
+
+            $body.find(".form-q").val('');
+
+            navigate(
+            {
+                state   :   'list'
+            });
+        });
+    }
+
 
     function _init( )
     {
         var $mainFacet      = $element.find(".main-facet").data()
         ,   $resetFacet     = $element.find(".facet-reset")
-        ,   $listAnchor     = $resetFacet.find('.anchor-reset')
-        ,   criteria        = {}
-        ,   options         = {}
+        ,   $listAnchor     = $element.find('.anchor-reset')
         ;
 
-            $listAnchor.unbind("click").on('click', function( e )
-            {
-                e.preventDefault();
-
-                criteria.facetFilters   =   [];
-                options.q               =   '';
-                options.sort            =   [];
-                globalCriteria          =   {};
-                paging.search.offset    =   0;
-                bidx.controller.updateHash( "#search/list" );
-
-                //$resetFacet.addClass( "hide" );
-                //
-
-                navigate(
-                {
-                    state   :   'list'
-                /*,   params  :   {
-                                    q               :   options.q
-                                ,   sort            :   options.sort
-                                ,   facetFilters    :   {}
-                                ,   rangeFilters    :   {}
-                                ,   genericFilters  :   {}
-                                }*/
-                });
-
-            });
+        _reset( $listAnchor );
 
     }
 
@@ -1970,11 +1998,12 @@
 
     }
 
-    function _facetClick( )
+    function _facetClick( response  )
     {
-        var  $listFacetAnchor
+        var $listFacetAnchor
       //  ,    $mainFacet      = $element.find(".main-facet")
-        ,    $resetFacet     = $element.find(".facet-reset")
+        ,   $resetFacet     = $element.find(".facet-reset")
+        ,   total           = bidx.utils.getValue(response, 'total')
         ;
 
         // Facet Label Click
@@ -2019,6 +2048,13 @@
                 {
                     globalCriteria.facetFilters[clickedCategory]    =   [];
                     globalCriteria.entityType = [ filterValue ]; // Empty entityType in criteria and add new data
+
+                    if( !total  ) // If there is no result found then clear the input text value clear it and reset the search
+                    {
+                        bidx.utils.setValue( globalCriteria, 'searchTerm', 'basic:*' );
+
+                        $body.find(".form-q").val('');
+                    }
                 }
 
                 globalCriteria.facetFilters[clickedCategory].push( filterValue );
@@ -2057,6 +2093,11 @@
         ,   isBoolean
         ,   isRangeFilter
         ,   isfilterDisplayed
+        ,   facetKeys
+        ,   rangeKeys
+        ,   booleanKeys
+        ,   allKeys
+        ,   difference
         ,   isFacetRendered =   false
         ,   isRangeRendered =   false
         ,   isBoolRendered  =   false
@@ -2066,7 +2107,28 @@
         ,   sortOptions     =   bidx.utils.getValue(response, 'sortOptions')
         ,   filterOptions   =   CONSTANTS.FILTERSORDER
         ,   $list           =   $element.find(".facet-list")
+        ,   responseLength  =   _.size( response.found )
         ;
+
+        if(filterOptions)
+        {
+            facetKeys     =   _.pluck(facets, 'field');
+            rangeKeys     =   _.keys(rangeFilters);
+            booleanKeys   =   _.pluck(booleanOptions, 'field');
+            allKeys       =   _.union(facetKeys, rangeKeys, booleanKeys);
+
+            difference    =   _.difference(allKeys, filterOptions);
+
+            bidx.utils.log('facetKeys', facetKeys);
+            bidx.utils.log('rangeKeys', rangeKeys);
+            bidx.utils.log('booleanKeys', booleanKeys);
+            bidx.utils.log('difference', difference);
+
+            if( difference.length)
+            {
+                console.log("%cPlease add filter in filterOptions " + difference, "font: 2em sans-serif; color: yellow; background-color: red;");
+            }
+        }
 
         if(filterOptions.length)
         {
@@ -2089,7 +2151,6 @@
                 switch(true)
                 {
                     case !_.isUndefined(isFacet):
-                        bidx.utils.log('In facet');
 
                         isFacetRendered     =   true;
 
@@ -2098,24 +2159,28 @@
                     break;
 
                     case _.isObject(isRangeFilter):
-                        bidx.utils.log('In Range');
-
-                        isRangeRendered     =   true;
-
-                        _doRangeFilterListing(
+                        if( responseLength )
                         {
-                            facetItem:    filterOrderingItem
-                        ,   facetMinMax:  isRangeFilter
-                        } );
+
+                            isRangeRendered     =   true;
+
+                            _doRangeFilterListing(
+                            {
+                                facetItem:    filterOrderingItem
+                            ,   facetMinMax:  isRangeFilter
+                            } );
+                        }
 
                     break;
 
                     case !_.isUndefined(isBoolean):
-                        bidx.utils.log('In Boolean');
+                        if( responseLength )
+                        {
 
                         isBoolRendered      =   true;
 
                         _doBooleanFilterListing( isBoolean );
+                        }
 
                     break;
 
@@ -2135,18 +2200,20 @@
 
     }
 
-    function _doFilterEvents( options )
+    function _doFilterEvents( params )
     {
-        var isFacetRendered  =   bidx.utils.getValue(options, 'isFacetRendered')
-        ,   isRangeRendered  =   bidx.utils.getValue(options, 'isRangeRendered')
-        ,   isBoolRendered   =   bidx.utils.getValue(options, 'isBoolRendered')
+        var filterDisplay    =   params.filterDisplay
+        ,   response         =   params.response
+        ,   isFacetRendered  =   bidx.utils.getValue(filterDisplay, 'isFacetRendered')
+        ,   isRangeRendered  =   bidx.utils.getValue(filterDisplay, 'isRangeRendered')
+        ,   isBoolRendered   =   bidx.utils.getValue(filterDisplay, 'isBoolRendered')
         ;
 
          //On Click events
         //1 for Facets0
         if( isFacetRendered )
         {
-            _facetClick();
+            _facetClick( response );
         }
 
         if( isRangeRendered )
@@ -2184,7 +2251,7 @@
                     //Store received response to Global criteria inorder to use for subsequent calls
                     globalCriteria      =   bidx.utils.getValue(response, 'criteria');
 
-                    if( ( !options.urlParam ) || ( options.urlParam && responseLength ) )
+                    if( true || ( !options.urlParam ) || ( options.urlParam && responseLength ) )
                     {
                         filterDisplay       =   _doListing( response );
 
@@ -2193,7 +2260,7 @@
                             sortOptions:    sortOptions
                         } );
 
-                        _doBulk( );
+                        _doBulk( response );
                     }
 
                     _doSearchListing(
@@ -2370,11 +2437,13 @@
             var entityFacet
             ,   entityValues
             ,   checkedEntity
+            ,   checkedOption
             ,   unCheckedEntity
             ,   unCheckedOption
             ,   errorMsg
             ,   lbl
             ,   $empty
+            ,   $reset
             ;
 
             bidx.utils.log('facets', facets);
@@ -2383,16 +2452,16 @@
 
             bidx.utils.log('entityFacet', entityFacet);
 
-
             entityValues    =   entityFacet.values;
 
             checkedEntity   =   _.findWhere(entityValues, { checked:    true });
 
             if( !checkedEntity || checkedEntity.count === 0 )
             {
+
                 unCheckedEntity  =   _.findWhere(entityValues, {   checked:  false  });
 
-                if( unCheckedEntity && unCheckedEntity.count )
+                if( unCheckedEntity && unCheckedEntity.count ) //If there is result with unchecked entityType either call the service if its form Url param or display the message
                 {
                     unCheckedOption     =   unCheckedEntity.option;
 
@@ -2424,14 +2493,37 @@
                         $listEmpty.find('.errormsg').empty().append( lbl );
                     }
                 }
+                else
+                {
+                    assignActions   =   true;
+                    checkedOption   =   checkedEntity.option;
+                    errorMsg        =   bidx.i18n.i( 'searchError', 'search' );
+                    $empty          =   $(  "<a />"
+                                        ,   {
+                                                "class":        "anchor-reset"
+                                            ,   "data-filter":  "reset"
+                                        } )
+                                        .append
+                                        (
+                                            $( "<span class='tagLabel'>" +  bidx.i18n.i('clickhere', appName) + "</span>")
+                                        );
+
+                    lbl =   errorMsg.replace( "%clickhere%", $empty[0].outerHTML );
+
+                    $listEmpty.find('.errormsg').empty().append( lbl );
+                }
 
             }
 
-            if(!urlParam)
+            if(assignActions)
             {
                 $list.empty();
 
                 $list.append($listEmpty);
+
+                $reset  =   $list.find( '.anchor-reset' );
+
+                _reset( $reset  );
 
                 if( $.isFunction( options.cb ) )
                 {
@@ -2444,7 +2536,7 @@
 
         if( assignActions  || true)
         {
-            _doFilterEvents( filterDisplay );
+            _doFilterEvents( params );
         }
         // execute cb function
         //
@@ -2465,8 +2557,6 @@
         ,   conditionalElementArr   =   { }
         ,   type                    =   response.type
         ;
-
-        bidx.utils.log('entityType', type);
 
         switch( type )
         {

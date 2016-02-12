@@ -381,7 +381,7 @@
                     $( "<div />", { "class": "cardHeader hide-overflow" } )
                     .append
                     (
-                        $( "<a />", { "href": item.bidxMeta.bidxGroupUrl + "/" + bidx.common.getCurrentLanguage(), "class": "btn btn-primary btn-xs pull-right info-action main-margin-half" + (currentGroupId == item.bidxMeta.bidxGroupId ? " hide" : ""), "html": bidx.i18n.i( "poPortal" ) } )
+                        $( "<a />", { "href": item.bidxMeta.bidxGroupUrl + "/" + bidx.common.getCurrentLanguage() + "/dashboard/", "class": "btn btn-primary btn-xs pull-right info-action main-margin-half" + (currentGroupId == item.bidxMeta.bidxGroupId ? " hide" : ""), "html": bidx.i18n.i( "poPortal" ) } )
                     )          
                     .append
                     (

@@ -66,14 +66,14 @@
                                     <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e("Loading search results, please wait...", "bidxplugin");?>
                                 </div>
                                 <div class="view viewBulk">
-                                   <div class="media-list bulk-list">
+                                   <div class="media-list bulk-list top">
                                     </div>
                                 </div>
                                  <ul class="media-list search-list">
                                     <!-- Results will be loaded here through js -->
                                 </ul>
                                 <div class="view viewBulk">
-                                   <div class="media-list bulk-list">
+                                   <div class="media-list bulk-list bottom">
                                     </div>
                                 </div>
                                 <div class="view viewPager" >
@@ -225,7 +225,7 @@
                     </div>
                      <div class="col-sm-6">
                         <div class="pull-left">
-                            <select name="bulk">
+                            <select name="bulk" class="bulk-%pos%">
                                 <option value=''><?php _e('  --Select Bulk actions--  ', 'bidxplugin')?> </option>
                                 <option value='sendEmail'><?php _e('Send email', 'bidxplugin')?> </option>
                                 <option class="hide" value='sendRequest'><?php _e('Send request', 'bidxplugin')?> </option>
@@ -472,7 +472,7 @@
             <li class="media" >
                 <div class="pull-left check"></div>
                 <div class="alert alert-warning errormsg facet-title" data-name='entityType'>
-                    <?php _e('There are no results for you search request','bidxplugin')?>
+                    <?php //_e('There are no results for you search request, please %clickhere% to reset your criteria.','bidxplugin')?>
                 </div>
             </li>
             -->
