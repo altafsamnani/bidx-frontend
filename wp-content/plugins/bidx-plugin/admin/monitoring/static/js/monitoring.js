@@ -547,7 +547,7 @@
 
             search =    {
                         criteria    :   {
-                                            "searchTerm"    :   "basic:" + q
+                                            "searchTerm"    :   q
                                         ,   "facetsVisible" :   facetsVisible
                                         ,   "offset"        :   data.start
                                         ,   "maxResult"     :   data.length
@@ -1063,7 +1063,7 @@
     function _getSearchTotals( options )
     {
         var criteria    =   {
-                                "searchTerm": "basic:*",
+                                "searchTerm": "*",
                                 "entityType": ["bdxmember"],
                                 "scope": "LOCAL"
                             };

@@ -804,7 +804,7 @@
             ,   {
                     groupDomain: bidx.common.groupDomain
                 ,   data: {
-                                "searchTerm"    :   "basic:" + criteriaQ + "*"
+                                "searchTerm"    :   criteriaQ + "*"
                             ,   "sort"          :   []
                             ,   "maxResult"     :   CONSTANTS.SEARCH_LIMIT
                             ,   "offset"        :   CONSTANTS.OFFSET
