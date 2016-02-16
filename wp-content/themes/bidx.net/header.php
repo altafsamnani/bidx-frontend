@@ -66,7 +66,7 @@
     <!-- Facebook OG Meta Tags -->
     <meta property="og:locale" content="en_US">
     <meta property="og:image" content='https://bidx.net/wp-content/themes/bidx.net/assets/img/bidxgroupicon.png'/>
-    <meta property="og:url" content="http://bidx.net/"/>
+    <meta property="og:url" content="https://bidx.net/"/>
     <meta property="og:title" content="bidx"/>
     <meta property="og:site_name" content="bidx | Entrepreneurial ecosystems online">
     <meta property="og:description" content="Start, grow and finance your entrepreneurs. Connect them with investors, mentors and business partners.">
