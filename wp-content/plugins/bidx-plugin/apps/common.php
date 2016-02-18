@@ -583,7 +583,7 @@ class BidxCommon
                 break;
 
             case 'expressform':
-            if (false && $authenticated == 'false')
+            if ($authenticated == 'false')
             {
 
                     $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .'/bidx-soca/bidxauth?id=facebook&redirect_to=' . base64_encode ($current_url) ;
