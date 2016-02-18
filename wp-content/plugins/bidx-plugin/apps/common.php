@@ -386,6 +386,22 @@ class BidxCommon
             //Redirect URL Logic
             switch ($module) {
 
+                case 'expressform':
+                    $memberId = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
+
+                    if ($memberId) {
+                        $data->memberId = $memberId;
+                        $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
+                        $this::$bidxSession[$subDomain]->memberId = $memberId;
+                        $this::$bidxSession[$subDomain]->external = true;
+                    } else {
+
+                        $redirect = 'auth'; //To redirect /member and not loggedin page to /login
+                        $statusMsgId = 1;
+                    }
+
+                break;
+
                 case 'member':
                     $sessionMemberId = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
                     $memberId = ( !empty ( $id ) ) ? $id : $sessionMemberId;
@@ -566,7 +582,26 @@ class BidxCommon
 
                 break;
 
+            case 'expressform':
+            if (false && $authenticated == 'false')
+            {
+
+                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .'/bidx-soca/bidxauth?id=facebook&redirect_to=' . base64_encode ($current_url) ;
+
+                    $redirect_url = str_replace( 'local', 'test', $redirect_url);
+
+                    wp_clear_auth_cookie ();
+
+                    //Clear Session and Static variables (except for any redirect setting)
+                    $this::clearWpBidxSession();
+
+                    $this::$staticSession = NULL;
+                    unset ($this::$bidxSession[$subDomain]);
+            }
+            break;
+
             case 'mail' :
+            case 'expressform':
                 if ($authenticated == 'false') {
 
                     $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .'/'.$langUrl. '/auth?redirect_to=' . base64_encode ($current_url) . '/#auth/login';

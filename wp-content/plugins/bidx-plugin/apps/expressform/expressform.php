@@ -32,20 +32,14 @@ class expressform {
      * Dynamic action needs to be added here
      * @param $atts
      */
-    function load($atts) {
-        $siteUrl = get_site_url();
-        $subdomain = BidxCommon::get_bidx_subdomain( false, $siteUrl );
-
+    function load($atts)
+    {
         // 1. Template Rendering
         require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
         $view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/expressform/templates/' );
-        // 2. Determine the view needed
 
-        // ob_start is necessary to capture the shortcode response. ob_get_Clean returns the captured content
-        //
-        ob_start();
+        // 2. Determine the view needed
         $view -> render('expressform.phtml');
-        return ob_get_clean();
 
     }
 }
