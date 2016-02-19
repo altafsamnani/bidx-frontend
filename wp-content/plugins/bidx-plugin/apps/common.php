@@ -586,7 +586,7 @@ class BidxCommon
             if ($authenticated == 'false')
             {
 
-                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .'/bidx-soca/bidxauth?id=facebook&redirect_to=' . base64_encode ($current_url) ;
+                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .'/bidx-soca/bidxauth?id=facebook&path.success=/expressform';
 
                     $redirect_url = str_replace( 'local', 'test', $redirect_url);
 
@@ -601,7 +601,6 @@ class BidxCommon
             break;
 
             case 'mail' :
-            case 'expressform':
                 if ($authenticated == 'false') {
 
                     $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .'/'.$langUrl. '/auth?redirect_to=' . base64_encode ($current_url) . '/#auth/login';
