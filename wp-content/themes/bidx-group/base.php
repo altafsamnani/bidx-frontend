@@ -85,7 +85,7 @@
 
 <?php } ?>
 
-<?php if( !$session->external )
+<?php if( true || !$session->external )
     {
         get_template_part('templates/footer');
     }

@@ -359,6 +359,11 @@
         ,   'createBusinessSummary':                            'createBusinessSummary'
         ,   'viewBusinessSummary':                              'viewBusinessSummary'
 
+        ,   'editExpressForm(/:id)(*splat)':                    'editExpressForm'
+        ,   'createExpressForm':                                'createExpressForm'
+        ,   'viewExpressForm':                                  'viewExpressForm'
+
+
         ,   'editCompetition(/:id)(*splat)':                    'editCompetition'
         ,   'createCompetition':                                'createCompetition'
         ,   'viewCompetition(/:id)(*splat)':                    'viewCompetition'
@@ -619,6 +624,50 @@
              _navigateToApp
             (
                 "company"
+            ,   {
+                    requestedState: "create"
+                }
+            );
+        }
+    ,   viewExpressForm:          function( state )
+        {
+            bidx.utils.log( "AppRouter::viewExpressForm" );
+
+            mainState = "viewExpressForm";
+
+            _navigateToApp
+            (
+                "expressform"
+            ,   {
+                    requestedState: "view"
+                }
+            );
+        }
+    ,   editExpressForm:    function( id, splat )
+        {
+            bidx.utils.log( "AppRouter::editExpressForm", id  );
+
+            mainState   = "editExpressForm";
+
+            _doNavigateToApp
+            (
+                "expressform"
+            ,   {
+                    requestedState: "edit"
+                ,   id:             id
+                ,   params:   _deparamSplat( splat )
+                }
+            );
+        }
+    ,   createExpressForm:          function()
+        {
+            bidx.utils.log( "AppRouter::createExpressForm" );
+
+            mainState       = "createExpressForm";
+
+             _navigateToApp
+            (
+                "expressform"
             ,   {
                     requestedState: "create"
                 }

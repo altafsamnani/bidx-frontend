@@ -161,18 +161,19 @@
     function getAccreditationAuthItems( req, authItems )
     {
         var tmp;
-
-        $.each( authItems, function( id, item )
+        if( authItems )
         {
-            $.each( item.authorizations, function( id, auth )
+            $.each( authItems, function( id, item )
             {
-                if ( req.request.mentorId === auth.user.id )
+                $.each( item.authorizations, function( id, auth )
                 {
-                    tmp = auth.user;
-                }
+                    if ( req.request.mentorId === auth.user.id )
+                    {
+                        tmp = auth.user;
+                    }
+                });
             });
-        });
-
+        }
         return tmp;
     }
 
@@ -2081,7 +2082,7 @@
     $( ".member" ).on( "click", "button.editProfile", function()
     {
         var editHref = $(".tab-pane.active a[href*='#edit']").first().attr( "href" );
-        
+
         window.location.href = window.location.pathname + editHref;
     });
 

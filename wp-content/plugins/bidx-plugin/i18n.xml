@@ -27,6 +27,8 @@
     <Item value="btnCancel">Cancel</Item>
     <Item value="btnOk">Ok</Item>
     <Item value="btnSave">Save</Item>
+    <Item value="btnApply">Apply</Item>
+    <Item value="btnSubmit">Submit</Item>
     <Item value="btnSaveAndView">Save &amp; view</Item>
     <Item value="btnSaveProfile">Save Profile</Item>
     <Item value="btnAddAndView">Create &amp; view</Item>
