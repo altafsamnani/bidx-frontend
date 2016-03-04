@@ -1342,6 +1342,7 @@
             case 'view':
 
                 bidx.utils.log( "ExpressForm::AppRouter::view" );
+                _showView( "show" );
 
             break;
 

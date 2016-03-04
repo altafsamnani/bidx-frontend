@@ -367,6 +367,7 @@ class BidxCommon
         $statusMsgId                                                =   NULL;
         $this::$bidxSession[$subDomain]->companyId                  =   NULL;
         $this::$bidxSession[$subDomain]->requestedBusinessSummaryId =   NULL;
+        $this::$bidxSession[$subDomain]->external                   =   false;
 
         if( strlen ( $hostAddress[1] ) == 2 )
         {

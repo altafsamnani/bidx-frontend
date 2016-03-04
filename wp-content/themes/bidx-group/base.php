@@ -56,7 +56,9 @@
 </div>
 <![endif]-->
 
-<?php if( true ||  !$session->external )
+<?php
+
+    if( !$session->external )
     {
         get_template_part('templates/header');
     }
