@@ -52,14 +52,26 @@ class expressform {
 
         $sessionData                =   $session->data;
 
+        // 3. Service Business Summary (entity)
+        $bidxBusinessSummary        =   $sessionData->wp->entities->bidxBusinessSummary;
+
+        if (isset ($session->requestedBusinessSummaryId))
+        {
+            $businessSummaryId = $session->requestedBusinessSummaryId;
+
+            $businessSummaryResult      =   $businessSummaryObj->getSummaryDetails( $businessSummaryId );
+        }
+        else
+        {
+         //   $businessSummaryResult      =   $businessSummaryObj->getExpressFormSubmission( $bidxBusinessSummary );
+        }
+
         // 2. Render Member Profile Services for Initial View Display
         $memberResult               =   $memberObj->getMemberDetails(  );
 
         $memberData                 =   (isset($memberResult->data)) ? $memberResult->data:NULL;
 
-        // 3. Service Business Summary (entity)
-        $bidxBusinessSummary        =   $sessionData->wp->entities->bidxBusinessSummary;
-        //$businessSummaryResult      =   $businessSummaryObj->getExpressFormSubmission( $bidxBusinessSummary );
+
         $businessData               =   (isset($businessSummaryResult->data)) ? $businessSummaryResult->data:NULL;
 
          if ( isset( $businessSummaryResult -> data -> bidxMeta -> bidxCompletionMesh) ) {

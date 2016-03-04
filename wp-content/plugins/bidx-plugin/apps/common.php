@@ -387,20 +387,29 @@ class BidxCommon
             switch ($module) {
 
                 case 'expressform':
-                    $memberId = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
+                    $memberId           = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
+                    $businessSummaryId  = ( $id ) ? $id : NULL;
 
-                    if ($memberId) {
+                    if ( $businessSummaryId )
+                    {
+                        $data->businessSummaryId = $businessSummaryId;
+                        $this::$bidxSession[$subDomain]->requestedBusinessSummaryId = $businessSummaryId;
+                    }
+
+                    if ( $memberId )
+                    {
                         $data->memberId = $memberId;
                         $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
                         $this::$bidxSession[$subDomain]->memberId = $memberId;
                         $this::$bidxSession[$subDomain]->external = true;
-                    } else {
+                    } else
+                    {
 
                         $redirect = 'auth'; //To redirect /member and not loggedin page to /login
                         $statusMsgId = 1;
                     }
 
-                break;
+                    break;
 
                 case 'member':
                     $sessionMemberId = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;

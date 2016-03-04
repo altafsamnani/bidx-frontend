@@ -3,7 +3,7 @@
     "use strict";
 
     var $element          =     $( "#businessSummary" )
-    ,   $industrySectors  =     $element.find( "#industrySectors" )
+    ,   $industrySectors  =     $element.find( ".industrySectors" )
     ,   bidx              =     window.bidx
     ,   appName           =     "expressform"
     ,   $btnSave
@@ -48,6 +48,10 @@
         }
     ,   state
     ,   currentView
+    ,   businessSummaryId
+    ,   icl_vars                    = window.icl_vars || {}
+    ,   iclLanguage                 = bidx.utils.getValue( icl_vars, "current_language" )
+    ,   currentLanguage             = (iclLanguage && iclLanguage !== 'en') ? '/' + iclLanguage : ''
     ;
 
     // Form fields
@@ -81,13 +85,13 @@
             [
                 "financialSummaries"
             ]
-        ,   "_root":
+        /*,   "_root":
             [
                 "yearSalesStarted"
             ,   "equityRetained"
             ,   "investmentType"
             ,   "summaryFinancingNeeded"
-            ]
+            ] */
         ,   "financialSummaries":
             [
                 "financeNeeded"
@@ -110,6 +114,8 @@
         ,   value
         ,   fp
         ;
+
+        businessSummaryId   =   null;
 
         $.each( fields, function( form, formFields )
         {
@@ -201,6 +207,8 @@
                     _updateFinancialSummariesItem( $yearItem, data );
                 } );
             }
+
+            businessSummaryId = bidx.utils.getValue( businessSummary, "bidxMeta.bidxEntityId" );
         }
     }
 
@@ -465,7 +473,7 @@
 
         $btnSave.addClass( "disabled" );
         $btnCancel.addClass( "disabled" );
-        bidx.utils.log('I am in savee');
+
         _save(
         {
             error: function( jqXhr )
@@ -893,7 +901,9 @@
 
             // Unbox
             //
+            bidx.utils.log('form', form);
             form += "";
+             bidx.utils.log('form', form);
 
             if ( formFields._root )
             {
@@ -902,6 +912,7 @@
                     var $input
                     ,   value
                     ;
+                     bidx.utils.log('f', f);
 
                     if( form === 'personalDetails' )
                     {
@@ -924,176 +935,183 @@
                     }
                     else
                     {
+
                         $input = $form.find( "[name^='" + f + "']" );
+                        bidx.utils.log('input', $input);
+
 
                         value  = bidx.utils.getElementValue( $input );
+
+                        bidx.utils.log('value', value);
 
                         bidx.utils.setValue( businessSummary, f, value );
                     }
                 } );
             }
 
-
-            // Industry Sectors
-            var endSectors = $industrySectors.find( "[name*='endSector']" );
-
-            if ( endSectors )
+            if( form !== 'personalDetails' )
             {
-                var arr = [];
-                $.each( endSectors, function(i, f)
-                {
-                    var value   = bidx.utils.getElementValue( $(f) );
+                // Industry Sectors
+                var endSectors = $industrySectors.find( "[name*='endSector']" );
 
-                    if ( value )
+                if ( endSectors )
+                {
+                    var arr = [];
+                    $.each( endSectors, function(i, f)
                     {
-                        arr.push( value );
-                    }
-                });
+                        var value   = bidx.utils.getElementValue( $(f) );
 
-                arr = $.map( arr, function( n )
-                {
-                    return n;
-                });
+                        if ( value )
+                        {
+                            arr.push( value );
+                        }
+                    });
 
-                bidx.utils.setValue( businessSummary, "industry", arr );
-            }
+                    arr = $.map( arr, function( n )
+                    {
+                        return n;
+                    });
 
-
-            // Collect the nested objects
-            //
-            $.each( formFields, function( nest )
-            {
-                // unbox that value!
-                //
-                nest += "";
-
-                // Properties that start with an _ are special properties and should be ignore
-                //
-                if ( nest.charAt( 0 ) === "_" )
-                {
-                    return;
+                    bidx.utils.setValue( businessSummary, "industry", arr );
                 }
 
-                var i                   = 0
-                ,   arrayField          = formFields._arrayFields && $.inArray( nest, formFields._arrayFields ) !== -1
-                ,   reflowrowerField    = formFields._reflowRowerFields && $.inArray( nest, formFields._reflowRowerFields ) !== -1
-                ,   objectPath          = nest
-                ,   item
-                ,   count
-                ;
 
-                // @TODO: make it generic for 'object type' like financialSummaries is
+                // Collect the nested objects
                 //
-                if ( nest === "financialSummaries" )
+                $.each( formFields, function( nest )
                 {
-                    item = {};
-                    bidx.utils.setValue( businessSummary, objectPath, item );
-
-                    $form.find( ".financialSummariesItem" ).each( function( idx, financialSummariesItem )
-                    {
-                        var $financialSummariesItem = $( financialSummariesItem )
-                        ,   year                    = $financialSummariesItem.data( "year" )
-                        ;
-
-                        // Make sure we have an actual year by parsing it to a number
-                        //
-                        year = parseInt( year, 10 );
-
-                        if ( !year )
-                        {
-                            return;
-                        }
-
-                        item[ year ] = {};
-
-                        $.each( formFields[ nest ], function( i, f )
-                        {
-                            var $input  = $financialSummariesItem.find( "[name^='" + f + "']" )
-                            ,   value   = bidx.utils.getElementValue( $input )
-                            ;
-
-                            if ( value === "" )
-                            {
-                                value = 0;
-                            }
-
-                            item[ year ][ f ] = value;
-
-                        } );
-                    } );
-
-                    // Is there anything in the deleted years object that is not present in the new situation?
+                    // unbox that value!
                     //
-                    var newYears            = $.map( item, function( v, k ) { return k; } )
-                    ,   deletedYears        = $.map( financialSummary.deletedYears, function( v, k ) { return k; } )
+                    nest += "";
+
+                    // Properties that start with an _ are special properties and should be ignore
+                    //
+                    if ( nest.charAt( 0 ) === "_" )
+                    {
+                        return;
+                    }
+
+                    var i                   = 0
+                    ,   arrayField          = formFields._arrayFields && $.inArray( nest, formFields._arrayFields ) !== -1
+                    ,   reflowrowerField    = formFields._reflowRowerFields && $.inArray( nest, formFields._reflowRowerFields ) !== -1
+                    ,   objectPath          = nest
+                    ,   item
+                    ,   count
                     ;
 
-                    $.grep( deletedYears, function( y )
+                    // @TODO: make it generic for 'object type' like financialSummaries is
+                    //
+                    if ( nest === "financialSummaries" )
                     {
-                        if ( $.inArray( y, newYears ) === -1 )
+                        item = {};
+                        bidx.utils.setValue( businessSummary, objectPath, item );
+
+                        $form.find( ".financialSummariesItem" ).each( function( idx, financialSummariesItem )
                         {
-                            bidx.utils.log( "[businesssummary] deleted year", y );
-                            item[ y ] = null;
-                        }
-                    } );
-                }
-                else
-                {
-                    if ( arrayField )
-                    {
-                        count   = $form.find( "." + nest + "Item" ).length;
-                        item    = [];
+                            var $financialSummariesItem = $( financialSummariesItem )
+                            ,   year                    = $financialSummariesItem.data( "year" )
+                            ;
+
+                            // Make sure we have an actual year by parsing it to a number
+                            //
+                            year = parseInt( year, 10 );
+
+                            if ( !year )
+                            {
+                                return;
+                            }
+
+                            item[ year ] = {};
+
+                            $.each( formFields[ nest ], function( i, f )
+                            {
+                                var $input  = $financialSummariesItem.find( "[name^='" + f + "']" )
+                                ,   value   = bidx.utils.getElementValue( $input )
+                                ;
+
+                                if ( value === "" )
+                                {
+                                    value = 0;
+                                }
+
+                                item[ year ][ f ] = value;
+
+                            } );
+                        } );
+
+                        // Is there anything in the deleted years object that is not present in the new situation?
+                        //
+                        var newYears            = $.map( item, function( v, k ) { return k; } )
+                        ,   deletedYears        = $.map( financialSummary.deletedYears, function( v, k ) { return k; } )
+                        ;
+
+                        $.grep( deletedYears, function( y )
+                        {
+                            if ( $.inArray( y, newYears ) === -1 )
+                            {
+                                bidx.utils.log( "[businesssummary] deleted year", y );
+                                item[ y ] = null;
+                            }
+                        } );
                     }
                     else
                     {
-                        item    = {};
-                    }
-
-                    bidx.utils.setValue( businessSummary, objectPath, item );
-                    bidx.utils.setNestedStructure( item, count, nest, $form, formFields[ nest ]  );
-                }
-
-                // Now collect the removed items, clear the properties and push them to the list so the API will delete them
-                //
-                var $reflowContainer
-                ,   removedItems
-                ;
-
-                if ( reflowrowerField )
-                {
-                    $reflowContainer = $form.find( "." + nest + "Container" );
-
-                    if ( $reflowContainer.length )
-                    {
-                        removedItems = $reflowContainer.reflowrower( "getRemovedItems" );
-
-                        $.each( removedItems, function( idx, removedItem )
+                        if ( arrayField )
                         {
-                            var $removedItem    = $( removedItem )
-                            ,   bidxData        = $removedItem.data( "bidxData" )
-                            ;
+                            count   = $form.find( "." + nest + "Item" ).length;
+                            item    = [];
+                        }
+                        else
+                        {
+                            item    = {};
+                        }
 
-                            if ( bidxData )
-                            {
-                                // Iterate over the properties and set all, but bidxMeta, to null, except for array's, those must be set to an empty array...
-                                //
-                                $.each( bidxData, function( prop )
-                                {
-                                    if ( prop !== "bidxMeta" )
-                                    {
-                                        bidxData[ prop ] = $.type( bidxData[ prop ] ) === "array"
-                                            ? []
-                                            : null
-                                        ;
-                                    }
-                                } );
-                            }
-
-                            item.push( bidxData );
-                        } );
+                        bidx.utils.setValue( businessSummary, objectPath, item );
+                        bidx.utils.setNestedStructure( item, count, nest, $form, formFields[ nest ]  );
                     }
-                }
-            } );
+
+                    // Now collect the removed items, clear the properties and push them to the list so the API will delete them
+                    //
+                    var $reflowContainer
+                    ,   removedItems
+                    ;
+
+                    if ( reflowrowerField )
+                    {
+                        $reflowContainer = $form.find( "." + nest + "Container" );
+
+                        if ( $reflowContainer.length )
+                        {
+                            removedItems = $reflowContainer.reflowrower( "getRemovedItems" );
+
+                            $.each( removedItems, function( idx, removedItem )
+                            {
+                                var $removedItem    = $( removedItem )
+                                ,   bidxData        = $removedItem.data( "bidxData" )
+                                ;
+
+                                if ( bidxData )
+                                {
+                                    // Iterate over the properties and set all, but bidxMeta, to null, except for array's, those must be set to an empty array...
+                                    //
+                                    $.each( bidxData, function( prop )
+                                    {
+                                        if ( prop !== "bidxMeta" )
+                                        {
+                                            bidxData[ prop ] = $.type( bidxData[ prop ] ) === "array"
+                                                ? []
+                                                : null
+                                            ;
+                                        }
+                                    } );
+                                }
+
+                                item.push( bidxData );
+                            } );
+                        }
+                    }
+                } );
+            }
         } );
 
         // Logo
@@ -1114,33 +1132,10 @@
     {
         var url
         ;
-        if ( !businessSummary )
-        {
-            return;
-        }
 
         // Update the business summary object
         //
         _getFormValues();
-
-
-        // PM-187: Create call should set the periodStartDate to the first januari of the year the businessummary is created
-        //
-        if ( state === "create" )
-        {
-            businessSummary.periodStartDate = bidx.common.getNow().getFullYear() + "-01-01";
-
-            // BIDX-3838 - If attachment is empty don't send attachment to the API
-            if (businessSummary.attachment.length == 0)
-            {
-                delete businessSummary.attachment;
-            }
-            // BIDX-3524
-            if (businessSummary.managementTeam.length == 0)
-            {
-                delete businessSummary.managementTeam;
-            }
-        }
 
         // Make sure the entitytype is set correctly, probably only needed for 'create'
         //
@@ -1152,7 +1147,6 @@
 
         // Save the data to the API
         //
-        return;
         bidx.api.call(
             "businesssummary.save"
         ,   {
@@ -1178,7 +1172,7 @@
                     bidx.common.removeAppWithPendingChanges( appName );
 
 
-                    url = currentLanguage + "/businesssummary/" + businessSummaryId + "?rs=true";
+                    url = currentLanguage + "/expressform/" + businessSummaryId + "?rs=true";
 
                     document.location.href = url;
 
@@ -1257,13 +1251,25 @@
             _doSave();
         } );
 
-        $btnSave.i18nText( ( state === "create" ? "btnApply" : "btnSubmit" ) ).prepend( $( "<div />", { "class": "fa fa-check fa-above fa-big" } ) );
-        $btnCancel.i18nText( "btnCancel" ).prepend( $( "<div />", { "class": "fa fa-times fa-above fa-big" } ) );
 
         $controlsForEdit.empty();
-        $controlsForEdit.append( $btnCancel, $btnSave  );
 
-        //$controlsForError.empty();
+        if( state === 'create' )
+        {
+            $btnSave.i18nText( "btnApply" ).prepend( $( "<div />", { "class": "fa fa-check fa-above fa-big" } ) );
+
+            $controlsForEdit.append(  $btnSave  );
+        }
+        else
+        {
+            $btnSave.i18nText( "btnSubmit" ).prepend( $( "<div />", { "class": "fa fa-check fa-above fa-big" } ) );
+
+            $btnCancel.i18nText( "btnCancel" ).prepend( $( "<div />", { "class": "fa fa-times fa-above fa-big" } ) );
+
+            $controlsForEdit.append( $btnCancel, $btnSave  );
+        }
+
+                //$controlsForError.empty();
         //$controlsForError.append( $btnCancel.clone( true ) );
 
         // Show the delete year buttons on the first/last year
@@ -1285,6 +1291,12 @@
         }
 
         _showView( "edit" );
+
+        if( state !== 'edit')
+        {
+
+            businessSummary     = {};
+        }
 
     }
 
