@@ -63,7 +63,7 @@ class expressform {
         }
         else
         {
-         //   $businessSummaryResult      =   $businessSummaryObj->getExpressFormSubmission( $bidxBusinessSummary );
+            $businessSummaryResult      =   $businessSummaryObj->getExpressFormSubmission( $bidxBusinessSummary );
         }
 
         // 2. Render Member Profile Services for Initial View Display

@@ -48,7 +48,7 @@
         }
     ,   state
     ,   currentView
-    ,   businessSummaryId
+    ,   businessSummaryId           = ( businessSummary ) ? bidx.utils.getValue( businessSummary, "bidxMeta.bidxEntityId" ) : null
     ,   icl_vars                    = window.icl_vars || {}
     ,   iclLanguage                 = bidx.utils.getValue( icl_vars, "current_language" )
     ,   currentLanguage             = (iclLanguage && iclLanguage !== 'en') ? '/' + iclLanguage : ''
@@ -114,8 +114,6 @@
         ,   value
         ,   fp
         ;
-
-        businessSummaryId   =   null;
 
         $.each( fields, function( form, formFields )
         {
@@ -207,8 +205,6 @@
                     _updateFinancialSummariesItem( $yearItem, data );
                 } );
             }
-
-            businessSummaryId = bidx.utils.getValue( businessSummary, "bidxMeta.bidxEntityId" );
         }
     }
 
@@ -1342,7 +1338,18 @@
             case 'view':
 
                 bidx.utils.log( "ExpressForm::AppRouter::view" );
-                _showView( "show" );
+
+                _showView( "load" );
+
+                if( businessSummaryId )
+                {
+                    _showView( "show" );
+                }
+                else
+                {
+                    bidx.controller.updateHash( "#createExpressForm", true );
+
+                }
 
             break;
 
