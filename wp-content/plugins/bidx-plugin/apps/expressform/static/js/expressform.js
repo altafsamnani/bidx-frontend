@@ -1440,10 +1440,17 @@
 
     // Only update the hash when user is authenticating and when there is no hash defined
     //
-    if ( $( "body.bidx-expressform" ).length && !bidx.utils.getValue( window, "location.hash" ) )
+    if ( $( "body.bidx-expressform" ).length )
     {
-        var initHash            =   "#createExpressForm"
+        var initHash
+        ,   bidxHash        =   bidx.utils.getValue( window, "location.hash" )
+        ,   allowedHash     =   ['viewExpressForm', 'editExpressForm', 'createExpressForm']
         ;
+
+        if( _.indexOf(allowedHash, bidxHash) === -1 )
+        {
+            initHash            =   "#createExpressForm";
+        }
 
         if( businessSummary )
         {

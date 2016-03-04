@@ -55,7 +55,7 @@ class expressform {
         // 3. Service Business Summary (entity)
         $bidxBusinessSummary        =   $sessionData->wp->entities->bidxBusinessSummary;
 
-        if (isset ($session->requestedBusinessSummaryId))
+        if ( isset ($session->requestedBusinessSummaryId ) )
         {
             $businessSummaryId = $session->requestedBusinessSummaryId;
 

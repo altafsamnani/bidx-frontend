@@ -7,9 +7,8 @@
     ? $businessSummary->bidxMeta
     : null;
     $canEdit                    =   $this->exst($businessSummaryBidxMeta->bidxCanEdit, false);
-    $businessSummaryId          =   $businessSummaryBidxMeta->bidxEntityId;
-    $ownerId                    =   $businessSummary->bidxMeta->bidxOwnerId;
-    $loggedInUserId             =   $sessionData->data->id;
+    $businessSummaryId          =   $this->exst($businessSummaryBidxMeta->bidxEntityId, false);
+    $ownerId                    =   $this->exst($businessSummaryBidxMeta->bidxOwnerId, false);
     $progress                   =   $this -> completenessScore ? $this -> completenessScore : '0';
     $contactDetails             =   $personalDetails->contactDetail[0];
     $address                    =   $personalDetails->address[0];
