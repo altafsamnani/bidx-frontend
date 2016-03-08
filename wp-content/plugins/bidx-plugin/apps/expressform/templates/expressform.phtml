@@ -34,13 +34,13 @@
 
 <!-- *****View ***** -->
 <div class="businessSummary box-border top-margin-lineheight" id="businessSummary" data-bsid="<?php echo $businessSummaryId; ?>" data-ownerid="<?php echo $ownerId; ?>" >
-    <h1><?php echo _e('Usaha Pintar', 'bidxplugin')?></h1>
+    <!--<h1><?php echo _e('Usaha Pintar', 'bidxplugin')?></h1>-->
     <?php
         if ( $businessSummary->logo && $businessSummary->logo->document ):
 ?>
     <div class="businessCover">
         <div class="coverImage">
-                <img src="/wp-content/themes/bidx-group/assets/img/expressform/mekar.png" alt="Cover Image" style="position: relative; cursor: default;" class="ui-draggable ui-draggable-handle ui-draggable-disabled">
+                <img src="/wp-content/plugins/bidx-plugin/apps/expressform/static/img/rsz_usaha.jpg" alt="Cover Image" style="position: relative; cursor: default;" class="ui-draggable ui-draggable-handle ui-draggable-disabled">
         </div>
         <div class="logoImage">
             <img src="<?php echo $businessSummary->logo->document ?>" class="center-img" alt="Logo Image">
