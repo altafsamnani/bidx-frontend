@@ -1194,6 +1194,9 @@
     function _save( params )
     {
         var url
+        ,   memberData      =   {}
+        ,   businessData    =   {}
+        ,   entityData      =   []
         ;
 
         // Update the business summary object
@@ -1210,14 +1213,27 @@
 
         // Save the data to the API
         //
+        memberData      =   {
+                                entity:     member.bidxMemberProfile
+                            };
+
+        businessData    =   {
+                                entity:     businessSummary
+                           // ,   tags:       ['mekar']
+                            };
+
+
+        entityData.push( memberData, businessData);
+
+
         bidx.api.call(
-            "businesssummary.save"
+            "entity.bulk"
         ,   {
                 // Undefined when creating the business summary
                 //
                 businessSummaryId:      businessSummaryId
             ,   groupDomain:            bidx.common.groupDomain
-            ,   data:                   businessSummary
+            ,   data:                   entityData
             ,   success:        function( response )
                 {
                     bidx.utils.log( "businesssummary.save::success::response", response );
@@ -1282,8 +1298,8 @@
 
         // Inject the save and button into the controls
         //
-        $btnSave    = $( "<a />", { "class": "btn btn-primary btn-lg", href: "#save"    });
-        $btnCancel  = $( "<a />", { "class": "btn btn-primary btn-lg", href: "#viewExpressForm"});
+        $btnSave    = $( "<a />", { "class": "btn btn-primary", href: "#save"    });
+        $btnCancel  = $( "<a />", { "class": "btn btn-primary", href: "#viewExpressForm"});
 
 
 
