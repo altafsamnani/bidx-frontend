@@ -64,7 +64,7 @@
                 {
                     if ( $key === $currentYear ) :
                 ?>
-                        <div class="bs-cell main-padding pull-left"><i class="fa fa-dollar"></i> <span class="hidden-xs"><?php echo _e('Finance Needed', 'bidxplugin')?>:</span> <?php echo number_format($year->financeNeeded, 0, '', '.'); ?></div>
+                        <div class="bs-cell main-padding pull-left"><i class="fa"><strong><?php _e('IDR', 'bidxplugin');?></strong></i> <span class="hidden-xs"><?php echo _e('Finance Needed', 'bidxplugin')?>:</span> <?php echo number_format($year->financeNeeded, 0, '', '.'); ?></div>
                 <?php
                     endif;
                 }
@@ -75,7 +75,7 @@
     }
 ?>
 
-    <div class="main-padding bg-info info-bar">
+    <div class="main-padding bg-info info-bar affix-top" data-spy="affix">
         <div class="row">
             <div class="col-sm-12 pull-right text-right">
                 <?php // does a user have rights to edit ( is the owner )
@@ -352,7 +352,7 @@
         <div>
             <form id="formExpressForm-GeneralOverview">
                 <h2><?php echo _e('Business details','bidxplugin') ?></h2>
-                <blockquote class="alert-info"><?php _e('Use this section to describe your business. Think about what information you would like other people (investors and entrepreneurs) to know about your business if you only had a few minutes to explain.','bidxplugin')?></blockquote>
+                <blockquote class="alert-info"><?php _e('This section is dedicated to outline your business. By filling in this section you will provide investors with a brief overview of your business.','bidxplugin')?></blockquote>
                 <div class="row">
                     <!-- Name -->
                     <div class="form-group col-sm-6">
@@ -419,15 +419,15 @@
                 <h2><?php echo _e('Financial details','bidxplugin') ?></h2>
                 <blockquote class="alert-danger">
                     <strong>
-                        <?php _e('We dont disclose your financial details to anyone wihout your consent.','bidxplugin')?>
+                        <?php _e('Your financial data is guarded by us and will never be disclosed without your consent!','bidxplugin')?>
                     </strong>&nbsp;
-                    <?php _e('Here you should provide a very general overview of your finances, the financing you need, the number of employees you have currently and how you think your business has, and will continue to grow over time','bidxplugin')?>
+                    <?php _e('Use this section to provide a general overview of your financial position. Please state the financing your business requires, the number of current employees, and deliver a brief description on how your business has, and will continue to grow over time. Please be aware that we store all financial data in US Dollars. For your convenience we have included a currency converter that allows you to import your financial data directly in Rupiah.','bidxplugin')?>
                 </blockquote>
                 <div class="row">
                 <!-- Financial details -->
                     <div class="view viewShow viewEdit">
                         <?php
-                            $this->render('../../businesssummary/templates/financialsummary.phtml');
+                            $this->render('financialsummary.phtml');
                         ?>
                     </div>
                     <!-- ERROR -->

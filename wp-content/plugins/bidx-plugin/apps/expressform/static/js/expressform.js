@@ -21,6 +21,7 @@
     ,   expressFormData   =     window.__bidxExpressForm
     ,   businessSummary   =     bidx.utils.getValue( expressFormData, 'business')
     ,   member            =     bidx.utils.getValue( expressFormData, 'member')
+    ,   idr               =     bidx.utils.getValue( expressFormData, 'usdIdr')
     ,   personalDetails   =     bidx.utils.getValue( member, 'bidxMemberProfile.personalDetails')
     ,   forms             =
         {
@@ -94,10 +95,10 @@
             ] */
         ,   "financialSummaries":
             [
-                "financeNeeded"
+                "idrfinanceNeeded"
             ,   "numberOfEmployees"
-            ,   "operationalCosts"
-            ,   "salesRevenue"
+            ,   "idroperationalCosts"
+            ,   "idrsalesRevenue"
             //  totalIncome is a derived field, but not a input
             ]
         }
@@ -212,14 +213,35 @@
     //
     function _updateFinancialSummariesItem( $item, data )
     {
-        $.each( fields.financialDetails.financialSummaries, function( idx, f )
+        var value
+        ,   idrfValue
+        ,   f
+        ,   totalIncome
+        ,   idrTotalIncome
+        ;
+
+        totalIncome         =   data[ "totalIncome" ];
+        idrTotalIncome     =   parseInt( totalIncome * idr, 10 );
+
+        $.each( fields.financialDetails.financialSummaries, function( idx, idrf )
         {
-            var value = data[ f ] || "";
+
+
+            f           =   idrf.replace('idr', '');
+
+            value       =   data[ f ] || "";
+
+            idrfValue   =   parseInt( value * idr, 10 );
+
+            $item.find( "[name^='" + idrf + "']" ).val( idrfValue );
 
             $item.find( "[name^='" + f + "']" ).val( value );
+
         } );
 
-        $item.find( ".totalIncome .viewEdit" ).text("$ " + data[ "totalIncome" ]);
+        $item.find( ".totalIncome .usdEdit" ).text( totalIncome );
+
+        $item.find( ".totalIncome .idrEdit" ).text( idrTotalIncome);
     }
 
 
@@ -409,6 +431,15 @@
     //
     function _oneTimeSetup()
     {
+
+        $('.info-bar').affix(
+        {
+            offset:
+            {
+                top:    $('.info-bar').offset().top
+            }
+        });
+
         snippets.$financialSummaries    = $financialSummary.find( ".snippets" ).find( ".financialSummariesItem" ).remove();
         _setupValidation();
         _financialSummary();
@@ -503,7 +534,7 @@
 
     // Setup the financial summary component
         //
-    function _financialSummary()
+    function _financialSummary( )
     {
         // FinancialSummary
         //
@@ -512,10 +543,13 @@
         ,   $btnAddPrev     = $financialSummary.find( "a[href$=#addPreviousYear]" )
         ,   $btnAddNext     = $financialSummary.find( "a[href$=#addNextYear]" )
 
-        ,   curYear         = bidx.common.getNow().getFullYear()
+        ,   curYear         = bidx.common.getNow().getFullYear() -1
         ;
+
+
         // Add on year to the left
         //
+        $btnAddPrev.hide();
         $financialSummary.delegate( "a[href$=#addPreviousYear]", "click", function( e )
         {
             e.preventDefault();
@@ -525,6 +559,7 @@
 
         // Add on year to the right
         //
+        $btnAddNext.hide();
         $financialSummary.delegate( "a[href$=#addNextYear]", "click", function( e )
         {
             e.preventDefault();
@@ -563,20 +598,30 @@
             _navigateYear( "next" );
         } );
 
+
+
         // Calculate the totalincome when the salesRevenue and/or operationalCosts change
         //
-        $financialSummaryYearsContainer.delegate( "input[name^='salesRevenue'],input[name^='operationalCosts']", "change", function()
+        $financialSummaryYearsContainer.delegate( "input[name^='idrsalesRevenue'],input[name^='idroperationalCosts'],input[name^='idrfinanceNeeded']", "change", function()
         {
-            var $input  = $( this )
-            ,   $item   = $input.closest( ".financialSummariesItem" )
+            var $input      =   $( this )
+            ,   $item       =   $input.closest( ".financialSummariesItem" )
+            ,   isFnKey     =   $input.hasClass('idrfinanceNeeded')
             ;
 
-            _calculateTotalIncome( $item );
+            if( isFnKey )
+            {
+                _calculateFinanceNeeded( $item );
+            }
+            else
+            {
+                _calculateTotalIncome( $item );
+            }
+
         } );
 
         // Itterate over the server side rendered year items
         //
-        bidx.utils.log('$financialSummaryYearsContainer', $financialSummaryYearsContainer);
         $financialSummaryYearsContainer.find( ".financialSummariesItem:not(.addItem)" ).each( function( )
         {
             var $yearItem   = $( this )
@@ -775,16 +820,32 @@
             }
         }
 
+        function _calculateFinanceNeeded( $item )
+        {
+            var financeNeeded        = parseInt( $item.find( "input[name^='idrfinanceNeeded']"     ).val(), 10 ) || 0
+            ,   usdFinanceNeeded     = parseInt( financeNeeded/idr, 10)
+            ;
+
+            $item.find( ".financeNeeded" ).val( usdFinanceNeeded );
+        }
+
         // Calculate the new total income
         //
         function _calculateTotalIncome( $item )
         {
-            var salesRevenue        = parseInt( $item.find( "input[name^='salesRevenue']"     ).val(), 10 ) || 0
-            ,   operationalCosts    = parseInt( $item.find( "input[name^='operationalCosts']" ).val(), 10 ) || 0
-            ,   totalIncome         = salesRevenue - operationalCosts
+            var salesRevenue        = parseInt( $item.find( "input[name^='idrsalesRevenue']"     ).val(), 10 ) || 0
+            ,   operationalCosts    = parseInt( $item.find( "input[name^='idroperationalCosts']" ).val(), 10 ) || 0
+            ,   totalIncome         = parseInt( salesRevenue - operationalCosts, 10)
+            ,   usdSalesRevenue     = parseInt( salesRevenue/idr, 10)
+            ,   usdOperationalCosts = parseInt( operationalCosts/idr, 10)
+            ,   usdTotalIncome      = parseInt( usdSalesRevenue - usdOperationalCosts, 10)
             ;
 
-            $item.find( ".totalIncome .viewEdit" ).text( "$ " + totalIncome );
+            $item.find( ".salesRevenue" ).val( usdSalesRevenue );
+            $item.find( ".operationalCosts" ).val( usdOperationalCosts );
+
+            $item.find( ".totalIncome .idrEdit" ).text( totalIncome );
+            $item.find( ".totalIncome .usdEdit" ).text( usdTotalIncome );
         }
 
         // Select a certain year, update the selected state, show the correct years and disable/enable the buttons
@@ -804,7 +865,7 @@
 
             // Hide all and show conditional the new situation
             //
-            $years.hide();
+            //$years.hide();
 
             // Show at least the newly selected year
             //
@@ -881,6 +942,12 @@
         // Expose financial summary fucntinos
         //
         financialSummary.selectYear = selectYear;
+
+        _addFinancialSummaryYear( "prev" );
+        _addFinancialSummaryYear( "prev" );
+
+
+
     }
 
     // Convert the form values back into the member object

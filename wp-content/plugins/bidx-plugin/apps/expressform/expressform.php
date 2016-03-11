@@ -108,6 +108,7 @@ class expressform {
         $jsParams = array(
                             'member'    => $view->memberData
                         ,   'business'  => $view->businessSummaryData
+                        ,   'usdIdr'   => BIDX_USD_IDR
                         );
 
         wp_localize_script ('bidx-data', '__bidxExpressForm', $jsParams);
