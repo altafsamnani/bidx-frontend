@@ -64,11 +64,12 @@ class BidxCommon
         $is_ajax = isset ($_SERVER['HTTP_X_REQUESTED_WITH']) AND
             strtolower ($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 
-        if (!$is_ajax) {
+        $isFacebookReferer  =   isset ($_SERVER['HTTP_REFERER']) AND
+            strstr ($_SERVER['HTTP_REFERER'], 'facebook.com');  // For express form Android Facebook Browser its needed Damnnnn
+
+        if (!$is_ajax || $isFacebookReferer ) {
             // To check whther its login page or q= redirect already checked session.
             $checkSession = $this->checkSession ();
-
-
 
             if ($checkSession) {
 

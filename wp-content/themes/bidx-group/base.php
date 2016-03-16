@@ -1,6 +1,10 @@
 <?php
     $session = BidxCommon::$staticSession;
 
+    echo "<pre>";
+    print_r($session);
+    echo "</pre>";exit;
+
     $authClass = "not-auth";
     $authenticated = false;
 
