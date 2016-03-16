@@ -362,6 +362,7 @@
         ,   'editExpressForm(/:id)(*splat)':                    'editExpressForm'
         ,   'createExpressForm':                                'createExpressForm'
         ,   'viewExpressForm':                                  'viewExpressForm'
+        ,   'landingExpressForm':                               'landingExpressForm'
 
 
         ,   'editCompetition(/:id)(*splat)':                    'editCompetition'
@@ -640,6 +641,20 @@
                 "expressform"
             ,   {
                     requestedState: "view"
+                }
+            );
+        }
+    ,   landingExpressForm:          function( state )
+        {
+            bidx.utils.log( "AppRouter::landingExpressForm" );
+
+            mainState = "landingExpressForm";
+
+            _navigateToApp
+            (
+                "expressform"
+            ,   {
+                    requestedState: "landing"
                 }
             );
         }

@@ -20,6 +20,7 @@
     ,   $views            =     $element.find( ".view" )
     ,   $modals           =     $element.find( ".modalView" )
     ,   $modal
+    ,   $affixInfoBar     =     $('.info-bar')
     ,   expressFormData   =     window.__bidxExpressForm
     ,   businessSummary   =     bidx.utils.getValue( expressFormData, 'business')
     ,   member            =     bidx.utils.getValue( expressFormData, 'member')
@@ -430,14 +431,16 @@
     //
     function _oneTimeSetup()
     {
-
-        $('.info-bar').affix(
+        if($affixInfoBar.length)
         {
-            offset:
+            $('.info-bar').affix(
             {
-                top:    $('.info-bar').offset().top
-            }
-        });
+                offset:
+                {
+                    top:    $('.info-bar').offset().top
+                }
+            });
+        }
 
         snippets.$financialSummaries    = $financialSummary.find( ".snippets" ).find( ".financialSummariesItem" ).remove();
         _setupValidation();
@@ -1279,7 +1282,7 @@
                         {
                             bidx.common.notifyRedirect();
 
-                            url = currentLanguage + "/expressform/" + businessEntityId ;
+                            url = currentLanguage + "/expressform/" + businessEntityId + "?rs=true";
 
                             document.location.href = url;
                         }
@@ -1512,9 +1515,17 @@
 
         switch ( state )
         {
+            case 'landing':
+
+            $affixInfoBar.hide();
+            _showView( "show" );
+
+            break;
             case 'view':
 
                 bidx.utils.log( "ExpressForm::AppRouter::view" );
+
+                $affixInfoBar.show();
 
                 _showView( "load" );
 
@@ -1536,21 +1547,16 @@
 
                 _showView( "load" );
 
-                 bidx.i18n.load( [ "__global", appName ] )
-                .then( function()
-                {
-                    return bidx.data.load( [ "country" ] );
-                } )
-                .done( function()
-                {
-                    _init( state );
+                $affixInfoBar.show();
 
-                    financialSummary.addFinancialSummaryYear( "prev" );
+                _init( state );
 
-                    financialSummary.addFinancialSummaryYear( "prev" );
+                financialSummary.addFinancialSummaryYear( "prev" );
 
-                    _populateScreen( );
-                } );
+                financialSummary.addFinancialSummaryYear( "prev" );
+
+                _populateScreen( );
+
 
             break;
 
@@ -1561,13 +1567,9 @@
                 //
                 _showView( "load" );
 
-                bidx.i18n.load( [ "__global", appName ] )
-                .then( function()
-                {
-                    return bidx.data.load( [ "country" ] );
-                } )
-                .done( function()
-                {
+                $affixInfoBar.show();
+
+
                     _init( state );
 
                     financialSummary.addFinancialSummaryYear( "prev" );
@@ -1575,7 +1577,7 @@
                     financialSummary.addFinancialSummaryYear( "prev" );
 
                     _populateScreen( );
-                } );
+
 
                 $element.addClass( "edit" );
 
@@ -1642,7 +1644,7 @@
 
         if( _.indexOf(allowedHash, bidxHash) === -1 )
         {
-            initHash            =   "#createExpressForm";
+            initHash            =   "#landingExpressForm";
         }
 
         if( businessSummary )
