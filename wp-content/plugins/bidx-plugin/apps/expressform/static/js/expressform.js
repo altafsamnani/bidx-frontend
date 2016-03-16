@@ -329,7 +329,7 @@
     {
         forms.personalDetails.$el.validate(
         {
-            debug:          false
+            ignore: ".genderRadio input"
         ,   rules:
             {
                 "personalDetails.firstName":
@@ -1444,10 +1444,10 @@
             }
         });
 
-        if( options.callback )
+        if( options.onHide )
         {
             //  to prevent duplicate attachments bind event only onces
-            $modal.on( 'hidden.bs.modal', options.callback );
+            $modal.on( 'hidden.bs.modal', options.onHide );
         }
 
         if( options.onShow )
