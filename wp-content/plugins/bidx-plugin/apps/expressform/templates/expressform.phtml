@@ -123,7 +123,8 @@
                 <div class="alert alert-success hide-overflow">
 
                     <?php
-                        echo sprintf ( __('Thank you for participating in the competition, Please %1$s the Mekar competition page to get the updates about finalists and winners.','bidxplugin'), $fbLikeButton ); ?>
+                        echo sprintf( __('In order to keep track of the event’s progress and stay updated and connected, please %1$s the Mekar page, specially dedicated to the competition. We advise you to allow notification from the page as illustrated bellow, in order to avoid missing out on any developments.','bidxplugin'), $fbLikeButton);
+                        ?>
                 </div>
             </div>
             <h1>
@@ -180,7 +181,7 @@
                     __('Last name','bidxplugin')        =>  $personalDetails->lastName ,
                     __('Mobile number','bidxplugin')    =>  $mobile ,
                     __('Email','bidxplugin')            =>  $emailAddress ,
-                    __('Gender','bidxplugin')           =>  $gender ,
+                   // __('Gender','bidxplugin')           =>  $gender ,
                     __('City','bidxplugin')             =>  $personalDetails->address[0]->cityTown
                 );
 
@@ -310,44 +311,49 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                             <label><?php echo _e('First name','bidxplugin') ?></label>
-                            <input type="text" class="form-control" name="firstName" placeholder="<?php echo _e('Enter your first name','bidxplugin') ?>" />
+                            <input type="text" class="form-control" name="personalDetails.firstName" placeholder="<?php echo _e('Enter your first name','bidxplugin') ?>" />
                     </div>
 
                     <div class="form-group col-sm-6">
                             <label><?php echo _e('Last name','bidxplugin') ?></label>
-                            <input type="text" class="form-control" name="lastName" placeholder="<?php echo _e('Enter your last name','bidxplugin') ?>" />
+                            <input type="text" class="form-control" name="personalDetails.lastName" placeholder="<?php echo _e('Enter your last name','bidxplugin') ?>" />
                     </div>
 
                     <div class="form-group col-sm-6">
                         <label><?php echo _e('Mobile number','bidxplugin') ?></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-tablet"></i></span>
-                            <input type="tel" class="form-control" name="contactDetail[0].mobile" placeholder="<?php echo _e('Enter your mobile number','bidxplugin') ?>" />
+                            <input type="tel" class="form-control" name="personalDetails.contactDetail[0].mobile" placeholder="<?php echo _e('Enter your mobile number','bidxplugin') ?>" />
                         </div>
                     </div>
                     <div class="form-group col-sm-6">
                         <label><?php echo _e('Email','bidxplugin') ?></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                            <input type="email" class="form-control" name="emailAddress" placeholder="<?php echo _e('Enter your email','bidxplugin') ?>" />
+                            <input type="email" class="form-control" name="personalDetails.emailAddress" placeholder="<?php echo _e('Enter your email','bidxplugin') ?>" />
                         </div>
                     </div>
 
-                     <div class="form-group col-sm-6 clear-both">
-                        <label><?php _e('Gender','bidxplugin'); ?></label>
-                        <div class="radio">
-                            <input type="radio" value="m" id="radio-personalDetailsM" name="gender" data-toggle="radio">
-                            <label for="radio-personalDetailsM"><span></span><?php _e('Male', 'bidxplugin');?></label>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label><?php _e('Gender','bidxplugin'); ?></label>
+
+                            <div class="radio">
+                                <input type="radio" value="m" id="radio-personalDetailsM" name="personalDetails.gender" data-toggle="radio" />
+                                <label for="radio-personalDetailsM"><span></span><?php _e('Male','bidxplugin'); ?></label>
+                            </div>
+
+                            <div class="radio">
+                                <input type="radio" value="f" id="radio-personalDetailsF" name="personalDetails.gender" data-toggle="radio" />
+                                <label for="radio-personalDetailsF"><span></span><?php _e('Female','bidxplugin'); ?></label>
+                            </div>
+
                         </div>
 
-                        <div class="radio checked">
-                            <input type="radio" value="f" id="radio-personalDetailsF" name="gender" data-toggle="radio">
-                            <label for="radio-personalDetailsF"><span></span><?php _e('Female', 'bidxplugin');?></label>
-                        </div>
                     </div>
                      <div class="col-sm-6">
                         <label><?php _e('City','bidxplugin'); ?></label>
-                        <input type="text" class="form-control" name="address[0].cityTown" placeholder="<?php echo _e('Enter the location of your business', 'bidxplugin') ?>">
+                        <input type="text" class="form-control" name="personalDetails.address[0].cityTown" placeholder="<?php echo _e('Enter the location of your business', 'bidxplugin') ?>">
                     </div>
                 </div>
             </form>
@@ -360,7 +366,7 @@
                     <!-- Name -->
                     <div class="form-group col-sm-6">
                         <label><?php _e('Name of your business','bidxplugin'); ?></label>
-                        <input type="text" class="form-control" name="name">
+                        <input type="text" class="form-control" name="bname">
                     </div>
                     <!-- Logo -->
                     <div class="col-sm-6 bsLogo">
@@ -459,7 +465,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3 class="bidx-modalLabel"><?php _e('Thank you for participating in the competition!','bidxplugin')?></h3>
+                    <h3 class="bidx-modalLabel"><?php _e('Thank you for participating in the competition','bidxplugin')?></h3>
                 </div>
                 <div class="modal-body">
                 <p>

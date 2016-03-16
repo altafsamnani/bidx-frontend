@@ -71,7 +71,6 @@ class expressform {
 
         $memberData                 =   (isset($memberResult->data)) ? $memberResult->data:NULL;
 
-
         $businessData               =   (isset($businessSummaryResult->data)) ? $businessSummaryResult->data:NULL;
 
          if ( isset( $businessSummaryResult -> data -> bidxMeta -> bidxCompletionMesh) ) {
@@ -97,12 +96,6 @@ class expressform {
         $view->sessionData          =   $sessionData;
         $view->businessSummaryData  =   $businessData;
         $view->memberData           =   $memberData;
-
-        //echo "<pre>";
-        //print_r($sessionData);
-        //print_r($memberData);
-        //print_r($businessSummaryData);
-        //echo "</pre>";exit;
 
         //Localize to js variables, currently to use focusexpertise for mentoring to display match
         $jsParams = array(

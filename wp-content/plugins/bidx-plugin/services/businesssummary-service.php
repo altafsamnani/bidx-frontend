@@ -49,7 +49,7 @@ class BusinessSummaryService extends APIbridge
         $tagResults     =   false;
         foreach( $bidxBusinessSummary as $businessSummaryId )
         {
-            $businessSummaryId  =   9066;
+            //$businessSummaryId  =   9066;
             $result             =   $this->callBidxAPI ($this->apiUrl . $businessSummaryId, array (), 'GET');
             $bidxMeta           =   $result->data->bidxMeta;
 
