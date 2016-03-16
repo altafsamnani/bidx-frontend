@@ -163,7 +163,7 @@
 
                         value  = bidx.utils.getValue( personalDetails, fp );
 
-                        $input = $form.find( "[name='" + f + "']" );
+                        $input = $form.find( "[name='personalDetails." + f + "']" );
 
                         bidx.utils.setElementValue( $input, value );
                     }
@@ -332,21 +332,18 @@
             debug:          false
         ,   rules:
             {
-                "firstName":
+                "personalDetails.firstName":
                 {
                     required:               true
                 }
-            ,   "lastName":
+            ,   "personalDetails.lastName":
                 {
                     required:               true
                 }
-            ,   "gender":
-                {
-                    required:               true
-                }
-            ,   "emailAddress":
+            ,   "personalDetails.emailAddress":
                 {
                     email:                   true
+                ,   required:               true
                 }
             }
         ,   messages:
@@ -1227,8 +1224,8 @@
                                 entity:     businessSummary
                             ,   tags:       [{
                                                 tagId:      'mekar'
-                                            ,   visibility:  "ANYONE"
-                                            ,   groupId:     bidx.common.getCurrentGroupId( "currentGroup" )
+                                            ,   visibility: "ANYONE"
+                                            ,   groupId:    bidx.common.getCurrentGroupId( "currentGroup" )
                                             }]
                             };
 
@@ -1247,12 +1244,28 @@
                 {
                     bidx.utils.log( "businesssummary.save::success::response", response );
 
-                    var bidxMeta = bidx.utils.getValue( response, "data.bidxMeta" );
+                    var businessEntity
+                    ,   businessEntityId
+                    ,   bidxEntityType
+                    ,   responseData        =   bidx.utils.getValue( response, "data" )
+                    ;
 
-                    if ( state === "create" )
+                    businessEntity          =   _.find( responseData, function( response )
+                                            {
+                                                bidxEntityType    =   bidx.utils.getValue( response, 'bidxMeta.bidxEntityType');
+
+                                                return bidxEntityType === 'bidxBusinessSummary';
+
+                                            });
+
+                    businessEntityId    =   bidx.utils.getValue(businessEntity, 'bidxMeta.bidxEntityId' );
+
+                    bidx.utils.log('businessEntityId', businessEntityId );
+
+                /*    if ( state === "create" )
                     {
                         businessSummaryId = bidx.utils.getValue( bidxMeta, "bidxEntityId" );
-                    }
+                    }*/
 
                     bidx.common.closeNotifications();
 
@@ -1266,7 +1279,7 @@
                         {
                             bidx.common.notifyRedirect();
 
-                            url = currentLanguage + "/expressform/" + businessSummaryId ;
+                            url = currentLanguage + "/expressform/" + businessEntityId ;
 
                             document.location.href = url;
                         }
@@ -1431,7 +1444,7 @@
             }
         });
 
-        if( options.onHide )
+        if( options.callback )
         {
             //  to prevent duplicate attachments bind event only onces
             $modal.on( 'hidden.bs.modal', options.callback );
