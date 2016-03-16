@@ -81,6 +81,7 @@
                 "name"
             ,   "summary"
             ,   "externalVideoPitch"
+            ,   "website"
             ]
         }
     ,   "financialDetails":
@@ -379,6 +380,10 @@
                 {
                     required:               true
                 ,   maxlength:              900
+                }
+            ,   "website":
+                {
+                    urlOptionalProtocol:        true
                 }
             ,   "focusIndustrySector[0]mainSector":
                 {
@@ -1008,11 +1013,7 @@
                     {
                         $input = $form.find( "[name^='" + f + "']" );
 
-                        bidx.utils.log('input', $input);
-
                         value  = bidx.utils.getElementValue( $input );
-
-                        bidx.utils.log('value', value);
 
                         bidx.utils.setValue( businessSummary, f, value );
                     }
@@ -1189,6 +1190,13 @@
                 } );
             }
         } );
+
+        // Fix the URL fields so they will be prefixed with http:// in case something valid was provided, but not having a protocol
+        //
+        if ( businessSummary.website )
+        {
+            businessSummary.website = bidx.utils.prefixUrlWithProtocol( businessSummary.website );
+        }
 
         // Logo
         //

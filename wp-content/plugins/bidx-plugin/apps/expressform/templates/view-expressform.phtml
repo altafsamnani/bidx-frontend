@@ -109,8 +109,14 @@
 
             <div class="main-padding-vertical">
             <?php
+                $bpWebsite = null;
+
+                if ( $this->exst( $businessSummary->website ) ) {
+                    $bpWebsite = sprintf( '<a href="%1$s" target="_blank">%1$s</a>', $this->exst($businessSummary->website) );
+                }
+
                 $rowValues = array
-                (
+                (   __('Website','bidxplugin') => $bpWebsite,
                     __('Industry','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry'),
                     __('Country of business','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' )
                 );
