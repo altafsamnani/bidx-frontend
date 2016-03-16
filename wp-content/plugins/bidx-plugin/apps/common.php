@@ -367,6 +367,7 @@ class BidxCommon
         $statusMsgId                                                =   NULL;
         $this::$bidxSession[$subDomain]->companyId                  =   NULL;
         $this::$bidxSession[$subDomain]->requestedBusinessSummaryId =   NULL;
+        $this::$bidxSession[$subDomain]->external                   =   false;
 
         if( strlen ( $hostAddress[1] ) == 2 )
         {
@@ -385,6 +386,31 @@ class BidxCommon
 
             //Redirect URL Logic
             switch ($module) {
+
+                case 'expressform':
+                    $memberId           = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
+                    $businessSummaryId  = ( $id ) ? $id : NULL;
+
+                    if ( $businessSummaryId )
+                    {
+                        $data->businessSummaryId = $businessSummaryId;
+                        $this::$bidxSession[$subDomain]->requestedBusinessSummaryId = $businessSummaryId;
+                    }
+
+                    if ( $memberId )
+                    {
+                        $data->memberId = $memberId;
+                        $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
+                        $this::$bidxSession[$subDomain]->memberId = $memberId;
+                        $this::$bidxSession[$subDomain]->external = true;
+                    } else
+                    {
+
+                        $redirect = 'auth'; //To redirect /member and not loggedin page to /login
+                        $statusMsgId = 1;
+                    }
+
+                    break;
 
                 case 'member':
                     $sessionMemberId = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
@@ -565,6 +591,24 @@ class BidxCommon
                 unset( $_SESSION['returnAfterLogin'] );
 
                 break;
+
+            case 'expressform':
+            if ($authenticated == 'false')
+            {
+
+                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .'/bidx-soca/bidxauth?id=facebook&path.success=/expressform';
+
+                    $redirect_url = str_replace( 'local', 'test', $redirect_url);
+
+                    wp_clear_auth_cookie ();
+
+                    //Clear Session and Static variables (except for any redirect setting)
+                    $this::clearWpBidxSession();
+
+                    $this::$staticSession = NULL;
+                    unset ($this::$bidxSession[$subDomain]);
+            }
+            break;
 
             case 'mail' :
                 if ($authenticated == 'false') {

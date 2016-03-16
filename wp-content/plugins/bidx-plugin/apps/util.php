@@ -101,6 +101,12 @@ if ( !defined('BIDX_LOGIN_PRIORITY') ) {
     define( 'BIDX_LOGIN_PRIORITY', BIDX_SUPERADMIN_ROLE.'|'.BIDX_OWNER_ROLE.'|'.BIDX_ADMIN_ROLE.'|'.BIDX_MEMBER_ROLE);
 }
 
+/*Currency */
+
+if ( !defined( 'BIDX_USD_IDR' ) ) {
+	define( 'BIDX_USD_IDR', '13212' );
+}
+
 //SLOW !!
 //add_option( BIDX_VERSION_KEY, BIDX_VERSION_NUM );
 

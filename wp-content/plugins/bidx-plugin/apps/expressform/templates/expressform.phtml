@@ -1,212 +1,478 @@
-<div id="expressform" class="col-sm-6 col-sm-offset-3 well">
-<form id="formexpressform">
+<?php
 
-        <fieldset>
-            <legend><?php echo _e('Personal details', 'bidxplugin')?></legend>
-            <div>
-            <h1 id="fb-welcome"></h1>
-            <div class="form-group col-sm-6">
-                    <label><?php echo _e('First name','bidxplugin') ?></label>
-                    <input type="text" class="form-control" name="firstName" placeholder="<?php echo _e('Enter your first name','bidxplugin') ?>"/>
-            </div>
+    $memberData               =   $this->memberData;
+    $personalDetails            =   isset( $memberData->bidxMemberProfile->personalDetails ) ? $memberData->bidxMemberProfile->personalDetails : NULL;
+    $businessSummary            =   $this->businessSummaryData;
+    $businessSummaryBidxMeta    =   isset($businessSummary->bidxMeta)
+    ? $businessSummary->bidxMeta
+    : null;
+    $canEdit                    =   $this->exst($businessSummaryBidxMeta->bidxCanEdit, false);
+    $businessSummaryId          =   $this->exst($businessSummaryBidxMeta->bidxEntityId, false);
+    $ownerId                    =   $this->exst($businessSummaryBidxMeta->bidxOwnerId, false);
+    $progress                   =   $this -> completenessScore ? $this -> completenessScore : '0';
+    $contactDetails             =   $personalDetails->contactDetail[0];
+    $address                    =   $personalDetails->address[0];
+    $currentYear                =   date("Y");
+    $tmpsummary                 =   $this->exst($businessSummary->summary, null, false);
+    $gender                     =   $this->addExtraValuesToRows( 'gender', $this->exst( $personalDetails->gender ) );
+    $emailAddress               =   $this->exst( $personalDetails->emailAddress );
+    $mobile                     =   $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'mobile');
+    $fbPage                     =   "https://www.facebook.com/mekarcompetitions/";
 
-            <div class="form-group col-sm-6">
-                    <label><?php echo _e('Last name','bidxplugin') ?></label>
-                    <input type="text" class="form-control" name="lastName" placeholder="<?php echo _e('Enter your last name','bidxplugin') ?>"/>
-            </div>
 
-            <div class="form-group col-sm-6 clear-both">
-                <label><?php _e('Gender','bidxplugin'); ?></label>
-                <div class="radio">
-                    <input type="radio" value="m" id="radio-personalDetailsM" name="gender" data-toggle="radio">
-                    <label for="radio-personalDetailsM"><span></span>Male</label>
-                </div>
+?>
 
-                <div class="radio checked">
-                    <input type="radio" value="f" id="radio-personalDetailsF" name="gender" data-toggle="radio" checked="checked">
-                    <label for="radio-personalDetailsF"><span></span>Female</label>
-                </div>
-            </div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.5&appId=294717990543462";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
-            <div class="form-group col-sm-6">
-                <label><?php echo _e('Mobile number','bidxplugin') ?></label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-tablet"></i></span>
-                    <input type="tel" class="form-control" name="phone" placeholder="<?php echo _e('Enter your mobile number','bidxplugin') ?>"/>
+
+
+
+
+<!-- *****View ***** -->
+<div class="businessSummary box-border top-margin-lineheight" id="businessSummary" data-bsid="<?php echo $businessSummaryId; ?>" data-ownerid="<?php echo $ownerId; ?>" >
+    <!--<h1><?php echo _e('Usaha Pintar', 'bidxplugin')?></h1>-->
+    <?php
+        $fbLikeButton   =   '<div class="fb-like" data-href='.$fbPage.' data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>';
+
+        if ( $businessSummary->logo && $businessSummary->logo->document ):
+?>
+    <div class="businessCover">
+        <div class="coverImage">
+                <img src="/wp-content/plugins/bidx-plugin/apps/expressform/static/img/rsz_usaha.jpg" alt="Cover Image" style="position: relative; cursor: default;" class="ui-draggable ui-draggable-handle ui-draggable-disabled">
+        </div>
+        <div class="logoImage">
+            <img src="<?php echo $businessSummary->logo->document ?>" class="center-img" alt="Logo Image">
+        </div>
+    </div>
+<?php
+        endif;
+?>
+<?php
+    if ( $businessSummaryId )
+    {
+        $updatedDate    =   $this->getLocaleDate( $businessSummaryBidxMeta->bidxLastUpdateDateTime  );
+?>
+    <div class="bg-gray control-bar">
+        <div class="bs-info hide-overflow">
+            <div class="bs-cell main-padding pull-left"><i class="fa fa-line-chart"></i> <span class="hidden-xs"><?php echo _e('Completed', 'bidxplugin')?>:</span> <?php echo $progress; ?><span>%</span></div>
+
+            <div class="bs-cell main-padding pull-left"><i class="fa fa-refresh"></i> <span class="hidden-xs"><?php echo _e('Last Update', 'bidxplugin')?>:</span> <?php echo $updatedDate; ?></div>
+<?php
+                foreach ($businessSummary->financialSummaries as $key => $year)
+                {
+                    if ( $key === $currentYear ) :
+                ?>
+                        <div class="bs-cell main-padding pull-left"><i class="fa"><strong><?php _e('IDR', 'bidxplugin');?></strong></i> <span class="hidden-xs"><?php echo _e('Finance Needed', 'bidxplugin')?>:</span> <?php echo number_format($year->financeNeeded, 0, '', '.'); ?></div>
+                <?php
+                    endif;
+                }
+?>
+        </div>
+    </div>
+<?php
+    }
+?>
+
+    <div class="main-padding bg-info info-bar affix-top" data-spy="affix">
+        <div class="row">
+            <div class="col-sm-12 pull-right text-right">
+                <?php // does a user have rights to edit ( is the owner )
+                    if ( $canEdit )
+                    {
+                    ?>
+                        <a class="btn btn-primary editBS" href="#editExpressForm/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+
+                <?php }
+                 ?>
+
+                <div class="editControlsContainer">
+                    <div class="editControls pull-right">
+
+                        <!-- SHOW -->
+                        <div class="view viewShow"></div>
+
+                        <!-- EDIT, conditionally filled by the app -->
+                        <div class="view viewEdit btn-group"></div>
+                    </div>
                 </div>
             </div>
         </div>
-        </fieldset>
+    </div>
 
-        <br>
-        <fieldset>
-            <legend><?php echo _e('Business details','bidxplugin') ?></legend>
 
-            <div class="form-group">                                
-                <!-- Logo -->
-                <div class="col-sm-6 bsLogo">
-                    <label><?php _e('Logo','bidxplugin'); ?></label>
-                    <div class="logoContainer">
-                        <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
+
+<!-- *****Show***** -->
+<!-- SHOW -->
+<div class="view viewShow">
+
+    <div class="mainBusiness hide-overflow">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+             <?php
+                if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
+                {
+            ?>
+             <div class="cardView top-margin-lineheight fbLikeMsg">
+                <div class="alert alert-success hide-overflow">
+
+                    <?php
+                        echo sprintf ( __('Thank you for participating in the competition, Please %1$s the Mekar competition page to get the updates about finalists and winners.','bidxplugin'), $fbLikeButton ); ?>
+                </div>
+            </div>
+            <h1>
+                <?php echo $this->exst( $businessSummary->name , null, false); ?>
+                <small>&nbsp;<?php echo _e( 'by', 'bidxplugin' ); ?>&nbsp;
+                    <a href="<?php echo _l('member')."/".$this->exst( $businessSummaryBidxMeta->bidxOwnerId ); ?>"><?php echo $this->exst( $businessSummaryBidxMeta->bidxOwnerDisplayName ); ?></a>
+                </small>
+            </h1>
+            <?php
+                }
+            ?>
+
+            <h4><?php echo $this->exst( $businessSummary->slogan, null, false ); ?></h4>
+            <?php
+                $theVideo = '';
+                $videoUrl = $this->exst($businessSummary->externalVideoPitch);
+                $parsedVideo = $this->parseVideos( $videoUrl );
+
+                if ( $parsedVideo )
+                {
+                    $theVideo = '<div class="video-wrapper embed-responsive embed-responsive-16by9 bottom-margin-lineheight">'.$parsedVideo[0]['videoplayer'].'</div>';
+                }
+
+                echo $theVideo;
+
+                if ( $this->exst($businessSummary->externalAudioPitch) )
+                {
+                ?>
+                    <a target="_blank" href="<?php echo $this->exst($businessSummary->externalAudioPitch); ?>" class="audioPitch btn btn-lg btn-primary btn-block"><?php _e('Listen the audio pitch', 'bidxplugin')?></a>
+                <?php
+                }
+
+                if ( $tmpsummary )
+                {
+                ?>
+                <div class="main-padding-vertical">
+            <h3 class="text-uppercase"><?php _e('In a few words', 'bidxplugin')?></h3>
+            <div>
+<?php
+                echo $tmpsummary;
+?>
+            </div>
+        </div>
+
+<?php
+    }
+?>
+            <!--Member Detailssssssss-->
+            <div class="main-padding-vertical">
+            <?php
+                $rowValues = array
+                (
+                    __('First name','bidxplugin')       =>  $personalDetails->firstName ,
+                    __('Last name','bidxplugin')        =>  $personalDetails->lastName ,
+                    __('Mobile number','bidxplugin')    =>  $mobile ,
+                    __('Email','bidxplugin')            =>  $emailAddress ,
+                    __('Gender','bidxplugin')           =>  $gender ,
+                    __('City','bidxplugin')             =>  $personalDetails->address[0]->cityTown
+                );
+
+                if ( $this->checkEmpty( $rowValues ) ) :
+                ?>
+                    <h3 class="text-uppercase"><?php _e('Personal details', 'bidxplugin')?></h3>
+                <?php
+                    echo $this->tableRow ( $rowValues );
+                    endif;
+                ?>
+            </div>
+
+            <div class="main-padding-vertical">
+            <?php
+                $rowValues = array
+                (
+                    __('Industry','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry'),
+                    __('Country of business','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' )
+                );
+
+                if ( $this->checkEmpty( $rowValues ) ) :
+                ?>
+                    <h3 class="text-uppercase"><?php _e('The Business', 'bidxplugin')?></h3>
+                <?php
+                    echo $this->tableRow ( $rowValues );
+                    endif;
+                ?>
+            </div>
+
+            <h3 class="text-uppercase"><?php _e('Financial Details', 'bidxplugin')?></h3>
+<?php
+                $rowValues = array
+                (
+                    __('Business sales started in','bidxplugin')=> $this->exst($businessSummary->yearSalesStarted),
+                    __('Reason for financing','bidxplugin') => $this->exst($businessSummary->summaryFinancingNeeded),
+                    __('Equity currently retained','bidxplugin') => $this->addPrefixSuffix ( $this->exst($businessSummary->equityRetained ), '', ' %' ),
+                    __('Investment type','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->investmentType), ', ', 'investmentType' )
+                );
+
+                if ( $this->checkEmpty( $rowValues ) ) :
+                    echo $this->tableRow ( $rowValues );
+                endif;
+                $financialDetails = $this->exst( $businessSummary->financialSummaries );
+                if( $financialDetails )
+                {
+?>
+                <table class="table table-bordered table-financial">
+                    <tr>
+                        <th class="text-center td-15" rowspan="2"><?php _e('Year', 'bidxplugin')?></th>
+                        <th class="text-center hidden-sm hidden-xs" colspan="3"><?php _e('Income statement', 'bidxplugin')?></th>
+                        <th class="text-center visible-sm visible-xs"><?php _e('Income statement', 'bidxplugin')?></th>
+                        <th class="text-center" rowspan="2"><?php _e('Finance needed', 'bidxplugin')?> * </th>
+                        <th class="text-center hidden-sm hidden-xs" rowspan="2"><?php _e('Employees', 'bidxplugin')?> ** </th>
+                    </tr>
+                    <tr>
+                        <th class="text-center td-15 hidden-sm hidden-xs"><small><?php _e('Sales revenues', 'bidxplugin')?></small></th>
+                        <th class="text-center td-15 hidden-sm hidden-xs"><small><?php _e('Operational costs', 'bidxplugin')?></small></th>
+                        <th class="text-center td-15"><small><?php _e('Total income', 'bidxplugin')?></small></th>
+                    </tr>
+                    <?php
+
+
+                    $sortedfinancialDetails = new ArrayObject($financialDetails);
+                    $sortedfinancialDetails->ksort();
+
+                    foreach ( $sortedfinancialDetails as $year => $yearDetails )
+                    {
+                        if ( $year < $currentYear )
+                        {
+                            $yd = __('Actuals', 'bidxplugin');
+                        }
+                        elseif ( $year > $currentYear )
+                        {
+                            $yd = __('Forecast', 'bidxplugin');
+                        }
+                        else
+                        {
+                            $yd = __('Current year', 'bidxplugin');
+                        }
+
+                        echo '<tr>';
+                        echo '<td class="text-center">' . $year . '</td>';
+                        echo '<td class="text-right hidden-sm hidden-xs">' . '<small>$</small> ' . number_format($yearDetails->salesRevenue, 0, '', '.') . '</td>';
+                        echo '<td class="text-right hidden-sm hidden-xs">' . '<small>$</small> ' . number_format($yearDetails->operationalCosts, 0, '', '.') . '</td>';
+                        echo '<td class="text-right">' . '<small>$</small> ' . number_format($yearDetails->totalIncome, 0, '', '.') . '</td>';
+                        echo '<td class="text-right">' . '<small>$</small> ' . number_format($yearDetails->financeNeeded, 0, '', '.') . '</td>';
+                        echo '<td class="text-center hidden-sm hidden-xs">' . $yearDetails->numberOfEmployees . '</td>';
+                        echo '</tr>';
+
+                    } ?>
+                </table>
+                <p>
+                    * <small><?php _e('from external financiers in US Dollars', 'bidxplugin')?></small><br>
+                    ** <small><?php _e('being directly paid in this business', 'bidxplugin')?></small>
+                </p>
+                <?php } ?>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- LOAD -->
+<div class="view viewLoad main-padding">
+    <div class="alert alert-info text-center">
+        <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Retrieving information...','bidxplugin'); ?>
+    </div>
+</div>
+
+
+<!-- ERROR -->
+<div class="view viewError main-padding">
+    <div class="alert alert-warning">
+        <p class="errorMsg"></p>
+    </div>
+</div>
+
+<!-- *****EDIT***** -->
+<div class="view viewEdit main-padding">
+        <div>
+            <form id="formExpressForm-PersonalDetails">
+                <h2><?php echo _e('Personal details', 'bidxplugin')?></h2>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                            <label><?php echo _e('First name','bidxplugin') ?></label>
+                            <input type="text" class="form-control" name="firstName" placeholder="<?php echo _e('Enter your first name','bidxplugin') ?>" />
                     </div>
 
-                    <br>
-                    <div class="logoBtns">
-                        <a href="#addLogo" data-toggle="modal" class="btn btn-primary"><?php _e('Select'); ?></a>
-                        <a href="#removeLogo" class="btn btn-primary hide"><?php _e('Remove'); ?></a>
+                    <div class="form-group col-sm-6">
+                            <label><?php echo _e('Last name','bidxplugin') ?></label>
+                            <input type="text" class="form-control" name="lastName" placeholder="<?php echo _e('Enter your last name','bidxplugin') ?>" />
                     </div>
 
-                    <div class="addLogoImage modal fade">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
+                    <div class="form-group col-sm-6">
+                        <label><?php echo _e('Mobile number','bidxplugin') ?></label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-tablet"></i></span>
+                            <input type="tel" class="form-control" name="contactDetail[0].mobile" placeholder="<?php echo _e('Enter your mobile number','bidxplugin') ?>" />
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label><?php echo _e('Email','bidxplugin') ?></label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                            <input type="email" class="form-control" name="emailAddress" placeholder="<?php echo _e('Enter your email','bidxplugin') ?>" />
+                        </div>
+                    </div>
+
+                     <div class="form-group col-sm-6 clear-both">
+                        <label><?php _e('Gender','bidxplugin'); ?></label>
+                        <div class="radio">
+                            <input type="radio" value="m" id="radio-personalDetailsM" name="gender" data-toggle="radio">
+                            <label for="radio-personalDetailsM"><span></span><?php _e('Male', 'bidxplugin');?></label>
+                        </div>
+
+                        <div class="radio checked">
+                            <input type="radio" value="f" id="radio-personalDetailsF" name="gender" data-toggle="radio">
+                            <label for="radio-personalDetailsF"><span></span><?php _e('Female', 'bidxplugin');?></label>
+                        </div>
+                    </div>
+                     <div class="col-sm-6">
+                        <label><?php _e('City','bidxplugin'); ?></label>
+                        <input type="text" class="form-control" name="address[0].cityTown" placeholder="<?php echo _e('Enter the location of your business', 'bidxplugin') ?>">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div>
+            <form id="formExpressForm-GeneralOverview">
+                <h2><?php echo _e('Business details','bidxplugin') ?></h2>
+                <blockquote class="alert-info"><?php _e('This section is dedicated to outline your business. By filling in this section you will provide investors with a brief overview of your business.','bidxplugin')?></blockquote>
+                <div class="row">
+                    <!-- Name -->
+                    <div class="form-group col-sm-6">
+                        <label><?php _e('Name of your business','bidxplugin'); ?></label>
+                        <input type="text" class="form-control" name="name">
+                    </div>
+                    <!-- Logo -->
+                    <div class="col-sm-6 bsLogo">
+                        <label><?php _e('Logo','bidxplugin'); ?></label>
+                        <div class="logoContainer">
+                            <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
+                        </div>
+                        <br>
+                        <div class="logoBtns">
+                            <a href="#addLogo" data-toggle="modal" class="btn btn-primary"><?php _e('Select'); ?></a>
+                            <a href="#removeLogo" class="btn btn-primary hide"><?php _e('Remove'); ?></a>
+                        </div>
+
+                        <div class="addLogoImage modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     <h3><?php _e('Check the file you want to use as your Logo', 'bidxplugin' ); ?></h3>
-                                </div>
+                                    </div>
+                                    <div class="modal-body">
+                <?php
+                                        // Media app will only be inserted once, this is by design!
+                                        //
+                                        echo do_shortcode( '[bidx app="media"]' );
+                ?>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></button>
+                                        <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
 
-                                <div class="modal-body">
-                            <?php
-                                echo do_shortcode( '[bidx app="media"]' );
-                            ?>
-                                </div>
-                                                
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></button>
-                                    <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-            </div>
-            
-            <!-- Name -->
-            <div class="form-group clear-both">
-                <label><?php _e('Name of your business','bidxplugin'); ?></label>
-                <input type="text" class="form-control" name="bpname" placeholder="<?php echo _e('Enter the name of your business', 'bidxplugin') ?>">
-            </div>
-
-            <div class="form-group clear-both">
-                <label><?php _e('Describe your business ','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 900 characters)','bidxplugin'); ?></small></label>
-                <textarea name="description" class="form-control" placeholder="<?php echo _e('Enter the description of your business', 'bidxplugin'); ?>"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label><?php _e('City','bidxplugin'); ?></label>
-                <input type="text" class="form-control" name="city" placeholder="<?php echo _e('Enter the location of your business', 'bidxplugin') ?>">
-            </div>
-
-            <div id="industrySectors">
-                <label><?php _e('Select the industries that apply to your business','bidxplugin');?></label>
-            </div>
-
-            <div class="form-group">
-                <label><?php _e('Financing needed','bidxplugin'); ?></label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                    <input type="text" name="financingNeeded" class="form-control">
-                </div>
-            </div>
-
-            <div class="clear-both">
-                <div class="col-sm-6">
-                <label><?php echo _e('Revenues','bidxplugin') ?></label><br>
-
-                    <div class="form-group">
-                        <label>2012</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                            <input type="text" class="form-control text-center valid" name="salesRevenue_2012">
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('Describe your business ','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 900 characters)','bidxplugin'); ?></small></label>
+                        <textarea name="summary" class="form-control" placeholder="<?php echo _e('Enter the description of your business', 'bidxplugin'); ?>"></textarea>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="industrySectors">
+                                <label><?php _e('Select the industries that apply to your business','bidxplugin'); ?></label>
                         </div>
                     </div>
 
-                    <div class="form-group clear-both">
-                        <label>2013</label>
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('Video pitch','bidxplugin'); ?></label>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                            <input type="text" class="form-control text-center valid" name="salesRevenue_2013">
-                        </div>
-                    </div>
-
-                    <div class="form-group clear-both">
-                        <label>2014</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                            <input type="text" class="form-control text-center valid" name="salesRevenue_2014">
-                        </div>
-                    </div>
-
-                    <div class="form-group clear-both">
-                        <label>2015</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                            <input type="text" class="form-control text-center valid" name="salesRevenue_2015">
-                        </div>
-                    </div>
-
-                    <div class="form-group clear-both">
-                        <label>2016</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                            <input type="text" class="form-control text-center valid" name="salesRevenue_2016">
+                            <span class="input-group-addon"><i class="fa fa-video-camera"></i></span>
+                            <input type="text" class="form-control" name="externalVideoPitch" placeholder="<?php _e('Enter a YouTube or Vimeo url link','bidxplugin'); ?>">
                         </div>
                     </div>
                 </div>
-            </div>
-            <div>
-                <div class="col-sm-6">
-                <label><?php echo _e('Employees','bidxplugin') ?></label><br>
-                    
-                    <div class="form-group">
-                        <label>2012</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input type="text" class="form-control text-center valid" name="employees_2012">
-                        </div>
+            </form>
+        </div>
+        <div>
+            <form id="formExpressForm-FinancialDetails">
+                <h2><?php echo _e('Financial details','bidxplugin') ?></h2>
+                <blockquote class="alert-danger">
+                    <strong>
+                        <?php _e('Your financial data is guarded by us and will never be disclosed without your consent!','bidxplugin')?>
+                    </strong>&nbsp;
+                    <?php _e('Use this section to provide a general overview of your financial position. Please state the financing your business requires, the number of current employees, and deliver a brief description on how your business has, and will continue to grow over time. Please be aware that we store all financial data in US Dollars. For your convenience we have included a currency converter that allows you to import your financial data directly in Rupiah.','bidxplugin')?>
+                </blockquote>
+                <div class="row">
+                <!-- Financial details -->
+                    <div class="view viewShow viewEdit">
+                        <?php
+                            $this->render('financialsummary.phtml');
+                        ?>
                     </div>
-
-                    <div class="form-group clear-both">
-                   <label>2013</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input type="text" class="form-control text-center valid" name="employees_2013">
-                        </div>
-                    </div>
-
-                    <div class="form-group clear-both">
-                        <label>2014</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input type="text" class="form-control text-center valid" name="employees_2014">
-                        </div>
-                    </div>
-
-                    <div class="form-group clear-both">
-                        <label>2015</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input type="text" class="form-control text-center valid" name="employees_2015">
-                        </div>
-                    </div>
-
-                    <div class="form-group clear-both">
-                        <label>2016</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input type="text" class="form-control text-center valid" name="employees_2016">
-                        </div>
+                    <!-- ERROR -->
+                    <div class="view viewError alert alert-warning">
+                        <p class="errorMsg"></p>
                     </div>
                 </div>
+            </form><!-- /Financial details -->
+        </div>
+        <div class="editControlsContainer hide">
+            <div class="editControls pull-right">
+
+                <!-- SHOW -->
+                <div class="view viewShow"></div>
+
+                <!-- EDIT, conditionally filled by the app -->
+                <div class="view viewEdit btn-group"></div>
             </div>
-
-            <div class="form-group clear-both">
-            <label><?php echo _e('Video','bidxplugin') ?></label>
-            <input type="file" name="video" accept="video/*" capture>
-              <input type="submit" value="Upload">
+        </div>
+</div>
+<!--  ************************** MODAL VIEWS ****************************************** -->
+<div class="modalView modalFblike">
+    <!-- Modal -->
+    <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 class="bidx-modalLabel"><?php _e('Thank you for participating in the competition!','bidxplugin')?></h3>
+                </div>
+                <div class="modal-body">
+                <p>
+                    <?php echo sprintf( __('In order to keep track of the event’s progress and stay updated and connected, please %1$s the Mekar page, specially dedicated to the competition. We advise you to allow notification from the page as illustrated bellow, in order to avoid missing out on any developments.','bidxplugin'), $fbLikeButton);
+                    ?>
+                </p>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-expressform" data-dismiss="modal"  aria-hidden="true"><?php _e('Skip','bidxplugin')?></a>
+                    <a class="btn btn-primary"  href="<?php echo $fbPage;?>"><?php _e('Visit the Facebook page','bidxplugin')?></a>
+                </div>
             </div>
-
-        </legend>
-
-        <br>
-        <button id="submitform" type="submit" class="btn btn-primary" style="display: block;"><?php _e('Submit application','bidxplugin');?></button>
-</form>
+        </div>
+    </div>
+</div>
 </div>

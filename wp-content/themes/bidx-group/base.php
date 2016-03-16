@@ -56,7 +56,13 @@
 </div>
 <![endif]-->
 
-<?php get_template_part('templates/header'); ?>
+<?php
+
+    if( !$session->external )
+    {
+        get_template_part('templates/header');
+    }
+?>
 
 <?php if ( is_front_page() || $post->post_type === 'bidx' ) { ?>
     <?php include roots_template_path(); ?>
@@ -81,7 +87,11 @@
 
 <?php } ?>
 
-<?php get_template_part('templates/footer'); ?>
+<?php if( true || !$session->external )
+    {
+        get_template_part('templates/footer');
+    }
+?>
 
 </body>
 </html>

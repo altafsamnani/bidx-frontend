@@ -990,7 +990,7 @@
     }
 
 
-    function _doRangeSliderAction(  )
+    function _doRangeSliderAction( response )
     {
         var $this
         ,   $listReset
@@ -1018,7 +1018,6 @@
                 {
                     delete globalCriteria.rangeFilters[clickedCategory].min;
                     delete globalCriteria.rangeFilters[clickedCategory].max;
-
                 }
 
                 if ( globalCriteria.rangeFilters.length === 0 )
@@ -2161,7 +2160,6 @@
                     case _.isObject(isRangeFilter):
                         if( responseLength )
                         {
-
                             isRangeRendered     =   true;
 
                             _doRangeFilterListing(
@@ -2176,10 +2174,9 @@
                     case !_.isUndefined(isBoolean):
                         if( responseLength )
                         {
+                            isBoolRendered      =   true;
 
-                        isBoolRendered      =   true;
-
-                        _doBooleanFilterListing( isBoolean );
+                            _doBooleanFilterListing( isBoolean );
                         }
 
                     break;
@@ -2219,7 +2216,7 @@
         if( isRangeRendered )
         {
             //2 For Range events
-            _doRangeSliderAction(  );
+            _doRangeSliderAction( response  );
 
             //
             _doRangeCalendarAction( );
