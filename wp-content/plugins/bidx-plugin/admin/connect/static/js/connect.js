@@ -2326,8 +2326,6 @@
             bidx.utils.log("[connect] show modal", options );
 
             $modal = $modals.filter( bidx.utils.getViewName ( options.view, "modal" ) ).find( ".bidx-modal");
-            bidx.utils.log("MODALS", $modals);
-            bidx.utils.log("MODAL", $modal);
 
             // if callback is provided, we set our own handler directly to the confirm button
             //

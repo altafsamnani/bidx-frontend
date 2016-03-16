@@ -17,6 +17,7 @@
     $gender                     =   $this->addExtraValuesToRows( 'gender', $this->exst( $personalDetails->gender ) );
     $emailAddress               =   $this->exst( $personalDetails->emailAddress );
     $mobile                     =   $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'mobile');
+    $fbPage                     =   "https://www.facebook.com/mekarcompetitions/";
 
 
 ?>
@@ -32,10 +33,14 @@
 
 
 
+
+
 <!-- *****View ***** -->
 <div class="businessSummary box-border top-margin-lineheight" id="businessSummary" data-bsid="<?php echo $businessSummaryId; ?>" data-ownerid="<?php echo $ownerId; ?>" >
     <!--<h1><?php echo _e('Usaha Pintar', 'bidxplugin')?></h1>-->
     <?php
+        $fbLikeButton   =   '<div class="fb-like" data-href='.$fbPage.' data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>';
+
         if ( $businessSummary->logo && $businessSummary->logo->document ):
 ?>
     <div class="businessCover">
@@ -118,8 +123,6 @@
                 <div class="alert alert-success hide-overflow">
 
                     <?php
-                        $fbLikeButton   =   '<div class="fb-like" data-href="https://www.facebook.com/mekarcompetitions/" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>';
-
                         echo sprintf ( __('Thank you for participating in the competition, Please %1$s the Mekar competition page to get the updates about finalists and winners.','bidxplugin'), $fbLikeButton ); ?>
                 </div>
             </div>
@@ -447,5 +450,29 @@
                 <div class="view viewEdit btn-group"></div>
             </div>
         </div>
+</div>
+<!--  ************************** MODAL VIEWS ****************************************** -->
+<div class="modalView modalFblike">
+    <!-- Modal -->
+    <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 class="bidx-modalLabel"><?php _e('Thank you for participating in the competition!','bidxplugin')?></h3>
+                </div>
+                <div class="modal-body">
+                <p>
+                    <?php echo sprintf( __('In order to keep track of the event’s progress and stay updated and connected, please %1$s the Mekar page, specially dedicated to the competition. We advise you to allow notification from the page as illustrated bellow, in order to avoid missing out on any developments.','bidxplugin'), $fbLikeButton);
+                    ?>
+                </p>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-expressform" data-dismiss="modal"  aria-hidden="true"><?php _e('Skip','bidxplugin')?></a>
+                    <a class="btn btn-primary"  href="<?php echo $fbPage;?>"><?php _e('Visit the Facebook page','bidxplugin')?></a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </div>

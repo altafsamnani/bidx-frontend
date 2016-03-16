@@ -18,6 +18,8 @@
     ,   $logoContainer    =     $bsLogo.find( ".logoContainer" )
     ,   snippets          =     {}
     ,   $views            =     $element.find( ".view" )
+    ,   $modals           =     $element.find( ".modalView" )
+    ,   $modal
     ,   expressFormData   =     window.__bidxExpressForm
     ,   businessSummary   =     bidx.utils.getValue( expressFormData, 'business')
     ,   member            =     bidx.utils.getValue( expressFormData, 'member')
@@ -554,7 +556,7 @@
         {
             e.preventDefault();
 
-            _addFinancialSummaryYear( "prev" );
+            addFinancialSummaryYear( "prev" );
         } );
 
         // Add on year to the right
@@ -564,7 +566,7 @@
         {
             e.preventDefault();
 
-            _addFinancialSummaryYear( "next" );
+            addFinancialSummaryYear( "next" );
         } );
 
         // Delete the year
@@ -673,7 +675,7 @@
 
         // Add a financial year item
         //
-        function _addFinancialSummaryYear( direction )
+        function addFinancialSummaryYear( direction )
         {
             var $item       = snippets.$financialSummaries.clone()
             ,   year
@@ -730,12 +732,12 @@
             // Set content in the header
             //
             $item.find( ".year"         ).text( year );
-            $item.find( ".yearLabel"    ).text( yearLabel );
+            //$item.find( ".yearLabel"    ).text( yearLabel );
 
             // Move the available delete year button to the new year
             //
             $otherYear.find( ".btnDelete" ).hide();
-            $item.find( ".btnDelete" ).show();
+           // $item.find( ".btnDelete" ).show();
 
             if ( direction === "prev" )
             {
@@ -822,11 +824,18 @@
 
         function _calculateFinanceNeeded( $item )
         {
-            var financeNeeded        = parseInt( $item.find( "input[name^='idrfinanceNeeded']"     ).val(), 10 ) || 0
-            ,   usdFinanceNeeded     = parseInt( financeNeeded/idr, 10)
+            var $financeNeeded      =   $item.find( ".financeNeeded" )
+            ,   financeNeeded       =   parseInt( $item.find( "input[name^='idrfinanceNeeded']"     ).val(), 10 ) || 0
+            ,   usdFinanceNeeded    =   parseInt( financeNeeded/idr, 10)
             ;
-
-            $item.find( ".financeNeeded" ).val( usdFinanceNeeded );
+            if(usdFinanceNeeded !== 0)
+            {
+                $financeNeeded.val( usdFinanceNeeded );
+            }
+            else
+            {
+                $financeNeeded.empty(  );
+            }
         }
 
         // Calculate the new total income
@@ -942,12 +951,7 @@
         // Expose financial summary fucntinos
         //
         financialSummary.selectYear = selectYear;
-
-        _addFinancialSummaryYear( "prev" );
-        _addFinancialSummaryYear( "prev" );
-
-
-
+        financialSummary.addFinancialSummaryYear   =   addFinancialSummaryYear;
     }
 
     // Convert the form values back into the member object
@@ -964,9 +968,7 @@
 
             // Unbox
             //
-            bidx.utils.log('form', form);
             form += "";
-             bidx.utils.log('form', form);
 
             if ( formFields._root )
             {
@@ -975,7 +977,6 @@
                     var $input
                     ,   value
                     ;
-                     bidx.utils.log('f', f);
 
                     if( form === 'personalDetails' )
                     {
@@ -998,10 +999,9 @@
                     }
                     else
                     {
-
                         $input = $form.find( "[name^='" + f + "']" );
-                        bidx.utils.log('input', $input);
 
+                        bidx.utils.log('input', $input);
 
                         value  = bidx.utils.getElementValue( $input );
 
@@ -1088,9 +1088,15 @@
 
                             $.each( formFields[ nest ], function( i, f )
                             {
-                                var $input  = $financialSummariesItem.find( "[name^='" + f + "']" )
-                                ,   value   = bidx.utils.getElementValue( $input )
+                                var  $input
+                                ,    value
                                 ;
+
+                                f      =   f.replace('idr', '');
+
+                                $input  = $financialSummariesItem.find( "[name^='" + f + "']" );
+
+                                value   = bidx.utils.getElementValue( $input );
 
                                 if ( value === "" )
                                 {
@@ -1219,12 +1225,15 @@
 
         businessData    =   {
                                 entity:     businessSummary
-                           // ,   tags:       ['mekar']
+                            ,   tags:       [{
+                                                tagId:      'mekar'
+                                            ,   visibility:  "ANYONE"
+                                            ,   groupId:     bidx.common.getCurrentGroupId( "currentGroup" )
+                                            }]
                             };
 
 
         entityData.push( memberData, businessData);
-
 
         bidx.api.call(
             "entity.bulk"
@@ -1246,14 +1255,26 @@
                     }
 
                     bidx.common.closeNotifications();
-                    bidx.common.notifyRedirect();
+
 
                     bidx.common.removeAppWithPendingChanges( appName );
 
+                    _showModal(
+                    {
+                        view  : "fblike"
+                    ,   callback: function()
+                        {
+                            bidx.common.notifyRedirect();
 
-                    url = currentLanguage + "/expressform/" + businessSummaryId + "?rs=true";
+                            url = currentLanguage + "/expressform/" + businessSummaryId ;
 
-                    document.location.href = url;
+                            document.location.href = url;
+                        }
+                    } );
+
+
+
+
 
 //                    var url = document.location.href.split( "#" ).shift();
 //                    // Maybe rs=true was already added, or not 'true' add it before reloading
@@ -1379,6 +1400,66 @@
 
     }
 
+    //  ################################## MODAL #####################################  \\
+
+
+    //  show modal view with optionally and ID to be appended to the views buttons
+    function _showModal( options )
+    {
+        var href
+        ,   type
+        ,   params = {};
+
+       // bidx.utils.log("[mentoringrequest] show modal", options, $modals.filter( bidx.utils.getViewName ( options.view, "modal" )).find( ".bidx-modal") );
+
+        $modal        = $modals.filter( bidx.utils.getViewName ( options.view, "modal" ) ).find( ".bidx-modal");
+
+        $modal.find('.btn-expressform').on( 'click', function(evt)
+        {
+            var $this = $( this );
+
+            /*if( $this.attr( "data-href") )
+            {
+                href = $this.attr( "data-href" );
+
+                window.open(href, '_blank');
+            }*/
+
+            if (options && options.callback)
+            {
+                options.callback();
+            }
+        });
+
+        if( options.onHide )
+        {
+            //  to prevent duplicate attachments bind event only onces
+            $modal.on( 'hidden.bs.modal', options.callback );
+        }
+
+        if( options.onShow )
+        {
+
+            $modal.on( 'show.bs.modal' ,options.onShow );
+        }
+
+         $modal.modal( {} );
+    }
+
+
+    //  closing of modal view state
+    var _closeModal = function(options)
+    {
+        if ($modal)
+        {
+            if (options && options.unbindHide)
+            {
+                $modal.unbind('hide');
+            }
+            $modal.modal('hide');
+        }
+    };
+
     var _showView = function( v )
     {
         currentView = v;
@@ -1451,6 +1532,10 @@
                 {
                     _init( state );
 
+                    financialSummary.addFinancialSummaryYear( "prev" );
+
+                    financialSummary.addFinancialSummaryYear( "prev" );
+
                     _populateScreen( );
                 } );
 
@@ -1471,6 +1556,10 @@
                 .done( function()
                 {
                     _init( state );
+
+                    financialSummary.addFinancialSummaryYear( "prev" );
+
+                    financialSummary.addFinancialSummaryYear( "prev" );
 
                     _populateScreen( );
                 } );
