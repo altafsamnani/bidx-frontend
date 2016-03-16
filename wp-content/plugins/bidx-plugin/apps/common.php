@@ -64,11 +64,12 @@ class BidxCommon
         $is_ajax = isset ($_SERVER['HTTP_X_REQUESTED_WITH']) AND
             strtolower ($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 
-        if (!$is_ajax) {
+        $isFacebookReferer  =   isset ($_SERVER['HTTP_REFERER']) AND
+            strstr ($_SERVER['HTTP_REFERER'], 'facebook.com');  // For express form Android Facebook Browser its needed Damnnnn
+
+        if (!$is_ajax || $isFacebookReferer ) {
             // To check whther its login page or q= redirect already checked session.
             $checkSession = $this->checkSession ();
-
-
 
             if ($checkSession) {
 
@@ -353,11 +354,8 @@ class BidxCommon
      */
     public function getURIParams ($subDomain, $jsSessionData = NULL)
     {
-    /*    include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
-        echo get_home_url();
-        echo "<pre>";
-        print_r($_GET);
-        echo "</pre>";exit;*/
+    /*    include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' ); */
+
         $requestUri                                                 =   explode ('?', $_SERVER ["REQUEST_URI"]);
         $hostAddress                                                =   explode ('/', $requestUri[0]);
         $module                                                     =   $hostAddress[1];

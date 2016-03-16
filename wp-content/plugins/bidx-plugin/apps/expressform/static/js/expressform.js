@@ -117,7 +117,14 @@
         ,   $form
         ,   value
         ,   fp
+        ,   emailAddress    =   bidx.utils.getValue(personalDetails,'emailAddress' )
+        ,   userName        =   bidx.utils.getValue(member,'member.username' )
         ;
+
+        if( !emailAddress )
+        {
+            bidx.utils.setValue( personalDetails, 'emailAddress', userName );
+        }
 
         $.each( fields, function( form, formFields )
         {
