@@ -43,6 +43,17 @@
 @screen-sm-max:              (@screen-md-min - 1);
 @screen-md-max:              (@screen-lg-min - 1);
 
+.expressForm
+{
+	@media (max-width: @screen-xs-max)
+    {
+		.cardView .alert
+		{
+			margin:0px;
+		}
+	}
+}
+
 .bidx-expressform .financialSummariesItem
 {
 	@media (max-width: @screen-xs-max)

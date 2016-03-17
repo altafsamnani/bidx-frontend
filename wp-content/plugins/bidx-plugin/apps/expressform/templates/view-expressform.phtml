@@ -31,20 +31,28 @@
 <div class="view viewShow">
 
     <div class="mainBusiness">
+        <?php
+        if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
+        {
+            ?>
+        <div class="cardView top-margin-lineheight fbLikeMsg">
+            <div class="alert alert-success">
+
+                <?php echo sprintf( __('In order to keep track of the event’s progress and stay updated and connected, please %1$s the Mekar page, specially dedicated to the competition. We advise you to allow notification from the page as illustrated bellow, in order to avoid missing out on any developments.','bidxplugin'), $fbLikeButton);
+                ?>
+            </div>
+        </div>
+        <?php
+        }
+        ?>
+
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
              <?php
                 if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
                 {
             ?>
-             <div class="cardView top-margin-lineheight fbLikeMsg">
-                <div class="alert alert-success">
 
-                    <?php
-                        echo sprintf( __('In order to keep track of the event’s progress and stay updated and connected, please %1$s the Mekar page, specially dedicated to the competition. We advise you to allow notification from the page as illustrated bellow, in order to avoid missing out on any developments.','bidxplugin'), $fbLikeButton);
-                        ?>
-                </div>
-            </div>
             <h1>
                 <?php echo $this->exst( $businessSummary->name , null, false); ?>
                 <small>&nbsp;<?php echo _e( 'by', 'bidxplugin' ); ?>&nbsp;
@@ -100,7 +108,8 @@
                     __('Mobile number','bidxplugin')    =>  $mobile ,
                     __('Email','bidxplugin')            =>  $emailAddress ,
                    // __('Gender','bidxplugin')           =>  $gender ,
-                    __('City','bidxplugin')             =>  $personalDetails->address[0]->cityTown
+                    __('City','bidxplugin')             =>  $personalDetails->address[0]->cityTown,
+                    __('Country','bidxplugin')          =>  $this->getStaticVal( 'country', $this->exst($personalDetails->address[0]->country) )
                 );
 
                 if ( $this->checkEmpty( $rowValues ) ) :

@@ -2,7 +2,7 @@
 {
     "use strict";
 
-    var $element          =     $( "#businessSummary" )
+    var $element          =     $( "#expressForm" )
     ,   $industrySectors  =     $element.find( ".industrySectors" )
     ,   bidx              =     window.bidx
     ,   appName           =     "expressform"
@@ -72,6 +72,7 @@
             ,   'emailAddress'
             ,   'mobile'
             ,   'cityTown'
+            ,   'country'
             ]
         }
     ,   "generalOverview":
@@ -165,6 +166,14 @@
                             f   =   'address[0].cityTown';
 
                             fp  =   'address.0.cityTown';
+
+                            break;
+
+                            case 'country':
+
+                            f   =   'address[0].country';
+
+                            fp  =   'address.0.country';
 
                             break;
 
@@ -988,18 +997,35 @@
                 {
                     var $input
                     ,   value
+                    ,   fp
                     ;
 
                     if( form === 'personalDetails' )
                     {
+                        fp  =   f;
+
                         switch (f)
                         {
+
                             case 'cityTown':
-                                f   =   'address.0.cityTown';
+                                f   =   'address[0].cityTown';
+
+                                fp  =   'address.0.cityTown';
+
+                            break;
+
+                            case 'country':
+                                f   =   'address[0].country';
+
+                                fp  =   'address.0.country';
+
                             break;
 
                             case 'mobile':
-                                f   =   'contactDetail.0.mobile';
+                                f   =   'contactDetail[0].mobile';
+
+                                fp  =   'contactDetail.0.mobile';
+
                             break;
                         }
 
@@ -1007,7 +1033,7 @@
 
                         value  = bidx.utils.getElementValue( $input );
 
-                        bidx.utils.setValue( member, "bidxMemberProfile.personalDetails." + f, value );
+                        bidx.utils.setValue( member, "bidxMemberProfile.personalDetails." + fp, value );
                     }
                     else
                     {
@@ -1231,6 +1257,8 @@
         bidx.common.notifySave();
 
         bidx.utils.log( "About to save BusinessSummary::: ", businessSummary );
+
+        bidx.utils.log( "About to save Member::: ", member );
 
         // Save the data to the API
         //
