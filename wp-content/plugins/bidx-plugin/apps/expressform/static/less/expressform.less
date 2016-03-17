@@ -59,7 +59,7 @@
 	width: 400px;
 	height: 30px;
 	overflow:hidden;
-} */
+}
 
 .fb-like
 {
@@ -71,6 +71,22 @@
     	width:100% !important;
     }
 }
+
+*/
+
+// This element holds injected scripts inside iframes that in some cases may stretch layouts. So, we're just hiding it.
+#fb-root
+{
+  display: none;
+}
+
+// To fill the container and nothing else */
+.fb_iframe_widget, .fb_iframe_widget span, .fb_iframe_widget span iframe[style]
+{
+  width: 100% !important;
+}
+
+
 
 .bidx-expressform .fs-section-header
 {
