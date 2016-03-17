@@ -2,7 +2,7 @@
 {
     "use strict";
 
-    var $element          =     $( "#businessSummary" )
+    var $element          =     $( "#expressForm" )
     ,   $industrySectors  =     $element.find( ".industrySectors" )
     ,   bidx              =     window.bidx
     ,   appName           =     "expressform"
@@ -72,6 +72,7 @@
             ,   'emailAddress'
             ,   'mobile'
             ,   'cityTown'
+            ,   'country'
             ]
         }
     ,   "generalOverview":
@@ -81,6 +82,7 @@
                 "name"
             ,   "summary"
             ,   "externalVideoPitch"
+            ,   "website"
             ]
         }
     ,   "financialDetails":
@@ -164,6 +166,14 @@
                             f   =   'address[0].cityTown';
 
                             fp  =   'address.0.cityTown';
+
+                            break;
+
+                            case 'country':
+
+                            f   =   'address[0].country';
+
+                            fp  =   'address.0.country';
 
                             break;
 
@@ -379,6 +389,10 @@
                 {
                     required:               true
                 ,   maxlength:              900
+                }
+            ,   "website":
+                {
+                    urlOptionalProtocol:        true
                 }
             ,   "focusIndustrySector[0]mainSector":
                 {
@@ -983,18 +997,35 @@
                 {
                     var $input
                     ,   value
+                    ,   fp
                     ;
 
                     if( form === 'personalDetails' )
                     {
+                        fp  =   f;
+
                         switch (f)
                         {
+
                             case 'cityTown':
-                                f   =   'address.0.cityTown';
+                                f   =   'address[0].cityTown';
+
+                                fp  =   'address.0.cityTown';
+
+                            break;
+
+                            case 'country':
+                                f   =   'address[0].country';
+
+                                fp  =   'address.0.country';
+
                             break;
 
                             case 'mobile':
-                                f   =   'contactDetail.0.mobile';
+                                f   =   'contactDetail[0].mobile';
+
+                                fp  =   'contactDetail.0.mobile';
+
                             break;
                         }
 
@@ -1002,17 +1033,13 @@
 
                         value  = bidx.utils.getElementValue( $input );
 
-                        bidx.utils.setValue( member, "bidxMemberProfile.personalDetails." + f, value );
+                        bidx.utils.setValue( member, "bidxMemberProfile.personalDetails." + fp, value );
                     }
                     else
                     {
                         $input = $form.find( "[name^='" + f + "']" );
 
-                        bidx.utils.log('input', $input);
-
                         value  = bidx.utils.getElementValue( $input );
-
-                        bidx.utils.log('value', value);
 
                         bidx.utils.setValue( businessSummary, f, value );
                     }
@@ -1190,6 +1217,13 @@
             }
         } );
 
+        // Fix the URL fields so they will be prefixed with http:// in case something valid was provided, but not having a protocol
+        //
+        if ( businessSummary.website )
+        {
+            businessSummary.website = bidx.utils.prefixUrlWithProtocol( businessSummary.website );
+        }
+
         // Logo
         //
         var logoImageData = $logoContainer.data( "bidxData" );
@@ -1223,6 +1257,8 @@
         bidx.common.notifySave();
 
         bidx.utils.log( "About to save BusinessSummary::: ", businessSummary );
+
+        bidx.utils.log( "About to save Member::: ", member );
 
         // Save the data to the API
         //
@@ -1448,16 +1484,16 @@
                 window.open(href, '_blank');
             }*/
 
-            if (options && options.callback)
+            /*if (options && options.callback)
             {
                 options.callback();
-            }
+            }*/
         });
 
-        if( options.onHide )
+        if( options.callback )
         {
             //  to prevent duplicate attachments bind event only onces
-            $modal.on( 'hidden.bs.modal', options.onHide );
+            $modal.on( 'hidden.bs.modal', options.callback );
         }
 
         if( options.onShow )
