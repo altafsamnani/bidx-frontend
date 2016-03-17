@@ -1456,16 +1456,16 @@
                 window.open(href, '_blank');
             }*/
 
-            if (options && options.callback)
+            /*if (options && options.callback)
             {
                 options.callback();
-            }
+            }*/
         });
 
-        if( options.onHide )
+        if( options.callback )
         {
             //  to prevent duplicate attachments bind event only onces
-            $modal.on( 'hidden.bs.modal', options.onHide );
+            $modal.on( 'hidden.bs.modal', options.callback );
         }
 
         if( options.onShow )

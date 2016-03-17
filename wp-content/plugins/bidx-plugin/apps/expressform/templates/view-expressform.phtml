@@ -17,15 +17,20 @@
     $emailAddress               =   $this->exst( $personalDetails->emailAddress );
     $mobile                     =   $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'mobile');
     $fbPage                     =   "https://www.facebook.com/mekarcompetitions/";
-    $fbLikeButton   =   '<div class="fb-like" data-href='.$fbPage.' data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>';
-
+    $fbLikeButton               =   '<div class="fb-like"
+                                        data-href='.$fbPage.'
+                                        data-layout="button"
+                                        data-action="like"
+                                        data-show-faces="false"
+                                        data-share="false">
+                                    </div>';
 ?>
 
 <!-- *****Show***** -->
 <!-- SHOW -->
 <div class="view viewShow">
 
-    <div class="mainBusiness hide-overflow">
+    <div class="mainBusiness">
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
              <?php
@@ -33,10 +38,10 @@
                 {
             ?>
              <div class="cardView top-margin-lineheight fbLikeMsg">
-                <div class="alert alert-success hide-overflow">
+                <div class="alert alert-success">
 
                     <?php
-                        echo sprintf( __('In order to keep track of the event’s progress and stay updated and connected, please %1$s the Mekar page, specially dedicated to the competition. We advise you to allow notification from the page as illustrated bellow, in order to avoid missing out on any developments.','bidxplugin'), $fbLikeButton);
+                        echo sprintf( __('<div class="fbStart">In order to keep track of the event’s progress and stay updated and connected, please </div> %1$s <div class="fbEnd">the Mekar page, specially dedicated to the competition. We advise you to allow notification from the page as illustrated bellow, in order to avoid missing out on any developments.</div>','bidxplugin'), $fbLikeButton);
                         ?>
                 </div>
             </div>
