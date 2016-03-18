@@ -1,0 +1,2442 @@
+# Context  Textdomain bidxplugin
+msgid ""
+msgstr ""
+"Project-Id-Version: P4\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Altaf <altaf@bidx.net>\n"
+"Language-Team: Bidx\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: id\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+# Language Original
+# _x("Select what best matches your reason for submission", "auth","i18n");
+# Context auth TextDomain i18n
+msgctxt "auth"
+msgid "Select what best matches your reason for submission"
+msgstr "Pilihlah yang paling cocok dengan alasan pengajuan Anda"
+
+# _x("Please check one of the above", "auth","i18n");
+# Context auth TextDomain i18n
+msgctxt "auth"
+msgid "Please check one of the above"
+msgstr "Berikan tanda centang pada salah satu yang di atas"
+
+# _x("Select an Option", "auth","i18n");
+# Context auth TextDomain i18n
+msgctxt "auth"
+msgid "Select an Option"
+msgstr "Pilih sebuah Opsi"
+
+# _x("Current year", "businesssummary","i18n");
+# Context businesssummary TextDomain i18n
+msgctxt "businesssummary"
+msgid "Current year"
+msgstr "Tahun berjalan"
+
+# _x("Actuals", "businesssummary","i18n");
+# Context businesssummary TextDomain i18n
+msgctxt "businesssummary"
+msgid "Actuals"
+msgstr "Aktual"
+
+# _x("Forecast", "businesssummary","i18n");
+# Context businesssummary TextDomain i18n
+msgctxt "businesssummary"
+msgid "Forecast"
+msgstr "Prakiraan"
+
+# _x("%count% matches found", "businesssummary","i18n");
+# Context businesssummary TextDomain i18n
+msgctxt "businesssummary"
+msgid "%count% matches found"
+msgstr "%count% kecocokan ditemukan"
+
+# _x("Rating (%d vote)", "businesssummary","i18n");
+# Context businesssummary TextDomain i18n
+msgctxt "businesssummary"
+msgid "Rating (%d vote)"
+msgstr "Peringkat (%d suara)"
+
+# _x("Rating (%d votes)", "businesssummary","i18n");
+# Context businesssummary TextDomain i18n
+msgctxt "businesssummary"
+msgid "Rating (%d votes)"
+msgstr "Peringkat (%d suara)"
+
+# _x("Your rating", "businesssummary","i18n");
+# Context businesssummary TextDomain i18n
+msgctxt "businesssummary"
+msgid "Your rating"
+msgstr "Peringkat Anda"
+
+# _x("Rate this plan", "businesssummary","i18n");
+# Context businesssummary TextDomain i18n
+msgctxt "businesssummary"
+msgid "Rate this plan"
+msgstr "Beri nilai untuk rencana ini"
+
+# _x("You are about to delete this business and lose all its content. This action is irreversible. Are you sure?", "businesssummary","i18n");
+# Context businesssummary TextDomain i18n
+msgctxt "businesssummary"
+msgid ""
+"You are about to delete this business and lose all its content. This action "
+"is irreversible. Are you sure?"
+msgstr ""
+"Anda akan menghapus usaha ini dan kehilangan semua kontennya. Tindakan ini "
+"tidak dapat diurungkan. Apakah Anda yakin?"
+
+# _x("Comment saved", "commenting","i18n");
+# Context commenting TextDomain i18n
+msgctxt "commenting"
+msgid "Comment saved"
+msgstr "Komentar disimpan"
+
+# _x("General comment", "commenting","i18n");
+# Context commenting TextDomain i18n
+msgctxt "commenting"
+msgid "General comment"
+msgstr "Komentar umum"
+
+# _x("General overview section", "commenting","i18n");
+# Context commenting TextDomain i18n
+msgctxt "commenting"
+msgid "General overview section"
+msgstr "Bagian gambaran umum"
+
+# _x("About the business section", "commenting","i18n");
+# Context commenting TextDomain i18n
+msgctxt "commenting"
+msgid "About the business section"
+msgstr "Tentang bagian usaha"
+
+# _x("About the team section", "commenting","i18n");
+# Context commenting TextDomain i18n
+msgctxt "commenting"
+msgid "About the team section"
+msgstr "Tentang bagian tim"
+
+# _x("Financial section", "commenting","i18n");
+# Context commenting TextDomain i18n
+msgctxt "commenting"
+msgid "Financial section"
+msgstr "Bagian keuangan"
+
+# _x("Company section", "commenting","i18n");
+# Context commenting TextDomain i18n
+msgctxt "commenting"
+msgid "Company section"
+msgstr "Bagian perusahaan"
+
+# _x("Mentoring section", "commenting","i18n");
+# Context commenting TextDomain i18n
+msgctxt "commenting"
+msgid "Mentoring section"
+msgstr "Bagian pembinaan"
+
+# _x("Document section", "commenting","i18n");
+# Context commenting TextDomain i18n
+msgctxt "commenting"
+msgid "Document section"
+msgstr "Bagian dokumen"
+
+# _x("Private note (just for you)", "commenting","i18n");
+# Context commenting TextDomain i18n
+msgctxt "commenting"
+msgid "Private note (just for you)"
+msgstr "Catatan pribadi (hanya untuk Anda)"
+
+# _x("Administrative note (for all group admins)", "commenting","i18n");
+# Context commenting TextDomain i18n
+msgctxt "commenting"
+msgid "Administrative note (for all group admins)"
+msgstr "Catatan administratif (untuk semua admin grup)"
+
+# _x("Mentor feedback (for entrepreneur and their mentors)", "commenting","i18n");
+# Context commenting TextDomain i18n
+msgctxt "commenting"
+msgid "Mentor feedback (for entrepreneur and their mentors)"
+msgstr "Masukan pembina (untuk wiraswasta dan pembina mereka)"
+
+# _x("Investor feedback (for entrepreneur, their mentors and all investors)", "commenting","i18n");
+# Context commenting TextDomain i18n
+msgctxt "commenting"
+msgid "Investor feedback (for entrepreneur, their mentors and all investors)"
+msgstr ""
+"Masukan investor (untuk wiraswasta, pembina mereka, dan semua investor)"
+
+# _x("Public comment (for anyone)", "commenting","i18n");
+# Context commenting TextDomain i18n
+msgctxt "commenting"
+msgid "Public comment (for anyone)"
+msgstr "Komentar publik (untuk siapa saja)"
+
+# _x("Select country", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Select country"
+msgstr "Pilih negara"
+
+# _x("Select licenses obtained", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Select licenses obtained"
+msgstr "Pilih lisensi yang dimiliki"
+
+# _x("Select the legal form of your company", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Select the legal form of your company"
+msgstr "Pilih badan hukum perusahaan Anda"
+
+# _x("You are about to delete this company and lose all its content. This action is irreversible. Are you sure?", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid ""
+"You are about to delete this company and lose all its content. This action "
+"is irreversible. Are you sure?"
+msgstr ""
+"Anda akan menghapus perusahaan ini dan kehilangan semua kontennya. Tindakan "
+"ini tidak dapat diurungkan. Apakah Anda yakin?"
+
+# _x("Add company", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Add company"
+msgstr "Tambahkan perusahaan"
+
+# _x("Save company", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Save company"
+msgstr "Simpan perusahaan"
+
+# _x("Please select the reason why you are participating", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Please select the reason why you are participating"
+msgstr "Pilih alasan Anda berpartisipasi"
+
+# _x("Pending", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Pending"
+msgstr "Ditunda"
+
+# _x("Current year", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Current year"
+msgstr "Tahun berjalan"
+
+# _x("Actuals", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Actuals"
+msgstr "Aktual"
+
+# _x("Forecast", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Forecast"
+msgstr "Prakiraan"
+
+# _x("%count% matches found", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "%count% matches found"
+msgstr "%count% kecocokan ditemukan"
+
+# _x("Rating (%d vote)", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Rating (%d vote)"
+msgstr "Peringkat (%d suara)"
+
+# _x("Rating (%d votes)", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Rating (%d votes)"
+msgstr "Peringkat (%d suara)"
+
+# _x("Your rating", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Your rating"
+msgstr "Peringkat Anda"
+
+# _x("Rate this plan", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Rate this plan"
+msgstr "Beri nilai untuk rencana ini"
+
+# _x("Public", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Public"
+msgstr "Publik"
+
+# _x("Closed", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Closed"
+msgstr "Tertutup"
+
+# _x("Invited persons", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Invited persons"
+msgstr "Orang yang diundang"
+
+# _x("Applied", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Applied"
+msgstr "Diterapkan"
+
+# _x("Submitted", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Submitted"
+msgstr "Terkirim"
+
+# _x("Withdrawn", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Withdrawn"
+msgstr "Ditarik"
+
+# _x("Rejected", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Rejected"
+msgstr "Ditolak"
+
+# _x("Not a finalist", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Not a finalist"
+msgstr "Bukan finalis"
+
+# _x("Finalist", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Finalist"
+msgstr "Finalis"
+
+# _x("Not a Winner", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Not a Winner"
+msgstr "Bukan Pemenang"
+
+# _x("Winner", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Winner"
+msgstr "Pemenang"
+
+# _x("Assessor's recommendation", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Assessor's recommendation"
+msgstr "Rekomendasi penilai"
+
+# _x("You are updating this competition to the Judging phase. The status of all submissions will be updated according to your recommendation. All participants will receive a notification of this change in status.  Are you sure you want to proceed? ", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid ""
+"You are updating this competition to the Judging phase. The status of all "
+"submissions will be updated according to your recommendation. All "
+"participants will receive a notification of this change in status.  Are you "
+"sure you want to proceed? "
+msgstr ""
+"Anda memperbarui kompetisi ini ke tahap Penjurian. Status semua pengajuan "
+"akan diperbarui sesuai dengan rekomendasi Anda. Semua peserta akan menerima "
+"pemberitahuan mengenai perubahan status ini. Apakah Anda yakin ingin "
+"melanjutkan?"
+
+# _x("By declaring the winner(s), you are closing this competition. All participants will receive a notification of this change in status. Are you sure you want to proceed?", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid ""
+"By declaring the winner(s), you are closing this competition. All "
+"participants will receive a notification of this change in status. Are you "
+"sure you want to proceed?"
+msgstr ""
+"Dengan menyatakan (para) pemenangnya, berarti Anda menutup kompetisi ini. "
+"Semua peserta akan menerima pemberitahuan mengenai perubahan status ini. "
+"Apakah Anda yakin ingin melanjutkan?"
+
+# _x("You have successfully applied for this competition. Thank you for participating! Please note: Your application is now in draft status, you can still review and edit your business plan. If you are ready to have your application reviewed by the competition assessors, please submit your application by clicking on the Submit button", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid ""
+"You have successfully applied for this competition. Thank you for "
+"participating! Please note: Your application is now in draft status, you can "
+"still review and edit your business plan. If you are ready to have your "
+"application reviewed by the competition assessors, please submit your "
+"application by clicking on the Submit button"
+msgstr ""
+"Anda berhasil mendaftar di kompetisi ini. Terima kasih atas partisipasi "
+"Anda! Harap diperhatikan: permohonan Anda sekarang dalam status draf, Anda "
+"masih dapat meninjau dan mengedit rencana usaha Anda. Jika permohonan Anda "
+"telah siap ditinjau oleh para penilai dalam kompetisi ini, silakan ajukan "
+"permohonan Anda dengan mengklik tombol Ajukan"
+
+# _x("You have successfully submitted your application. Thank you for participating! Your submission will now be reviewed by our competition assessors. Good luck!", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid ""
+"You have successfully submitted your application. Thank you for "
+"participating! Your submission will now be reviewed by our competition "
+"assessors. Good luck!"
+msgstr ""
+"Anda berhasil mengajukan permohonan. Terima kasih atas partisipasi Anda! "
+"Pengajuan Anda sekarang akan ditinjau oleh para penilai dalam kompetisi "
+"kami. Semoga Anda beruntung!"
+
+# _x("You have successfully withdrawn your application from this competition. Please feel free to join future competitions. We wish you the best of luck! ", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid ""
+"You have successfully withdrawn your application from this competition. "
+"Please feel free to join future competitions. We wish you the best of luck! "
+msgstr ""
+"Anda berhasil menarik permohonan Anda dari kompetisi ini. Jangan ragu untuk "
+"mengikuti kompetisi lain di masa mendatang. Semoga Anda beruntung!"
+
+# _x("You have successfully submitted this application. A notification has been sent out to the participant", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid ""
+"You have successfully submitted this application. A notification has been "
+"sent out to the participant"
+msgstr ""
+"Anda berhasil mengajukan permohonan ini. Pemberitahuan telah dikirimkan "
+"kepada peserta "
+
+# _x("You have successfully rejected this submission. A notification has been sent out to the participant", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid ""
+"You have successfully rejected this submission. A notification has been sent "
+"out to the participant"
+msgstr ""
+"Anda berhasil menolak pengajuan ini. Pemberitahuan telah dikirimkan kepada "
+"peserta"
+
+# _x("This submission is qualified as a finalist! ", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "This submission is qualified as a finalist! "
+msgstr "Pengajuan ini memenuhi syarat sebagai finalis!"
+
+# _x("This submission is qualified as not a finalist", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "This submission is qualified as not a finalist"
+msgstr "Pengajuan ini tidak memenuhi syarat sebagai finalis"
+
+# _x("This submission has been declared a winner!", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "This submission has been declared a winner!"
+msgstr "Pengajuan ini telah diumumkan sebagai pemenang!"
+
+# _x("This submission has not been declared a winner", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "This submission has not been declared a winner"
+msgstr "Pengajuan ini belum diumumkan sebagai pemenang"
+
+# _x("You have successfully assigned assessors to this submission. ", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "You have successfully assigned assessors to this submission. "
+msgstr "Anda berhasil menugaskan penilai untuk pengajuan ini"
+
+# _x("You have successfully assigned judges for this submission. ", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "You have successfully assigned judges for this submission. "
+msgstr "Anda berhasil menugaskan juri untuk pengajuan ini"
+
+# _x("You have recommended this plan as a finalist", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "You have recommended this plan as a finalist"
+msgstr "Anda merekomendasikan rencana ini sebagai finalis"
+
+# _x("You have recommended this plan as not a finalist", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "You have recommended this plan as not a finalist"
+msgstr "Anda merekomendasikan rencana ini sebagai bukan finalis"
+
+# _x("You have recommended this plan as a Winner", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "You have recommended this plan as a Winner"
+msgstr "Anda merekomendasikan rencana ini sebagai Pemenang"
+
+# _x("You have recommended this plan as not a winner", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "You have recommended this plan as not a winner"
+msgstr "Anda merekomendasikan rencana ini sebagai bukan pemenang"
+
+# _x("You have successfully rejected this submission", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "You have successfully rejected this submission"
+msgstr "Anda berhasil menolak pengajuan ini"
+
+# _x("Something went wrong", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Something went wrong"
+msgstr "Terjadi kesalahan"
+
+# _x("No comments", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "No comments"
+msgstr "Tidak ada komentar"
+
+# _x("Apply to the competition", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Apply to the competition"
+msgstr "Daftar ke kompetisi"
+
+# _x("Submit your business plan", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Submit your business plan"
+msgstr "Ajukan rencana usaha Anda"
+
+# _x("Withdraw your business plan", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Withdraw your business plan"
+msgstr "Tarik rencana usaha Anda"
+
+# _x("Please wait while we are updating phase of the competition", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid "Please wait while we are updating phase of the competition"
+msgstr "Mohon tunggu saat kami memperbarui tahapan kompetisi ini"
+
+# _x("Congratulations, you have successfully updated the phase of this competition", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid ""
+"Congratulations, you have successfully updated the phase of this competition"
+msgstr "Selamat! Anda berhasil memperbarui tahapan kompetisi ini"
+
+# _x("Before moving to the next phase, all applications need a competition administrator review", "competition","i18n");
+# Context competition TextDomain i18n
+msgctxt "competition"
+msgid ""
+"Before moving to the next phase, all applications need a competition "
+"administrator review"
+msgstr ""
+"Sebelum masuk ke tahapan berikutnya, semua permohonan memerlukan tinjauan "
+"administrator kompetisi"
+
+# _x("You have no company", "dashboard","i18n");
+# Context dashboard TextDomain i18n
+msgctxt "dashboard"
+msgid "You have no company"
+msgstr "Anda tidak memiliki perusahaan"
+
+# _x("You have no business plan", "dashboard","i18n");
+# Context dashboard TextDomain i18n
+msgctxt "dashboard"
+msgid "You have no business plan"
+msgstr "Anda tidak memiliki rencana usaha"
+
+# _x("There are no recommended businesses", "dashboard","i18n");
+# Context dashboard TextDomain i18n
+msgctxt "dashboard"
+msgid "There are no recommended businesses"
+msgstr "Tidak ada usaha yang direkomendasikan"
+
+# _x("You have not contacted any businesses", "dashboard","i18n");
+# Context dashboard TextDomain i18n
+msgctxt "dashboard"
+msgid "You have not contacted any businesses"
+msgstr "Anda belum menghubungi usaha mana pun"
+
+# _x("Add new business plan", "dashboard","i18n");
+# Context dashboard TextDomain i18n
+msgctxt "dashboard"
+msgid "Add new business plan"
+msgstr "Tambahkan rencana usaha baru"
+
+# _x("Add new company", "dashboard","i18n");
+# Context dashboard TextDomain i18n
+msgctxt "dashboard"
+msgid "Add new company"
+msgstr "Tambahkan perusahaan baru"
+
+# _x("Current year", "expressform","i18n");
+# Context expressform TextDomain i18n
+msgctxt "expressform"
+msgid "Current year"
+msgstr "Tahun berjalan"
+
+# _x("Actuals", "expressform","i18n");
+# Context expressform TextDomain i18n
+msgctxt "expressform"
+msgid "Actuals"
+msgstr "Aktual"
+
+# _x("Forecast", "expressform","i18n");
+# Context expressform TextDomain i18n
+msgctxt "expressform"
+msgid "Forecast"
+msgstr "Prakiraan"
+
+# _x("%count% matches found", "expressform","i18n");
+# Context expressform TextDomain i18n
+msgctxt "expressform"
+msgid "%count% matches found"
+msgstr "%count% kecocokan ditemukan"
+
+# _x("Rating (%d vote)", "expressform","i18n");
+# Context expressform TextDomain i18n
+msgctxt "expressform"
+msgid "Rating (%d vote)"
+msgstr "Peringkat (%d suara)"
+
+# _x("Rating (%d votes)", "expressform","i18n");
+# Context expressform TextDomain i18n
+msgctxt "expressform"
+msgid "Rating (%d votes)"
+msgstr "Peringkat (%d suara)"
+
+# _x("Your rating", "expressform","i18n");
+# Context expressform TextDomain i18n
+msgctxt "expressform"
+msgid "Your rating"
+msgstr "Peringkat Anda"
+
+# _x("Rate this plan", "expressform","i18n");
+# Context expressform TextDomain i18n
+msgctxt "expressform"
+msgid "Rate this plan"
+msgstr "Beri nilai untuk rencana ini"
+
+# _x("You are about to delete this business and lose all its content. This action is irreversible. Are you sure?", "expressform","i18n");
+# Context expressform TextDomain i18n
+msgctxt "expressform"
+msgid ""
+"You are about to delete this business and lose all its content. This action "
+"is irreversible. Are you sure?"
+msgstr ""
+"Anda akan menghapus usaha ini dan kehilangan semua kontennya. Tindakan ini "
+"tidak dapat diurungkan. Apakah Anda yakin?"
+
+# _x("On %date% at %time%, %sender% wrote:", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "On %date% at %time%, %sender% wrote:"
+msgstr "Pada tanggal %date% pukul %time%, %sender% menulis:"
+
+# _x("Forwarded message", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "Forwarded message"
+msgstr "Pesan diteruskan"
+
+# _x("Sending message", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "Sending message"
+msgstr "Mengirimkan pesan"
+
+# _x("Incoming contact requests", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "Incoming contact requests"
+msgstr "Permohonan kontak masuk"
+
+# _x("Pending contact requests", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "Pending contact requests"
+msgstr "Permohonan kontak tertunda"
+
+# _x("New contact request has been sent to", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "New contact request has been sent to"
+msgstr "Permohonan kontak baru telah dikirimkan kepada"
+
+# _x("Active contacts", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "Active contacts"
+msgstr "Kontak aktif"
+
+# _x("Blocked contacts", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "Blocked contacts"
+msgstr "Kontak diblokir"
+
+# _x("New contact request", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "New contact request"
+msgstr "Permohonan kontak baru"
+
+# _x("Group admin", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "Group admin"
+msgstr "Admin grup"
+
+# _x("Portal moderator", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "Portal moderator"
+msgstr "Moderator portal"
+
+# _x("Deleted from", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "Deleted from"
+msgstr "Dihapus dari"
+
+# _x("Unblock", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "Unblock"
+msgstr "Buka blokir"
+
+# _x("You cannot trash a system mail this way", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "You cannot trash a system mail this way"
+msgstr "Anda tidak dapat membuang email sistem dengan cara ini"
+
+# _x("Select the outcome of this business", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select the outcome of this business"
+msgstr "Pilih hasil dari usaha ini"
+
+# _x("Enter the focus industry", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Enter the focus industry"
+msgstr "Masukkan fokus industri"
+
+# _x("Select investment type", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select investment type"
+msgstr "Pilih jenis investasi"
+
+# _x("Select your investor", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select your investor"
+msgstr "Pilih investor Anda"
+
+# _x("Select country", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select country"
+msgstr "Pilih negara"
+
+# _x("Select your nationality", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select your nationality"
+msgstr "Pilih kewarganegaraan Anda"
+
+# _x("Select your highest level of education", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select your highest level of education"
+msgstr "Pilih tingkat pendidikan tertinggi Anda"
+
+# _x("CV is required", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "CV is required"
+msgstr "Riwayat Kerja diperlukan"
+
+# _x("Please check one of the above", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Please check one of the above"
+msgstr "Berikan tanda centang pada salah satu yang di atas"
+
+# _x("Please upload at least one document", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Please upload at least one document"
+msgstr "Mohon unggah sedikitnya satu dokumen"
+
+# _x("You are about to delete this item and lose all its content. This action is irreversible. Are you sure?", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid ""
+"You are about to delete this item and lose all its content. This action is "
+"irreversible. Are you sure?"
+msgstr ""
+"Anda akan menghapus item ini dan kehilangan semua kontennya. Tindakan ini "
+"tidak dapat diurungkan. Apakah Anda yakin?"
+
+# _x("Mentoring request pending", "mentor","i18n");
+# Context mentor TextDomain i18n
+msgctxt "mentor"
+msgid "Mentoring request pending"
+msgstr "Permohonan pembinaan tertunda"
+
+# _x("Received request", "mentor","i18n");
+# Context mentor TextDomain i18n
+msgctxt "mentor"
+msgid "Received request"
+msgstr "Permohonan diterima"
+
+# _x("Ongoing", "mentor","i18n");
+# Context mentor TextDomain i18n
+msgctxt "mentor"
+msgid "Ongoing"
+msgstr "Berlangsung"
+
+# _x("%count% matches found", "mentor","i18n");
+# Context mentor TextDomain i18n
+msgctxt "mentor"
+msgid "%count% matches found"
+msgstr "%count% kecocokan ditemukan"
+
+# _x("Please select a location from the dropdown", "register","i18n");
+# Context register TextDomain i18n
+msgctxt "register"
+msgid "Please select a location from the dropdown"
+msgstr "Silakan pilih lokasi dari daftar tarik-turun"
+
+# _x("This email address is not registered with us", "resetpassword","i18n");
+# Context resetpassword TextDomain i18n
+msgctxt "resetpassword"
+msgid "This email address is not registered with us"
+msgstr "Alamat email ini tidak terdaftar di catatan kami"
+
+# _x("Interested in", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Interested in"
+msgstr "Berminat dalam"
+
+# _x("Registered", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Registered"
+msgstr "Terdaftar"
+
+# _x("results", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "results"
+msgstr "hasil"
+
+# _x("click here ", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "click here "
+msgstr "klik di sini"
+
+# _x("Group", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Group"
+msgstr "Grup"
+
+# _x("Company", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Company"
+msgstr "Perusahaan"
+
+# _x("Industry", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Industry"
+msgstr "Industri"
+
+# _x("Country", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Country"
+msgstr "Negara"
+
+# _x("Language", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Language"
+msgstr "Bahasa"
+
+# _x("Type", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Type"
+msgstr "Jenis"
+
+# _x("Role", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Role"
+msgstr "Peran"
+
+# _x("Gender", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Gender"
+msgstr "Jenis kelamin"
+
+# _x("Expertise", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Expertise"
+msgstr "Keahlian"
+
+# _x("Member Age", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Member Age"
+msgstr "Usia Anggota"
+
+# _x("Environmental Impact", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Environmental Impact"
+msgstr "Dampak Lingkungan"
+
+# _x("Social Impact", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Social Impact"
+msgstr "Dampak Sosial"
+
+# _x("Investment type", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Investment type"
+msgstr "Jenis Investasi"
+
+# _x("Financing needed", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Financing needed"
+msgstr "Pembiayaan yang dibutuhkan"
+
+# _x("Created", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Created"
+msgstr "Dibuat"
+
+# _x("Modified", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Modified"
+msgstr "Diubah"
+
+# _x("Completion", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Completion"
+msgstr "Penyelesaian"
+
+# _x("Rating", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Rating"
+msgstr "Peringkat"
+
+# _x("%num% years", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "%num% years"
+msgstr "%num% tahun"
+
+# _x("Member has profile picture ?", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Member has profile picture ?"
+msgstr "Anggota memiliki gambar profil?"
+
+# _x("Member has attachment ?", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Member has attachment ?"
+msgstr "Anggota memiliki lampiran?"
+
+# _x("Plan has attachment ?", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Plan has attachment ?"
+msgstr "Rencana memiliki lampiran?"
+
+# _x("Has attachment(s) ?", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Has attachment(s) ?"
+msgstr "Memiliki lampiran?"
+
+# _x("Member has facebook ?", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Member has facebook ?"
+msgstr "Anggota memiliki facebook ?"
+
+# _x("Member has Linkedin ? ", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Member has Linkedin ? "
+msgstr "Anggota memiliki Linkedin ? "
+
+# _x("Has audio pitch ? ", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Has audio pitch ? "
+msgstr "Memiliki presentasi audio?"
+
+# _x("Has video pitch ?", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Has video pitch ?"
+msgstr "Memiliki presentasi video?"
+
+# _x("Plan has Logo ? ", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Plan has Logo ? "
+msgstr "Rencana memiliki Logo?"
+
+# _x("Plan requires mentoring ? ", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Plan requires mentoring ? "
+msgstr "Rencana memerlukan pembinaan?"
+
+# _x("Joined", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Joined"
+msgstr "Bergabung"
+
+# _x("Last name", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Last name"
+msgstr "Nama belakang"
+
+# _x("First name", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "First name"
+msgstr "Nama depan"
+
+# _x("Plan title", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Plan title"
+msgstr "Judul rencana"
+
+# _x("%num% %", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "%num% %"
+msgstr "%num% %"
+
+# _x("$ %num%", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "$ %num%"
+msgstr "$ %num%"
+
+# _x("%num% results", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "%num% results"
+msgstr "%num% hasil"
+
+# _x("There are no results for you search request, please %clickhere% to reset your criteria.", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid ""
+"There are no results for you search request, please %clickhere% to reset "
+"your criteria."
+msgstr ""
+"Tidak ada hasil untuk permintaan pencarian Anda, silakan %clickhere% untuk "
+"mengatur ulang kriteria Anda."
+
+# _x("There are no results for you search request but we found %count% matching member/s", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid ""
+"There are no results for you search request but we found %count% matching "
+"member/s"
+msgstr ""
+"Tidak ada hasil untuk permintaan pencarian Anda, namun kami menemukan %count"
+"% anggota yang cocok"
+
+# _x("There are no results for you search request but we found %count% matching business plan/s", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid ""
+"There are no results for you search request but we found %count% matching "
+"business plan/s"
+msgstr ""
+"Tidak ada hasil untuk permintaan pencarian Anda, namun kami menemukan %count"
+"% rencana usaha yang cocok"
+
+# _x("On %date% at %time%, %sender% wrote:", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "On %date% at %time%, %sender% wrote:"
+msgstr "Pada tanggal %date% pukul %time%, %sender% menulis:"
+
+# _x("Forwarded message", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "Forwarded message"
+msgstr "Pesan diteruskan"
+
+# _x("Sending message", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "Sending message"
+msgstr "Mengirimkan pesan"
+
+# _x("Message sent", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "Message sent"
+msgstr "Pesan terkirim"
+
+# _x("Group admin", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "Group admin"
+msgstr "Admin grup"
+
+# _x("Portal moderator", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "Portal moderator"
+msgstr "Moderator portal"
+
+# _x("All Entrepreneurs", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "All Entrepreneurs"
+msgstr "Semua Wiraswasta"
+
+# _x("All Investors", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "All Investors"
+msgstr "Semua Investor"
+
+# _x("All Mentors", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "All Mentors"
+msgstr "Semua Pembina"
+
+# _x("All Members", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "All Members"
+msgstr "Semua Anggota"
+
+# _x("Member only", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "Member only"
+msgstr "Hanya anggota"
+
+# _x("Please select sender group", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "Please select sender group"
+msgstr "Silakan pilih grup pengirim"
+
+# _x("Your email has been sent successfully", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "Your email has been sent successfully"
+msgstr "Email Anda berhasil dikirimkan"
+
+# _x("Move message to folder", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "Move message to folder"
+msgstr "Pindahkan pesan ke folder"
+
+# _x("You are about to delete this/these message(s). Are you sure?", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "You are about to delete this/these message(s). Are you sure?"
+msgstr "Anda akan menghapus pesan ini. Apakah Anda yakin?"
+
+# _x("You are about to discard this message. Are you sure?", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "You are about to discard this message. Are you sure?"
+msgstr "Anda akan membuang pesan ini. Apakah Anda yakin?"
+
+# _x("You have not selected any message, please click on checkbox to make selection", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid ""
+"You have not selected any message, please click on checkbox to make selection"
+msgstr ""
+"Anda belum memilih pesan, klik pada kotak centang untuk menentukan pilihan"
+
+# _x("Deleted from", "connect","i18n");
+# Context connect TextDomain i18n
+msgctxt "connect"
+msgid "Deleted from"
+msgstr "Dihapus dari"
+
+# _x("Rolewise division of Users", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Rolewise division of Users"
+msgstr "Pembagian Pengguna menurut Peran"
+
+# _x("Loading Data Error", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Loading Data Error"
+msgstr "Kesalahan Memuat Data"
+
+# _x("Loading ...", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Loading ..."
+msgstr "Memuat..."
+
+# _x("No data found! How is it possible ?", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "No data found! How is it possible ?"
+msgstr "Tidak ada data yang ditemukan! Bagaimana mungkin?"
+
+# _x("Member profile", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Member profile"
+msgstr "Profil anggota"
+
+# _x("Business summary", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Business summary"
+msgstr "Ikhtisar usaha"
+
+# _x("Investor", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Investor"
+msgstr "Investor"
+
+# _x("Entrepreneur", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Entrepreneur"
+msgstr "Wiraswasta"
+
+# _x("Group", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Group"
+msgstr "Grup"
+
+# _x("Company", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Company"
+msgstr "Perusahaan"
+
+# _x("Mentor", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Mentor"
+msgstr "Pembina"
+
+# _x("Industry", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Industry"
+msgstr "Industri"
+
+# _x("Country", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Country"
+msgstr "Negara"
+
+# _x("Language", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Language"
+msgstr "Bahasa"
+
+# _x("Type", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Type"
+msgstr "Jenis"
+
+# _x("Growth", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Growth"
+msgstr "Pertumbuhan"
+
+# _x("Member only", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Member only"
+msgstr "Hanya anggota"
+
+# _x("Name", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Name"
+msgstr "Nama"
+
+# _x("Date of birth", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Date of birth"
+msgstr "Tanggal lahir"
+
+# _x("Email", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Email"
+msgstr "Email"
+
+# _x("Mobile", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Mobile"
+msgstr "Telepon seluler"
+
+# _x("Landline", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Landline"
+msgstr "Telepon rumah"
+
+# _x("Languages Spoken", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Languages Spoken"
+msgstr "Bahasa yang dituturkan"
+
+# _x("Mothertongue", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Mothertongue"
+msgstr "Bahasa ibu"
+
+# _x("Summary", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Summary"
+msgstr "Ikhtisar"
+
+# _x("Interested in", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Interested in"
+msgstr "Berminat dalam"
+
+# _x("Investor Type", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Investor Type"
+msgstr "Jenis Investor"
+
+# _x("Showing records %from% to %to% of total %total%", "monitoring","i18n");
+# Context monitoring TextDomain i18n
+msgctxt "monitoring"
+msgid "Showing records %from% to %to% of total %total%"
+msgstr "Menampilkan catatan %from% hingga %to% dari total %total%"
+
+# _e("You do not have the rights to edit this profile", "i18n");
+# Context  TextDomain i18n
+msgid "You do not have the rights to edit this profile"
+msgstr "Anda tidak memiliki izin untuk mengedit profil ini"
+
+# _e("You do not have the rights to edit this", "i18n");
+# Context  TextDomain i18n
+msgid "You do not have the rights to edit this"
+msgstr "Anda tidak memiliki izin untuk mengedit ini"
+
+# _e("Your changes have not yet been saved. Are you sure you want to navigate away from this page and lose your pending changes?", "i18n");
+# Context  TextDomain i18n
+msgid ""
+"Your changes have not yet been saved. Are you sure you want to navigate away "
+"from this page and lose your pending changes?"
+msgstr ""
+"Perubahan Anda belum disimpan. Apakah Anda yakin ingin meninggalkan halaman "
+"ini dan kehilangan semua perubahan tertunda Anda?"
+
+# _e("Please wait while you are redirected", "i18n");
+# Context  TextDomain i18n
+msgid "Please wait while you are redirected"
+msgstr "Mohon tunggu saat Anda dialihkan"
+
+# _e("Processing request", "i18n");
+# Context  TextDomain i18n
+msgid "Processing request"
+msgstr "Memroses permintaan"
+
+# _e("This document has been removed from your media library.", "i18n");
+# Context  TextDomain i18n
+msgid "This document has been removed from your media library."
+msgstr "Dokumen ini telah dihapus dari perpustakaan media Anda."
+
+# _e("Yes", "i18n");
+# Context  TextDomain i18n
+msgid "Yes"
+msgstr "Ya"
+
+# _e("No", "i18n");
+# Context  TextDomain i18n
+msgid "No"
+msgstr "Tidak"
+
+# _e("Select type", "i18n");
+# Context  TextDomain i18n
+msgid "Select type"
+msgstr "Pilih jenis"
+
+# _e("Attachment deleted", "i18n");
+# Context  TextDomain i18n
+msgid "Attachment deleted"
+msgstr "Lampiran dihapus"
+
+# _e("Attachment upload done", "i18n");
+# Context  TextDomain i18n
+msgid "Attachment upload done"
+msgstr "Pengunggahan lampiran selesai"
+
+# _e("Problem uploading attachment", "i18n");
+# Context  TextDomain i18n
+msgid "Problem uploading attachment"
+msgstr "Terjadi masalah saat mengunggah lampiran"
+
+# _e("Problems deleting attachment", "i18n");
+# Context  TextDomain i18n
+msgid "Problems deleting attachment"
+msgstr "Terjadi masalah saat menghapus lampiran"
+
+# _e("Attachment file type not allowed", "i18n");
+# Context  TextDomain i18n
+msgid "Attachment file type not allowed"
+msgstr "Jenis file lampiran tidak diperbolehkan"
+
+# _e("Next", "i18n");
+# Context  TextDomain i18n
+msgid "Next"
+msgstr "Berikutnya"
+
+# _e("Cancel", "i18n");
+# Context  TextDomain i18n
+msgid "Cancel"
+msgstr "Batal"
+
+# _e("Ok", "i18n");
+# Context  TextDomain i18n
+msgid "Ok"
+msgstr "Oke"
+
+# _e("Save", "i18n");
+# Context  TextDomain i18n
+msgid "Save"
+msgstr "Simpan"
+
+# _e("Apply", "i18n");
+# Context  TextDomain i18n
+msgid "Apply"
+msgstr "Daftar"
+
+# _e("Submit", "i18n");
+# Context  TextDomain i18n
+msgid "Submit"
+msgstr "Ajukan"
+
+# _e("Save & view", "i18n");
+# Context  TextDomain i18n
+msgid "Save & view"
+msgstr "Simpan dan lihat"
+
+# _e("Save Profile", "i18n");
+# Context  TextDomain i18n
+msgid "Save Profile"
+msgstr "Simpan Profil"
+
+# _e("Create & view", "i18n");
+# Context  TextDomain i18n
+msgid "Create & view"
+msgstr "Buat dan lihat"
+
+# _e("Are you sure?", "i18n");
+# Context  TextDomain i18n
+msgid "Are you sure?"
+msgstr "Anda yakin?"
+
+# _e("Please wait", "i18n");
+# Context  TextDomain i18n
+msgid "Please wait"
+msgstr "Harap tunggu"
+
+# _e("Try again", "i18n");
+# Context  TextDomain i18n
+msgid "Try again"
+msgstr "Coba lagi"
+
+# _e("Request sent", "i18n");
+# Context  TextDomain i18n
+msgid "Request sent"
+msgstr "Permohonan terkirim"
+
+# _e("Request received", "i18n");
+# Context  TextDomain i18n
+msgid "Request received"
+msgstr "Permohonan diterima"
+
+# _e("Request ongoing", "i18n");
+# Context  TextDomain i18n
+msgid "Request ongoing"
+msgstr "Permohonan berlangsung"
+
+# _e("Request rejected", "i18n");
+# Context  TextDomain i18n
+msgid "Request rejected"
+msgstr "Permohonan ditolak"
+
+# _e("Rejected by mentor", "i18n");
+# Context  TextDomain i18n
+msgid "Rejected by mentor"
+msgstr "Ditolak oleh pembina"
+
+# _e("Rejected by entrepreneur", "i18n");
+# Context  TextDomain i18n
+msgid "Rejected by entrepreneur"
+msgstr "Ditolak oleh wiraswasta"
+
+# _e("Request accepted", "i18n");
+# Context  TextDomain i18n
+msgid "Request accepted"
+msgstr "Permohonan disetujui"
+
+# _e("View Profile", "i18n");
+# Context  TextDomain i18n
+msgid "View Profile"
+msgstr "Lihat Profil"
+
+# _e("Create business proposal", "i18n");
+# Context  TextDomain i18n
+msgid "Create business proposal"
+msgstr "Buat proposal usaha"
+
+# _e("Create company profile", "i18n");
+# Context  TextDomain i18n
+msgid "Create company profile"
+msgstr "Buat profil perusahaan"
+
+# _e("Yes, lose changes", "i18n");
+# Context  TextDomain i18n
+msgid "Yes, lose changes"
+msgstr "Ya, perubahan akan hilang"
+
+# _e("No, go back", "i18n");
+# Context  TextDomain i18n
+msgid "No, go back"
+msgstr "Tidak, kembali lagi"
+
+# _e("You request has been sent successfully", "i18n");
+# Context  TextDomain i18n
+msgid "You request has been sent successfully"
+msgstr "Permohonan Anda berhasil dikirimkan"
+
+# _e("You have successfully accepted the request", "i18n");
+# Context  TextDomain i18n
+msgid "You have successfully accepted the request"
+msgstr "Anda berhasil menyetujui permohonan"
+
+# _e("You have successfully ignored the request", "i18n");
+# Context  TextDomain i18n
+msgid "You have successfully ignored the request"
+msgstr "Anda berhasil mengabaikan permohonan"
+
+# _e("You have successfully stopped the mentoring", "i18n");
+# Context  TextDomain i18n
+msgid "You have successfully stopped the mentoring"
+msgstr "Anda berhasil menghentikan pembinaan"
+
+# _e("Something went wrong while creating a relationship:", "i18n");
+# Context  TextDomain i18n
+msgid "Something went wrong while creating a relationship:"
+msgstr "Terjadi kesalahan saat membuat hubungan:"
+
+# _e("No results match", "i18n");
+# Context  TextDomain i18n
+msgid "No results match"
+msgstr "Tidak ada hasil yang cocok"
+
+# _e("Select an Option", "i18n");
+# Context  TextDomain i18n
+msgid "Select an Option"
+msgstr "Pilih sebuah Opsi"
+
+# _e("Select Some Options", "i18n");
+# Context  TextDomain i18n
+msgid "Select Some Options"
+msgstr "Pilih Beberapa Opsi"
+
+# _e("Select what best matches your reason for submission", "i18n");
+# Context  TextDomain i18n
+msgid "Select what best matches your reason for submission"
+msgstr "Pilihlah yang paling cocok dengan alasan pengajuan Anda"
+
+# _e("Desc", "i18n");
+# Context  TextDomain i18n
+msgid "Desc"
+msgstr "Dari terbesar"
+
+# _e("Asc", "i18n");
+# Context  TextDomain i18n
+msgid "Asc"
+msgstr "Dari terkecil"
+
+# _e("This field is required", "i18n");
+# Context  TextDomain i18n
+msgid "This field is required"
+msgstr "Bidang ini wajib diisi"
+
+# _e("Please select an item", "i18n");
+# Context  TextDomain i18n
+msgid "Please select an item"
+msgstr "Pilih item"
+
+# _e("Please enter a valid date", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid date"
+msgstr "Masukkan tanggal yang valid"
+
+# _e("Please enter a valid e-mail address", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid e-mail address"
+msgstr "Masukkan alamat email yang valid"
+
+# _e("Please enter a valid password", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid password"
+msgstr "Masukkan kata sandi yang valid"
+
+# _e("Please enter a valid Skype username", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid Skype username"
+msgstr "Masukkan nama pengguna Skype yang valid"
+
+# _e("Please enter a valid LinkedIn username", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid LinkedIn username"
+msgstr "Masukkan nama pengguna LinkedIn yang valid"
+
+# _e("Please enter a valid Facebook username", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid Facebook username"
+msgstr "Masukkan nama pengguna Facebook yang valid"
+
+# _e("Please enter a valid Twitter username", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid Twitter username"
+msgstr "Masukkan nama pengguna Twitter yang valid"
+
+# _e("Please enter a valid url", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid url"
+msgstr "Masukkan URL yang valid"
+
+# _e("Please enter a valid amount", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid amount"
+msgstr "Masukkan jumlah yang valid"
+
+# _e("Please give at least {0} items", "i18n");
+# Context  TextDomain i18n
+msgid "Please give at least {0} items"
+msgstr "Berikan sedikitnya {0} item"
+
+# _e("Please enter a value greater than or equal to {0}", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a value greater than or equal to {0}"
+msgstr "Masukkan nilai lebih besar dari atau sama dengan {0}"
+
+# _e("Please enter a value less than or equal to {0}", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a value less than or equal to {0}"
+msgstr "Masukkan nilai kurang dari atau sama dengan {0}"
+
+# _e("Please provide a positive number", "i18n");
+# Context  TextDomain i18n
+msgid "Please provide a positive number"
+msgstr "Masukkan nomor positif"
+
+# _e("Please provide no more than maximum {0} characters", "i18n");
+# Context  TextDomain i18n
+msgid "Please provide no more than maximum {0} characters"
+msgstr "Masukkan tidak lebih dari {0} karakter"
+
+# _e("Please enter at least {0} characters", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter at least {0} characters"
+msgstr "Masukkan sedikitnya {0} karakter"
+
+# _e("Please fill all the required fields", "i18n");
+# Context  TextDomain i18n
+msgid "Please fill all the required fields"
+msgstr "Mohon lengkapi semua bidang yang wajib diisi"
+
+# _e("Please fix this field.", "i18n");
+# Context  TextDomain i18n
+msgid "Please fix this field."
+msgstr "Mohon perbaiki bidang ini."
+
+# _e("Please enter a valid number.", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid number."
+msgstr "Masukkan nomor yang valid."
+
+# _e("Please enter a valid credit card number.", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid credit card number."
+msgstr "Masukkan nomor kartu kredit yang valid."
+
+# _e("Please enter the same value again.", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter the same value again."
+msgstr "Masukkan nilai yang sama lagi."
+
+# _e("Please enter a value between {0} and {1} characters long.", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a value between {0} and {1} characters long."
+msgstr "Masukkan nilai dengan panjang karakter antara {0} dan {1}."
+
+# _e("Please enter a value between {0} and {1}.", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a value between {0} and {1}."
+msgstr "Masukkan nilai antara {0} dan {1}."
+
+# _e("This email address is already in use", "i18n");
+# Context  TextDomain i18n
+msgid "This email address is already in use"
+msgstr "Email ini sudah digunakan"
+
+# _e("This is not a valid email address", "i18n");
+# Context  TextDomain i18n
+msgid "This is not a valid email address"
+msgstr "Ini bukan alamat email yang valid"
+
+# _e("The password is incorrect", "i18n");
+# Context  TextDomain i18n
+msgid "The password is incorrect"
+msgstr "Kata sandi salah"
+
+# _e("Offer Mentoring", "i18n");
+# Context  TextDomain i18n
+msgid "Offer Mentoring"
+msgstr "Tawarkan Pembinaan"
+
+# _e("Offer mentoring to", "i18n");
+# Context  TextDomain i18n
+msgid "Offer mentoring to"
+msgstr "Tawarkan pembinaan kepada"
+
+# _e("Request Mentoring", "i18n");
+# Context  TextDomain i18n
+msgid "Request Mentoring"
+msgstr "Ajukan Permohonan Pembinaan"
+
+# _e("Request Mentoring for ", "i18n");
+# Context  TextDomain i18n
+msgid "Request Mentoring for "
+msgstr "Ajukan Permohonan Pembinaan untuk"
+
+# _e("You have a mentor request from", "i18n");
+# Context  TextDomain i18n
+msgid "You have a mentor request from"
+msgstr "Anda menerima permohonan pembinaan dari"
+
+# _e("Your mentor request is pending", "i18n");
+# Context  TextDomain i18n
+msgid "Your mentor request is pending"
+msgstr "Permohonan pembinaan Anda tertunda"
+
+# _e("You are mentoring this business", "i18n");
+# Context  TextDomain i18n
+msgid "You are mentoring this business"
+msgstr "Anda membina usaha ini"
+
+# _e("has offered to be your mentor", "i18n");
+# Context  TextDomain i18n
+msgid "has offered to be your mentor"
+msgstr "menawarkan diri menjadi pembina Anda"
+
+# _e("has requested you to mentor this business", "i18n");
+# Context  TextDomain i18n
+msgid "has requested you to mentor this business"
+msgstr "meminta Anda untuk membina usaha ini"
+
+# _e("is mentoring your business", "i18n");
+# Context  TextDomain i18n
+msgid "is mentoring your business"
+msgstr "membina usaha Anda"
+
+# _e("You are mentoring this business by ", "i18n");
+# Context  TextDomain i18n
+msgid "You are mentoring this business by "
+msgstr "Anda membina usaha ini melalui"
+
+# _e("You cancelled your mentor request", "i18n");
+# Context  TextDomain i18n
+msgid "You cancelled your mentor request"
+msgstr "Anda membatalkan permohonan pembinaan Anda"
+
+# _e("You offered to mentor this business", "i18n");
+# Context  TextDomain i18n
+msgid "You offered to mentor this business"
+msgstr "Anda menawarkan untuk membina usaha ini"
+
+# _e("You offered to mentor this business by", "i18n");
+# Context  TextDomain i18n
+msgid "You offered to mentor this business by"
+msgstr "Anda menawarkan untuk membina usaha ini melalui"
+
+# _e("You requested mentoring for", "i18n");
+# Context  TextDomain i18n
+msgid "You requested mentoring for"
+msgstr "Anda mengajukan permohonan pembinaan untuk"
+
+# _e("You requested mentoring from", "i18n");
+# Context  TextDomain i18n
+msgid "You requested mentoring from"
+msgstr "Anda mengajukan permohonan pembinaan dari"
+
+# _e("You cancelled your offer to mentor this business", "i18n");
+# Context  TextDomain i18n
+msgid "You cancelled your offer to mentor this business"
+msgstr "Anda membatalkan penawaran Anda untuk membina usaha ini"
+
+# _e("You cancelled your mentor request for", "i18n");
+# Context  TextDomain i18n
+msgid "You cancelled your mentor request for"
+msgstr "Anda membatalkan permohonan pembinaan Anda untuk"
+
+# _e("Stop Mentoring", "i18n");
+# Context  TextDomain i18n
+msgid "Stop Mentoring"
+msgstr "Hentikan Pembinaan"
+
+# _e("You have cancelled the mentor request ", "i18n");
+# Context  TextDomain i18n
+msgid "You have cancelled the mentor request "
+msgstr "Anda membatalkan permohonan pembinaan"
+
+# _e("Remove", "i18n");
+# Context  TextDomain i18n
+msgid "Remove"
+msgstr "Hapus"
+
+# _e("Request", "i18n");
+# Context  TextDomain i18n
+msgid "Request"
+msgstr "Permohonan"
+
+# _e("Reject", "i18n");
+# Context  TextDomain i18n
+msgid "Reject"
+msgstr "Tolak"
+
+# _e("Accept", "i18n");
+# Context  TextDomain i18n
+msgid "Accept"
+msgstr "Setujui"
+
+# _e("Send a Reminder", "i18n");
+# Context  TextDomain i18n
+msgid "Send a Reminder"
+msgstr "Kirimkan Pengingat"
+
+# _e("Cancel Request", "i18n");
+# Context  TextDomain i18n
+msgid "Cancel Request"
+msgstr "Batalkan Permohonan"
+
+# _e("Remove Access", "i18n");
+# Context  TextDomain i18n
+msgid "Remove Access"
+msgstr "Hapus Akses"
+
+# _e("Dismiss", "i18n");
+# Context  TextDomain i18n
+msgid "Dismiss"
+msgstr "Hentikan"
+
+# _e("requests access", "i18n");
+# Context  TextDomain i18n
+msgid "requests access"
+msgstr "ajukan permohonan akses"
+
+# _e("has access", "i18n");
+# Context  TextDomain i18n
+msgid "has access"
+msgstr "memiliki akses"
+
+# _e("has been rejected", "i18n");
+# Context  TextDomain i18n
+msgid "has been rejected"
+msgstr "telah ditolak"
+
+# _e("Request access from", "i18n");
+# Context  TextDomain i18n
+msgid "Request access from"
+msgstr "Minta akses dari"
+
+# _e("Requests Access", "i18n");
+# Context  TextDomain i18n
+msgid "Requests Access"
+msgstr "Minta Akses"
+
+# _e("You have requested access from", "i18n");
+# Context  TextDomain i18n
+msgid "You have requested access from"
+msgstr "Anda meminta akses dari"
+
+# _e("You have been granted full access by", "i18n");
+# Context  TextDomain i18n
+msgid "You have been granted full access by"
+msgstr "Anda mendapatkan akses penuh dari"
+
+# _e("Completed", "i18n");
+# Context  TextDomain i18n
+msgid "Completed"
+msgstr "Diselesaikan"
+
+# _e("Finance Needed", "i18n");
+# Context  TextDomain i18n
+msgid "Finance Needed"
+msgstr "Keuangan yang Dibutuhkan"
+
+# _e("Business stage", "i18n");
+# Context  TextDomain i18n
+msgid "Business stage"
+msgstr "Tahapan usaha"
+
+# _e("Year sales started", "i18n");
+# Context  TextDomain i18n
+msgid "Year sales started"
+msgstr "Tahun penjualan dimulai"
+
+# _e("Industry", "i18n");
+# Context  TextDomain i18n
+msgid "Industry"
+msgstr "Industri"
+
+# _e("Country of business", "i18n");
+# Context  TextDomain i18n
+msgid "Country of business"
+msgstr "Negara tempat usaha"
+
+# _e("View Business", "i18n");
+# Context  TextDomain i18n
+msgid "View Business"
+msgstr "Lihat Usaha"
+
+# _e("Date of registration", "i18n");
+# Context  TextDomain i18n
+msgid "Date of registration"
+msgstr "Tanggal pendaftaran"
+
+# _e("Registration number", "i18n");
+# Context  TextDomain i18n
+msgid "Registration number"
+msgstr "Nomor registrasi"
+
+# _e("Fiscal number", "i18n");
+# Context  TextDomain i18n
+msgid "Fiscal number"
+msgstr "Nomor fiskal"
+
+# _e("Legal form of business", "i18n");
+# Context  TextDomain i18n
+msgid "Legal form of business"
+msgstr "Bahan hukum usaha"
+
+# _e("View Company", "i18n");
+# Context  TextDomain i18n
+msgid "View Company"
+msgstr "Lihat Perusahaan"
+
+# _e("Visit Portal", "i18n");
+# Context  TextDomain i18n
+msgid "Visit Portal"
+msgstr "Kunjungi Portal"
+
+# _e("Roles", "i18n");
+# Context  TextDomain i18n
+msgid "Roles"
+msgstr "Peran"
+
+# _e("Customise Portal", "i18n");
+# Context  TextDomain i18n
+msgid "Customise Portal"
+msgstr "Sesuaikan Portal"
+
+# _e("Entrepreneur, ", "i18n");
+# Context  TextDomain i18n
+msgid "Entrepreneur, "
+msgstr "Wiraswasta,"
+
+# _e("Mentor, ", "i18n");
+# Context  TextDomain i18n
+msgid "Mentor, "
+msgstr "Pembina,"
+
+# _e("Investor, ", "i18n");
+# Context  TextDomain i18n
+msgid "Investor, "
+msgstr "Investor,"
+
+# _e("This user has been added to your contacts", "i18n");
+# Context  TextDomain i18n
+msgid "This user has been added to your contacts"
+msgstr "Pengguna ini telah ditambahkan ke kontak Anda"
+
+# _e("Disconnect", "i18n");
+# Context  TextDomain i18n
+msgid "Disconnect"
+msgstr "Putuskan koneksi"
+
+# _e("You have successfully sent a contact request to this user", "i18n");
+# Context  TextDomain i18n
+msgid "You have successfully sent a contact request to this user"
+msgstr "Anda berhasil mengirimkan permohonan kontak kepada pengguna ini"
+
+# _e("wants to connect with you", "i18n");
+# Context  TextDomain i18n
+msgid "wants to connect with you"
+msgstr "ingin terhubung dengan Anda"
+
+# _e("You are about to send request. Are you sure?", "i18n");
+# Context  TextDomain i18n
+msgid "You are about to send request. Are you sure?"
+msgstr "Anda akan mengirimkan permohonan. Apakah Anda yakin?"
+
+# _e("You are about to send the request. Are you sure?", "i18n");
+# Context  TextDomain i18n
+msgid "You are about to send the request. Are you sure?"
+msgstr "Anda akan mengirimkan permohonan ini. Apakah Anda yakin?"
+
+# _e("You are about to accept the request. Are you sure?", "i18n");
+# Context  TextDomain i18n
+msgid "You are about to accept the request. Are you sure?"
+msgstr "Anda akan menyetujui permohonan ini. Apakah Anda yakin?"
+
+# _e("You are about to ignore the request. Are you sure?", "i18n");
+# Context  TextDomain i18n
+msgid "You are about to ignore the request. Are you sure?"
+msgstr "Anda akan mengabaikan permohonan ini. Apakah Anda yakin?"
+
+# _e("You are about to cancel the request. Are you sure?", "i18n");
+# Context  TextDomain i18n
+msgid "You are about to cancel the request. Are you sure?"
+msgstr "Anda akan membatalkan permohonan ini. Apakah Anda yakin?"
+
+# _e("You are about to cancel request. Are you sure?", "i18n");
+# Context  TextDomain i18n
+msgid "You are about to cancel request. Are you sure?"
+msgstr "Anda akan membatalkan permohonan. Apakah Anda yakin?"
+
+# _e("You are about to stop the mentoring. Are you sure?", "i18n");
+# Context  TextDomain i18n
+msgid "You are about to stop the mentoring. Are you sure?"
+msgstr "Anda akan menghentikan pembinaan. Apakah Anda yakin?"
+
+# _e("Send mentoring request", "i18n");
+# Context  TextDomain i18n
+msgid "Send mentoring request"
+msgstr "Kirimkan permohonan pembinaan"
+
+# _e("Send request", "i18n");
+# Context  TextDomain i18n
+msgid "Send request"
+msgstr "Kirimkan permohonan"
+
+# _e("Accept request", "i18n");
+# Context  TextDomain i18n
+msgid "Accept request"
+msgstr "Setujui permohonan"
+
+# _e("Ignore request", "i18n");
+# Context  TextDomain i18n
+msgid "Ignore request"
+msgstr "Abaikan permohonan"
+
+# _e("Cancel request", "i18n");
+# Context  TextDomain i18n
+msgid "Cancel request"
+msgstr "Batalkan permohonan"
+
+# _e("Cancel mentoring request", "i18n");
+# Context  TextDomain i18n
+msgid "Cancel mentoring request"
+msgstr "Batalkan permohonan pembinaan"
+
+# _e("Stop mentoring", "i18n");
+# Context  TextDomain i18n
+msgid "Stop mentoring"
+msgstr "Hentikan pembinaan"
+
+# _e("Business plan", "i18n");
+# Context  TextDomain i18n
+msgid "Business plan"
+msgstr "Rencana usaha"
+
+# _e("Investor", "i18n");
+# Context  TextDomain i18n
+msgid "Investor"
+msgstr "Investor"
+
+# _e("Entrepreneur", "i18n");
+# Context  TextDomain i18n
+msgid "Entrepreneur"
+msgstr "Wiraswasta"
+
+# _e("Mentor", "i18n");
+# Context  TextDomain i18n
+msgid "Mentor"
+msgstr "Pembina"
+
+# _e("Member", "i18n");
+# Context  TextDomain i18n
+msgid "Member"
+msgstr "Anggota"
+
+# _e("Member only", "i18n");
+# Context  TextDomain i18n
+msgid "Member only"
+msgstr "Hanya anggota"
+
+# _e("Connected ", "i18n");
+# Context  TextDomain i18n
+msgid "Connected "
+msgstr "Terhubung"
+
+# _e("Pending", "i18n");
+# Context  TextDomain i18n
+msgid "Pending"
+msgstr "Ditunda"
+
+# _e("Country", "i18n");
+# Context  TextDomain i18n
+msgid "Country"
+msgstr "Negara"
+
+# _e("City", "i18n");
+# Context  TextDomain i18n
+msgid "City"
+msgstr "Kota"
+
+# _e("Language", "i18n");
+# Context  TextDomain i18n
+msgid "Language"
+msgstr "Bahasa"
+
+# _e("Type", "i18n");
+# Context  TextDomain i18n
+msgid "Type"
+msgstr "Jenis"
+
+# _e("Growth ", "i18n");
+# Context  TextDomain i18n
+msgid "Growth "
+msgstr "Pertumbuhan"
+
+# _e("Feedback", "i18n");
+# Context  TextDomain i18n
+msgid "Feedback"
+msgstr "Masukan"
+
+# _e("Hide feedback", "i18n");
+# Context  TextDomain i18n
+msgid "Hide feedback"
+msgstr "Sembunyikan masukan"
+
+# _e("Submit feedback", "i18n");
+# Context  TextDomain i18n
+msgid "Submit feedback"
+msgstr "Kirim masukan"
+
+# _e("Add new feedback", "i18n");
+# Context  TextDomain i18n
+msgid "Add new feedback"
+msgstr "Tambahkan masukan baru"
+
+# _e("This will delete this feedback. Are you sure?", "i18n");
+# Context  TextDomain i18n
+msgid "This will delete this feedback. Are you sure?"
+msgstr "Tindakan ini akan menghapus masukan. Apakah Anda yakin?"
+
+# _e("Feedback added successfully", "i18n");
+# Context  TextDomain i18n
+msgid "Feedback added successfully"
+msgstr "Masukan berhasil ditambahkan"
+
+# _e("Feedback updated successfully", "i18n");
+# Context  TextDomain i18n
+msgid "Feedback updated successfully"
+msgstr "Masukan berhasil diperbarui"
+
+# _e("Feedback deleted successfully", "i18n");
+# Context  TextDomain i18n
+msgid "Feedback deleted successfully"
+msgstr "Masukan berhasil dihapus"
+
+# _e("Error occured, try again", "i18n");
+# Context  TextDomain i18n
+msgid "Error occured, try again"
+msgstr "Terjadi kesalahan, coba lagi"
+
+# _e("Clear", "i18n");
+# Context  TextDomain i18n
+msgid "Clear"
+msgstr "Kosongkan"
+
+# _e("Only me", "i18n");
+# Context  TextDomain i18n
+msgid "Only me"
+msgstr "Hanya saya"
+
+# _e("My mentors", "i18n");
+# Context  TextDomain i18n
+msgid "My mentors"
+msgstr "Pembina saya"
+
+# _e("All investors", "i18n");
+# Context  TextDomain i18n
+msgid "All investors"
+msgstr "Semua investor"
+
+# _e("Everyone", "i18n");
+# Context  TextDomain i18n
+msgid "Everyone"
+msgstr "Semua orang"
+
+# _e("Group admin", "i18n");
+# Context  TextDomain i18n
+msgid "Group admin"
+msgstr "Admin grup"
+
+# _e("Select Main Sector", "i18n");
+# Context  TextDomain i18n
+msgid "Select Main Sector"
+msgstr "Pilih Sektor Utama"
+
+# _e("Select Sub Sector", "i18n");
+# Context  TextDomain i18n
+msgid "Select Sub Sector"
+msgstr "Pilih Subsektor"
+
+# _e("Select End Sector", "i18n");
+# Context  TextDomain i18n
+msgid "Select End Sector"
+msgstr "Pilih Sektor Akhir"
+
+# _e("Go to first page", "i18n");
+# Context  TextDomain i18n
+msgid "Go to first page"
+msgstr "Lompat ke halaman pertama"
+
+# _e("Go to previous page", "i18n");
+# Context  TextDomain i18n
+msgid "Go to previous page"
+msgstr "Lompat ke halaman sebelumnya"
+
+# _e("Go to next page", "i18n");
+# Context  TextDomain i18n
+msgid "Go to next page"
+msgstr "Lompat ke halaman berikutnya"
+
+# _e("Go to last page", "i18n");
+# Context  TextDomain i18n
+msgid "Go to last page"
+msgstr "Lompat ke halaman terakhir"
+
+# _e("Go to page %num%", "i18n");
+# Context  TextDomain i18n
+msgid "Go to page %num%"
+msgstr "Lompat ke halaman %num%"
+
+# _e("USD", "i18n");
+# Context  TextDomain i18n
+msgid "USD"
+msgstr "USD"
+
+# _e("Inbox", "i18n");
+# Context  TextDomain i18n
+msgid "Inbox"
+msgstr "Pesan Masuk"
+
+# _e("Sent", "i18n");
+# Context  TextDomain i18n
+msgid "Sent"
+msgstr "Terkirim"
+
+# _e("Deleted", "i18n");
+# Context  TextDomain i18n
+msgid "Deleted"
+msgstr "Dihapus"
+
+# _e("Trash", "i18n");
+# Context  TextDomain i18n
+msgid "Trash"
+msgstr "Kotak Sampah"
+
+# _e("Fwd", "i18n");
+# Context  TextDomain i18n
+msgid "Fwd"
+msgstr "Teruskan"
+
+# _e("Re", "i18n");
+# Context  TextDomain i18n
+msgid "Re"
+msgstr "Balas"
+
+# _e("From", "i18n");
+# Context  TextDomain i18n
+msgid "From"
+msgstr "Dari"
+
+# _e("To", "i18n");
+# Context  TextDomain i18n
+msgid "To"
+msgstr "Kepada"
+
+# _e("new", "i18n");
+# Context  TextDomain i18n
+msgid "new"
+msgstr "baru"
+
+# _e("More", "i18n");
+# Context  TextDomain i18n
+msgid "More"
+msgstr "Lebih banyak"
+
+# _e("Less", "i18n");
+# Context  TextDomain i18n
+msgid "Less"
+msgstr "Lebih sedikit"
+
+# _e("Loading", "i18n");
+# Context  TextDomain i18n
+msgid "Loading"
+msgstr "Memuat"
+
+# _e("User not found.", "i18n");
+# Context  TextDomain i18n
+msgid "User not found."
+msgstr "Pengguna tidak ditemukan."
+
+# _e("Invalid username or password.", "i18n");
+# Context  TextDomain i18n
+msgid "Invalid username or password."
+msgstr "Nama pengguna atau kata sandi tidak valid."
+
+# _e("Please log out of wordpress administrator.", "i18n");
+# Context  TextDomain i18n
+msgid "Please log out of wordpress administrator."
+msgstr "Mohon keluar dari administrator wordpress."
+
+# _e("All", "i18n");
+# Context  TextDomain i18n
+msgid "All"
+msgstr "Semua"
+
+# _e("Mark as:", "i18n");
+# Context  TextDomain i18n
+msgid "Mark as:"
+msgstr "Tandai sebagai:"
+
+# _e("Marked as ", "i18n");
+# Context  TextDomain i18n
+msgid "Marked as "
+msgstr "Ditandai sebagai"
+
+# _e("Accredited", "i18n");
+# Context  TextDomain i18n
+msgid "Accredited"
+msgstr "Terakreditasi"
+
+# _e("Not Accredited", "i18n");
+# Context  TextDomain i18n
+msgid "Not Accredited"
+msgstr "Tidak Terakreditasi"
+
+# _e("Pending Accreditation", "i18n");
+# Context  TextDomain i18n
+msgid "Pending Accreditation"
+msgstr "Akreditasi Tertunda"
+
+# _e("Assignment is not allowed for tags:", "i18n");
+# Context  TextDomain i18n
+msgid "Assignment is not allowed for tags:"
+msgstr "Penugasan tidak diperbolehkan untuk penanda:"
+
+# _e("EntityId is not specified", "i18n");
+# Context  TextDomain i18n
+msgid "EntityId is not specified"
+msgstr "EntityId tidak ditentukan"
+
+# _e("Connect", "i18n");
+# Context  TextDomain i18n
+msgid "Connect"
+msgstr "Hubungkan"
+
+# _e("Message sent", "i18n");
+# Context  TextDomain i18n
+msgid "Message sent"
+msgstr "Pesan terkirim"
+
+# _e("Reminder sent", "i18n");
+# Context  TextDomain i18n
+msgid "Reminder sent"
+msgstr "Pengingat terkirim"
+
+# _e("Send Message", "i18n");
+# Context  TextDomain i18n
+msgid "Send Message"
+msgstr "Kirim Pesan"
