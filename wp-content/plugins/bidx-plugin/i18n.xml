@@ -126,7 +126,7 @@
     <Item value="youAskedMentorFrom">You offered to mentor this business by</Item>
     <Item value="youAskedMentorForBusiness">You requested mentoring for</Item>
     <Item value="youAskedFromMentor">You requested mentoring from</Item>
-    <Item value="mentorAskedYou">has offered to be your mentor</Item>
+
     <Item value="mentorYouCancelled">You cancelled your offer to mentor this business</Item>
     <Item value="mentorYouCancelledForBusiness">You cancelled your mentor request for</Item>
 
@@ -156,7 +156,7 @@
     <Item value="bsFinanceNeeded">Finance Needed</Item>
     <Item value="bsBusinessStage">Business stage</Item>
     <Item value="bsYearSalesStarted">Year sales started</Item>
-    <Item value="bsIndustry">Industry</Item>
+    <Item value="industry">Industry</Item>
     <Item value="bsCountryBusiness">Country of business</Item>
     <Item value="bsViewBusiness">View Business</Item>
 
@@ -209,12 +209,10 @@
     <Item value="investor">Investor</Item>
     <Item value="entrepreneur">Entrepreneur</Item>
     <Item value="mentor">Mentor</Item>
-    <Item value="member">Member</Item>
     <Item value="norole">Member only</Item>
     <Item value="CONNECTED">Connected </Item>
     <Item value="PENDING">Pending</Item>
 
-    <Item value="facet_industry">Industry</Item>
     <Item value="facet_country">Country</Item>
     <Item value="facet_city">City</Item>
     <Item value="facet_language">Language</Item>

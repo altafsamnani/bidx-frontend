@@ -1333,7 +1333,7 @@ function currentUserRecommendationForCurrentPhase( response )
     ,   isHavingJudgeReview
     ,   reviews                     =   response.reviews
     ,   status                      =   response.status
-    ,   recommendation              =   bidx.i18n.i( 'pendingStatus', appName )
+    ,   recommendation              =   bidx.i18n.i( 'statusPending' )
     ,   reviewRating                =   0
     ,   loggedInCompetitionRoles    =   competitionBidxMeta.bidxCompetitionRoles
     ;

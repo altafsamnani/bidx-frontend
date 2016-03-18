@@ -336,7 +336,7 @@
                                             $( "<tr />", { "class": (item.industry ? "" : " hide") })
                                             .append
                                             (
-                                                $( "<td />", { "html": bidx.i18n.i( "bsIndustry" ) })
+                                                $( "<td />", { "html": bidx.i18n.i( "industry" ) })
                                             )
                                             .append
                                             (
@@ -382,7 +382,7 @@
                     .append
                     (
                         $( "<a />", { "href": item.bidxMeta.bidxGroupUrl + "/" + bidx.common.getCurrentLanguage() + "/dashboard/", "class": "btn btn-primary btn-xs pull-right info-action main-margin-half" + (currentGroupId == item.bidxMeta.bidxGroupId ? " hide" : ""), "html": bidx.i18n.i( "poPortal" ) } )
-                    )          
+                    )
                     .append
                     (
                         $( "<div />", { "class": (isAdmin ? "" : " hide") })
@@ -1009,11 +1009,11 @@
         ;
 
         if (auth && !$.isEmptyObject(auth.investor) )
-        { 
+        {
             accreditation = auth.investor.tagAssignmentSummary[0].tagId;
         }
         if (auth && !$.isEmptyObject(auth.mentor) )
-        { 
+        {
             accreditation = auth.mentor.tagAssignmentSummary[0].tagId;
         }
 
@@ -1121,7 +1121,7 @@
                         else
                         {
                             bidx.utils.log('55');
-                            text = data.relChecks.showBusinessInfo ? text = " " + bidx.i18n.i( "mentorAskedYou" ) + " " : text = " " + bidx.i18n.i( "wantsToMentor" );
+                            text = data.relChecks.showBusinessInfo ? text = " " + bidx.i18n.i( "wantsToMentor" ) + " " : text = " " + bidx.i18n.i( "wantsToMentor" );
                         }
 
                     break;
