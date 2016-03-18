@@ -71,7 +71,7 @@ class expressform {
 
         $memberData                 =   (isset($memberResult->data)) ? $memberResult->data:NULL;
 
-        $businessData               =   (isset($businessSummaryResult->data)) ? $businessSummaryResult->data:NULL;
+        //$businessData               =   (isset($businessSummaryResult->data)) ? $businessSummaryResult->data:NULL;
 
          if ( isset( $businessSummaryResult -> data -> bidxMeta -> bidxCompletionMesh) ) {
                 $completeness = $businessSummaryResult -> data -> bidxMeta -> bidxCompletionMesh;
