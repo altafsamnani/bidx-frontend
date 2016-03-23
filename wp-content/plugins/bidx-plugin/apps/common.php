@@ -61,12 +61,19 @@ class BidxCommon
     //http://www.phpro.org/tutorials/Introduction-To-PHP-Sessions.html
     public function processSessionAndScript ($subDomain)
     {
-        $is_ajax = isset ($_SERVER['HTTP_X_REQUESTED_WITH']) AND
-            (strtolower ($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest' ||
-                $_SERVER['HTTP_X_REQUESTED_WITH'] === 'com.facebook.katana' ); // For express form Android Facebook Browser its needed Damnnnn
+        $is_ajax            =   false;
 
-        $isFacebookReferer  =   isset ($_SERVER['HTTP_REFERER']) AND
-            strstr ($_SERVER['HTTP_REFERER'], 'facebook.com');  // For express form Android Facebook Browser its needed Damnnnn
+        $isFacebookReferer  =   false;
+
+        if(isset ($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower ($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest' )
+        {
+            $is_ajax            = true;
+        };
+
+        if (isset ($_SERVER['HTTP_REFERER']) AND strstr ($_SERVER['HTTP_REFERER'], 'facebook.com') )
+        {
+            $isFacebookReferer  =   true; // For express form Android Facebook Browser its needed Damnnnn
+        }
 
         if (!$is_ajax || $isFacebookReferer ) {
             // To check whther its login page or q= redirect already checked session.
