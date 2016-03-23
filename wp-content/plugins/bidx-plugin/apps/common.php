@@ -62,7 +62,8 @@ class BidxCommon
     public function processSessionAndScript ($subDomain)
     {
         $is_ajax = isset ($_SERVER['HTTP_X_REQUESTED_WITH']) AND
-            strtolower ($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+            (strtolower ($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest' ||
+                $_SERVER['HTTP_X_REQUESTED_WITH'] === 'com.facebook.katana' ); // For express form Android Facebook Browser its needed Damnnnn
 
         $isFacebookReferer  =   isset ($_SERVER['HTTP_REFERER']) AND
             strstr ($_SERVER['HTTP_REFERER'], 'facebook.com');  // For express form Android Facebook Browser its needed Damnnnn
