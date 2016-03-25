@@ -306,8 +306,6 @@ function ajax_submit_signin ()
 
             $result = call_bidx_service ($url, $body);
 
-
-
             // Clear all cookie and session before we process
             //3 Check validation error and include redirect logic
             $requestData = bidx_wordpress_post_action ($url, $result, $body);
