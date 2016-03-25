@@ -1097,13 +1097,21 @@ function bidx_wordpress_post_action ($url, $result, $body)
 
     /*     * ***Check the Http response and decide the status of request whether its error or ok * */
 
-    if ($httpCode >= 200 && $httpCode < 300) {
+    if ($httpCode >= 200 && $httpCode < 300)
+    {
         //Keep the real status
         //$requestData->status = 'ERROR';
-    } else if ($httpCode >= 300 && $httpCode < 400) {
+        $requestData->authenticated = 'true';
+    } else if ($httpCode >= 300 && $httpCode < 400)
+    {
+
         $requestData->status = 'ERROR';
-    } else if ($httpCode == 401) {
+        $requestData->authenticated = 'true';
+
+    } else if ($httpCode == 401)
+    {
         $requestData->status = 'ERROR';
+        $requestData->authenticated = 'false';
         //If user not logged in and its not ajax call then redirect him to the login screen
         $is_ajax = isset ($_SERVER['HTTP_X_REQUESTED_WITH']) AND
             strtolower ($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
