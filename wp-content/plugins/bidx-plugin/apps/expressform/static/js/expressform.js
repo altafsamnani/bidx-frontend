@@ -2,30 +2,31 @@
 {
     "use strict";
 
-    var $element          =     $( "#expressForm" )
-    ,   $industrySectors  =     $element.find( ".industrySectors" )
-    ,   bidx              =     window.bidx
-    ,   appName           =     "expressform"
+    var $element                =   $( "#expressForm" )
+    ,   $industrySectors        =   $element.find( ".industrySectors" )
+    ,   bidx                    =   window.bidx
+    ,   appName                 =   "expressform"
     ,   $btnSave
     ,   $btnCancel
-    ,   $editControls     =     $element.find( ".editControls" )
-    ,   $bsLogo           =     $element.find( ".bsLogo" )
-    ,   $bsLogoBtn        =     $bsLogo.find( "[href$='#addLogo']" )
-    ,   $bsLogoRemoveBtn  =     $bsLogo.find( "[href$='#removeLogo']" )
-    ,   $controlsForEdit  =     $editControls.find( ".viewEdit" )
-    ,   $controlsForError =     $editControls.find( ".viewError" )
-    ,   $bsLogoModal      =     $bsLogo.find( ".addLogoImage" )
-    ,   $logoContainer    =     $bsLogo.find( ".logoContainer" )
-    ,   snippets          =     {}
-    ,   $views            =     $element.find( ".view" )
-    ,   $modals           =     $element.find( ".modalView" )
+    ,   $editControls           =   $element.find( ".editControls" )
+    ,   $bsLogo                 =   $element.find( ".bsLogo" )
+    ,   $bsLogoBtn              =   $bsLogo.find( "[href$='#addLogo']" )
+    ,   $bsLogoRemoveBtn        =   $bsLogo.find( "[href$='#removeLogo']" )
+    ,   $controlsForEdit        =   $editControls.find( ".viewEdit" )
+    ,   $controlsForError       =   $editControls.find( ".viewError" )
+    ,   $bsLogoModal            =   $bsLogo.find( ".addLogoImage" )
+    ,   $logoContainer          =   $bsLogo.find( ".logoContainer" )
+    ,   snippets                =   {}
+    ,   $views                  =   $element.find( ".view" )
+    ,   $modals                 =   $element.find( ".modalView" )
     ,   $modal
-    ,   $affixInfoBar     =     $('.info-bar')
-    ,   expressFormData   =     window.__bidxExpressForm
-    ,   businessSummary   =     bidx.utils.getValue( expressFormData, 'business')
-    ,   member            =     bidx.utils.getValue( expressFormData, 'member')
-    ,   idr               =     bidx.utils.getValue( expressFormData, 'usdIdr')
-    ,   personalDetails   =     bidx.utils.getValue( member, 'bidxMemberProfile.personalDetails')
+    ,   $affixInfoBar           =   $('.info-bar')
+    ,   expressFormData         =   window.__bidxExpressForm
+    ,   businessSummary         =   bidx.utils.getValue( expressFormData, 'business')
+    ,   member                  =   bidx.utils.getValue( expressFormData, 'member')
+    ,   idr                     =   bidx.utils.getValue( expressFormData, 'usdIdr')
+    ,   personalDetails         =   bidx.utils.getValue( member, 'bidxMemberProfile.personalDetails')
+    ,   hasEntrepreneurProfile  =   bidx.utils.getValue ( member, "bidxEntrepreneurProfile" )
     ,   forms             =
         {
             generalOverview:
@@ -227,6 +228,55 @@
                 } );
             }
         }
+    }
+
+    // Try to save to the API
+    //
+    function _saveEntrepreneur( params )
+    {
+        var bidxAPIService = "entity.save"
+        ,   bidxAPIParams
+        ,   dataForEntrpreneurProfile
+        ;
+
+        dataForEntrpreneurProfile   =
+        {
+            bidxMeta:   {
+                            bidxEntityType: "bidxEntrepreneurProfile"
+                        }
+        };
+
+        bidxAPIParams   =
+        {
+            data:           dataForEntrpreneurProfile
+        ,   groupDomain:    bidx.common.groupDomain
+        ,   success:        function( response )
+            {
+                bidx.utils.log( bidxAPIService + "::success::response", response );
+
+                bidx.common.closeNotifications();
+
+                bidx.common.removeAppWithPendingChanges( appName );
+
+                // Finally join the group with clicking a hidden button
+                // This is used because it handles the redirection to front page
+                //
+                //$btnJoinGroup.click();
+            }
+        ,   error:          function( jqXhr, textStatus )
+            {
+                params.error( jqXhr );
+
+                bidx.common.closeNotifications();
+            }
+        };
+
+        // Call that service!
+        //
+        bidx.api.call(
+            bidxAPIService
+        ,   bidxAPIParams
+        );
     }
 
     // Update the pre-rendered dom elements for the financial summary
@@ -1278,7 +1328,8 @@
 
         entityData.push( memberData, businessData);
 
-        bidx.api.call(
+
+         bidx.api.call(
             "entity.bulk"
         ,   {
                 // Undefined when creating the business summary
@@ -1306,15 +1357,33 @@
 
                     businessEntityId    =   bidx.utils.getValue(businessEntity, 'bidxMeta.bidxEntityId' );
 
-                    bidx.utils.log('businessEntityId', businessEntityId );
-
-                /*    if ( state === "create" )
+                    if( !hasEntrepreneurProfile )    //If its first time & businessSummaryId
                     {
-                        businessSummaryId = bidx.utils.getValue( bidxMeta, "bidxEntityId" );
-                    }*/
+                        _saveEntrepreneur(
+                        {
+                            error: function( jqXhr )
+                            {
+                                var response
+                                ;
+                                try
+                                {
+                                    // Not really needed for now, but just have it on the screen, k thx bye
+                                    //
+                                    response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
+                                }
+                                catch ( e )
+                                {
+                                    bidx.utils.error( "problem parsing error response from investorProfile save" );
+                                }
+
+                                bidx.common.notifyError( "Something went wrong during save: " + response );
+
+
+                            }
+                        } );
+                    }
 
                     bidx.common.closeNotifications();
-
 
                     bidx.common.removeAppWithPendingChanges( appName );
 
@@ -1330,30 +1399,6 @@
                             document.location.href = url;
                         }
                     } );
-
-
-
-
-
-//                    var url = document.location.href.split( "#" ).shift();
-//                    // Maybe rs=true was already added, or not 'true' add it before reloading
-//                    //
-//                    var rs = bidx.utils.getQueryParameter( "rs", url );
-//                    var redirect_to = bidx.utils.getQueryParameter( "redirect_to", url );
-//
-//
-//                    if( redirect_to ) {
-//                        url = '/' + redirect_to;
-//                    }
-//
-//                    if ( !rs || rs !== "true" )
-//                    {
-//                        url += ( url.indexOf( "?" ) === -1 ) ? "?" : "&";
-//                        url += "rs=true";
-//                    }
-//
-//                    document.location.href = url;
-
                 }
             ,   error:          function( jqXhr )
                 {
