@@ -1077,8 +1077,9 @@
 
                 rangeFilters    =   bidx.utils.getValue( globalCriteria, 'rangeFilters');
 
-                globalCriteria.rangeFilters[rangeName].min = min;
-                globalCriteria.rangeFilters[rangeName].max = max;
+                _.isEmpty(globalCriteria.rangeFilters[rangeName])?  globalCriteria.rangeFilters[rangeName] = {} : '';
+                globalCriteria.rangeFilters[rangeName]["min"] = min;
+                globalCriteria.rangeFilters[rangeName]["max"] = max;
 
                 //Make offset 0 for filtering so start from begining
                 paging.search.offset = 0;
@@ -1219,12 +1220,12 @@
 
     }
 
-    function _doRangeFilterListing( options  )
+    function _doRangeFilterListing( isRangeFilter  )
     {
         var snippit         = $("#facet-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $facetType      = $("#facet-type").html().replace(/(<!--)*(-->)*/g, "")
-        ,   facetItem       = options.facetItem
-        ,   facetMinMax     = options.facetMinMax
+        ,   facetItem       = isRangeFilter.field
+        ,   facetMinMax     = isRangeFilter
         ,   $list           = $element.find(".facet-list")
         ,   emptyVal        = ''
         ,   $listItem
@@ -1253,6 +1254,8 @@
         ,   maxDateObj
         ,   isSliderAction      =   true
         ,   isCalendarAction    =   true
+        ,   criteriaRangeFilters    =   bidx.utils.getValue( globalCriteria, 'rangeFilters' )
+        ,   rangeCriteria           =   bidx.utils.getValue( criteriaRangeFilters, facetItem )
         ;
 
         if ( facetMinMax )
@@ -1260,9 +1263,11 @@
             // Add Default image if there is no image attached to the bs
             /*$.each( rangeFilters , function ( facetItem, facetMinMax )
             {*/
-                min             =   bidx.utils.getValue(facetMinMax, 'min');
+                min             =   bidx.utils.getValue(rangeCriteria, 'min');
 
-                max             =   bidx.utils.getValue(facetMinMax, 'min');
+                max             =   bidx.utils.getValue(rangeCriteria, 'min');
+
+
 
                 foundMin        =   bidx.utils.getValue(facetMinMax, 'foundMin');
 
@@ -1302,8 +1307,7 @@
 
                         _renderCalendar(
                         {
-                            facetItem:          facetItem
-                        ,   facetMinMax:        facetMinMax
+                            isRangeFilter:      isRangeFilter
                         ,   $currentCategory:   $currentCategory
                         ,   label:              bidx.i18n.i('rangeYearLabel', appName)
                         });
@@ -1315,8 +1319,7 @@
 
                         _renderSlider(
                         {
-                            facetItem:          facetItem
-                        ,   facetMinMax:        facetMinMax
+                            isRangeFilter:      isRangeFilter
                         ,   $currentCategory:   $currentCategory
                         ,   label:              bidx.i18n.i(facetItem + 'PerLabel', appName)
                         });
@@ -1332,8 +1335,7 @@
                         //{
                         _renderSlider(
                         {
-                            facetItem:          facetItem
-                        ,   facetMinMax:        facetMinMax
+                            isRangeFilter:       isRangeFilter
                         ,   $currentCategory:   $currentCategory
                         ,   label:              bidx.i18n.i( facetItem + 'PerLabel', appName )
                         });
@@ -1358,14 +1360,19 @@
         ,   $calendarFrom
         ,   $calendarTo
         ,   $currentCategory    =   options.$currentCategory
-        ,   facetItem           =   options.facetItem
-        ,   facetMinMax         =   options.facetMinMax
 
-        ,   minVal              =   bidx.utils.getValue(facetMinMax, 'min')
+        ,   isRangeFilter       =   options.isRangeFilter
+        ,   facetItem           =   isRangeFilter.field
+        ,   facetMinMax         =   isRangeFilter
+
+        ,   criteriaRangeFilters    =   bidx.utils.getValue( globalCriteria, 'rangeFilters' )
+        ,   rangeCriteria           =   bidx.utils.getValue( criteriaRangeFilters, facetItem )
+
+        ,   minVal              =    rangeCriteria ? bidx.utils.getValue( rangeCriteria, 'min' ) : facetMinMax.foundMin
         ,   minObj              =   ( minVal ) ? bidx.utils.parseISODate ( minVal ) : ''
         ,   min                 =   ( minVal ) ? new Date( minObj.y, minObj.m - 1, minObj.d ) : ''
 
-        ,   maxVal              =   bidx.utils.getValue(facetMinMax, 'max')
+        ,   maxVal              =   rangeCriteria ? bidx.utils.getValue( rangeCriteria, 'max' ) : facetMinMax.foundMax
         ,   maxObj              =   ( maxVal ) ? bidx.utils.parseISODate ( maxVal ) : ''
         ,   max                 =   ( maxVal ) ? new Date( maxObj.y, maxObj.m - 1, maxObj.d ) : ''
 
@@ -1429,6 +1436,21 @@
 
     function _renderSlider( params )
     {
+        function _getAge(timestampDate)
+        {
+            var dateObj
+            ,   timeDiff
+            ,   age
+            ;
+
+            dateObj  =   new Date(timestampDate);
+            timeDiff    =   Math.abs(date.getTime() - dateObj.getTime());
+            age         =   Math.ceil(timeDiff / (1000 * 3600 * 24 * 365)) - 1;
+
+            return age;
+        }
+
+
         var listFacetsItem
         ,   $listFacetsItem
         ,   labelMinVal
@@ -1436,39 +1458,44 @@
         ,   total
         ,   ticks
         ,   ticksLabels
-        ,   intSeconds          =   1
+        ,   intSeconds              =   1
         ,   refreshId
-        ,   slideStart          =   false
-        ,   sliderOptions       =   {}
-        ,   $currentCategory    =   params.$currentCategory
-        ,   facetItem           =   params.facetItem
-        ,   facetMinMax         =   params.facetMinMax
-        ,   min                 =   bidx.utils.getValue( facetMinMax, 'min' )
-        ,   max                 =   bidx.utils.getValue( facetMinMax, 'max' )
-        ,   minDateObj
-        ,   maxDateObj
-        ,   foundMin            =   bidx.utils.getValue( facetMinMax, 'foundMin')
-        ,   foundMax            =   bidx.utils.getValue( facetMinMax, 'foundMax')
+        ,   slideStart              =   false
+        ,   sliderOptions           =   {}
+        ,   $currentCategory        =   params.$currentCategory
+        ,   isRangeFilter           =   params.isRangeFilter
+        ,   facetItem               =   isRangeFilter.field
+        ,   facetMinMax             =   isRangeFilter
+        ,   criteriaRangeFilters    =   bidx.utils.getValue( globalCriteria, 'rangeFilters' )
+        ,   rangeCriteria           =   bidx.utils.getValue( criteriaRangeFilters, facetItem )
+        ,   min
+        ,   max
+        ,   foundMin                =   bidx.utils.getValue( facetMinMax, 'foundMin')
+        ,   foundMax                =   bidx.utils.getValue( facetMinMax, 'foundMax')
         ,   foundMinObj
         ,   foundMaxObj
-        ,   label               =   params.label
+        ,   label                   =   params.label
         //,   criteria            =   params.criteria
-        ,   defaultRange        =   CONSTANTS.RANGEDEFAULT[facetItem]
-        ,   defaultMinVal       =   bidx.utils.getValue(defaultRange, '0')
-        ,   defaultMaxVal       =   bidx.utils.getValue(defaultRange, '1')
-        ,   sliderSnippit       =   $("#facetslider-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        //,   defaultRange        =   CONSTANTS.RANGEDEFAULT[facetItem]
+        //,   defaultMinVal       =   bidx.utils.getValue(defaultRange, '0')
+        //,   defaultMaxVal       =   bidx.utils.getValue(defaultRange, '1')
+
+        ,   defaultMinVal           =   bidx.utils.getValue(facetMinMax, 'rangeMin')
+        ,   defaultMaxVal           =   bidx.utils.getValue(facetMinMax, 'rangeMax')
+
+        ,   sliderSnippit           =   $("#facetslider-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $sliderRange
-        ,   testIterator        =   0
-        ,   enabled             =   true
+        ,   testIterator            =   0
+        ,   enabled                 =   true
         ,   tick1
         ,   tick2
         ,   tick3
         ,   tick4
         ;
 
-        min         =   min ? min : foundMin;
+        min         =   ( rangeCriteria && !_.isEmpty(rangeCriteria) ) ? bidx.utils.getValue( rangeCriteria, 'min' ) : foundMin;
 
-        max         =   max ? max : foundMax;
+        max         =   ( rangeCriteria && !_.isEmpty(rangeCriteria) ) ? bidx.utils.getValue( rangeCriteria, 'max' ) : foundMax;
 
         if( (foundMin === foundMax) && ( min || max ) )
         {
@@ -1487,9 +1514,31 @@
                 ,   minDate
                 ,   maxDate
                 ,   timeDiff
+                ,   rangeMinVal
+                ,   rangeMaxVal
                 ;
 
-                if( min )
+                rangeMinVal   =   0 ;
+
+                rangeMaxVal   =   100 ; //1970 46
+
+                defaultMinVal   =   rangeMinVal;
+
+                defaultMaxVal   =   rangeMaxVal;
+
+                minDate             =   _getAge( max ) ;
+
+                maxDate             =   _getAge( min ) ; //1965 51
+
+                min         =   minDate;
+
+                max         =   maxDate;
+
+                bidx.utils.log( 'max', max);
+                bidx.utils.log( 'defaultMaxVal', defaultMaxVal);
+                //defaultMaxVal   =   ( max > defaultMaxVal ) ? max : defaultMaxVal; // Beause of 1970 error
+
+              /*  if( min )
                 {
                     minDateObj      =   new Date(min);
                     timeDiff        =   Math.abs(date.getTime() - minDateObj.getTime());
@@ -1502,10 +1551,10 @@
                     timeDiff        =   Math.abs(date.getTime() - maxDateObj.getTime());
                     minAge          =   Math.ceil(timeDiff / (1000 * 3600 * 24 * 365)) - 1;
                 }
-
                 min     =   minAge;
 
-                max     =   maxAge;
+                max     =   maxAge;*/
+
 
                 labelMinVal =   label.replace(/%num%/g,  defaultMinVal );
 
@@ -1634,9 +1683,9 @@
                 }
 
                 //facetFiltersCat     =   rangeFilters[rangeName];
-
-                globalCriteria.rangeFilters[rangeName].min = min;
-                globalCriteria.rangeFilters[rangeName].max = max;
+                _.isEmpty(globalCriteria.rangeFilters[rangeName])?  globalCriteria.rangeFilters[rangeName] = {} : '';
+                globalCriteria.rangeFilters[rangeName]["min"] = min;
+                globalCriteria.rangeFilters[rangeName]["max"] = max;
 
                 //Make offset 0 for filtering so start from begining
                 paging.search.offset = 0;
@@ -2100,7 +2149,7 @@
         ,   isFacetRendered =   false
         ,   isRangeRendered =   false
         ,   isBoolRendered  =   false
-        ,   rangeFilters    =   bidx.utils.getValue(globalCriteria, 'rangeFilters')
+        ,   rangeOptions    =   bidx.utils.getValue(response, 'rangeOptions')
         ,   facets          =   bidx.utils.getValue(response, 'facets')
         ,   booleanOptions  =   bidx.utils.getValue(response, 'booleanOptions')
         ,   sortOptions     =   bidx.utils.getValue(response, 'sortOptions')
@@ -2112,7 +2161,7 @@
         if(filterOptions)
         {
             facetKeys     =   _.pluck(facets, 'field');
-            rangeKeys     =   _.keys(rangeFilters);
+            rangeKeys     =   _.pluck(rangeOptions, 'field');
             booleanKeys   =   _.pluck(booleanOptions, 'field');
             allKeys       =   _.union(facetKeys, rangeKeys, booleanKeys);
 
@@ -2140,7 +2189,10 @@
                                         field:  filterOrderingItem
                                     });
 
-                isRangeFilter   =   bidx.utils.getValue( rangeFilters, filterOrderingItem );
+                isRangeFilter   =   _.findWhere(rangeOptions,
+                                    {
+                                        field:  filterOrderingItem
+                                    });
 
                 isBoolean       =   _.findWhere(booleanOptions,
                                     {
@@ -2162,11 +2214,7 @@
                         {
                             isRangeRendered     =   true;
 
-                            _doRangeFilterListing(
-                            {
-                                facetItem:    filterOrderingItem
-                            ,   facetMinMax:  isRangeFilter
-                            } );
+                            _doRangeFilterListing( isRangeFilter );
                         }
 
                     break;

@@ -52,6 +52,8 @@
     <Item value="sortMemberFirstName">First name</Item>
     <Item value="sortPlanTitle">Plan title</Item>
 
+    <Item value="completionPerLabel">%num% %</Item>
+    <Item value="ratingPerLabel">%num% %</Item>
     <Item value="planFinancingNeededPerLabel">$ %num%</Item>
 
 
