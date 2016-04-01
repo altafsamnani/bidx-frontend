@@ -1368,11 +1368,11 @@
         ,   criteriaRangeFilters    =   bidx.utils.getValue( globalCriteria, 'rangeFilters' )
         ,   rangeCriteria           =   bidx.utils.getValue( criteriaRangeFilters, facetItem )
 
-        ,   minVal              =    rangeCriteria ? bidx.utils.getValue( rangeCriteria, 'min' ) : facetMinMax.foundMin
+        ,   minVal              =    ( rangeCriteria && !_.isEmpty(rangeCriteria) ) ? bidx.utils.getValue( rangeCriteria, 'min' ) : facetMinMax.foundMin
         ,   minObj              =   ( minVal ) ? bidx.utils.parseISODate ( minVal ) : ''
         ,   min                 =   ( minVal ) ? new Date( minObj.y, minObj.m - 1, minObj.d ) : ''
 
-        ,   maxVal              =   rangeCriteria ? bidx.utils.getValue( rangeCriteria, 'max' ) : facetMinMax.foundMax
+        ,   maxVal              =   ( rangeCriteria && !_.isEmpty(rangeCriteria) ) ? bidx.utils.getValue( rangeCriteria, 'max' ) : facetMinMax.foundMax
         ,   maxObj              =   ( maxVal ) ? bidx.utils.parseISODate ( maxVal ) : ''
         ,   max                 =   ( maxVal ) ? new Date( maxObj.y, maxObj.m - 1, maxObj.d ) : ''
 
