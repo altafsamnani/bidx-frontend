@@ -2,12 +2,11 @@
 
 <div id="contact" class="main-wrapper">
     <section id="google-map" class="section google-map pad-top-0 hidden-xs">
-        <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Bidx+B.V.,+De+Ruijterkade,+Amsterdam,+Nederland&amp;aq=0&amp;oq=De+Ruijterkade+bidx&amp;sll=52.381467,4.896212&amp;sspn=0.038979,0.090809&amp;ie=UTF8&amp;hq=&amp;hnear=&amp;ll=52.377863,4.905407&amp;spn=0.006295,0.006295&amp;t=m&amp;iwloc=A&amp;output=embed"></iframe>
+        <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2435.929267368065!2d4.89511565171756!3d52.3717025548616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609b091127e0f%3A0x549a45b9e10cab71!2sBidx+B.V.!5e0!3m2!1sen!2snl!4v1459767498773"></iframe>
     </section>
     <section id="google-map" class="section google-map pad-top-0 visible-xs">
-        <iframe width="100%" height="180" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Bidx+B.V.,+De+Ruijterkade,+Amsterdam,+Nederland&amp;aq=0&amp;oq=De+Ruijterkade+bidx&amp;sll=52.381467,4.896212&amp;sspn=0.038979,0.090809&amp;ie=UTF8&amp;hq=&amp;hnear=&amp;ll=52.377863,4.905407&amp;spn=0.006295,0.006295&amp;t=m&amp;iwloc=A&amp;output=embed"></iframe>
+        <iframe width="100%" height="180" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2435.929267368065!2d4.89511565171756!3d52.3717025548616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609b091127e0f%3A0x549a45b9e10cab71!2sBidx+B.V.!5e0!3m2!1sen!2snl!4v1459767498773"></iframe>
     </section>
-
     <section id="contact-us" class="pad-25">
         <div class="container">
             <div class="row">
@@ -17,9 +16,9 @@
                             <h5><i class="fa fa-compass"></i> Visit Us</h5>
                         </div>
                         <address>
-                            <strong>bidx BV</strong><br>
-                            De Ruijterkade, 107<br>
-                            Amsterdam, 1011 AB<br>
+                            <strong>bidx BV</strong><br/>
+                            Oudezijds Achterburgwal 141E<br/>
+                            Amsterdam, 1012 DG<br/>
                         </address>
                     </div>
                     <div class="contact-numbers pad-top-25">
