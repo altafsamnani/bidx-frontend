@@ -94,7 +94,7 @@ class expressform {
 
         // 4. Determine the view needed
         $view->sessionData          =   $sessionData;
-        $view->businessSummaryData  =   $businessData;
+       // $view->businessSummaryData  =   $businessData;
         $view->memberData           =   $memberData;
 
         //Localize to js variables, currently to use focusexpertise for mentoring to display match
