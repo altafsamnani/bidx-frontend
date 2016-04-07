@@ -6,7 +6,7 @@ $financialSummariesItem = <<<EOT
     <div class="financialSummariesItem {{extraItemClasses}}" data-year="{{year}}">
         <div class="fs-cell fs-header">
 
-            <div class="fs-header-controls-left hide">
+            <div class="fs-header-controls-left">
                 <a href="#prev" class="btnPrev"><span class="fa fa-chevron-left"></span></a>
                 <a href="#addPreviousYear" class="btnAddPrev"><i class="fa fa-plus-circle"></i></a>
             </div>
@@ -20,7 +20,7 @@ $financialSummariesItem = <<<EOT
                 </div>
             </div>
 
-            <div class="fs-header-controls-right hide">
+            <div class="fs-header-controls-right">
                 <a href="#next" class="btnNext"><span class="fa fa-chevron-right"></span></a>
                 <a href="#addNextYear" class="btnAddNext"><i class="fa fa-plus-circle"></i></a>
             </div>
@@ -210,7 +210,7 @@ if ( $hasYears == false ) {
 
         <!-- Section: FINANCE NEEDED -->
         <div class="fs-cell fs-section-header">
-            <div class="fs-content"><strong><?php _e( 'Finance needed','bidxplugin'); ?></strong> (<?php _e('from external financiers in Indonesian Rupiah','bidxplugin'); ?>)</div>
+            <div class="fs-content"><strong><?php _e( 'Finance needed','bidxplugin'); ?></strong> <br/>(<?php _e('from external financiers in Indonesian Rupiah','bidxplugin'); ?>)</div>
         </div>
 
         <div class="fs-cell fs-row">
@@ -219,7 +219,7 @@ if ( $hasYears == false ) {
 
         <!-- Section: NUMBER OF EMPLOYEES -->
         <div class="fs-cell fs-section-header">
-            <div class="fs-content"><strong><?php _e( 'Number of employees','bidxplugin'); ?></strong> (<?php _e('being directly paid in this business','bidxplugin'); ?>)</div>
+            <div class="fs-content"><strong><?php _e( 'Number of employees','bidxplugin'); ?></strong><br/>(<?php _e('being directly paid in this business','bidxplugin'); ?>)</div>
         </div>
 
         <div class="fs-cell fs-row">
