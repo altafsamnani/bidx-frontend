@@ -534,7 +534,7 @@ class BidxCommon
 
         if( strlen ( $hostAddress[1] ) == 2 )
         {
-            $langUrl = $hostAddress[1];
+            $langUrl = '/'. $hostAddress[1];
         }
 
         //Status Messages
@@ -549,7 +549,7 @@ class BidxCommon
 
             case 'auth' :
                 if ($authenticated == 'true') {
-                    $redirect_url = $http . $_SERVER['HTTP_HOST'] .'/'.$langUrl. '/member' . $param;
+                    $redirect_url = $http . $_SERVER['HTTP_HOST'] .$langUrl. '/member' . $param;
                 } else {
                     wp_clear_auth_cookie ();
                 }
@@ -558,7 +558,7 @@ class BidxCommon
             case 'member' :
 
                 if ($authenticated == 'false' && $redirect) {
-                    $redirect_url = $http . $_SERVER['HTTP_HOST'] .'/'.$langUrl . '/' . $redirect . $param;
+                    $redirect_url = $http . $_SERVER['HTTP_HOST'] .$langUrl . '/' . $redirect . $param;
                     wp_clear_auth_cookie ();
 
                     //Clear Session and Static variables (except for any redirect setting)
@@ -585,7 +585,7 @@ class BidxCommon
                 // will cause issues if the bare URL actually includes percent characters. (See also
                 // http://serverfault.com/questions/331899/apache-mod-rewrite-double-encodes-query-string)
 
-                $redirect_url = $http . $_SERVER['HTTP_HOST'] .'/'.$langUrl. '/auth?redirect_to=' . base64_encode ( urldecode($_GET['url']) ) . '#auth/login';
+                $redirect_url = $http . $_SERVER['HTTP_HOST'] .$langUrl. '/auth?redirect_to=' . base64_encode ( urldecode($_GET['url']) ) . '#auth/login';
 
                 clear_bidx_cookies ();
                 $params['domain'] = get_bidx_subdomain ();
@@ -602,7 +602,7 @@ class BidxCommon
             if ($authenticated == 'false')
             {
 
-                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .'/bidx-soca/bidxauth?id=facebook&path.success=/expressform';
+                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .'/bidx-soca/bidxauth?id=facebook&path.success='.$langUrl.'/expressform';
 
                     $redirect_url = str_replace( 'local', 'test', $redirect_url);
 
@@ -619,7 +619,7 @@ class BidxCommon
             case 'mail' :
                 if ($authenticated == 'false') {
 
-                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .'/'.$langUrl. '/auth?redirect_to=' . base64_encode ($current_url) . '/#auth/login';
+                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .$langUrl. '/auth?redirect_to=' . base64_encode ($current_url) . '/#auth/login';
                     wp_clear_auth_cookie ();
 
                     //Clear Session and Static variables (except for any redirect setting)
