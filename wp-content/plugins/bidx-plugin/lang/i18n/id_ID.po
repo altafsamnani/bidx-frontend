@@ -993,9 +993,9 @@ msgstr "Rencana memiliki lampiran?"
 # _x("Has attachment(s) ?", "search","i18n");
 # Context search TextDomain i18n
 msgctxt "search"
-msgid "Has attachment(s) ?"
+msgid "Any attachment ?"
 msgstr "Memiliki lampiran?"
-
+guls
 # _x("Member has facebook ?", "search","i18n");
 # Context search TextDomain i18n
 msgctxt "search"

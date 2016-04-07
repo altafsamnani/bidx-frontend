@@ -60,13 +60,377 @@
 	}
 }
 
+.bidx-expressform
+{
+    &.bidx-edit
+    {
+        .businessCover .logoImage
+        {
+            display: none;
+        }
+         .fa-ban
+        {
+            color:#d9534f;
+        }
+        .fa-bookmark
+        {
+            color:#5cb85c;
+        }
+
+        .fa-bookmark-o
+        {
+            color:#dddddd;
+        }
+    }
+    .table-financial,
+    .table-company
+    {
+        th
+        {
+            background-color: #efefef;
+        }
+    }
+    .main-padding-vertical
+    {
+        td
+        {
+            width: 35%;
+        }
+        td + td
+        {
+            width: auto;
+        }
+    }
+    .table-company
+    {
+        td
+        {
+            width: auto !important;
+        }
+    }
+    .viewMainsuccess
+    {
+        float: right;
+    }
+    .viewShow
+    {
+        display: block;
+    }
+    .financialSummary
+    {
+        a.disabled
+        {
+            color: #ccc;
+        }
+        .btnPrev,
+        .btnAddPrev,
+        .btnNext,
+        .btnAddNext
+        {
+            font-size: ceil(@font-size-base * 2.2);
+        }
+        .fs-controls
+        {
+            @media (max-width: @screen-xs-max)
+            {
+                display: none;
+            }
+        }
+    }
+    .fs-col-labels
+    {
+        width: 20%;
+        float: left;
+        @media (max-width: @screen-sm-max)
+        {
+            width: 30%;
+        }
+        @media (max-width: @screen-xs-max)
+        {
+            width: 40%;
+        }
+        @media (max-width: @screen-xs)
+        {
+            display: none;
+        }
+    }
+    .fs-cell
+    {
+        // margin: 0 1px 1px 0;
+        margin: 2px 3px;
+        position: relative;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        .fs-content
+        {
+            padding: 10px 12px;
+        }
+        .fs-cell-label
+        {
+            display: none;
+            @media (max-width: @screen-xs)
+            {
+                text-align: center;
+                display: block;
+                cursor: normal;
+                padding-top: 6px;
+            }
+        }
+        div.controls
+        {
+            padding: 10px 12px;
+        }
+    }
+    .fs-header
+    {
+        height: 74px;
+        position: relative;
+    }
+    .fs-section-header
+    {
+        height:                     80px;
+        // background-color:           #f8f7f6;
+        div.fs-content
+        {
+            position:                   absolute;
+            bottom:                     0;
+            padding-bottom:             6px;
+        }
+        strong
+        {
+            font-weight:                bold;
+            font-size:                  18px;
+        }
+    }
+    .fs-row
+    {
+        background-color: #e6e3de;
+    }
+    .fs-col-years
+    {
+        width: 76%;
+        float: left;
+        overflow: hidden;
+        @media (max-width: @screen-sm-max)
+        {
+            width: 66%;
+        }
+        @media (max-width: @screen-xs-max)
+        {
+            width: 56%;
+        }
+        @media (max-width: @screen-xs)
+        {
+            width: 100%;
+        }
+        .fs-header
+        {
+            background-color: lighten(@brand-primary, 30%);
+            margin: 0;
+            // color: white;
+            a
+            {
+                color: @brand-danger;
+            }
+            p
+            {
+                margin: 0;
+            }
+            .fs-content
+            {
+                text-align: center;
+                position: static;
+                padding: 12px;
+            }
+            .year
+            {
+                font-size: 22px;
+                font-weight: bold;
+                line-height: 18px;
+            }
+        }
+        .selected
+        {
+            .fs-header
+            {
+                color: #34495e;
+                background-color: lighten(@brand-primary, 15%);
+                a
+                {
+                    color: @brand-danger;
+                    &.btnDelete
+                    {
+                        color: #BE2025;
+                    }
+                }
+            }
+            .fs-row
+            {
+                background-color:           #f6f0e8;
+            }
+        }
+        .addItem
+        {
+            @media (max-width: @screen-xs)
+            {
+                display: none;
+            }
+        }
+    }
+    .fs-col-right
+    {
+        width: 4%;
+        float: left;
+        @media (max-width: @screen-xs)
+        {
+            display: none;
+        }
+    }
+    .fs-header-controls-left,
+    .fs-header-controls-right
+    {
+        display: none;
+        padding: 16px 10px;
+        position: absolute;
+        top: 0;
+        a
+        {
+            color: darken(@brand-primary, 30%) !important;
+        }
+    }
+    .fs-header-controls-left
+    {
+        left: 0;
+        @media (max-width: @screen-xs-max)
+        {
+            display: block;
+        }
+    }
+    .fs-header-controls-right
+    {
+        right: 0;
+        @media (max-width: @screen-xs-max)
+        {
+            display: block;
+        }
+    }
+    .financialSummariesItem
+    {
+        width: 33.333%;
+        float: left;
+        background-color: #FFF;
+        @media (max-width: @screen-xs-max)
+        {
+            display: none;
+            width: 0;
+            overflow: hidden;
+        }
+        &.addItem
+        {
+            text-align: center;
+            .noMoreYears
+            {
+                font-style: italic;
+                padding-top: 20px;
+            }
+            .addYear
+            {
+                // padding-top: 20px;
+                // a
+                // {
+                //     font-size: 18px;
+                // }
+            }
+        }
+        &.addYearCol
+        {
+            background-color: transparent;
+        }
+        .fs-header
+        {
+            .btnAddPrev,
+            .btnAddNext,
+            .btnDelete
+            {
+                display: none;
+            }
+        }
+        &.first .fs-header .btnPrev,
+        &.last .fs-header .btnNext
+        {
+            display: none;
+        }
+        &.selected
+        {
+            border-right: 2px solid lighten(@gray-light, 34%);
+            border-left: 2px solid lighten(@gray-light, 34%);
+            @media (max-width: @screen-xs-max)
+            {
+                display: block;
+                width: 100%;
+                float: none;
+            }
+        }
+    }
+    .companyItem label.radio
+    {
+        margin: 0;
+    }
+    .businessSummary.edit .financialSummariesItem.first .fs-header .btnAddPrev,
+    .businessSummary.edit .financialSummariesItem.last .fs-header .btnAddNext
+    {
+        display: inline;
+    }
+    .completeness-score
+    {
+        background-color: @brand-success;
+        color: @gray-lighter;
+        margin: 0;
+        padding: ceil(@padding-base-horizontal * 0.5);
+        font-weight: 100;
+        .percentage
+        {
+            font-size: ceil(@font-size-base * 2.2);
+            line-height: 1;
+            span
+            {
+                font-size: ceil(@font-size-base * 1.5);
+            }
+        }
+
+        &.medium
+        {
+                background-color: @brand-warning;
+        }
+        &.incomplete
+        {
+                background-color: @brand-danger;
+        }
+    }
+}
+
 .bidx-expressform .financialSummariesItem
 {
-	@media (max-width: @screen-xs-max)
+	@media (max-width: @screen-xs)
     {
         display: block !important;
         width: 100% !important;
         overflow: hidden;
+
+        .fs-header-controls-right,
+        .fs-header-controls-left
+        {
+        	display : none;
+        }
+
+        .fs-section-header
+        {
+        	height: 0px;
+        }
+    }
+    .input-group .form-control
+    {
+    	//width: 95% !important
     }
 }
 
@@ -105,17 +469,22 @@
 
 
 
-.bidx-expressform .fs-section-header
+/* .bidx-expressform .fs-section-header
 {
 	@media (max-width: @screen-md)
 	{
 		height: 0px !important;
 	}
-	@media (max-width: @screen-xs-max)
+	@media (max-width: @screen-sm)
 	{
 		height: 0px !important;
 	}
+	@media (max-width: @screen-xs)
+	{
+		height: 80px !important;
+	}
 }
+*/
 
 .bidx-expressform .noty_modal
 {
@@ -160,7 +529,7 @@
 		font-size: 11px;
 		padding: 3px 5px;
 	}
-	.inputFinanceFront
+	/*.inputFinanceFront
 	{
 		width:108px;
 
@@ -172,7 +541,7 @@
 		{
 			width: 233px;
 		}
-	}
+	} */
 	.inputFinanceBack
 	{
 		padding:0px;

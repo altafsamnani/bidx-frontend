@@ -4837,7 +4837,7 @@ msgid "Participate now"
 msgstr "Berpartisipasi"
 
 # 990) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/expressform/templates/landing-expressform.phtml -8
-# _e("Is your business omzet is growing by 20%+ per year?\nThen your business is probably one of the fastest growers in your city.<br/><br/>\n\nApply with Usaha Pintar 50 and be awarded the Usaha Pintar award. Receive:\n<ul>\n\t<li>free mentoring (accounting, marketing, legal, etc.)</li>\n\t<li>Access to loans & equity finance</li>\n\t<li>Get media exposure (on Kompas TV, Detik, Bens Radio, etc.)</li>\n\t<li>Access a network of other innovative businesses (usahapintar.com)</li>\n\t<li>Get support from KPMG</li></ul><br/>\nJoin today! ","bidxplugin");
+# _e("Is your business revenue growing by 20%+ per year?\nThen your business is probably one of the fastest growers in your city.<br/><br/>\n\nApply with Usaha Pintar 50 and be awarded the Usaha Pintar award.<br>With Usaha Pintar 50 you can receive:\n<ul>\n\t<li>free mentoring (accounting, marketing, legal, etc.)</li>\n\t<li>Access to loans & equity finance</li>\n\t<li>Get media exposure (on Kompas TV, Detik, Bens Radio, etc.)</li>\n\t<li>Access a network of other innovative businesses (usahapintar.com)</li>\n\t<li>Get support from KPMG</li></ul><br/>\nJoin Usaha Pintar 50 Today! ","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid ""
 "Is your business omzet is growing by 20%+ per year?\n"

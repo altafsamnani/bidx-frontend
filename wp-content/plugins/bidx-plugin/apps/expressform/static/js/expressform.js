@@ -170,21 +170,24 @@
 
                             break;
 
-                            case 'country':
+                          /*  case 'country':
 
                             f   =   'address[0].country';
 
                             fp  =   'address.0.country';
 
-                            break;
+                            break; */
 
                         }
 
-                        value  = bidx.utils.getValue( personalDetails, fp );
+                        if( f !== 'country' ) //Default country from hidden field so
+                        {
+                            value  = bidx.utils.getValue( personalDetails, fp );
 
-                        $input = $form.find( "[name='personalDetails." + f + "']" );
+                            $input = $form.find( "[name='personalDetails." + f + "']" );
 
-                        bidx.utils.setElementValue( $input, value );
+                            bidx.utils.setElementValue( $input, value );
+                        }
                     }
                 } );
             }
@@ -734,6 +737,7 @@
                 {
                     required:               true
                 ,   monetaryAmount:         true
+                ,   maxlength:              10
 
                 ,   messages:
                     {
@@ -1048,6 +1052,7 @@
                     var $input
                     ,   value
                     ,   fp
+                    ,   country
                     ;
 
                     if( form === 'personalDetails' )
@@ -1065,9 +1070,12 @@
                             break;
 
                             case 'country':
+                            country = f;
+
                                 f   =   'address[0].country';
 
                                 fp  =   'address.0.country';
+
 
                             break;
 
@@ -1328,8 +1336,7 @@
 
         entityData.push( memberData, businessData);
 
-
-         bidx.api.call(
+        bidx.api.call(
             "entity.bulk"
         ,   {
                 // Undefined when creating the business summary
