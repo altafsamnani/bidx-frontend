@@ -2448,26 +2448,38 @@ function bidx_general_settings() {
 
     require_once(BIDX_PLUGIN_DIR . '/dashboard/dashboard.php');
 
-    if (isset ($_POST['action'])) {
+    if (isset ($_POST['action']))
+    {
         $action = $_POST['action'];
         $html = '';
 
-        if ($action == 'Save') {
-            //Is Competition and Email Settings
-            $groupNews = ( isset ( $_POST['group-news'] ) ) ? $_POST['group-news'] : 0;
+        if ($action == 'Save')
+        {
+            //Save the group options
+            $groupNews      =   ( isset ( $_POST['group-news'] ) ) ? $_POST['group-news'] : 0;
 
             update_option ('group-news', $groupNews);
 
-	    $ssoRedirect = ( isset( $_POST['bidx-sso-redirect'] ) ) ? $_POST['bidx-sso-redirect'] : false;
+            //Save the express form settings
+            $expressForm    =   ( isset ( $_POST['bidx-expressform'] ) ) ? $_POST['bidx-expressform'] : 0;
 
-	    if ( $ssoRedirect ) {
-		$ssoRedirectUrl = $_POST['bidx-ssoredirect-url'];
-		if ( !empty( $ssoRedirectUrl ) ) {
-			update_option( 'bidx-ssoredirect-url', $ssoRedirectUrl );
-		}
-	    } else {
-		delete_option( 'bidx-ssoredirect-url' );
-	    }
+            update_option ('bidx-expressform', $expressForm);
+
+
+
+    	    $ssoRedirect = ( isset( $_POST['bidx-sso-redirect'] ) ) ? $_POST['bidx-sso-redirect'] : false;
+
+    	    if ( $ssoRedirect )
+            {
+    		  $ssoRedirectUrl = $_POST['bidx-ssoredirect-url'];
+        		if ( !empty( $ssoRedirectUrl ) ) {
+        			update_option( 'bidx-ssoredirect-url', $ssoRedirectUrl );
+        		}
+    	    }
+            else
+            {
+    		  delete_option( 'bidx-ssoredirect-url' );
+    	    }
 
             $html .= "<div class='updated'>
                         <p>" . __ ('bidX options are updated succesfully.', 'bidxplugin') . "
