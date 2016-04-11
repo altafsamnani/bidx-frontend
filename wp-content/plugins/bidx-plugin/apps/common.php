@@ -396,6 +396,7 @@ class BidxCommon
                 case 'expressform':
                     $memberId           = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
                     $businessSummaryId  = ( $id ) ? $id : NULL;
+                    $isActivated        = get_option('bidx-expressform');
 
                     if ( $businessSummaryId )
                     {
@@ -408,13 +409,17 @@ class BidxCommon
                         $data->memberId = $memberId;
                         $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
                         $this::$bidxSession[$subDomain]->memberId = $memberId;
-                        $this::$bidxSession[$subDomain]->external = true;
+                        $this::$bidxSession[$subDomain]->external = ($isActivated) ? true : false;
                     } else
                     {
 
                         $redirect = 'auth'; //To redirect /member and not loggedin page to /login
                         $statusMsgId = 1;
                     }
+
+                    $this::$bidxSession[$subDomain]->expressForm = $isActivated;
+
+
 
                     break;
 
@@ -599,7 +604,9 @@ class BidxCommon
                 break;
 
             case 'expressform':
-            if ($authenticated == 'false')
+            $expressform    =   $this::$bidxSession[$subDomain]->expressForm;
+
+            if ( $authenticated == 'false' && $expressform )
             {
 
                     $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .'/bidx-soca/bidxauth?id=facebook&path.success='.$langUrl.'/expressform';

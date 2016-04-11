@@ -44,7 +44,7 @@ class dashboard
         $isBidxAdminPage = false;
 
         if (in_array (WP_ADMIN_ROLE, $currentUser->roles) || in_array (WP_OWNER_ROLE, $currentUser->roles)) {
-  
+
             switch ($menuTitle) {
 
                 case 'invite-members':
@@ -105,7 +105,7 @@ class dashboard
                 {
                     wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
                     $investorDashboard = get_option ('investor-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
-                    
+
                     $view->startingPage = 0;
                     if ( $investorDashboard )
                     {
@@ -222,21 +222,27 @@ class dashboard
 
             case 'general-settings' :
 
-                $view->groupNews = get_option ('group-news');
-		if ( get_option ( 'bidx-ssoredirect-url' ) ) {
-                	$view->ssoRedirect = true;
-		} else {
-			$view->ssoRedirect = false;
-		}
+                $view->groupNews    = get_option ('group-news');
+                $view->expressform  = get_option('bidx-expressform');
+
+        		if ( get_option ( 'bidx-ssoredirect-url' ) )
+                {
+                    $view->ssoRedirect = true;
+        		} else
+                {
+        			$view->ssoRedirect = false;
+        		}
 
                 $view->ssoRedirectUrl = get_option( 'bidx-ssoredirect-url' );
 
                 $template = 'groupowner/general-settings.phtml';
+
                 break;
 
             default:
 
                 $template = 'dashboard.phtml';
+
                 break;
         }
 

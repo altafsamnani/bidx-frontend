@@ -52,62 +52,70 @@ class expressform {
 
         $sessionData                =   $session->data;
 
-        // 3. Service Business Summary (entity)
-        $bidxBusinessSummary        =   $sessionData->wp->entities->bidxBusinessSummary;
+        $isActivated                =   $session->expressForm;
 
-        if ( isset ($session->requestedBusinessSummaryId ) )
+        if( $isActivated )
         {
-            $businessSummaryId = $session->requestedBusinessSummaryId;
+            // 3. Service Business Summary (entity)
+            $bidxBusinessSummary        =   $sessionData->wp->entities->bidxBusinessSummary;
 
-            $businessSummaryResult      =   $businessSummaryObj->getSummaryDetails( $businessSummaryId );
+            if ( isset ($session->requestedBusinessSummaryId ) )
+            {
+                $businessSummaryId = $session->requestedBusinessSummaryId;
+
+                $businessSummaryResult      =   $businessSummaryObj->getSummaryDetails( $businessSummaryId );
+            }
+            else
+            {
+                $businessSummaryResult      =   $businessSummaryObj->getExpressFormSubmission( $bidxBusinessSummary );
+            }
+
+            // 2. Render Member Profile Services for Initial View Display
+            $memberResult               =   $memberObj->getMemberDetails(  );
+
+            $memberData                 =   (isset($memberResult->data)) ? $memberResult->data:NULL;
+
+            $businessData               =   (isset($businessSummaryResult->data)) ? $businessSummaryResult->data:NULL;
+
+             if ( isset( $businessSummaryResult -> data -> bidxMeta -> bidxCompletionMesh) ) {
+                    $completeness = $businessSummaryResult -> data -> bidxMeta -> bidxCompletionMesh;
+
+                    //TODO : structurally fix this using the scoring service
+                    $view->completenessScore = round($completeness);
+                    if ( $view->completenessScore < 30 ) {
+                        $view->completenessColour = 'incomplete';
+                    } else if ( $view->completenessScore < 60 ) {
+                        $view->completenessColour = 'medium';
+                    } else {
+                        $view->completenessColour = 'good';
+                    }
+                }
+                else {
+                    $view->completenessScore = 0;
+                    $view->completenessColour = 'red';
+                }
+
+
+            // 4. Determine the view needed
+            $view->sessionData          =   $sessionData;
+            $view->businessSummaryData  =   $businessData;
+            $view->memberData           =   $memberData;
+
+            //Localize to js variables, currently to use focusexpertise for mentoring to display match
+            $jsParams = array(
+                                'member'    => $view->memberData
+                            ,   'business'  => $view->businessSummaryData
+                            ,   'usdIdr'   => BIDX_USD_IDR
+                            );
+
+            wp_localize_script ('bidx-data', '__bidxExpressForm', $jsParams);
+
+            $view -> render('expressform.phtml');
         }
         else
         {
-            $businessSummaryResult      =   $businessSummaryObj->getExpressFormSubmission( $bidxBusinessSummary );
+            $view -> render('disabled-function-msg.phtml');
         }
-
-        // 2. Render Member Profile Services for Initial View Display
-        $memberResult               =   $memberObj->getMemberDetails(  );
-
-        $memberData                 =   (isset($memberResult->data)) ? $memberResult->data:NULL;
-
-        $businessData               =   (isset($businessSummaryResult->data)) ? $businessSummaryResult->data:NULL;
-
-         if ( isset( $businessSummaryResult -> data -> bidxMeta -> bidxCompletionMesh) ) {
-                $completeness = $businessSummaryResult -> data -> bidxMeta -> bidxCompletionMesh;
-
-                //TODO : structurally fix this using the scoring service
-                $view->completenessScore = round($completeness);
-                if ( $view->completenessScore < 30 ) {
-                    $view->completenessColour = 'incomplete';
-                } else if ( $view->completenessScore < 60 ) {
-                    $view->completenessColour = 'medium';
-                } else {
-                    $view->completenessColour = 'good';
-                }
-            }
-            else {
-                $view->completenessScore = 0;
-                $view->completenessColour = 'red';
-            }
-
-
-        // 4. Determine the view needed
-        $view->sessionData          =   $sessionData;
-        $view->businessSummaryData  =   $businessData;
-        $view->memberData           =   $memberData;
-
-        //Localize to js variables, currently to use focusexpertise for mentoring to display match
-        $jsParams = array(
-                            'member'    => $view->memberData
-                        ,   'business'  => $view->businessSummaryData
-                        ,   'usdIdr'   => BIDX_USD_IDR
-                        );
-
-        wp_localize_script ('bidx-data', '__bidxExpressForm', $jsParams);
-
-        $view -> render('expressform.phtml');
-
     }
 }
 

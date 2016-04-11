@@ -1,55 +1,71 @@
 <div id='icon-edit' class='icon32 icon32-posts-post'><br></div>
-<h2>bidX General Settings</h2>
+<h2><?php _e('bidX General Settings','bidxplugin');?></h2>
 
 <form method='post'>
     <div class='metabox-holder'>
         <div id='categorydiv' class='postbox'>
-            <div class='handlediv' title='Click to toggle'><br></div><h3 class='hndle'><span>News and Events</span></h3>
+            <div class='handlediv' title='Click to toggle'><br></div><h3 class='hndle'><span><?php _e('Express form','bidxplugin');?></span></h3>
+            <div class='inside'>
+                <div id='taxonomy-category' class='categorydiv'>
+                    <div class=''>
+                        <div class='label'>
+                            <label class='selectit'>
+                                <input <?php echo (isset($this->expressform) && $this->expressform) ? 'checked':'';?> value='1' type='checkbox' name='bidx-expressform' id='bidx-expressform'>
+                                <?php _e('Do you want to activate Express Form for this portal ? ','bidxplugin');?>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div id='categorydiv' class='postbox'>
+            <div class='handlediv' title='Click to toggle'><br></div><h3 class='hndle'><span><?php _e('News and Events','bidxplugin');?></span></h3>
             <div class='inside'>
                 <div id='taxonomy-category' class='categorydiv'>
                     <div class=''>
                         <div class='label'>
                             <label class='selectit'>
                                 <input <?php echo (isset($this->groupNews) && $this->groupNews) ? 'checked':'';?> value='1' type='checkbox' name='group-news' id='group-news'>
-                                Do you want to activate News and Events for this group ?
+                                <?php _e('Do you want to activate News and Events for this group ?','bidxplugin');?>
                             </label>
                         </div>
                     </div>
 
                 </div>
             </div>
-        </div>       
+        </div>
         <div id='categorydiv' class='postbox'>
-            <div class='handlediv' title='Click to toggle'><br></div><h3 class='hndle'><span>SSO Login redirect</span></h3> 
+            <div class='handlediv' title='Click to toggle'><br></div><h3 class='hndle'><span>SSO Login redirect</span></h3>
             <div class='inside'>
                 <div id='taxonomy-category' class='categorydiv'>
                     <div class=''>
 		    	<p>
-				When integrating with an external single sign on mechanism a specific redirect is needed. It can be enabled and set here by a Wordpress administrator.<br />For security reasons only a local URI redirect is allowed which can loop it through the SSO mechanism in Bidx-Soca.
+				<?php _e('When integrating with an external single sign on mechanism a specific redirect is needed. It can be enabled and set here by a Wordpress administrator.<br />For security reasons only a local URI redirect is allowed which can loop it through the SSO mechanism in Bidx-Soca.','bidxplugin');?>
 			</p>
                         <div class='label'>
                             <label class='selectit'>
                                 <input <?php echo (isset($this->ssoRedirect) && $this->ssoRedirect) ? 'checked':'';?> value='1' type='checkbox' name='bidx-sso-redirect' id='bidx-sso-redirect'>
-				<span class="description">Enable an external SSO redirect URL for my portal.</span>
+				<span class="description"><?php _e('Enable an external SSO redirect URL for my portal.','bidxplugin');?></span>
                             </label>
                         </div>
                     </div>
                         <div class='label'>
                             <label class='selectit' for='bidx-ssoredirect-url'>
-                                <span class="description">SSO redirect URI for my portal.</span><br/>
+                                <span class="description"><?php _e('SSO redirect URI for my portal.','bidxplugin');?></span><br/>
                                 <input <?php if( isset( $this->ssoRedirectUrl ) ) { echo 'value="'.$this->ssoRedirectUrl.'"'; }?> type='text' name='bidx-ssoredirect-url' id='bidx-ssoredirect-url' class='regular-text' <?php disabled( $this->ssoRedirect, 'disabled', true ); ?> >
-                            </label>                        
+                            </label>
 			</div>
-                    </div>        
+                    </div>
                 </div>
             </div>
         </div>
        <div class="updated inline below-h2">
-            <p><strong>Important:</strong> Refresh the page after saving the option to see the News & Events category in Left menu.</p>
+            <p><strong><?php _e('Important:');?></strong><?php _e('Refresh the page after saving the option to see the News & Events category in Left menu.','bidxplugin');?></p>
        </div><br/>
-        <div class='buttonwrapper'>            
+        <div class='buttonwrapper'>
             <input type='submit' name = 'action' value='Save' class='button button-primary'>
-         
+
         </div>
     </div>
 </form>
