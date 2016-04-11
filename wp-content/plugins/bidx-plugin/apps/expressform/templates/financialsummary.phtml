@@ -34,7 +34,7 @@ $financialSummariesItem = <<<EOT
             <div class="viewEdit">
                 <div class="input-group">
                     <div class="input-group-addon">IDR</div>
-                    <input type="text" class="form-control idrsalesRevenue inputFinanceFront" name="idrsalesRevenue[{{year}}]">
+                    <input type="text" class="form-control idrsalesRevenue inputIdr inputFinanceFront" name="idrsalesRevenue[{{year}}]">
                     <span class="input-group-addon calculateLbl"><i class="fa fa-usd"></i></span>
                     <input type="text" class="form-control salesRevenue inputFinanceBack" name="salesRevenue[{{year}}]" readonly>
                 </div>
@@ -47,14 +47,14 @@ $financialSummariesItem = <<<EOT
             <div class="viewEdit">
                 <div class="input-group">
                     <div class="input-group-addon">IDR</div>
-                    <input type="text" class="form-control idroperationalCosts inputFinanceFront" name="idroperationalCosts[{{year}}]">
+                    <input type="text" class="form-control idroperationalCosts inputFinanceFront inputIdr" name="idroperationalCosts[{{year}}]">
                     <div class="input-group-addon calculateLbl"><i class="fa fa-usd"></i></div>
                     <input type="text" class="form-control operationalCosts inputFinanceBack" name="operationalCosts[{{year}}]" readonly>
                 </div>
             </div>
         </div>
 
-        <!-- Operational Costs -->
+        <!-- Total incomes -->
         <div class="fs-cell fs-row">
             <label class="fs-cell-label">{{lblTotalIncome}}</label>
             <div class="totalIncome value fs-content text-center">
@@ -71,7 +71,7 @@ $financialSummariesItem = <<<EOT
             <div class="viewEdit">
                 <div class="input-group">
                     <div class="input-group-addon">IDR</div>
-                    <input type="text" class="form-control idrfinanceNeeded inputFinanceFront" name="idrfinanceNeeded[{{year}}]">
+                    <input type="text" class="form-control idrfinanceNeeded inputFinanceFront inputIdr" name="idrfinanceNeeded[{{year}}]">
                     <div class="input-group-addon calculateLbl"><i class="fa fa-usd"></i></div>
                     <input type="text" class="form-control financeNeeded inputFinanceBack" name="financeNeeded[{{year}}]" readonly>
                 </div>
@@ -86,7 +86,7 @@ $financialSummariesItem = <<<EOT
             <div class="viewEdit">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" class="form-control text-center" name="numberOfEmployees[{{year}}]" class="noValidationErrorMessage">
+                    <input type="text" class="form-control text-center inputIdr" name="numberOfEmployees[{{year}}]" class="noValidationErrorMessage">
                 </div>
             </div>
         </div>

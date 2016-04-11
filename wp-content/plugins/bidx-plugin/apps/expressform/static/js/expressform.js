@@ -406,10 +406,12 @@
                 "personalDetails.firstName":
                 {
                     required:               true
+                ,   maxlength:               60
                 }
             ,   "personalDetails.lastName":
                 {
                     required:               true
+                ,   maxlength:               60
                 }
             ,   "personalDetails.emailAddress":
                 {
@@ -727,24 +729,45 @@
         {
             // Shortcut it for now by treating all the inputs the same
             //
+            var idrRule
+            ,   usdRule
+            ;
+
+            idrRule     =   {
+                                    required:               true
+                                ,   monetaryAmount:         true
+                                ,   maxlength:              12
+
+                                ,   messages:
+                                    {
+                                        required:               ""
+                                    ,   monetaryAmount:         "Please enter only numbers"
+                                    ,   maxlength:              "IDR should not be more than 12 characters"
+                                    }
+                            };
+
+            usdRule     =   {
+                                min: 1000
+                            ,   messages:
+                                {
+                                    min:    'Amount should be atleast $1000'
+                                }
+                            };
+
+
+
             $yearItem.find( "input" ).each( function( )
             {
-                var $input          = $( this )
-                ,   name            = $input.prop( "name" )
+                var rule
+                ,   $input  =   $( this )
+                ,   name    =   $input.prop( "name" )
+                ,   isIdr   =   $input.hasClass('inputIdr')
                 ;
 
-                $input.rules( "add",
-                {
-                    required:               true
-                ,   monetaryAmount:         true
-                ,   maxlength:              10
+                rule        =   ( isIdr ) ?  idrRule : usdRule ;
 
-                ,   messages:
-                    {
-                        required:               ""
-                    ,   monetaryAmount:         "Please enter only numbers"
-                    }
-                } );
+               $input.rules( "add", rule );
+
             } );
         }
 
