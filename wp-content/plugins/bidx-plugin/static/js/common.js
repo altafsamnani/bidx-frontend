@@ -1313,9 +1313,13 @@
         } );
     };
 
-
-    var notifyConfirm = function( msg, entityId )
+    var notifyConfirm = function( options )
     {
+        var msg         =   bidx.utils.getValue( options, "msg" )
+        ,   entityId    =   bidx.utils.getValue( options, "entityId" )
+        ,   callback    =   bidx.utils.getValue( options, "callback" )
+        ;
+
         _notify(
         {
             text:           msg
@@ -1331,7 +1335,15 @@
                 ,   text:       bidx.i18n.i("btnOk")
                 ,   onClick: function($noty)
                     {
-                        _denti( entityId );
+                        //  execute callback if provided
+                        if( entityId )
+                        {
+                            _denti( entityId );
+                        }
+                        else if (options && callback)
+                        {
+                            options.callback(  );
+                        }
                     }
                 }
             ,   {
@@ -1345,7 +1357,6 @@
             ]
         } );
     };
-
 
     // Convenience function for retrieving the id of the current group
     //

@@ -113,7 +113,11 @@
             ,   entityId    = item.data( "entityid" )
             ;
 
-            bidx.common.notifyConfirm( bidx.i18n.i( "itemDeletion", appName ), entityId );
+            bidx.common.notifyConfirm(
+            {
+                msg:        bidx.i18n.i( "itemDeletion" )
+            ,   entityId:   entityId
+            });
 
         } );
 
@@ -432,7 +436,7 @@
         // Check if the file has been removed
         //
         var profileUploadId = bidx.utils.getValue( attachment, "bidxMeta.bidxUploadId" );
-       
+
         if ( state !== "create" && !profileUploadId )
         {
             bidx.utils.warn( "entrepreneurprofile::_addCv: CV has been deleted!" );
@@ -529,7 +533,7 @@
         else
         {
             $attachmentImage.remove();
-            
+
             // Check if the file has been removed
             //
             if ( deletedDoc )
@@ -545,7 +549,7 @@
 
         $attachmentsContainer.reflowrower( "addItem", $attachment );
     }
-    
+
     // Use the retrieved member object to populate the form and other screen elements
     //
     function _populateScreen()
@@ -813,7 +817,7 @@
                 $cvControlGroup.find( ".noCV" ).addClass( "alert-danger" );
                 $cvControl.prev().addClass( "heading-error" );
             }
-            
+
             return valid;
         }
 
@@ -883,7 +887,7 @@
                             }
 
                             bidx.common.notifyError( "Something went wrong during save: " + response );
-                            
+
                             // Offer a login modal if not authecticated
                             if ( jqXhr.status === 401 )
                             {

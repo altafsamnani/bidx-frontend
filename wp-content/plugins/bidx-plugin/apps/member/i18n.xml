@@ -9,5 +9,4 @@
     <Item value="frmNoCv">CV is required</Item>
     <Item value="preferredCommunicationAll">Please check one of the above</Item>
     <Item value="referencesAll">Please upload at least one document</Item>
-    <Item value="itemDeletion">You are about to delete this item and lose all its content. This action is irreversible. Are you sure?</Item>
 </I18N>

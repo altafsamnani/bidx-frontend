@@ -4,24 +4,8 @@
 
     <div class="row">
          <section class="views">
-            <div class="col-sm-4">
-                <form action="" class="filtersform">
-                    <div class="side-bar well sideBar main-facet">
-                        <article class="viewFacet">
-                             <div class="facet-list">
-                                <?php _e('Rendering facets...', 'bidxplugin');?>
-                             </div>
-                             <div class="facet-reset">
-                                <a data-filter="save"  class="clearboth anchor-save btn btn-block btn-success hide"><span class="fa fa-plus"></span> <?php _e('Save this search', 'bidxplugin');?></a>
-                                <a data-filter="reset" class="clearboth anchor-reset btn btn-block btn-danger"><?php _e("Clear all filters", "bidxplugin");?></a>
-                            </div>
-                        </article>
-                    </div>
-                </form>
-            </div>
-
-            <div class="col-sm-8">
-                <div class="searchcontrol bg-primary-darker">
+            <div class="col-sm-12">
+                <div class="searchcontrol bg-primary-dark">
                     <div class="search">
                         <form action="" class="searchform">
                             <div class="input-group">
@@ -35,6 +19,83 @@
                         </form>
                     </div>
                 </div>
+                <div class="view viewPager thickBorderBottom" >
+                    <div class="pagerContainer">
+                        <div class="row pagerAction">
+                            <div class="col-sm-4">
+                                <div class="pagerTotal pull-right pagerText"></div>
+                            </div>
+                            <div class="col-sm-4">
+                                    <ul class="pager"></ul>
+                            </div>
+                            <div class="col-sm-4 orderFiltering">
+
+                                <div class="pull-right">
+                                    <select name="orderBy" class="orderBy hide"></select>
+                                </div>
+                                <div class="pull-right">
+                                    <select name="filterBy" class="filterBy hide"></select>
+                                </div>
+                                <div class="pull-right pagerText">
+                                    <h4><?php _e('Order by:', 'bidxplugin');?></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 saveSearchPanel panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="display:none;">
+                <div class="panel panel-default panel-primary">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h3 class="panel-title">
+                            <a class="btn anchor-save" role="button" href="javascript:void(0)">
+                                <span class="fa fa-minus-square"></span>&nbsp;&nbsp;<span class="panel-action"><?php _e('Save search', 'bidxplugin');?></span>
+                            </a>
+                        </h3>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                        <small><?php _e('This filter will be saved.','bidxplugin');?></small>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                        <label><?php echo _e('Filter name','bidxplugin') ?></label>
+                                        <input type="text" class="form-control" name="filterName" placeholder="<?php echo _e('Enter filter name','bidxplugin') ?>" />
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label><?php echo _e('Filter criteria','bidxplugin') ?></label>
+                                    <div class="filter-data">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a data-filter="saveSearch" class="clearboth btn btn-primary save-search panel-action"><?php _e("Save search", "bidxplugin");?></a>
+                            <a data-filter="cancelSearch" class="btn btn-default anchor-save"><?php _e("Cancel", "bidxplugin");?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <form action="" class="filtersform">
+                    <div class="side-bar well sideBar main-facet">
+                        <article class="view viewSavesearch">
+                          <a data-filter="save"  class="clearboth anchor-save btn-link-save"><span class="fa fa-bell-o"></span> <?php _e('Save search', 'bidxplugin');?></a>
+                          <a tabindex="0" id="preset-listing" class="view viewPreset pull-right preset-listing" role="button" data-toggle="popover" title="<?php _e('My filters');?>"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                        </article>
+                        <article class="viewFacet">
+                             <div class="facet-list">
+                                <?php _e('Rendering facets...', 'bidxplugin');?>
+                             </div>
+                             <div class="facet-reset">
+                                <a data-filter="reset" class="clearboth anchor-reset btn btn-block btn-danger"><?php _e("Clear all filters", "bidxplugin");?></a>
+                            </div>
+                        </article>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-sm-8">
                  <div>
                     <!-- Tab panes -->
                     <div class="tab-content">
@@ -42,26 +103,6 @@
 
                            <!-- BusinessSummaries VIEW -->
                             <article class="view viewSearchList">
-                                <div class="view viewPager" >
-                                    <div class="pagerContainer">
-                                        <div class="row pagerAction">
-                                            <div class="col-sm-2 col-sm-offset">
-                                                    <div class="pagerTotal pull-left"></div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                    <ul class="pager"></ul>
-                                            </div>
-                                            <div class="col-sm-4 orderFiltering">
-                                                <div class="pull-right">
-                                                    <select name="orderBy" class="orderBy hide"></select>
-                                                </div>
-                                                <div class="pull-right">
-                                                    <select name="filterBy" class="filterBy hide"></select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="view viewLoad alert alert-info text-center">
                                     <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e("Loading search results, please wait...", "bidxplugin");?>
                                 </div>
@@ -76,27 +117,6 @@
                                    <div class="media-list bulk-list bottom">
                                     </div>
                                 </div>
-                                <div class="view viewPager" >
-                                    <div class="pagerContainer">
-                                        <div class="row pagerAction">
-                                            <div class="col-sm-2 col-sm-offset">
-                                                    <div class="pagerTotal pull-left"></div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                    <ul class="pager"></ul>
-                                            </div>
-                                            <div class="col-sm-4 orderFiltering">
-                                                <div class="pull-right">
-                                                    <select name="orderBy" class="sortDropdown orderBy hide"></select>
-                                                </div>
-                                                <div class="pull-right">
-                                                    <select name="filterBy" class="sortDropdown filterBy hide"></select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </article>
 
                             <!-- ERROR -->
@@ -139,6 +159,23 @@
                 Mentor
             </a></div>
             </div>
+        </script>
+
+        <script type="text/html" id="preset-listitem">
+             <!--
+             <div class="row">
+                 <div class="col-sm-7">
+                    <div class="radio presetRadio">
+                    <input type="radio" class="preset-radio preset-%presetId%" id = "preset-%presetId%" data-toggle="radio" data-payload="%presetPayload%" name="preset" value="%presetId%">
+                    <label for="radio-preset-%presetId%"><span></span>%presetLabel%</label>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <a data-id="%presetId%" class='preset-edit anchor-save'  ><?php _e('Edit', 'bidxplugin'); ?> </a>|
+                    <a data-id="%presetId%" class='preset-delete anchor-delete'  ><?php _e('Delete', 'bidxplugin'); ?> </a>
+                </div>
+            </div>
+            -->
         </script>
 
         <!-- Html Templates for Facet Category -->
@@ -215,7 +252,7 @@
 
         <!-- Html Template for Sort -->
         <script type="text/html" id="bulk-listitem">
-            <div class="cardContent main-padding">
+            <div class="cardContent">
                 <div class="row">
                     <div class="col-sm-1">
                         <div class="checkbox">

@@ -11,7 +11,6 @@
     <Item value="bidxBusinessGroup">Group</Item>
     <Item value="bidxCompany">Company</Item>
 
-
     <!-- Facet Title -->
     <Item value="industry">Industry</Item>
     <Item value="country">Country</Item>
@@ -38,7 +37,7 @@
     <Item value="memberHasProfilePicture">Member has profile picture ?</Item>
     <Item value="memberHasAttachment">Member has attachment ?</Item>
     <Item value="planHasAttachment">Plan has attachment ?</Item>
-    <Item value="hasAttachment">Has attachment(s) ?</Item>
+    <Item value="hasAttachment">Any attachment ?</Item>
     <Item value="memberHasFacebook">Member has facebook ?</Item>
     <Item value="memberHasLinkedin">Member has Linkedin ? </Item>
     <Item value="planHasAudioPitch">Has audio pitch ? </Item>
@@ -63,5 +62,11 @@
     <Item value="searchError">There are no results for you search request, please %clickhere% to reset your criteria.</Item>
     <Item value="bdxmemberError">There are no results for you search request but we found %count% matching member/s</Item>
     <Item value="bdxplanError">There are no results for you search request but we found %count% matching business plan/s</Item>
+
+
+    <!-- Preset strings -->
+    <Item value="btnSaveSearch">Save search</Item>
+    <Item value="btnEditSearch">Edit search</Item>
+
 
 </I18N>
