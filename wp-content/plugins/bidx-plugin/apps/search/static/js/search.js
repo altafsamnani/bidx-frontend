@@ -533,8 +533,9 @@
     function _doListPresets()
     {
         var $saveSearchBtn  =   $element.find('.save-search')
-        ,   $saveSearchLink         = $element.find( ".anchor-save")
+        ,   $saveSearchLink =   $element.find( ".anchor-save")
         ;
+
         _getSearchPresets(
         {
             callback:   function( response )
