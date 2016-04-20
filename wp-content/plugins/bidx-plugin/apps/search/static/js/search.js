@@ -263,6 +263,7 @@
     function _eventOnPreset ( options )
     {
         var $popoverListing =   options.$popoverListing
+        ,   $contentPopup   =   options.$contentPopup
         ,   $popOverRadio
         ,   $popOverEdit
         ,   $popOverDelete
@@ -274,6 +275,12 @@
 
         bidx.utils.log('popoverradio', $popOverRadio);
 
+         //To create popup content dynamic
+        $popoverListing.on( 'show.bs.popover', function ()
+        {
+            $popoverListing.attr('data-content', $contentPopup.html());
+
+        });
         $popoverListing.on( 'shown.bs.popover', function ()
         {
 
@@ -307,10 +314,6 @@
             {
                 $edit:      $popOverEdit
             ,   $delete:    $popOverDelete
-            ,   callback:   function()
-                {
-                    $popoverListing.popover('hide');
-                }
             } );
 
         } );
@@ -323,10 +326,13 @@
         ,   $listPresetItem
         ,   popoverOptions      =   {}
         ,   snippit             =   $("#preset-listitem").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listPopup          =   $("<div>", {id: "popupPreset", class: "popupPreset form-group"})
+        ,   $contentPopup          =   $("<div>", {id: "popupPreset", class: "popupPreset form-group"})
         ,   $popoverListing     =   $element.find('#preset-listing')
+        ,   $presetSel          =   $element.find('.presetSel')
+        ,   $hasPopup
         ;
 
+        bidx.utils.log( 'presetData', presetData ); 
         if( !$.isEmptyObject( presetData ) )
         {
             globalPresets   =   presetData;
@@ -340,23 +346,48 @@
                                 ;
                $listPresetItem  =   $( snippitPreset );
 
-               $listPopup.append( $listPresetItem );
+               $contentPopup.append( $listPresetItem );
 
             });
 
             popoverOptions  =
             {
                 html:       true
-            ,   content:    $listPopup[0].outerHTML
+            ,   title:      bidx.i18n.i('popoverTitle', appName)
+           // ,   content:    $contentPopup
+            ,   selector:   $('.presetSel')
+            //,   container:  $popoverListing
             };
 
-            bidx.utils.log( popoverOptions);
+            /*$hasPopup    =   $presetSel.has('div')
 
-            $popoverListing.popover( popoverOptions ); // For search preset viewing arrow click
+            bidx.utils.log( 'haspopup', $hasPopup ); 
+            bidx.utils.log( 'haspopup', $hasPopup.length ); 
+            if($hasPopup.length)
+            {
+                bidx.utils.log("I am in if");
+                $presetSel.find('.popupPreset').empty().html( $contentPopup );
+            }
+            else
+            {
+                bidx.utils.log("I am in else");
+                $popoverListing.popover( popoverOptions ); // For search preset viewing arrow click    
+                  
+            }*/
+
+            $popoverListing.popover( popoverOptions ); // For search preset viewing arrow click    
+
+            bidx.utils.log( 'popoverOptions', popoverOptions);
+
+            //$popoverListing.popover( popoverOptions ); // For search preset viewing arrow click
+            
+
+            //$popoverListing.data('content').setContent( );
 
             _eventOnPreset(
             {
                 $popoverListing : $popoverListing
+            ,   $contentPopup:    $contentPopup
             } );
 
             _showAllView( "preset" );
@@ -409,10 +440,11 @@
         var id
         ,   criteria
         ,   filterName          =   ''
-        ,   $saveSearchPanel
+       // ,   $saveSearchPanel
+        ,   $popoverListing     =   $element.find('#preset-listing')
         ,   $edit               =   bidx.utils.getValue( options, '$edit')
         ,   $delete             =   bidx.utils.getValue( options, '$delete')
-        ,   $btnSaveLink        =   $element.find('.btn-link-save')
+       // ,   $btnSaveLink        =   $element.find('.viewSavesearch')
         ,   $presetForm         =   $element.find('.saveSearchPanel')
         ,   $presetNameInput    =   $presetForm.find( "[name='filterName']" )
         ,   $saveSearchBtn      =   $element.find('.save-search')
@@ -440,12 +472,18 @@
 
             $saveSearchBtn.data('id', id);
 
-            $saveSearchPanel    =   $element.find('.saveSearchPanel');
+            //$saveSearchPanel    =   $element.find('.saveSearchPanel');
 
-            $saveSearchPanel.toggle( "slow", function()
+            /*$saveSearchPanel.toggle( "slow", function()
             {
                 $btnSaveLink.toggle( );
-            } );
+
+                $popoverListing.popover('hide');
+
+            } );*/
+
+            _toggleSearchPresets( );
+
         } );
         if( $delete )
         {
@@ -454,6 +492,8 @@
                 e.preventDefault();
 
                 id                  =   $(this).data('id');
+
+                $popoverListing.popover('hide');
 
                 bidx.common.notifyConfirm(
                 {
@@ -471,16 +511,14 @@
                                 callback: function()
                                 {
                                     bidx.common.closeNotifications( );
+
                                 }
                             });
                         }
                     }
                 });
 
-                if( options && options.callback)
-                {
-                    options.callback( );
-                }
+                
             } );
         }
     }
@@ -494,13 +532,14 @@
                 groupDomain:          bidx.common.groupDomain
             ,   data:                 globalPresets
             ,   success: function( response )
-                {
+                {                   
+
+                    _addSearchPreset( response );
+
                     if( options && options.callback)
                     {
                         options.callback( );
                     }
-
-                    _addSearchPreset( response );
 
                 }
             ,   error: function( jqXhr, textStatus )
@@ -528,6 +567,22 @@
 
                 }
             });
+    }
+
+    function _toggleSearchPresets( )
+    {
+        var $saveSearchPanel   =   $element.find('.saveSearchPanel')
+        ,   $btnSaveLink    =   $element.find('.viewSavesearch')
+        ,   $popoverListing     =   $element.find('#preset-listing')
+        ;
+
+        $saveSearchPanel.toggle( "slow", function()
+        {
+            $btnSaveLink.toggle( );
+
+            $popoverListing.popover('hide');
+
+        } );
     }
 
     function _doListPresets()
@@ -587,7 +642,11 @@
             globalPresets.push( presetData );
 
             $this.addClass('disabled');
+            
             $cancelBtn.addClass( 'disabled' );
+            
+            bidx.common.notifySave();
+
             bidx.utils.log('presetData', presetData);
 
             _doSavePresets(
@@ -597,11 +656,14 @@
                     $this.removeClass('disabled');
 
                     $cancelBtn.removeClass( 'disabled' );
+
+                    bidx.common.closeNotifications();
+
+                    _toggleSearchPresets( );
+
                 }
-            });
-
-
-        });
+            })
+     });
     }
 
     function _doSortingAction()
@@ -2831,7 +2893,7 @@
             if( data.total )
             {
 
-                $searchPagerContainer.find('.pagerTotal').empty().append('<h4>' + data.total + ' ' + bidx.i18n.i( 'resultsLabel', appName ) + ':</h4>');
+                $searchPagerContainer.find('.pagerTotal').empty().append('<h4>' + data.total + ' ' + bidx.i18n.i( 'resultsLabel', appName ) + '</h4>');
             }
 
             $searchPager.bootstrapPaginator( pagerOptions );
@@ -3465,7 +3527,7 @@
 
                 _hideView( "pager" );
                 _showAllView( "load" );
-                _showAllView( "searchList" );
+                
 
                 _toggleListLoading( $element );
 
@@ -3482,6 +3544,8 @@
                         _hideView( "load" );
                         _showAllView( "pager" );
                         _showAllView( "sort" );
+                        _showAllView( "searchList" );
+                        _showAllView( "sidebar" );
                         _toggleListLoading( $element );
                         tempLimit = CONSTANTS.SEARCH_LIMIT;
                         //_showAllView( "pager" );

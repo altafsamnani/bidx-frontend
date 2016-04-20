@@ -67,6 +67,7 @@
     <!-- Preset strings -->
     <Item value="btnSaveSearch">Save search</Item>
     <Item value="btnEditSearch">Edit search</Item>
+    <Item value="popoverTitle"> My filters </Item>
 
 
 </I18N>

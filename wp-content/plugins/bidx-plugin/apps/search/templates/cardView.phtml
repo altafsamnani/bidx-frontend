@@ -19,16 +19,29 @@
                         </form>
                     </div>
                 </div>
+                <!-- LOAD -->
+                <div class="view viewLoad alert alert-info text-center">
+                    <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e("Loading search results, please wait...", "bidxplugin");?>
+                </div>
+                <div class="view viewSuccess main-padding">
+                    <div class="alert alert-success text-center">
+                        <p class="successMsg"> </p>
+                    </div>
+                </div>
+                <!-- ERROR -->
+                <div class="view viewError main-padding">
+                    <div class="alert alert-warning">
+                        <p class="errorMsg"></p>
+                    </div>
+                </div>
+
                 <div class="view viewPager thickBorderBottom" >
                     <div class="pagerContainer">
                         <div class="row pagerAction">
                             <div class="col-sm-4">
-                                <div class="pagerTotal pull-right pagerText"></div>
+                                <div class="pagerTotal pull-left pagerText"></div>
                             </div>
-                            <div class="col-sm-4">
-                                    <ul class="pager"></ul>
-                            </div>
-                            <div class="col-sm-4 orderFiltering">
+                            <div class="col-sm-8 orderFiltering">
 
                                 <div class="pull-right">
                                     <select name="orderBy" class="orderBy hide"></select>
@@ -78,10 +91,13 @@
             </div>
             <div class="col-sm-4">
                 <form action="" class="filtersform">
-                    <div class="side-bar well sideBar main-facet">
+                    <div class="view viewSidebar side-bar well sideBar main-facet">
                         <article class="view viewSavesearch">
                           <a data-filter="save"  class="clearboth anchor-save btn-link-save"><span class="fa fa-bell-o"></span> <?php _e('Save search', 'bidxplugin');?></a>
                           <a tabindex="0" id="preset-listing" class="view viewPreset pull-right preset-listing" role="button" data-toggle="popover" title="<?php _e('My filters');?>"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                          <div class="presetSel">
+   
+                       </div>
                         </article>
                         <article class="viewFacet">
                              <div class="facet-list">
@@ -102,10 +118,7 @@
                         <div role="tabpanel" class="tab-pane fade in active" id="home">
 
                            <!-- BusinessSummaries VIEW -->
-                            <article class="view viewSearchList">
-                                <div class="view viewLoad alert alert-info text-center">
-                                    <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e("Loading search results, please wait...", "bidxplugin");?>
-                                </div>
+                            <article class="view viewSearchList">                                
                                 <div class="view viewBulk">
                                    <div class="media-list bulk-list top">
                                     </div>
@@ -116,13 +129,9 @@
                                 <div class="view viewBulk">
                                    <div class="media-list bulk-list bottom">
                                     </div>
-                                </div>
+                                </div>                               
                             </article>
 
-                            <!-- ERROR -->
-                            <div class="view viewError alert alert-warning">
-                                <p class="errorMsg"></p>
-                            </div>
 
                         </div>
                         <div role="tabpanel" class="tab-pane" id="profile">
@@ -131,8 +140,15 @@
 
                       </div>
                 </div>
-
-
+                <div class="view viewPager" >
+                    <div class="pagerContainer">
+                        <div class="row pagerAction">
+                            <div class="col-sm-12">
+                                    <ul class="pager"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </section>

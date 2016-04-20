@@ -95,7 +95,7 @@
 
     search.preset = function( params )
     {
-        var method          = params.presetId ? "PUT" : "POST"
+        var method          = params.presetId ? "PUT" : "PUT"
         ;
 
         api._call(
