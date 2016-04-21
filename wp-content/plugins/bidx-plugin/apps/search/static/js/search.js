@@ -262,18 +262,9 @@
 
     function _eventOnPreset ( options )
     {
-        var $popoverListing =   options.$popoverListing
-        ,   $contentPopup   =   options.$contentPopup
-        ,   $popOverRadio
-        ,   $popOverEdit
-        ,   $popOverDelete
-        ,   $this
-        ,   id
-        ,   payload
-        ,   criteria
+        var $popoverListing =   $element.find('#preset-listing')
+        ,   $contentPopup   =   options.$contentPopup        
         ;
-
-        bidx.utils.log('popoverradio', $popOverRadio);
 
          //To create popup content dynamic
         $popoverListing.on( 'show.bs.popover', function ()
@@ -281,53 +272,16 @@
             $popoverListing.attr('data-content', $contentPopup.html());
 
         });
-        $popoverListing.on( 'shown.bs.popover', function ()
-        {
-
-            $popOverRadio   =   $( '.preset-radio' );
-            $popOverEdit    =   $( '.preset-edit');
-            $popOverDelete  =   $( '.preset-delete');
-
-            $popOverRadio.change( function ( e )
-            {
-                $this       =   $(this);
-                id          =   $this.val( );
-                criteria    =   _.findWhere( globalPresets, { id: parseInt( id ) } );
-
-                //For search filtering add the current filter
-
-                globalCriteria  =   criteria.payload;
-
-                //Make offset 0 for filtering so start from begining
-                paging.search.offset = 0;
-
-                //set the max records limit to 10
-                tempLimit = CONSTANTS.SEARCH_LIMIT;
-
-                bidx.utils.log('Preset selected ', criteria.label );
-
-                _callSearchAction();
-
-            } );
-
-            _triggerSaveSearch(
-            {
-                $edit:      $popOverEdit
-            ,   $delete:    $popOverDelete
-            } );
-
-        } );
+       
     }
 
     function _addSearchPreset( presetData )
     {
 
         var snippitPreset
-        ,   $listPresetItem
-        ,   popoverOptions      =   {}
+        ,   $listPresetItem        
         ,   snippit             =   $("#preset-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $contentPopup          =   $("<div>", {id: "popupPreset", class: "popupPreset form-group"})
-        ,   $popoverListing     =   $element.find('#preset-listing')
         ,   $presetSel          =   $element.find('.presetSel')
         ,   $hasPopup
         ;
@@ -348,46 +302,12 @@
 
                $contentPopup.append( $listPresetItem );
 
-            });
+            });          
 
-            popoverOptions  =
-            {
-                html:       true
-            ,   title:      bidx.i18n.i('popoverTitle', appName)
-           // ,   content:    $contentPopup
-            ,   selector:   $('.presetSel')
-            //,   container:  $popoverListing
-            };
-
-            /*$hasPopup    =   $presetSel.has('div')
-
-            bidx.utils.log( 'haspopup', $hasPopup ); 
-            bidx.utils.log( 'haspopup', $hasPopup.length ); 
-            if($hasPopup.length)
-            {
-                bidx.utils.log("I am in if");
-                $presetSel.find('.popupPreset').empty().html( $contentPopup );
-            }
-            else
-            {
-                bidx.utils.log("I am in else");
-                $popoverListing.popover( popoverOptions ); // For search preset viewing arrow click    
-                  
-            }*/
-
-            $popoverListing.popover( popoverOptions ); // For search preset viewing arrow click    
-
-            bidx.utils.log( 'popoverOptions', popoverOptions);
-
-            //$popoverListing.popover( popoverOptions ); // For search preset viewing arrow click
-            
-
-            //$popoverListing.data('content').setContent( );
 
             _eventOnPreset(
             {
-                $popoverListing : $popoverListing
-            ,   $contentPopup:    $contentPopup
+                $contentPopup:    $contentPopup
             } );
 
             _showAllView( "preset" );
@@ -585,11 +505,83 @@
         } );
     }
 
+    function _initPopover()
+    {
+        var popoverOptions  =   {}       
+        ,   $popoverListing =   $element.find('#preset-listing')
+        ,   $popOverRadio
+        ,   $popOverEdit
+        ,   $popOverDelete
+        ,   $this
+        ,   isChecked
+        ,   id
+        ,   payload
+        ,   criteria
+        ;
+
+        popoverOptions  =
+        {
+            html:       true
+        ,   title:      bidx.i18n.i('popoverTitle', appName)
+       // ,   content:    $contentPopup
+        ,   selector:   $('.presetSel')
+        //,   container:  $popoverListing
+        };
+
+        $popoverListing.popover( popoverOptions ); // For search preset viewing arrow click  
+
+         $popoverListing.on( 'shown.bs.popover', function (  )
+        {
+
+            $popOverRadio   =   $( "input[name='preset']" );
+            $popOverEdit    =   $('.popover').find( '.preset-edit');
+            $popOverDelete  =   $('.popover').find( '.preset-delete');
+
+            $popOverRadio.change( function ( e )
+            {
+                $this       =   $(this);
+
+                isChecked   =   $this.is(':checked')
+                
+                if( isChecked )
+                {
+                    id          =   $this.val( );
+                    criteria    =   _.findWhere( globalPresets, { id: parseInt( id ) } );
+                    bidx.utils.log('popOverRadio', $this, isChecked);
+                    //For search filtering add the current filter
+
+                    globalCriteria  =   criteria.payload;
+
+                    //Make offset 0 for filtering so start from begining
+                    paging.search.offset = 0;
+
+                    //set the max records limit to 10
+                    tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+                    bidx.utils.log('Preset selected ', criteria.label );
+
+                    _callSearchAction();
+                }
+
+            } );
+
+            _triggerSaveSearch(
+            {
+                $edit:      $popOverEdit
+            ,   $delete:    $popOverDelete
+            } );
+
+        } );
+
+    }
+
     function _doListPresets()
     {
         var $saveSearchBtn  =   $element.find('.save-search')
         ,   $saveSearchLink =   $element.find( ".anchor-save")
         ;
+
+        _initPopover( ); 
 
         _getSearchPresets(
         {
