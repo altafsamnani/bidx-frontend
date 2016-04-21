@@ -345,7 +345,11 @@
         {
             e.preventDefault();
 
-            bidx.common.notifyConfirm( bidx.i18n.i( "summaryDeletion", appName ), bidxConfig.context.businessSummaryId );
+            bidx.common.notifyConfirm(
+            {
+                msg:        bidx.i18n.i( "summaryDeletion", appName )
+            ,   entityId:   bidxConfig.context.businessSummaryId
+            });
         } );
 
 
@@ -3789,7 +3793,7 @@
         // Update the business summary object
         //
         _getFormValues();
-        
+
         if ( businessSummary.stageBusiness )
         {
             businessSummary.stageBusiness = businessSummary.stageBusiness.toLowerCase();

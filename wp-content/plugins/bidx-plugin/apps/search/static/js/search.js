@@ -37,8 +37,9 @@
     ,   $views                  = $element.find( ".view" )
     ,   $searchList             = $element.find( ".search-list" )
     ,   $errorListItem          = $element.find( "#error-listitem" )
+    ,   $filterData             = $element.find(".filter-data")
 
-    ,   $searchPagerContainer   = $views.filter( ".viewSearchList" ).find( ".pagerContainer")
+    ,   $searchPagerContainer   = $views.filter( ".viewPager" )
     ,   $searchPager            = $searchPagerContainer.find( ".pager" )
 
     ,   $sortView               = $views.find('.viewSort')
@@ -53,6 +54,7 @@
     ,   appName                 = "search"
     ,   loggedInMemberId        = bidx.common.getCurrentUserId()
     ,   globalCriteria
+    ,   globalPresets           = []
     ,   selectedMembers         = []
 
     ,   paging                  =
@@ -256,9 +258,404 @@
         // Run the industry widget on the selector
         //
         $investorIndSectors.industries();
+    }
+
+    function _eventOnPreset ( options )
+    {
+        var $popoverListing =   $element.find('#preset-listing')
+        ,   $contentPopup   =   options.$contentPopup        
+        ;
+
+         //To create popup content dynamic
+        $popoverListing.on( 'show.bs.popover', function ()
+        {
+            $popoverListing.attr('data-content', $contentPopup.html());
+
+        });
+       
+    }
+
+    function _addSearchPreset( presetData )
+    {
+
+        var snippitPreset
+        ,   $listPresetItem        
+        ,   snippit             =   $("#preset-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $contentPopup          =   $("<div>", {id: "popupPreset", class: "popupPreset form-group"})
+        ,   $presetSel          =   $element.find('.presetSel')
+        ,   $hasPopup
+        ;
+
+        bidx.utils.log( 'presetData', presetData ); 
+        if( !$.isEmptyObject( presetData ) )
+        {
+            globalPresets   =   presetData;
+
+            $.each( presetData , function ( idx, data )
+            {
+                snippitPreset   =   snippit
+                                .replace( /%presetId%/g, data.id )
+                                .replace( /%presetLabel%/g, data.label)
+                                .replace( /%presetPayload%/g, data.payload)
+                                ;
+               $listPresetItem  =   $( snippitPreset );
+
+               $contentPopup.append( $listPresetItem );
+
+            });          
+
+
+            _eventOnPreset(
+            {
+                $contentPopup:    $contentPopup
+            } );
+
+            _showAllView( "preset" );
+        }
+    }
+
+    function _getSearchPresets( options )
+    {
+
+        bidx.api.call(
+            "search.getpreset"
+        ,   {
+                groupDomain:          bidx.common.groupDomain
+            ,   success: function( response )
+                {
+                    if (options && options.callback)
+                    {
+                        options.callback( response  );
+                    }
+                }
+            ,   error: function( jqXhr, textStatus )
+                {
+
+                    var response = $.parseJSON( jqXhr.responseText)
+                    ,   responseText = response && response.text ? response.text : "Status code " + jqXhr.status
+                    ;
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Client  error occured", response );
+                        _showError( "Something went wrong while retrieving the members relationships: " + responseText );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                        _showError("An error occured processing your searchrequest.");
+                        //_showError( "Something went wrong while retrieving the members relationships: " + responseText );
+                    }
+
+                }
+            });
+    }
+
+    function _triggerSaveSearch( options )
+    {
+        var id
+        ,   criteria
+        ,   filterName          =   ''
+       // ,   $saveSearchPanel
+        ,   $popoverListing     =   $element.find('#preset-listing')
+        ,   $edit               =   bidx.utils.getValue( options, '$edit')
+        ,   $delete             =   bidx.utils.getValue( options, '$delete')
+       // ,   $btnSaveLink        =   $element.find('.viewSavesearch')
+        ,   $presetForm         =   $element.find('.saveSearchPanel')
+        ,   $presetNameInput    =   $presetForm.find( "[name='filterName']" )
+        ,   $saveSearchBtn      =   $element.find('.save-search')
+        ,   $panelActionText     =   $presetForm.find('.panel-action')
+        ,   btnI18nLabel        =   "btnSaveSearch"
+        ;
+
+        $edit.click( function ( e )
+        {
+            id                  =   $(this).data('id');
+
+            if( id )
+            {
+                btnI18nLabel =   "btnEditSearch";
+
+                criteria    =   _.findWhere( globalPresets, { id: parseInt( id ) } );
+
+                filterName  =   criteria.label;
+
+            }
+
+            $panelActionText.i18nText( btnI18nLabel, appName );
+
+            bidx.utils.setElementValue( $presetNameInput, filterName );
+
+            $saveSearchBtn.data('id', id);
+
+            //$saveSearchPanel    =   $element.find('.saveSearchPanel');
+
+            /*$saveSearchPanel.toggle( "slow", function()
+            {
+                $btnSaveLink.toggle( );
+
+                $popoverListing.popover('hide');
+
+            } );*/
+
+            _toggleSearchPresets( );
+
+        } );
+        if( $delete )
+        {
+            $delete.bind( "click", function( e )
+            {
+                e.preventDefault();
+
+                id                  =   $(this).data('id');
+
+                $popoverListing.popover('hide');
+
+                bidx.common.notifyConfirm(
+                {
+                    msg:        bidx.i18n.i( "itemDeletion" )
+                ,   callback:   function()
+                    {
+                        if( id )
+                        {
+                            globalPresets   =   _.reject( globalPresets, function( filter )
+                                                {
+                                                    return filter.id === id;
+                                                });
+                            _doSavePresets(
+                            {
+                                callback: function()
+                                {
+                                    bidx.common.closeNotifications( );
+
+                                }
+                            });
+                        }
+                    }
+                });
+
+                
+            } );
+        }
+    }
+
+    function _doSavePresets( options )
+    {
+
+        bidx.api.call(
+            "search.preset"
+        ,   {
+                groupDomain:          bidx.common.groupDomain
+            ,   data:                 globalPresets
+            ,   success: function( response )
+                {                   
+
+                    _addSearchPreset( response );
+
+                    if( options && options.callback)
+                    {
+                        options.callback( );
+                    }
+
+                }
+            ,   error: function( jqXhr, textStatus )
+                {
+
+                    var response = $.parseJSON( jqXhr.responseText)
+                    ,   responseText = response && response.text ? response.text : "Status code " + jqXhr.status
+                    ;
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Client  error occured", response );
+                        _showError( "Something went wrong while retrieving the members relationships: " + responseText );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                        _showError("An error occured processing your searchrequest.");
+                        //_showError( "Something went wrong while retrieving the members relationships: " + responseText );
+                    }
+
+                }
+            });
+    }
+
+    function _toggleSearchPresets( )
+    {
+        var $saveSearchPanel   =   $element.find('.saveSearchPanel')
+        ,   $btnSaveLink    =   $element.find('.viewSavesearch')
+        ,   $popoverListing     =   $element.find('#preset-listing')
+        ;
+
+        $saveSearchPanel.toggle( "slow", function()
+        {
+            $btnSaveLink.toggle( );
+
+            $popoverListing.popover('hide');
+
+        } );
+    }
+
+    function _initPopover()
+    {
+        var popoverOptions  =   {}       
+        ,   $popoverListing =   $element.find('#preset-listing')
+        ,   $popOverRadio
+        ,   $popOverEdit
+        ,   $popOverDelete
+        ,   $this
+        ,   isChecked
+        ,   id
+        ,   payload
+        ,   criteria
+        ;
+
+        popoverOptions  =
+        {
+            html:       true
+        ,   title:      bidx.i18n.i('popoverTitle', appName)
+       // ,   content:    $contentPopup
+        ,   selector:   $('.presetSel')
+        //,   container:  $popoverListing
+        };
+
+        $popoverListing.popover( popoverOptions ); // For search preset viewing arrow click  
+
+         $popoverListing.on( 'shown.bs.popover', function (  )
+        {
+
+            $popOverRadio   =   $( "input[name='preset']" );
+            $popOverEdit    =   $('.popover').find( '.preset-edit');
+            $popOverDelete  =   $('.popover').find( '.preset-delete');
+
+            $popOverRadio.change( function ( e )
+            {
+                $this       =   $(this);
+
+                isChecked   =   $this.is(':checked')
+                
+                if( isChecked )
+                {
+                    id          =   $this.val( );
+                    criteria    =   _.findWhere( globalPresets, { id: parseInt( id ) } );
+                    bidx.utils.log('popOverRadio', $this, isChecked);
+                    //For search filtering add the current filter
+
+                    globalCriteria  =   criteria.payload;
+
+                    //Make offset 0 for filtering so start from begining
+                    paging.search.offset = 0;
+
+                    //set the max records limit to 10
+                    tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+                    bidx.utils.log('Preset selected ', criteria.label );
+
+                    _callSearchAction();
+                }
+
+            } );
+
+            _triggerSaveSearch(
+            {
+                $edit:      $popOverEdit
+            ,   $delete:    $popOverDelete
+            } );
+
+        } );
+
+    }
+
+    function _doListPresets()
+    {
+        var $saveSearchBtn  =   $element.find('.save-search')
+        ,   $saveSearchLink =   $element.find( ".anchor-save")
+        ;
+
+        _initPopover( ); 
+
+        _getSearchPresets(
+        {
+            callback:   function( response )
+            {
+                _showAllView( 'savesearch');
+
+                _addSearchPreset( response );
+
+                _triggerSaveSearch(
+                {
+                    $edit:      $saveSearchLink
+                } );
+            }
+
+        } );
+
+        $saveSearchBtn.click (function ( )
+        {
+            var bulkValue
+            ,   presetData
+            ,   presetLabel
+            ,   $presetName
+            ,   $this       =   $(this)
+            ,   $presetForm =   $element.find('.saveSearchPanel')
+            ,   $cancelBtn  =   $presetForm.find( '.anchor-save')
+            ,   id          =   $this.data('id')
+            ;
+
+            $presetName     = $presetForm.find( "[name='filterName']" );
+
+            presetLabel     = bidx.utils.getElementValue( $presetName );
+
+            presetData      =   {
+                                    label:      presetLabel
+                                ,   payload:    globalCriteria
+                                };
+
+            if(id)
+            {
+                presetData.id   =   id;
+                globalPresets   =   _.reject( globalPresets, function( filter )
+                                    {
+                                        return filter.id === id;
+                                    });
+            }
 
 
 
+            globalPresets.push( presetData );
+
+            $this.addClass('disabled');
+            
+            $cancelBtn.addClass( 'disabled' );
+            
+            bidx.common.notifySave();
+
+            bidx.utils.log('presetData', presetData);
+
+            _doSavePresets(
+            {
+                callback: function()
+                {
+                    $this.removeClass('disabled');
+
+                    $cancelBtn.removeClass( 'disabled' );
+
+                    bidx.common.closeNotifications();
+
+                    _toggleSearchPresets( );
+
+                }
+            })
+     });
     }
 
     function _doSortingAction()
@@ -343,10 +740,17 @@
         //    CONSTANTS.ENTITY_TYPES.pop(); // Removes Investor Profile, not to display
         }
 
-        _tabSearch();
-        _languages();
-        _advancedFilters();
-        _doSortingAction();
+        _tabSearch( );
+        _languages( );
+        //_advancedFilters( );
+        _doSortingAction( );
+
+        bidx.utils.log('currentUserId', currentUserId );
+
+        if( !_.isUndefined( currentUserId )  )
+        {
+            _doListPresets( );
+        }
 
         if ( $fakecrop )
         {
@@ -1703,6 +2107,41 @@
         }
     }
 
+
+    function _listSearchCriterias( options )
+    {
+        var facetLabel          =   options.facetLabel
+        ,   checkedCriterias    =   options.checkedCriterias
+        ;
+
+        bidx.utils.log( 'options', options);
+
+        if( checkedCriterias.length )
+        {
+
+        $filterData.append
+                        (
+                            $( "<div />", { "class": "row "  } )
+                            .append
+                            (
+                                $( "<div />", { "class": "col-sm-6 "  } )
+                                .append
+                                (
+                                    facetLabel
+                                )
+                            )
+                            .append
+                            (
+                                $( "<div />", { "class": "col-sm-6 "  } )
+                                .append
+                                (
+                                    checkedCriterias.join(', ')
+                                )
+                            )
+                        );
+        }
+    }
+
     /* Get the search list
     Sample
     bidxBusinessGroup - 8747 - Cleancookstoves
@@ -1740,14 +2179,15 @@
         ,   industry
         ,   anchorFacet
         ,   isCriteriaSelected
-        ,   facetCriteria   = {}
+        ,   facetCriteria       = {}
         ,   filterQuery
         ,   facetValueName
-        ,   facetCounter    =   1
-        ,   topFacets       =   []
-        ,   bottomFacets    =   []
-        ,   finalFacets     =   []
-        ,   tempFacetValues =   []
+        ,   facetCounter        =   1
+        ,   topFacets           =   []
+        ,   bottomFacets        =   []
+        ,   finalFacets         =   []
+        ,   tempFacetValues     =   []
+        ,   checkedCriterias    =   []
         ;
 
         //$list.empty();
@@ -1844,11 +2284,22 @@
                                 {
                                     $listFacetsItem.addClass( "list-group-item-success" );
                                 }
+
+                                bidx.utils.log('itemchecked', item);
+
+                                checkedCriterias.push( newname );
+
                             }
 
                             $currentCategory.find( ".list-group" ).append($listFacetsItem);
                         }
                     });
+
+                _listSearchCriterias({
+                    facetLabel:         facetLabel
+                ,   checkedCriterias:   checkedCriterias
+                });
+
                 }
 
                 // Show the first VISIBLE_FILTER_ITEMS filter items if more than (VISIBLE_FILTER_ITEMS + 3)
@@ -2181,6 +2632,7 @@
         if(filterOptions.length)
         {
             $list.empty();
+            $filterData.empty();
 
             $.each( filterOptions, function( i, filterOrderingItem )
             {
@@ -2433,7 +2885,7 @@
             if( data.total )
             {
 
-                $searchPagerContainer.find('.pagerTotal').empty().append('<h5>' + data.total + ' ' + bidx.i18n.i( 'resultsLabel', appName ) + ':</h5>');
+                $searchPagerContainer.find('.pagerTotal').empty().append('<h4>' + data.total + ' ' + bidx.i18n.i( 'resultsLabel', appName ) + '</h4>');
             }
 
             $searchPager.bootstrapPaginator( pagerOptions );
@@ -3067,7 +3519,7 @@
 
                 _hideView( "pager" );
                 _showAllView( "load" );
-                _showAllView( "searchList" );
+                
 
                 _toggleListLoading( $element );
 
@@ -3084,6 +3536,8 @@
                         _hideView( "load" );
                         _showAllView( "pager" );
                         _showAllView( "sort" );
+                        _showAllView( "searchList" );
+                        _showAllView( "sidebar" );
                         _toggleListLoading( $element );
                         tempLimit = CONSTANTS.SEARCH_LIMIT;
                         //_showAllView( "pager" );

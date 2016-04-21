@@ -291,4 +291,7 @@
     <Item value="reminderSent">Reminder sent</Item>
     <Item value="inMailBtn">Send Message</Item>
 
+    <!-- Confirmation -->
+    <Item value="itemDeletion">You are about to delete this item and lose all its content. This action is irreversible. Are you sure?</Item>
+
 </I18N>

@@ -9,15 +9,14 @@
     ,   search          = {}
     ,   nnSearchUrl     = "/api/v1/nnsearch"
     ,   baseUrl         = "/api/v1/nsearch"
-    ,   baseOldUrl      = "/api/v1/search"
     ,   baseMemberUrl   = "/api/v1/nnsearch"
+    ,   presetUrl       = "/api/v1/storage/searchpreset"
     ,   params          = []
     ;
 
     search.fetch = function( params )
     {
         var method  = "GET"
-        ,   baseOldUrl = "/api/v1/search"
         ;
 
         api._call(
@@ -94,7 +93,63 @@
         } );
     };
 
-    search.members = function( params )
+    search.preset = function( params )
+    {
+        var method          = params.presetId ? "PUT" : "PUT"
+        ;
+
+        api._call(
+        {
+            method:         method
+        ,   groupDomain:    params.groupDomain
+        ,   baseUrl:        presetUrl
+        ,   data:           params.data
+        ,   success:        function( response, textStatus, jqXhr )
+            {
+                if ( response && response.data )
+                {
+                    response = response.data;
+                }
+
+                params.success( response, textStatus, jqXhr );
+            }
+        ,   error:          function( jqXhr, textStatus, errorThrown )
+            {
+                params.error( jqXhr, textStatus, errorThrown );
+            }
+        } );
+    };
+
+    search.getpreset = function( params )
+    {
+        var method          = "GET"
+        ;
+
+        api._call(
+        {
+            method:         method
+        ,   groupDomain:    params.groupDomain
+        ,   baseUrl:        presetUrl
+        ,   extraUrlParameters:         params.extraUrlParameters
+        ,   success:        function( response, textStatus, jqXhr )
+            {
+                if ( response && response.data )
+                {
+                    response = response.data;
+                }
+
+                params.success( response, textStatus, jqXhr );
+            }
+        ,   error:          function( jqXhr, textStatus, errorThrown )
+            {
+                params.error( jqXhr, textStatus, errorThrown );
+            }
+        } );
+    };
+
+
+
+    /*search.members = function( params )
     {
         var method  = "GET"
         ;
@@ -119,7 +174,7 @@
                 params.error( jqXhr, textStatus, errorThrown );
             }
         } );
-    };
+    }; */
 
     api.search = search;
 } )( jQuery );

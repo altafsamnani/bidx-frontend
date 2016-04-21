@@ -176,7 +176,11 @@
         {
             e.preventDefault();
 
-            bidx.common.notifyConfirm( bidx.i18n.i( "companyDeletion", appName ), bidxConfig.context.companyId );
+            bidx.common.notifyConfirm(
+            {
+                msg:        bidx.i18n.i( "companyDeletion", appName )
+            ,   entityId:   bidxConfig.context.companyId
+            });
         } );
 
 
