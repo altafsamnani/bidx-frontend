@@ -137,6 +137,10 @@
                 {
                     response = response.data;
                 }
+                else
+                {
+                    response = {};
+                }
 
                 params.success( response, textStatus, jqXhr );
             }
