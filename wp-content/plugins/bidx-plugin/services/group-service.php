@@ -53,6 +53,35 @@ class GroupService extends APIbridge {
 
   }
 
+  /**
+   * Retrieves the latest members from a group
+   * @param string $group_id optional a group id otherwise the current
+   * @link http://bidx.net/api/v1/group
+   * @return partial result from the service in JSON form containing the members
+   */
+  public function getGroupSettings( $options = array() ) 
+  {
+    $result = array();
+
+    if( !empty( $options ) )
+    {
+      foreach( $options as $optionKey => $optionVal)
+      {
+         switch ( $optionVal )
+         {
+            case 'wizehive':
+
+              $result['wizehive'] = get_option('bidx-wizehive');
+              break;
+
+            default:
+         }
+      }
+    }
+
+    return $result;
+  }
+
 
   /**
    * Retrieves the latest companies from a group

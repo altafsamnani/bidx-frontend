@@ -29,7 +29,9 @@ class MemberService extends APIbridge {
     {
 
         $sessionData = BidxCommon::$staticSession;
+
         $return = NULL;
+        
         if (isset ($sessionData->memberId)) {
             $memberId = $sessionData->memberId;
 

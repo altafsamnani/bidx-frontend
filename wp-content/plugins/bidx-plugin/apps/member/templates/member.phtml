@@ -22,6 +22,8 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 $hasAccessToInvestorProfile     = ( $isInvestor && $isLoggedinMemberIsInvestor && $ownProfile ) || ( $isInvestor && $this->isLoggedInGroupOwner ) ? true : false;
 $visitedId                      = $data->member->bidxMeta->bidxMemberId;
 $showAccredit                   = ( !empty( $data->bidxInvestorProfile )  && !empty( $data->bidxMentorProfile ) && ( $visitedId !== $loggedInMemberId ) );
+$isMemberActive                 = ( !$this->isExternal )  ? 'active' : '';
+$isEntrepreneurActive           = ( $this->isExternal )  ? 'active' : ''; 
 // d($data);
 
 // Authorized Entrepreneur
@@ -173,11 +175,11 @@ endif;
     <div class="col-sm-3 tabs-nav">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs tabs-left">
-            <li class="active"><a href="#tab-member" data-toggle="tab"><i class="pull-left fa fa-user"></i> <?php _e('Member', 'bidxplugin')?></a></li>
+            <li class="<?php echo $isMemberActive; ?>"><a href="#tab-member" data-toggle="tab"><i class="pull-left fa fa-user"></i> <?php _e('Member', 'bidxplugin')?></a></li>
 <?php
             if ( !empty($this->data->bidxEntrepreneurProfile ) ):
 ?>
-            <li><a href="#tab-entrepreneur" data-toggle="tab"><i class="pull-left fa fa-lightbulb-o"></i> <?php _e('Entrepreneur','bidxplugin');?></a></li>
+            <li class="<?php echo $isEntrepreneurActive; ?>"><a href="#tab-entrepreneur" data-toggle="tab"><i class="pull-left fa fa-lightbulb-o"></i> <?php _e('Entrepreneur','bidxplugin');?></a></li>
 <?php
             endif;
 ?>
@@ -216,14 +218,14 @@ endif;
     <div class="col-sm-9 tabs-content">
         <!-- Tab panes -->
         <div id="myProfile" class="tab-content">
-            <div class="tab-pane active" id="tab-member">
+            <div class="tab-pane <?php echo $isMemberActive; ?>" id="tab-member">
                 <?php $this->render('view-member.phtml');  ?>
 
             </div>
 <?php
             if ( !empty($this->data->bidxEntrepreneurProfile ) ):
 ?>
-            <div class="tab-pane" id="tab-entrepreneur">
+            <div class="tab-pane <?php echo $isEntrepreneurActive; ?>" id="tab-entrepreneur">
                 <?php $this->render('view-entrepreneur.phtml'); ?>
             </div>
 <?php

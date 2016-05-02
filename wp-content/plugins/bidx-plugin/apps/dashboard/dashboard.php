@@ -224,6 +224,7 @@ class dashboard
 
                 $view->groupNews    = get_option ('group-news');
                 $view->expressform  = get_option('bidx-expressform');
+                $view->wizehive  = get_option('bidx-wizehive');
 
         		if ( get_option ( 'bidx-ssoredirect-url' ) )
                 {

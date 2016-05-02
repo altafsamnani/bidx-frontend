@@ -19,6 +19,23 @@
                 </div>
             </div>
         </div>
+
+        <div id='categorydiv' class='postbox'>
+            <div class='handlediv' title='Click to toggle'><br></div><h3 class='hndle'><span><?php _e('Wizehive','bidxplugin');?></span></h3>
+            <div class='inside'>
+                <div id='taxonomy-category' class='categorydiv'>
+                    <div class=''>
+                        <div class='label'>
+                            <label class='selectit'>
+                                <input <?php echo (isset($this->wizehive) && $this->wizehive) ? 'checked':'';?> value='1' type='checkbox' name='bidx-wizehive' id='bidx-wizehive'>
+                                <?php _e('Do you want to activate Wizehive for this portal ? ','bidxplugin');?>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id='categorydiv' class='postbox'>
             <div class='handlediv' title='Click to toggle'><br></div><h3 class='hndle'><span><?php _e('News and Events','bidxplugin');?></span></h3>
             <div class='inside'>

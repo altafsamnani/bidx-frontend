@@ -23,6 +23,8 @@ $loggedInUserId     = $sessionData->data->id;
 
 $competitionData    = $this->competitionData;
 
+$wizehivesFormData = $this->wizehivesFormData;
+
 // if a user has an investorProfile, he is allowed to request access to a business summary
 //
 $canRequestAccess = isset( $entities->bidxInvestorProfile );
@@ -291,7 +293,17 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                         }
 ?>
                         <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><i class="fa fa-eye fa-big fa-above"></i><?php echo _e( 'Request access', 'bidxplugin' ); ?></a>
-                        <?php } ?>
+            <?php   }
+                    if( $this->isWizehive )
+                    { ?>
+                        <form id="wizehive-sso" method="post" action="https://app.wizehive.com/appform/display/SPARKFundApp">
+                             <input type="hidden" name="user" value="<?php echo $wizehivesFormData['user']; ?>" />
+                             <input type="hidden" name="timestamp" value="<?php echo $wizehivesFormData['timestamp']; ?>" />
+                             <input type="hidden" name="token" value="<?php echo $wizehivesFormData['token']; ?>" />
+                             <input type="hidden" name="form" value="<?php print( $wizehivesFormData['form']); ?>" />
+                             <button type="submit" id="wizehive" class="btn btn-success btn-wizehive margin-half-left"><i class="fa fa-globe fa-big fa-above"></i> <?php _e( 'Apply to GACC', 'bidxplugin' ); ?></button>
+                        </form>
+            <?php   }  ?> 
                 </div>
             </div>
 

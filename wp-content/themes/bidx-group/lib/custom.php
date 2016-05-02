@@ -252,6 +252,9 @@ function bidx_status_text ( $textId, $replaceString ) {
     case '8':
         $text = __('You have successfully %action% the request!','bidxplugin');
         break;
+    case 'wizehive' :
+        $text = __('Please login to Bidx portal to apply to GACC application. Thank you');
+        break;
 
     default :
         $text = __('Add your notification message to custom.php with id ','bidxplugin');

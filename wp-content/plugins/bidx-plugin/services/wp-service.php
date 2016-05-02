@@ -2465,7 +2465,10 @@ function bidx_general_settings() {
 
             update_option ('bidx-expressform', $expressForm);
 
+            //Save the express form settings
+            $wizeHive    =   ( isset ( $_POST['bidx-wizehive'] ) ) ? $_POST['bidx-wizehive'] : 0;
 
+            update_option ('bidx-wizehive', $wizeHive);
 
     	    $ssoRedirect = ( isset( $_POST['bidx-sso-redirect'] ) ) ? $_POST['bidx-sso-redirect'] : false;
 

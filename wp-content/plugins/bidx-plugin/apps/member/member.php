@@ -77,6 +77,10 @@ class member {
 			    require_once( BIDX_PLUGIN_DIR .'/../services/member-service.php' );
 			    $memberObj = new MemberService( );
 
+			    //2. Service Group
+				require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
+				$groupSvc = new GroupService( );
+
 			    /* 3. Render Member Profile Services for Initial View Display */
 			    $memberData = $memberObj->getMemberDetails(  );
 
@@ -85,16 +89,19 @@ class member {
 			    $sessionSvc = new SessionService( );
 
                 /*************** Is investor or groupadmin *****************/
-                $view->isLoggedInInvestor      = $sessionSvc->isHavingProfile ('bidxInvestorProfile');
-                $view->isLoggedInGroupOwner    = $sessionSvc->isAdmin ( );
-
+                $view->isLoggedInInvestor      	= 	$sessionSvc->isHavingProfile ('bidxInvestorProfile');
+                $view->isLoggedInGroupOwner    	= 	$sessionSvc->isAdmin ( );
+                $session                    	=   BidxCommon::$staticSession;
+                $groupSettings           		=   $groupSvc->getGroupSettings( array('wizehive') );
 
 			    //Localize to js variables, currently to use focusexpertise for mentoring to display match
 			    $jsParams = array('member' => $view->data);
 			    wp_localize_script ('bidx-data', '__bidxMember', $jsParams);
 
-			    $view->bidxGroupDomain = (isset($memberData->bidxGroupDomain)) ? $memberData->bidxGroupDomain : NULL;
-			    $view->sessionData = BidxCommon::$staticSession;
+			    $view->bidxGroupDomain 	= (isset($memberData->bidxGroupDomain)) ? $memberData->bidxGroupDomain : NULL;
+			    $view->sessionData 		= $session ;
+			    $view->isExternal 		= $groupSettings['wizehive'] ;
+
 
 	      		$view->render('member.phtml');
 		}
