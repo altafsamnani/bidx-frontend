@@ -633,11 +633,11 @@
             var bulkValue
             ,   presetData
             ,   presetLabel
-            ,   $presetName
-            ,   $this       =   $(this)
+            ,   $presetName            
             ,   $presetForm =   $element.find('.saveSearchPanel')
+            ,   $saveBtn    =   $presetForm.find('.save-search')
             ,   $cancelBtn  =   $presetForm.find( '.anchor-save')
-            ,   id          =   $this.data('id')
+            ,   id          =   $saveBtn.data('id')
             ;
 
             $presetName     = $presetForm.find( "[name='filterName']" );
@@ -662,7 +662,7 @@
 
             globalPresets.push( presetData );
 
-            $this.addClass('disabled');
+            $saveBtn.addClass('disabled');
             
             $cancelBtn.addClass( 'disabled' );
             
@@ -674,7 +674,7 @@
             {
                 callback: function()
                 {
-                    $this.removeClass('disabled');
+                    $saveBtn.removeClass('disabled');
 
                     $cancelBtn.removeClass( 'disabled' );
 
