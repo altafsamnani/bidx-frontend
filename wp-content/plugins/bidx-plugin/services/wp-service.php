@@ -372,6 +372,13 @@ function bidx_signout ()
     wp_clear_auth_cookie ();
     clear_wp_bidx_session ();
 
+     if (isset ($_GET['redirect_to'])) 
+     {
+        $redirect_to = $_GET['redirect_to'];
+        header ("Location: $redirect_to");
+        
+    }
+
     if ($provider || isset ($_COOKIE['bidx-skipso-competition'])) {
        // callProviderLogoutURL (); // Use it for skipso logout in future if needed
     }
