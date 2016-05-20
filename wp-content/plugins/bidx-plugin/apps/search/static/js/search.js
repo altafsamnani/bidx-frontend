@@ -8,6 +8,7 @@
     ,   $bidx                   = $( bidx )
     ,   $element                = $( "#searchHome")
     ,   $frmSearch              = $element.find( ".searchform" )
+    ,   $frmFilters             = $element.find( ".filtersform")
 
     ,   $nationality            = $element.find( "[name='nationality']" )
     ,   $languageSelect         = $element.find( "[name='languages']"     )
@@ -599,16 +600,44 @@
 
         } );
 
-        $saveSearchBtn.click (function ( )
+        $frmFilters.validate(
+        {
+            rules:
+            {
+                "filterName":
+                {
+                    required:      true
+                }
+            }
+        ,   messages:
+            {
+                // Anything that is app specific, the general validations should have been set
+                // in common.js already
+            }
+        ,   submitHandler:          function( e )
+            {
+                bidx.utils.log('I am here in submit handler');
+                _saveSearch( );  
+            }
+        } );
+
+        /*$saveSearchBtn.click (function ( )
+        {
+
+            bidx.utils.log('I am here in click');
+            //_saveSearch( );      
+        });*/
+
+        function _saveSearch( )
         {
             var bulkValue
             ,   presetData
             ,   presetLabel
-            ,   $presetName
-            ,   $this       =   $(this)
+            ,   $presetName            
             ,   $presetForm =   $element.find('.saveSearchPanel')
+            ,   $saveBtn    =   $presetForm.find('.save-search')
             ,   $cancelBtn  =   $presetForm.find( '.anchor-save')
-            ,   id          =   $this.data('id')
+            ,   id          =   $saveBtn.data('id')
             ;
 
             $presetName     = $presetForm.find( "[name='filterName']" );
@@ -633,7 +662,7 @@
 
             globalPresets.push( presetData );
 
-            $this.addClass('disabled');
+            $saveBtn.addClass('disabled');
             
             $cancelBtn.addClass( 'disabled' );
             
@@ -645,7 +674,7 @@
             {
                 callback: function()
                 {
-                    $this.removeClass('disabled');
+                    $saveBtn.removeClass('disabled');
 
                     $cancelBtn.removeClass( 'disabled' );
 
@@ -655,7 +684,7 @@
 
                 }
             })
-     });
+        }        
     }
 
     function _doSortingAction()
@@ -1021,9 +1050,23 @@
         }
 
         // init bidx_chosen plugin
-        $filterDropdown.bidx_chosen();
+        $filterDropdown.bidx_chosen(
+        {
+            chosen: 
+            {
+                width:              "135px"
+            ,   disable_search:     true
+            }
+        });
 
-        $orderDropdown.bidx_chosen( );
+        $orderDropdown.bidx_chosen(
+        {
+            chosen: 
+            {
+                width:              "75px"
+            ,   disable_search:     true
+            }
+        });
 
         //Remove hide classes to display dropdowns
         $filterDropdown.removeClass('hide');

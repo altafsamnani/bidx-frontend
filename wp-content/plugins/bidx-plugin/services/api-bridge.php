@@ -86,7 +86,7 @@ abstract class APIbridge
         // 4. WP Http Request
         $url = API_URL . $urlService . $bidxGetParams;
 
-        $this->logger->trace (sprintf ('Calling API URL: %s Method: %s Body: %s Headers: %s Cookies: %s', $url, $method, $body, var_export ($headers, true), var_export ($cookieArr, true)));
+        /*$this->logger->trace (sprintf ('Calling API URL: %s Method: %s Body: %s Headers: %s Cookies: %s', $url, $method, $body, var_export ($headers, true), var_export ($cookieArr, true)));*/
 
         //$request = new WP_Http;
         $result = wp_remote_request ($url, array ('method' => $bidxMethod,
@@ -126,6 +126,7 @@ abstract class APIbridge
 
         return $requestData;
     }
+    
 
     /**
      * Process Bidx Api Response
@@ -286,7 +287,7 @@ abstract class APIbridge
 
         //If its illegal request like group is not backend that it sends back group missing with illegal request, so to know that error using edmsg
         //To genuine session expire using emsg=1
-        $statusText     = ($statusText) ? '&edmsg='.base64_encode($statusText) : '&emsg=1';
+        $statusText     = ($statusText) ? '&emsg='.base64_encode($statusText) : '&emsg=1';
 
         $redirect_url   = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . $lang. '/auth?q=' . base64_encode ($current_url) .$statusText ;
 

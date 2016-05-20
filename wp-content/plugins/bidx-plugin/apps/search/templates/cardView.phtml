@@ -68,6 +68,7 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                         <div class="panel-body">
+                         <form action="" class="filtersform">
                             <div class="row">
                                 <div class="col-sm-12">
                                         <small><?php _e('This filter will be saved.','bidxplugin');?></small>
@@ -83,20 +84,19 @@
                                 </div>
                             </div>
 
-                            <a data-filter="saveSearch" class="clearboth btn btn-primary save-search panel-action"><?php _e("Save search", "bidxplugin");?></a>
+                            <button type="submit" data-filter="saveSearch" class="clearboth btn btn-primary save-search panel-action"><?php _e("Save search", "bidxplugin");?></button>
                             <a data-filter="cancelSearch" class="btn btn-default anchor-save"><?php _e("Cancel", "bidxplugin");?></a>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <form action="" class="filtersform">
+            <div class="col-sm-4">               
                     <div class="view viewSidebar side-bar well sideBar main-facet">
                         <article class="view viewSavesearch">
                           <a data-filter="save"  class="clearboth anchor-save btn-link-save"><span class="fa fa-bell-o"></span> <?php _e('Save search', 'bidxplugin');?></a>
                           <a tabindex="0" id="preset-listing" class="view viewPreset pull-right preset-listing" role="button" data-toggle="popover" title="<?php _e('My filters');?>"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          <div class="presetSel">
-   
+                          <div class="presetSel">   
                        </div>
                         </article>
                         <article class="viewFacet">
@@ -107,8 +107,7 @@
                                 <a data-filter="reset" class="clearboth anchor-reset btn btn-block btn-danger"><?php _e("Clear all filters", "bidxplugin");?></a>
                             </div>
                         </article>
-                    </div>
-                </form>
+                    </div>                
             </div>
 
             <div class="col-sm-8">

@@ -374,6 +374,7 @@ class BidxCommon
         $this::$bidxSession[$subDomain]->companyId                  =   NULL;
         $this::$bidxSession[$subDomain]->requestedBusinessSummaryId =   NULL;
         $this::$bidxSession[$subDomain]->external                   =   false;
+        $eMsgId                                                     =   false;
 
         if( strlen ( $hostAddress[1] ) == 2 )
         {
@@ -427,14 +428,25 @@ class BidxCommon
                     $sessionMemberId = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
                     $memberId = ( !empty ( $id ) ) ? $id : $sessionMemberId;
 
-                    if ($memberId) {
+                    if ($memberId) 
+                    {
                         $data->memberId = $memberId;
                         $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
                         $this::$bidxSession[$subDomain]->memberId = $memberId;
-                    } else {
-
-                        $redirect = 'auth'; //To redirect /member and not loggedin page to /login
-                        $statusMsgId = 1;
+                        $this::$bidxSession[$subDomain]->external = ($_GET['external']) ? $_GET['external'] : false;
+                    } 
+                    else 
+                    {
+                        $redirect       = 'auth'; //To redirect /member and not loggedin page to /login
+                        
+                        if($_GET['external'])
+                        {
+                            $eMsgId         =   $_GET['external'];
+                        }
+                        else
+                        {
+                            $statusMsgId    = 1;
+                        }
                     }
 
                     break;
@@ -458,9 +470,16 @@ class BidxCommon
 
                     $businessSummaryId = ( $id ) ? $id : NULL;
 
-                    if ($businessSummaryId) {
+                    if ($businessSummaryId) 
+                    {
                         $data->businessSummaryId = $businessSummaryId;
+
                         $this::$bidxSession[$subDomain]->requestedBusinessSummaryId = $businessSummaryId;
+
+                        if( !empty ($jsSessionData->data->id ) )
+                        {
+                            $this::$bidxSession[$subDomain]->memberId = $jsSessionData->data->id;
+                        }            
                     }
 
                     break;
@@ -500,7 +519,7 @@ class BidxCommon
 
             if ($jsSessionData) {
                 $authenticated = (isset ($jsSessionData->authenticated)) ? $jsSessionData->authenticated : 'false';
-                $this->redirectUrls ($module, $authenticated, $redirect, $statusMsgId, $subDomain);
+                $this->redirectUrls ($module, $authenticated, $redirect, $statusMsgId, $eMsgId, $subDomain);
             }
 
             $return['data'] = $data;
@@ -526,7 +545,7 @@ class BidxCommon
      * @param String $password
      * @return Loggedin User
      */
-    function redirectUrls ($uriString, $authenticated, $redirect = NULL, $statusMsgId = NULL, $subDomain)
+    function redirectUrls ($uriString, $authenticated, $redirect = NULL, $statusMsgId = NULL, $eMsgId = NULL, $subDomain)
     {
         $redirect_url   =   NULL;
         $urlSep         =   '?';
@@ -543,8 +562,15 @@ class BidxCommon
         }
 
         //Status Messages
-        if ($statusMsgId) {
+        if ($statusMsgId) 
+        {
             $param.= '?smsg=' . $statusMsgId;
+            $urlSep = '&';
+        }
+
+        if ($eMsgId) 
+        {
+            $param.= $urlSep . 'emsg=' . $eMsgId;
             $urlSep = '&';
         }
 
@@ -562,8 +588,12 @@ class BidxCommon
 
             case 'member' :
 
-                if ($authenticated == 'false' && $redirect) {
-                    $redirect_url = $http . $_SERVER['HTTP_HOST'] .$langUrl . '/' . $redirect . $param;
+                if ($authenticated == 'false' && $redirect) 
+                {
+                    $member_url     =   $http . $_SERVER['HTTP_HOST'] . $requestUri[0];
+                    //$redirect_url = $http . $_SERVER['HTTP_HOST'] .$langUrl . '/' . $redirect . $param;
+                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .$langUrl. '/'. $redirect. $param. $urlSep.'redirect_to=' . base64_encode ($member_url) . '/#auth/login';
+
                     wp_clear_auth_cookie ();
 
                     //Clear Session and Static variables (except for any redirect setting)

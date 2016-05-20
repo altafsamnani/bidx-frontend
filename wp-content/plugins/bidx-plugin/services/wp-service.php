@@ -372,6 +372,13 @@ function bidx_signout ()
     wp_clear_auth_cookie ();
     clear_wp_bidx_session ();
 
+     if (isset ($_GET['redirect_to'])) 
+     {
+        $redirect_to = $_GET['redirect_to'];
+        header ("Location: $redirect_to");
+        
+    }
+
     if ($provider || isset ($_COOKIE['bidx-skipso-competition'])) {
        // callProviderLogoutURL (); // Use it for skipso logout in future if needed
     }
@@ -2465,7 +2472,10 @@ function bidx_general_settings() {
 
             update_option ('bidx-expressform', $expressForm);
 
+            //Save the express form settings
+            $wizeHive    =   ( isset ( $_POST['bidx-wizehive'] ) ) ? $_POST['bidx-wizehive'] : 0;
 
+            update_option ('bidx-wizehive', $wizeHive);
 
     	    $ssoRedirect = ( isset( $_POST['bidx-sso-redirect'] ) ) ? $_POST['bidx-sso-redirect'] : false;
 
