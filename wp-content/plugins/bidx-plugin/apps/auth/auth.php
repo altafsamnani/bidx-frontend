@@ -7,6 +7,7 @@
  * @author msp (js app)
  * @version 1.0
  */
+
 class auth {
 
 	/**
