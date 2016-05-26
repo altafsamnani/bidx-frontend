@@ -54,7 +54,7 @@ class expressform {
 
         $isActivated                =   $session->expressForm;
 
-        if( $isActivated )
+        if( $isActivated  )
         {
             // 3. Service Business Summary (entity)
             $bidxBusinessSummary        =   $sessionData->wp->entities->bidxBusinessSummary;

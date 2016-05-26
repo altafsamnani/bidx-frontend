@@ -86,34 +86,88 @@ class BusinessSummaryService extends APIbridge
         $userEmail          =   $member->username;
         $address1           =   $personalDetails->address[0]->street.' '.$personalDetails->address[0]->streetNumber; 
 
+
+        $id                 =   $userId;
+        $first              =   $personalDetails->firstName;
+        $last               =   $personalDetails->lastName;
+        $email              =   $userEmail;
+
          $wizehivesUserMapping   =   array(
-         'id'       => $userId,
+         'id'       => $id,
          'name'     => $member->displayName,
-         'first'    => $personalDetails->firstName,
-         'last'     => $personalDetails->lastName,
-         'email'    => $userEmail
+         'first'    => $first,
+         'last'     => $last,
+         'email'    => $email
         );
 
         $wizehivesFormMapping   = array(
-         'first'            =>  $personalDetails->firstName,
-         'last'             =>  $personalDetails->lastName,
-         'email'            =>  $userEmail,
+         'first'            =>  $first,
+         'last'             =>  $last,
+         'email'            =>  $email,
          'address1'         =>  $address1,
          'address2'         =>  '',
          'city'             =>  $personalDetails->address[0]->cityTown,
-         //'state'    => 'MA',           
+         'state'            =>  'Not known',           
          'zip'              =>  $personalDetails->address[0]->postalCode,
-         'country'          =>  $view->getStaticVal( 'country', $personalDetails->address[0]->country ),
-         'aicpa_member_id'  =>  $userId
+         'country'          =>  $personalDetails->address[0]->country,
+         'aicpa_member_id'  =>  $id
         );
 
-        $timestamp          =   time( );
+        $timestamp = time();
+        
+        $token_data = $id . '|' . $email . '|' . $timestamp;
+        
+        $token_key = '2238c1b2da7541f88ba560bc81fd7bff';
+        $token = hash_hmac('sha1', $token_data , $token_key);
 
-        $inputData          =   $businessSummaryId . '|' . $userId . '|' . $userEmail ;
+       /* echo "<pre>"; 
+        print_r($wizehivesUserMapping); 
+        print_r($wizehivesFormMapping); 
+        echo $token;
+        echo "</pre>";*/ 
+
+        /*$wizehivesUserMapping = array(
+         'id' => '121',
+         'name' => 'Sam Wich1',
+         'first' => 'Sam12',
+         'last' => 'Wich12',
+         'email' => 'samwich132335@deli.com',
+        );
+
+
+        $timestamp = time();
+        $token_data = $wizehivesUserMapping['id'] . '|' . $wizehivesUserMapping['email'] . '|' . $timestamp;
+        $token_key = '2238c1b2da7541f88ba560bc81fd7bff';
+        $token = hash_hmac('sha1', $token_data , $token_key);
+        $form = json_encode(array());
+
+        $wizehivesFormMapping = array(
+         'first' => 'Sam12',
+         'last' => 'Wich12',
+         'email' => 'samwich132335@deli.com',
+         'address1' => '1 Turkey Lane',
+         'address2' => '',
+         'city' => 'Rye',
+         'state' => 'MA',
+         'zip' => '01234',
+         'country' => 'US',
+         'aicpa_member_id' => '121',
+        );
+
+        echo "<pre>"; 
+        print_r($wizehivesUserMapping); 
+        print_r($wizehivesFormMapping); 
+        echo $token;
+        echo "</pre>";exit;
+
+
+        //$timestamp          =   time( );
+
+        //$inputData          =   $businessSummaryId . '|' . $userId . '|' . $userEmail ;
         
         //$token              =   hash_hmac('sha1', $tokenData , $this->tokenKey);
         //$token              =   $this->encrypt( $inputData,  $this->tokenKey, $this->iv, $this->bitCheck  );
-        $token              =   base64_encode($inputData);
+        //$token              =   base64_encode($inputData);
 
         /*$results            =   array( 
                                 'user'      =>  $wizehivesUserMapping,
@@ -127,8 +181,7 @@ class BusinessSummaryService extends APIbridge
                                 'form'      =>  urlencode(json_encode($wizehivesFormMapping)),
                                 'timestamp' =>  $timestamp,
                                 'token'     =>  $token
-                                );
-
+                                ); 
         return $results;
     }
 

@@ -296,12 +296,13 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             <?php   }
                     if( $this->isWizehive )
                     { ?>
-                        <form id="wizehive-sso" method="post" action="https://app.wizehive.com/appform/display/SPARKFundApp">
+                        <form id="wizehive-sso" method="post" action="https://app.wizehive.com/appform/display/SPARK">
                              <input type="hidden" name="user" value="<?php echo $wizehivesFormData['user']; ?>" />
                              <input type="hidden" name="timestamp" value="<?php echo $wizehivesFormData['timestamp']; ?>" />
                              <input type="hidden" name="token" value="<?php echo $wizehivesFormData['token']; ?>" />
-                             <input type="hidden" name="form" value="<?php print( $wizehivesFormData['form']); ?>" />
-                             <button type="submit" id="wizehive" class="btn btn-success btn-wizehive margin-half-left"><i class="fa fa-globe fa-big fa-above"></i> <?php _e( 'Apply to GACC', 'bidxplugin' ); ?></button>
+                             <input type="hidden" name="form" value="<?php print( $wizehivesFormData['form']); ?>" />                             
+                             <button type="submit" id="wizehive" class="btn btn-success btn-wizehive margin-half-left" value="Send"><i class="fa fa-globe fa-big fa-above"></i> <?php _e( 'Apply to GACC', 'bidxplugin' ); ?></button>   
+                                                   
                         </form>
             <?php   }  ?> 
                 </div>
