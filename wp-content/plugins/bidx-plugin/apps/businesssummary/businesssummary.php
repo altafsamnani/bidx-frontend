@@ -70,17 +70,17 @@ class businesssummary
 
             //Get bp summary details
             $businessSummaryResults     =   $businessSummaryObj->getSummaryDetails( $businessSummaryId );
-            $businessSummaryData        =   $businessSummaryResults->data;
+            $businessSummaryResult        =   $businessSummaryResults->data;
 
-            $businessSummaryData->thirdPartyID  =   $formSubmissionId;
+            $businessSummaryResult->thirdPartyID  =   $formSubmissionId;
 
             //Post bp summary details
-            $response                   =   $businessSummaryObj->postSummaryDetails( $businessSummaryId, $businessSummaryData );
+            $response                   =   $businessSummaryObj->postSummaryDetails( $businessSummaryId, $businessSummaryResult );
 
 
             echo "<pre>"; 
             print_r($data); 
-            print_r($businessSummaryData); 
+            print_r($businessSummaryResult); 
             print_r($response); 
             echo "</pre>"; 
             exit;
@@ -124,9 +124,9 @@ class businesssummary
             $businessSummaryObj = new BusinessSummaryService( );
 
             /* 3. Render Services for Initial View Display */
-            $businessSummaryData    = $businessSummaryObj->getSummaryDetails( $businessSummaryId );
+            $businessSummaryResult    = $businessSummaryObj->getSummaryDetails( $businessSummaryId );
 
-            $competitionIds = $businessSummaryData->data->bidxMeta->bidxCompetitionIds;
+            $competitionIds = $businessSummaryResult->data->bidxMeta->bidxCompetitionIds;
 
             if (!empty($competitionIds))
             {
@@ -143,7 +143,7 @@ class businesssummary
                 $competitionData        = $competitionObj->isHavingCompetitionRole( $competitionDataArray );
             }
 
-            $view->data             = $businessSummaryData->data;
+            $view->data             = $businessSummaryResult->data;
 
             //Localize to js variables, currently to use focusexpertise for mentoring to display match
             $jsParams = array('business' => $view->data);
@@ -151,8 +151,8 @@ class businesssummary
 
             $view->competitionData  = $competitionData;
 
-            if ( isset( $businessSummaryData -> data -> bidxMeta -> bidxCompletionMesh) ) {
-                $completeness = $businessSummaryData -> data -> bidxMeta -> bidxCompletionMesh;
+            if ( isset( $businessSummaryResult -> data -> bidxMeta -> bidxCompletionMesh) ) {
+                $completeness = $businessSummaryResult -> data -> bidxMeta -> bidxCompletionMesh;
 
                 //TODO : structurally fix this using the scoring service
                 $view->completenessScore = round($completeness);
@@ -173,7 +173,7 @@ class businesssummary
              * the Entity API as well, but if the current user can rate we need more details,
              * such as the user's rating, for which we need to make another API call.
              */
-            if( $businessSummaryData->data->bidxMeta->bidxCanRate ) {
+            if( $businessSummaryResult->data->bidxMeta->bidxCanRate ) {
                 require_once (BIDX_PLUGIN_DIR . '/../services/rating-service.php');
                 $ratingServiceObj = new RatingService ();
                 $ratingData = $ratingServiceObj->getRating ( $businessSummaryId );
@@ -195,9 +195,11 @@ class businesssummary
 
             $groupSvc       =   new GroupService( );
 
-            $isWizehive     =   $groupSvc->getGroupSettings( array('wizehive') );
+            $groupSettings     =   $groupSvc->getGroupSettings( array('wizehive') );
 
-            if( $isWizehive )
+            $isWizehive      = $groupSettings['wizehive'] ;
+
+            if( $isWizehive && $businessSummaryId )
             {                
                 $view->isWizehive = $isWizehive; 
 
@@ -206,9 +208,9 @@ class businesssummary
 
                 $memberObj = new MemberService( );
 
-                $memberData = $memberObj->getMemberDetails(  );
+                $memberResult = $memberObj->getMemberDetails(  );
 
-                $view->wizehivesFormData    =  $businessSummaryObj->getWizehivesSubmissionData( $memberData, $businessSummaryId, $view );  
+                $view->wizehivesFormData    =  $businessSummaryObj->getWizehivesSubmissionData( $memberResult->data, $businessSummaryResult->data );  
 
             }
         }
@@ -217,7 +219,7 @@ class businesssummary
         /*$mystring = ob_get_contents();
         ob_end_clean();
 
-        $mystring = preg_replace('/(<title>)(.*?)(<\/title>)/', '$1' . $businessSummaryData->data->name . '$3', $mystring);
+        $mystring = preg_replace('/(<title>)(.*?)(<\/title>)/', '$1' . $businessSummaryResult->data->name . '$3', $mystring);
 
         echo $mystring;*/
 

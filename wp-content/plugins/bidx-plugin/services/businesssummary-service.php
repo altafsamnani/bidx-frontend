@@ -21,7 +21,11 @@ class BusinessSummaryService extends APIbridge
      * Constructs the API bridge.
      * Needed for operational logging.
      */
-    private $apiUrl = 'businesssummary/';
+    private $apiUrl     =   'businesssummary/';
+
+    private $submitUrl  =   'https://app.wizehive.com/appform/display';
+
+    private $editUrl    =   'https://app.wizehive.com/appform/edit';
 
     public function __construct ()
     {
@@ -75,12 +79,26 @@ class BusinessSummaryService extends APIbridge
      'email' => 'samwich13335@deli.com',
     );
     */
-    function getWizehivesSubmissionData ( $memberData, $businessSummaryId, $view )
+
+    function getWizehivesBpData()
     {
+
+    }
+
+    function getWizehivesMemberData()
+    {
+
+    }
+
+
+    function getWizehivesSubmissionData ( $memberData, $bpData )
+    {
+        
+
         //Call entity API
         $results            =   array( );
-        $member             =   $memberData->data->member;
-        $bidxMemberProfile  =   $memberData->data->bidxMemberProfile;
+        $member             =   $memberData->member;
+        $bidxMemberProfile  =   $memberData->bidxMemberProfile;
         $personalDetails    =   $bidxMemberProfile->personalDetails; 
         $userId             =   $member->bidxMeta->bidxMemberId;
         $userEmail          =   $member->username;
@@ -92,7 +110,30 @@ class BusinessSummaryService extends APIbridge
         $last               =   $personalDetails->lastName;
         $email              =   $userEmail;
 
-         $wizehivesUserMapping   =   array(
+        $businessSummaryId  =   $bpData->bidxMeta->bidxEntityId;
+
+        $wizehivesUrl       =   $this->submitUrl;
+
+        if( !$id )
+        {
+            $wizehivesUrl   =   $this->editUrl;
+           // $wizehiveSubId  =   
+        }
+
+        $wizehiveSlug       =   get_option('bidx-wizehive-slug');
+        $actionUrl          =   $wizehivesUrl.'/'.$wizehiveSlug;
+
+        $wizehivesBpMapping   =   array(
+         'id'                   => $businessSummaryId,
+         'title'                => $bpData->name,
+         'country'              => $bpData->countryOperation,
+         'stageOfBusiness'      => $bpData->stageBusiness,
+         'yearSalesStarted'     => $bpData->yearSalesStarted,
+         'financialSummaries'   => $bpData->financialSummaries
+
+        );
+
+        $wizehivesUserMapping   =   array(
          'id'       => $id,
          'name'     => $member->displayName,
          'first'    => $first,
@@ -177,7 +218,9 @@ class BusinessSummaryService extends APIbridge
                                 );*/ 
 
         $results            =   array( 
+                                'actionurl' =>  $actionUrl,
                                 'user'      =>  urlencode(json_encode($wizehivesUserMapping)),
+                                'business'  =>  urlencode(json_encode($wizehivesBpMapping)),
                                 'form'      =>  urlencode(json_encode($wizehivesFormMapping)),
                                 'timestamp' =>  $timestamp,
                                 'token'     =>  $token

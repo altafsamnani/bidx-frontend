@@ -296,8 +296,9 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             <?php   }
                     if( $this->isWizehive )
                     { ?>
-                        <form id="wizehive-sso" method="post" action="https://app.wizehive.com/appform/display/SPARK">
+                        <form id="wizehive-sso" method="post" action="<?php echo $wizehivesFormData['actionurl']; ?>">
                              <input type="hidden" name="user" value="<?php echo $wizehivesFormData['user']; ?>" />
+                             <input type="hidden" name="business" value="<?php echo $wizehivesFormData['business']; ?>" />
                              <input type="hidden" name="timestamp" value="<?php echo $wizehivesFormData['timestamp']; ?>" />
                              <input type="hidden" name="token" value="<?php echo $wizehivesFormData['token']; ?>" />
                              <input type="hidden" name="form" value="<?php print( $wizehivesFormData['form']); ?>" />                             
