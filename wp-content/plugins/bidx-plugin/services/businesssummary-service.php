@@ -96,32 +96,51 @@ class BusinessSummaryService extends APIbridge
         
 
         //Call entity API
-        $results            =   array( );
-        $member             =   $memberData->member;
-        $bidxMemberProfile  =   $memberData->bidxMemberProfile;
-        $personalDetails    =   $bidxMemberProfile->personalDetails; 
-        $userId             =   $member->bidxMeta->bidxMemberId;
-        $userEmail          =   $member->username;
-        $address1           =   $personalDetails->address[0]->street.' '.$personalDetails->address[0]->streetNumber; 
+        $results                    =   array( );
+        $member                     =   $memberData->member;
+        $bidxMemberProfile          =   $memberData->bidxMemberProfile;
+        $personalDetails            =   $bidxMemberProfile->personalDetails; 
+        $userId                     =   $member->bidxMeta->bidxMemberId;
+        $userEmail                  =   $member->username;
+        $address1                   =   $personalDetails->address[0]->street.' '.$personalDetails->address[0]->streetNumber; 
 
 
-        $id                 =   $userId;
-        $first              =   $personalDetails->firstName;
-        $last               =   $personalDetails->lastName;
-        $email              =   $userEmail;
+        $id                         =   $userId;
+        $first                      =   $personalDetails->firstName;
+        $last                       =   $personalDetails->lastName;
+        $email                      =   $userEmail;
 
-        $businessSummaryId  =   $bpData->bidxMeta->bidxEntityId;
+        $businessSummaryId          =   $bpData->bidxMeta->bidxEntityId;
 
-        $wizehivesUrl       =   $this->submitUrl;
+        $wizehivesUrl               =   $this->submitUrl;
 
-        if( !$id )
+        $btnLabel                   =   __('Apply to GACC', 'bidxplugin');
+
+        $integrations               =   isset( $memberData->member->integrations ) ? $memberData->member->integrations : false ;
+
+        if( $integrations ) // TEST
+        {
+            $integrations[0]            = '3396837';  
+            $integrations[1]            = '10175';  
+            $integrations[2]            = false;  
+        }
+
+
+        $integrationSubmissionId    =  $integrations[0];
+        $integrationsId             =  $integrations[1];
+        $integrationStatus          =  $integrations[2];
+        $integrationSubmissionIdUrl =  ($integrationSubmissionId) ? '/'.$integrations[0] : '';
+        
+
+        if( $integrationsId == $businessSummaryId  )
         {
             $wizehivesUrl   =   $this->editUrl;
+            $btnLabel       =   ( !$integrationStatus ) ? 'Submit to GACC' : 'Print GACC' ;
            // $wizehiveSubId  =   
         }
 
         $wizehiveSlug       =   get_option('bidx-wizehive-slug');
-        $actionUrl          =   $wizehivesUrl.'/'.$wizehiveSlug;
+        $actionUrl          =   $wizehivesUrl.'/'.$wizehiveSlug.$integrationSubmissionIdUrl;
 
         $wizehivesBpMapping   =   array(
          'id'                   => $businessSummaryId,
@@ -223,7 +242,8 @@ class BusinessSummaryService extends APIbridge
                                 'business'  =>  urlencode(json_encode($wizehivesBpMapping)),
                                 'form'      =>  urlencode(json_encode($wizehivesFormMapping)),
                                 'timestamp' =>  $timestamp,
-                                'token'     =>  $token
+                                'token'     =>  $token,
+                                'btnLabel'  =>  $btnLabel
                                 ); 
         return $results;
     }

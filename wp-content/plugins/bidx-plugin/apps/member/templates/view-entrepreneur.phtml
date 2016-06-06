@@ -18,6 +18,14 @@ $entrepreneurBidxMeta       = isset( $entrepreneurDetails->bidxMeta ) ? $entrepr
 
 $businessSummaryBidxMeta    = isset( $businessSummary->bidxMeta ) ? $businessSummary->bidxMeta : $businessSummary;
 
+$integrations               = isset( $this->data->member->integrations ) ? $this->data->member->integrations : false ;
+
+if( $integrations ) // TEST
+{
+    $integrations[0]            = '3396837';  
+    $integrations[1]            = '10175';  
+    $integrations[2]            = false;  
+}
 if ($entrepreneurDetails &&
     ( $entrepreneurBidxMeta->bidxEntityStatus == 'PUBLISHED' || $entrepreneurBidxMeta->bidxCanEdit  ) ) {
 ?>
@@ -88,7 +96,8 @@ if ($entrepreneurDetails &&
 
                     <div class="list-group js-fakecrop">
 <?php
-                        foreach ($businessSummary as $index => $business) {
+                        foreach ($businessSummary as $index => $business) 
+                        {  
 ?>
                                     <div class="card-entityid list-group-item" data-entityid="<?php echo $business->bidxMeta->bidxEntityId; ?>">
                                         <div class="list-group-item-text">
@@ -119,9 +128,17 @@ if ($entrepreneurDetails &&
                                                             </h4>
                                                         </div>
                                                         <div>
-                                                            <?php   if( $this->isWizehive )
+                                                            <?php   
+                                                            if( $this->isWizehive )
                                                             { 
-                                                                $wizehivesFormData    =  $businessSummaryObj->getWizehivesSubmissionData( $this->data, $business );
+                                                                /*echo 'heree'. $integrations[1];
+                                                                echo 'bid'. $business->bidxMeta->bidxEntityId;
+                                                                echo 'test'. strstr( $integrations[1], $business->bidxMeta->bidxEntityId);*/
+                                                                if( !$integrations || ($integrations && $integrations[1] == $business->bidxMeta->bidxEntityId) )
+                                                                {
+
+                                                                    $wizehivesFormData    =  $businessSummaryObj->getWizehivesSubmissionData( $this->data, $business );
+                                                                
                                                                 ?>
                                                                 <form id="wizehive-sso" method="post" action="<?php echo $wizehivesFormData['actionurl']; ?>">
                                                                      <input type="hidden" name="user" value="<?php echo $wizehivesFormData['user']; ?>" />
@@ -129,10 +146,11 @@ if ($entrepreneurDetails &&
                                                                      <input type="hidden" name="timestamp" value="<?php echo $wizehivesFormData['timestamp']; ?>" />
                                                                      <input type="hidden" name="token" value="<?php echo $wizehivesFormData['token']; ?>" />
                                                                      <input type="hidden" name="form" value="<?php print( $wizehivesFormData['form']); ?>" />                             
-                                                                     <button type="submit" id="wizehive" class="btn btn-success btn-xs btn-wizehive" value="Send"><i class="fa fa-globe"></i> <?php _e( 'Apply to GACC', 'bidxplugin' ); ?></button>   
+                                                                     <button type="submit" id="wizehive" class="btn btn-success btn-xs btn-wizehive" value="Send"><i class="fa fa-globe"></i> <?php echo $wizehivesFormData['btnLabel'] ?></button>   
                                                                                            
                                                                 </form>
-                                                        <?php   }  ?> 
+                                                        <?php   }
+                                                            }  ?> 
                                                         </div>
 
                                                     </div>

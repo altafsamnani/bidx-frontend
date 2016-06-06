@@ -210,6 +210,8 @@ class businesssummary
 
                 $memberResult = $memberObj->getMemberDetails(  );
 
+                $view->memberData = (isset($memberResult->data)) ? $memberResult->data:NULL;
+
                 $view->wizehivesFormData    =  $businessSummaryObj->getWizehivesSubmissionData( $memberResult->data, $businessSummaryResult->data );  
 
             }
