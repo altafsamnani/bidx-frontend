@@ -18,14 +18,17 @@ $entrepreneurBidxMeta       = isset( $entrepreneurDetails->bidxMeta ) ? $entrepr
 
 $businessSummaryBidxMeta    = isset( $businessSummary->bidxMeta ) ? $businessSummary->bidxMeta : $businessSummary;
 
-$integrations               = isset( $this->data->member->integrations ) ? $this->data->member->integrations : false ;
+$integrationObj               = (array) isset( $this->data->member->integrations ) ? $this->data->member->integrations : false ;
+
+$integrations               =  (array) $integrationObj;
 
 if( $integrations ) // TEST
 {
-    $integrations[0]            = '3396837';  
-    $integrations[1]            = '10175';  
-    $integrations[2]            = false;  
+    $integrations['wizehive.submission.id']     =   '3396837';  
+    $integrations['wizehive.businessplan.id']   =   '10175';  
+    $integrations['wizehive.submission.final']  =   false;  
 }
+
 if ($entrepreneurDetails &&
     ( $entrepreneurBidxMeta->bidxEntityStatus == 'PUBLISHED' || $entrepreneurBidxMeta->bidxCanEdit  ) ) {
 ?>
@@ -134,7 +137,7 @@ if ($entrepreneurDetails &&
                                                                 /*echo 'heree'. $integrations[1];
                                                                 echo 'bid'. $business->bidxMeta->bidxEntityId;
                                                                 echo 'test'. strstr( $integrations[1], $business->bidxMeta->bidxEntityId);*/
-                                                                if( !$integrations || ($integrations && $integrations[1] == $business->bidxMeta->bidxEntityId) )
+                                                                if( !$integrations || ($integrations && $integrations['wizehive.businessplan.id'] == $business->bidxMeta->bidxEntityId) )
                                                                 {
 
                                                                     $wizehivesFormData    =  $businessSummaryObj->getWizehivesSubmissionData( $this->data, $business );

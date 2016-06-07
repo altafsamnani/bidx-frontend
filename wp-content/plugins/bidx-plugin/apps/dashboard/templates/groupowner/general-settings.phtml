@@ -14,8 +14,39 @@
                                 <?php _e('Do you want to activate Express Form for this portal ? ','bidxplugin');?>
                             </label>
                         </div>
-                    </div>
+                    </div>                   
+                    <div>
+                        <label><?php _e('Expressform','bidxplugin'); ?></label>
+                        <?php 
+                            if( isset($this->expressform))
+                            {
+                                $checkedFb      = '';
+                                $checkedBidx    = '';
+                                $checkedDefault = '';
+                                switch ( $this->expressform )
+                                {
+                                    case 'fb':
+                                        $checkedFb      = 'checked';
+                                    break;
 
+                                    case 'bidx':
+                                        $checkedBidx    = 'checked';
+                                    break;
+                                    default:
+                                        $checkedDefault = 'checked';
+                                }
+                            }
+                        ?>
+                        <label class="radio">
+                            <input type="radio" data-toggle="radio" <?php echo $checkedDefault;?> name="expressformDisable" value="false" ><?php _e('Disable','bidxplugin'); ?>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" data-toggle="radio" <?php echo $checkedFb;?> name="expressformFb"  value="fb"><?php _e('Via facebook','bidxplugin'); ?>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" data-toggle="radio" <?php echo $checkedBidx;?> name="expressformBidx" value="bidx"><?php _e('Via bidx','bidxplugin'); ?>
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>

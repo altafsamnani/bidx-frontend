@@ -27,13 +27,15 @@ $wizehivesFormData  = $this->wizehivesFormData;
 
 $memberData         = $this->memberData;
 
-$integrations       = isset( $this->memberData->member->integrations ) ? $this->memberData->member->integrations : false ;
+$integrationObj     = isset( $this->memberData->member->integrations ) ? $this->memberData->member->integrations : false ;
+
+$integrations       = (array) $integrationObj;
 
 if( $integrations ) // TEST
 {
-    $integrations[0]            = '3396837';  
-    $integrations[1]            = '10175';  
-    $integrations[2]            = false;  
+    $integrations['wizehive.submission.id']     =   '3396837';  
+    $integrations['wizehive.businessplan.id']   =   '10175';  
+    $integrations['wizehive.submission.final']  =   false;  
 }
 
 // if a user has an investorProfile, he is allowed to request access to a business summary
@@ -307,7 +309,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
             <?php   }
                     if( $this->isWizehive )
                     { 
-                        if( !$integrations || ($integrations && $integrations[1] == $businessSummaryId) )
+                        if( !$integrations || ($integrations && $integrations['wizehive.businessplan.id'] == $businessSummaryId) )
                         {
                                                                 
                         ?>

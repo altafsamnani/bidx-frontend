@@ -110,7 +110,7 @@ class expressform {
 
             wp_localize_script ('bidx-data', '__bidxExpressForm', $jsParams);
 
-            $view -> render('expressform.phtml');
+            $view -> render('custom/telaviv.phtml');
         }
         else
         {

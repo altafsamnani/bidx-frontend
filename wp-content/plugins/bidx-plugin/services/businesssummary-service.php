@@ -116,20 +116,22 @@ class BusinessSummaryService extends APIbridge
 
         $btnLabel                   =   __('Apply to GACC', 'bidxplugin');
 
-        $integrations               =   isset( $memberData->member->integrations ) ? $memberData->member->integrations : false ;
+        $integrationObj             =   isset( $memberData->member->integrations ) ? $memberData->member->integrations : false ;
+
+        $integrations               =  (array) $integrationObj;
 
         if( $integrations ) // TEST
         {
-            $integrations[0]            = '3396837';  
-            $integrations[1]            = '10175';  
-            $integrations[2]            = false;  
+            $integrations['wizehive.submission.id']     =   '3396837';  
+            $integrations['wizehive.businessplan.id']   =   '10175';  
+            $integrations['wizehive.submission.final']  =   false;  
         }
 
 
-        $integrationSubmissionId    =  $integrations[0];
-        $integrationsId             =  $integrations[1];
-        $integrationStatus          =  $integrations[2];
-        $integrationSubmissionIdUrl =  ($integrationSubmissionId) ? '/'.$integrations[0] : '';
+        $integrationSubmissionId    =  $integrations['wizehive.submission.id']   ;
+        $integrationsId             =  $integrations['wizehive.businessplan.id'] ;
+        $integrationStatus          =  $integrations['wizehive.submission.final'];
+        $integrationSubmissionIdUrl =  ($integrationSubmissionId) ? '/'.$integrationSubmissionId : '';
         
 
         if( $integrationsId == $businessSummaryId  )
