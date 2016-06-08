@@ -120,12 +120,12 @@ class BusinessSummaryService extends APIbridge
 
         $integrations               =  (array) $integrationObj;
 
-        if( $integrations ) // TEST
+        /*if( $integrations ) // TEST
         {
             $integrations['wizehive.submission.id']     =   '3396837';  
             $integrations['wizehive.businessplan.id']   =   '10175';  
             $integrations['wizehive.submission.final']  =   false;  
-        }
+        }*/
 
 
         $integrationSubmissionId    =  $integrations['wizehive.submission.id']   ;

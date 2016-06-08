@@ -31,12 +31,12 @@ $integrationObj     = isset( $this->memberData->member->integrations ) ? $this->
 
 $integrations       = (array) $integrationObj;
 
-if( $integrations ) // TEST
+/*if( $integrations ) // TEST
 {
     $integrations['wizehive.submission.id']     =   '3396837';  
     $integrations['wizehive.businessplan.id']   =   '10175';  
     $integrations['wizehive.submission.final']  =   false;  
-}
+}*/
 
 // if a user has an investorProfile, he is allowed to request access to a business summary
 //
@@ -307,8 +307,11 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 ?>
                         <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><i class="fa fa-eye fa-big fa-above"></i><?php echo _e( 'Request access', 'bidxplugin' ); ?></a>
             <?php   }
-                    if( $this->isWizehive )
+                     echo 'Integrations- Submission Id- '. $integrations['wizehive.submission.id'];?><br/>
+                        <?php echo 'Integrations- Bp Id- '. $integrations['wizehive.businessplan.id'];
+                    if( $this->isWizehive && ( $ownerId == $loggedInUserId ) )
                     { 
+                       
                         if( !$integrations || ($integrations && $integrations['wizehive.businessplan.id'] == $businessSummaryId) )
                         {
                                                                 

@@ -22,12 +22,17 @@ $integrationObj               = (array) isset( $this->data->member->integrations
 
 $integrations               =  (array) $integrationObj;
 
+/*echo "<pre>"; 
+print_r($integrations); 
+echo "</pre>"; 
+exit; 
+
 if( $integrations ) // TEST
 {
     $integrations['wizehive.submission.id']     =   '3396837';  
     $integrations['wizehive.businessplan.id']   =   '10175';  
     $integrations['wizehive.submission.final']  =   false;  
-}
+}*/
 
 if ($entrepreneurDetails &&
     ( $entrepreneurBidxMeta->bidxEntityStatus == 'PUBLISHED' || $entrepreneurBidxMeta->bidxCanEdit  ) ) {
@@ -86,7 +91,9 @@ if ($entrepreneurDetails &&
             <div class="row" id="existingBusinesses" data-ownerid= <?php echo $memberId; ?>>
                 <div class="col-sm-12">
                     <h4>
-                        <?php echo $labelBusiness; ?>
+                        <?php echo $labelBusiness; ?><br/>
+                        <?php echo 'Integrations- Submission Id- '. $integrations['wizehive.submission.id'];?><br/>
+                        <?php echo 'Integrations- Bp Id- '. $integrations['wizehive.businessplan.id'];?>
 <?php
                         if ( $entrepreneurDetails->bidxMeta->bidxCanEdit ):
 ?>
@@ -132,7 +139,7 @@ if ($entrepreneurDetails &&
                                                         </div>
                                                         <div>
                                                             <?php   
-                                                            if( $this->isWizehive )
+                                                            if( $this->isWizehive && ( $memberId === $loggedInMemberId ) )
                                                             { 
                                                                 /*echo 'heree'. $integrations[1];
                                                                 echo 'bid'. $business->bidxMeta->bidxEntityId;
