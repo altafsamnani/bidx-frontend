@@ -172,7 +172,8 @@ class BusinessSummaryService extends APIbridge
          'state'            =>  'Not known',           
          'zip'              =>  $personalDetails->address[0]->postalCode,
          'country'          =>  $personalDetails->address[0]->country,
-         'aicpa_member_id'  =>  $id
+         'aicpa_member_id'  =>  $id,
+         'business'         =>  $wizehivesBpMapping 
         );
 
         $timestamp = time();
@@ -241,7 +242,7 @@ class BusinessSummaryService extends APIbridge
         $results            =   array( 
                                 'actionurl' =>  $actionUrl,
                                 'user'      =>  urlencode(json_encode($wizehivesUserMapping)),
-                                'business'  =>  urlencode(json_encode($wizehivesBpMapping)),
+                                //'business'  =>  urlencode(json_encode($wizehivesBpMapping)),
                                 'form'      =>  urlencode(json_encode($wizehivesFormMapping)),
                                 'timestamp' =>  $timestamp,
                                 'token'     =>  $token,

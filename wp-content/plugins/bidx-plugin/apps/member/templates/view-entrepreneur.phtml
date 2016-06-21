@@ -18,14 +18,13 @@ $entrepreneurBidxMeta       = isset( $entrepreneurDetails->bidxMeta ) ? $entrepr
 
 $businessSummaryBidxMeta    = isset( $businessSummary->bidxMeta ) ? $businessSummary->bidxMeta : $businessSummary;
 
-$integrationObj               = (array) isset( $this->data->member->integrations ) ? $this->data->member->integrations : false ;
+$integrationObj             = (array) isset( $this->data->member->integrations ) ? $this->data->member->integrations : false ;
 
-$integrations               =  (array) $integrationObj;
+$integrations               = (array) $integrationObj;
 
-/*echo "<pre>"; 
-print_r($integrations); 
-echo "</pre>"; 
-exit; 
+$integrations               = NULL;
+
+/*
 
 if( $integrations ) // TEST
 {

@@ -78,12 +78,12 @@ class businesssummary
             $response                   =   $businessSummaryObj->postSummaryDetails( $businessSummaryId, $businessSummaryResult );
 
 
-            echo "<pre>"; 
+          /*  echo "<pre>"; 
             print_r($data); 
             print_r($businessSummaryResult); 
             print_r($response); 
             echo "</pre>"; 
-            exit;
+            exit;*/
 
 
         }        
