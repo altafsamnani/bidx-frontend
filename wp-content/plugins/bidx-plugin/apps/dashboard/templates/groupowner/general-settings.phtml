@@ -14,6 +14,12 @@
                                 <?php _e('Do you want to activate Express Form for this portal ? ','bidxplugin');?>
                             </label>
                         </div>
+                        <div class='label'>
+                        <label class='selectit' for='bidx-express-custom'>
+                            <span class="description"><?php _e('Please enter wizehive slug ','bidxplugin');?></span><br/>
+                            <input <?php if( isset( $this->expressCustom ) ) { echo 'value="'.$this->expressCustom.'"'; }?> type='text' name='bidx-express-custom' id='bidx-express-custom' class='regular-text'>
+                        </label>
+                     </div>
                     </div>                   
                     <div>
                         <label><?php _e('Expressform','bidxplugin'); ?></label>

@@ -2472,23 +2472,34 @@ function bidx_general_settings() {
 
             update_option ('bidx-expressform', $expressForm);
 
+            /*if ( $expressForm )
+            {*/
+                $expressCustom = $_POST['bidx-express-custom'];
+
+                update_option ('bidx-express-custom', $expressCustom);
+
+            /*}
+            else
+            {
+              delete_option( 'bidx-express-custom' );
+            }*/
+
             //Save the express form settings
             
 
             $wizeHive = ( isset( $_POST['bidx-wizehive'] ) ) ? $_POST['bidx-wizehive'] : false;
 
-            if ( $wizeHive )
-            {
+    /*        if ( $wizeHive )
+            {*/
                 $wizehiveSlug = $_POST['bidx-wizehive-slug'];
-                if ( !empty( $wizehiveSlug ) ) 
-                {
-                    update_option ('bidx-wizehive-slug', $wizehiveSlug);
-                }
-            }
+     
+                update_option ('bidx-wizehive-slug', $wizehiveSlug);
+                
+            /*}
             else
             {
               delete_option( 'bidx-wizehive-slug' );
-            }
+            }*/
 
     	    $ssoRedirect = ( isset( $_POST['bidx-sso-redirect'] ) ) ? $_POST['bidx-sso-redirect'] : false;
 

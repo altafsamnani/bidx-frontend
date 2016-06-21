@@ -110,7 +110,13 @@ class expressform {
 
             wp_localize_script ('bidx-data', '__bidxExpressForm', $jsParams);
 
-            $view -> render('custom/telaviv.phtml');
+            $expressCustom      =   get_option('bidx-express-custom');
+
+            $folderLabel        =   ( $expressCustom ) ?  $expressCustom .'/' : '';
+
+            $view->folderLabel  =   $folderLabel;
+
+            $view -> render( $folderLabel. 'expressform.phtml');
         }
         else
         {
