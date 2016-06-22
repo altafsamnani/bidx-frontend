@@ -263,7 +263,7 @@
 
                 // Finally join the group with clicking a hidden button
                 // This is used because it handles the redirection to front page
-                //
+                
                 //$btnJoinGroup.click();
             }
         ,   error:          function( jqXhr, textStatus )
@@ -1370,12 +1370,16 @@
             ,   success:        function( response )
                 {
                     bidx.utils.log( "businesssummary.save::success::response", response );
-
+                    
                     var businessEntity
                     ,   businessEntityId
                     ,   bidxEntityType
-                    ,   responseData        =   bidx.utils.getValue( response, "data" )
+                    ,   responseData    =   bidx.utils.getValue( response, "data" )
+                    ,   groupId         =   bidx.common.getCurrentGroupId
                     ;
+
+                    //Joining Group Now
+                    bidx.common.joinGroup( groupId );
 
                     businessEntity          =   _.find( responseData, function( response )
                                             {
