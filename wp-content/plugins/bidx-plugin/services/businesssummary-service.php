@@ -119,6 +119,7 @@ class BusinessSummaryService extends APIbridge
         $integrationObj             =   isset( $memberData->member->integrations ) ? $memberData->member->integrations : false ;
 
         $integrations               =  (array) $integrationObj;
+        $integrations               =  NULL;
 
         /*if( $integrations ) // TEST
         {
@@ -150,7 +151,7 @@ class BusinessSummaryService extends APIbridge
          'country'              => $bpData->countryOperation,
          'stageOfBusiness'      => $bpData->stageBusiness,
          'yearSalesStarted'     => $bpData->yearSalesStarted,
-         'financialSummaries'   => $bpData->financialSummaries
+         'financialSummaries'   => json_decode(json_encode($bpData->financialSummaries), true)
 
         );
 
@@ -176,68 +177,18 @@ class BusinessSummaryService extends APIbridge
          'business'         =>  $wizehivesBpMapping 
         );
 
+
+
+        /*echo "<pre>";
+        print_r($wizehivesFormMapping);
+        echo "</pre>"; */
+
         $timestamp = time();
         
         $token_data = $id . '|' . $email . '|' . $timestamp;
         
         $token_key = '2238c1b2da7541f88ba560bc81fd7bff';
-        $token = hash_hmac('sha1', $token_data , $token_key);
-
-       /* echo "<pre>"; 
-        print_r($wizehivesUserMapping); 
-        print_r($wizehivesFormMapping); 
-        echo $token;
-        echo "</pre>";*/ 
-
-        /*$wizehivesUserMapping = array(
-         'id' => '121',
-         'name' => 'Sam Wich1',
-         'first' => 'Sam12',
-         'last' => 'Wich12',
-         'email' => 'samwich132335@deli.com',
-        );
-
-
-        $timestamp = time();
-        $token_data = $wizehivesUserMapping['id'] . '|' . $wizehivesUserMapping['email'] . '|' . $timestamp;
-        $token_key = '2238c1b2da7541f88ba560bc81fd7bff';
-        $token = hash_hmac('sha1', $token_data , $token_key);
-        $form = json_encode(array());
-
-        $wizehivesFormMapping = array(
-         'first' => 'Sam12',
-         'last' => 'Wich12',
-         'email' => 'samwich132335@deli.com',
-         'address1' => '1 Turkey Lane',
-         'address2' => '',
-         'city' => 'Rye',
-         'state' => 'MA',
-         'zip' => '01234',
-         'country' => 'US',
-         'aicpa_member_id' => '121',
-        );
-
-        echo "<pre>"; 
-        print_r($wizehivesUserMapping); 
-        print_r($wizehivesFormMapping); 
-        echo $token;
-        echo "</pre>";exit;
-
-
-        //$timestamp          =   time( );
-
-        //$inputData          =   $businessSummaryId . '|' . $userId . '|' . $userEmail ;
-        
-        //$token              =   hash_hmac('sha1', $tokenData , $this->tokenKey);
-        //$token              =   $this->encrypt( $inputData,  $this->tokenKey, $this->iv, $this->bitCheck  );
-        //$token              =   base64_encode($inputData);
-
-        /*$results            =   array( 
-                                'user'      =>  $wizehivesUserMapping,
-                                'form'      =>  $wizehivesFormMapping,
-                                'timestamp' =>  $timestamp,
-                                'token'     =>  $token
-                                );*/ 
+        $token = hash_hmac('sha1', $token_data , $token_key);       
 
         $results            =   array( 
                                 'actionurl' =>  $actionUrl,

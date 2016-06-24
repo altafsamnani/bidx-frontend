@@ -90,10 +90,7 @@ if ($entrepreneurDetails &&
             <div class="row" id="existingBusinesses" data-ownerid= <?php echo $memberId; ?>>
                 <div class="col-sm-12">
                     <h4>
-                        <?php echo $labelBusiness; ?><br/>
-                        <?php echo 'Integrations- Submission Id- '. $integrations['wizehive.submission.id'];?><br/>
-                        <?php echo 'Integrations- Bp Id- '. $integrations['wizehive.businessplan.id'];?>
-<?php
+                    <?php
                         if ( $entrepreneurDetails->bidxMeta->bidxCanEdit ):
 ?>
                         <a href="<?php echo _l("businesssummary");?>#createBusinessSummary" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e( 'Add new Business plan', 'bidxplugin' ); ?> </a>
@@ -143,15 +140,16 @@ if ($entrepreneurDetails &&
                                                                 /*echo 'heree'. $integrations[1];
                                                                 echo 'bid'. $business->bidxMeta->bidxEntityId;
                                                                 echo 'test'. strstr( $integrations[1], $business->bidxMeta->bidxEntityId);*/
+
                                                                 if( !$integrations || ($integrations && $integrations['wizehive.businessplan.id'] == $business->bidxMeta->bidxEntityId) )
                                                                 {
-
+                              
                                                                     $wizehivesFormData    =  $businessSummaryObj->getWizehivesSubmissionData( $this->data, $business );
                                                                 
                                                                 ?>
                                                                 <form id="wizehive-sso" method="post" action="<?php echo $wizehivesFormData['actionurl']; ?>">
                                                                      <input type="hidden" name="user" value="<?php echo $wizehivesFormData['user']; ?>" />
-                                                                     <input type="hidden" name="business" value="<?php echo $wizehivesFormData['business']; ?>" />
+                                                                     
                                                                      <input type="hidden" name="timestamp" value="<?php echo $wizehivesFormData['timestamp']; ?>" />
                                                                      <input type="hidden" name="token" value="<?php echo $wizehivesFormData['token']; ?>" />
                                                                      <input type="hidden" name="form" value="<?php print( $wizehivesFormData['form']); ?>" />                             
