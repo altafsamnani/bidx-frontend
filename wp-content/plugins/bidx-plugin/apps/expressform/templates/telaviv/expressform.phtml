@@ -131,11 +131,11 @@
 
     if ( $businessSummaryId )
     {
-        $this->render('view.phtml');
+        $this->render( $this->folderLabel.'view.phtml');
     }
     else
     {
-        $this->render('landing.phtml');
+        $this->render( $this->folderLabel.'landing.phtml');
     }
 ?>
 <!-- LOAD -->
@@ -255,9 +255,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-sm-12">
+                    <div class="form-group col-sm-6">
                         <label><?php _e('Describe your business ','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 900 characters)','bidxplugin'); ?></small></label>
                         <textarea name="summary" class="form-control" placeholder="<?php echo _e('Enter the description of your business', 'bidxplugin'); ?>"></textarea>
+                    </div>
+                    <!-- Social impact -->
+                    <div class="form-group col-sm-6">
+                        <label><?php _e('Stage of business','bidxplugin'); ?></label>
+                        <select name="stageBusiness"></select>
                     </div>
                     <div class="col-sm-12">
                         <div class="industrySectors">
@@ -294,7 +299,7 @@
                 <!-- Financial details -->
                     <div class="view viewShow viewEdit">
                         <?php
-                            $this->render('financial.phtml');
+                            $this->render( $this->folderLabel . 'financial.phtml');
                         ?>
                     </div>
                     <!-- ERROR -->

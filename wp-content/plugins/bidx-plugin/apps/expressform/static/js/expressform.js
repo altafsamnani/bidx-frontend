@@ -16,6 +16,7 @@
     ,   $controlsForError       =   $editControls.find( ".viewError" )
     ,   $bsLogoModal            =   $bsLogo.find( ".addLogoImage" )
     ,   $logoContainer          =   $bsLogo.find( ".logoContainer" )
+    ,   $stageBusiness          =   $element.find( "[name='stageBusiness']" )
     ,   snippets                =   {}
     ,   $views                  =   $element.find( ".view" )
     ,   $modals                 =   $element.find( ".modalView" )
@@ -523,6 +524,11 @@
         _financialSummary();
 
         $industrySectors.industries();
+
+        $stageBusiness.bidx_chosen(
+        {
+            dataKey:            "stageBusinessDetail"
+        });
 
         forms.financialDetails.$el.find( "[name='yearSalesStarted']" ).bidx_chosen();
 
