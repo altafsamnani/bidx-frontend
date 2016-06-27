@@ -8,7 +8,7 @@ class expressform {
      * Registers hooks for ajax requests and security related material
      * Also registers the scripts for expressform.
      */
-
+    private $expressCustom; 
 
     static $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2',
         'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-globalchecks', 'bidx-elements', 'bidx-interactions', 'bidx-reflowrower', 'bidx-industries','bidx-cover', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
@@ -27,8 +27,12 @@ class expressform {
      */
     function set_expressform_bidx_ui_libs()
     {
+        $this->expressCustom      =   get_option('bidx-express-custom');
+
+        $folderLabel  =   ( $this->expressCustom ) ?  $this->expressCustom .'/' : '';
+
        // wp_register_script ('facebook-campaign', plugins_url( 'static/js/facebook.js', __FILE__ ), array(), '20160202', TRUE );
-        wp_register_script( 'expressform', plugins_url( 'static/js/expressform.js', __FILE__ ), self::$deps, '20160202', TRUE );
+        wp_register_script( 'expressform', plugins_url( $folderLabel. 'static/js/expressform.js', __FILE__ ), self::$deps, '20160202', TRUE );
     }
 
     /**
@@ -75,7 +79,7 @@ class expressform {
 
             $memberData                 =   (isset($memberResult->data)) ? $memberResult->data:NULL;
 
-            $businessData               =   (isset($businessSummaryResult->data)) ? $businessSummaryResult->data:NULL;
+            $businessData               =   (isset($businessSummaryResult->data)) ? $businessSummaryResult->data : NULL;
 
              if ( isset( $businessSummaryResult -> data -> bidxMeta -> bidxCompletionMesh) ) {
                     $completeness = $businessSummaryResult -> data -> bidxMeta -> bidxCompletionMesh;
@@ -110,11 +114,13 @@ class expressform {
 
             wp_localize_script ('bidx-data', '__bidxExpressForm', $jsParams);
 
-            $expressCustom      =   get_option('bidx-express-custom');
 
-            $folderLabel        =   ( $expressCustom ) ?  $expressCustom .'/' : '';
+
+            $folderLabel        =   ( $this->expressCustom ) ?  '../'.$this->expressCustom .'/templates/' : '';
 
             $view->folderLabel  =   $folderLabel;
+
+            $view->expressCustom =  ( $this->expressCustom ) ? $this->expressCustom . '/' : '' ;
 
             $view -> render( $folderLabel. 'expressform.phtml');
         }
