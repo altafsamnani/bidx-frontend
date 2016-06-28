@@ -636,12 +636,19 @@ class BidxCommon
             case 'expressform':
             $expressform    =   $this::$bidxSession[$subDomain]->expressForm;
 
-            if ( $authenticated == 'false' && $expressform )
+            if ( $authenticated == 'false' )
             {
+                if ( $expressform == 'fb' || $expressform == 'bidx' )
+                {
+                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .$langUrl. '/auth?redirect_to=' . base64_encode ($current_url);
 
-                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .'/bidx-soca/bidxauth?id=facebook&path.success='.$langUrl.'/expressform';
+                    if( $expressform == 'fb')
+                    {
+                        $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .'/bidx-soca/bidxauth?id=facebook&path.success='.$langUrl.'/expressform';
 
-                    $redirect_url = str_replace( 'local', 'test', $redirect_url);
+                        $redirect_url = str_replace( 'local', 'test', $redirect_url);                        
+                    }
+            
 
                     wp_clear_auth_cookie ();
 
@@ -650,6 +657,8 @@ class BidxCommon
 
                     $this::$staticSession = NULL;
                     unset ($this::$bidxSession[$subDomain]);
+                }
+            
             }
             break;
 
