@@ -823,7 +823,12 @@
                             ,   id:    item.properties.userId
                             });
 
-                            actorArr[item.properties.userId] = item.member; // Store at global array for later use
+                            actorArr[item.properties.userId] = 
+                            {
+                                userId:     item.properties.userId
+                            ,   name:       item.properties.name
+                            //,   actorType:  ''                                
+                            }; // Store at global array for later use
                         });
 
                         $d.resolve( matches  );

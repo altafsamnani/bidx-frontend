@@ -4,6 +4,10 @@
 
     var $element                =   $( "#expressForm" )
     ,   $industrySectors        =   $element.find( ".industrySectors" )
+    ,   $expertiseNeeded        =   $element.find( "[name='expertiseNeeded']" )
+    ,   $toggles                =   $element.find( ".toggle" ).hide()
+    ,   $toggleExpertiseNeeded  =   $element.find( "[name='mentorAdvisory']" )
+    ,   $countryOperation       =   $element.find( "[name='countryOperation']" )
     ,   bidx                    =   window.bidx
     ,   appName                 =   "expressform"
     ,   $btnSave
@@ -24,9 +28,9 @@
     ,   $affixInfoBar           =   $('.info-bar')
     ,   expressFormData         =   window.__bidxExpressForm
     ,   businessSummary         =   bidx.utils.getValue( expressFormData, 'business')
-    ,   member                  =   bidx.utils.getValue( expressFormData, 'member')
-    ,   idr                     =   bidx.utils.getValue( expressFormData, 'usdIdr')
+    ,   member                  =   ( bidxConfig.authenticated === false ) ? {} : bidx.utils.getValue( expressFormData, 'member')
     ,   personalDetails         =   bidx.utils.getValue( member, 'bidxMemberProfile.personalDetails')
+    ,   $currentAddressCountry  =   $element.find( "[name='personalDetails.address[0].country']"         )
     ,   hasEntrepreneurProfile  =   bidx.utils.getValue ( member, "bidxEntrepreneurProfile" )
     ,   forms             =
         {
@@ -41,6 +45,10 @@
         ,   financialDetails:
             {
                 $el:                    $element.find( "#formExpressForm-FinancialDetails" )
+            }
+        ,   mentoringDetails:
+            {
+                $el:                    $element.find( "#formExpressForm-MentoringDetails" )
             }
         }
 
@@ -75,6 +83,8 @@
             ,   'mobile'
             ,   'cityTown'
             ,   'country'
+            ,   'linkedIn'
+            ,   'landLine'
             ]
         }
     ,   "generalOverview":
@@ -85,6 +95,7 @@
             ,   "summary"
             ,   "externalVideoPitch"
             ,   "website"
+            ,   "countryOperation"
             ]
         }
     ,   "financialDetails":
@@ -102,15 +113,25 @@
             ] */
         ,   "financialSummaries":
             [
-                "idrfinanceNeeded"
+                "financeNeeded"
             ,   "numberOfEmployees"
-            ,   "idroperationalCosts"
-            ,   "idrsalesRevenue"
+            ,   "operationalCosts"
+            ,   "salesRevenue"
             //  totalIncome is a derived field, but not a input
+            ]
+        }
+    ,   "mentoringDetails":
+        {
+            "_root":
+            [
+                "mentorAdvisory"
+            ,   "expertiseNeeded"
+            ,   "expertiseNeededDetail"
             ]
         }
     };
 
+ 
     // Use the retrieved businessSummary entity to populate the form and other screen elements
     //
     function _populateScreen()
@@ -121,6 +142,7 @@
         ,   $form
         ,   value
         ,   fp
+        ,   rp
         ,   emailAddress    =   bidx.utils.getValue(personalDetails,'emailAddress' )
         ,   userName        =   bidx.utils.getValue(member,'member.username' )
         ;
@@ -153,13 +175,16 @@
                     {
                         fp  =   f;
 
+                        rp  =   f;
+
                         switch( f )
                         {
                             case 'mobile':
+                            case 'landLine':
 
-                            f   =   'contactDetail[0].mobile';
+                            f   =   'contactDetail[0].' + rp;
 
-                            fp  =   'contactDetail.0.mobile';
+                            fp  =   'contactDetail.0.' + rp;
 
                             break;
 
@@ -232,6 +257,10 @@
                 } );
             }
         }
+
+        $expertiseNeeded.trigger( "chosen:updated" );
+        $countryOperation.trigger( "chosen:updated" );
+        $currentAddressCountry.trigger( "chosen:updated" );
     }
 
     // Try to save to the API
@@ -287,35 +316,14 @@
     //
     function _updateFinancialSummariesItem( $item, data )
     {
-        var value
-        ,   idrfValue
-        ,   f
-        ,   totalIncome
-        ,   idrTotalIncome
-        ;
-
-        totalIncome         =   data[ "totalIncome" ];
-        idrTotalIncome     =   parseInt( totalIncome * idr, 10 );
-
-        $.each( fields.financialDetails.financialSummaries, function( idx, idrf )
+        $.each( fields.financialDetails.financialSummaries, function( idx, f )
         {
-
-
-            f           =   idrf.replace('idr', '');
-
-            value       =   data[ f ] || "";
-
-            idrfValue   =   parseInt( value * idr, 10 );
-
-            $item.find( "[name^='" + idrf + "']" ).val( idrfValue );
+            var value = data[ f ] || "";
 
             $item.find( "[name^='" + f + "']" ).val( value );
-
         } );
 
-        $item.find( ".totalIncome .usdEdit" ).text( totalIncome );
-
-        $item.find( ".totalIncome .idrEdit" ).text( idrTotalIncome);
+        $item.find( ".totalIncome .viewEdit" ).text("$ " + data[ "totalIncome" ]);
     }
 
 
@@ -396,7 +404,8 @@
     });
 
     // Setup initial form validation
-    //
+    // f   =   'contactDetail[0].' + rp;
+
     function _setupValidation()
     {
         forms.personalDetails.$el.validate(
@@ -406,18 +415,32 @@
             {
                 "personalDetails.firstName":
                 {
-                    required:               true
-                ,   maxlength:               60
+                    required:    true
+                ,   maxlength:   60
                 }
             ,   "personalDetails.lastName":
                 {
-                    required:               true
-                ,   maxlength:               60
+                    required:    true
+                ,   maxlength:   60
                 }
             ,   "personalDetails.emailAddress":
                 {
-                    email:                   true
-                ,   required:               true
+                    email:       true
+                ,   required:    true
+                }
+             ,   "personalDetails.linkedIn":
+                {
+                    linkedIn:    true
+                }
+            ,   "personalDetails.contactDetail[0].mobile":
+                {
+                    phone:       true
+                ,   minlength:   9
+                }
+            ,   "personalDetails.contactDetail[0].landLine":
+                {
+                    phone:       true
+                ,   minlength:   9
                 }
             }
         ,   messages:
@@ -450,6 +473,10 @@
                 {
                     urlOptionalProtocol:        true
                 }
+            ,   countryOperation:
+                {
+                    required:      true
+                }
             ,   "focusIndustrySector[0]mainSector":
                 {
                     required:      true
@@ -468,6 +495,40 @@
 
             }
         ,   submitHandler:          function( e )
+            {
+                _doSave();
+            }
+        } );
+
+        // Financial Details
+            //
+        forms.mentoringDetails.$el.validate(
+        {
+            ignore:                 ""
+        ,   debug:                  false
+        ,   rules:
+            {
+                mentorAdvisory:
+                {
+                    // required:               true
+                }
+            ,   expertiseNeeded:
+                {
+                    required:               { depends: function () { return !$( ".toggle-mentorAdvisory" ).is(':hidden'); } }
+                }
+            ,   expertiseNeededDetail:
+                {
+                    required:               { depends: function () { return !$( ".toggle-mentorAdvisory" ).is(':hidden'); } }
+                ,   maxlength:              300
+                }
+            }
+
+        ,   messages:
+            {
+
+            }
+
+        ,   submitHandler:        function( e )
             {
                 _doSave();
             }
@@ -503,7 +564,6 @@
         } );
     }
 
-
     // private functions
     //
     function _oneTimeSetup()
@@ -530,6 +590,22 @@
             dataKey:            "stageBusinessDetail"
         });
 
+        $countryOperation.bidx_chosen(
+        {
+            dataKey:            "country"
+        });
+
+        $expertiseNeeded.bidx_chosen(
+        {
+            dataKey:            "mentorExpertise"
+        });
+
+        $currentAddressCountry.bidx_chosen(
+        {
+            dataKey:            "country"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
+
         forms.financialDetails.$el.find( "[name='yearSalesStarted']" ).bidx_chosen();
 
         $bsLogoRemoveBtn.click( function( e )
@@ -543,6 +619,24 @@
             businessSummary.logo = null;
         } );
 
+        var _handleToggleChange = function( show, group )
+        {
+            var fn = show ? "fadeIn" : "hide";
+
+            $toggles.filter( ".toggle-" + group )[ fn ]();
+        };
+
+        // Update the UI to show the input / previous run business'
+        //
+        $toggleExpertiseNeeded.change( function()
+        {
+            var value   = $toggleExpertiseNeeded.filter( "[checked]" ).val();
+
+            _handleToggleChange( value === "true", "mentorAdvisory" );
+            _handleToggleChange( value === "true", "mentorMatches" );
+
+        } );
+
 
     }
 
@@ -552,12 +646,8 @@
     {
         // Only allow saving when all the sub forms are valid
         //
-        var anyInvalid = false;
-
-        if ( bidxConfig.authenticated === false )
-        {
-            bidx.utils.log('Not logged in');
-        }
+        var errorSave
+        ,   anyInvalid = false;
 
         if( forms )
         {
@@ -585,40 +675,56 @@
         $btnSave.addClass( "disabled" );
         $btnCancel.addClass( "disabled" );
 
-        _save(
+        errorSave   =   function( jqXhr )
         {
-            error: function( jqXhr )
+            var response;
+
+            try
             {
-                var response;
-
-                try
-                {
-                    // Not really needed for now, but just have it on the screen, k thx bye
-                    //
-                    response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
-                }
-                catch ( e )
-                {
-                    bidx.utils.error( "problem parsing error response from businessSummary save" );
-                }
-
-                bidx.common.notifyError( "Something went wrong during save: " + response );
-
-                // Offer a login modal if not authecticated
-                if ( jqXhr.status === 401 )
-                {
-                    $( ".loginModal" ).modal();
-                }
-
-                $btnSave.removeClass( "disabled" );
-                $btnCancel.removeClass( "disabled" );
+                // Not really needed for now, but just have it on the screen, k thx bye
+                //
+                response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
             }
-        } );
+            catch ( e )
+            {
+                bidx.utils.error( "problem parsing error response from businessSummary save" );
+            }
+
+            bidx.common.notifyError( "Something went wrong during save: " + response );
+
+            // Offer a login modal if not authecticated
+            if ( jqXhr.status === 401 )
+            {
+                $( ".loginModal" ).modal();
+            }
+
+            $btnSave.removeClass( "disabled" );
+            $btnCancel.removeClass( "disabled" );
+        };
+
+        if ( bidxConfig.authenticated === false )
+        {
+            bidx.utils.log('Not logged in');
+
+            _saveRegisterForm(
+            {
+                error:  errorSave
+            } );
+        }
+        else
+        {
+            _save(
+            {
+                error:  errorSave
+                
+            } );
+        }
+
     }
 
     // Setup the financial summary component
-        //
-    function _financialSummary( )
+    //
+    function _financialSummary()
     {
         // FinancialSummary
         //
@@ -627,28 +733,25 @@
         ,   $btnAddPrev     = $financialSummary.find( "a[href$=#addPreviousYear]" )
         ,   $btnAddNext     = $financialSummary.find( "a[href$=#addNextYear]" )
 
-        ,   curYear         = bidx.common.getNow().getFullYear() -1
+        ,   curYear         = bidx.common.getNow().getFullYear()
         ;
-
 
         // Add on year to the left
         //
-        $btnAddPrev.hide();
         $financialSummary.delegate( "a[href$=#addPreviousYear]", "click", function( e )
         {
             e.preventDefault();
 
-            addFinancialSummaryYear( "prev" );
+            _addFinancialSummaryYear( "prev" );
         } );
 
         // Add on year to the right
         //
-        $btnAddNext.hide();
         $financialSummary.delegate( "a[href$=#addNextYear]", "click", function( e )
         {
             e.preventDefault();
 
-            addFinancialSummaryYear( "next" );
+            _addFinancialSummaryYear( "next" );
         } );
 
         // Delete the year
@@ -682,26 +785,15 @@
             _navigateYear( "next" );
         } );
 
-
-
         // Calculate the totalincome when the salesRevenue and/or operationalCosts change
         //
-        $financialSummaryYearsContainer.delegate( "input[name^='idrsalesRevenue'],input[name^='idroperationalCosts'],input[name^='idrfinanceNeeded']", "change", function()
+        $financialSummaryYearsContainer.delegate( "input[name^='salesRevenue'],input[name^='operationalCosts']", "change", function()
         {
-            var $input      =   $( this )
-            ,   $item       =   $input.closest( ".financialSummariesItem" )
-            ,   isFnKey     =   $input.hasClass('idrfinanceNeeded')
+            var $input  = $( this )
+            ,   $item   = $input.closest( ".financialSummariesItem" )
             ;
 
-            if( isFnKey )
-            {
-                _calculateFinanceNeeded( $item );
-            }
-            else
-            {
-                _calculateTotalIncome( $item );
-            }
-
+            _calculateTotalIncome( $item );
         } );
 
         // Itterate over the server side rendered year items
@@ -735,51 +827,29 @@
         {
             // Shortcut it for now by treating all the inputs the same
             //
-            var idrRule
-            ,   usdRule
-            ;
-
-            idrRule     =   {
-                                    required:               true
-                                ,   monetaryAmount:         true
-                                ,   maxlength:              12
-
-                                ,   messages:
-                                    {
-                                        required:               ""
-                                    ,   monetaryAmount:         "Please enter only numbers"
-                                    ,   maxlength:              "IDR should not be more than 12 characters"
-                                    }
-                            };
-
-            usdRule     =   {
-                                min: 1000
-                            ,   messages:
-                                {
-                                    min:    'Amount should be atleast $1000'
-                                }
-                            };
-
-
-
             $yearItem.find( "input" ).each( function( )
             {
-                var rule
-                ,   $input  =   $( this )
-                ,   name    =   $input.prop( "name" )
-                ,   isIdr   =   $input.hasClass('inputIdr')
+                var $input          = $( this )
+                ,   name            = $input.prop( "name" )
                 ;
 
-                rule        =   ( isIdr ) ?  idrRule : usdRule ;
+                $input.rules( "add",
+                {
+                    required:               true
+                ,   monetaryAmount:         true
 
-               $input.rules( "add", rule );
-
+                ,   messages:
+                    {
+                        required:               ""
+                    ,   monetaryAmount:         "Please enter only numbers"
+                    }
+                } );
             } );
         }
 
         // Add a financial year item
         //
-        function addFinancialSummaryYear( direction )
+        function _addFinancialSummaryYear( direction )
         {
             var $item       = snippets.$financialSummaries.clone()
             ,   year
@@ -836,12 +906,12 @@
             // Set content in the header
             //
             $item.find( ".year"         ).text( year );
-            //$item.find( ".yearLabel"    ).text( yearLabel );
+            $item.find( ".yearLabel"    ).text( yearLabel );
 
             // Move the available delete year button to the new year
             //
             $otherYear.find( ".btnDelete" ).hide();
-           // $item.find( ".btnDelete" ).show();
+            $item.find( ".btnDelete" ).show();
 
             if ( direction === "prev" )
             {
@@ -926,39 +996,16 @@
             }
         }
 
-        function _calculateFinanceNeeded( $item )
-        {
-            var $financeNeeded      =   $item.find( ".financeNeeded" )
-            ,   financeNeeded       =   parseInt( $item.find( "input[name^='idrfinanceNeeded']"     ).val(), 10 ) || 0
-            ,   usdFinanceNeeded    =   parseInt( financeNeeded/idr, 10)
-            ;
-            if(usdFinanceNeeded !== 0)
-            {
-                $financeNeeded.val( usdFinanceNeeded );
-            }
-            else
-            {
-                $financeNeeded.empty(  );
-            }
-        }
-
         // Calculate the new total income
         //
         function _calculateTotalIncome( $item )
         {
-            var salesRevenue        = parseInt( $item.find( "input[name^='idrsalesRevenue']"     ).val(), 10 ) || 0
-            ,   operationalCosts    = parseInt( $item.find( "input[name^='idroperationalCosts']" ).val(), 10 ) || 0
-            ,   totalIncome         = parseInt( salesRevenue - operationalCosts, 10)
-            ,   usdSalesRevenue     = parseInt( salesRevenue/idr, 10)
-            ,   usdOperationalCosts = parseInt( operationalCosts/idr, 10)
-            ,   usdTotalIncome      = parseInt( usdSalesRevenue - usdOperationalCosts, 10)
+            var salesRevenue        = parseInt( $item.find( "input[name^='salesRevenue']"     ).val(), 10 ) || 0
+            ,   operationalCosts    = parseInt( $item.find( "input[name^='operationalCosts']" ).val(), 10 ) || 0
+            ,   totalIncome         = salesRevenue - operationalCosts
             ;
 
-            $item.find( ".salesRevenue" ).val( usdSalesRevenue );
-            $item.find( ".operationalCosts" ).val( usdOperationalCosts );
-
-            $item.find( ".totalIncome .idrEdit" ).text( totalIncome );
-            $item.find( ".totalIncome .usdEdit" ).text( usdTotalIncome );
+            $item.find( ".totalIncome .viewEdit" ).text( "$ " + totalIncome );
         }
 
         // Select a certain year, update the selected state, show the correct years and disable/enable the buttons
@@ -978,7 +1025,7 @@
 
             // Hide all and show conditional the new situation
             //
-            //$years.hide();
+            $years.hide();
 
             // Show at least the newly selected year
             //
@@ -1055,7 +1102,7 @@
         // Expose financial summary fucntinos
         //
         financialSummary.selectYear = selectYear;
-        financialSummary.addFinancialSummaryYear   =   addFinancialSummaryYear;
+        financialSummary.addFinancialSummaryYear   =   _addFinancialSummaryYear;
     }
 
     // Convert the form values back into the member object
@@ -1081,6 +1128,7 @@
                     var $input
                     ,   value
                     ,   fp
+                    ,   rp
                     ,   country
                     ;
 
@@ -1088,13 +1136,16 @@
                     {
                         fp  =   f;
 
+                        rp  =   f;
+
                         switch (f)
                         {
-
                             case 'cityTown':
                                 f   =   'address[0].cityTown';
 
                                 fp  =   'address.0.cityTown';
+
+                                rp  =   'city';
 
                             break;
 
@@ -1105,13 +1156,17 @@
 
                                 fp  =   'address.0.country';
 
+                                rp  =   'country';
 
                             break;
 
                             case 'mobile':
-                                f   =   'contactDetail[0].mobile';
+                            case 'landLine':
+                                f   =   'contactDetail[0].' + rp;
 
-                                fp  =   'contactDetail.0.mobile';
+                                fp  =   'contactDetail.0.' + rp;
+
+                                //rp  =   'mobile';
 
                             break;
                         }
@@ -1120,7 +1175,19 @@
 
                         value  = bidx.utils.getElementValue( $input );
 
-                        bidx.utils.setValue( member, "bidxMemberProfile.personalDetails." + fp, value );
+                        if ( bidxConfig.authenticated === false )
+                        {
+                            bidx.utils.setValue( member, rp, value );
+                            //Manual set username to create user first time, backend requirement
+                            if( rp === 'emailAddress')
+                            {
+                                bidx.utils.setValue( member, 'username', value );
+                            }
+                        }
+                        else
+                        {
+                            bidx.utils.setValue( member, "bidxMemberProfile.personalDetails." + fp, value );
+                        }
                     }
                     else
                     {
@@ -1185,7 +1252,7 @@
 
                     // @TODO: make it generic for 'object type' like financialSummaries is
                     //
-                    if ( nest === "financialSummaries" )
+                     if ( nest === "financialSummaries" )
                     {
                         item = {};
                         bidx.utils.setValue( businessSummary, objectPath, item );
@@ -1209,15 +1276,9 @@
 
                             $.each( formFields[ nest ], function( i, f )
                             {
-                                var  $input
-                                ,    value
+                                var $input  = $financialSummariesItem.find( "[name^='" + f + "']" )
+                                ,   value   = bidx.utils.getElementValue( $input )
                                 ;
-
-                                f      =   f.replace('idr', '');
-
-                                $input  = $financialSummariesItem.find( "[name^='" + f + "']" );
-
-                                value   = bidx.utils.getElementValue( $input );
 
                                 if ( value === "" )
                                 {
@@ -1322,6 +1383,118 @@
 
     }
 
+    function _saveRegisterForm( params )
+    {
+        var url
+        ,   entities            =   []
+        ,   businessEntity      =   {}
+        ,   entrepreneurEntity  =   {}
+        ,   postData            =   []
+        ;
+
+        // Update the business summary object
+        //
+        _getFormValues();
+
+        // Make sure the entitytype is set correctly, probably only needed for 'create'
+        //
+        bidx.utils.setValue( businessSummary, "bidxMeta.bidxEntityType", "bidxBusinessSummary" );
+
+        bidx.common.notifySave();
+
+        
+        bidx.utils.log( "About to save Member::: ", member );
+
+        // Save the data to the API
+        //
+        entrepreneurEntity  =   {
+                                    entity:    
+                                    {
+                                        bidxMeta: 
+                                        {
+                                            bidxEntityType:    "bidxEntrepreneurProfile"
+                                        }
+                                    }
+                                };
+
+        businessEntity      =   {
+                                    entity:     businessSummary
+                                ,   tags:       [{
+                                                tagId:      'mekar'
+                                            ,   visibility: "ANYONE"
+                                            ,   groupId:    bidx.common.getCurrentGroupId( "currentGroup" )
+                                            }]
+                                };
+
+        entities.push( entrepreneurEntity, businessEntity );
+
+        postData    =   
+        {
+            member:     member
+        ,   entities:   entities
+        }
+
+        bidx.utils.log( "About to Post data to Register::: ", postData ); 
+
+        bidx.api.call(
+            "register.register"
+        ,   {
+                // Undefined when creating the business summary
+                //
+                groupDomain:            bidx.common.groupDomain
+            ,   data:                   postData
+            ,   success:        function( response )
+                {
+                    bidx.utils.log( "businesssummary.save::success::response", response );
+                    
+                    var businessEntity
+                    ,   businessEntityId
+                    ,   bidxEntityType
+                    ,   responseData    =   bidx.utils.getValue( response, "data" )
+                    ,   groupId         =   bidx.common.getCurrentGroupId
+                    ;
+
+                    //Joining Group Now
+                    //bidx.common.joinGroup( groupId );
+
+                    businessEntity          =   _.find( responseData, function( response )
+                                            {
+                                                bidxEntityType    =   bidx.utils.getValue( response, 'bidxMeta.bidxEntityType');
+
+                                                return bidxEntityType === 'bidxBusinessSummary';
+
+                                            });
+
+                    businessEntityId    =   bidx.utils.getValue(businessEntity, 'bidxMeta.bidxEntityId' );
+
+                    bidx.common.closeNotifications();
+
+                    bidx.common.removeAppWithPendingChanges( appName );
+
+                    document.location.hash = "thankExpressForm";
+
+                    /*_showModal(
+                    {
+                        view  : "fblike"
+                    ,   callback: function()
+                        {
+                            bidx.common.notifyRedirect();
+
+                            url = currentLanguage + "/expressform/" + businessEntityId + "?rs=true";
+
+                            document.location.href = url;
+                        }
+                    } );*/
+                }
+            ,   error:          function( jqXhr )
+                {
+                    params.error( jqXhr );
+
+                    bidx.common.closeNotifications();
+                }
+            }
+        );
+    }
 
     // Beware! validation should have been tested, this is just a function for callin the API for saving
     //
@@ -1362,8 +1535,9 @@
                                             }]
                             };
 
-
         entityData.push( memberData, businessData);
+
+        bidx.utils.log( 'entityDataaaaaa', entityData );
 
         bidx.api.call(
             "entity.bulk"
@@ -1538,7 +1712,6 @@
 
         if( state !== 'edit')
         {
-
             businessSummary     = {};
         }
 
@@ -1649,6 +1822,14 @@
             _showView( "show" );
 
             break;
+
+            case 'thankyou':
+
+            $affixInfoBar.hide();
+            bidx.utils.log("I am in thank you");
+            _showView( "thankyou" );
+
+            break;
             case 'view':
 
                 bidx.utils.log( "ExpressForm::AppRouter::view" );
@@ -1671,6 +1852,8 @@
 
             case "create":
 
+                var curYear         = bidx.common.getNow().getFullYear();
+
                 bidx.utils.log( "ExpressForm::AppRouter::create" );
 
                 _showView( "load" );
@@ -1683,7 +1866,12 @@
 
                 financialSummary.addFinancialSummaryYear( "prev" );
 
-                _populateScreen( );
+                financialSummary.selectYear( curYear - 1);
+
+                if( bidxConfig.authenticated !== false )
+                {
+                    _populateScreen( );
+                }
 
 
             break;
@@ -1700,9 +1888,9 @@
 
                     _init( state );
 
-                    financialSummary.addFinancialSummaryYear( "prev" );
+                    /*financialSummary.addFinancialSummaryYear( "prev" );
 
-                    financialSummary.addFinancialSummaryYear( "prev" );
+                    financialSummary.addFinancialSummaryYear( "prev" );*/
 
                     _populateScreen( );
 
@@ -1772,7 +1960,7 @@
 
         if( _.indexOf(allowedHash, bidxHash) === -1 )
         {
-            initHash            =   "#landingExpressForm";
+            initHash            =   "#createExpressForm";
         }
 
         if( businessSummary )

@@ -411,12 +411,13 @@ class BidxCommon
                         $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
                         $this::$bidxSession[$subDomain]->memberId = $memberId;
                         $this::$bidxSession[$subDomain]->external = ($isActivated) ? true : false;
-                    } else
+                    } 
+                    /*else
                     {
 
                         $redirect = 'auth'; //To redirect /member and not loggedin page to /login
                         $statusMsgId = 1;
-                    }
+                    }*/
 
                     $this::$bidxSession[$subDomain]->expressForm = $isActivated;
 
@@ -619,17 +620,45 @@ class BidxCommon
                 // (single) encoded value. Hence we're calling urldecode(...) just in case, though that
                 // will cause issues if the bare URL actually includes percent characters. (See also
                 // http://serverfault.com/questions/331899/apache-mod-rewrite-double-encodes-query-string)
+ 
+                $getUrl         =   urldecode( $_GET['url'] );
 
-                $redirect_url = $http . $_SERVER['HTTP_HOST'] .$langUrl. '/auth?redirect_to=' . base64_encode ( urldecode($_GET['url']) ) . '#auth/login';
+                /* Why this is needed , Because after login wordpress needs one page redirection to set the cookies and then again redirect back from there through returnAfterLogin */
 
-                clear_bidx_cookies ();
-                $params['domain'] = get_bidx_subdomain ();
-                call_bidx_service ('session', $params, 'DELETE');
-                wp_clear_auth_cookie ();
+                if( preg_match ('/wp-content/i', $getUrl ) 
+                    || preg_match ('/wp-admin/i', $getUrl ) 
+                    || preg_match ('/wp-login/i', $getUrl) )
+                {
+                    $redirect_url   =   $getUrl ;
+    
+                     if( $authenticated != 'true' )
+                     { 
+          
+                         $redirect_url                 = $http . $_SERVER['HTTP_HOST'] .$langUrl. '/auth?redirect_to='.base64_encode (urldecode('/')).'#auth/login';
+                         $_SESSION['returnAfterLogin'] = $getUrl;
+                         wp_clear_auth_cookie ( );
 
-                // This clears the full session, except for any post-login redirect setting, so clear that too.
-                $this::clearWpBidxSession();
-                unset( $_SESSION['returnAfterLogin'] );
+                        //Clear Session and Static variables (except for any redirect setting)
+                        $this::clearWpBidxSession();
+
+                        $this::$staticSession = NULL;
+                        unset ($this::$bidxSession[$subDomain]);
+                    }
+
+                } 
+                else
+                {
+                    $redirect_url   =   $$http . $_SERVER['HTTP_HOST'] .$langUrl. '/auth?redirect_to=' . base64_encode ( urldecode($_GET['url']) ) . '#auth/login';;                
+
+                    clear_bidx_cookies ();
+                    $params['domain'] = get_bidx_subdomain ();
+                    call_bidx_service ('session', $params, 'DELETE');
+                    wp_clear_auth_cookie ();
+
+                    // This clears the full session, except for any post-login redirect setting, so clear that too.
+                    $this::clearWpBidxSession();
+                    unset( $_SESSION['returnAfterLogin'] );
+                }
 
                 break;
 
@@ -638,9 +667,10 @@ class BidxCommon
 
             if ( $authenticated == 'false' )
             {
-                if ( $expressform == 'fb' || $expressform == 'bidx' )
+                if ( $expressform == 'fb'  // || $expressform == 'bidx' 
+                    )
                 {
-                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .$langUrl. '/auth?redirect_to=' . base64_encode ($current_url);
+                    $redirect_url = $http. $_SERVER['HTTP_HOST'] .$langUrl. '/auth?redirect_to=' . base64_encode ($current_url);
 
                     if( $expressform == 'fb')
                     {
@@ -665,7 +695,7 @@ class BidxCommon
             case 'mail' :
                 if ($authenticated == 'false') {
 
-                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .$langUrl. '/auth?redirect_to=' . base64_encode ($current_url) . '/#auth/login';
+                    $redirect_url = $http . $_SERVER['HTTP_HOST'] .$langUrl. '/auth?redirect_to=' . base64_encode ($current_url) . '/#auth/login';
                     wp_clear_auth_cookie ();
 
                     //Clear Session and Static variables (except for any redirect setting)
@@ -709,7 +739,9 @@ class BidxCommon
                 }
         }
 
-        if ($redirect_url) {
+        if ($redirect_url) 
+        {
+
             header ("Location: " . $redirect_url);
             exit;
         }

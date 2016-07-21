@@ -12,18 +12,6 @@ class businesssummary
         'bidx-location', 'bidx-chosen', 'bidx-connect', 'jquery-fitvids', 'jquery-raty'
     );
 
-    static $postData = array(
-    "Auth"            => array( 'hash' => 'OTA2NnwxMzUxfGlyYXR4ZUBjbGVhbmNvb2tzdG92ZXMuY29t')
-,   'WorkflowEvent'   => array( 'created' => '2012-11- 02 18:00:49')
-,   'WorkflowTrigger' => array( 'id' => 3, 'workspace_id' => 1, 'type' => 4, 'name' => 'Form saved', 'description' => 'Form saved', 'created' => '2012-11- 02 17:59:59', 'modified' => '2012-11- 02 17:59:59')
-,   'WorkflowAction'  => array( 'id' => '1', 'workspace_id' => 1, 'type' => 6, 'name' => 'Push to API', 'description' => 'Push to API', 'created' => '2012-11- 02 17:58:55', 'modified' => '2012-11- 02 17:58:55')
-,   'Record'          => array( 'id' => '1', 'workspace_id' => 1, 'record_folder_id' => 0, 'name' => 'Test Record Name', 'description' => '','is_deleted' => 0, 'deleted_date' => '', 'created' => '2012-11- 02 18:00:35', 'modified' => '2012-11- 02 18:00:35')
-,   'FormSubmission'  => array( 'id' => '777', 'form_id' => 1, 'record_id' => 1, 'user_id' => 1,'is_deleted' => 0, 'deleted_date' => '', 'created' => '2012-11- 02 18:00:49', 'modified' => '2012-11- 02 18:00:49', 'user_type' => 'normal')
-,   'FormResponse'    => array( array( 'id' => 1, 'form_submission_id' => 1, 'form_field_id' => 1, 'value' => 3074953 ),
-                                array( 'id' => 2, 'form_submission_id' => 1, 'form_field_id' => 2, 'value' => 3472637 )
-                              )
-);
-
     /**
     * Constructor
     */
@@ -55,41 +43,7 @@ class businesssummary
         wp_register_script('businesssummary', plugins_url('static/js/businesssummary.js', __FILE__), self::$deps, '20130501', TRUE);
     }
 
-    function processEndpoint()
-    {
-        $postData   =   $_POST;
-        
-        if( !empty($postData) )
-        {
-            $postData                   =   self :: $postData; // example test
-            $hash                       =   base64_decode( $postData['Auth']['hash'] );
-            $formSubmissionId           =   $postData['FormSubmission']['id'];
-            $data                       =   explode( "|" , $hash );
-            $businessSummaryId          =   $data[0]; 
-            $businessSummaryObj         =   new BusinessSummaryService( );
-
-            //Get bp summary details
-            $businessSummaryResults     =   $businessSummaryObj->getSummaryDetails( $businessSummaryId );
-            $businessSummaryResult        =   $businessSummaryResults->data;
-
-            $businessSummaryResult->thirdPartyID  =   $formSubmissionId;
-
-            //Post bp summary details
-            $response                   =   $businessSummaryObj->postSummaryDetails( $businessSummaryId, $businessSummaryResult );
-
-
-          /*  echo "<pre>"; 
-            print_r($data); 
-            print_r($businessSummaryResult); 
-            print_r($response); 
-            echo "</pre>"; 
-            exit;*/
-
-
-        }        
-    }
-
-    /**
+     /**
     * Load the content.
     * Dynamic action needs to be added here
     * @param $atts
@@ -104,7 +58,7 @@ class businesssummary
         /* 2. Service Business Summary (entity)*/
         require_once( BIDX_PLUGIN_DIR .'/../services/businesssummary-service.php' );
 
-        $this->processEndpoint( );//If End point through post Ex Wizehives communication
+       // $this->processEndpoint( );//If End point through post Ex Wizehives communication
 
         $sessionData = BidxCommon::$staticSession;
 

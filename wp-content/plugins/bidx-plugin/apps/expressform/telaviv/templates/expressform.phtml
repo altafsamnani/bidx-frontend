@@ -47,7 +47,7 @@
 
 
 <!-- *****View ***** -->
-<div class="expressForm box-border top-margin-lineheight" id="expressForm" data-bsid="<?php echo $businessSummaryId; ?>" data-ownerid="<?php echo $ownerId; ?>" >
+<div class="expressForm box-border top-margin-lineheight telaviv" id="expressForm" data-bsid="<?php echo $businessSummaryId; ?>" data-ownerid="<?php echo $ownerId; ?>" >
     <!--<h1><?php echo _e('Usaha Pintar', 'bidxplugin')?></h1>-->
 <?php
 
@@ -135,8 +135,11 @@
     }
     else
     {
-        $this->render( $this->folderLabel.'landing.phtml');
+        //$this->render( $this->folderLabel.'landing.phtml');
+        $this->render( $this->folderLabel.'thankyou.phtml');
     }
+
+
 ?>
 <!-- LOAD -->
 <div class="view viewLoad main-padding">
@@ -168,7 +171,25 @@
                             <label><?php echo _e('Last name','bidxplugin') ?></label>
                             <input type="text" class="form-control" name="personalDetails.lastName" placeholder="<?php echo _e('Enter your last name','bidxplugin') ?>" />
                     </div>
+                </div>
+                <div class="row">
+                     <div class="form-group col-sm-6">
+                        <label><?php echo _e('Email','bidxplugin') ?></label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                            <input type="email" class="form-control" name="personalDetails.emailAddress" placeholder="<?php echo _e('Enter your email','bidxplugin') ?>" />
+                        </div>
+                    </div>  
+                    <div class="form-group col-sm-6" >
+                        <label><?php _e('LinkedIn profile','bidxplugin'); ?></label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-linkedin-square"></i></span>
+                            <input type="text" class="form-control" name="personalDetails.linkedIn" />
+                        </div>
+                    </div>                       
+                </div> 
 
+                 <div class="row">             
                     <div class="form-group col-sm-6">
                         <label><?php echo _e('Mobile number','bidxplugin') ?></label>
                         <div class="input-group">
@@ -177,19 +198,29 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-6">
-                        <label><?php echo _e('Email','bidxplugin') ?></label>
+                        <label><?php _e('Landline','bidxplugin'); ?></label>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                            <input type="email" class="form-control" name="personalDetails.emailAddress" placeholder="<?php echo _e('Enter your email','bidxplugin') ?>" />
+                            <span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+                            <input type="text" class="form-control" name="personalDetails.contactDetail[0].landLine" placeholder="<?php echo _e('Enter your landline number','bidxplugin') ?>"/>
                         </div>
+                    </div>   
+                 </div> 
+                 <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label><?php _e('City','bidxplugin'); ?></label>
+                        <input type="text" class="form-control" name="personalDetails.address[0].cityTown" placeholder="<?php echo _e('Enter the location of your business', 'bidxplugin') ?>">                        
+                    </div> 
+                    <div class="form-group col-sm-6">
+                        <label><?php _e('Country','bidxplugin'); ?></label>
+                        <select name="personalDetails.address[0].country" ></select>
                     </div>
-
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label><?php _e('Gender','bidxplugin'); ?></label>
-
+                 </div>
+                 <div class="row">                          
+                    <div class="form-group col-sm-6">
+                        <label><?php _e('Gender','bidxplugin'); ?></label>
+                        <div class="input-group">
                             <div class="radio genderRadio">
-                                <input type="radio" value="m" id="personalDetailsM" name="personalDetails.gender" data-toggle="radio" />
+                                <input type="radio" value="m" id="personalDetailsM" name="personalDetails.gender" data-toggle="radio" checked/>
                                 <label for="radio-personalDetailsM"><span></span><?php _e('Male','bidxplugin'); ?></label>
                             </div>
 
@@ -197,16 +228,9 @@
                                 <input type="radio" value="f" id="personalDetailsF" name="personalDetails.gender" data-toggle="radio" />
                                 <label for="radio-personalDetailsF"><span></span><?php _e('Female','bidxplugin'); ?></label>
                             </div>
-
                         </div>
-
-                    </div>
-                     <div class="col-sm-6">
-                        <label><?php _e('City','bidxplugin'); ?></label>
-                        <input type="text" class="form-control" name="personalDetails.address[0].cityTown" placeholder="<?php echo _e('Enter the location of your business', 'bidxplugin') ?>">
-                        <input type="hidden" name="personalDetails.address[0].country" value=<?php echo $config['country'];?> />
-                    </div>
-
+                    </div> 
+                                       
                 </div>
             </form>
         </div>
@@ -220,55 +244,26 @@
                         <label><?php _e('Name of your business','bidxplugin'); ?></label>
                         <input type="text" class="form-control" name="name">
                     </div>
-                    <!-- Logo -->
-                    <div class="col-sm-6 bsLogo">
-                        <label><?php _e('Logo','bidxplugin'); ?></label>
-                        <div class="logoContainer">
-                            <div class="icons-rounded"><i class="fa fa-suitcase text-primary-light"></i></div>
-                        </div>
-                        <br>
-                        <div class="logoBtns">
-                            <a href="#addLogo" data-toggle="modal" class="btn btn-primary"><?php _e('Select'); ?></a>
-                            <a href="#removeLogo" class="btn btn-primary hide"><?php _e('Remove'); ?></a>
-                        </div>
-
-                        <div class="addLogoImage modal fade">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h3><?php _e('Check the file you want to use as your Logo', 'bidxplugin' ); ?></h3>
-                                    </div>
-                                    <div class="modal-body">
-                <?php
-                                        // Media app will only be inserted once, this is by design!
-                                        //
-                                        echo do_shortcode( '[bidx app="media"]' );
-                ?>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></button>
-                                        <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-sm-6">
-                        <label><?php _e('Describe your business ','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 900 characters)','bidxplugin'); ?></small></label>
-                        <textarea name="summary" class="form-control" placeholder="<?php echo _e('Enter the description of your business', 'bidxplugin'); ?>"></textarea>
-                    </div>
-                    <!-- Social impact -->
+                      <!-- Stage of business -->
                     <div class="form-group col-sm-6">
                         <label><?php _e('Stage of business','bidxplugin'); ?></label>
                         <select name="stageBusiness"></select>
                     </div>
                     <div class="col-sm-12">
+                        <label><?php _e('Describe your business ','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 900 characters)','bidxplugin'); ?></small></label>
+                        <textarea name="summary" class="form-control" placeholder="<?php echo _e('Enter the description of your business', 'bidxplugin'); ?>"></textarea>
+                    </div>                                    
+                    <div class="col-sm-12">
                         <div class="industrySectors">
                                 <label><?php _e('Select the industries that apply to your business','bidxplugin'); ?></label>
                         </div>
                     </div>
+                    <!-- Country operation -->
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('Select your countries of business','bidxplugin'); ?></label>
+                        <select name="countryOperation" multiple></select>
+                    </div>
+                    
                     <div class="form-group col-sm-6">
                         <label><?php _e('Website','bidxplugin'); ?></label>
                         <div class="input-group">
@@ -286,6 +281,41 @@
                 </div>
             </form>
         </div>
+        <!-- Mentoring Details -->
+        <div>
+            <h2><?php echo _e('Mentoring details','bidxplugin') ?></h2>
+            <blockquote class="alert-info"><?php _e('A mentor can help you ​to ​complete and improve your business proposal. ​Please indicate here if you would like the help of a mentor and, if yes, ​select the areas of expertise where you would like support.', 'bidxplugin')?></blockquote>
+            <form id="formExpressForm-MentoringDetails">
+                <div class="row">              
+                    <!-- Mentor Advisory? -->
+                    <div class="form-group col-sm-6">
+                        <label><?php _e('Do you need a mentor to advise you?​','bidxplugin'); ?></label>
+                        <div class="controls">
+                            <div class="radio">
+                                <input type="radio" value="true" id="radio-AdvisoryYes" name="mentorAdvisory" data-toggle="radio" />
+                                <label for="radio-AdvisoryYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="false" id="radio-AdvisoryNo" name="mentorAdvisory" data-toggle="radio" />
+                                <label for="radio-AdvisoryNo"><span></span><?php _e('No','bidxplugin'); ?></label>
+                            </div>
+                        </div>
+                    </div>                 
+                </div>
+                <div class="row toggle toggle-mentorAdvisory">               
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('In which areas of expertise do you need support?','bidxplugin'); ?></label>
+                        <select name="expertiseNeeded" multiple></select>
+                    </div>                    
+                </div>
+                <div class="row toggle toggle-mentorAdvisory">          
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('Describe the challenges facing your business, with which you would like the support of a mentor','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 300 characters)','bidxplugin'); ?></small></label>
+                        <textarea type="text" class="form-control" name="expertiseNeededDetail"></textarea>
+                    </div>                 
+                </div>
+            </form>                               
+        </div><!-- /Mentoring Details -->
         <div>
             <form id="formExpressForm-FinancialDetails">
                 <h2><?php echo _e('Financial details','bidxplugin') ?></h2>
@@ -293,7 +323,7 @@
                     <strong>
                         <?php _e('Your financial data is guarded by us and will never be disclosed without your consent!','bidxplugin')?>
                     </strong>&nbsp;
-                    <?php _e('Use this section to provide a general overview of your financial position. Please be aware that we store all financial data in US Dollars. For your convenience we have included a currency converter that allows you to import your financial data directly in Rupiah.','bidxplugin')?>
+                    <?php _e('Use this section to provide a general overview of your financial position. Please be aware that we store all financial data in US Dollars.','bidxplugin')?>
                 </blockquote>
                 <div class="row">
                 <!-- Financial details -->

@@ -93,8 +93,6 @@ class BusinessSummaryService extends APIbridge
 
     function getWizehivesSubmissionData ( $memberData, $bpData )
     {
-        
-
         //Call entity API
         $results                    =   array( );
         $member                     =   $memberData->member;
@@ -105,13 +103,20 @@ class BusinessSummaryService extends APIbridge
         $address1                   =   $personalDetails->address[0]->street.' '.$personalDetails->address[0]->streetNumber; 
 
 
+
         $id                         =   $userId;
         $first                      =   $personalDetails->firstName;
         $last                       =   $personalDetails->lastName;
         $email                      =   $userEmail;
 
-        $businessSummaryId          =   $bpData->bidxMeta->bidxEntityId;
+        $conactDetail               =   $personalDetails->contactDetail[0];
+        $landline                   =   $conactDetail->landLine;
+        $mobile                     =   $contactDetail->mobile;
+        $nationality                =   $personalDetails->nationality;
+        $gender                     =   ( $personalDetails->gender == 'f' ) ? 'female' : 'male';
 
+
+        $businessSummaryId          =   $bpData->bidxMeta->bidxEntityId;
         $wizehivesUrl               =   $this->submitUrl;
 
         $btnLabel                   =   __('Apply to GACC', 'bidxplugin');
@@ -142,6 +147,7 @@ class BusinessSummaryService extends APIbridge
            // $wizehiveSubId  =   
         }
 
+
         $wizehiveSlug       =   get_option('bidx-wizehive-slug');
         $actionUrl          =   $wizehivesUrl.'/'.$wizehiveSlug.$integrationSubmissionIdUrl;
 
@@ -167,6 +173,10 @@ class BusinessSummaryService extends APIbridge
          'first'            =>  $first,
          'last'             =>  $last,
          'email'            =>  $email,
+         'landline'         =>  $landline,
+         'mobile'           =>  $mobile,
+         'gender'           =>  $gender,
+         'nationality'      =>  $nationality,
          'address1'         =>  $address1,
          'address2'         =>  '',
          'city'             =>  $personalDetails->address[0]->cityTown,
@@ -177,18 +187,13 @@ class BusinessSummaryService extends APIbridge
          'business'         =>  $wizehivesBpMapping 
         );
 
-
-
-        /*echo "<pre>";
-        print_r($wizehivesFormMapping);
-        echo "</pre>"; */
-
         $timestamp = time();
         
         $token_data = $id . '|' . $email . '|' . $timestamp;
         
         $token_key = '2238c1b2da7541f88ba560bc81fd7bff';
-        $token = hash_hmac('sha1', $token_data , $token_key);       
+        $token = hash_hmac('sha1', $token_data , $token_key);     
+
 
         $results            =   array( 
                                 'actionurl' =>  $actionUrl,
@@ -199,6 +204,7 @@ class BusinessSummaryService extends APIbridge
                                 'token'     =>  $token,
                                 'btnLabel'  =>  $btnLabel
                                 ); 
+
         return $results;
     }
 
@@ -213,29 +219,32 @@ class BusinessSummaryService extends APIbridge
     {
         //Call entity API
         $tagResults     =   false;
-        foreach( $bidxBusinessSummary as $businessSummaryId )
-        {
-            //$businessSummaryId  =   9066;
-            $result             =   $this->callBidxAPI ($this->apiUrl . $businessSummaryId, array (), 'GET');
-            $bidxMeta           =   $result->data->bidxMeta;
-
-            if(isset($bidxMeta->tagAssignmentSummary))
+        if( !empty( $bidxBusinessSummary ) )
+        {    
+            foreach( $bidxBusinessSummary as $businessSummaryId )
             {
-                $tagAssignmentSummary = $bidxMeta->tagAssignmentSummary;
-                foreach( $tagAssignmentSummary as $valueTag)
+                //$businessSummaryId  =   9066;
+                $result             =   $this->callBidxAPI ($this->apiUrl . $businessSummaryId, array (), 'GET');
+                $bidxMeta           =   $result->data->bidxMeta;
+
+                if(isset($bidxMeta->tagAssignmentSummary))
                 {
-                    if($valueTag->tagId === 'mekar')
+                    $tagAssignmentSummary = $bidxMeta->tagAssignmentSummary;
+                    foreach( $tagAssignmentSummary as $valueTag)
                     {
-                        $tagResults     =   $result;
+                        if($valueTag->tagId === 'mekar')
+                        {
+                            $tagResults     =   $result;
+                            break;
+                        }
+                    }
+
+                    if( $tagResults )
+                    {
                         break;
                     }
-                }
 
-                if( $tagResults )
-                {
-                    break;
                 }
-
             }
         }
 
