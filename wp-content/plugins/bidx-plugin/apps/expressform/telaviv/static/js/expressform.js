@@ -84,7 +84,7 @@
             ,   'cityTown'
             ,   'country'
             ,   'linkedIn'
-            ,   'landLine'
+            ,   'landline'
             ]
         }
     ,   "generalOverview":
@@ -180,7 +180,7 @@
                         switch( f )
                         {
                             case 'mobile':
-                            case 'landLine':
+                            case 'landline':
 
                             f   =   'contactDetail[0].' + rp;
 
@@ -437,7 +437,7 @@
                     phone:       true
                 ,   minlength:   9
                 }
-            ,   "personalDetails.contactDetail[0].landLine":
+            ,   "personalDetails.contactDetail[0].landline":
                 {
                     phone:       true
                 ,   minlength:   9
@@ -1161,7 +1161,7 @@
                             break;
 
                             case 'mobile':
-                            case 'landLine':
+                            case 'landline':
                                 f   =   'contactDetail[0].' + rp;
 
                                 fp  =   'contactDetail.0.' + rp;
