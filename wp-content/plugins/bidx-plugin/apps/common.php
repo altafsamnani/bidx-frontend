@@ -398,6 +398,7 @@ class BidxCommon
                     $memberId           = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
                     $businessSummaryId  = ( $id ) ? $id : NULL;
                     $isActivated        = get_option('bidx-expressform');
+                    $this::$bidxSession[$subDomain]->external = ($isActivated) ? true : false;
 
                     if ( $businessSummaryId )
                     {
@@ -409,8 +410,7 @@ class BidxCommon
                     {
                         $data->memberId = $memberId;
                         $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
-                        $this::$bidxSession[$subDomain]->memberId = $memberId;
-                        $this::$bidxSession[$subDomain]->external = ($isActivated) ? true : false;
+                        $this::$bidxSession[$subDomain]->memberId = $memberId;                        
                     } 
                     /*else
                     {

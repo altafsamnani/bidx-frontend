@@ -1,6 +1,6 @@
 <?php
 
-$businessSummary = $this->data;
+$businessSummary = $this->businessSummaryData;
 
 $financialSummariesItem = <<<EOT
     <div class="financialSummariesItem {{extraItemClasses}}" data-year="{{year}}">
@@ -112,7 +112,11 @@ $financialSummariesItemTranslations = array(
     '{{lblDeleteYear}}'             => __('Delete year','bidxplugin')
 );
 
-if ( $financialSummaries ) {
+
+
+if ( $financialSummaries ) 
+{
+  
 
     $years      = get_object_vars( $financialSummaries );
 

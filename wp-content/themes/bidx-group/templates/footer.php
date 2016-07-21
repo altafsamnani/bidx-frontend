@@ -8,6 +8,9 @@
         $has_social = true;
         $rightSideFooterColSm = 'col-sm-8';
     }
+
+if( !$session->external )
+{
 ?>
 
 <footer>
@@ -60,6 +63,10 @@
         </div>
     </div>
 </footer>
+<?php 
+} 
+?>
+
 
 <div class="loginModal modal fade">
     <div class="modal-dialog">
