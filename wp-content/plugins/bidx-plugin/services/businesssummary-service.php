@@ -27,6 +27,8 @@ class BusinessSummaryService extends APIbridge
 
     private $editUrl    =   'https://app.wizehive.com/appform/edit';
 
+    private $printUrl   =   'https://app.wizehive.com/appform/print';
+
     public function __construct ()
     {
         parent :: __construct ();
@@ -124,9 +126,10 @@ class BusinessSummaryService extends APIbridge
         $integrationObj             =   isset( $memberData->member->integrations ) ? $memberData->member->integrations : false ;
 
         $integrations               =  (array) $integrationObj;
-        $integrations               =  NULL;
-
-        /*if( $integrations ) // TEST
+        
+        /*
+        $integrations               =  NULL; 
+        if( $integrations ) // TEST
         {
             $integrations['wizehive.submission.id']     =   '3396837';  
             $integrations['wizehive.businessplan.id']   =   '10175';  
@@ -135,20 +138,30 @@ class BusinessSummaryService extends APIbridge
 
 
         $integrationSubmissionId    =  $integrations['wizehive.submission.id']   ;
+
         $integrationsId             =  $integrations['wizehive.businessplan.id'] ;
+
         $integrationStatus          =  $integrations['wizehive.submission.final'];
+
         $integrationSubmissionIdUrl =  ($integrationSubmissionId) ? '/'.$integrationSubmissionId : '';
         
-
         if( $integrationsId == $businessSummaryId  )
-        {
-            $wizehivesUrl   =   $this->editUrl;
-            $btnLabel       =   ( !$integrationStatus ) ? 'Submit to GACC' : 'Print GACC' ;
-           // $wizehiveSubId  =   
+        { 
+            $btnLabel       =  'Print GACC' ;
+
+            $wizehivesUrl   =  $this->printUrl;
+
+            if( $integrationStatus === 'false' ) 
+            {
+                $btnLabel       =   'Submit to GACC' ;
+
+                $wizehivesUrl   =    $this->editUrl;
+            }
         }
 
 
         $wizehiveSlug       =   get_option('bidx-wizehive-slug');
+
         $actionUrl          =   $wizehivesUrl.'/'.$wizehiveSlug.$integrationSubmissionIdUrl;
 
         $wizehivesBpMapping   =   array(

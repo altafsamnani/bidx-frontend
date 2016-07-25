@@ -89,7 +89,7 @@ class member {
 			   /* echo "<pre>"; 
 			    print_r($view->data); 
 			    echo "</pre>"; 
-			    exit; */
+			    exit;*/ 
 
 			    $sessionSvc = new SessionService( );
 
