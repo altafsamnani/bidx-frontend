@@ -8,4 +8,5 @@
     <Item value="ratingUserLabel">Your rating</Item>
     <Item value="ratingUserLabelNone">Rate this plan</Item>
     <Item value="summaryDeletion">You are about to delete this business and lose all its content. This action is irreversible. Are you sure?</Item>
+    <Item value="errorRequiredFields">Please enter all required fields in form, errors have been highlighted.</Item>
 </I18N>

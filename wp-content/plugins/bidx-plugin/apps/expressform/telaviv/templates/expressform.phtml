@@ -115,13 +115,21 @@
              ?>
 
             <div class="editControlsContainer">
+                
                 <div class="editControls pull-right">
-
+                    
                     <!-- SHOW -->
                     <div class="view viewShow"></div>
 
                     <!-- EDIT, conditionally filled by the app -->
                     <div class="view viewEdit btn-group"></div>
+                </div>
+
+                <!-- ERROR -->
+                <div class="view viewError pull-right main-padding">
+                    <div class="alert alert-danger">
+                        <p class="errorMsg"></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -145,14 +153,6 @@
 <div class="view viewLoad main-padding">
     <div class="alert alert-info text-center">
         <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Retrieving information...','bidxplugin'); ?>
-    </div>
-</div>
-
-
-<!-- ERROR -->
-<div class="view viewError main-padding">
-    <div class="alert alert-warning">
-        <p class="errorMsg"></p>
     </div>
 </div>
 
@@ -249,15 +249,17 @@
                         <label><?php _e('Stage of business','bidxplugin'); ?></label>
                         <select name="stageBusiness"></select>
                     </div>
-                    <div class="col-sm-12">
+                    <div class="form-group col-sm-12">
                         <label><?php _e('Describe your business ','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 900 characters)','bidxplugin'); ?></small></label>
                         <textarea name="summary" class="form-control" placeholder="<?php echo _e('Enter the description of your business', 'bidxplugin'); ?>"></textarea>
-                    </div>                                    
-                    <div class="col-sm-12">
-                        <div class="industrySectors">
-                                <label><?php _e('Select the industries that apply to your business','bidxplugin'); ?></label>
-                        </div>
-                    </div>
+                    </div> 
+                </div>
+                
+                 <div class="industrySectors">
+                    <label><?php _e('Select the industries that apply to your business','bidxplugin'); ?></label>
+                </div>
+                    
+                <div class="row">
                     <!-- Country operation -->
                     <div class="form-group col-sm-12">
                         <label><?php _e('Select your countries of business','bidxplugin'); ?></label>
@@ -290,7 +292,7 @@
                     <!-- Mentor Advisory? -->
                     <div class="form-group col-sm-6">
                         <label><?php _e('Do you need a mentor to advise you?​','bidxplugin'); ?></label>
-                        <div class="controls">
+                        <div class="controls mentorAdvice">
                             <div class="radio">
                                 <input type="radio" value="true" id="radio-AdvisoryYes" name="mentorAdvisory" data-toggle="radio" />
                                 <label for="radio-AdvisoryYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
@@ -332,16 +334,20 @@
                             $this->render( $this->folderLabel . 'financial.phtml');
                         ?>
                     </div>
-                    <!-- ERROR -->
-                    <div class="view viewError alert alert-warning">
-                        <p class="errorMsg"></p>
-                    </div>
+                    
                 </div>
             </form><!-- /Financial details -->
         </div>
+        <hr>
+        <blockquote class="alert-warning">
+<?php
+            $url = '/terms-of-service';
+            $link = sprintf( __( 'By clicking on Apply button you automatically accept the <a target="_blank" href="%s">Terms of Service</a>.', 'bidxplugin' ), esc_url( $url ) );
+            echo $link;
+?>
+        </blockquote>
         <div class="editControlsContainer hide">
             <div class="editControls pull-right">
-
                 <!-- SHOW -->
                 <div class="view viewShow"></div>
 

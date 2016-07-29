@@ -406,6 +406,32 @@
     // Setup initial form validation
     // f   =   'contactDetail[0].' + rp;
 
+    function _doValidate()
+    {
+        // Only allow saving when all the sub forms are valid
+        //
+        var errorSave
+        ,   errorMsg
+        ,   anyInvalid = false;
+
+        if( forms )
+        {
+            bidx.utils.log('forms', forms);
+            $.each( forms, function( name, form )
+            {
+                
+                if ( !form.$el.valid() )
+                {
+                     anyInvalid = true;
+                }
+            } );
+            if( !anyInvalid )
+            {
+                $views.filter( ".viewError" ).hide();
+            }
+        }
+    }
+
     function _setupValidation()
     {
         forms.personalDetails.$el.validate(
@@ -451,6 +477,10 @@
             {
                 _doSave();
             }
+        ,   onkeyup: function()
+            {
+                _doValidate()
+            }
         } );
 
         forms.generalOverview.$el.validate(
@@ -459,25 +489,7 @@
         ,   debug:          false
         ,   rules:
             {
-                name:
-                {
-                    required:               true
-                ,   maxlength:              30
-                }
-            ,   summary:
-                {
-                    required:               true
-                ,   maxlength:              900
-                }
-            ,   "website":
-                {
-                    urlOptionalProtocol:        true
-                }
-            ,   countryOperation:
-                {
-                    required:      true
-                }
-            ,   "focusIndustrySector[0]mainSector":
+                "focusIndustrySector[0]mainSector":
                 {
                     required:      true
                 }
@@ -489,6 +501,24 @@
                 {
                     required:      true
                 }
+            ,   name:
+                {
+                    required:               true
+                ,   maxlength:              30
+                }
+            ,   summary:
+                {
+                    required:               true
+                ,   maxlength:              900
+                }
+            ,   website:
+                {
+                    urlOptionalProtocol:        true
+                }
+            ,   countryOperation:
+                {
+                    required:      true
+                }
             }
         ,   messages:
             {
@@ -497,6 +527,10 @@
         ,   submitHandler:          function( e )
             {
                 _doSave();
+            }
+        ,   onkeyup: function()
+            {
+                _doValidate()
             }
         } );
 
@@ -532,7 +566,11 @@
             {
                 _doSave();
             }
-        } );
+        ,   onkeyup: function()
+            {
+                _doValidate()
+            }
+        } );  
 
         // Financial Details
         //
@@ -560,6 +598,10 @@
         ,   submitHandler:        function( e )
             {
                 _doSave();
+            }
+        ,   onkeyup: function()
+            {
+                _doValidate()
             }
         } );
     }
@@ -647,15 +689,20 @@
         // Only allow saving when all the sub forms are valid
         //
         var errorSave
+        ,   errorMsg
         ,   anyInvalid = false;
 
         if( forms )
         {
+            bidx.utils.log('forms', forms);
             $.each( forms, function( name, form )
             {
+                
                 if ( !form.$el.valid() )
                 {
+                    errorMsg   =     bidx.i18n.i( "errorRequiredFields", appName );
                     bidx.utils.warn( "[ExpressForm] Invalid form", form.$el, form.$el.validate().errorList );
+                    _showError( errorMsg );
 
                     anyInvalid = true;
                 }
@@ -1775,6 +1822,15 @@
             }
             $modal.modal('hide');
         }
+    };
+
+    // Private functions
+    //
+    var _showError = function( msg )
+    {
+        var v   =   'error';
+        $views.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
+        $views.filter( ".viewError" ).show();
     };
 
     var _showView = function( v )

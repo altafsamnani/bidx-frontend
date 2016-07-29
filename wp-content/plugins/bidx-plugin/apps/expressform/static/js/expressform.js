@@ -552,7 +552,8 @@
     {
         // Only allow saving when all the sub forms are valid
         //
-        var anyInvalid = false;
+        var errorMsg
+        ,   anyInvalid = false;
 
         if ( bidxConfig.authenticated === false )
         {
@@ -565,7 +566,9 @@
             {
                 if ( !form.$el.valid() )
                 {
+                    errorMsg   =     bidx.i18n.i( "errorRequiredFields", appName );
                     bidx.utils.warn( "[ExpressForm] Invalid form", form.$el, form.$el.validate().errorList );
+                    _showError( errorMsg );
 
                     anyInvalid = true;
                 }
@@ -1602,6 +1605,14 @@
             }
             $modal.modal('hide');
         }
+    };
+
+    // Private functions
+    //
+    var _showError = function( msg )
+    {
+        $views.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
+        _showView( "error" );
     };
 
     var _showView = function( v )
