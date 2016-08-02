@@ -23,7 +23,27 @@ $loggedInUserId     = $sessionData->data->id;
 
 $competitionData    = $this->competitionData;
 
-$wizehivesFormData = $this->wizehivesFormData;
+$wizehivesFormData  = $this->wizehivesFormData;
+
+$memberData         = $this->memberData;
+
+$integrationObj     = isset( $this->memberData->member->integrations ) ? $this->memberData->member->integrations : false ;
+
+$integrations       = (array) $integrationObj;
+
+//$integrations       = NULL;
+
+/*echo "<pre>"; 
+print_r($wizehivesFormData); 
+echo "</pre>"; 
+exit; */
+
+/*if( $integrations ) // TEST
+{
+    $integrations['wizehive.submission.id']     =   '3396837';  
+    $integrations['wizehive.businessplan.id']   =   '10175';  
+    $integrations['wizehive.submission.final']  =   false;  
+}*/
 
 // if a user has an investorProfile, he is allowed to request access to a business summary
 //
@@ -294,16 +314,24 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
 ?>
                         <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><i class="fa fa-eye fa-big fa-above"></i><?php echo _e( 'Request access', 'bidxplugin' ); ?></a>
             <?php   }
-                    if( $this->isWizehive )
-                    { ?>
-                        <form id="wizehive-sso" method="post" action="https://app.wizehive.com/appform/display/SPARKFundApp">
-                             <input type="hidden" name="user" value="<?php echo $wizehivesFormData['user']; ?>" />
+                     
+                    if( $this->isWizehive && ( $ownerId == $loggedInUserId ) )
+                    { 
+                       
+                        if( !$integrations || ($integrations && $integrations['wizehive.businessplan.id'] == $businessSummaryId) )
+                        {
+                                                                
+                        ?>
+                        <form id="wizehive-sso" method="post" action="<?php echo $wizehivesFormData['actionurl']; ?>">
+                             <input type="hidden" name="user" value="<?php echo $wizehivesFormData['user']; ?>" />                             
                              <input type="hidden" name="timestamp" value="<?php echo $wizehivesFormData['timestamp']; ?>" />
                              <input type="hidden" name="token" value="<?php echo $wizehivesFormData['token']; ?>" />
-                             <input type="hidden" name="form" value="<?php print( $wizehivesFormData['form']); ?>" />
-                             <button type="submit" id="wizehive" class="btn btn-success btn-wizehive margin-half-left"><i class="fa fa-globe fa-big fa-above"></i> <?php _e( 'Apply to GACC', 'bidxplugin' ); ?></button>
+                             <input type="hidden" name="form" value="<?php print( $wizehivesFormData['form']); ?>" />                             
+                             <button type="submit" id="wizehive" class="btn btn-success btn-wizehive margin-half-left" value="Send"><i class="fa fa-globe fa-big fa-above"></i> <?php echo $wizehivesFormData['btnLabel']; ?></button>   
+                                                   
                         </form>
-            <?php   }  ?> 
+            <?php      } 
+                    } ?> 
                 </div>
             </div>
 

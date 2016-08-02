@@ -34,6 +34,18 @@
 
     }, "This field is required" );
 
+    //Validate phone number
+    $.validator.addMethod( "phone", function(value, element, param)
+    {
+        if ( this.optional( element ))
+        {
+            return true;
+        }
+
+        return /^[0-9-+]+$/.test( value );
+
+    }, "Please enter valid phone number" );
+
     // https://support.skype.com/en/faq/FA94/what-is-a-skype-name
     //
     // Your Skype Name must have between 6 and 32 characters. It must start with a letter and can contain only letters, numbers and the following punctuation marks:
@@ -98,7 +110,7 @@
 
         // Please note, usernames (so the /in/ url) are at least 5 characters long. So the username 'test' is not valid, so is https://www.linkedin.com/in/test not!
         //
-    }, "Sorry, this is not a valid URL.<br />To find your URL go to www.linkedin.com/profile when logged on; check your profile URL and copy/paste it here.<br />Example URL’s:<br />http://www.linkedin.com/in/test12<br />http://www.linkedin.com/pub/test/0/123/1" );
+    }, "Please enter valid LinkedIn Url. Ex http://www.linkedin.com/in/telaviv" );
 
     // http://www.labnol.org/internet/change-facebook-page-username/21449/
     //

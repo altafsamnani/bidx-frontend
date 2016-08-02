@@ -21,7 +21,13 @@ class BusinessSummaryService extends APIbridge
      * Constructs the API bridge.
      * Needed for operational logging.
      */
-    private $apiUrl = 'businesssummary/';
+    private $apiUrl     =   'businesssummary/';
+
+    private $submitUrl  =   'https://app.wizehive.com/appform/display';
+
+    private $editUrl    =   'https://app.wizehive.com/appform/edit';
+
+    private $printUrl   =   'https://app.wizehive.com/appform/print';
 
     public function __construct ()
     {
@@ -75,59 +81,142 @@ class BusinessSummaryService extends APIbridge
      'email' => 'samwich13335@deli.com',
     );
     */
-    function getWizehivesSubmissionData ( $memberData, $businessSummaryId, $view )
+
+    function getWizehivesBpData()
+    {
+
+    }
+
+    function getWizehivesMemberData()
+    {
+
+    }
+
+
+    function getWizehivesSubmissionData ( $memberData, $bpData )
     {
         //Call entity API
-        $results            =   array( );
-        $member             =   $memberData->data->member;
-        $bidxMemberProfile  =   $memberData->data->bidxMemberProfile;
-        $personalDetails    =   $bidxMemberProfile->personalDetails; 
-        $userId             =   $member->bidxMeta->bidxMemberId;
-        $userEmail          =   $member->username;
-        $address1           =   $personalDetails->address[0]->street.' '.$personalDetails->address[0]->streetNumber; 
+        $results                    =   array( );
+        $member                     =   $memberData->member;
+        $bidxMemberProfile          =   $memberData->bidxMemberProfile;
+        $personalDetails            =   $bidxMemberProfile->personalDetails; 
+        $userId                     =   $member->bidxMeta->bidxMemberId;
+        $userEmail                  =   $member->username;
+        $address1                   =   $personalDetails->address[0]->street.' '.$personalDetails->address[0]->streetNumber; 
 
-         $wizehivesUserMapping   =   array(
-         'id'       => $userId,
+
+
+        $id                         =   $userId;
+        $first                      =   $personalDetails->firstName;
+        $last                       =   $personalDetails->lastName;
+        $email                      =   $userEmail;
+
+        $conactDetail               =   $personalDetails->contactDetail[0];
+        $landline                   =   $conactDetail->landLine;
+        $mobile                     =   $contactDetail->mobile;
+        $nationality                =   $personalDetails->nationality;
+        $gender                     =   ( $personalDetails->gender == 'f' ) ? 'female' : 'male';
+
+
+        $businessSummaryId          =   $bpData->bidxMeta->bidxEntityId;
+        $wizehivesUrl               =   $this->submitUrl;
+
+        $btnLabel                   =   __('Apply to GACC', 'bidxplugin');
+
+        $integrationObj             =   isset( $memberData->member->integrations ) ? $memberData->member->integrations : false ;
+
+        $integrations               =  (array) $integrationObj;
+        
+        /*
+        $integrations               =  NULL; 
+        if( $integrations ) // TEST
+        {
+            $integrations['wizehive.submission.id']     =   '3396837';  
+            $integrations['wizehive.businessplan.id']   =   '10175';  
+            $integrations['wizehive.submission.final']  =   false;  
+        }*/
+
+
+        $integrationSubmissionId    =  $integrations['wizehive.submission.id']   ;
+
+        $integrationsId             =  $integrations['wizehive.businessplan.id'] ;
+
+        $integrationStatus          =  $integrations['wizehive.submission.final'];
+
+        $integrationSubmissionIdUrl =  ($integrationSubmissionId) ? '/'.$integrationSubmissionId : '';
+        
+        if( $integrationsId == $businessSummaryId  )
+        { 
+            $btnLabel       =  'Print GACC' ;
+
+            $wizehivesUrl   =  $this->printUrl;
+
+            if( $integrationStatus === 'false' ) 
+            {
+                $btnLabel       =   'Submit to GACC' ;
+
+                $wizehivesUrl   =    $this->editUrl;
+            }
+        }
+
+
+        $wizehiveSlug       =   get_option('bidx-wizehive-slug');
+
+        $actionUrl          =   $wizehivesUrl.'/'.$wizehiveSlug.$integrationSubmissionIdUrl;
+
+        $wizehivesBpMapping   =   array(
+         'id'                   => $businessSummaryId,
+         'title'                => $bpData->name,
+         'country'              => $bpData->countryOperation,
+         'stageOfBusiness'      => $bpData->stageBusiness,
+         'yearSalesStarted'     => $bpData->yearSalesStarted,
+         'financialSummaries'   => json_decode(json_encode($bpData->financialSummaries), true)
+
+        );
+
+        $wizehivesUserMapping   =   array(
+         'id'       => $id,
          'name'     => $member->displayName,
-         'first'    => $personalDetails->firstName,
-         'last'     => $personalDetails->lastName,
-         'email'    => $userEmail
+         'first'    => $first,
+         'last'     => $last,
+         'email'    => $email
         );
 
         $wizehivesFormMapping   = array(
-         'first'            =>  $personalDetails->firstName,
-         'last'             =>  $personalDetails->lastName,
-         'email'            =>  $userEmail,
+         'first'            =>  $first,
+         'last'             =>  $last,
+         'email'            =>  $email,
+         'landline'         =>  $landline,
+         'mobile'           =>  $mobile,
+         'gender'           =>  $gender,
+         'nationality'      =>  $nationality,
          'address1'         =>  $address1,
          'address2'         =>  '',
          'city'             =>  $personalDetails->address[0]->cityTown,
-         //'state'    => 'MA',           
+         'state'            =>  'Not known',           
          'zip'              =>  $personalDetails->address[0]->postalCode,
-         'country'          =>  $view->getStaticVal( 'country', $personalDetails->address[0]->country ),
-         'aicpa_member_id'  =>  $userId
+         'country'          =>  $personalDetails->address[0]->country,
+         'aicpa_member_id'  =>  $id,
+         'business'         =>  $wizehivesBpMapping 
         );
 
-        $timestamp          =   time( );
-
-        $inputData          =   $businessSummaryId . '|' . $userId . '|' . $userEmail ;
+        $timestamp = time();
         
-        //$token              =   hash_hmac('sha1', $tokenData , $this->tokenKey);
-        //$token              =   $this->encrypt( $inputData,  $this->tokenKey, $this->iv, $this->bitCheck  );
-        $token              =   base64_encode($inputData);
+        $token_data = $id . '|' . $email . '|' . $timestamp;
+        
+        $token_key = '2238c1b2da7541f88ba560bc81fd7bff';
+        $token = hash_hmac('sha1', $token_data , $token_key);     
 
-        /*$results            =   array( 
-                                'user'      =>  $wizehivesUserMapping,
-                                'form'      =>  $wizehivesFormMapping,
-                                'timestamp' =>  $timestamp,
-                                'token'     =>  $token
-                                );*/ 
 
         $results            =   array( 
+                                'actionurl' =>  $actionUrl,
                                 'user'      =>  urlencode(json_encode($wizehivesUserMapping)),
+                                //'business'  =>  urlencode(json_encode($wizehivesBpMapping)),
                                 'form'      =>  urlencode(json_encode($wizehivesFormMapping)),
                                 'timestamp' =>  $timestamp,
-                                'token'     =>  $token
-                                );
+                                'token'     =>  $token,
+                                'btnLabel'  =>  $btnLabel
+                                ); 
 
         return $results;
     }
@@ -143,29 +232,32 @@ class BusinessSummaryService extends APIbridge
     {
         //Call entity API
         $tagResults     =   false;
-        foreach( $bidxBusinessSummary as $businessSummaryId )
-        {
-            //$businessSummaryId  =   9066;
-            $result             =   $this->callBidxAPI ($this->apiUrl . $businessSummaryId, array (), 'GET');
-            $bidxMeta           =   $result->data->bidxMeta;
-
-            if(isset($bidxMeta->tagAssignmentSummary))
+        if( !empty( $bidxBusinessSummary ) )
+        {    
+            foreach( $bidxBusinessSummary as $businessSummaryId )
             {
-                $tagAssignmentSummary = $bidxMeta->tagAssignmentSummary;
-                foreach( $tagAssignmentSummary as $valueTag)
+                //$businessSummaryId  =   9066;
+                $result             =   $this->callBidxAPI ($this->apiUrl . $businessSummaryId, array (), 'GET');
+                $bidxMeta           =   $result->data->bidxMeta;
+
+                if(isset($bidxMeta->tagAssignmentSummary))
                 {
-                    if($valueTag->tagId === 'mekar')
+                    $tagAssignmentSummary = $bidxMeta->tagAssignmentSummary;
+                    foreach( $tagAssignmentSummary as $valueTag)
                     {
-                        $tagResults     =   $result;
+                        if($valueTag->tagId === 'mekar')
+                        {
+                            $tagResults     =   $result;
+                            break;
+                        }
+                    }
+
+                    if( $tagResults )
+                    {
                         break;
                     }
-                }
 
-                if( $tagResults )
-                {
-                    break;
                 }
-
             }
         }
 

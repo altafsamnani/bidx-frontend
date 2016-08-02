@@ -222,9 +222,13 @@ class dashboard
 
             case 'general-settings' :
 
-                $view->groupNews    = get_option ('group-news');
-                $view->expressform  = get_option('bidx-expressform');
-                $view->wizehive  = get_option('bidx-wizehive');
+                $view->groupNews        =   get_option ('group-news');
+                $view->expressform      =   get_option('bidx-expressform');
+                $view->expressCustom    =   get_option('bidx-express-custom');
+                $wizehiveSlug           =   get_option('bidx-wizehive-slug');
+
+                $view->wizehive         =   ( $wizehiveSlug ) ?   true    :   false;
+                $view->wizehiveSlug     =   $wizehiveSlug;
 
         		if ( get_option ( 'bidx-ssoredirect-url' ) )
                 {

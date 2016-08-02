@@ -71,7 +71,7 @@ class GroupService extends APIbridge {
          {
             case 'wizehive':
 
-              $result['wizehive'] = get_option('bidx-wizehive');
+              $result['wizehive'] = get_option('bidx-wizehive-slug');
               break;
 
             default:

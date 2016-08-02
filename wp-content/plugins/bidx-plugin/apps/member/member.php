@@ -82,9 +82,14 @@ class member {
 				$groupSvc = new GroupService( );
 
 			    /* 3. Render Member Profile Services for Initial View Display */
-			    $memberData = $memberObj->getMemberDetails(  );
+			    $memberResult = $memberObj->getMemberDetails(  );
 
-			    $view->data = (isset($memberData->data)) ? $memberData->data:NULL;
+			    $view->data = (isset($memberResult->data)) ? $memberResult->data:NULL;
+
+			   /* echo "<pre>"; 
+			    print_r($view->data); 
+			    echo "</pre>"; 
+			    exit;*/ 
 
 			    $sessionSvc = new SessionService( );
 
@@ -98,9 +103,9 @@ class member {
 			    $jsParams = array('member' => $view->data);
 			    wp_localize_script ('bidx-data', '__bidxMember', $jsParams);
 
-			    $view->bidxGroupDomain 	= (isset($memberData->bidxGroupDomain)) ? $memberData->bidxGroupDomain : NULL;
+			    $view->bidxGroupDomain 	= (isset($memberResult->bidxGroupDomain)) ? $memberResult->bidxGroupDomain : NULL;
 			    $view->sessionData 		= $session ;
-			    $view->isExternal 		= $groupSettings['wizehive'] ;
+			    $view->isWizehive 		= $groupSettings['wizehive'] ;
 
 
 	      		$view->render('member.phtml');

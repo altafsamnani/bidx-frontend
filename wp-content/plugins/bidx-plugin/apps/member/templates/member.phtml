@@ -22,8 +22,14 @@ $isMentor                       = isset( $data->bidxMentorProfile ) ? $data->bid
 $hasAccessToInvestorProfile     = ( $isInvestor && $isLoggedinMemberIsInvestor && $ownProfile ) || ( $isInvestor && $this->isLoggedInGroupOwner ) ? true : false;
 $visitedId                      = $data->member->bidxMeta->bidxMemberId;
 $showAccredit                   = ( !empty( $data->bidxInvestorProfile )  && !empty( $data->bidxMentorProfile ) && ( $visitedId !== $loggedInMemberId ) );
-$isMemberActive                 = ( !$this->isExternal )  ? 'active' : '';
-$isEntrepreneurActive           = ( $this->isExternal )  ? 'active' : ''; 
+
+$isMemberActive                 = 'active';
+
+if( $loggedInMemberId && $isLoggedinMemberIsEntrepreneur && $this->isWizehive )  
+{
+   $isEntrepreneurActive        = 'active';
+   $isMemberActive              = '';
+}  
 // d($data);
 
 // Authorized Entrepreneur
@@ -39,6 +45,7 @@ if ( $isLoggedinMemberIsEntrepreneur && $data->authorizedBusinessSummaries ) :
         endif;
     }
 endif;
+
 
 ?>
 <div class="member box-border top-margin-lineheight" data-ownerid="<?php echo $memberId; ?>" >

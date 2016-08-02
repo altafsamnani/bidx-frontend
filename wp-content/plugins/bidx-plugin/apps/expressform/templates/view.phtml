@@ -1,0 +1,217 @@
+<?php
+	$memberData               =   $this->memberData;
+    $personalDetails            =   isset( $memberData->bidxMemberProfile->personalDetails ) ? $memberData->bidxMemberProfile->personalDetails : NULL;
+    $businessSummary            =   $this->businessSummaryData;
+    $businessSummaryBidxMeta    =   isset($businessSummary->bidxMeta)
+    ? $businessSummary->bidxMeta
+    : null;
+    $canEdit                    =   $this->exst($businessSummaryBidxMeta->bidxCanEdit, false);
+    $businessSummaryId          =   $this->exst($businessSummaryBidxMeta->bidxEntityId, false);
+    $ownerId                    =   $this->exst($businessSummaryBidxMeta->bidxOwnerId, false);
+    $progress                   =   $this->completenessScore ? $this->completenessScore : '0';
+    $contactDetails             =   $personalDetails->contactDetail[0];
+    $address                    =   $personalDetails->address[0];
+    $currentYear                =   date("Y");
+    $tmpsummary                 =   $this->exst($businessSummary->summary, null, false);
+    $gender                     =   $this->addExtraValuesToRows( 'gender', $this->exst( $personalDetails->gender ) );
+    $emailAddress               =   $this->exst( $personalDetails->emailAddress );
+    $mobile                     =   $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'mobile');
+    $fbPage                     =   "https://www.facebook.com/mekarcompetitions/";
+    $fbLikeButton               =   '<div class="fb-like"
+                                        data-href='.$fbPage.'
+                                        data-layout="button"
+                                        data-action="like"
+                                        data-show-faces="false"
+                                        data-share="false">
+                                    </div>';
+?>
+
+<!-- *****Show***** -->
+<!-- SHOW -->
+<div class="view viewShow">
+
+    <div class="mainBusiness">
+        <?php
+        if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
+        {
+            ?>
+        <div class="cardView top-margin-lineheight fbLikeMsg">
+            <div class="alert alert-success">
+
+                <?php echo sprintf( __('In order to keep track of the event’s progress and stay updated and connected, please %1$s the Mekar page, specially dedicated to the competition. We advise you to allow notification from the facebook page, in order to avoid missing out on any developments. The Bidx team wishes you luck','bidxplugin'), $fbLikeButton);
+                ?>
+            </div>
+        </div>
+        <?php
+        }
+        ?>
+
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+             <?php
+                if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
+                {
+            ?>
+
+            <h1>
+                <?php echo $this->exst( $businessSummary->name , null, false); ?>
+                <small>&nbsp;<?php echo _e( 'by', 'bidxplugin' ); ?>&nbsp;
+                    <a href="<?php echo _l('member')."/".$this->exst( $businessSummaryBidxMeta->bidxOwnerId ); ?>"><?php echo $this->exst( $businessSummaryBidxMeta->bidxOwnerDisplayName ); ?></a>
+                </small>
+            </h1>
+            <?php
+                }
+            ?>
+
+            <h4><?php echo $this->exst( $businessSummary->slogan, null, false ); ?></h4>
+            <?php
+                $theVideo = '';
+                $videoUrl = $this->exst($businessSummary->externalVideoPitch);
+                $parsedVideo = $this->parseVideos( $videoUrl );
+
+                if ( $parsedVideo )
+                {
+                    $theVideo = '<div class="video-wrapper embed-responsive embed-responsive-16by9 bottom-margin-lineheight">'.$parsedVideo[0]['videoplayer'].'</div>';
+                }
+
+                echo $theVideo;
+
+                if ( $this->exst($businessSummary->externalAudioPitch) )
+                {
+                ?>
+                    <a target="_blank" href="<?php echo $this->exst($businessSummary->externalAudioPitch); ?>" class="audioPitch btn btn-lg btn-primary btn-block"><?php _e('Listen the audio pitch', 'bidxplugin')?></a>
+                <?php
+                }
+
+                if ( $tmpsummary )
+                {
+                ?>
+                <div class="main-padding-vertical">
+            <h3 class="text-uppercase"><?php _e('In a few words', 'bidxplugin')?></h3>
+            <div>
+<?php
+                echo $tmpsummary;
+?>
+            </div>
+        </div>
+
+<?php
+    }
+?>
+            <!--Member Detailssssssss-->
+            <div class="main-padding-vertical">
+            <?php
+                $rowValues = array
+                (
+                    __('First name','bidxplugin')       =>  $personalDetails->firstName ,
+                    __('Last name','bidxplugin')        =>  $personalDetails->lastName ,
+                    __('Mobile number','bidxplugin')    =>  $mobile ,
+                    __('Email','bidxplugin')            =>  $emailAddress ,
+                   // __('Gender','bidxplugin')           =>  $gender ,
+                    __('City','bidxplugin')             =>  $personalDetails->address[0]->cityTown,
+                    __('Country','bidxplugin')          =>  $this->getStaticVal( 'country', $this->exst($personalDetails->address[0]->country) )
+                );
+
+                if ( $this->checkEmpty( $rowValues ) ) :
+                ?>
+                    <h3 class="text-uppercase"><?php _e('Personal details', 'bidxplugin')?></h3>
+                <?php
+                    echo $this->tableRow ( $rowValues );
+                    endif;
+                ?>
+            </div>
+
+            <div class="main-padding-vertical">
+            <?php
+                $bpWebsite = null;
+
+                if ( $this->exst( $businessSummary->website ) ) {
+                    $bpWebsite = sprintf( '<a href="%1$s" target="_blank">%1$s</a>', $this->exst($businessSummary->website) );
+                }
+
+                $rowValues = array
+                (   __('Website','bidxplugin') => $bpWebsite,
+                    __('Industry','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industry'),
+                    __('Country of business','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' )
+                );
+
+                if ( $this->checkEmpty( $rowValues ) ) :
+                ?>
+                    <h3 class="text-uppercase"><?php _e('The Business', 'bidxplugin')?></h3>
+                <?php
+                    echo $this->tableRow ( $rowValues );
+                    endif;
+                ?>
+            </div>
+
+            <h3 class="text-uppercase"><?php _e('Financial Details', 'bidxplugin')?></h3>
+<?php
+                $rowValues = array
+                (
+                    __('Business sales started in','bidxplugin')=> $this->exst($businessSummary->yearSalesStarted),
+                    __('Reason for financing','bidxplugin') => $this->exst($businessSummary->summaryFinancingNeeded),
+                    __('Equity currently retained','bidxplugin') => $this->addPrefixSuffix ( $this->exst($businessSummary->equityRetained ), '', ' %' ),
+                    __('Investment type','bidxplugin') => $this->getMultiValues( $this->exst($businessSummary->investmentType), ', ', 'investmentType' )
+                );
+
+                if ( $this->checkEmpty( $rowValues ) ) :
+                    echo $this->tableRow ( $rowValues );
+                endif;
+                $financialDetails = $this->exst( $businessSummary->financialSummaries );
+                if( $financialDetails )
+                {
+?>
+                <table class="table table-bordered table-financial">
+                    <tr>
+                        <th class="text-center td-15" rowspan="2"><?php _e('Year', 'bidxplugin')?></th>
+                        <th class="text-center hidden-sm hidden-xs" colspan="3"><?php _e('Income statement', 'bidxplugin')?></th>
+                        <th class="text-center visible-sm visible-xs"><?php _e('Income statement', 'bidxplugin')?></th>
+                        <th class="text-center" rowspan="2"><?php _e('Finance needed', 'bidxplugin')?> * </th>
+                        <th class="text-center hidden-sm hidden-xs" rowspan="2"><?php _e('Employees', 'bidxplugin')?> ** </th>
+                    </tr>
+                    <tr>
+                        <th class="text-center td-15 hidden-sm hidden-xs"><small><?php _e('Sales revenues', 'bidxplugin')?></small></th>
+                        <th class="text-center td-15 hidden-sm hidden-xs"><small><?php _e('Operational costs', 'bidxplugin')?></small></th>
+                        <th class="text-center td-15"><small><?php _e('Total income', 'bidxplugin')?></small></th>
+                    </tr>
+                    <?php
+
+
+                    $sortedfinancialDetails = new ArrayObject($financialDetails);
+                    $sortedfinancialDetails->ksort();
+
+                    foreach ( $sortedfinancialDetails as $year => $yearDetails )
+                    {
+                        if ( $year < $currentYear )
+                        {
+                            $yd = __('Actuals', 'bidxplugin');
+                        }
+                        elseif ( $year > $currentYear )
+                        {
+                            $yd = __('Forecast', 'bidxplugin');
+                        }
+                        else
+                        {
+                            $yd = __('Current year', 'bidxplugin');
+                        }
+
+                        echo '<tr>';
+                        echo '<td class="text-center">' . $year . '</td>';
+                        echo '<td class="text-right hidden-sm hidden-xs">' . '<small>$</small> ' . number_format($yearDetails->salesRevenue, 0, '', '.') . '</td>';
+                        echo '<td class="text-right hidden-sm hidden-xs">' . '<small>$</small> ' . number_format($yearDetails->operationalCosts, 0, '', '.') . '</td>';
+                        echo '<td class="text-right">' . '<small>$</small> ' . number_format($yearDetails->totalIncome, 0, '', '.') . '</td>';
+                        echo '<td class="text-right">' . '<small>$</small> ' . number_format($yearDetails->financeNeeded, 0, '', '.') . '</td>';
+                        echo '<td class="text-center hidden-sm hidden-xs">' . $yearDetails->numberOfEmployees . '</td>';
+                        echo '</tr>';
+
+                    } ?>
+                </table>
+                <p>
+                    * <small><?php _e('from external financiers in US Dollars', 'bidxplugin')?></small><br>
+                    ** <small><?php _e('being directly paid in this business', 'bidxplugin')?></small>
+                </p>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+</div>

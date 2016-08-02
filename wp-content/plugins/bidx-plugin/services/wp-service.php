@@ -2472,17 +2472,42 @@ function bidx_general_settings() {
 
             update_option ('bidx-expressform', $expressForm);
 
-            //Save the express form settings
-            $wizeHive    =   ( isset ( $_POST['bidx-wizehive'] ) ) ? $_POST['bidx-wizehive'] : 0;
+            /*if ( $expressForm )
+            {*/
+                $expressCustom = $_POST['bidx-express-custom'];
 
-            update_option ('bidx-wizehive', $wizeHive);
+                update_option ('bidx-express-custom', $expressCustom);
+
+            /*}
+            else
+            {
+              delete_option( 'bidx-express-custom' );
+            }*/
+
+            //Save the express form settings
+            
+
+            $wizeHive = ( isset( $_POST['bidx-wizehive'] ) ) ? $_POST['bidx-wizehive'] : false;
+
+    /*        if ( $wizeHive )
+            {*/
+                $wizehiveSlug = $_POST['bidx-wizehive-slug'];
+     
+                update_option ('bidx-wizehive-slug', $wizehiveSlug);
+                
+            /*}
+            else
+            {
+              delete_option( 'bidx-wizehive-slug' );
+            }*/
 
     	    $ssoRedirect = ( isset( $_POST['bidx-sso-redirect'] ) ) ? $_POST['bidx-sso-redirect'] : false;
 
     	    if ( $ssoRedirect )
             {
-    		  $ssoRedirectUrl = $_POST['bidx-ssoredirect-url'];
-        		if ( !empty( $ssoRedirectUrl ) ) {
+    		     $ssoRedirectUrl = $_POST['bidx-ssoredirect-url'];
+        		if ( !empty( $ssoRedirectUrl ) ) 
+                {
         			update_option( 'bidx-ssoredirect-url', $ssoRedirectUrl );
         		}
     	    }

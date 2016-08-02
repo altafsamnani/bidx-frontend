@@ -571,11 +571,6 @@
 
         var groupId = $btn.data( "groupid" );
 
-        if ( !groupId )
-        {
-            groupId = bidx.utils.getValue( bidxConfig, "session.currentGroup" );
-        }
-
         joinGroup( groupId, function( err )
         {
             $btn.removeClass( "disabled" );
@@ -597,6 +592,11 @@
     //
     function joinGroup( groupId, cb )
     {
+        if ( !groupId )
+        {
+            groupId = bidx.utils.getValue( bidxConfig, "session.currentGroup" );
+        }
+        
         if ( !bidx.utils.getValue( bidxConfig, "authenticated" ))
         {
             alert( "It is only possible to join a group when you are logged in" );
@@ -617,8 +617,11 @@
             ,   success:            function( response )
                 {
                     bidx.utils.log( "bidx::groupsJoin::save::success", response );
-
-                    cb();
+                    
+                    if( cb )
+                    {
+                        cb( );
+                    }
                 }
             ,   error:            function( jqXhr, textStatus )
                 {

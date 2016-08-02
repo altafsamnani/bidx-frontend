@@ -363,6 +363,7 @@
         ,   'createExpressForm':                                'createExpressForm'
         ,   'viewExpressForm':                                  'viewExpressForm'
         ,   'landingExpressForm':                               'landingExpressForm'
+        ,   'thankExpressForm':                                 'thankExpressForm'
 
 
         ,   'editCompetition(/:id)(*splat)':                    'editCompetition'
@@ -655,6 +656,20 @@
                 "expressform"
             ,   {
                     requestedState: "landing"
+                }
+            );
+        }
+    ,   thankExpressForm:          function( state )
+        {
+            bidx.utils.log( "AppRouter::thankExpressForm" );
+
+            mainState = "thankExpressForm";
+
+            _navigateToApp
+            (
+                "expressform"
+            ,   {
+                    requestedState: "thankyou"
                 }
             );
         }

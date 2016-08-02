@@ -1,7 +1,8 @@
 <?php
-
-$entrepreneurDetails = isset($this->data->bidxEntrepreneurProfile) ? $this->data->bidxEntrepreneurProfile : NULL ;
-$businessSummary = isset ($this->data->wp->entities->bidxBusinessSummary) ? $this->data->wp->entities->bidxBusinessSummary : NULL;
+require_once( BIDX_PLUGIN_DIR .'/../services/businesssummary-service.php' );
+$businessSummaryObj         = new BusinessSummaryService( );
+$entrepreneurDetails        = isset($this->data->bidxEntrepreneurProfile) ? $this->data->bidxEntrepreneurProfile : NULL ;
+$businessSummary            = isset ($this->data->wp->entities->bidxBusinessSummary) ? $this->data->wp->entities->bidxBusinessSummary : NULL;
 $memberId                   = isset( $this->data->member->bidxMeta->bidxMemberId ) ? $this->data->member->bidxMeta->bidxMemberId : null ;
 $loggedInMemberId           = isset( $this -> sessionData -> data -> id ) ? $this -> sessionData -> data -> id : null;
 $authenticated              = isset( $this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
@@ -9,15 +10,28 @@ $groupIds                   = array_keys ( (array)$this -> sessionData -> data -
 $inGroup                    = in_array( $this -> sessionData -> data -> currentGroup, $groupIds);
 $isLoggedinMemberIsMentor   = isset( $this -> sessionData -> data -> wp -> entities -> bidxMentorProfile ) ? $this -> sessionData -> data -> wp -> entities -> bidxMentorProfile : null;
 $isMentor                   = isset( $data->bidxMentorProfile ) ? $data->bidxMentorProfile : NULL;
-$companies = isset ($this->data->companies) ? $this->data->companies : NULL;
+$companies                  = isset ($this->data->companies) ? $this->data->companies : NULL;
 
-$entrepreneurBidxMeta = isset( $entrepreneurDetails->bidxMeta )
-    ? $entrepreneurDetails->bidxMeta
-    : $entrepreneurDetails;
 
-$businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
-    ? $businessSummary->bidxMeta
-    : $businessSummary;
+
+$entrepreneurBidxMeta       = isset( $entrepreneurDetails->bidxMeta ) ? $entrepreneurDetails->bidxMeta : $entrepreneurDetails;
+
+$businessSummaryBidxMeta    = isset( $businessSummary->bidxMeta ) ? $businessSummary->bidxMeta : $businessSummary;
+
+$integrationObj             = (array) isset( $this->data->member->integrations ) ? $this->data->member->integrations : false ;
+
+$integrations               = (array) $integrationObj;
+
+
+
+/*
+$integrations               = NULL;
+if( $integrations ) // TEST
+{
+    $integrations['wizehive.submission.id']     =   '3396837';  
+    $integrations['wizehive.businessplan.id']   =   '10175';  
+    $integrations['wizehive.submission.final']  =   false;  
+}*/
 
 if ($entrepreneurDetails &&
     ( $entrepreneurBidxMeta->bidxEntityStatus == 'PUBLISHED' || $entrepreneurBidxMeta->bidxCanEdit  ) ) {
@@ -76,8 +90,7 @@ if ($entrepreneurDetails &&
             <div class="row" id="existingBusinesses" data-ownerid= <?php echo $memberId; ?>>
                 <div class="col-sm-12">
                     <h4>
-                        <?php echo $labelBusiness; ?>
-<?php
+                    <?php
                         if ( $entrepreneurDetails->bidxMeta->bidxCanEdit ):
 ?>
                         <a href="<?php echo _l("businesssummary");?>#createBusinessSummary" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e( 'Add new Business plan', 'bidxplugin' ); ?> </a>
@@ -89,7 +102,8 @@ if ($entrepreneurDetails &&
 
                     <div class="list-group js-fakecrop">
 <?php
-                        foreach ($businessSummary as $index => $business) {
+                        foreach ($businessSummary as $index => $business) 
+                        {  
 ?>
                                     <div class="card-entityid list-group-item" data-entityid="<?php echo $business->bidxMeta->bidxEntityId; ?>">
                                         <div class="list-group-item-text">
@@ -111,7 +125,43 @@ if ($entrepreneurDetails &&
 ?>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <h4 class="list-group-item-heading"><a href="<?php echo _l('businesssummary');?>/<?php echo $business->bidxMeta->bidxEntityId ?>"><?php echo $business->name; ?></a></h4>
+                                                    
+                                                    <div>
+                                                        <div class="">
+                                                            <h4 class="list-group-item-heading">
+                                                                <a href="<?php echo _l('businesssummary');?>/<?php echo $business->bidxMeta->bidxEntityId ?>"><?php echo $business->name; ?>                                                                
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div>
+                                                            <?php   
+                                                            if( $this->isWizehive && ( $memberId === $loggedInMemberId ) )
+                                                            { 
+                                                                /*echo 'heree'. $integrations[1];
+                                                                echo 'bid'. $business->bidxMeta->bidxEntityId;
+                                                                echo 'test'. strstr( $integrations[1], $business->bidxMeta->bidxEntityId);*/
+
+                                                                if( !$integrations || ($integrations && $integrations['wizehive.businessplan.id'] == $business->bidxMeta->bidxEntityId) )
+                                                                {
+                              
+                                                                    $wizehivesFormData    =  $businessSummaryObj->getWizehivesSubmissionData( $this->data, $business );
+                                                                
+                                                                ?>
+                                                                <form id="wizehive-sso" method="post" action="<?php echo $wizehivesFormData['actionurl']; ?>">
+                                                                     <input type="hidden" name="user" value="<?php echo $wizehivesFormData['user']; ?>" />
+                                                                     
+                                                                     <input type="hidden" name="timestamp" value="<?php echo $wizehivesFormData['timestamp']; ?>" />
+                                                                     <input type="hidden" name="token" value="<?php echo $wizehivesFormData['token']; ?>" />
+                                                                     <input type="hidden" name="form" value="<?php print( $wizehivesFormData['form']); ?>" />                             
+                                                                     <button type="submit" id="wizehive" class="btn btn-success btn-xs btn-wizehive" value="Send"><i class="fa fa-globe"></i> <?php echo $wizehivesFormData['btnLabel'] ?></button>   
+                                                                                           
+                                                                </form>
+                                                        <?php   }
+                                                            }  ?> 
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="absolute">
                                                     <ul class="list-unstyled">
 <?php
                                                         $businessSlogan = $this->exst ( $business->slogan, null, false );
@@ -137,6 +187,7 @@ if ($entrepreneurDetails &&
 
 ?>
                                                     </ul>
+                                                    </div>
                                                 </div>
                                                 <div class="col-sm-2 actions">
 <?php

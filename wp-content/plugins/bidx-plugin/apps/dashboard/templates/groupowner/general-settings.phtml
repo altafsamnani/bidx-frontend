@@ -8,14 +8,45 @@
             <div class='inside'>
                 <div id='taxonomy-category' class='categorydiv'>
                     <div class=''>
-                        <div class='label'>
-                            <label class='selectit'>
-                                <input <?php echo (isset($this->expressform) && $this->expressform) ? 'checked':'';?> value='1' type='checkbox' name='bidx-expressform' id='bidx-expressform'>
-                                <?php _e('Do you want to activate Express Form for this portal ? ','bidxplugin');?>
-                            </label>
-                        </div>
-                    </div>
+                        <div>                       
+                        <?php 
+                            if( isset($this->expressform))
+                            {
+                                $checkedFb      = '';
+                                $checkedBidx    = '';
+                                $checkedDefault = '';
+                                switch ( $this->expressform )
+                                {
+                                    case 'fb':
+                                        $checkedFb      = 'checked';
+                                    break;
 
+                                    case 'bidx':
+                                        $checkedBidx    = 'checked';
+                                    break;
+                                    default:
+                                        $checkedDefault = 'checked';
+                                }
+                            }
+                        ?>
+                        <label class="radio">
+                            <input type="radio" data-toggle="radio" <?php echo $checkedDefault;?> name="bidx-expressform" value="false" ><?php _e('Disable','bidxplugin'); ?>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" data-toggle="radio" <?php echo $checkedFb;?> name="bidx-expressform"  value="fb"><?php _e('Via facebook','bidxplugin'); ?>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" data-toggle="radio" <?php echo $checkedBidx;?> name="bidx-expressform" value="bidx"><?php _e('Via bidx','bidxplugin'); ?>
+                        </label>
+                    </div>
+                        <div class='label'>
+                        <label class='selectit' for='bidx-express-custom'>
+                            <span class="description"><?php _e('Please enter wizehive slug ','bidxplugin');?></span><br/>
+                            <input <?php if( isset( $this->expressCustom ) ) { echo 'value="'.$this->expressCustom.'"'; }?> type='text' name='bidx-express-custom' id='bidx-express-custom' class='regular-text'>
+                        </label>
+                     </div>
+                    </div>                   
+                    
                 </div>
             </div>
         </div>
@@ -30,9 +61,16 @@
                                 <input <?php echo (isset($this->wizehive) && $this->wizehive) ? 'checked':'';?> value='1' type='checkbox' name='bidx-wizehive' id='bidx-wizehive'>
                                 <?php _e('Do you want to activate Wizehive for this portal ? ','bidxplugin');?>
                             </label>
+                            <div style="float:right;"><a target='_blank' href="https://drive.google.com/file/d/0B2cEbY8jkjRaRUNoSU90cWlNN3c/view?usp=sharing"><?php _e('Click here to view docs'); ?></a></div>
                         </div>
                     </div>
-                </div>
+                    <div class='label'>
+                        <label class='selectit' for='bidx-wizehive-slug'>
+                            <span class="description"><?php _e('Please enter wizehive slug ','bidxplugin');?></span><br/>
+                            <input <?php if( isset( $this->wizehiveSlug ) ) { echo 'value="'.$this->wizehiveSlug.'"'; }?> type='text' name='bidx-wizehive-slug' id='bidx-wizehive-slug' class='regular-text'>
+                        </label>
+                     </div>
+                    </div>
             </div>
         </div>
 
@@ -57,22 +95,22 @@
             <div class='inside'>
                 <div id='taxonomy-category' class='categorydiv'>
                     <div class=''>
-		    	<p>
-				<?php _e('When integrating with an external single sign on mechanism a specific redirect is needed. It can be enabled and set here by a Wordpress administrator.<br />For security reasons only a local URI redirect is allowed which can loop it through the SSO mechanism in Bidx-Soca.','bidxplugin');?>
-			</p>
+        		    	 <p>
+        				    <?php _e('When integrating with an external single sign on mechanism a specific redirect is needed. It can be enabled and set here by a Wordpress administrator.<br />For security reasons only a local URI redirect is allowed which can loop it through the SSO mechanism in Bidx-Soca.','bidxplugin');?>
+        			     </p>
                         <div class='label'>
                             <label class='selectit'>
                                 <input <?php echo (isset($this->ssoRedirect) && $this->ssoRedirect) ? 'checked':'';?> value='1' type='checkbox' name='bidx-sso-redirect' id='bidx-sso-redirect'>
-				<span class="description"><?php _e('Enable an external SSO redirect URL for my portal.','bidxplugin');?></span>
+				                <span class="description"><?php _e('Enable an external SSO redirect URL for my portal.','bidxplugin');?></span>
                             </label>
                         </div>
                     </div>
-                        <div class='label'>
-                            <label class='selectit' for='bidx-ssoredirect-url'>
-                                <span class="description"><?php _e('SSO redirect URI for my portal.','bidxplugin');?></span><br/>
-                                <input <?php if( isset( $this->ssoRedirectUrl ) ) { echo 'value="'.$this->ssoRedirectUrl.'"'; }?> type='text' name='bidx-ssoredirect-url' id='bidx-ssoredirect-url' class='regular-text' <?php disabled( $this->ssoRedirect, 'disabled', true ); ?> >
-                            </label>
-			</div>
+                    <div class='label'>
+                        <label class='selectit' for='bidx-ssoredirect-url'>
+                            <span class="description"><?php _e('SSO redirect URI for my portal.','bidxplugin');?></span><br/>
+                            <input <?php if( isset( $this->ssoRedirectUrl ) ) { echo 'value="'.$this->ssoRedirectUrl.'"'; }?> type='text' name='bidx-ssoredirect-url' id='bidx-ssoredirect-url' class='regular-text' <?php disabled( $this->ssoRedirect, 'disabled', true ); ?> >
+                        </label>
+		             </div>
                     </div>
                 </div>
             </div>
@@ -84,5 +122,4 @@
             <input type='submit' name = 'action' value='Save' class='button button-primary'>
 
         </div>
-    </div>
 </form>
