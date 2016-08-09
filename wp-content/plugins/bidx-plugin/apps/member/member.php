@@ -86,11 +86,6 @@ class member {
 
 			    $view->data = (isset($memberResult->data)) ? $memberResult->data:NULL;
 
-			   /* echo "<pre>"; 
-			    print_r($view->data); 
-			    echo "</pre>"; 
-			    exit;*/ 
-
 			    $sessionSvc = new SessionService( );
 
                 /*************** Is investor or groupadmin *****************/
