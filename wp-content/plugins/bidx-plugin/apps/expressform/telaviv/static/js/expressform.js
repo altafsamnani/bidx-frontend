@@ -83,6 +83,7 @@
             ,   "externalVideoPitch"
             ,   "website"
             ,   "countryOperation"
+            ,   "stageBusinessDetail"
             ]
         }
     ,   "mentoringDetails":
@@ -206,6 +207,7 @@
 
         $expertiseNeeded.trigger( "chosen:updated" );
         $countryOperation.trigger( "chosen:updated" );
+        $stageBusiness.trigger( "chosen:updated" );
         $currentAddressCountry.trigger( "chosen:updated" );
     }
 
