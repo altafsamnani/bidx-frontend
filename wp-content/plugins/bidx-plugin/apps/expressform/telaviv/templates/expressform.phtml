@@ -217,17 +217,17 @@
                  </div>
                  <div class="row">
                     <div class="form-group col-sm-6">
-                        <label><?php _e('Facebook profile','bidxplugin'); ?></label>
+                        <label><?php _e('Facebook profilename','bidxplugin'); ?></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-facebook-square"></i></span>
-                            <input type="text" class="form-control" name="personalDetails.facebook" />
+                            <input placeholder="Enter PROFILENAME Ex https://facebook.com/PROFILENAME" type="text" class="form-control" name="personalDetails.facebook" />
                         </div>
                     </div>
                     <div class="form-group col-sm-6">
-                        <label><?php _e('Twitter','bidxplugin'); ?></label>
+                        <label><?php _e('Twitter handle','bidxplugin'); ?></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-twitter-square"></i></span>
-                            <input type="text" class="form-control" name="personalDetails.twitter" />
+                            <input placeholder="Enter HANDLE Ex https://twitter.com/HANDLE" type="text" class="form-control" name="personalDetails.twitter" />
                         </div>
                     </div>
                 </div>
@@ -341,7 +341,7 @@
         <blockquote class="alert-warning">
 <?php
             $url = '/terms-of-service';
-            $link = sprintf( __( 'By clicking on Apply button you automatically accept the <a target="_blank" href="%s">Terms of Service</a>.', 'bidxplugin' ), esc_url( $url ) );
+            $link = sprintf( __( 'By clicking on Submit button you automatically accept the <a target="_blank" href="%s">Terms of Service</a>.', 'bidxplugin' ), esc_url( $url ) );
             echo $link;
 ?>
         </blockquote>

@@ -72,6 +72,8 @@
             ,   'country'
             ,   'linkedIn'
             ,   'landline'
+            ,   'facebook'
+            ,   'twitter'
             ]
         }
     ,   "generalOverview":

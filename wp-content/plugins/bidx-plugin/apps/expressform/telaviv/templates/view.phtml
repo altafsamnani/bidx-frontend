@@ -119,6 +119,22 @@
                     echo $this->tableRow ( $rowValues );
                     endif;
                 ?>
+                <div class="pull-right member-social">
+<?php
+                    $rowValues1 = array (
+                        'Facebook' => $this->addSocialPluginScript ('facebookprofile', $this->exst ($personalDetails->facebook)),
+                        'Linkedin' => $this->addSocialPluginScript ('linkedin', $this->exst ($personalDetails->linkedIn)),
+                    );
+
+                    $rowValues2 = array (
+                        'Twitter' => $this->addSocialPluginScript ('twitterprofile', $this->exst ($personalDetails->twitter)),
+                        'Skype' => $this->addSocialPluginScript ('skype', $this->exst ($personalDetails->skype))
+                    );
+                    
+                    $rowValues = ( isset( $rowValues2 ) ) ? array_merge( $rowValues1, $rowValues2 ) : $rowValues1;
+                    echo $this->addAdjacentRows ('pull-left', $rowValues, array ('Skype' => 'skypeclass', 'Linkedin' => 'linkedin', 'Facebook' => 'facebook', 'Twitter' => 'twitter' ));
+?>
+                </div>
             </div>
 
             <div class="main-padding-vertical">
