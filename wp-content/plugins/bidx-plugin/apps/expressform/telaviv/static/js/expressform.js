@@ -20,7 +20,7 @@
     ,   $controlsForError       =   $editControls.find( ".viewError" )
     ,   $bsLogoModal            =   $bsLogo.find( ".addLogoImage" )
     ,   $logoContainer          =   $bsLogo.find( ".logoContainer" )
-    ,   $stageBusiness          =   $element.find( "[name='stageBusiness']" )
+    ,   $stageBusiness          =   $element.find( "[name='stageBusinessDetail']" )
     ,   snippets                =   {}
     ,   $views                  =   $element.find( ".view" )
     ,   $modals                 =   $element.find( ".modalView" )
@@ -42,23 +42,10 @@
             {
                 $el:                    $element.find( "#formExpressForm-PersonalDetails" )
             }
-        ,   financialDetails:
-            {
-                $el:                    $element.find( "#formExpressForm-FinancialDetails" )
-            }
         ,   mentoringDetails:
             {
                 $el:                    $element.find( "#formExpressForm-MentoringDetails" )
             }
-        }
-
-        // Financial Summary / Details
-        //
-    ,   $financialSummary                   = $element.find( ".financialSummary")
-    ,   $financialSummaryYearsContainer     = $financialSummary.find( ".fs-col-years" )
-    ,   financialSummary            =
-        {
-            deletedYears:               {}
         }
     ,   state
     ,   currentView
@@ -85,6 +72,8 @@
             ,   'country'
             ,   'linkedIn'
             ,   'landline'
+            ,   'facebook'
+            ,   'twitter'
             ]
         }
     ,   "generalOverview":
@@ -96,28 +85,7 @@
             ,   "externalVideoPitch"
             ,   "website"
             ,   "countryOperation"
-            ]
-        }
-    ,   "financialDetails":
-        {
-            "_arrayFields":
-            [
-                "financialSummaries"
-            ]
-        /*,   "_root":
-            [
-                "yearSalesStarted"
-            ,   "equityRetained"
-            ,   "investmentType"
-            ,   "summaryFinancingNeeded"
-            ] */
-        ,   "financialSummaries":
-            [
-                "financeNeeded"
-            ,   "numberOfEmployees"
-            ,   "operationalCosts"
-            ,   "salesRevenue"
-            //  totalIncome is a derived field, but not a input
+            ,   "stageBusinessDetail"
             ]
         }
     ,   "mentoringDetails":
@@ -237,29 +205,11 @@
                 $logoContainer.append( "<img src='"+ logoImage.document +"' />" );
                 $logoContainer.addClass( "logoPlaced" ).parent().find( "[href$='#removeLogo']" ).removeClass( "hide" );
             }
-
-            // Financial Summaries is an object of which the keys are years and the body is the financial summary
-            // for that year
-            //
-            // Since the HTML is already there, rendered by PHP, we just have to update the fields with the latest values
-            // You could argue why this is needed and not just use the 'view rendering time' values, but doing this now
-            // ensures the values are as up to date as possible.
-            //
-            var financialSummaries = bidx.utils.getValue( businessSummary, "financialSummaries" );
-
-            if ( financialSummaries )
-            {
-                $.each( financialSummaries, function( year, data )
-                {
-                    var $yearItem = $financialSummaryYearsContainer.find( "[data-year='" + year + "']" );
-
-                    _updateFinancialSummariesItem( $yearItem, data );
-                } );
-            }
         }
 
         $expertiseNeeded.trigger( "chosen:updated" );
         $countryOperation.trigger( "chosen:updated" );
+        $stageBusiness.trigger( "chosen:updated" );
         $currentAddressCountry.trigger( "chosen:updated" );
     }
 
@@ -311,21 +261,6 @@
         ,   bidxAPIParams
         );
     }
-
-    // Update the pre-rendered dom elements for the financial summary
-    //
-    function _updateFinancialSummariesItem( $item, data )
-    {
-        $.each( fields.financialDetails.financialSummaries, function( idx, f )
-        {
-            var value = data[ f ] || "";
-
-            $item.find( "[name^='" + f + "']" ).val( value );
-        } );
-
-        $item.find( ".totalIncome .viewEdit" ).text("$ " + data[ "totalIncome" ]);
-    }
-
 
     // Logo
     //
@@ -416,7 +351,6 @@
 
         if( forms )
         {
-            bidx.utils.log('forms', forms);
             $.each( forms, function( name, form )
             {
                 
@@ -515,9 +449,13 @@
                 {
                     urlOptionalProtocol:        true
                 }
-            ,   countryOperation:
+            /*,   countryOperation:
                 {
                     required:      true
+                }*/
+            ,   stageBusinessDetail:
+                {
+                    required:     true
                 }
             }
         ,   messages:
@@ -571,39 +509,6 @@
                 _doValidate()
             }
         } );  
-
-        // Financial Details
-        //
-        forms.financialDetails.$el.validate(
-        {
-            ignore:                 ""
-        ,   debug:                  false
-        ,   rules:
-            {
-                yearSalesStarted:
-                {
-                    required:               true
-                }
-            ,   financeNeeded:
-                {
-                    required:               true
-                }
-            }
-
-        ,   messages:
-            {
-
-            }
-
-        ,   submitHandler:        function( e )
-            {
-                _doSave();
-            }
-        ,   onkeyup: function()
-            {
-                _doValidate()
-            }
-        } );
     }
 
     // private functions
@@ -621,15 +526,14 @@
             });
         }
 
-        snippets.$financialSummaries    = $financialSummary.find( ".snippets" ).find( ".financialSummariesItem" ).remove();
         _setupValidation();
-        _financialSummary();
 
         $industrySectors.industries();
 
         $stageBusiness.bidx_chosen(
         {
             dataKey:            "stageBusinessDetail"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
         $countryOperation.bidx_chosen(
@@ -647,8 +551,6 @@
             dataKey:            "country"
         ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
-
-        forms.financialDetails.$el.find( "[name='yearSalesStarted']" ).bidx_chosen();
 
         $bsLogoRemoveBtn.click( function( e )
         {
@@ -769,389 +671,6 @@
 
     }
 
-    // Setup the financial summary component
-    //
-    function _financialSummary()
-    {
-        // FinancialSummary
-        //
-        var $btnNext        = $financialSummary.find( "a[href$=#next]" )
-        ,   $btnPrev        = $financialSummary.find( "a[href$=#prev]" )
-        ,   $btnAddPrev     = $financialSummary.find( "a[href$=#addPreviousYear]" )
-        ,   $btnAddNext     = $financialSummary.find( "a[href$=#addNextYear]" )
-
-        ,   curYear         = bidx.common.getNow().getFullYear()
-        ;
-
-        // Add on year to the left
-        //
-        $financialSummary.delegate( "a[href$=#addPreviousYear]", "click", function( e )
-        {
-            e.preventDefault();
-
-            _addFinancialSummaryYear( "prev" );
-        } );
-
-        // Add on year to the right
-        //
-        $financialSummary.delegate( "a[href$=#addNextYear]", "click", function( e )
-        {
-            e.preventDefault();
-
-            _addFinancialSummaryYear( "next" );
-        } );
-
-        // Delete the year
-        //
-        $financialSummary.delegate( "a[href$=#deleteYear]", "click", function( e )
-        {
-            e.preventDefault();
-
-            var $financialSummariesItem = $( this ).closest( ".financialSummariesItem" )
-            ,   year                    = parseInt( $financialSummariesItem.attr( "data-year" ), 10 )
-            ;
-
-            _deleteFinancialSummaryYear( year );
-        } );
-
-        // Navigate one year to the left
-        //
-        $financialSummary.delegate( "a[href$=#prev]", "click", function( e )
-        {
-            e.preventDefault();
-
-            _navigateYear( "prev" );
-        } );
-
-        // Navigate one year to the right
-        //
-        $financialSummary.delegate( "a[href$=#next]", "click", function( e )
-        {
-            e.preventDefault();
-
-            _navigateYear( "next" );
-        } );
-
-        // Calculate the totalincome when the salesRevenue and/or operationalCosts change
-        //
-        $financialSummaryYearsContainer.delegate( "input[name^='salesRevenue'],input[name^='operationalCosts']", "change", function()
-        {
-            var $input  = $( this )
-            ,   $item   = $input.closest( ".financialSummariesItem" )
-            ;
-
-            _calculateTotalIncome( $item );
-        } );
-
-        // Itterate over the server side rendered year items
-        //
-        $financialSummaryYearsContainer.find( ".financialSummariesItem:not(.addItem)" ).each( function( )
-        {
-            var $yearItem   = $( this )
-            ,   year        = parseInt( $yearItem.attr( "data-year" ), 10 )
-            ;
-
-            _setupValidationForYearItem( $yearItem );
-
-            // Show the delete button on the last / first year in case the year is not current year
-            //
-            if ( state === "edit" )
-            {
-                if ( $yearItem.hasClass( "first" ) && year < curYear )
-                {
-                    $yearItem.find( ".btnDelete" ).show();
-                }
-                else if ( $yearItem.hasClass( "last" ) && year > curYear )
-                {
-                    $yearItem.find( ".btnDelete" ).show();
-                }
-            }
-        } );
-
-        // Setup validation on a specific year item
-        // Altaf
-        function _setupValidationForYearItem( $yearItem )
-        {
-            // Shortcut it for now by treating all the inputs the same
-            //
-            $yearItem.find( "input" ).each( function( )
-            {
-                var $input          = $( this )
-                ,   name            = $input.prop( "name" )
-                ;
-
-                $input.rules( "add",
-                {
-                    required:               true
-                ,   monetaryAmount:         true
-
-                ,   messages:
-                    {
-                        required:               ""
-                    ,   monetaryAmount:         "Please enter only numbers"
-                    }
-                } );
-            } );
-        }
-
-        // Add a financial year item
-        //
-        function _addFinancialSummaryYear( direction )
-        {
-            var $item       = snippets.$financialSummaries.clone()
-            ,   year
-            ,   yearLabel
-            ,   $otherYear
-            ,   otherYear
-            ,   $marker
-            ;
-
-            // What is the year we are going to add?
-            //
-            if ( direction === "prev" )
-            {
-                $marker     = $financialSummaryYearsContainer.find( ".addItem:first" );
-                $otherYear  = $marker.next();
-                otherYear   = parseInt( $otherYear.attr( "data-year" ), 10 );
-
-                // Is there no other year? This can only happen when there are absolutely none year items in the DOM
-                //
-                if ( !otherYear )
-                {
-                    year        = curYear;
-                    yearLabel   = bidx.i18n.i( "currentYear", appName );
-                }
-                else
-                {
-                    year        = otherYear - 1;
-                    yearLabel   = bidx.i18n.i( "actuals", appName );
-                }
-            }
-            else
-            {
-                $marker     = $financialSummaryYearsContainer.find( ".addItem:last" );
-                $otherYear  = $marker.prev();
-                otherYear   = parseInt( $otherYear.attr( "data-year" ), 10 );
-
-                if ( !otherYear )
-                {
-                    year        = curYear;
-                    yearLabel   = bidx.i18n.i( "currentYear", appName );
-                }
-                else
-                {
-                    year        = otherYear + 1;
-                    yearLabel   = bidx.i18n.i( "forecast", appName );
-                }
-            }
-
-            // Add administration of the item
-            //
-            $item.attr( "data-year", year );
-            $item.addClass( "new" );
-
-            // Set content in the header
-            //
-            $item.find( ".year"         ).text( year );
-            $item.find( ".yearLabel"    ).text( yearLabel );
-
-            // Move the available delete year button to the new year
-            //
-            $otherYear.find( ".btnDelete" ).hide();
-            $item.find( ".btnDelete" ).show();
-
-            if ( direction === "prev" )
-            {
-                $otherYear.removeClass( "first" );
-                $item.addClass( "first" );
-
-                $marker.after( $item );
-            }
-            else
-            {
-                $otherYear.removeClass( "last" );
-                $item.addClass( "last" );
-
-                $marker.before( $item );
-            }
-
-            // Rename all the input elements to include the year
-            //
-            $item.find( "input" ).each( function( )
-            {
-                var $input      = $( this )
-                ,   name        = $input.prop( "name" )
-                ,   newName     = name.replace( "[]", "[" + year + "]" )
-                ;
-
-                $input.prop( "name", newName );
-            } );
-
-            _setupValidationForYearItem( $item );
-
-            financialSummary.selectYear( year );
-        }
-
-        // Delete the year from the DOM and administer it's deleting so we can communicate it as being delete to the
-        // API
-        //
-        function _deleteFinancialSummaryYear( year )
-        {
-            var $year          = $financialSummaryYearsContainer.find( ".financialSummariesItem[data-year='" + year + "']" )
-            ,   newYear
-            ,   $newYear       = $year.next()
-            ;
-
-            // What to select as a new year?
-            //
-            if ( !$newYear.is( ".addItem" ) )
-            {
-                newYear = year + 1;
-            }
-            else
-            {
-                $newYear = $year.prev();
-
-                if ( !$newYear.is( ".addItem" ) )
-                {
-                    newYear = year - 1;
-                }
-                else
-                {
-                    $newYear = undefined;
-                }
-            }
-
-            // Now we know what we are to move next to, remove it from the DOM
-            //
-            $year.remove();
-            financialSummary.deletedYears[ year ] = true;
-
-            if ( $newYear )
-            {
-                // If it isn't the current year, show the delete button on the new year
-                //
-                if ( newYear !== curYear && state === "edit" )
-                {
-                    $newYear.find( ".btnDelete" ).show();
-                }
-
-                if ( newYear )
-                {
-                    financialSummary.selectYear( newYear );
-                }
-            }
-        }
-
-        // Calculate the new total income
-        //
-        function _calculateTotalIncome( $item )
-        {
-            var salesRevenue        = parseInt( $item.find( "input[name^='salesRevenue']"     ).val(), 10 ) || 0
-            ,   operationalCosts    = parseInt( $item.find( "input[name^='operationalCosts']" ).val(), 10 ) || 0
-            ,   totalIncome         = salesRevenue - operationalCosts
-            ;
-
-            $item.find( ".totalIncome .viewEdit" ).text( "$ " + totalIncome );
-        }
-
-        // Select a certain year, update the selected state, show the correct years and disable/enable the buttons
-        //
-        function selectYear( year )
-        {
-            var $years          = $financialSummaryYearsContainer.find( ".financialSummariesItem" )
-            ,   $selectedYear   = $years.filter( ".selected" )
-            ,   $visibleItems   = $years.filter( ":visible" )
-            ,   $yearItem       = $years.filter( "[data-year='" + year + "']" )
-            ,   $prevItem       = $yearItem.prev()
-            ,   $nextItem       = $yearItem.next()
-            ;
-
-            $selectedYear.removeClass( "selected" );
-            $yearItem.addClass( "selected" );
-
-            // Hide all and show conditional the new situation
-            //
-            $years.hide();
-
-            // Show at least the newly selected year
-            //
-            $yearItem.show();
-
-            // Responsive design decision. Is the year hugely smaller than the container?
-            // Seems to be more correct than testing for css display property which sometimes just says it's
-            // block while it isn't
-            //
-            if ( $yearItem.width() + 100 < $yearItem.parent().width()  )
-            {
-                $nextItem.show();
-                $prevItem.show();
-            }
-
-            if ( $prevItem.is( ".addItem" ) )
-            {
-                $btnPrev.addClass( "disabled" );
-            }
-            else
-            {
-                $btnPrev.removeClass( "disabled" );
-            }
-
-            if ( $nextItem.is( ".addItem" ) )
-            {
-                $btnNext.addClass( "disabled" );
-            }
-            else
-            {
-                $btnNext.removeClass( "disabled" );
-            }
-        }
-
-        // Either navigate next or prev
-        // Beware, direction is used as a jquery DOM function in this method
-        //
-        function _navigateYear( direction )
-        {
-            var $selectedYear   = $financialSummaryYearsContainer.find( ".financialSummariesItem.selected" )
-            ,   $otherYear
-            ,   otherYear
-            ,   $btn
-            ;
-
-            switch ( direction )
-            {
-                case "next":
-                    $btn = $btnNext;
-                break;
-
-                case "prev":
-                    $btn = $btnPrev;
-                break;
-
-                default:
-                    // NOOP
-                    bidx.utils.warn( appName + "::_navigateYear: unknown direction: " + direction );
-            }
-
-            if ( !$btn || !$btn.length || $btn.hasClass( "disabled" ) )
-            {
-                return;
-            }
-
-            // What is the year item we want to navigate to?
-            //
-            $otherYear  = $selectedYear[ direction ]( ":not(.addItem)" );
-            otherYear   = parseInt( $otherYear.attr( "data-year" ), 10 );
-
-            financialSummary.selectYear( otherYear );
-        }
-
-        // Expose financial summary fucntinos
-        //
-        financialSummary.selectYear = selectYear;
-        financialSummary.addFinancialSummaryYear   =   _addFinancialSummaryYear;
-    }
-
     // Convert the form values back into the member object
     //
     function _getFormValues()
@@ -1242,6 +761,12 @@
 
                         value  = bidx.utils.getElementValue( $input );
 
+                        if( !value && f === 'countryOperation' )
+                        {
+                            value  = 'IL';
+                            bidx.utils.log('I am overwritten with Israel country operations');
+                        }
+
                         bidx.utils.setValue( businessSummary, f, value );
                     }
                 } );
@@ -1299,60 +824,7 @@
 
                     // @TODO: make it generic for 'object type' like financialSummaries is
                     //
-                     if ( nest === "financialSummaries" )
-                    {
-                        item = {};
-                        bidx.utils.setValue( businessSummary, objectPath, item );
-
-                        $form.find( ".financialSummariesItem" ).each( function( idx, financialSummariesItem )
-                        {
-                            var $financialSummariesItem = $( financialSummariesItem )
-                            ,   year                    = $financialSummariesItem.data( "year" )
-                            ;
-
-                            // Make sure we have an actual year by parsing it to a number
-                            //
-                            year = parseInt( year, 10 );
-
-                            if ( !year )
-                            {
-                                return;
-                            }
-
-                            item[ year ] = {};
-
-                            $.each( formFields[ nest ], function( i, f )
-                            {
-                                var $input  = $financialSummariesItem.find( "[name^='" + f + "']" )
-                                ,   value   = bidx.utils.getElementValue( $input )
-                                ;
-
-                                if ( value === "" )
-                                {
-                                    value = 0;
-                                }
-
-                                item[ year ][ f ] = value;
-
-                            } );
-                        } );
-
-                        // Is there anything in the deleted years object that is not present in the new situation?
-                        //
-                        var newYears            = $.map( item, function( v, k ) { return k; } )
-                        ,   deletedYears        = $.map( financialSummary.deletedYears, function( v, k ) { return k; } )
-                        ;
-
-                        $.grep( deletedYears, function( y )
-                        {
-                            if ( $.inArray( y, newYears ) === -1 )
-                            {
-                                bidx.utils.log( "[businesssummary] deleted year", y );
-                                item[ y ] = null;
-                            }
-                        } );
-                    }
-                    else
+                    if ( nest !== "financialSummaries" )
                     {
                         if ( arrayField )
                         {
@@ -1584,8 +1056,6 @@
 
         entityData.push( memberData, businessData);
 
-        bidx.utils.log( 'entityDataaaaaa', entityData );
-
         bidx.api.call(
             "entity.bulk"
         ,   {
@@ -1677,15 +1147,14 @@
     {
         // Reset any state
         //
-        financialSummary.deletedYears = {};
 
 
         var curYear         = bidx.common.getNow().getFullYear();
 
         // Inject the save and button into the controls
         //
-        $btnSave    = $( "<a />", { "class": "btn btn-primary", href: "#save"    });
-        $btnCancel  = $( "<a />", { "class": "btn btn-primary", href: "#viewExpressForm"});
+        $btnSave    = $( "<a />", { "class": "btn btn-secondary", href: "#save"    });
+        $btnCancel  = $( "<a />", { "class": "btn btn-secondary", href: "#viewExpressForm"});
 
 
 
@@ -1721,7 +1190,7 @@
 
         if( state === 'create' )
         {
-            $btnSave.i18nText( "btnApply" ).prepend( $( "<div />", { "class": "fa fa-check fa-above fa-big" } ) );
+            $btnSave.i18nText( "btnSubmit" ).prepend( $( "<div />", { "class": "fa fa-check fa-above fa-big" } ) );
 
             $controlsForEdit.append(  $btnSave  );
         }
@@ -1732,27 +1201,6 @@
             $btnCancel.i18nText( "btnCancel" ).prepend( $( "<div />", { "class": "fa fa-times fa-above fa-big" } ) );
 
             $controlsForEdit.append( $btnCancel, $btnSave  );
-        }
-
-                //$controlsForError.empty();
-        //$controlsForError.append( $btnCancel.clone( true ) );
-
-        // Show the delete year buttons on the first/last year
-        //
-        var $firstYear  = $financialSummaryYearsContainer.find( ".financialSummariesItem:not(.addItem):first" )
-        ,   $lastYear   = $financialSummaryYearsContainer.find( ".financialSummariesItem:not(.addItem):last"  )
-        ,   firstYear   = parseInt( $firstYear.attr( "data-year" ), 10 )
-        ,   lastYear    = parseInt( $lastYear.attr( "data-year" ), 10 )
-        ;
-
-        if ( firstYear < curYear )
-        {
-            $firstYear.find( ".btnDelete" ).show();
-        }
-
-        if ( lastYear > curYear )
-        {
-            $lastYear.find( ".btnDelete" ).show();
         }
 
         _showView( "edit" );
@@ -1918,12 +1366,6 @@
 
                 _init( state );
 
-                financialSummary.addFinancialSummaryYear( "prev" );
-
-                financialSummary.addFinancialSummaryYear( "prev" );
-
-                financialSummary.selectYear( curYear - 1);
-
                 if( bidxConfig.authenticated !== false )
                 {
                     _populateScreen( );
@@ -1941,15 +1383,9 @@
 
                 $affixInfoBar.show();
 
+                _init( state );
 
-                    _init( state );
-
-                    /*financialSummary.addFinancialSummaryYear( "prev" );
-
-                    financialSummary.addFinancialSummaryYear( "prev" );*/
-
-                    _populateScreen( );
-
+                _populateScreen( );
 
                 $element.addClass( "edit" );
 
@@ -1964,25 +1400,6 @@
         state = null;
 
         bidx.common.removeAppWithPendingChanges( appName );
-
-        // Remove any created years that haven't been saved and select the current year
-        //
-        $financialSummaryYearsContainer.find( ".financialSummariesItem.new" ).remove();
-
-        var year     = bidx.common.getNow().getFullYear()
-        ,   $year    = $financialSummaryYearsContainer.find( ".financialSummariesItem[data-year='" + year + "']" )
-        ;
-
-        // No current year??
-        // Select the last one...
-        //
-        if ( $year.length === 0 )
-        {
-            $year   = $financialSummaryYearsContainer.find( ".financialSummariesItem:not(.addItem):last" );
-            year    = $year.attr( "data-year" );
-        }
-
-        financialSummary.selectYear( year );
     }
 
     // Initialize handlers

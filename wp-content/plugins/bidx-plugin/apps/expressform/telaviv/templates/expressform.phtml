@@ -51,27 +51,27 @@
     <!--<h1><?php echo _e('Usaha Pintar', 'bidxplugin')?></h1>-->
 <?php
 
-    if ( $businessSummary->logo && $businessSummary->logo->document )
+    if ( true || $businessSummary->logo && $businessSummary->logo->document )
     {
 ?>
     <div class="businessCover">
         <div class="coverImage">
             <div class="row container">
-                <div class="col-sm-8">
+                <div class="col-sm-6">
+                    <img src="https://israeldev.bidx.net/assets/sites/127/2016/02/logo-israel-dev.png" alt="Cover Image"  width="100%" height="100%" />
+                </div>
+                <div class="col-sm-6">
                     <div class="text-center">
-                        <h1 class="text-primary-dark expressTitle"><?php _e('Usaha Pintar 50', 'bidxplugin');?> </h1>
+                        <h1 class="text-primary-dark hide"><?php _e('Join Israel Dev Community', 'bidxplugin');?> </h1>
                         <h3 class="text-copy">
-                            <?php _e('A competition to find Indonesias fastest growth companies,', 'bidxplugin' ); ?></br/>
-                            <?php _e('Indonesias job creators & innovators, Tomorrows most valuable companies', 'bidxplugin' ); ?>
+                            <?php _e('Connecting between developing world challenges & Israeli innovation', 'bidxplugin' ); ?>
                         </h3>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <img src="/wp-content/plugins/bidx-plugin/apps/expressform/static/img/pintar.png" alt="Cover Image"  width="100%" height="100%" />
-                </div>
+                
             </div>
         </div>
-        <div class="logoImage">
+        <div class="logoImage hide">
             <img src="<?php echo $businessSummary->logo->document ?>" class="center-img" alt="Logo Image">
         </div>
     </div>
@@ -91,7 +91,7 @@
                 {
                     if ( $key === $currentYear ) :
                 ?>
-                        <div class="bs-cell main-padding pull-left"><i class="fa"><strong><?php _e('IDR', 'bidxplugin');?></strong></i> <span class="hidden-xs"><?php echo _e('Finance Needed', 'bidxplugin')?>:</span> <?php echo number_format($year->financeNeeded, 0, '', '.'); ?></div>
+                        <div class="bs-cell main-padding pull-left"><i class="fa fa-dollar"></i> <span class="hidden-xs"><?php echo _e('Finance Needed', 'bidxplugin')?>:</span> <?php echo number_format($year->financeNeeded, 0, '', '.'); ?></div>
                 <?php
                     endif;
                 }
@@ -102,14 +102,14 @@
     }
 ?>
 
-<div class="main-padding bg-info info-bar affix-top" data-spy="affix">
+<div class="main-padding bg-secondary-light info-bar affix-top" data-spy="affix">
     <div class="row">
         <div class="col-sm-12 pull-right text-right">
             <?php // does a user have rights to edit ( is the owner )
                 if ( $canEdit )
                 {
                 ?>
-                    <a class="btn btn-primary editBS" href="#editExpressForm/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                    <a class="btn btn-secondary editBS" href="#editExpressForm/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
 
             <?php }
              ?>
@@ -215,12 +215,28 @@
                         <select name="personalDetails.address[0].country" ></select>
                     </div>
                  </div>
-                 <div class="row">                          
+                 <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label><?php _e('Facebook profilename','bidxplugin'); ?></label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-facebook-square"></i></span>
+                            <input placeholder="Enter PROFILENAME Ex https://facebook.com/PROFILENAME" type="text" class="form-control" name="personalDetails.facebook" />
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label><?php _e('Twitter handle','bidxplugin'); ?></label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-twitter-square"></i></span>
+                            <input placeholder="Enter HANDLE Ex https://twitter.com/HANDLE" type="text" class="form-control" name="personalDetails.twitter" />
+                        </div>
+                    </div>
+                </div>
+                 <div class="row hide">                          
                     <div class="form-group col-sm-6">
                         <label><?php _e('Gender','bidxplugin'); ?></label>
                         <div class="input-group">
                             <div class="radio genderRadio">
-                                <input type="radio" value="m" id="personalDetailsM" name="personalDetails.gender" data-toggle="radio" checked/>
+                                <input type="radio" value="m" id="personalDetailsM" name="personalDetails.gender" data-toggle="radio"/>
                                 <label for="radio-personalDetailsM"><span></span><?php _e('Male','bidxplugin'); ?></label>
                             </div>
 
@@ -229,15 +245,14 @@
                                 <label for="radio-personalDetailsF"><span></span><?php _e('Female','bidxplugin'); ?></label>
                             </div>
                         </div>
-                    </div> 
-                                       
+                    </div>                                        
                 </div>
             </form>
         </div>
         <div>
             <form id="formExpressForm-GeneralOverview">
                 <h2><?php echo _e('Business details','bidxplugin') ?></h2>
-                <blockquote class="alert-info"><?php _e('This section is dedicated to outline your business. By filling in this section you will provide investors with a brief overview of your business.','bidxplugin')?></blockquote>
+                <blockquote class="alert-expressform"><?php _e('This section is dedicated to outline your business. By filling in this section you will provide investors with a brief overview of your business.','bidxplugin')?></blockquote>
                 <div class="row">
                     <!-- Name -->
                     <div class="form-group col-sm-6">
@@ -247,7 +262,7 @@
                       <!-- Stage of business -->
                     <div class="form-group col-sm-6">
                         <label><?php _e('Stage of business','bidxplugin'); ?></label>
-                        <select name="stageBusiness"></select>
+                        <select name="stageBusinessDetail"></select>
                     </div>
                     <div class="form-group col-sm-12">
                         <label><?php _e('Describe your business ','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 900 characters)','bidxplugin'); ?></small></label>
@@ -286,7 +301,7 @@
         <!-- Mentoring Details -->
         <div>
             <h2><?php echo _e('Mentoring details','bidxplugin') ?></h2>
-            <blockquote class="alert-info"><?php _e('A mentor can help you ​to ​complete and improve your business proposal. ​Please indicate here if you would like the help of a mentor and, if yes, ​select the areas of expertise where you would like support.', 'bidxplugin')?></blockquote>
+            <blockquote class="alert-expressform"><?php _e('A mentor can help you ​to ​complete and improve your business proposal. ​Please indicate here if you would like the help of a mentor and, if yes, ​select the areas of expertise where you would like support.', 'bidxplugin')?></blockquote>
             <form id="formExpressForm-MentoringDetails">
                 <div class="row">              
                     <!-- Mentor Advisory? -->
@@ -300,6 +315,10 @@
                             <div class="radio">
                                 <input type="radio" value="false" id="radio-AdvisoryNo" name="mentorAdvisory" data-toggle="radio" />
                                 <label for="radio-AdvisoryNo"><span></span><?php _e('No','bidxplugin'); ?></label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="more" id="radio-AdvisoryNMore" name="mentorAdvisory" data-toggle="radio" />
+                                <label for="radio-AdvisoryMore"><span></span><?php _e('Please send me more information','bidxplugin'); ?></label>
                             </div>
                         </div>
                     </div>                 
@@ -318,31 +337,11 @@
                 </div>
             </form>                               
         </div><!-- /Mentoring Details -->
-        <div>
-            <form id="formExpressForm-FinancialDetails">
-                <h2><?php echo _e('Financial details','bidxplugin') ?></h2>
-                <blockquote class="alert-danger">
-                    <strong>
-                        <?php _e('Your financial data is guarded by us and will never be disclosed without your consent!','bidxplugin')?>
-                    </strong>&nbsp;
-                    <?php _e('Use this section to provide a general overview of your financial position. Please be aware that we store all financial data in US Dollars.','bidxplugin')?>
-                </blockquote>
-                <div class="row">
-                <!-- Financial details -->
-                    <div class="view viewShow viewEdit">
-                        <?php
-                            $this->render( $this->folderLabel . 'financial.phtml');
-                        ?>
-                    </div>
-                    
-                </div>
-            </form><!-- /Financial details -->
-        </div>
         <hr>
         <blockquote class="alert-warning">
 <?php
             $url = '/terms-of-service';
-            $link = sprintf( __( 'By clicking on Apply button you automatically accept the <a target="_blank" href="%s">Terms of Service</a>.', 'bidxplugin' ), esc_url( $url ) );
+            $link = sprintf( __( 'By clicking on Submit button you automatically accept the <a target="_blank" href="%s">Terms of Service</a>.', 'bidxplugin' ), esc_url( $url ) );
             echo $link;
 ?>
         </blockquote>

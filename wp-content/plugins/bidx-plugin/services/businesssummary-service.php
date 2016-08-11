@@ -127,8 +127,9 @@ class BusinessSummaryService extends APIbridge
 
         $integrations               =  (array) $integrationObj;
         
-        /*
+        
         $integrations               =  NULL; 
+        /*
         if( $integrations ) // TEST
         {
             $integrations['wizehive.submission.id']     =   '3396837';  
@@ -167,7 +168,7 @@ class BusinessSummaryService extends APIbridge
         $wizehivesBpMapping   =   array(
          'id'                   => $businessSummaryId,
          'title'                => $bpData->name,
-         'country'              => $bpData->countryOperation,
+         'country'              => implode( $bpData->countryOperation, ", "),
          'stageOfBusiness'      => $bpData->stageBusiness,
          'yearSalesStarted'     => $bpData->yearSalesStarted,
          'financialSummaries'   => json_decode(json_encode($bpData->financialSummaries), true)

@@ -75,7 +75,8 @@ class BidxCommon
             $isFacebookReferer  =   true; // For express form Android Facebook Browser its needed Damnnnn
         }
 
-        if (!$is_ajax || $isFacebookReferer ) {
+        if (!$is_ajax || $isFacebookReferer ) 
+        {
             // To check whther its login page or q= redirect already checked session.
             $checkSession = $this->checkSession ();
 
