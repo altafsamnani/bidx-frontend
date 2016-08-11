@@ -120,10 +120,24 @@ class dashboard
 
                     $entrepreneurDashboard = get_option ('entrepreneur-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
                     $view->startingPage = 0;
-                    if ($entrepreneurDashboard) {
+                    if ($entrepreneurDashboard) 
+                    {
                         ($entrepreneurDashboard != 2 ) ? update_option ('entrepreneur-startingpage', 0) : $view->startingPage = $entrepreneurDashboard;
                     }
 
+                    /* 2. Service MemberProfile
+                    require_once( BIDX_PLUGIN_DIR .'/../services/member-service.php' );
+                    $memberObj = new MemberService( );
+
+      
+                    $memberResult = $memberObj->getMemberDetails(  );
+
+                    $view->data = (isset($memberResult->data)) ? $memberResult->data:NULL;
+
+                    $groupSettings      =   $groupSvc->getGroupSettings( array('wizehive') );
+
+                    $view->isWizehive   =   $groupSettings['wizehive'] ; */
+                    
                     $template = 'entrepreneur/dashboard.phtml';
                 }
                 else
