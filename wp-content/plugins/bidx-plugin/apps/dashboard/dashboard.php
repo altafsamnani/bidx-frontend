@@ -116,6 +116,8 @@ class dashboard
                 }
                 else if ( $entrepreneurProfile )
                 {
+                    $jsParams   =   array( );
+
                     wp_register_script ('dashboard', plugins_url ('static/js/entrepreneur-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
 
                     $entrepreneurDashboard = get_option ('entrepreneur-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
@@ -124,20 +126,54 @@ class dashboard
                     {
                         ($entrepreneurDashboard != 2 ) ? update_option ('entrepreneur-startingpage', 0) : $view->startingPage = $entrepreneurDashboard;
                     }
+                    require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
+                    $groupSvc       =   new GroupService( );
+                    $groupSettings  =   $groupSvc->getGroupSettings( array('wizehive') );
 
-                    /* 2. Service MemberProfile
-                    require_once( BIDX_PLUGIN_DIR .'/../services/member-service.php' );
-                    $memberObj = new MemberService( );
+                    $isWizehive   =   $groupSettings['wizehive'] ; 
 
-      
-                    $memberResult = $memberObj->getMemberDetails(  );
+                    if( $isWizehive )
+                    {
 
-                    $view->data = (isset($memberResult->data)) ? $memberResult->data:NULL;
+                        /* 2. Service MemberProfile */
+                        require_once( BIDX_PLUGIN_DIR .'/../services/member-service.php' );
+                        require_once( BIDX_PLUGIN_DIR .'/../services/businesssummary-service.php' );
 
-                    $groupSettings      =   $groupSvc->getGroupSettings( array('wizehive') );
+                        $businessSummaryObj =   new BusinessSummaryService( );
 
-                    $view->isWizehive   =   $groupSettings['wizehive'] ; */
+                        $memberObj          =   new MemberService( );
+          
+                        $memberResult       =   $memberObj->getMemberDetails(  );
+
+                        $memberData         =   (isset($memberResult->data)) ? $memberResult->data:NULL;
+
+                        $integrationObj     =   (array) isset( $memberData->member->integrations ) ? $memberData->member->integrations : false ;
+
+                        $integrations       =   ( $integrationObj ) ? (array) $integrationObj : NULL ;
+
+                        
+
+                        $businessSummary    =   isset ($memberData->wp->entities->bidxBusinessSummary) ? $memberData->wp->entities->bidxBusinessSummary : NULL;
+
+
+
+                        foreach ($businessSummary as $index => $business) 
+                        { 
+
+                            if( !$integrations || ($integrations && $integrations['wizehive.businessplan.id'] == $business->bidxMeta->bidxEntityId) )
+                            {
+                                $wizehivesFormData[ $business->bidxMeta->bidxEntityId ]  =  $businessSummaryObj->getWizehivesSubmissionData( $memberData, $business );
+                            }
+                        } 
+                    }
                     
+                    $view->isWizehive   =   $isWizehive;
+
+                    //Localize to js variables, currently to use focusexpertise for mentoring to display match
+                    //$jsParams = array(  'wizehive' => $wizehivesFormData  );
+                    
+                    wp_localize_script ('bidx-data', '__wizeHive', $wizehivesFormData);
+
                     $template = 'entrepreneur/dashboard.phtml';
                 }
                 else

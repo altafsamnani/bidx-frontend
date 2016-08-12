@@ -48,14 +48,10 @@
 
                 profileLink     =   $("<div />").append($alert.find("a").clone()).html();
 
-                bidx.utils.log('profileLinkkkk', profileLink);
-
                 $alert.removeClass( "bg-Requested" ).addClass( "bg-Accepted" );
                 $alertMessage.empty( );
 
                 alertHtml   =   bidx.construct.actionMessage( options, "mentor" );
-
-                bidx.utils.log('options', options);
 
                 $alertMessage
                 .prepend( bidx.construct.profileThumb( request.mentorId ))
@@ -472,8 +468,6 @@
         {
             params.mentorId = $(".btn.btn-mentor.disabled").attr("id");
         }
-
-        bidx.utils.log("params!!! ", params);
 
         bidx.commonmentordashboard.doCreateMentorRequest(
         {

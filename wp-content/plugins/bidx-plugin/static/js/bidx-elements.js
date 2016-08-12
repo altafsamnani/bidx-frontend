@@ -241,9 +241,58 @@
         });
     };
 
+
+    var wizeHiveForm    = function ( item )
+    {
+        var $wizeHiveForm   =   ''
+        ,   wizeHive        =   window.__wizeHive
+        ,   wizeHiveData    =   ( wizeHive && _.has( wizeHive, item.bidxMeta.bidxEntityId ) ) ? wizeHive[  item.bidxMeta.bidxEntityId ] : false
+        ;
+
+       /* bidx.utils.log( 'wizeHive', wizeHive);
+        bidx.utils.log( 'item.bidxMeta.bidxEntityId', item.bidxMeta.bidxEntityId);
+*/
+        if( wizeHiveData )
+        {
+            $wizeHiveForm   =   $( "<form />", { "class": "wizehive pull-right", "id": "wizehive-sso", "method": "post", "action": wizeHiveData.actionurl} )
+                                .append
+                                (
+                                    $( "<input />", { "name": "user" , "type": "hidden", "value":  wizeHiveData.user } )
+                                )
+                                .append
+                                (
+                                    $( "<input />", { "name": "timestamp" , "type": "hidden", "value":  wizeHiveData.timestamp } )
+                                )
+                                .append
+                                (
+                                    $( "<input />", { "name": "token" , "type": "hidden", "value":  wizeHiveData.token } )
+                                )
+                                .append
+                                (
+                                    $( "<input />", { "name": "form" , "type": "hidden", "value":  wizeHiveData.form } )
+                                )
+                                .append
+                                (
+                                    $( "<button />", { "id": "wizehive" , "type": "submit", "value":  "Send", "class": "btn btn-success btn-xs btn-wizehive main-margin-half" } )
+                                    .append
+                                    (
+                                        $( "<i />", { "class" : "fa fa-globe" } )
+                                    )
+                                    .append
+                                    (
+                                        $( "<span />", { "html" : wizeHiveData.btnLabel })
+                                    )
+                                );
+        }
+        
+        return $wizeHiveForm;
+
+    };
+
     var businessCardView = function ( item )
     {
-        var card;
+        var card
+        ;
 
         _getStaticDataVal( item );
 
@@ -263,6 +312,10 @@
                     .append
                     (
                         $( "<a />", { "href": bidx.common.url('businesssummary') + item.bidxMeta.bidxEntityId, "class": "btn btn-primary btn-xs pull-right info-action main-margin-half", "html": bidx.i18n.i( "bsViewBusiness" ) } )
+                    )
+                    .append
+                    (
+                        wizeHiveForm( item )
                     )
                 )
                 .append
@@ -1082,7 +1135,6 @@
                               bidx.globalChecks.isMentorDashboard() ||
                               bidx.globalChecks.isInvestorDashboard() ) )
                         {
-                            bidx.utils.log( 'dataaa',data);
                             statusMsgLbl    =   ( request.mentorId === loggedInMemberId ) ? 'youAreMentoring' : 'isMentoring';
                             text            =   " " + bidx.i18n.i( statusMsgLbl ) ;
                         }
@@ -1099,28 +1151,23 @@
                         {
                             if ( data.relChecks.isTheMentor )
                             {
-                                bidx.utils.log('11');
                                 text = bidx.globalChecks.isInvestorDashboard() ? bidx.i18n.i( "youAskedMentorFrom" ) + " " :  bidx.i18n.i( "youAskedMentor" ) + " ";
                             }
                             else if ( !data.relChecks.isTheMentor && !bidx.globalChecks.isOwnProfile() && data.relChecks.showBusinessInfo )
                             {
-                                bidx.utils.log('22');
                                 text = bidx.i18n.i( "youAskedMentorForBusiness" ) + " ";
                             }
                             else
                             {
-                                bidx.utils.log('33');
                                 text = bidx.i18n.i( "youAskedFromMentor" ) + " ";
                             }
                         }
                         else if ( data.relChecks.isTheMentor && !data.relChecks.isTheInitiator )
                         {
-                            bidx.utils.log('44');
                             text = " " + bidx.i18n.i( "wantsYouToMentor" );
                         }
                         else
                         {
-                            bidx.utils.log('55');
                             text = data.relChecks.showBusinessInfo ? text = " " + bidx.i18n.i( "wantsToMentor" ) + " " : text = " " + bidx.i18n.i( "wantsToMentor" );
                         }
 

@@ -426,7 +426,6 @@
             {
                 if ( (!req.relChecks.isTheInitiator && !req.relChecks.isTheMentor ) || req.request.status === "accepted" )
                 {
-                    bidx.utils.log('1', req);
                     memberInfo  =   bidx.common.tmpData.members[req.request.mentorId];
 
                     $bsEl.last().find( ".alert-message" ).last()
@@ -443,7 +442,6 @@
                 }
                 else
                 {
-                    bidx.utils.log('2', req);
                     $bsEl.last().find( ".alert-message" ).last()
                     .prepend
                     (
@@ -460,7 +458,6 @@
             {
                 if ( req.relChecks.isTheInitiator && !req.relChecks.isTheMentor && req.request.status !== "accepted")
                 {
-                    bidx.utils.log('3', req);
                     memberInfo  =   bidx.common.tmpData.members[req.request.mentorId];
                     $bsEl.last().find( ".alert-message" ).last()
                     .prepend
@@ -478,7 +475,6 @@
                        // && bidx.globalChecks.isInvestorDashboard()
                         && req.request.status === "accepted" )
                 {
-                    bidx.utils.log('4', req);
 
                     $bsEl.last().find( ".alert-message" ).last()
                     .prepend
@@ -496,7 +492,6 @@
                         && bidx.globalChecks.isInvestorDashboard()
                         && req.request.status === "requested" )
                 {
-                    bidx.utils.log('5', req);
                     $bsEl.last().find( ".alert-message" ).last()
                     .prepend
                     (
@@ -513,7 +508,6 @@
                       //  && bidx.globalChecks.isInvestorDashboard()
                         )
                 {
-                    bidx.utils.log('6', req);
                    // memberId    =   bidx.common.tmpData.businesses[req.request.entityId].bidxMeta.bidxOwnerId;
                    memberId       =   req.request.initiatorId;
                     if(req.request.status !== "accepted")
@@ -538,7 +532,6 @@
                 }
                 else
                 {
-                    bidx.utils.log('7', req);
                     memberId    =   ( req.relChecks.isTheInitiator && req.request.status !== "accepted") ?  req.request.initiatorId : req.request.mentorId;
                     //memberInfo  =   bidx.common.tmpData.members[ memberId ];
                     if( (!req.relChecks.isTheInitiator && req.request.status !== "accepted" )

@@ -128,7 +128,7 @@ class BusinessSummaryService extends APIbridge
         $integrations               =  (array) $integrationObj;
         
         
-        $integrations               =  NULL; 
+        //$integrations               =  NULL; 
         /*
         if( $integrations ) // TEST
         {
