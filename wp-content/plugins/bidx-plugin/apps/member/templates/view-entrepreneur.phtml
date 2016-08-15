@@ -20,9 +20,7 @@ $businessSummaryBidxMeta    = isset( $businessSummary->bidxMeta ) ? $businessSum
 
 $integrationObj             = (array) isset( $this->data->member->integrations ) ? $this->data->member->integrations : false ;
 
-$integrations               = (array) $integrationObj;
-
-
+$integrations               = ( $integrationObj ) ? (array) $integrationObj : NULL ;
 
 /*
 $integrations               = NULL;

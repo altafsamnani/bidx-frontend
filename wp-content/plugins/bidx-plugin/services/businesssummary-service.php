@@ -25,9 +25,11 @@ class BusinessSummaryService extends APIbridge
 
     private $submitUrl  =   'https://app.wizehive.com/appform/display';
 
-    private $editUrl    =   'https://app.wizehive.com/appform/edit';
+    //private $editUrl    =   'https://app.wizehive.com/appform/edit';
+    private $editUrl  =   'https://app.wizehive.com/appform/display';
 
-    private $printUrl   =   'https://app.wizehive.com/appform/print';
+    //private $printUrl   =   'https://app.wizehive.com/appform/print';
+    private $printUrl  =   'https://app.wizehive.com/appform/display';
 
     public function __construct ()
     {
@@ -128,7 +130,7 @@ class BusinessSummaryService extends APIbridge
         $integrations               =  (array) $integrationObj;
         
         
-        $integrations               =  NULL; 
+        //$integrations               =  NULL; 
         /*
         if( $integrations ) // TEST
         {

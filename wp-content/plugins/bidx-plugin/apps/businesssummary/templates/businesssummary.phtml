@@ -29,7 +29,7 @@ $memberData         = $this->memberData;
 
 $integrationObj     = isset( $this->memberData->member->integrations ) ? $this->memberData->member->integrations : false ;
 
-$integrations       = (array) $integrationObj;
+$integrations       = ( $integrationObj ) ? (array) $integrationObj : NULL ;
 
 //$integrations       = NULL;
 
@@ -317,9 +317,9 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                      
                     if( $this->isWizehive && ( $ownerId == $loggedInUserId ) )
                     { 
-                       
                         if( !$integrations || ($integrations && $integrations['wizehive.businessplan.id'] == $businessSummaryId) )
                         {
+
                                                                 
                         ?>
                         <form id="wizehive-sso" method="post" action="<?php echo $wizehivesFormData['actionurl']; ?>">
