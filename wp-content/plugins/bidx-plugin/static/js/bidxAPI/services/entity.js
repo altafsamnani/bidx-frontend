@@ -104,6 +104,33 @@
         } );
     };
 
+    service.getBulk = function( params )
+    {
+        var url
+        ,   method = "POST"
+        ;
+
+        url =   baseUrl + '/bulk';
+
+        api._call(
+        {
+            method:         method
+        ,   groupDomain:    params.groupDomain
+        ,   baseUrl:        url
+        ,   data:           params.data
+        ,   success:        function( data, textStatus, jqXhr )
+            {
+                params.success( data, textStatus, jqXhr );
+            }
+        ,   error:          function( jqXhr, textStatus, errorThrown )
+            {
+                params.error( jqXhr, textStatus, errorThrown );
+            }
+        } );
+    };
+
+
+
 
 
     api.entity = service;

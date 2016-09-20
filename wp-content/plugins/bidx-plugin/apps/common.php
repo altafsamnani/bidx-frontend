@@ -395,6 +395,12 @@ class BidxCommon
             //Redirect URL Logic
             switch ($module) {
 
+                case 'evaluation':
+
+                    $this::$bidxSession[$subDomain]->webapp = true;
+
+                break;
+
                 case 'expressform':
                     $memberId           = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
                     $businessSummaryId  = ( $id ) ? $id : NULL;
@@ -421,8 +427,6 @@ class BidxCommon
                     }*/
 
                     $this::$bidxSession[$subDomain]->expressForm = $isActivated;
-
-
 
                     break;
 

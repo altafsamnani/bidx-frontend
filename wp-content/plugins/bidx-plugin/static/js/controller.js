@@ -358,6 +358,7 @@
         ,   'editBusinessSummary(/:id)(*splat)':                'editBusinessSummary'
         ,   'createBusinessSummary':                            'createBusinessSummary'
         ,   'viewBusinessSummary':                              'viewBusinessSummary'
+        ,   'viewEvaluationBusiness':                           'viewEvaluationBusiness'
 
         ,   'editExpressForm(/:id)(*splat)':                    'editExpressForm'
         ,   'createExpressForm':                                'createExpressForm'
@@ -742,6 +743,20 @@
              _navigateToApp
             (
                 "businesssummary"
+            ,   {
+                    requestedState: "view"
+                }
+            );
+        }
+    ,   viewEvaluationBusiness:          function()
+        {
+            bidx.utils.log( "AppRouter::viewEvaluationBusiness" );
+
+            mainState       = "viewEvaluationBusiness";
+
+             _navigateToApp
+            (
+                "evaluation"
             ,   {
                     requestedState: "view"
                 }

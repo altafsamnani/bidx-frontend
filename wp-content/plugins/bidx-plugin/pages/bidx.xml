@@ -225,6 +225,13 @@
             <mapping>(.*)expressform</mapping>
             <content>[bidx app="expressform"]</content>
         </post>
+         <post>
+            <post_id>33</post_id>
+            <name>evaluation</name>
+            <title>Evaluation</title>
+            <mapping>(.*)evaluation</mapping>
+            <content>[bidx app="evaluation"]</content>
+        </post>
     </posts>
 
     <widgets>

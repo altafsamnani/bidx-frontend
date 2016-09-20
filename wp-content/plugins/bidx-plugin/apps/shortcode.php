@@ -267,6 +267,7 @@ class BidxShortcode
             wp_register_script ('bidx-location', $bidxJsDir . '/bidx-location.js', array ('jquery', 'bidx-utils', 'jquery-ui-widget','google-jsapi'), '20130904', true);
             wp_register_script ('bidx-chosen',  $bidxJsDir . '/bidx-chosen.js', array ('jquery', 'chosen'),  '20131118', TRUE);
             wp_register_script ('bidx-mentor',  $plugins_url . '/mentor/static/js/common-mentordashboard.js', array ('jquery'), '20150713', TRUE);
+            //wp_register_script ('bidx-swype',  'http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js', array ('jquery'), '20150713', TRUE);
 
             wp_enqueue_script ('bidx-common');
             wp_enqueue_script ('bidx-controller');

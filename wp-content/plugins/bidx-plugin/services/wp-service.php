@@ -1054,6 +1054,25 @@ function get_redirect ($url, $requestData, $domain = NULL)
 			}
             $redirectLang           =   ($currentLanguage != 'en') ? '/'.$currentLanguage : '/';
             $redirect               =   ($redirect) ? $redirect : $redirectLang;*/
+
+         
+            if( !$redirect )
+            {
+                $webapp   =   get_option('bidx-webapp');
+
+                if( $webapp )
+                {
+                    $sessionSvc = new SessionService( );
+
+                    $mentorProfile = $sessionSvc->isHavingProfile ('bidxMentorProfile', $requestData );
+
+                    if( $mentorProfile )
+                    {
+                        $redirect   =   '/evaluation' ;
+                    }
+                }
+            }
+
             $requestData->redirect  =   $redirect;
 
             break;
@@ -2500,6 +2519,18 @@ function bidx_general_settings() {
             {
               delete_option( 'bidx-wizehive-slug' );
             }*/
+
+
+            $webapp = ( isset( $_POST['bidx-webapp'] ) ) ? $_POST['bidx-webapp'] : false;
+     
+            
+            update_option ('bidx-webapp', $webapp);
+
+            $competitionId  = ( isset( $_POST['bidx-evaluation-competitionid'] ) ) ? $_POST['bidx-evaluation-competitionid'] : false;
+     
+            
+            update_option ('bidx-evaluation-competitionid', $competitionId);
+            
 
     	    $ssoRedirect = ( isset( $_POST['bidx-sso-redirect'] ) ) ? $_POST['bidx-sso-redirect'] : false;
 
