@@ -62,25 +62,27 @@ class evaluation
 
         $sessionData        =   BidxCommon::$staticSession;
 
+        $competitionData    =   (!empty($sessionData->competition) ) ? $sessionData->competition : NULL;
+
         $businessSummaryId  =   null;
 
-        $webapp             =   get_option('bidx-webapp');
+       // $webapp             =   get_option('bidx-webapp');
 
-        $competitionId      =   get_option('bidx-evaluation-competitionid');
-        
-        if ( $webapp && !is_null( $competitionId )) 
+      //  $competitionId      =   get_option('bidx-evaluation-competitionid');
+
+        if ( $competitionData ) 
         {
-            /* 2. Service Business Summary (entity)*/
+            /* 2. Service Business Summary (entity)
             require_once( BIDX_PLUGIN_DIR .'/../services/competition-service.php' );
 
             $competitionObj = new CompetitionService( );
 
-            /* 3. Render Services for Initial View Display */
-            $competitionData = $competitionObj->getCompetitionDetails( $competitionId );
+            //3. Render Services for Initial View Display 
+            $competitionData = $competitionObj->getCompetitionDetails( $competitionId );*/
 
-            $view->data = $competitionData->data;
+            $view->data = $competitionData;
 
-            $jsData     = json_decode(json_encode($competitionData->data), true);
+            $jsData     = json_decode(json_encode($competitionData), true);
 
             wp_localize_script ('bidx-data', '__bidxCompetition', $jsData);
 

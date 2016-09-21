@@ -60,7 +60,9 @@
 
     $isWebApp       =   $session->webapp;
 
-    $hiddenXs       =   ( $isWebApp ) ? 'hidden-xs' : '';
+    $competitionId  =   $session->competitionId;
+
+    $hiddenXs       =   ( $isWebApp ) ? 'hidden-xs hide' : '';
 
     // check for the widget
     if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
@@ -187,7 +189,8 @@
 
                 if( $isWebApp )
                 { ?>
-                    <li ><a href="#joinGroup"><i class="fa fa-gavel"></i>&nbsp;<?php _e('Evaluate', 'bidxplugin')?></a></li>
+                    <li ><a href="<?php echo _l('evaluation');?>"><i class="fa fa-gavel"></i>&nbsp;<?php _e('Evaluate', 'bidxplugin')?></a></li>
+                    <li ><a href="<?php echo _l('competition'). '/'. $competitionId;?>"><i class="fa fa-globe"></i>&nbsp;<?php _e('Competition', 'bidxplugin')?></a></li>
 <?php           }
 
                 if ( !$inGroup )

@@ -1055,20 +1055,41 @@ function get_redirect ($url, $requestData, $domain = NULL)
             $redirectLang           =   ($currentLanguage != 'en') ? '/'.$currentLanguage : '/';
             $redirect               =   ($redirect) ? $redirect : $redirectLang;*/
 
+
+
          
             if( !$redirect )
             {
-                $webapp   =   get_option('bidx-webapp');
+                $webapp                 =   get_option('bidx-webapp');
 
-                if( $webapp )
+                $competitionId          =   get_option('bidx-evaluation-competitionid');
+
+                
+
+                if ( $webapp && $competitionId )
                 {
-                    $sessionSvc = new SessionService( );
+                    /* 2. Service Business Summary (entity)*/
+                    require_once( BIDX_PLUGIN_DIR .'/../services/competition-service.php' );
 
-                    $mentorProfile = $sessionSvc->isHavingProfile ('bidxMentorProfile', $requestData );
+                    $competitionObj     =   new CompetitionService( );
 
-                    if( $mentorProfile )
+                    /* 3. Render Services for Initial View Display */
+                    $competition        =   $competitionObj->getCompetitionDetails( $competitionId );
+
+                    $competitionData    =   (!empty( $competition->data )) ? $competition->data : NULL;
+
+
+                    if( $competitionData  )
                     {
-                        $redirect   =   '/evaluation' ;
+                        $competitionMeta    =   (!empty( $competitionData->bidxMeta )) ? $competitionData->bidxMeta : NULL ;
+
+
+                        $competitionRoles   =   (!empty( $competitionMeta->bidxCompetitionRoles )) ? $competitionMeta->bidxCompetitionRoles : NULL ;
+
+                        if( in_array('COMPETITION_ASSESSOR' , $competitionRoles ) || in_array( 'COMPETITION_JUDGE', $competitionRoles ) )
+                        {
+                            $redirect = '/evaluation';
+                        }
                     }
                 }
             }

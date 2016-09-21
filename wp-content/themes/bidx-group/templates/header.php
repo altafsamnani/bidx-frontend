@@ -3,7 +3,9 @@
 
     $isWebApp   =   $session->webapp;    
 
-    $hiddenXs   =   ( $isWebApp ) ? 'hidden-xs' : '';
+    $hiddenXs   =   ( $isWebApp ) ? 'hidden-xs hide' : '';
+
+    $hiddenOffset   =   ( $isWebApp ) ? 'col-sm-offset-6' : '';
 
     $authClass  = "not-auth";
 
@@ -41,7 +43,7 @@
                     get_template_part('templates/searchform');
 ?>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-6 <?php echo $hiddenOffset;?>">
 <?php
                     echo do_shortcode( '[bidx app="group" view="navbarshort"]' );
 ?>
