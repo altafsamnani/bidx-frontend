@@ -1,0 +1,218 @@
+<div class="evaluationContainer">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="eval-list">
+                <!-- LOAD -->
+                <div class="top-margin-lineheight viewLoad alert alert-info text-center main-padding">
+                    <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e("Loading businesses, please wait...", "bidxplugin");?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="likeBtn hide affixLikeBtn" data-spy="affix" data-affix-top="505">   
+    <button type="button" data-bpid="" class="btn btn-recommend btn-success btn-circle btn-xl"><i class="fa fa-fw fa-thumbs-up faa-vertical animated"></i></button>
+    <button type="button" data-bpid="" class="btn btn-recommend btn-danger btn-circle btn-xl"><i class="fa fa-fw fa-thumbs-down faa-vertical animated"></i></button>
+</div>
+
+
+<script type="text/html" id="bp-snippet">
+<!--
+    <div data-role='page' class="businessSummary box-border top-margin-lineheight" id="businessSummary%entityId%" data-bsid="%businessSummaryId%" data-ownerid="%ownerId%" >
+    <div data-role='content'>
+    <div class="businessCover">
+        <div class="coverImageContainer hide">
+            <div class="coverImage ">
+                <img src="%coverDocument%" alt="Cover Image" data-initop="%coverTop%" style="position: relative; top: %coverTop%px">
+            </div>
+        </div>
+        <div class="logoImage hide">
+            <img src="%logoDocument%" class="center-img" alt="Logo Image">
+        </div>
+    </div>
+    <div class="bg-gray control-bar">
+        <div class="bs-info hide-overflow">
+            <div class="bs-cell main-padding pull-left"><i class="fa fa-line-chart"></i> 
+                <span class="hidden-xs"><?php echo _e('Completed', 'bidxplugin')?>:</span> 
+                <span>%bidxCompletionMesh%</span>
+            </div>
+            <div class="bs-cell main-padding pull-left hidden-xs bs-score">
+                <div class="rating-wrapper">
+                    <div class="rating-no-score %bidxRatingAverage% hide">
+                        <span class="rating-score-text"><?php echo _e('No Score', 'bidxplugin'); ?></span>
+                    </div>
+                    <div class="rating-score %ratingAvg%">
+                        <i class="fa fa-star"></i>
+                        <span class="hidden-xs"><?php echo _e('Score', 'bidxplugin')?>:</span> <span class="rating-average">%bidxRatingAverage%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bs-cell main-padding pull-left"><i class="fa fa-refresh"></i> <span class="hidden-xs"><?php echo _e('Last Update', 'bidxplugin')?>:</span> %modified%
+            </div>
+            <div class="bs-cell main-padding pull-left"><i class="fa fa-dollar"></i> <span class="hidden-xs"><?php echo _e('Finance Needed', 'bidxplugin')?>:</span> %financingNeeded%</div>
+        </div>
+    </div>
+
+    <div class="show">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+                <h1>
+                    %name%
+                    <small>&nbsp;<?php echo _e( 'by', 'bidxplugin' ); ?>&nbsp;
+                        <a href="<?php echo _l('member')."/"; ?>%ownerId%">%bidxOwnerDisplayName%</a>
+                    </small>
+                </h1>
+
+                <h4>%slogan%</h4>
+
+                <div class="video-wrapper embed-responsive embed-responsive-16by9 bottom-margin-lineheight hide">%parseVideos%</div>
+
+                <a target="_blank" href="%externalAudioPitch%" class="audioPitch btn btn-lg btn-primary btn-block hide"><?php _e('Listen the audio pitch', 'bidxplugin')?></a>
+
+                <div class="view viewSummary main-padding-vertical">
+                    <h3 class="text-uppercase"><?php _e('In a few words', 'bidxplugin')?></h3>
+                    <div>
+                        %summary%
+                    </div>
+                </div>
+                <div class="view viewCompany main-padding-vertical">
+                    <h3 class="text-uppercase"><?php _e('General Overview', 'bidxplugin');?></h3>
+                    <table class="table table-condensed table-bottom-border">
+                        <tbody>
+                            <tr>
+                                <td><?php _e('Stage of business','bidxplugin');?></td>
+                                <td>%stageBusiness%</td>
+                            </tr>
+                            <tr>
+                                <td><?php _e('Company registration','bidxplugin');?></td>
+                                <td>%companyRegistration%</td>
+                            </tr>
+                        </tbody>
+                    </table>    
+                </div>
+ 
+               <div class="main-padding-vertical">
+                <h3 class="text-uppercase"><?php _e('The Business', 'bidxplugin');?></h3>
+                    <table class="table table-condensed table-bottom-border">
+                        <tbody>
+                            <tr class="view viewIndustry" >
+                                <td><?php _e('Industry','bidxplugin') ;?></td>
+                                <td>%industry%</td>
+                            </tr>
+                            <tr class="view viewCountryOperation">
+                                <td><?php _e('Country of business','bidxplugin') ;?></td>
+                                <td>%country%</td>
+                            </tr>
+                            <tr class="view viewSocialImpact">
+                                <td><?php _e('Social impact','bidxplugin') ;?></td>
+                                <td>%socialImpact%</td>
+                            </tr>
+                            <tr class="view viewEnvImpact">
+                                <td><?php _e('Environmental impact','bidxplugin') ;?></td>
+                                <td>%envImpact%</td>
+                            </tr>
+                            <tr class="view viewConsumerType">
+                                <td><?php _e('Main customer type','bidxplugin') ;?></td>
+                                <td>%consumerType%</td>
+                            </tr>
+                        </tbody>
+                    </table>    
+                </div>
+                
+                <div class="view viewFinancialSummaries">
+                    <h3 class="text-uppercase"><?php _e('Financial Details', 'bidxplugin')?></h3>
+                    <table class="table table-bordered table-financial">
+                        <tbody class="financeBody">
+                            <tr>
+                                <th class="text-center td-15" rowspan="2"><?php _e('Year', 'bidxplugin');?></th>
+                                <th class="text-center hidden-sm hidden-xs" colspan="3"><?php _e('Income statement', 'bidxplugin');?></th>
+                                <th class="text-center visible-sm visible-xs"><?php _e('Income statement', 'bidxplugin');?></th>
+                                <th class="text-center" rowspan="2"><?php _e('Finance needed', 'bidxplugin');?> * </th>
+                                <th class="text-center hidden-sm hidden-xs" rowspan="2"><?php _e('Employees', 'bidxplugin');?> ** </th>
+                            </tr>
+                            <tr>
+                                <th class="text-center td-15 hidden-sm hidden-xs"><small><?php _e('Sales revenues', 'bidxplugin');?></small></th>
+                                <th class="text-center td-15 hidden-sm hidden-xs"><small><?php _e('Operational costs', 'bidxplugin');?></small></th>
+                                <th class="text-center td-15"><small><?php _e('Total income', 'bidxplugin');?></small></th>
+                            </tr>             
+                        </tbody>
+                    </table>
+                    <p>
+                        * <small><?php _e('from external financiers in US Dollars', 'bidxplugin')?></small><br>
+                        ** <small><?php _e('being directly paid in this business', 'bidxplugin')?></small>
+                    </p>
+                </div>
+
+                <div class="view viewMentorAdvisory main-padding-vertical ">
+                    <h3 class="text-uppercase"><?php _e('For Mentors', 'bidxplugin')?></h3>
+                    <table class="table table-condensed table-bottom-border">
+                        <tbody>
+                            <tr>
+                                <td><?php _e('Expertise needed','bidxplugin');?></td>
+                                <td>%expertiseNeeded%</td>
+                            </tr>
+                            <tr>
+                                <td><?php _e('Expertise needed in detail','bidxplugin');?></td>
+                                <td>%expertiseNeededDetail%</td>
+                            </tr>
+                        </tbody>
+                    </table> 
+                 </div>   
+
+                 <div class="view viewAttachment main-padding-vertical">
+                    <h3 class="text-uppercase"><?php _e('Attached Documents', 'bidxplugin')?></h3>
+                    <table class="table table-bordered table-attachment">
+                        <tbody class="attachmentBody">
+                            <tr>
+                                <th>Name</th>
+                                <th class="hidden-sm hidden-xs">Purpose</th>
+                                <th class="hidden-sm hidden-xs">Type</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    -->
+</script>
+
+
+<script type="text/html" id="financial-snippet">
+<!--
+        <td class="text-center">%year%</td>
+        <td class="text-right hidden-sm hidden-xs">
+            <small>$</small> %revenue%
+        </td>
+        <td class="text-right hidden-sm hidden-xs">
+            <small>$</small> %operationalCost%
+        </td>
+        <td class="text-right">
+            <small>$</small> %totalIncome%
+        </td>
+        <td class="text-right">
+            <small>$</small> %financeNeeded%
+        </td>
+        <td class="text-center hidden-sm hidden-xs">
+            %employees%
+        </td>
+    -->
+</script>
+
+<script type="text/html" id="attachment-snippet">
+<!--
+    <tr>
+        <td>
+            <a class='word-break' href='%document%'>%documentName%</a>
+        </td>
+         <td class='hidden-sm hidden-xs'>
+            %purpose%
+         </td>
+         <td class='hidden-sm hidden-xs'>
+            %documentType%
+        </td>
+    </tr>
+-->
+</script>
+
