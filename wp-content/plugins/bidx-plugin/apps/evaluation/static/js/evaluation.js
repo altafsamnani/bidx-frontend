@@ -375,11 +375,12 @@
         ;
 
 
-        offset  =   ( bpCounter === businessSummary.length ) ? 0 : bpCounter;
+        bpCounter  =   ( bpCounter === businessSummary.length ) ? 0 : bpCounter;
+
+
+        item    =   businessSummary[ bpCounter ];
 
         bpCounter++;
-
-        item    =   businessSummary[ offset ];
 
         bidxMeta        =   bidx.utils.getValue(item, 'bidxMeta');
         completeness    =   bidx.utils.getValue(bidxMeta, 'bidxCompletionMesh');
@@ -389,7 +390,7 @@
 
        // $financeItem.empty( );
 
-        bidx.utils.log('$evallist', offset, item);
+        bidx.utils.log('$evallist', bpCounter, item);
 
         $entityElement      =   $("#bp-snippet");
         snippit             =   $entityElement.html().replace(/(<!--)*(-->)*/g, "");
@@ -607,7 +608,7 @@
         };
 
         $likeBtn.removeClass('hide');
-        
+
         showElements(
         {
             elementArr: conditionalElementArr
