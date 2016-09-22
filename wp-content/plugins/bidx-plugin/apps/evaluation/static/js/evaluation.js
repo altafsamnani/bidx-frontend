@@ -690,7 +690,21 @@
             ,   data
             ,   role
             ,   action
+            ,   btnType                 =   $this.data('btntype')
             ;
+
+            if( btnType ==   'dislike' ) //Overwrite if Its Dislike, Like is set beforehand in isBusinessPlanForRecommendation
+            {
+                if( roleAction.role == 'COMPETITION_ASSESSOR' )
+                {
+                    roleAction.action  =   'NOT_FINALIST' ;
+                }
+
+                if( roleAction.role == 'COMPETITION_JUDGE' )
+                {
+                    roleAction.action  =   'NOT_WINNER';
+                }
+            }
 
             data    =   {
                             "role":           roleAction.role,
