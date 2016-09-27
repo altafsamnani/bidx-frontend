@@ -78,9 +78,9 @@ class search {
 
 			echo "<pre>heree";print_r( $view -> results);echo "</pre>";exit; */
 
+			wp_localize_script ('bidx-data', '__bidxCounter', true);
+
 			return $view->render( 'widget-counter.phtml' );
-			//	<strong class="counterTxt"data-to='1233' data-easing='Business plans'>0</strong>
-			//  <strong class="counterTxt"data-to='342' data-easing='Mentors'>0</strong>
 
 			break;
 

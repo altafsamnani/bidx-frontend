@@ -69,6 +69,7 @@
     ,   date                    =  (new Date)
     ,   currentYear             =  date.getFullYear()
     ,   currentDate             =  date.toISOString()
+    ,   counterVars             =  window.__bidxCounter || null
     ;
 
     // Constants
@@ -3676,10 +3677,16 @@
         state = null;
     }
 
-    _oneTimeSetup();
-    
-    _portalCountSetup();
-
+    if( counterVars )
+    {
+        bidx.utils.log('I am in if');
+        _portalCountSetup ();
+    }
+    else
+    {
+        bidx.utils.log('I am in else');
+        _oneTimeSetup();
+    }
 
     //expose
     var search =
