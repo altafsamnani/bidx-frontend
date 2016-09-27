@@ -3,6 +3,45 @@
     visibility: hidden;
 }
 
+.counter
+{
+    strong
+    { 
+      font-size:50px;
+      color:#444;
+      vertical-align:middle;
+    }
+    strong:after
+    { 
+        content:' 'attr(data-easing); 
+        opacity:0.3; 
+        font-size:0.4em; 
+        margin-left:10px; 
+    }
+
+    .time
+    { 
+        position:absolute; 
+        top:0; 
+        right:10px; 
+        width:20%; 
+        margin-top:20px; 
+        color:#666; 
+        padding:1em 2em; 
+        background:#EEE; 
+        font-weight:bold; 
+        text-align:center; 
+    }
+    .time span
+    { 
+        opacity:0.5; 
+    }
+    .time span:before
+    { 
+        content:' / '; 
+    }
+}
+
 #searchHome
 {
     .viewSavesearch .popover

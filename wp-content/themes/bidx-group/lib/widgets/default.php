@@ -258,6 +258,17 @@ With just a few adjustments, you will be ready to welcome your first members.</p
     $count++;
     update_option('widget_'.$widget_name,$widgets);
 
+    // Counter Wdiget
+    //
+    $widget_name = 'counter_widget';
+    $widgets = get_option('widget_'.$widget_name);
+    $sidebar_options[$add_to_sidebar[0]][] = $widget_name.'-'.$count;
+    $widgets[$count] = array(
+        'title' => 'Animated Counter',
+    );
+    $count++;
+    update_option('widget_'.$widget_name,$widgets);
+
     // Add widget to sidebar:
     //
     // $widget_name = 'sponsors_widget';
@@ -279,8 +290,10 @@ With just a few adjustments, you will be ready to welcome your first members.</p
     // );
     // $count++;
     // update_option('widget_'.$widget_name,$widgets);
-
+    
     update_option('sidebars_widgets',$sidebar_options);
+
+    
 
 }
 add_action('after_switch_theme', 'set_default_theme_widgets');

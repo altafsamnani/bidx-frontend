@@ -208,6 +208,8 @@ class BidxShortcode
             wp_register_script ('jquery-raty', $vendorDir . '/raty-master/lib/jquery.raty.js', array ('jquery'), '2.7.0', TRUE);
             wp_register_script ('chosen', $vendorDir . '/chosen_v1.0.0/chosen.jquery.js', array ('jquery'), '20131111', TRUE);
 
+            wp_register_script ('bidx-countto', $bidxJsDir . '/vendor/countTo.js', array('jquery') , '20131103', false );
+
             wp_register_script ('numeral', $vendorDir . '/numeral/min/numeral.min.js', array ('jquery'), '20151201', TRUE);
 
             wp_register_script ('responsive-pagination', $vendorDir . '/responsive-pagination/responsive-paginate.js', array ('jquery'), '20151215', TRUE);

@@ -31,7 +31,7 @@ abstract class APIbridge
      * @param boolean $isFormUpload  is it form upload
      * @return array $requestData response from Bidx API
      */
-    public function callBidxAPI ($urlService, $body, $method = 'POST', $isFormUpload = false, $do_not_reuse = false)
+    public function callBidxAPI ($urlService, $body, $method = 'POST', $isFormUpload = false, $do_not_reuse = false, $isJson = false )
     {
 
         $bidxMethod     = strtoupper ($method);
@@ -65,9 +65,14 @@ abstract class APIbridge
 //        }
         // 2. Set Headers
         // 2.1 Is Form Upload
-        if ($isFormUpload)
+        if ( $isFormUpload )
         {
             $headers['Content-Type'] = 'multipart/form-data';
+        }
+
+        if( $isJson )
+        {
+            $headers['Content-Type'] = 'application/json';
         }
 
         // 2.2 Set the group domain header

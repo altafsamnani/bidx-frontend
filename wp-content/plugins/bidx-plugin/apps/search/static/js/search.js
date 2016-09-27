@@ -762,6 +762,78 @@
         });
     }
 
+    function _portalCountSetup( )
+    {
+        var $counterText    =   $('.counterTxt')
+        ,   $currentElement
+        ,   totalCount      =   {}
+        ;
+
+        //Fixed to Display Count of Entities
+        tempLimit                   =   0;
+        CONSTANTS['ENTITY_TYPES']   =   [ 'bdxplan', 'bdxmember' ] ;
+
+
+        var filterDisplay
+        ,   searchCriteria      =   _getSearchCriteria(  )
+        ;
+
+        bidx.api.call(
+            "search.found"
+        ,   {
+                groupDomain:          bidx.common.groupDomain
+            ,   data:                 searchCriteria
+            ,   success: function( response )
+                {
+                    var responseLength  =   _.size( response.found )
+                    ,   facets          =   bidx.utils.getValue(response, 'facets')
+                    ,   entityType      =   _.findWhere(facets, { field: 'entityType'})
+                    ,   totalMembers    =   _.findWhere(entityType.values, { option: 'bdxmember'})
+                    ,   totalPlans      =   _.findWhere(entityType.values, { option: 'bdxplan'})
+                    ,   role            =   _.findWhere(facets, { field: 'role'})
+                    ,   totalMentors    =   _.findWhere(role.values, { option: 'mentor'})
+                    ;
+
+                    bidx.utils.log( 'response', facets);
+                    bidx.utils.log( 'totalMembers', entityType);
+                    bidx.utils.log( 'totalPlans', totalPlans);
+                    bidx.utils.log( 'totalMentors', totalMentors);
+
+                    totalCount  =   {
+                                        members     :   parseInt( totalMembers.count )
+                                    ,   plans       :   parseInt( totalPlans.count )
+                                    ,   mentors     :   parseInt( totalMentors.count )
+                                    }
+
+                    // print value (converts it to an integer)
+                    $counterText.each(function( ) 
+                    {
+                        var $currentElement = $(this)
+                        ,   type            = $currentElement.data( 'type' );
+
+                        $currentElement.countTo(
+                        {
+                            from:               0
+                        ,   to:                 totalCount[ type ]
+                        ,   speed:              1000
+                        ,   refreshInterval:    50
+                        ,   onComplete:         function(value) 
+                            {
+                                console.debug(this);
+                            }
+                        } );
+                    });
+                }
+            ,   error: function( jqXhr, textStatus )
+                {
+
+                }
+            }
+        );
+
+        
+    }
+
     function _oneTimeSetup()
     {
         if(!displayInvestorProfile)
@@ -2468,7 +2540,7 @@
             globalSearchTerm    =   (globalSearchTerm) ? globalSearchTerm : "*";
         }
 
-        qString =   globalSearchTerm.replace("basic:", ""); // 'get the string after basic: ex testdata in basic:testdata'
+        qString =   (globalSearchTerm) ? globalSearchTerm.replace("basic:", "") : ''; // 'get the string after basic: ex testdata in basic:testdata'
 
         if ( qString !== '*')
         {
@@ -3605,6 +3677,9 @@
     }
 
     _oneTimeSetup();
+    
+    _portalCountSetup();
+
 
     //expose
     var search =
