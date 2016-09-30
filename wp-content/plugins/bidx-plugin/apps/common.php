@@ -110,6 +110,9 @@ class BidxCommon
 
                 //Iterate entities and store it properly ex data->entities->bidxEntrepreneurProfile = 2
                 $this->processEntities ($subDomain);
+
+                //Set Competition Variables
+                $this->processCompetitionVars ( $subDomain );
             }
 
             $scriptValue = $this->injectJsVariables ($subDomain);
@@ -118,6 +121,45 @@ class BidxCommon
         }
 
         return;
+    }
+
+    public function processCompetitionVars( $subDomain )
+    {
+
+        $webapp                 =   get_option('bidx-webapp');
+
+        $competitionId          =   get_option('bidx-evaluation-competitionid');
+
+
+        if ( $webapp && $competitionId )
+        {
+            /* 2. Service Business Summary (entity)*/
+            require_once( BIDX_PLUGIN_DIR .'/../services/competition-service.php' );
+
+            $competitionObj     =   new CompetitionService( );
+
+            /* 3. Render Services for Initial View Display */
+            $competition        =   $competitionObj->getCompetitionDetails( $competitionId );
+
+            $competitionData    =   (!empty( $competition->data )) ? $competition->data : NULL;
+
+            $this::$bidxSession[$subDomain]->competition = $competitionData;
+
+            if( $competitionData  )
+            {
+                $competitionMeta    =   (!empty( $competitionData->bidxMeta )) ? $competitionData->bidxMeta : NULL ;
+
+
+                $competitionRoles   =   (!empty( $competitionMeta->bidxCompetitionRoles )) ? $competitionMeta->bidxCompetitionRoles : NULL ;
+
+                if( in_array('COMPETITION_ASSESSOR' , $competitionRoles ) || in_array( 'COMPETITION_JUDGE', $competitionRoles ) )
+                {
+                    $this::$bidxSession[$subDomain]->webapp         = true;
+
+                    $this::$bidxSession[$subDomain]->competitionId  = $competitionId;
+                }
+            }
+        }
     }
 
     /**
@@ -353,6 +395,9 @@ class BidxCommon
         return $scriptJs;
     }
 
+
+    
+
     /**
      * Grab the subdomain portion of the URL. If there is no sub-domain, the root
      * domain is passed back. By default, this function *returns* the value as a
@@ -421,8 +466,6 @@ class BidxCommon
                     }*/
 
                     $this::$bidxSession[$subDomain]->expressForm = $isActivated;
-
-
 
                     break;
 
@@ -519,7 +562,8 @@ class BidxCommon
 
             }
 
-            if ($jsSessionData) {
+            if ($jsSessionData) 
+            {
                 $authenticated = (isset ($jsSessionData->authenticated)) ? $jsSessionData->authenticated : 'false';
                 $this->redirectUrls ($module, $authenticated, $redirect, $statusMsgId, $eMsgId, $subDomain);
             }

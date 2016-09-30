@@ -63,6 +63,51 @@
    color: desaturate(darken(@brand-secondary, 35%), 25%);
 }
 
+.counterWrapper
+{
+    strong
+    { 
+      font-size:50px;
+      color:#444;
+      vertical-align:middle;
+      color: desaturate(darken(@brand-primary, 35%), 25%);
+    }
+    strong:after
+    { 
+        content:' 'attr(data-easing); 
+        opacity:0.6; 
+        font-size:0.4em; 
+        margin-left:10px; 
+        color: desaturate(darken(@brand-primary, 35%), 25%);
+    }
+
+    .time
+    { 
+        position:absolute; 
+        top:0; 
+        right:10px; 
+        width:20%; 
+        margin-top:20px; 
+        color:#666; 
+        padding:1em 2em; 
+        background:#EEE; 
+        font-weight:bold; 
+        text-align:center; 
+    }
+    .time span
+    { 
+        opacity:0.5; 
+    }
+    .time span:before
+    { 
+        content:' / '; 
+    }
+
+    text-align:center;
+    color: darken(@brand-primary, 25%);
+
+}
+
 // Base
 // -------------------------
 body

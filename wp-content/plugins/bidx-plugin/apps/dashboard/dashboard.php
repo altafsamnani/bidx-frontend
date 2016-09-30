@@ -276,9 +276,13 @@ class dashboard
                 $view->expressform      =   get_option('bidx-expressform');
                 $view->expressCustom    =   get_option('bidx-express-custom');
                 $wizehiveSlug           =   get_option('bidx-wizehive-slug');
+                $webapp                 =   get_option('bidx-webapp');
+                $competitionId          =   get_option('bidx-evaluation-competitionid');
 
                 $view->wizehive         =   ( $wizehiveSlug ) ?   true    :   false;
                 $view->wizehiveSlug     =   $wizehiveSlug;
+                $view->webapp           =   $webapp;
+                $view->competitionId    =   $competitionId;
 
         		if ( get_option ( 'bidx-ssoredirect-url' ) )
                 {

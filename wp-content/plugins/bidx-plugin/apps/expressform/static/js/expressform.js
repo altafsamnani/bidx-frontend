@@ -1611,8 +1611,9 @@
     //
     var _showError = function( msg )
     {
+        var v   =   'error';
         $views.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
-        _showView( "error" );
+        $views.filter( ".viewError" ).show();
     };
 
     var _showView = function( v )

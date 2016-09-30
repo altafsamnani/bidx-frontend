@@ -13,7 +13,7 @@ $financialSummariesItem = <<<EOT
 
             <div class="fs-content text-center">
                 <div class="year">{{year}}</div>
-                <p class="yearLabel hide">{{year_label}}</p>
+                <p class="yearLabel">{{year_label}}</p>
 
                 <div class="view viewEdit">
                     <a href="#deleteYear" class="btnDelete"><i class="fa fa-times-circle"></i> {{lblDeleteYear}}</a>
@@ -31,12 +31,10 @@ $financialSummariesItem = <<<EOT
         <!-- Sales revenues -->
         <div class="fs-cell fs-row form-group">
             <label class="fs-cell-label">{{lblSalesRevenues}}</label>
-            <div class="viewEdit">
+            <div class="view viewEdit">
                 <div class="input-group">
-                    <div class="input-group-addon">IDR</div>
-                    <input type="text" class="form-control idrsalesRevenue inputIdr inputFinanceFront" name="idrsalesRevenue[{{year}}]">
-                    <span class="input-group-addon calculateLbl"><i class="fa fa-usd"></i></span>
-                    <input type="text" class="form-control salesRevenue inputFinanceBack" name="salesRevenue[{{year}}]" readonly>
+                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <input type="text" class="form-control text-center" name="salesRevenue[{{year}}]" class="">
                 </div>
             </div>
         </div>
@@ -44,22 +42,19 @@ $financialSummariesItem = <<<EOT
         <!-- Operational Costs -->
         <div class="fs-cell fs-row form-group">
             <label class="fs-cell-label">{{lblOperationalCosts}}</label>
-            <div class="viewEdit">
+            <div class="view viewEdit">
                 <div class="input-group">
-                    <div class="input-group-addon">IDR</div>
-                    <input type="text" class="form-control idroperationalCosts inputFinanceFront inputIdr" name="idroperationalCosts[{{year}}]">
-                    <div class="input-group-addon calculateLbl"><i class="fa fa-usd"></i></div>
-                    <input type="text" class="form-control operationalCosts inputFinanceBack" name="operationalCosts[{{year}}]" readonly>
+                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <input type="text" class="form-control text-center" name="operationalCosts[{{year}}]" class="noValidationErrorMessage">
                 </div>
             </div>
         </div>
 
-        <!-- Total incomes -->
+        <!-- Operational Costs -->
         <div class="fs-cell fs-row">
             <label class="fs-cell-label">{{lblTotalIncome}}</label>
             <div class="totalIncome value fs-content text-center">
-                <div class="viewEdit pull-left"><i class="fa"><strong>IDR</strong></i>&nbsp;<span class="idrEdit"></span></div>
-                <div class="viewEdit"><i class="fa fa-usd"></i>&nbsp;<span class="usdEdit"></span></div>
+                <span class="view viewEdit">$ -</span>
             </div>
         </div>
 
@@ -67,13 +62,11 @@ $financialSummariesItem = <<<EOT
 
         <!-- Finance Needed -->
         <div class="fs-cell fs-row form-group">
-           <label class="fs-cell-label">{{lblFinanceNeeded}}</label>
-            <div class="viewEdit">
+            <label class="fs-cell-label">{{lblFinanceNeeded}}</label>
+            <div class="view viewEdit">
                 <div class="input-group">
-                    <div class="input-group-addon">IDR</div>
-                    <input type="text" class="form-control idrfinanceNeeded inputFinanceFront inputIdr" name="idrfinanceNeeded[{{year}}]">
-                    <div class="input-group-addon calculateLbl"><i class="fa fa-usd"></i></div>
-                    <input type="text" class="form-control financeNeeded inputFinanceBack" name="financeNeeded[{{year}}]" readonly>
+                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <input type="text" class="form-control text-center" name="financeNeeded[{{year}}]" class="noValidationErrorMessage">
                 </div>
             </div>
         </div>
@@ -83,10 +76,10 @@ $financialSummariesItem = <<<EOT
         <!-- Number Of Employees -->
         <div class="fs-cell fs-row form-group">
             <label class="fs-cell-label">{{lblNumberOfEmployees}}</label>
-            <div class="viewEdit">
+            <div class="view viewEdit">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" class="form-control text-center inputIdr" name="numberOfEmployees[{{year}}]" class="noValidationErrorMessage">
+                    <input type="text" class="form-control text-center" name="numberOfEmployees[{{year}}]" class="noValidationErrorMessage">
                 </div>
             </div>
         </div>
@@ -106,7 +99,7 @@ $firstYear      = NULL;
 $nrPrevYears    = 0;
 $nrNextYears    = 0;
 
-$curYear        = date( 'Y' ) ;
+$curYear        = date( 'Y' );
 
 // The financial summary year template exists of two types of variables, dynamic and
 //
@@ -181,14 +174,7 @@ if ( $hasYears == false ) {
             <div class="pull-right fs-controls">
                 <a href="#prev" class="btn btnPrev <?php echo ( $hasPrevYear ? '' : 'disabled' ); ?>"><span class="fa fa-chevron-left"></span></a>
             </div>
-            <div class="fs-content">
-                <div>
-                    <strong><?php _e( 'Currency in: Indonesian Rupiah', 'bidxplugin' ); ?></strong>
-                </div>
-                <div>
-                    <?php echo sprintf( '1 USD = %d Rupiah', BIDX_USD_IDR ); ?>
-                </div>
-            </div>
+            <div class="fs-content"><strong><?php _e( 'Currency in: US Dollars', 'bidxplugin' ); ?></strong></div>
         </div>
 
         <!-- Section: INCOME STATEMENT -->
@@ -210,7 +196,7 @@ if ( $hasYears == false ) {
 
         <!-- Section: FINANCE NEEDED -->
         <div class="fs-cell fs-section-header">
-            <div class="fs-content"><strong><?php _e( 'Finance needed','bidxplugin'); ?></strong> <br/>(<?php _e('from external financiers in Indonesian Rupiah','bidxplugin'); ?>)</div>
+            <div class="fs-content"><strong><?php _e( 'Finance needed','bidxplugin'); ?></strong> (<?php _e('from external financiers in US Dollars','bidxplugin'); ?>)</div>
         </div>
 
         <div class="fs-cell fs-row">
@@ -219,7 +205,7 @@ if ( $hasYears == false ) {
 
         <!-- Section: NUMBER OF EMPLOYEES -->
         <div class="fs-cell fs-section-header">
-            <div class="fs-content"><strong><?php _e( 'Number of employees','bidxplugin'); ?></strong><br/>(<?php _e('being directly paid in this business','bidxplugin'); ?>)</div>
+            <div class="fs-content"><strong><?php _e( 'Number of employees','bidxplugin'); ?></strong> (<?php _e('being directly paid in this business','bidxplugin'); ?>)</div>
         </div>
 
         <div class="fs-cell fs-row">

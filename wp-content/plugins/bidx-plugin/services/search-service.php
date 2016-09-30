@@ -26,8 +26,10 @@ class SearchService extends APIbridge {
 	 * @todo implement the query cooking here for the facets
 	 */
 	public function getSearchResults( $query ) {
-		
-		return $this->callBidxAPI('search', $query , 'GET');
+			
+	    $jsonEncode 	=	json_encode($query);
+	    		
+		return $this->callBidxAPI('nnsearch/', $jsonEncode,'POST', FALSE, FALSE, TRUE );
 		
 	}	
 

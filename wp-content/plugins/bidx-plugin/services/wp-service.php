@@ -1054,6 +1054,46 @@ function get_redirect ($url, $requestData, $domain = NULL)
 			}
             $redirectLang           =   ($currentLanguage != 'en') ? '/'.$currentLanguage : '/';
             $redirect               =   ($redirect) ? $redirect : $redirectLang;*/
+
+
+
+         
+            if( !$redirect )
+            {
+                $webapp                 =   get_option('bidx-webapp');
+
+                $competitionId          =   get_option('bidx-evaluation-competitionid');
+
+                
+
+                if ( $webapp && $competitionId )
+                {
+                    /* 2. Service Business Summary (entity)*/
+                    require_once( BIDX_PLUGIN_DIR .'/../services/competition-service.php' );
+
+                    $competitionObj     =   new CompetitionService( );
+
+                    /* 3. Render Services for Initial View Display */
+                    $competition        =   $competitionObj->getCompetitionDetails( $competitionId );
+
+                    $competitionData    =   (!empty( $competition->data )) ? $competition->data : NULL;
+
+
+                    if( $competitionData  )
+                    {
+                        $competitionMeta    =   (!empty( $competitionData->bidxMeta )) ? $competitionData->bidxMeta : NULL ;
+
+
+                        $competitionRoles   =   (!empty( $competitionMeta->bidxCompetitionRoles )) ? $competitionMeta->bidxCompetitionRoles : NULL ;
+
+                        if( in_array('COMPETITION_ASSESSOR' , $competitionRoles ) || in_array( 'COMPETITION_JUDGE', $competitionRoles ) )
+                        {
+                            $redirect = '/evaluation';
+                        }
+                    }
+                }
+            }
+
             $requestData->redirect  =   $redirect;
 
             break;
@@ -2500,6 +2540,18 @@ function bidx_general_settings() {
             {
               delete_option( 'bidx-wizehive-slug' );
             }*/
+
+
+            $webapp = ( isset( $_POST['bidx-webapp'] ) ) ? $_POST['bidx-webapp'] : false;
+     
+            
+            update_option ('bidx-webapp', $webapp);
+
+            $competitionId  = ( isset( $_POST['bidx-evaluation-competitionid'] ) ) ? $_POST['bidx-evaluation-competitionid'] : false;
+     
+            
+            update_option ('bidx-evaluation-competitionid', $competitionId);
+            
 
     	    $ssoRedirect = ( isset( $_POST['bidx-sso-redirect'] ) ) ? $_POST['bidx-sso-redirect'] : false;
 

@@ -1,21 +1,32 @@
 <?php
-    $session = BidxCommon::$staticSession;
+    $session    =   BidxCommon::$staticSession;
 
-    $authClass = "not-auth";
+    $isWebApp   =   $session->webapp;    
+
+    $hiddenXs   =   ( $isWebApp ) ? 'hidden-xs hide' : '';
+
+    $hiddenOffset   =   ( $isWebApp ) ? 'col-sm-offset-6' : '';
+
+    $authClass  = "not-auth";
+
     $authenticated = false;
 
     if ( isset( $session->authenticated ) && $session->authenticated == 'true' )
     {
         $authenticated = true;
+
         $authClass = "auth";
     }
 
-    $isEntrepreneur = isset( $session->data->wp->entities->bidxEntrepreneurProfile )   ? TRUE : FALSE ;
-    $isInvestor     = isset( $session->data->wp->entities->bidxInvestorProfile )       ? TRUE : FALSE;
-    $isMentor       = isset( $session->data->wp->entities->bidxMentorProfile )         ? TRUE : FALSE;
+    $isEntrepreneur     = isset( $session->data->wp->entities->bidxEntrepreneurProfile )    ? TRUE : FALSE ;
+    $isInvestor         = isset( $session->data->wp->entities->bidxInvestorProfile )        ? TRUE : FALSE;
+    $isMentor           = isset( $session->data->wp->entities->bidxMentorProfile )          ? TRUE : FALSE;
+    $isWeb              = isset( $session->webapp )                                         ? TRUE : FALSE;
 
     $hasRole = false;
-    if ( $isEntrepreneur || $isInvestor || $isMentor )
+
+    //You want to disable choose a role link if he is competition assessor/judge and in Webapp so adding $isWeb condition
+    if ( $isEntrepreneur || $isInvestor || $isMentor || $isWeb) 
     {
         $hasRole = true;
     }
@@ -30,13 +41,13 @@
     <div class="bg-primary-darker navbar navbar-fixed-top">
         <div class="container">
             <div class="row">
-                <div class="search col-xs-6">
+                <div class="search col-sm-6 <?php echo $hiddenXs;?>">
                     <a class="home-btn navbar-left flip" href="<?php echo getLangPrefix('/');?>"><i class="fa fa-home"></i></a>
 <?php
                     get_template_part('templates/searchform');
 ?>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-sm-6 <?php echo $hiddenOffset;?>">
 <?php
                     echo do_shortcode( '[bidx app="group" view="navbarshort"]' );
 ?>
@@ -148,7 +159,7 @@
     </header>
 
 <?php
-    if (has_nav_menu('primary_navigation')) :
+    if (has_nav_menu('primary_navigation') && !$isWebApp) :
 
         // Check - Invert Main Menu colors
         $invertedMenu = '';

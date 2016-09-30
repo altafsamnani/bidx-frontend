@@ -34,11 +34,14 @@ class search {
 						,	'bidx-chosen'
 						, 	'jquery-raty'
 						,   'responsive-pagination'
+						,	'bidx-countto'
 						);
+
 	/**
 	 * Constructor
 	 */
-	function __construct() {
+	function __construct() 
+	{
 		add_action( 'wp_enqueue_scripts', array( &$this, 'register_search_bidx_ui_libs' ) ) ;
 	}
 
@@ -47,6 +50,7 @@ class search {
 	 */
 	public function register_search_bidx_ui_libs()
 	{
+		//http://codepen.io/vsync/pen/deoxg
 		wp_register_script( 'search', plugins_url( 'static/js/search.js', __FILE__ ),  self :: $deps, '20130501', TRUE );
 	}
 
@@ -59,7 +63,35 @@ class search {
 
 		$command = 'cardView';
 
-		return $view->render( 'cardView.phtml' );
+		// 3. Determine the view needed
+		$command = $atts['view'];
+
+		switch ( $command ) 
+		{
+			case "widget-counter" :
+			/* 2. Server side rendering anonymous
+			require_once( BIDX_PLUGIN_DIR . '/../services/search-service.php' );
+
+			$service = new SearchService( );
+
+			$view -> results = $service -> getSearchResults( array('maxResult' => 0) );
+
+			echo "<pre>heree";print_r( $view -> results);echo "</pre>";exit; */
+
+			wp_localize_script ('bidx-data', '__bidxCounter', true);
+
+			return $view->render( 'widget-counter.phtml' );
+
+			break;
+
+			default:
+
+			return $view->render( 'cardView.phtml' );
+
+			break;
+		}
+
+		
 
 	}
 

@@ -9,7 +9,7 @@
         $rightSideFooterColSm = 'col-sm-8';
     }
 
-if( !$session->external )
+if( !$session->external && !$session->webapp )
 {
 ?>
 

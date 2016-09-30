@@ -1,6 +1,7 @@
 <?php
     include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
     $sessionSvc = new SessionService( );
+
     // define the profiles we currently want to display
     //
     $profiles = array(
@@ -53,17 +54,24 @@
 
 <?php
 
-    $session = BidxCommon::$staticSession;
-    $authenticated  = $session -> authenticated;
+    $session        =   BidxCommon::$staticSession;
 
-        // check for the widget
-        if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
-        {
+    $authenticated  =   $session -> authenticated;
+
+    $isWebApp       =   $session->webapp;
+
+    $competitionId  =   $session->competitionId;
+
+    $hiddenXs       =   ( $isWebApp ) ? 'hidden-xs hide' : '';
+
+    // check for the widget
+    if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
+    {
 ?>
-            <div class="btn-group language-switcher">
-                <?php //the_widget('ICL_Language_Switcher'); ?>
-                <?php echo languages_list_header();?>
-            </div>
+        <div class="btn-group language-switcher">
+            <?php //the_widget('ICL_Language_Switcher'); ?>
+            <?php echo languages_list_header();?>
+        </div>
 <?php
          }
 
@@ -75,6 +83,7 @@
     $currentGroup   = $this -> sessionData -> data -> currentGroup;
     $groupIds       = array_keys ( (array)$this -> sessionData -> data -> groups );
     $inGroup        = in_array( $currentGroup, $groupIds);
+
     $isCompetition  = get_option ('skipso-competition');
     $skipsoJudgeUrl = get_option ('skipso-judge-url');
     $userName       = $this -> sessionData -> data -> username;
@@ -92,7 +101,7 @@
     if ( $inGroup && $hasProfiles )
     {
     ?>
-        <div class="btn-group profiles">
+        <div class="btn-group profiles <?php echo $hiddenXs;?>">
             <a href="<?php echo _l('dashboard');?>/" type="button" class="text-white"  title="<?php _e('Dashboard', 'bidxplugin')?>">
                 <i class="fa fa-dashboard"></i>
                 <span class="iconbar-text"><?php _e('Dashboard','bidxplugin')?></span>
@@ -127,7 +136,7 @@
 <?php
         }
  ?>
-        <div class="btn-group">
+        <div class="btn-group <?php echo $hiddenXs;?>">
 <?php
             if ( $inGroup )
             {
@@ -172,29 +181,35 @@
                 if ( $inGroup )
                 {
 ?>
-                    <li><a href="<?php echo _l('member');?>"><i class="fa fa-user"></i>&nbsp;<?php _e('Profile','bidxplugin')?></a></li>
+                    <li class="<?php echo $hiddenXs;?>" ><a href="<?php echo _l('member');?>"><i class="fa fa-user"></i>&nbsp;<?php _e('Profile','bidxplugin')?></a></li>
                     <li><a href="<?php echo _l('account');?>/#account"><i class="fa fa-cog"></i>&nbsp;<?php _e('Account settings','bidxplugin')?></a></li>
                     <!-- <li><a href="<?php echo _l('media');?>"><i class="fa fa-file"></i>&nbsp;<?php _e('All my documents','bidxplugin')?></a></li> -->
 <?php
                 }
 
+                if( $isWebApp )
+                { ?>
+                    <li ><a href="<?php echo _l('evaluation');?>"><i class="fa fa-gavel"></i>&nbsp;<?php _e('Evaluate', 'bidxplugin')?></a></li>
+                    <li ><a href="<?php echo _l('competition'). '/'. $competitionId;?>"><i class="fa fa-globe"></i>&nbsp;<?php _e('Competition', 'bidxplugin')?></a></li>
+<?php           }
+
                 if ( !$inGroup )
                 {
 ?>
-                    <li><a href="#joinGroup"><i class="fa fa-sign-in"></i>&nbsp;<?php _e('Join this portal', 'bidxplugin')?></a></li>
+                    <li class="<?php echo $hiddenXs;?>"><a href="#joinGroup"><i class="fa fa-sign-in"></i>&nbsp;<?php _e('Join this portal', 'bidxplugin')?></a></li>
 <?php
                 }
                 elseif ( !$currentGroupAdmin )
                 {
 ?>
-                    <li><a href="#leaveGroup"><i class="fa fa-sign-out"></i>&nbsp;<?php _e('Leave this portal', 'bidxplugin')?></a></li>
+                    <li class="<?php echo $hiddenXs;?>"><a href="#leaveGroup"><i class="fa fa-sign-out"></i>&nbsp;<?php _e('Leave this portal', 'bidxplugin')?></a></li>
 <?php
                 }
 
                 if( $hasGroups )
                 {
 ?>
-                    <li><a href="<?php echo _l('mail');?>/#mail/compose"><i class="fa fa-question"></i>&nbsp;<?php _e('Help','bidxplugin')?></a></li>
+                    <li class="<?php echo $hiddenXs;?>"><a href="<?php echo _l('mail');?>/#mail/compose"><i class="fa fa-question"></i>&nbsp;<?php _e('Help','bidxplugin')?></a></li>
 <?php
                 }
 

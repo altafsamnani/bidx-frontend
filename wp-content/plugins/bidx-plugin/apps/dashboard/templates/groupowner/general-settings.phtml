@@ -40,13 +40,36 @@
                         </label>
                     </div>
                         <div class='label'>
-                        <label class='selectit' for='bidx-express-custom'>
-                            <span class="description"><?php _e('Please enter wizehive slug ','bidxplugin');?></span><br/>
-                            <input <?php if( isset( $this->expressCustom ) ) { echo 'value="'.$this->expressCustom.'"'; }?> type='text' name='bidx-express-custom' id='bidx-express-custom' class='regular-text'>
-                        </label>
-                     </div>
+                            <label class='selectit' for='bidx-express-custom'>
+                                <span class="description"><?php _e('Please enter wizehive slug ','bidxplugin');?></span><br/>
+                                <input <?php if( isset( $this->expressCustom ) ) { echo 'value="'.$this->expressCustom.'"'; }?> type='text' name='bidx-express-custom' id='bidx-express-custom' class='regular-text'>
+                            </label>
+                        </div>
                     </div>                   
                     
+                </div>
+            </div>
+        </div>
+
+        <div id='categorydiv' class='postbox'>
+            <div class='handlediv' title='Click to toggle'><br></div><h3 class='hndle'><span><?php _e('Mentoring evaluation','bidxplugin');?></span></h3>
+            <div class='inside'>
+                <div id='taxonomy-category' class='categorydiv'>
+                    <div class=''>
+                        <div class='label'>
+                            <label class='selectit'>
+                                <input <?php echo (isset($this->webapp) && $this->webapp) ? 'checked':'';?> value='1' type='checkbox' name='bidx-webapp' id='bidx-webapp'>
+                                <?php _e('Do you want to activate mentoring evaluation for this portal ? ','bidxplugin');?>
+                            </label>
+                            <div style="float:right;display:none;"><a target='_blank' href="https://drive.google.com/file/d/0B2cEbY8jkjRaRUNoSU90cWlNN3c/view?usp=sharing"><?php _e('Click here to view docs'); ?></a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class='label'>
+                    <label class='selectit' for='bidx-evaluation-competitionid'>
+                        <span class="description"><?php _e('Please enter competition Id ','bidxplugin');?></span><br/>
+                        <input <?php if( isset( $this->competitionId ) ) { echo 'value="'.$this->competitionId.'"'; }?> type='text' name='bidx-evaluation-competitionid' id='bidx-evaluation-competitionid' class='regular-text'>
+                    </label>
                 </div>
             </div>
         </div>

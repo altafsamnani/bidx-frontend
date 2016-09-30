@@ -208,6 +208,8 @@ class BidxShortcode
             wp_register_script ('jquery-raty', $vendorDir . '/raty-master/lib/jquery.raty.js', array ('jquery'), '2.7.0', TRUE);
             wp_register_script ('chosen', $vendorDir . '/chosen_v1.0.0/chosen.jquery.js', array ('jquery'), '20131111', TRUE);
 
+            wp_register_script ('bidx-countto', $bidxJsDir . '/vendor/countTo.js', array('jquery') , '20131103', false );
+
             wp_register_script ('numeral', $vendorDir . '/numeral/min/numeral.min.js', array ('jquery'), '20151201', TRUE);
 
             wp_register_script ('responsive-pagination', $vendorDir . '/responsive-pagination/responsive-paginate.js', array ('jquery'), '20151215', TRUE);
@@ -267,6 +269,7 @@ class BidxShortcode
             wp_register_script ('bidx-location', $bidxJsDir . '/bidx-location.js', array ('jquery', 'bidx-utils', 'jquery-ui-widget','google-jsapi'), '20130904', true);
             wp_register_script ('bidx-chosen',  $bidxJsDir . '/bidx-chosen.js', array ('jquery', 'chosen'),  '20131118', TRUE);
             wp_register_script ('bidx-mentor',  $plugins_url . '/mentor/static/js/common-mentordashboard.js', array ('jquery'), '20150713', TRUE);
+            //wp_register_script ('bidx-swype',  'http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js', array ('jquery'), '20150713', TRUE);
 
             wp_enqueue_script ('bidx-common');
             wp_enqueue_script ('bidx-controller');
