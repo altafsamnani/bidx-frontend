@@ -1,4 +1,5 @@
 (function($) {
+ //http://stackoverflow.com/questions/2540277/jquery-counter-to-count-up-to-a-target-number
     $.fn.countTo = function(options) {
         // merge the default plugin settings with the custom options
         options = $.extend({}, $.fn.countTo.defaults, options || {});

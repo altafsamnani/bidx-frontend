@@ -319,6 +319,7 @@
 
         var $listItem
         ,   $financeItem   
+        ,   $financialItem
         ,   $attachItem 
         ,   $attachmentItem
         ,   listItem
@@ -477,7 +478,7 @@
         //Iterate Financial Summaries
         if( financialSummaries )
         {
-        $financeItem        =   $listItem.find('.financeBody');
+        $financialItem        =   $listItem.find('.financeBody');
 
             $.each( financialSummaries, function( year, financeData )
             {
@@ -490,8 +491,9 @@
                                         .replace( /%financeNeeded%/g,   financeData.financeNeeded       ?   financeData.financeNeeded : financeEmptyVal )
                                         .replace( /%employees%/g,       financeData.numberOfEmployees   ?   financeData.numberOfEmployees : financeEmptyVal )
                                         ; 
+                $financeItem        =   $("").add( financeItem );                        
                 
-                $financeItem.append( $("tr").add( financeItem ));
+                $financialItem.append( $financeItem );
 
             });
         }

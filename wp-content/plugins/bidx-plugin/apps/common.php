@@ -562,7 +562,8 @@ class BidxCommon
 
             }
 
-            if ($jsSessionData) {
+            if ($jsSessionData) 
+            {
                 $authenticated = (isset ($jsSessionData->authenticated)) ? $jsSessionData->authenticated : 'false';
                 $this->redirectUrls ($module, $authenticated, $redirect, $statusMsgId, $eMsgId, $subDomain);
             }
