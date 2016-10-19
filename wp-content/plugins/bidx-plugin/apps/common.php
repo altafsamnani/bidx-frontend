@@ -254,8 +254,6 @@ class BidxCommon
         }
     }
 
-
-
     /**
      * Process Entities and store it in session variable
      *
