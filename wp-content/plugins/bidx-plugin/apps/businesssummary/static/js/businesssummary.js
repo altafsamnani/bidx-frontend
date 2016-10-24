@@ -16,6 +16,7 @@
     ,   $envImpact                  = $element.find( "[name='envImpact']" )
     ,   $socialImpact               = $element.find( "[name='socialImpact']" )
     ,   $yearSalesStarted           = $element.find( "[name='yearSalesStarted']" )
+    ,   $stageBusiness              = $element.find( "[name='stageBusinessOverride']" )
 
     ,   $btnSave
     ,   $btnCancel
@@ -272,6 +273,7 @@
             ,   "equityRetained"
             ,   "investmentType"
             ,   "summaryFinancingNeeded"
+            ,   "stageBusinessOverride"
             ]
 
         ,   "financialSummaries":
@@ -384,6 +386,12 @@
         $socialImpact.bidx_chosen(
         {
             dataKey:            "socialImpact"
+        });
+
+        $stageBusiness.bidx_chosen(
+        {
+            dataKey:            "stageBusiness"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
         // Run the industry widget on the selector
@@ -837,12 +845,11 @@
         {
             // FinancialSummary
             //
-            var $btnNext        = $financialSummary.find( "a[href$=#next]" )
-            ,   $btnPrev        = $financialSummary.find( "a[href$=#prev]" )
-            ,   $btnAddPrev     = $financialSummary.find( "a[href$=#addPreviousYear]" )
-            ,   $btnAddNext     = $financialSummary.find( "a[href$=#addNextYear]" )
-
-            ,   curYear         = bidx.common.getNow().getFullYear()
+            var $btnNext            =   $financialSummary.find( "a[href$=#next]" )
+            ,   $btnPrev            =   $financialSummary.find( "a[href$=#prev]" )
+            ,   $btnAddPrev         =   $financialSummary.find( "a[href$=#addPreviousYear]" )
+            ,   $btnAddNext         =   $financialSummary.find( "a[href$=#addNextYear]" )
+            ,   curYear             =   bidx.common.getNow().getFullYear()
             ;
 
             // Add on year to the left
@@ -1941,6 +1948,10 @@
     {
         // Repopulate the companies table, this data is not coming from the business summary but from a seperate API call
         //
+        var  $fromStageBusiness
+        ,    stageBusinessOverride
+        ;
+
         $companiesTable.find( "tbody" ).empty();
 
         if ( companies )
@@ -1969,6 +1980,16 @@
                 } );
             }
         } );
+
+        stageBusinessOverride   =   bidx.utils.getValue( businessSummary, "stageBusinessOverride", true );
+
+        bidx.utils.log('stageBusinessOverride', stageBusinessOverride);
+
+        if( stageBusinessOverride )
+        {
+            $fromStageBusiness  =   $element.find( ".frmStageOfBusiness" );
+            $fromStageBusiness.removeClass('hide');
+        }
 
         // Industry Sectors
         //
@@ -2086,6 +2107,7 @@
         $envImpact.trigger( "chosen:updated" );
         $socialImpact.trigger( "chosen:updated" );
         $yearSalesStarted.trigger( "chosen:updated" );
+        $stageBusiness.trigger( "chosen:updated" );
     }
 
     // Update the pre-rendered dom elements for the financial summary

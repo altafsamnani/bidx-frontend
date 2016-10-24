@@ -1110,7 +1110,19 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                                 </div>
                             </div>
                             <div class="row">
-                                <!-- Investment type -->
+                                <!-- Summary Financing Needed -->
+                                <div class="form-group col-sm-6 hide frmStageOfBusiness">
+                                    <label><?php _e('Stage of business','bidxplugin'); ?> </label>
+                                     <select name="stageBusinessOverride"></select>
+                                </div>
+
+                                <!-- Summary Financing Needed -->
+                                <div class="form-group col-sm-6">
+                                    <label><?php _e('Why does your business need financing?','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 300 characters)','bidxplugin'); ?></small></label>
+                                    <textarea name="summaryFinancingNeeded" class="form-control"></textarea>
+                                </div>
+                                
+                            <!-- Investment type -->
                                 <div class="form-group col-sm-6">
                                     <label><?php _e('What type of finance do you prefer?','bidxplugin'); ?></label>
 <?php
@@ -1126,12 +1138,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                                         }
 ?>
                                 </div>
-
-                                <!-- Summary Financing Needed -->
-                                <div class="form-group col-sm-6">
-                                    <label><?php _e('Why does your business need financing?','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 300 characters)','bidxplugin'); ?></small></label>
-                                    <textarea name="summaryFinancingNeeded" class="form-control"></textarea>
-                                </div>
+                                
                             </div>
 
                         </div>
