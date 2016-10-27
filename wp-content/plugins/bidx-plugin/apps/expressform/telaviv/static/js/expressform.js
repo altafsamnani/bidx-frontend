@@ -20,7 +20,7 @@
     ,   $controlsForError       =   $editControls.find( ".viewError" )
     ,   $bsLogoModal            =   $bsLogo.find( ".addLogoImage" )
     ,   $logoContainer          =   $bsLogo.find( ".logoContainer" )
-    ,   $stageBusiness          =   $element.find( "[name='stageBusinessDetail']" )
+    ,   $stageBusiness          =   $element.find( "[name='stageBusinessOverride']" )
     ,   snippets                =   {}
     ,   $views                  =   $element.find( ".view" )
     ,   $modals                 =   $element.find( ".modalView" )
@@ -85,7 +85,7 @@
             ,   "externalVideoPitch"
             ,   "website"
             ,   "countryOperation"
-            ,   "stageBusinessDetail"
+            ,   "stageBusinessOverride"
             ]
         }
     ,   "mentoringDetails":
@@ -453,7 +453,7 @@
                 {
                     required:      true
                 }*/
-            ,   stageBusinessDetail:
+            ,   stageBusinessOverride:
                 {
                     required:     true
                 }
@@ -532,7 +532,7 @@
 
         $stageBusiness.bidx_chosen(
         {
-            dataKey:            "stageBusinessDetail"
+            dataKey:            "stageBusiness"
         ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 

@@ -243,7 +243,7 @@
         <div>
             <form id="formExpressForm-GeneralOverview">
                 <h2><?php echo _e('Business details','bidxplugin') ?></h2>
-                <blockquote class="alert-expressform"><?php _e('This section is dedicated to outline your business. By filling in this section you will provide investors with a brief overview of your business.','bidxplugin')?></blockquote>
+                <blockquote class="alert-expressform hide"><?php _e('This section is dedicated to outline your business. By filling in this section you will provide investors with a brief overview of your business.','bidxplugin')?></blockquote>
                 <div class="row">
                     <!-- Name -->
                     <div class="form-group col-sm-6">
@@ -253,7 +253,7 @@
                       <!-- Stage of business -->
                     <div class="form-group col-sm-6">
                         <label><?php _e('Stage of business','bidxplugin'); ?></label>
-                        <select name="stageBusinessDetail"></select>
+                        <select name="stageBusinessOverride"></select>
                     </div>
                     <div class="form-group col-sm-12">
                         <label><?php _e('Describe your business ','bidxplugin'); ?> <small class="text-muted"><?php _e('(max. 900 characters)','bidxplugin'); ?></small></label>
@@ -292,7 +292,7 @@
         <!-- Mentoring Details -->
         <div>
             <h2><?php echo _e('Mentoring details','bidxplugin') ?></h2>
-            <blockquote class="alert-expressform"><?php _e('A mentor can help you ​to ​complete and improve your business proposal. ​Please indicate here if you would like the help of a mentor and, if yes, ​select the areas of expertise where you would like support.', 'bidxplugin')?></blockquote>
+            <blockquote class="alert-expressform"><?php _e('The Bidx platform enables you to connect to mentors and investors in target markets across the developing world. To access Bidx mentors you have to submit a business proposal for review. A mentor can help you ​to ​complete your business proposal and prepare it for investors. ​Please indicate here if you would like the help of a mentor and, if yes, ​select the areas of expertise where you would like support.', 'bidxplugin')?></blockquote>
             <form id="formExpressForm-MentoringDetails">
                 <div class="row">              
                     <!-- Mentor Advisory? -->

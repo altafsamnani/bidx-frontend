@@ -108,7 +108,7 @@
                                                 ,   "industry" //Facets
                                                 //,   "expertise" //Facets (Not implemented)
                                                 //,   "reasonforsubmission" //Facets (Not implemented)
-                                                //,   "stageofbusiness" //Facets (Not implemented)
+                                                ,   "stageOfBusiness" 
                                                 ,   "gender" //Facets
                                                 ,   "memberDateOfBirth" // Range filters
                                                 ,   "planFinanceType" //Facets
@@ -2342,7 +2342,7 @@
                     $.each( facetValues , function ( idx, item )
                     {
                         facetValueName  =   bidx.utils.getValue(item, 'option');
-
+                        bidx.utils.log( 'facetitemsfield', facetItems.field);
                         switch (facetItems.field)
                         {
                             case 'entityType':
@@ -2364,6 +2364,10 @@
 
                             case 'planFinanceType':
                             facetValName    = bidx.data.i( facetValueName, 'investmentType' );
+                            break;
+
+                            case 'stageOfBusiness':
+                            facetValName    = bidx.data.i( facetValueName, 'stageBusiness' );
                             break;
 
                             default:

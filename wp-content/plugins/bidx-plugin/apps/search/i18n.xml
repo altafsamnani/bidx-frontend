@@ -24,6 +24,7 @@
     <Item value="planSocialImpact">Social Impact</Item>
     <Item value="planFinanceType">Investment type</Item>
     <Item value="planFinancingNeeded">Financing needed</Item>
+    <Item value="stageOfBusiness">Stage of Business</Item>
 
 
     <!-- Range Filters -->
