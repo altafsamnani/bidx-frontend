@@ -150,7 +150,7 @@ class BidxCommon
                 $competitionMeta    =   (!empty( $competitionData->bidxMeta )) ? $competitionData->bidxMeta : NULL ;
 
 
-                $competitionRoles   =   (!empty( $competitionMeta->bidxCompetitionRoles )) ? $competitionMeta->bidxCompetitionRoles : NULL ;
+                $competitionRoles   =   (!empty( $competitionMeta->bidxCompetitionRoles )) ? $competitionMeta->bidxCompetitionRoles : array() ;
 
                 if( in_array('COMPETITION_ASSESSOR' , $competitionRoles ) || in_array( 'COMPETITION_JUDGE', $competitionRoles ) )
                 {

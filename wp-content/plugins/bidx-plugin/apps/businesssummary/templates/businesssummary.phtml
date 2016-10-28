@@ -636,6 +636,10 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                 if ( $this->checkEmpty( $rowValues ) ) :
                     echo $this->tableRow ( $rowValues );
                 endif;
+                $financialDetails = $this->exst( $businessSummary->financialSummaries );
+
+                if(!empty($financialDetails))
+                {
 ?>
                 <table class="table table-bordered table-financial">
                     <tr>
@@ -651,7 +655,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                         <th class="text-center td-15"><small><?php _e('Total income', 'bidxplugin')?></small></th>
                     </tr>
 <?php
-                    $financialDetails = $this->exst( $businessSummary->financialSummaries );
+                    
                     $sortedfinancialDetails = new ArrayObject($financialDetails);
                     $sortedfinancialDetails->ksort();
 
@@ -686,7 +690,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                     * <small><?php _e('from external financiers in US Dollars', 'bidxplugin')?></small><br>
                     ** <small><?php _e('being directly paid in this business', 'bidxplugin')?></small>
                 </p>
-<?php
+<?php           }
             }
             else
             {
