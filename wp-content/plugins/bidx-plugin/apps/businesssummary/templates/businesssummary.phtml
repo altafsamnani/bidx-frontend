@@ -618,10 +618,12 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
     </div>
 <?php
     }
+
+    $financialDetails = $this->exst( $businessSummary->financialSummaries );
+    if(!empty($financialDetails))
+    {
 ?>
-
-
-            <h3 class="text-uppercase"><?php _e('Financial Details', 'bidxplugin')?></h3>
+        <h3 class="text-uppercase"><?php _e('Financial Details', 'bidxplugin')?></h3>
 <?php
             if ( $hasAccess )
             {
@@ -636,10 +638,9 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                 if ( $this->checkEmpty( $rowValues ) ) :
                     echo $this->tableRow ( $rowValues );
                 endif;
-                $financialDetails = $this->exst( $businessSummary->financialSummaries );
+                
 
-                if(!empty($financialDetails))
-                {
+                
 ?>
                 <table class="table table-bordered table-financial">
                     <tr>
@@ -690,8 +691,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                     * <small><?php _e('from external financiers in US Dollars', 'bidxplugin')?></small><br>
                     ** <small><?php _e('being directly paid in this business', 'bidxplugin')?></small>
                 </p>
-<?php           }
-            }
+<?php       }
             else
             {
                 $salesRevenue;
@@ -723,7 +723,7 @@ $viewRowProperties = array ('tag_label' => 'label', 'tag_value' => 'div', 'class
                 endif;
             }
 
-
+        }
 
     if ( $hasAccess )
     {
