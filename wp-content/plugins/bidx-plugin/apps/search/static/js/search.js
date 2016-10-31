@@ -3241,7 +3241,7 @@
                     .replace( /%industry%/g,            industry )
                     .replace( /%reasonForSubmission%/g, reason )
                     .replace( /%financingNeeded%/g,     bidx.utils.formatNumber(i18nItem.financingNeeded)   ? bidx.utils.formatNumber(i18nItem.financingNeeded) + " " + bidx.i18n.i('usd') : emptyVal )
-                    .replace( /%stageOfBusines%/g,      i18nItem.stageOfBusines )
+                    .replace( /%stageOfBusiness%/g,      i18nItem.stageOfBusiness )
                     .replace( /%yearSalesStarted%/g,    i18nItem.yearSalesStarted )
                     .replace( /%completeness%/g,        i18nItem.completion ? i18nItem.completion + '%' : '' )
                     ;
@@ -3295,7 +3295,7 @@
                 ,  'financingNeeded'    :   "financingNeeded"
                 ,  'reasonForSubmission':   'reasonForSubmission'
                 ,  'country'            :   'country'
-                ,  'stageOfBusines'     :   'stageOfBusines'
+                ,  'stageOfBusiness'     :   'stageOfBusiness'
                 ,  'yearSalesStarted'   :   'yearSalesStarted'
                 };
 
