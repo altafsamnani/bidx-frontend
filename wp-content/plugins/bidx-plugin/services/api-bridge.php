@@ -92,14 +92,17 @@ abstract class APIbridge
         $url = API_URL . $urlService . $bidxGetParams;
 
         /*$this->logger->trace (sprintf ('Calling API URL: %s Method: %s Body: %s Headers: %s Cookies: %s', $url, $method, $body, var_export ($headers, true), var_export ($cookieArr, true)));*/
+        $request    = new WP_Http;
 
-        //$request = new WP_Http;
-        $result = wp_remote_request ($url, array ('method' => $bidxMethod,
-          'body' => $body,
-          'headers' => $headers,
-          'cookies' => $cookieArr,
-          'timeout' => apply_filters ('http_request_timeout', 60)
-        ));
+        $args       = array ( 'method'  => $bidxMethod,
+                              'body'    => $body,
+                              'headers' => $headers,
+                              'cookies' => $cookieArr,
+                              'timeout' => apply_filters ('http_request_timeout', 60)
+                            );
+        $request->buildCookieHeader( $args );   
+                             
+        $result = $request->request ($url, $args );
 
         $this->logger->trace (sprintf ('Response for API URL: %s Response: %s', $url, var_export ($result, true)));
 

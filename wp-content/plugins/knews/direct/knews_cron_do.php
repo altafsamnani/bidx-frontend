@@ -142,7 +142,7 @@ if ($Knews_plugin) {
 			$users[$users_index]=$wpdb->get_row("SELECT * FROM " . KNEWS_USERS . " WHERE id=" . $unique_submit->user);
 			$users[$users_index]->unique_submit = $unique_submit->id;
 
-			$users[$users_index]->confirm = $Knews_plugin->get_localized_home($users[$users_index]->lang, 'knews=confirmUser&k=' . $users[$users_index]->confkey . '&e=' . urlencode($users[$users_index]->email) );
+			$users[$users_index]->confirm = $Knews_plugin->get_localized_home($users[$users_index]->lang, 'knews=confirmUser&k=' . $users[$users_index]->confkey . '&e=' . $users[$users_index]->id );
 			
 			if ($submit_pend[0]->special == 'import_confirm') {
 		
@@ -163,10 +163,10 @@ if ($Knews_plugin) {
 					$aux_array[] = array( 'token' => $token['token'], 'value' => $Knews_plugin->get_user_field($users[$users_index]->id, $token['id'], $token['defaultval']) );
 				}
 				$users[$users_index]->tokens = $aux_array;
-				$users[$users_index]->unsubscribe = $Knews_plugin->get_localized_home($users[$users_index]->lang, 'knews=unsubscribe&e=' . urlencode($users[$users_index]->email) . '&k=' . $users[$users_index]->confkey . '&n=' . $id_newsletter . '&id=' . $submit_pend[0]->id);
+				$users[$users_index]->unsubscribe = $Knews_plugin->get_localized_home($users[$users_index]->lang, 'knews=unsubscribe&e=' . $users[$users_index]->id . '&k=' . $users[$users_index]->confkey . '&n=' . $id_newsletter . '&id=' . $submit_pend[0]->id);
 				
 				$url_news = $Knews_plugin->get_localized_home($users[$users_index]->lang, 'knews=readEmail&id=' . $id_newsletter);
-				$users[$users_index]->cant_read = $url_news . '&e=' . urlencode($users[$users_index]->email) . '&k=' . $submit_pend[0]->id;				
+				$users[$users_index]->cant_read = $url_news . '&e=' . $users[$users_index]->id . '&k=' . $submit_pend[0]->id;				
 				$users[$users_index]->fb_like = 'https://www.facebook.com/sharer/sharer.php?u=' . urlencode($url_news . '&share=fb');
 				$users[$users_index]->tweet = 'http://twitter.com/share?text=#news_title_encoded#&url=' . urlencode($url_news . '&share=tw');
 

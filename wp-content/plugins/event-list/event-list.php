@@ -3,9 +3,10 @@
 Plugin Name: Event List
 Plugin URI: http://wordpress.org/extend/plugins/event-list/
 Description: Manage your events and show them in a list view on your site.
-Version: 0.7.2
+Version: 0.7.6
 Author: Michael Burtscher
 Author URI: http://wordpress.org/extend/plugins/event-list/
+Text Domain: event-list
 License: GPLv2
 
 A plugin for the blogging MySQL/PHP-based WordPress.
@@ -75,7 +76,7 @@ class Event_List {
 	} // end constructor
 
 	public function load_textdomain() {
-		load_plugin_textdomain('event-list', false, dirname(plugin_basename(__FILE__)).'/languages');
+		load_plugin_textdomain('event-list', false, basename(EL_PATH).'/languages');
 	}
 
 	public function shortcode_event_list($atts) {
@@ -112,8 +113,10 @@ class Event_List {
 	}
 
 	public function enqueue_styles() {
-		wp_register_style('event-list', EL_URL.'includes/css/event-list.css');
-		wp_enqueue_style('event-list');
+		if('' == $this->options->get('el_disable_css_file')) {
+			wp_register_style('event-list', EL_URL.'includes/css/event-list.css');
+			wp_enqueue_style('event-list');
+		}
 		$this->styles_loaded = true;
 	}
 } // end class linkview

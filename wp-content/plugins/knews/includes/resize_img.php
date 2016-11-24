@@ -78,7 +78,7 @@ function knews_resize_img_fn($url_img, $width, $height, $media_id=0) {
 	}
 
 	$pos = strrpos($url_img, "-");
-	if ($pos !== false) { 
+	if ($pos !== false && strrpos($url_img, "x") != false && strrpos($url_img, "x") > $pos + 1) { 
 		$pos2 = strrpos($url_img, ".");
 		
 		if ($pos2 !== false) { 
@@ -251,7 +251,8 @@ Array
 	print_r($wp_dirs);
 	
 	$blog_url = get_bloginfo('url');
-	if (function_exists( 'qtrans_init')) $blog_url = site_url();
+	
+	if (KNEWS_MULTILANGUAGE && $knewsOptions['multilanguage_knews']=='qt') $blog_url = site_url();
 	
 	if (substr($blog_url, -1, 1) == '/') $blog_url = substr($blog_url, 0, strlen($blog_url)-1);
 	//$absolute_dir = substr($_SERVER['SCRIPT_FILENAME'], 0, strpos($_SERVER['SCRIPT_FILENAME'], 'wp-admin'));

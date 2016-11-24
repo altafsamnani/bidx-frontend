@@ -24,7 +24,7 @@ function dedo_register_page_statistics() {
 	// Hook for screen options dropdown
 	add_action( "load-$dedo_statistics_page", 'dedo_statistics_screen_options' );
 }
-add_action( 'admin_menu', 'dedo_register_page_statistics', 5 );
+add_action( 'admin_menu', 'dedo_register_page_statistics', 20 );
 
 /**
  * Render Statistics Page
@@ -35,10 +35,10 @@ function dedo_render_page_statistics() {
 	
 	?>
 	<div class="wrap">
-		<h2><?php _e( 'Download Logs', 'delightful-downloads' ); ?>
+		<h1><?php _e( 'Download Logs', 'delightful-downloads' ); ?>
 			<a href="#dedo-stats-export" class="add-new-h2 dedo-modal-action"><?php _e( 'Export', 'delightful-downloads' ); ?></a>
 			<a href="<?php echo wp_nonce_url( admin_url( 'edit.php?post_type=dedo_download&page=dedo_statistics&action=empty_logs' ), 'dedo_empty_logs', 'dedo_empty_logs_nonce' ); ?>" class="add-new-h2 dedo_confirm_action" data-confirm="<?php _e( 'You are about to permanently delete the download logs.', 'delightful-downloads' ); ?>"><?php _e( 'Delete', 'delightful-downloads' ); ?></a>
-		</h2>
+		</h1>
 
 		<div id="dedo-settings-main">	
 			<?php do_action( 'ddownload_statistics_header' ); ?>
@@ -196,7 +196,9 @@ function dedo_statistics_actions_export() {
 		$log['user_id'] = ( isset( $user_name[$log['user_id']] ) ) ? $user_name[$log['user_id']] : __( 'Non-member', 'delightful-downloads' );
 
 		// Convert ip to human readable
-		$log['user_ip'] = inet_ntop( $log['user_ip'] );
+        if ( ! empty( $log['user_ip'] ) ) {
+            $log['user_ip'] = inet_ntop( $log['user_ip'] );
+        }
 		
 		fputcsv( $output, $log );
 	}	

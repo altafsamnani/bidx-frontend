@@ -4,8 +4,8 @@
  * Plugin Name: JP Sharing
  * Plugin URI: http://wordpress.org/plugins/jetpack-sharing/
  * Description: Share content with Facebook, Twitter, and many more.
- * Author: JP Bot
- * Version: 3.4.1
+ * Author: JP
+ * Version: 3.9.6
  * Text Domain: jetpack
  * Domain Path: /languages/
  * License: GPL2 or later
@@ -14,7 +14,7 @@
 
 /**
  * Module Name: Sharing
- * Module Description: Allow visitors to share your content on Facebook, Twitter, and more with a click.
+ * Module Description: Visitors can share your content.
  * Jumpstart Description: Twitter, Facebook and Google+ buttons at the bottom of each post, making it easy for visitors to share your content.
  * Sort Order: 7
  * Recommendation Order: 6
@@ -23,20 +23,21 @@
  * Requires Connection: No
  * Auto Activate: Yes
  * Module Tags: Social, Recommended
- * Feature: Recommended, Jumpstart
+ * Feature: Recommended, Jumpstart, Traffic
+ * Additional Search Queries: share, sharing, sharedaddy, buttons, icons, email, facebook, twitter, google+, linkedin, pinterest, pocket, press this, print, reddit, tumblr
  */
 
-define( 'JETPACK__VERSION', '3.4.1' );
+define( 'JETPACK__VERSION', '3.9.6' );
 
-if ( !function_exists( 'sharing_init' ) )
-	include dirname( __FILE__ ).'/sharedaddy/sharedaddy.php';
-
-add_action( 'init', 'jetpack_sharing_register_genericons', 1 );
-function jetpack_sharing_register_genericons() {
+add_action('init','jp_sharing_register_styles');
+function jp_sharing_register_styles() {
 	if ( ! wp_style_is( 'genericons', 'registered' ) ) {
 		wp_register_style( 'genericons', plugins_url( 'genericons/genericons/genericons.css', __FILE__ ), false, '3.1' );
 	}
 }
+
+if ( !function_exists( 'sharing_init' ) )
+	include dirname( __FILE__ ).'/sharedaddy/sharedaddy.php';
 
 /*
 add_action( 'jetpack_modules_loaded', 'sharedaddy_loaded' );

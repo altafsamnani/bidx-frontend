@@ -82,7 +82,7 @@
 					$mail->Host = $test_array['smtp_host_knews'];
 					$mail->Port = $test_array['smtp_port_knews'];
 					$mail->Timeout = 30;
-					$mail->SMTPDebug=1;
+					if (isset($test_array['SMTPDebug'])) $mail->SMTPDebug=$test_array['SMTPDebug'];
 					
 					if ($test_array['smtp_user_knews']!='' || $test_array['smtp_pass_knews'] != '') {
 		
@@ -106,7 +106,16 @@
 			$error_info=array();
 
 			foreach ($recipients as $recipient) {
-				$customHtml = $theHtml; $customText = $theText;
+
+				if (is_null($theText)) {
+					$customText = '';
+				} elseif ($theText=='') {
+					$customText = strip_tags($theHtml);
+				} else {
+					$customText = $theText;					
+				}
+				
+				$customHtml = $theHtml;
 
 				if (isset($recipient->confirm)) {
 					$customHtml=str_replace('#url_confirm#', $recipient->confirm, $customHtml);
@@ -121,8 +130,8 @@
 					$customHtml=str_replace('%cant_read_href%', $recipient->cant_read, $customHtml);
 					$customText=str_replace('%cant_read_href%', $recipient->cant_read, $customText);
 
-					$customHtml=str_replace('%mobile_version_href%', $recipient->cant_read . (($mobile) ? '&m=dsk' : '&m=mbl'), $customHtml);
-					$customText=str_replace('%mobile_version_href%', $recipient->cant_read . (($mobile) ? '&m=dsk' : '&m=mbl'), $customText);
+					$customHtml=str_replace('%mobile_version_href%', $recipient->cant_read . (($mobile) ? '&mbl=0' : '&mbl=1'), $customHtml);
+					$customText=str_replace('%mobile_version_href%', $recipient->cant_read . (($mobile) ? '&mbl=0' : '&mbl=1'), $customText);
 				}
 
 				if (isset($recipient->fb_like)) {
@@ -200,9 +209,9 @@
 
 					//if ($theHtml != '') $mail->Body=utf8_encode($customHtml);
 					//if ($theText != '') $mail->AltBody=utf8_encode($customText);
-					if ($theHtml != '') $mail->Body=$customHtml;
-					if ($theText != '') $mail->AltBody=$customText;
-					if ($theHtml != '') $mail->IsHTML(true);
+					if ($customHtml != '') $mail->Body=$customHtml;
+					if ($customText != '') $mail->AltBody=$customText;
+					if ($customHtml != '') $mail->IsHTML(true);
 
 					if ($mail->Send()) {
 						$submit_ok++;

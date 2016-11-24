@@ -1,6 +1,6 @@
 /**
  * Sharedaddy Base Styles
- * 
+ *
  * Contains styles for modules, containers, buttons
  */
 
@@ -237,17 +237,17 @@ body .sd-content ul li.share-custom.no-icon a span {
 .sd-social-icon-text .sd-content li.share-tumblr a:before {
 	content: '\f214';
 }
-.sd-social-icon .sd-content ul li.share-stumbleupon a:before,
-.sd-social-text .sd-content ul li.share-stumbleupon a:before,
-.sd-content ul li.share-stumbleupon div.option.option-smart-off a:before,
-.sd-social-icon-text .sd-content li.share-stumbleupon a:before {
-	content: '\f223';
-}
 .sd-social-icon .sd-content ul li.share-pocket a:before,
 .sd-social-text .sd-content ul li.share-pocket a:before,
 .sd-content ul li.share-pocket div.option.option-smart-off a:before,
 .sd-social-icon-text .sd-content li.share-pocket a:before {
 	content: '\f224';
+}
+.sd-social-icon .sd-content ul li.share-skype a:before,
+.sd-social-text .sd-content ul li.share-skype a:before,
+.sd-content ul li.share-skype div.option.option-smart-off a:before,
+.sd-social-icon-text .sd-content li.share-skype a:before {
+	content: '\f220';
 }
 .sd-social-icon .sd-content ul li.share-pinterest a:before,
 .sd-social-text .sd-content ul li.share-pinterest a:before,
@@ -330,26 +330,34 @@ body .sd-content ul li.share-custom.no-icon a span {
 	margin: 0 10px 5px 0 !important;
 	height: 25px;
 }
+
+.sd-social-official .fb-share-button > span {
+	vertical-align: top !important;
+}
+
 .sd-social-official .sd-content .pocket_button iframe {
 	width: 98px;
 }
 
-.sd-social-official .sd-content .twitter_button iframe {
-	width: 96px;
+.sd-social-official .sd-content .skypeShare {
+	width: 55px;
 }
 
-
 /* Individual official buttons */
-.stumbleupon_button iframe, .reddit_button iframe {
+.googleplus1_button .g-plus {
+	vertical-align: top !important;
+}
+
+.reddit_button iframe {
 	margin-top: 1px;
 }
 
-.pocket_button iframe, .googleplus1_button iframe, .pinterest_button, .twitter_button, .like_button iframe, .linkedin_button>span {
+.pocket_button iframe, .googleplus1_button iframe, .pinterest_button, .twitter_button, .linkedin_button>span {
 	margin: 0 !important;
 }
 
 body .sd-social-official li.share-print ,
-body .sd-social-official li.share-email a, 
+body .sd-social-official li.share-email a,
 body .sd-social-official li.share-custom a,
 body .sd-social-official li a.share-more,
 body .sd-social-official li.share-digg a,
@@ -376,14 +384,14 @@ body .sd-content ul li.share-custom a.share-icon span
 	background-size: 16px 16px;
 	background-repeat: no-repeat;
 	margin-left: 0;
-	padding: 0 0 0 19px; 
+	padding: 0 0 0 19px;
 	display: inline-block;
 	height: 16px;
 	line-height: 16px;
 }
 
 body .sd-social-icon .sd-content li.share-custom a span {
-	width: 0;	
+	width: 0;
 }
 
 body .sd-content li.share-custom a:hover span {
@@ -521,11 +529,6 @@ body .sd-social-icon .sd-content li.share-custom a span {
 	color: #fff !important;
 }
 
-.sd-social-icon .sd-content ul li[class*='share-'].share-stumbleupon a.sd-button {
-	background: #ea4b24;
-	color: #fff !important;
-}
-
 .sd-social-icon .sd-content ul li[class*='share-'].share-twitter a.sd-button {
 	background: #00acee;
 	color: #fff !important;
@@ -557,6 +560,11 @@ body .sd-social-icon .sd-content li.share-custom a span {
 
 .sd-social-icon .sd-content ul li[class*='share-'].share-pocket a.sd-button {
 	background: #ee4056;
+	color: #fff !important;
+}
+
+.sd-social-icon .sd-content ul li[class*='share-'].share-skype a.sd-button {
+	background: #00AFF0;
 	color: #fff !important;
 }
 
@@ -655,6 +663,11 @@ div.sharedaddy.sharedaddy-dark #sharing_email {
 	max-width: none;
 	padding: 1px 3px;
 }
+#jetpack-source_f_name {
+	display: none!important;
+	position: absolute !important;
+	left: -9000px;
+}
 
 #sharing_email .sharing_cancel {
 	padding: 0 0 0 1em;
@@ -667,4 +680,3 @@ div.sharedaddy.sharedaddy-dark #sharing_email {
 	height: 123px;
 	margin: 0 0 1em 0;
 }
-

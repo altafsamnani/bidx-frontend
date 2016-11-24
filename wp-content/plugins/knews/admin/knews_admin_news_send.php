@@ -48,9 +48,9 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 					$aux_array[] = array( 'token' => $token['token'], 'value' => $Knews_plugin->get_user_field($user->id, $token['id'], $token['defaultval']) );
 				}
 				$user->tokens = $aux_array;
-				$user->unsubscribe = $Knews_plugin->get_localized_home($user->lang, 'knews=unsubscribe&e=' . urlencode($user->email) . '&k=' . $user->confkey);
+				$user->unsubscribe = $Knews_plugin->get_localized_home($user->lang, 'knews=unsubscribe&e=' . $user->id . '&k=' . $user->confkey);
 				$url_news = $Knews_plugin->get_localized_home($user->lang, 'knews=readEmail&id=' . $id_newsletter);
-				$user->cant_read = $url_news . '&e=' . urlencode($user->email);
+				$user->cant_read = $url_news . '&e=' . $user->id;
 				$user->fb_like = 'https://www.facebook.com/sharer/sharer.php?u=' . urlencode($url_news . '&share=fb');
 				$user->tweet = 'http://twitter.com/share?text=#news_title_encoded#&url=' . urlencode($url_news . '&share=tw');
 
@@ -200,7 +200,7 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 		if ($cron) {
 		?>
 		<p><?php _e('Start (now or deferred)?','knews'); ?> <?php _e('Time','knews');?>: <input type="text" name="hour" value="<?php echo date( 'H', current_time('timestamp')); ?>" style="width:30px;" />:<input type="text" name="minute" value="<?php echo date( 'i', current_time('timestamp')); ?>" style="width:30px;" /> |  <?php _e('Date (day/month/year)','knews');?>: <input type="text" name="day" value="<?php echo date( 'd', current_time('timestamp')); ?>" style="width:30px;" />/<input type="text" name="month" value="<?php echo date( 'm', current_time('timestamp')); ?>" style="width:30px;" />/<input type="text" name="year" value="<?php echo date( 'Y', current_time('timestamp')); ?>" style="width:50px;" /></p>
-		<p><?php _e('Paused?','knews');?>? <select name="paused"><option value="0" selected="selected"><?php _e('No','knews');?></option><option value="1"><?php _e('Yes','knews');?></option></select> | <?php _e('Priority','knews');?>: <select name="priority"><option value="1">1 <?php _e('(lowest)','knews');?></option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5" selected="selected">5 <?php _e('(normal)','knews');?></option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10 <?php _e('(highest)','knews');?></option></select></p> 
+		<p><?php _e('Paused?','knews');?> <select name="paused"><option value="0" selected="selected"><?php _e('No','knews');?></option><option value="1"><?php _e('Yes','knews');?></option></select> | <?php _e('Priority','knews');?>: <select name="priority"><option value="1">1 <?php _e('(lowest)','knews');?></option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5" selected="selected">5 <?php _e('(normal)','knews');?></option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10 <?php _e('(highest)','knews');?></option></select></p> 
 		<?php
 		} else {
 		?>
@@ -217,23 +217,26 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 	<p><?php _e('E-mail for close supervision','knews'); ?>: <input type="text" name="strict_control" /></p>
 	*/
 ?>
+
 	<table style="width:480px" class="widefat">
 	<thead><tr><th class="manage-column column-cb check-column"></th><th>A quick status check before submit:</th></tr></thead>
-	<tbody>
+	<tbody style="display:none;" id="knews_status_details">
 
 		<?php 
 		if ($knewsOptions['smtp_knews'] == 0) {
 
 			if ($knewsOptions['from_name_knews']=='Knews robot') {
-
+				$led1='red';
 				echo '<tr class="alt"><td><img src="' . KNEWS_URL . '/images/red_led.gif" width="20" height="20" alt="" /></td><td>';
 				echo sprintf(__('Warning: %sConfigure sender name before submit!','knews'),'<a href="admin.php?page=knews_config">') . '</a></td></tr>';
 
 			} else {
+				$led1='yellow';
 				echo '<tr class="alt"><td><img src="' . KNEWS_URL . '/images/yellow_led.gif" width="20" height="20" alt="" /></td><td>';
 				echo sprintf(__('%sSMTP is not configured. Email will be sent through wp_mail()','knews'),'<a href="admin.php?page=knews_config&tab=advanced&subtab=2">') . '</a></td></tr>';
 			}
 		} else {
+			$led1='green';
 			echo '<tr class="alt"><td><img src="' . KNEWS_URL . '/images/green_led.gif" width="20" height="20" alt="" /></td><td>';
 			echo __('Email will be sent using SMTP','knews') . '</td></tr>';
 		}
@@ -243,10 +246,12 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 			$now_time = time();
 			if ($now_time - $last_cron_time < 800) {
 
+				$led2='green';
 				echo '<tr><td><img src="' . KNEWS_URL . '/images/green_led.gif" width="20" height="20" alt="" /></td><td>';
 				echo __('CRON is properly configured','knews') . '</td></tr>';
 
 			} else {
+				$led2='red';
 				echo '<tr><td><img src="' . KNEWS_URL . '/images/red_led.gif" width="20" height="20" alt="" /></td><td>';
 	
 				if ($last_cron_time == 0) {
@@ -256,17 +261,20 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 				}
 			}
 		} else {
+			$led2='yellow';
 			echo '<tr><td><img src="' . KNEWS_URL . '/images/yellow_led.gif" width="20" height="20" alt="" /></td><td>';
 			echo sprintf(__('%sCRON is not configured it will speed up submissions in background','knews'),'<a href="admin.php?page=knews_config&tab=advanced">') . '</a></td></tr>';
 		}
 
 		if ($knewsOptions['pixel_tracking'] == 1) {
 
+			$led3='red';
 			$wp_dirs = wp_upload_dir();
 			echo '<tr class="alt"><td><span style="background:url(' . KNEWS_URL . '/images/red_led.gif); display:block; width:20px; height:20px;"><span style="background:url(' . $wp_dirs['baseurl'] . '/knewsimages/testled.gif); display:block; width:20px; height:20px;"></span></span></td><td>';
 			echo '<a href="admin.php?page=knews_config&tab=advanced&subtab=3">' . __('Tracking pixel','knews') . '</a></td></tr>';
 		
 		} else {
+			$led3='yellow';
 			echo '<tr class="alt"><td><img src="' . KNEWS_URL . '/images/yellow_led.gif" width="20" height="20" alt="" /></td><td>';
 			echo '<a href="admin.php?page=knews_config&tab=advanced&subtab=3">' . __('Please, configure the tracking pixel, it will give you accurate stats.','knews') . '</a></td></tr>';
 			
@@ -276,16 +284,19 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 
 		if ($knewsOptions['blacklist_scan']==0) {
 
+			$led4='red';
 			echo '<tr><td><img src="' . KNEWS_URL . '/images/red_led.gif" width="20" height="20" alt="" /></td><td>';
 			echo '<a href="admin.php?page=knews_users#blacklists">' . __('Please, scan mailing lists with the new blacklist domains.','knews') . '</a></td></tr>';
 
 		} elseif ($knewsOptions['blacklist_scan']!=count($email_blacklist)) {
 
+			$led4='yellow';
 			echo '<tr><td><img src="' . KNEWS_URL . '/images/yellow_led.gif" width="20" height="20" alt="" /></td><td>';
 			echo '<a href="admin.php?page=knews_users#blacklists">' . __('Please, scan mailing lists with the new blacklist domains.','knews') . '</a></td></tr>';
 			
 		} else {
 
+			$led4='green';
 			echo '<tr><td><img src="' . KNEWS_URL . '/images/green_led.gif" width="20" height="20" alt="" /></td><td>';
 			echo __('Mailing lists cleaned from blacklists.','knews') . '</td></tr>';
 			
@@ -293,25 +304,58 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 		
 		if (!$Knews_plugin->im_pro()) {
 
+			$led5='gray';
 			echo '<tr class="alt"><td><img src="' . KNEWS_URL . '/images/gray_led.gif" width="20" height="20" alt="" /></td><td>';
 			echo '<a href="admin.php?page=knews_config&tab=pro">' . __('Only Knews Pro has a built-in email bounce detection','knews') . '</a></td></tr>';
 			
 		} elseif ($knewsOptions['bounce_on'] == 1) {
 
+			$led5='green';
 			echo '<tr><td><img src="' . KNEWS_URL . '/images/green_led.gif" width="20" height="20" alt="" /></td><td>';
 			echo __('Bounce detection activated','knews') . '</td></tr>';
 		
 		} else {
+
+			$led5='yellow';
 			echo '<tr><td><img src="' . KNEWS_URL . '/images/yellow_led.gif" width="20" height="20" alt="" /></td><td>';
 			echo '<a href="admin.php?page=knews_config&tab=pro&subtab=2">' . __('Bounce detection deactivated','knews') . '</a></td></tr>';
 			
 		}
 
 		?>
-	</tbody></table>
+	</tbody>
+	<tfoot id="knews_status">
+		<tr><th style="border:0"></th><th style="border:0">
+			<table cellpadding="0" cellspacing="0" border="0"><tr>
+				<td style="padding:0; margin:5px;"><img src="<?php echo KNEWS_URL; ?>/images/<?php echo $led1; ?>_led.gif" width="20" height="20" alt="" /></td>
+				<td style="padding:0 10px;"><img src="<?php echo KNEWS_URL; ?>/images/<?php echo $led2; ?>_led.gif" width="20" height="20" alt="" /></td>
+				<td style="padding:0;">
+				<?php
+				if ($led3=='red'):
+				?>
+				<span style="background:url(<?php echo KNEWS_URL; ?>/images/red_led.gif); display:block; width:20px; height:20px;"><span style="background:url(<?php echo $wp_dirs['baseurl']; ?>/knewsimages/testled.gif); display:block; width:20px; height:20px;"></span></span>
+				<?php
+				else:
+				?>
+				<img src="<?php echo KNEWS_URL; ?>/images/<?php echo $led3; ?>_led.gif" width="20" height="20" alt="" />
+				<?php
+				endif;
+				?>
+				</td>
+				<td style="padding:0 10px;"><img src="<?php echo KNEWS_URL; ?>/images/<?php echo $led4; ?>_led.gif" width="20" height="20" alt="" /></td>
+				<td style="padding:0;"><img src="<?php echo KNEWS_URL; ?>/images/<?php echo $led5; ?>_led.gif" width="20" height="20" alt="" /></td>
+				<td style="padding:0 10px;"><a href="#" onclick="jQuery('#knews_status_details').show(); jQuery('#knews_status').hide(); return false; ">Show details</a></td>
+			</tr></table>
+		</th></tr>
+	</tfoot>
+	</table>
 
 	<div class="submit">
-		<input type="submit" class="button-primary" value="<?php _e('Schedule submit','knews'); ?>">
+		<div class="resultats_test_pro"></div>
+		<p style="width:480px;">
+			<a href="#" class="button" id="test_smtp_pro">Real Spam Test</a> <a href="http://knewsplugin.com/real-spam-test-for-smtp-configuration-and-newsletters/" style="background:url(<?php echo KNEWS_URL; ?>/images/help.png) no-repeat 5px 0; padding:3px 0 3px 30px; color:#0646ff; font-size:15px; vertical-align:middle;" target="_blank" rel="noreferrer" title="About Real Spam Test"></a> 
+			<input type="submit" class="button-primary" value="<?php _e('Schedule submit','knews'); ?>" style="float:right;">
+		</p>
 	</div>
 	<?php 
 	//Security for CSRF attacks

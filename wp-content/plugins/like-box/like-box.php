@@ -2,11 +2,11 @@
 /*
 Plugin Name: Facebook Like Box
 Plugin URI: https://wordpress.org/plugins/like-box
-Description: Our Facebook like box plugin will help you to display Facebook like box on your wesite, just add Facebook Like box widget to your sidebar and use it. Also you can use Facebook Like box on your pages/posts and create Facebook Like box popup for your website.
-Version: 0.5.2
+Description: Facebook like box plugin will help you to display Facebook like box on your wesite, just add Facebook Like box widget to your sidebar and use it. Also you can use Facebook Like box on your pages/posts and create Facebook Like box popup for your website.
+Version: 0.7.40
 Author: smplug-in
-Author URI: wordpress.org
-License: GPL3
+Author URI: http://wpdevart.com/wordpress-facebook-like-box-plugin
+License: GPL/GPL3
 */
  
 
@@ -60,7 +60,6 @@ class like_box_main{
 		
 		require_once($this->like_box_plugin_path.'includes/front_end.php');
 		require_once($this->like_box_plugin_path.'includes/widget.php');
-
 		$like_box_front_end = new like_box_front_end(array('menu_name' => 'Like Box','databese_parametrs'=>$this->like_box_options));
 		
 	}
@@ -77,6 +76,17 @@ class like_box_main{
 	public function call_base_filters(){
 		add_action( 'init',  array($this,'registr_requeried_scripts') );
 		add_action( 'admin_head',  array($this,'include_requeried_scripts') );
+		//for_upgrade
+		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array($this,'plugin_activate_sublink') );
+	}
+	public function plugin_activate_sublink($links){
+		$plugin_submenu_added_link=array();		
+		 $added_link = array(
+		 '<a target="_blank" style="color: rgba(10, 154, 62, 1); font-weight: bold; font-size: 13px;" href="http://wpdevart.com/wordpress-facebook-like-box-plugin">Upgrade to Pro</a>',
+		 );
+		$plugin_submenu_added_link=array_merge( $plugin_submenu_added_link, $added_link );
+		$plugin_submenu_added_link=array_merge( $plugin_submenu_added_link, $links );
+		return $plugin_submenu_added_link;
 	}
   	public function include_requeried_scripts(){
 		wp_enqueue_script('wp-color-picker');

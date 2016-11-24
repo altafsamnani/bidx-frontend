@@ -2,6 +2,9 @@
 
 class like_box_setting{
 	public static $list_of_animations=array('bounce','flash','pulse','rubberBand','shake','swing','tada','wobble','bounceIn','bounceInDown','bounceInLeft','bounceInRight','bounceInUp','fadeIn','fadeInDown','fadeInDownBig','fadeInLeft','fadeInLeftBig','fadeInRight','fadeInRightBig','fadeInUp','fadeInUpBig','flip','flipInX','flipInY','lightSpeedIn','rotateIn','rotateInDownLeft','rotateInDownRight','rotateInUpLeft','rotateInUpRight','rollIn','zoomIn','zoomInDown','zoomInLeft','zoomInRight','zoomInUp');
+	public static $id_for_iframe=0;
+	
+	// Function for genereted animations
 	public static function get_animations_type_array($animation=''){
 		if($animation=='' || $animation=='none')
 			return '';
@@ -10,6 +13,91 @@ class like_box_setting{
 			return self::$list_of_animations[array_rand(self::$list_of_animations,1)];
 		}
 		return $animation;
+	}
+	
+	// Generate Facebook iframe and iframe js by array
+	public static function generete_iframe_by_array($params){
+		self::$id_for_iframe++;
+		$output_code='';
+		//Default parameters for FB iframe
+		$defaults=array(
+			'iframe_id'  =>  'facbook_like_box_'.self::$id_for_iframe,
+			'profile_id' =>  '',
+			'width' =>  '300', // Maximum width
+			'height' =>  '550',// Height
+			'show_border' =>  'show',
+			'border_color' =>  '#FFFFF',
+			'header' =>  'small', // Header type
+			'show_cover_photo'=>'true',  //Header cover photo
+			'connections' =>  'show',// Show Facebook faces
+			'stream' =>  '0',			
+			'animation_efect'=>'none',			
+			'locale' =>  'en_US', // Like Box Language			
+		);
+		$params=array_merge($defaults,$params);
+		$params['width']=max((int)$params['width'],180);
+		$params['width']=min((int)$params['width'],500);
+		
+		if($params['header']=='small' || $params['header']=='0' || $params['header']=='no')
+			$params['header']='true';
+		else
+			$params['header']='false';
+			
+		if((int)$params['connections']>0 || $params['connections']=="show")
+			$params['connections']='true';
+		else
+			$params['connections']='false';
+		
+		
+		if($params['stream']=='0' || $params['stream']=='hide')
+			$params['stream']='false';
+		else
+			$params['stream']='true';
+			
+		if($params['show_cover_photo']=='true' || $params['show_cover_photo']=='show')
+			$params['show_cover_photo']='false';
+		else
+			$params['show_cover_photo']='true';
+		
+		$like_box_array_query=array(
+			'adapt_container_width'  => 'true',
+			'container_width'  		 => $params['width'],
+			'width'  				 => $params['width'],
+			'height'  				 => $params['height'],
+			'hide_cover'  			 => $params['show_cover_photo'],
+			'href'  				 => urlencode("https://www.facebook.com/".$params['profile_id']),
+			'locale'  				 => $params['locale'],
+			'sdk'  					 => 'joey',
+			'show_facepile'  		 => $params['connections'],
+			'show_posts'  			 => $params['stream'],
+			'small_header'  		 => $params['header'],
+		);
+		$like_box_src=add_query_arg($like_box_array_query,'http://www.facebook.com/v2.6/plugins/page.php');
+		$output_code.='<iframe id="'.$params['iframe_id'].'" src="'.$like_box_src.'" scrolling="no" allowTransparency="true" style="'.(($params['show_border']=='yes' ||  $params['show_border']=='show')?'border:1px solid '.$params['border_color'].';':'border:none').' overflow:hidden;visibility:hidden; max-width:500px; width:'.$params['width'].'px; height:'.$params['height'].'px;"></iframe>';
+		$output_code.='<script>
+		if(typeof(jQuery)=="undefined")
+			jQuery=window.parent.jQuery;
+		if(typeof(like_box_animated_element)=="undefined")
+			like_box_animated_element=window.parent.like_box_animated_element;
+		if(typeof(like_box_set_width_cur_element)=="undefined")
+			like_box_set_width_cur_element=window.parent.like_box_animated_element;		
+		jQuery(document).ready(function(){';
+		if($params['animation_efect']!='none'){
+		$output_code.='
+				like_box_animated_element("'.like_box_setting::get_animations_type_array($params['animation_efect']).'","'.$params['iframe_id'].'");
+				like_box_set_width_cur_element("'.$params['iframe_id'].'",'.$params['width'].')
+				jQuery(window).scroll(function(){
+					like_box_animated_element("'.self::get_animations_type_array($params['animation_efect']).'","'.$params['iframe_id'].'");
+				})';
+		}
+		else{
+			$output_code.='
+			document.getElementById("'.$params['iframe_id'].'").style.visibility="visible"
+			like_box_set_width_cur_element("'.$params['iframe_id'].'",'.$params['width'].')
+			';
+		}
+        $output_code.= '});</script>';
+		return $output_code;
 	}
 	public static function generete_animation_select($select_id='',$curent_effect='none'){
 	?>

@@ -1,9 +1,10 @@
 <?php
-if( !defined( 'ABSPATH' ) ) {
+if(!defined('WPINC')) {
 	exit;
 }
 
-require_once( EL_PATH.'includes/options.php' );
+require_once(EL_PATH.'includes/options.php');
+require_once(EL_PATH.'includes/daterange.php');
 
 // Class for database access via wordpress functions
 class EL_Db {
@@ -12,11 +13,12 @@ class EL_Db {
 	private static $instance;
 	private $table;
 	private $options;
+	private $daterange;
 
 	public static function &get_instance() {
 		// Create class instance if required
-		if( !isset( self::$instance ) ) {
-			self::$instance = new EL_Db();
+		if(!isset(self::$instance)) {
+			self::$instance = new self();
 		}
 		// Return class instance
 		return self::$instance;
@@ -26,6 +28,7 @@ class EL_Db {
 		global $wpdb;
 		$this->table = $wpdb->prefix.self::TABLE_NAME;
 		$this->options = &EL_Options::get_instance();
+		$this->daterange = &EL_Daterange::get_instance();
 	}
 
 	// UPDATE DB
@@ -194,7 +197,9 @@ class EL_Db {
 
 	private function validate_sql_date($datestring) {
 		$d = date_create_from_format('Y-m-d', $datestring);
-		if($d && $d->format('Y-m-d') == $datestring) {
+		if($d && $d->format('Y-m-d') == $datestring
+		      && 1970 <= $d->format('Y')
+		      && 2999 >= $d->format('Y')) {
 			return $datestring;
 		}
 		return false;
@@ -251,62 +256,20 @@ class EL_Db {
 	}
 
 	private function sql_date_filter($element) {
-		$range = $this->check_date_format($element);
+		$range = $this->daterange->check_date_format($element);
 		if(null === $range) {
-			$range = $this->check_daterange_format($element);
+			$range = $this->daterange->check_daterange_format($element);
 		}
 		if(null === $range) {
 			//set to standard (upcoming)
-			$range = $this->get_date_range($element, $this->options->daterange_formats['upcoming']);
+			$range = $this->daterange->get_date_range($element, $this->options->daterange_formats['upcoming']);
 		}
-		return '(end_date >= "'.$range[0].'" AND start_date <= "'.$range[1].'")';
+		$date_for_startrange = ('' == $this->options->get('el_multiday_filterrange')) ? 'start_date' : 'end_date';
+		return '('.$date_for_startrange.' >= "'.$range[0].'" AND start_date <= "'.$range[1].'")';
 	}
 
 	private function sql_cat_filter ($element) {
 		return 'categories LIKE "%|'.$element.'|%"';
-	}
-
-	private function check_date_format($element) {
-		foreach($this->options->date_formats as $date_type) {
-			if(preg_match('@'.$date_type['regex'].'@', $element)) {
-				return $this->get_date_range($element, $date_type);
-			}
-		}
-		return null;
-	}
-
-	private function check_daterange_format($element) {
-		foreach($this->options->daterange_formats as $key => $daterange_type) {
-			if(preg_match('@'.$daterange_type['regex'].'@', $element)) {
-				//check for date_range which requires special handling
-				if('date_range' == $key) {
-					$sep_pos = strpos($element, "~");
-					$startrange = $this->check_date_format(substr($element, 0, $sep_pos));
-					$endrange = $this->check_date_format(substr($element, $sep_pos+1));
-					return array($startrange[0], $endrange[1]);
-				}
-				return $this->get_date_range($element, $daterange_type);
-			}
-		}
-		return null;
-	}
-
-	private function get_date_range($element, &$range_type) {
-		// range start
-		if(substr($range_type['start'], 0, 8) == '--func--') {
-			eval('$range[0] = '.substr($range_type['start'], 8));
-		}
-		else {
-			$range[0] = str_replace('%v%', $element, $range_type['start']);
-		}
-		// range end
-		if(substr($range_type['end'], 0, 8) == '--func--') {
-			eval('$range[1] = '.substr($range_type['end'], 8));
-		}
-		else {
-			$range[1] = str_replace('%v%', $element, $range_type['end']);
-		}
-		return $range;
 	}
 
 	/** ************************************************************************************************************
@@ -329,17 +292,19 @@ class EL_Db {
 		}
 		else {
 			// truncate with preserving html tags
+			$truncated = false;
 			$printedLength = 0;
 			$position = 0;
 			$tags = array();
 			$out = '';
-			while($printedLength < $length && mb_preg_match('{</?([a-z]+\d?)[^>]*>|&#?[a-zA-Z0-9]+;}', $html, $match, PREG_OFFSET_CAPTURE, $position)) {
+			while($printedLength < $length && $this->mb_preg_match('{</?([a-z]+\d?)[^>]*>|&#?[a-zA-Z0-9]+;}', $html, $match, PREG_OFFSET_CAPTURE, $position)) {
 				list($tag, $tagPosition) = $match[0];
 				// Print text leading up to the tag
 				$str = mb_substr($html, $position, $tagPosition - $position);
 				if($printedLength + mb_strlen($str) > $length) {
 					$out .= mb_substr($str, 0, $length - $printedLength);
 					$printedLength = $length;
+					$truncated = true;
 					break;
 				}
 				$out .= $str;
@@ -352,13 +317,14 @@ class EL_Db {
 				else {
 					// Handle the tag
 					$tagName = $match[1][0];
-					if('/' == $tag[1]) {
+					if($this->mb_preg_match('{^<[\b]}', $tag)) {
 						// This is a closing tag
 						$openingTag = array_pop($tags);
-						assert($openingTag == $tagName); // check that tags are properly nested
+						// Check for not properly nested tags (for debugging only)
+						//assert($openingTag == $tagName, '----- Tags not properly nested: OpeningTag: '.$openingTag.'; TagName: '.$tagName.' -----');
 						$out .= $tag;
 					}
-					else if('/' == $tag[mb_strlen($tag) - 2]) {
+					else if($this->mb_preg_match('{/\s?>$}', $tag)) {
 						// Self-closing tag
 						$out .= $tag;
 					}
@@ -375,8 +341,8 @@ class EL_Db {
 			if($printedLength < $length && $position < mb_strlen($html)) {
 				$out .= mb_substr($html, $position, $length - $printedLength);
 			}
-			// Print ellipsis ("...") if the html is not complete
-			if(mb_strlen($html) != $position) {
+			// Print ellipsis ("...") if the html was truncated
+			if($truncated) {
 				$out .= ' &hellip;';
 			}
 			// Close any open tags.
@@ -386,10 +352,8 @@ class EL_Db {
 			return $out;
 		}
 	}
-}
 
-if(!function_exists("mb_preg_match")) {
-	function mb_preg_match($ps_pattern, $ps_subject, &$pa_matches, $pn_flags=0, $pn_offset=0, $ps_encoding=NULL) {
+	private function mb_preg_match($ps_pattern, $ps_subject, &$pa_matches=null, $pn_flags=0, $pn_offset=0, $ps_encoding=null) {
 		// WARNING! - All this function does is to correct offsets, nothing else:
 		//(code is independent of PREG_PATTER_ORDER / PREG_SET_ORDER)
 		if(is_null($ps_encoding)) {
@@ -402,17 +366,6 @@ if(!function_exists("mb_preg_match")) {
 				$ha_match[1] = mb_strlen(substr($ps_subject, 0, $ha_match[1]), $ps_encoding);
 			}
 		return $out;
-	}
-}
-
-/* create date_create_from_format (DateTime::createFromFormat) alternative for PHP 5.2
- *
- * This function is only a small implementation of this function with reduced functionality to handle sql dates (format: 2014-01-31)
- */
-if(!function_exists("date_create_from_format")) {
-	function date_create_from_format($dformat, $dvalue) {
-		$d = new DateTime($dvalue);
-		return $d;
 	}
 }
 ?>

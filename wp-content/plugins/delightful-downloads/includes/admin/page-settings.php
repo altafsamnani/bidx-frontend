@@ -18,7 +18,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 function dedo_register_page_settings() {
 	add_submenu_page( 'edit.php?post_type=dedo_download', __( 'Download Settings', 'delightful-downloads' ), __( 'Settings', 'delightful-downloads' ), 'manage_options', 'dedo_settings', 'dedo_render_page_settings' );
 }
-add_action( 'admin_menu', 'dedo_register_page_settings', 10 );
+add_action( 'admin_menu', 'dedo_register_page_settings', 30 );
 
 /**
  * Register Settings Sections and Fields
@@ -48,11 +48,16 @@ function dedo_register_settings() {
 	
 	// Register form fields
 	foreach ( $registered_settings as $key => $value ) {
-		
+		$callback = 'dedo_settings_' . $key . '_field';
+
+		if ( 'licenses' === $value['tab'] ) {
+			$callback = array( $value['class'], 'render_license_field' );
+		}
+
 		add_settings_field(
 			$key,
 			$value['name'],
-			'dedo_settings_' . $key . '_field',
+			$callback,
 			'dedo_settings_' . $value['tab'],
 			'dedo_settings_' . $value['tab']
 		);
@@ -77,18 +82,17 @@ function dedo_render_page_settings() {
 
 	<div class="wrap">
 		
-		<h2><?php _e( 'Download Settings', 'delightful-downloads' ); ?>
+		<h1><?php _e( 'Download Settings', 'delightful-downloads' ); ?>
 			<a href="#dedo-settings-import" class="add-new-h2 dedo-modal-action"><?php _e( 'Import', 'delightful-downloads' ); ?></a>
 			<a href="<?php echo wp_nonce_url( admin_url( 'edit.php?post_type=dedo_download&page=dedo_settings&action=export' ), 'dedo_export_settings', 'dedo_export_settings_nonce' ) ?>" class="add-new-h2"><?php _e( 'Export', 'delightful-downloads' ); ?></a>
 			<a href="<?php echo wp_nonce_url( admin_url( 'edit.php?post_type=dedo_download&page=dedo_settings&action=reset_defaults' ), 'dedo_reset_settings', 'dedo_reset_settings_nonce' ) ?>" class="add-new-h2 dedo_confirm_action" data-confirm="<?php _e( 'You are about to reset the download settings.', 'delightful-downloads' ); ?>"><?php _e( 'Reset Defaults', 'delightful-downloads' ); ?></a>
-		</h2>
+		</h1>
 		
 		<?php if ( isset( $_GET['settings-updated'] ) ) {
-				
-			echo '<div class="updated"><p>' . __( 'Settings updated successfully.', 'delightful-downloads' ) . '</p></div>';
+			echo '<div class="notice updated is-dismissible"><p>' . __( 'Settings updated successfully.', 'delightful-downloads' ) . '</p></div>';
 		} ?>
 
-		<h3 id="dedo-settings-tabs" class="nav-tab-wrapper">
+		<h2 id="dedo-settings-tabs" class="nav-tab-wrapper">
 			
 			<?php // Generate tabs
 			
@@ -97,7 +101,7 @@ function dedo_render_page_settings() {
 				echo '<a href="#dedo-settings-tab-' . $key . '" class="nav-tab ' . ( $active_tab == $key ? 'nav-tab-active' : '' ) . '">' . $value . '</a>';
    	 		} ?>
 
-		</h3>	
+		</h2>
 
 		<div id="dedo-settings-main" <?php echo ( !apply_filters( 'dedo_admin_sidebar', true ) ) ? 'style="float: none; width: 100%; padding-right: 0;"' : ''; ?>>	
 
@@ -230,19 +234,38 @@ foreach ( $dedo_options as $key => $value ) {
  * @since  1.5
  */
 function dedo_render_part_sidebar() {
-
 	if ( apply_filters( 'dedo_admin_sidebar', true ) ) : ?>
 
-		<div id="dedo-settings-sidebar">
-			<h4><?php _e( 'Help and Support', 'delightful-downloads' ); ?></h4>
-			<p><?php printf( __( 'Please take a moment to look at the %sdocumentation%s. If you are still having issues, please leave a %ssupport request%s.', 'delightful-downloads' ), '<a href="http://delightfulwp.com/delightful-downloads/documentation/">', '</a>', '<a href="http://delightfulwp.com/contact/?reason=support">', '</a>' ); ?></p>
-			
-			<h4><?php _e( 'Share the Love', 'delightful-downloads' ); ?></h4>
-			<p><?php printf( __( 'Enjoy Delightful Downloads? Please consider %sdonating%s a few dollars, to help support future development. Alternatively, a %splugin review%s is always appreciated.', 'delightful-downloads' ), '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=95AQB5DP83XAU">', '</a>', '<a href="http://wordpress.org/support/view/plugin-reviews/delightful-downloads">', '</a>' ); ?></p>
+		<?php $current_user = wp_get_current_user(); ?>
 
-			<h4><?php _e( 'About the Developer', 'delightful-downloads' ); ?></h4>
-			<p><?php printf( __( 'Hey there! I\'m %sAshley Rich%s, a freelance web designer and WordPress developer based in the West Midlands, England.', 'delightful-downloads' ), '<a href="http://ashleyrich.com">', '</a>' ); ?></p>
-			<p><?php printf( __( '%sTwitter%s', 'delightful-downloads' ), '<a href="//twitter.com/A5hleyRich">', '</a>' ); ?></p>
+		<div id="dedo-settings-sidebar">
+			<div class="pro-version">
+				<h4><?php _e( 'Add-ons?', 'delightful-downloads' ); ?></h4>
+				<p><?php _e( "I'm working on a few premium add-ons to enhance Delightful Downloads:", 'delightful-downloads' ); ?></p>
+				<ul>
+					<li>
+						<strike><?php _e( '<strong>Customizer</strong> - Button and list styles editor', 'delightful-downloads' ); ?></strike>
+						<a href="https://delightfuldownloads.com/add-ons/customizer/?utm_source=WordPress&utm_medium=Plugin&utm_content=Customizer&utm_campaign=Addons%20Page"><?php _e( 'Available', 'delightful-downloads' ); ?></a>
+					</li>
+					<li><?php _e( '<strong>MailChimp</strong> - Subscribe to download', 'delightful-downloads' ); ?></li>
+					<li><?php _e( '<strong>Twitter</strong> - Tweet to download', 'delightful-downloads' ); ?></li>
+				</ul>
+				<form method="post" action="http://ashleyrich.us5.list-manage.com/subscribe/post" target="_blank">
+					<input type="hidden" name="u" value="ace6f39e2bb7270b9ca7a21bc">
+					<input type="hidden" name="id" value="003e1f6906">
+					<label for="MERGE0">Email:</label>
+					<input type="email" name="MERGE0" id="MERGE0" class="regular-text" value="<?php echo $current_user->user_email; ?>">
+					<label for="MERGE1">First Name:</label>
+					<input type="text" name="MERGE1" id="MERGE1" class="regular-text" value="<?php echo $current_user->user_firstname; ?>">
+					<label for="MERGE2">Last Name:</label>
+					<input type="text" name="MERGE2" id="MERGE2" class="regular-text" value="<?php echo $current_user->user_lastname; ?>">
+					<button class="button button-primary"><?php _e( 'Keep me informed', 'delightful-downloads' ); ?></button>
+				</form>
+				<small><?php _e( 'I will not use your email for anything else and you can unsubscribe at anytime.' ); ?></small>
+			</div>
+
+			<h4><?php _e( 'Help and Support', 'delightful-downloads' ); ?></h4>
+			<p><?php printf( __( 'Having issues? Check out the %sdocumentation%s. If you can\'t find a solution, please raise an issue on the %ssupport forums%s.', 'delightful-downloads' ), '<a href="https://delightfuldownloads.com/documentation/">', '</a>', '<a href="https://wordpress.org/support/plugin/delightful-downloads">', '</a>' ); ?></p>
 		</div>
 
 	<?php endif;
@@ -357,14 +380,21 @@ function dedo_settings_default_text_field() {
 function dedo_settings_default_style_field() {
 	global $dedo_options;
 
-	$styles = dedo_get_shortcode_styles();
+	$styles        = dedo_get_shortcode_styles();
 	$default_style = $dedo_options['default_style'];
+	$disabled      = empty( $styles ) ? 'disabled' : '';
 
-	echo '<select name="delightful-downloads[default_style]">';
-	foreach ( $styles as $key => $value ) {
-		$selected = ( $default_style == $key ? ' selected="selected"' : '' );
-		echo '<option value="' . $key . '" ' . $selected . '>' . $value['name'] . '</option>';	
+	echo '<select name="delightful-downloads[default_style]" ' . $disabled . '>';
+
+	if ( ! empty( $styles ) ) {
+		foreach ( $styles as $key => $value ) {
+			$selected = ( $default_style == $key ? ' selected="selected"' : '' );
+			echo '<option value="' . $key . '" ' . $selected . '>' . $value['name'] . '</option>';
+		}
+	} else {
+		echo '<option>' . __( 'No styles registered', 'delightful-downloads' ) . '</option>';
 	}
+
 	echo '</select>';
 	echo '<p class="description">' . sprintf( __( 'The default output style, when using the %s shortcode. This can be overridden on a per-download basis.', 'delightful-downloads' ), '<code>[ddownload]</code>' );
 }
@@ -377,14 +407,19 @@ function dedo_settings_default_style_field() {
 function dedo_settings_default_button_field() {
 	global $dedo_options;
 
-	$colors = dedo_get_shortcode_buttons();
+	$colors        = dedo_get_shortcode_buttons();
 	$default_color = $dedo_options['default_button'];
+	$disabled      = empty( $colors ) ? 'disabled' : '';
 
-	echo '<select name="delightful-downloads[default_button]">';
-	
-	foreach ( $colors as $key => $value ) {
-		$selected = ( $default_color == $key ? ' selected="selected"' : '' );
-		echo '<option value="' . $key . '" ' . $selected . '>' . $value['name'] . '</option>';	
+	echo '<select name="delightful-downloads[default_button]" ' . $disabled . '>';
+
+	if ( ! empty( $colors ) ) {
+		foreach ( $colors as $key => $value ) {
+			$selected = ( $default_color == $key ? ' selected="selected"' : '' );
+			echo '<option value="' . $key . '" ' . $selected . '>' . $value['name'] . '</option>';
+		}
+	} else {
+		echo '<option>' . __( 'No button styles registered', 'delightful-downloads' ) . '</option>';
 	}
 
 	echo '</select>';
@@ -399,14 +434,19 @@ function dedo_settings_default_button_field() {
 function dedo_settings_default_list_field() {
 	global $dedo_options;
 
-	$lists = dedo_get_shortcode_lists();
+	$lists        = dedo_get_shortcode_lists();
 	$default_list = $dedo_options['default_list'];
+	$disabled     = empty( $lists ) ? 'disabled' : '';
 
-	echo '<select name="delightful-downloads[default_list]">';
-	
-	foreach ( $lists as $key => $value ) {
-		$selected = ( $default_list == $key ? ' selected="selected"' : '' );
-		echo '<option value="' . $key . '" ' . $selected . '>' . $value['name'] . '</option>';	
+	echo '<select name="delightful-downloads[default_list]" ' . $disabled . '>';
+
+	if ( ! empty( $lists ) ) {
+		foreach ( $lists as $key => $value ) {
+			$selected = ( $default_list == $key ? ' selected="selected"' : '' );
+			echo '<option value="' . $key . '" ' . $selected . '>' . $value['name'] . '</option>';
+		}
+	} else {
+		echo '<option>' . __( 'No list styles registered', 'delightful-downloads' ) . '</option>';
 	}
 
 	echo '</select>';
@@ -523,6 +563,18 @@ function dedo_settings_download_url_field() {
 }
 
 /**
+ * Render Upload Directory field
+ */
+function dedo_settings_upload_directory_field() {
+	global $dedo_options;
+
+	$text = $dedo_options['upload_directory'];
+
+	echo '<input type="text" name="delightful-downloads[upload_directory]" value="' . esc_attr( $text ) . '" class="regular-text" />';
+	echo '<p class="description">' . __( 'The directory to upload files.', 'delightful-downloads' ) . ' <code>' . trailingslashit( dedo_get_upload_dir( 'dedo_baseurl' ) ) . '</code></p>';
+}
+
+/**
  * Render Folder Protection field
  *
  * @since  1.5
@@ -567,13 +619,21 @@ function dedo_validate_settings( $input ) {
 
 	// Ensure text fields are not blank
 	foreach( $options as $key => $value ) {
-		if ( 'text' === $options[$key]['type'] && '' === trim( $input[$key] ) ) {
-			$input[$key] = $dedo_default_options[$key];
+		if ( 'text' !== $options[ $key ]['type'] ) {
+			continue;
+		}
+
+		// None empty text fields
+		if ( 'licenses' !== $options[ $key ]['tab'] && '' === trim( $input[ $key ] ) ) {
+			$input[ $key ] = $dedo_default_options[ $key ];
 		}
 	}
 	 
 	// Ensure download URL does not contain illegal characters
-	$input['download_url'] = strtolower( preg_replace( '/[^A-Za-z0-9_-]/', '', $input['download_url'] ) );
+	$input['download_url'] = strtolower( preg_replace( '/[^A-Za-z0-9\_\-]/', '', $input['download_url'] ) );
+
+	// Ensure upload directory does not contain illegal characters
+	$input['upload_directory'] = strtolower( preg_replace( '/[^A-Za-z0-9\_\-]/', '', $input['upload_directory'] ) );
 
 	// Run folder protection if option changed
 	if ( $input['folder_protection'] != $dedo_options['folder_protection'] ) {
@@ -583,7 +643,7 @@ function dedo_validate_settings( $input ) {
 	// Clear transients
 	dedo_delete_all_transients();
 
-	return $input;
+	return apply_filters( 'dedo_validate_settings', $input );
 }
 
 /**

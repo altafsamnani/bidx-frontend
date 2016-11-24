@@ -1,5 +1,5 @@
 <?php
-if(!defined('ABSPATH')) {
+if(!defined('WPINC')) {
 	exit;
 }
 
@@ -8,6 +8,7 @@ require_once(EL_PATH.'includes/options.php');
 // This class handles general functions which can be used on different admin pages
 class EL_Admin_Functions {
 	private static $instance;
+	private $options;
 
 	public static function &get_instance() {
 		// Create class instance if required
@@ -19,7 +20,71 @@ class EL_Admin_Functions {
 	}
 
 	private function __construct() {
+		$this->options = &EL_Options::get_instance();
+		$this->options->load_options_helptexts();
+	}
 
+	public function show_option_form($section) {
+		$out = '
+		<form method="post" action="options.php">
+		';
+		ob_start();
+		settings_fields('el_'.$section);
+		$out .= ob_get_contents();
+		ob_end_clean();
+		$out .= $this->show_option_table($section);
+		ob_start();
+		submit_button();
+		$out .= ob_get_contents();
+		ob_end_clean();
+		$out .='
+		</form>';
+		return $out;
+	}
+
+	public function show_option_table($section) {
+		$out = '
+			<div class="el-settings">
+			<table class="form-table">';
+		foreach($this->options->options as $oname => $o) {
+			if($o['section'] == $section) {
+				$out .= '
+					<tr>
+						<th>';
+				if($o['label'] != '') {
+					$out .= '<label for="'.$oname.'">'.$o['label'].':</label>';
+				}
+				$out .= '</th>
+					<td>';
+				switch($o['type']) {
+					case 'checkbox':
+						$out .= $this->show_checkbox($oname, $this->options->get($oname), $o['caption']);
+						break;
+					case 'dropdown':
+						$out .= $this->show_dropdown($oname, $this->options->get($oname), $o['caption']);
+						break;
+					case 'radio':
+						$out .= $this->show_radio($oname, $this->options->get($oname), $o['caption']);
+						break;
+					case 'text':
+						$out .= $this->show_text($oname, $this->options->get($oname));
+						break;
+					case 'textarea':
+						$out .= $this->show_textarea($oname, $this->options->get($oname));
+						break;
+					case 'file-upload':
+						$out .= $this->show_file_upload($oname, $o['maxsize']);
+				}
+				$out .= '
+					</td>
+					<td class="description">'.$o['desc'].'</td>
+				</tr>';
+			}
+		}
+		$out .= '
+		</table>
+		</div>';
+		return $out;
 	}
 
 	public function show_checkbox($name, $value, $caption, $disabled=false) {
@@ -35,10 +100,10 @@ class EL_Admin_Functions {
 		return $out;
 	}
 
-	public function show_combobox($name, $option_array, $selected=null, $class_array=null, $disabled=false) {
+	public function show_dropdown($name, $selected, $value_array, $class_array=null, $disabled=false) {
 		$out = '
 							<select id="'.$name.'" name="'.$name.'"'.$this->get_disabled_text($disabled).'>';
-		foreach($option_array as $key => $value) {
+		foreach($value_array as $key => $value) {
 			$class_text = isset($class_array[$key]) ? 'class="'.$class_array[$key].'" ' : '';
 			$selected_text = $selected===$key ? 'selected ' : '';
 			$out .= '
@@ -49,15 +114,15 @@ class EL_Admin_Functions {
 		return $out;
 	}
 
-	public function show_radio($name, $value, $caption, $disabled=false) {
+	public function show_radio($name, $selected, $value_array, $disabled=false) {
 		$out = '
 							<fieldset>';
-		foreach($caption as $okey => $ocaption) {
-			$checked = ($value === $okey) ? 'checked="checked" ' : '';
+		foreach($value_array as $key => $value) {
+			$checked = ($selected === $key) ? 'checked="checked" ' : '';
 			$out .= '
-								<label title="'.$ocaption.'">
-									<input type="radio" '.$checked.'value="'.$okey.'" name="'.$name.'">
-									<span>'.$ocaption.'</span>
+								<label title="'.$value.'">
+									<input type="radio" '.$checked.'value="'.$key.'" name="'.$name.'">
+									<span>'.$value.'</span>
 								</label>
 								<br />';
 		}
@@ -75,6 +140,12 @@ class EL_Admin_Functions {
 	public function show_textarea($name, $value, $disabled=false) {
 		$out = '
 							<textarea name="'.$name.'" id="'.$name.'" rows="5" class="large-text code"'.$this->get_disabled_text($disabled).'>'.$value.'</textarea>';
+		return $out;
+	}
+
+	public function show_file_upload($name, $max_size, $disabled=false) {
+		$out = '
+							<input name="'.$name.'" type="file" maxlength="'.$max_size.'">';
 		return $out;
 	}
 

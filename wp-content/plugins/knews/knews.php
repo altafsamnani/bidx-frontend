@@ -3,10 +3,12 @@
 Plugin Name: K-news
 Plugin URI: http://www.knewsplugin.com
 Description: Finally, newsletters are multilingual, quick and professional.
-Version: 1.7.3
+Version: 1.8.2
 Author: Carles Reverter
 Author URI: http://www.carlesrever.com
 License: GPLv2 or later
+Text Domain: knews
+Domain Path: /languages
 */
 
 /*
@@ -236,17 +238,27 @@ if (!class_exists("KnewsPlugin")) {
 			define('KNEWS_NEWSLETTERS_SUBMITS', $wpdb->base_prefix . 'knewsubmits');
 			define('KNEWS_DIR', dirname(__FILE__));
 			$url = plugins_url();
+
+			/* fixing protocol when CRON call http and site is https */
+			$protocol = 'http://';
+			if (substr(home_url(),0,8)=='https://') $protocol = 'https://';
+			$url = $protocol . substr($url, strpos($url, '://')+3);
+
 			if ($blog_id != 0 && $this->im_networked()) $url = $this->get_right_blog_path($blog_id) . KNEWS_WP_CONTENT . '/plugins';
 			define('KNEWS_URL', $url . '/knews');
 			$this->knews_load_plugin_textdomain();
 			$knewsOptions = $this->getAdminOptions();
 		
+			wp_register_script ('knews_subscribe', KNEWS_URL . '/includes/knews_subscribe.js', array('jquery'), KNEWS_VERSION, true);
+
 			$this->basic_initialized=true;
 		}
 		
 		function init($blog_id=0) {
-			global $knewsOptions, $wpdb;
+			if ($this->initialized) return;
+			$this->initialized = true;
 			
+			global $knewsOptions, $wpdb;
 			if ($blog_id != 0 && $this->im_networked() ) switch_to_blog($blog_id);
 			
 			if (!$this->basic_initialized) $this->basic_init($blog_id);
@@ -254,7 +266,7 @@ if (!class_exists("KnewsPlugin")) {
 			global $KnewsAdminOptions;
 			define('KNEWS_MULTILANGUAGE', $this->check_multilanguage_plugin($KnewsAdminOptions['multilanguage_knews']));
 
-			$this->creaSiNoExisteixDB();
+			$this->creaSiNoExisteixDB(); 
 			
 			$this->knewsLangs = $this->getLangs();
 
@@ -292,7 +304,11 @@ if (!class_exists("KnewsPlugin")) {
 			define('KNEWS_LOCALIZED_URL', $knews_localized_url);
 			define('KNEWS_LOCALIZED_ADMIN', $knews_localized_admin);
 
-			$this->initialized = true;
+			if (is_admin()) {
+				//Some rude plugins deactivate Knews crons
+				if ($knewsOptions['knews_cron'] == 'cronwp' && !wp_next_scheduled('knews_wpcron_function_hook')) wp_schedule_event( time(), 'knewstime', 'knews_wpcron_function_hook');
+				if (!wp_next_scheduled('knews_wpcron_automate_hook')) wp_schedule_event( time(), 'hourly', 'knews_wpcron_automate_hook');
+			}
 		}
 		
 		function im_networked() {
@@ -345,7 +361,7 @@ if (!class_exists("KnewsPlugin")) {
 			if (! $this->initialized) $this->init();
 		
 			$url_home = get_bloginfo('url');
-			
+
 			if (KNEWS_MULTILANGUAGE && $user_lang != '') {
 				if ($knewsOptions['multilanguage_knews']=='wpml') {
 					global $sitepress;
@@ -354,16 +370,22 @@ if (!class_exists("KnewsPlugin")) {
 						$url_home = $sitepress->language_url($user_lang);
 					}
 				}
+				
 				if ($knewsOptions['multilanguage_knews']=='qt') {
-					if (function_exists('qtrans_convertURL')) {
+
+					if (function_exists('qtranxf_convertURL')) {
+						$url_home = qtranxf_convertURL(get_bloginfo('url'), $user_lang);
+						
+					} elseif (function_exists('qtrans_convertURL')) {
 						//$user_lang = $Knews_plugin->get_user_lang($Knews_plugin->get_safe('e'));
 						$url_home = qtrans_convertURL(get_bloginfo('url'), $user_lang);
 					}
 				}
-				if ($knewsOptions['multilanguage_knews']=='pll') {
 
+				if ($knewsOptions['multilanguage_knews']=='pll') {
+					
 					global $polylang;
-						
+					
 					if (isset($polylang->options) && $polylang->options != '') 
 						$pll_options = $polylang->options;
 					else
@@ -417,9 +439,9 @@ if (!class_exists("KnewsPlugin")) {
 			if (strpos($url, '?')===false) {
 				if (substr($url, -1) != '/') $url .= '/';
 				$url .= '?' . $extra_params . $hash_url;
-				} else {
+			} else {
 				$url .= '&' . $extra_params . $hash_url;
-				}
+			}
 			return $url;
 		}
 
@@ -485,7 +507,18 @@ if (!class_exists("KnewsPlugin")) {
 			global $wpdb;
 			$insert = $wpdb->insert_id; 
 			if ($insert == 0) {
-				$insert = mysql_insert_id(); ;
+				$mysqli = false;
+				//from $wbdb class
+				if ( function_exists( 'mysqli_connect' ) ) {
+					if ( defined( 'WP_USE_EXT_MYSQL' ) ) {
+						$mysqli = ! WP_USE_EXT_MYSQL;
+					} elseif ( version_compare( phpversion(), '5.5', '>=' ) || ! function_exists( 'mysql_connect' ) ) {
+						$mysqli = true;
+					} elseif ( false !== strpos( $GLOBALS['wp_version'], '-' ) ) {
+						$mysqli = true;
+					}
+				}
+				if (!$mysqli) $insert = mysql_insert_id();
 			}
 			return $insert;
 		}
@@ -497,10 +530,10 @@ if (!class_exists("KnewsPlugin")) {
 			if ($format=='mysql') $date = $this->sql2time($date);
 
 			$gmt_offset = intval(get_option('gmt_offset')) * 60 * 60;
-			//$date = $date + $gmt_offset;
+			$date = $date + $gmt_offset;
 			
 			$day = 60*60*24;
-			$today_start = mktime (0,0,0,date('n'),date('j'),date('Y')) + $gmt_offset;
+			$today_start = mktime (0,0,0,date('n'),date('j'),date('Y')); // + $gmt_offset;
 
 			$diference = $date - $today_start;
 
@@ -554,8 +587,8 @@ if (!class_exists("KnewsPlugin")) {
 				$field_found = $wpdb->get_col( $query, 0 );
 
 			} else {
-			$query = "SELECT * FROM " . KNEWS_USERS_EXTRA . " WHERE user_id=" . $user_id . ' AND field_id=' . $field_id;
-			$field_found = $wpdb->get_col( $query, 3 );
+				$query = "SELECT * FROM " . KNEWS_USERS_EXTRA . " WHERE user_id=" . $user_id . ' AND field_id=' . $field_id;
+				$field_found = $wpdb->get_col( $query, 3 );
 			}
 			if ($field_found) {
 				if ($field_found[0]!='') return $field_found[0];
@@ -621,13 +654,21 @@ if (!class_exists("KnewsPlugin")) {
 			return $txt;
 		}
 	
-		function get_user_lang($email){
+		function get_user_lang($email_or_id){
 
 			if (! $this->initialized) $this->init();
 
 			global $wpdb;
+
+			$field = 'email';
 			
-			$query = "SELECT * FROM " . KNEWS_USERS . " WHERE email='" . $email . "'";
+			if (!$this->validEmail($email_or_id)) {
+				$email_or_id = intval($email_or_id);
+				if ($email_or_id==0) return 'en';
+				$field = 'id';
+			}
+			
+			$query = "SELECT * FROM " . KNEWS_USERS . " WHERE " . $field . "='" . $email_or_id . "'";
 			$user_found = $wpdb->get_results( $query );
 			return $user_found[0]->lang;
 		}
@@ -791,8 +832,8 @@ if (!class_exists("KnewsPlugin")) {
 				if ($submit_mail) {
 					
 					if ($bypass_confirmation) return 3;
-										
-					if (apply_filters('knews_submit_confirmation', $email, $confkey, $lang_locale, $lang)) {
+					
+					if (apply_filters('knews_submit_confirmation', $email, $confkey, $lang_locale, $lang, $user_id)) {
 					//if ($this->submit_confirmation ($email, $confkey, $lang_locale, $lang)) {
 						return 1; //Confirmation sent
 					} else {
@@ -812,15 +853,15 @@ if (!class_exists("KnewsPlugin")) {
 			}
 			
 		}
-		
-		function submit_confirmation ($email, $confkey, $lang_locale='en_US', $lang='en') {
+				
+		function submit_confirmation ($email, $confkey, $lang_locale='en_US', $lang='en', $user_id=0) {
 
 			global $knewsOptions;
 
 			$mailHtml = $this->get_custom_text('email_subscription_body', $lang_locale);
 			
 			//$url_confirm = KNEWS_LOCALIZED_ADMIN . 'admin-ajax.php?action=knewsConfirmUser&k=' . $confkey . '&e=' . urlencode($email);
-			$url_confirm = $this->get_localized_home($lang, 'knews=confirmUser&k=' . $confkey . '&e=' . urlencode($email) );
+			$url_confirm = $this->get_localized_home($lang, 'knews=confirmUser&k=' . $confkey . '&e=' . urlencode($user_id != 0 ? $user_id : $email) );
 
 			$mailHtml = str_replace('#url_confirm#', $url_confirm, $mailHtml);
 
@@ -870,7 +911,7 @@ if (!class_exists("KnewsPlugin")) {
 		}
 		
 		function have_qtranslate() {
-			return (function_exists( 'qtrans_init') || function_exists( 'qtranxf_init'));
+			return (function_exists( 'qtrans_init') || function_exists( 'qtranxf_init') || defined( 'QTRANSLATE_FILE'));
 		}
 		
         function have_polylang() {
@@ -890,18 +931,24 @@ if (!class_exists("KnewsPlugin")) {
 			global $wpdb;
 			
 			$confkey = $this->get_safe('k');
-			$email = $this->get_safe('e');
 			$date = $this->get_mysql_date();
+
+			$email_or_id = $this->get_safe('e');
+			$field = 'email';
 			
-			if (!$this->validEmail($email)) return false;
+			if (!$this->validEmail($email_or_id)) {
+				$email_or_id = intval($email_or_id);
+				if ($email_or_id==0) return false;
+				$field = 'id';
+			}
 			if ($confkey=='') return false;
 			
-			$query = "SELECT * FROM ".KNEWS_USERS." WHERE email='" . $email . "' AND confkey='" . $confkey . "'";
+			$query = "SELECT * FROM ".KNEWS_USERS." WHERE " . $field . "='" . $email_or_id . "' AND confkey='" . $confkey . "'";
 			$results = $wpdb->get_row( $query );
 			if (!isset($results->id)) return false;
 
 			$date = $this->get_mysql_date();
-			$query = "UPDATE ".KNEWS_USERS." SET state='2', joined='" . $date . "' WHERE email='" . $email . "' AND confkey='" . $confkey . "'";
+			$query = "UPDATE " . KNEWS_USERS . " SET state='2', joined='" . $date . "' WHERE " . $field . "='" . $email_or_id . "' AND confkey='" . $confkey . "'";
 			$results = $wpdb->query( $query );
 			
 			return true;
@@ -916,13 +963,19 @@ if (!class_exists("KnewsPlugin")) {
 			$submit_id = $this->get_safe('id', 0, 'int');
 			$id_newsletter = $this->get_safe('n', 0, 'int');
 			$confkey = $this->get_safe('k');
-			$email = $this->get_safe('e');
 			$date = $this->get_mysql_date();
+
+			$field = 'email';
+			$email_or_id = $this->get_safe('e');
+			if (!$this->validEmail($email_or_id)) {
+				$email_or_id = intval($email_or_id);
+				if ($email_or_id==0) return false;
+				$field = 'id';
+			}
 			
-			if (!$this->validEmail($email)) return false;
 			if ($confkey=='') return false;
 			
-			$query = "SELECT id FROM " . KNEWS_USERS . " WHERE confkey='" . $confkey . "' AND email='" . $email . "'";
+			$query = "SELECT id FROM " . KNEWS_USERS . " WHERE confkey='" . $confkey . "' AND " . $field . "='" . $email_or_id . "'";
 			$find_user = $wpdb->get_results( $query );
 			
 			if (count($find_user) != 1) return false;
@@ -1124,7 +1177,8 @@ if (!class_exists("KnewsPlugin")) {
 			echo $this->getLangHidden();
 		}
 		function printAjaxScript($container, $custom=false) {
-			echo $this->getAjaxScript($container, $custom=false);
+			//echo 
+			$this->getAjaxScript($container, $custom=false);
 		}
 		/* end print deprecated functions */
 
@@ -1180,51 +1234,7 @@ if (!class_exists("KnewsPlugin")) {
 		}
 		
 		function getAjaxScript($container, $custom=false) {
-
-			$response = '<script type="text/javascript">
-				jQuery(document).ready(function() {
-					knewsfunc = function() {
-						if (jQuery(this).attr(\'submitted\') !== "true") {
-							save_knews_form = jQuery(\'#knewsform_' . $this->knews_form_n . '\').html();
-							jQuery(this).attr(\'submitted\', "true");
-							jQuery("input:text", this).each(function() {
-								if (jQuery(this).attr("title") !== undefined) {
-									if (jQuery(this).val() == jQuery(this).attr("title")) jQuery(this).val("");
-								}
-							});
-							jQuery.post(jQuery(this).attr(\'action\'), jQuery(this).serialize(), function (data) { 
-								jQuery(\'#knewsform_' . $this->knews_form_n . '\').html(data);
-								jQuery(\'#knewsform_' . $this->knews_form_n . ' a.knews_back\').click( function () {
-									jQuery(\'#knewsform_' . $this->knews_form_n . '\').html(save_knews_form);
-									return false;								
-								});
-							});
-						}
-						return false;
-					};
-					knewsfuncInputs = function() {
-						if (typeof(jQuery(this).attr(\'title\')) != \'undefined\') {
-							if (jQuery(this).val() == jQuery(this).attr(\'title\') ) jQuery(this).val(\'\');
-						}
-					};
-					knewsfuncInputsExit = function() {
-						if (typeof(jQuery(this).attr(\'title\')) != \'undefined\') {
-							if (jQuery(this).val() == \'\' ) jQuery(this).val( jQuery(this).attr(\'title\') );
-						}
-					};
-					if (parseInt(jQuery.fn.jquery.split(\'.\').join(\'\'), 10) >= 170) {
-						jQuery(document).on(\'submit\', \'#knewsform_' . $this->knews_form_n . ' form\', knewsfunc);
-						jQuery(document).on(\'focus\', \'#knewsform_' . $this->knews_form_n . ' input\', knewsfuncInputs);
-						jQuery(document).on(\'blur\', \'#knewsform_' . $this->knews_form_n . ' input\', knewsfuncInputsExit);
-					} else {
-						jQuery(\'#knewsform_' . $this->knews_form_n . ' form\').live(\'submit\', knewsfunc);						
-						jQuery(\'#knewsform_' . $this->knews_form_n . ' input\').live(\'focus\', knewsfuncInputs);						
-						jQuery(\'#knewsform_' . $this->knews_form_n . ' input\').live(\'blur\', knewsfuncInputsExit);						
-					}
-				})
-			</script>';
-
-			return $response;
+			wp_enqueue_script ('knews_subscribe');
 		}
 		
 		function getForm($mandatory_id=0, $args='', $instance=array(), $container='knews_add_user') {
@@ -1244,7 +1254,7 @@ if (!class_exists("KnewsPlugin")) {
 
 				if (is_array($args)) $response .= $args['before_widget'] . $args['before_title'] . $this->get_custom_text('widget_title', $lang['localized_code']) . $args['after_title'];
 				
-				$response .= '<div class="' . $container . '" id="knewsform_' . $this->knews_form_n . '">
+				$response .= '<div class="' . $container . ' knewsform_container" id="knewsform_' . $this->knews_form_n . '">
 					<style type="text/css">
 					div.' . $container . ' textarea.knewscomment {position:absolute; top:-3000px; left:-3000px;}
 					div.' . $container . ' fieldset {border:0;}';
@@ -1322,7 +1332,7 @@ if (!class_exists("KnewsPlugin")) {
 				</div>';
 
 				if (is_array($args)) $response .=  $args['after_widget'];
-				$js = 1; if (isset($instance['script'])) $js = $instance['script']; if ($js != '0') $response .= $this->getAjaxScript('div.' . $container);
+				$js = 1; if (isset($instance['script'])) $js = $instance['script']; if ($js != '0') $this->getAjaxScript('div.' . $container);
 			}
 			$this->knews_form_n++;
 			return $response;
@@ -1409,10 +1419,10 @@ if (!class_exists("KnewsPlugin")) {
 			$now_time = time();
 			if ($now_time - $last_advice_time > 86400) {
 
-				$response = wp_remote_get( 'http://www.knewsplugin.com/read_advice.php?v=' . KNEWS_VERSION . '&l=' . WPLANG . '&p=' . ($this->im_pro() ? '1' : '0') );
+				$response = wp_remote_get( 'http://www.knewsplugin.com/read_advice.php?v=' . KNEWS_VERSION . '&l=en&p=' . ($this->im_pro() ? '1' : '0') );
 
 				if( is_wp_error( $response ) ) 
-					$response = wp_remote_get( 'https://knewsplugin.com/read_advice.php?v=' . KNEWS_VERSION . '&l=' . WPLANG . '&p=' . ($this->im_pro() ? '1' : '0') );
+					$response = wp_remote_get( 'https://knewsplugin.com/read_advice.php?v=' . KNEWS_VERSION . '&l=en&p=' . ($this->im_pro() ? '1' : '0') );
 
 			} else {
 				$response = get_option('knews_advice_response', '0');
@@ -1541,9 +1551,9 @@ if (!function_exists("Knews_plugin_ap")) {
 
 	if (class_exists("KnewsPlugin")) {
 		$Knews_plugin = new KnewsPlugin();
-		define('KNEWS_VERSION', '1.7.3');
+		define('KNEWS_VERSION', '1.8.2');
 
-		add_filter( 'knews_submit_confirmation', array($Knews_plugin, 'submit_confirmation'), 10, 4 );
+		add_filter( 'knews_submit_confirmation', array($Knews_plugin, 'submit_confirmation'), 10, 5 );
 		add_filter( 'knews_add_user_db', array($Knews_plugin, 'add_user_db'), 10, 7 );
 		add_filter( 'knews_get_cpt', array($Knews_plugin, 'get_cpt'), 10, 1 );
 		add_filter( 'knews_posts_preview', array($Knews_plugin, 'posts_preview'), 10, 8 );
@@ -1576,7 +1586,7 @@ if (!function_exists("Knews_plugin_ap")) {
 			add_submenu_page( 'knews_news', __('Auto-create','knews'), __('Auto-create','knews'), ($pro_menus ? 'knews_configure' : 'edit_posts'), 'knews_auto', array(&$Knews_plugin, 'KnewsAdminAuto'), '');
 			add_submenu_page( 'knews_news', __('Stats','knews'), __('Stats','knews'), ($pro_menus ? 'knews_see_stats' : 'edit_posts'), 'knews_stats', array(&$Knews_plugin, 'KnewsAdminStats'), '');
 			add_submenu_page( 'knews_news', __('Configuration','knews'), __('Configuration','knews'), ($pro_menus ? 'knews_configure' : 'edit_posts'), 'knews_config', array(&$Knews_plugin, 'KnewsAdminConfig'), '');
-			add_submenu_page( 'knews_news', __('Prioritary Support','knews'), __('Prioritary Support','knews'), 'edit_posts', ($Knews_plugin->im_pro() ? 'knews_support' : 'knews_config&tab=pro'), array(&$Knews_plugin, 'KnewsAdminSupport'), '');
+			add_submenu_page( 'knews_news', __('Priority Support','knews'), __('Priority Support','knews'), 'edit_posts', ($Knews_plugin->im_pro() ? 'knews_support' : 'knews_config&tab=pro'), array(&$Knews_plugin, 'KnewsAdminSupport'), '');
 
 			$registered_templates = apply_filters('knews_registered_templates','');
 			if (is_array($registered_templates)) {
@@ -1662,6 +1672,17 @@ if (!function_exists("Knews_plugin_ap")) {
 			add_thickbox();
 		}
 
+		if ($Knews_plugin->get_safe('page')=='knews_news' && $Knews_plugin->get_safe('section')=='edit') {
+			if (! $Knews_plugin->initialized) $Knews_plugin->init();
+			wp_enqueue_style( 'farbtastic' );
+			wp_enqueue_script( 'farbtastic' );
+			
+			wp_enqueue_style( 'knews-parent-editor-css', KNEWS_URL . '/wysiwyg/parent_editor.css', array(), KNEWS_VERSION );
+			wp_enqueue_script( 'knews-parent-editor-js', KNEWS_URL . '/wysiwyg/parent_editor.js', array( 'farbtastic', 'jquery' ), KNEWS_VERSION ); 
+			//wp_enqueue_style( 'wp-color-picker');
+			//wp_enqueue_script( 'wp-color-picker');
+		}
+
 		//wp_enqueue_script('media-upload');
 		if ( get_bloginfo( 'version' ) >= '3.5' && $Knews_plugin->get_safe('page')=='knews_news' && $Knews_plugin->get_safe('section')=='edit') {
 			wp_enqueue_media();
@@ -1691,25 +1712,28 @@ if (!function_exists("Knews_plugin_ap")) {
 		
 		//Deprecated, start:
 		if ($Knews_plugin->get_safe('subscription')=='ok' || $Knews_plugin->get_safe('subscription')=='error' || $Knews_plugin->get_safe('unsubscribe')=='ok' || $Knews_plugin->get_safe('unsubscribe')=='error') {
-			define ('KNEWS_POP_DIALOG', true);
+			if (!defined ('KNEWS_POP_DIALOG')) define ('KNEWS_POP_DIALOG', true);
 		}
 		//Deprecated, end.
 		if ($Knews_plugin->get_safe('knews')=='confirmUser') {
 			$knews_subscription_result = $Knews_plugin->confirm_user_self();
-			define ('KNEWS_POP_DIALOG', true);
+			if (!defined ('KNEWS_POP_DIALOG')) define ('KNEWS_POP_DIALOG', true);
 		}
 		if ($Knews_plugin->get_safe('knews')=='unsubscribe') {
 			$knews_block_result = $Knews_plugin->block_user_self();
-			define ('KNEWS_POP_DIALOG', true);
+			if (!defined ('KNEWS_POP_DIALOG')) define ('KNEWS_POP_DIALOG', true);
 		}
 
 		//if ($Knews_plugin->get_safe('knewspophome')=='1'
 		if ( $Knews_plugin->get_safe('knews')=='readEmail') {
-			define('KNEWS_POP_NEWS', true);
+			if (!defined ('KNEWS_POP_NEWS')) define('KNEWS_POP_NEWS', true);
 			?>
 			<script type="text/javascript">
 			jQuery(document).ready(function() {
-				knews_launch_iframe('<?php echo KNEWS_LOCALIZED_ADMIN; ?>admin-ajax.php?action=knewsReadEmail&id=<?php echo $Knews_plugin->get_safe('id',0,'int'); ?>&e=<?php echo $Knews_plugin->get_safe('e') . '&k=' . $Knews_plugin->get_safe('k'); if ($Knews_plugin->get_safe('m') != '') echo '&m=' . $Knews_plugin->get_safe('m'); ?>');
+				knews_launch_iframe('<?php echo KNEWS_LOCALIZED_ADMIN; ?>admin-ajax.php?action=knewsReadEmail&id=<?php echo $Knews_plugin->get_safe('id',0,'int'); ?>&e=<?php echo $Knews_plugin->get_safe('e') . '&k=' . $Knews_plugin->get_safe('k');
+				if ($Knews_plugin->get_safe('m') != '') echo '&mbl=' . ($Knews_plugin->get_safe('m')=='mbl' ? '1' : '0'); 
+				if ($Knews_plugin->get_safe('mbl') != '') echo '&mbl=' . $Knews_plugin->get_safe('mbl'); 
+				?>');
 			});
 			</script>
 			<?php
@@ -1719,7 +1743,7 @@ if (!function_exists("Knews_plugin_ap")) {
 			require_once( KNEWS_DIR . '/includes/dialogs.php');
 		}
 	}
-	add_action('wp_footer', 'knews_popup');
+	add_action('wp_footer', 'knews_popup', 100);
 	
 	function knews_admin_notice() {
 		require('includes/admin_notices.php');
@@ -1733,7 +1757,7 @@ if (!function_exists("Knews_plugin_ap")) {
 		return $Knews_plugin->getForm($id_list, '', $atts);
 	}
 	add_shortcode("knews_form", "knews_plugin_form");
-	
+
 	function knews_plugin_form_ext() {
 		global $Knews_plugin; if (!isset($Knews_plugin)) die();
 		
@@ -1793,8 +1817,10 @@ if (!function_exists("Knews_plugin_ap")) {
 		global $Knews_plugin, $knewsOptions;
 		if (! $Knews_plugin->initialized) $Knews_plugin->init();
 
-		$value=$Knews_plugin->post_safe('knews_automated_post', $knewsOptions['def_autom_post'], 0, 'int');
-		update_post_meta($postID, '_knews_automated', $value);
+		if (isset($_POST['knews_automated_post'])) {
+			$value=$Knews_plugin->post_safe('knews_automated_post', $knewsOptions['def_autom_post'], 0, 'int');
+			update_post_meta($postID, '_knews_automated', $value);
+		}
 	}
 	add_action('admin_menu', 'knews_options_box');
 	add_action('save_post', 'knews_options_save');
@@ -1847,9 +1873,9 @@ if (!function_exists("Knews_plugin_ap")) {
 	
 		if (! $Knews_plugin->initialized) $Knews_plugin->init();
 	
-		$url_img= $Knews_plugin->post_safe('urlimg');
-		$width= intval($Knews_plugin->post_safe('width'));
-		$height= intval($Knews_plugin->post_safe('height'));
+		$url_img = $Knews_plugin->post_safe('urlimg');
+		$width = intval($Knews_plugin->post_safe('width'));
+		$height = intval($Knews_plugin->post_safe('height'));
 		$Knews_plugin->template_id = $Knews_plugin->post_safe('template_id','unknown');
 		/*
 		$url_img = $Knews_plugin->get_safe('urlimg');
@@ -1884,7 +1910,12 @@ if (!function_exists("Knews_plugin_ap")) {
 	function knews_ajax_deny() {
 		die();
 	}
-
+	function knews_spamcheck() {
+		require( dirname(__FILE__) . "/includes/spamcheck.php");
+	}
+	function knews_spamcheck2() {
+		require( dirname(__FILE__) . "/includes/spamcheck2.php");
+	}
 	add_action('wp_ajax_knewsSelPost', 'knews_ajax_select_post' );
 	add_action('wp_ajax_nopriv_knewsSelPost', 'knews_ajax_deny' );
 
@@ -1941,6 +1972,12 @@ if (!function_exists("Knews_plugin_ap")) {
 
 	add_action('wp_ajax_knewsHTMLedit', 'knews_htmleditor' );
 	add_action('wp_ajax_nopriv_knewsHTMLedit', 'knews_ajax_deny' );
+
+	add_action('wp_ajax_knewsSpamcheck', 'knews_spamcheck' );
+	add_action('wp_ajax_nopriv_knewsSpamcheck', 'knews_ajax_deny' );
+
+	add_action('wp_ajax_knewsSpamcheck2', 'knews_spamcheck2' );
+	add_action('wp_ajax_nopriv_knewsSpamcheck2', 'knews_ajax_deny' );
 	// Add the pointer javascript
 	function knews_add_pointer_scripts() {
 		global $Knews_plugin, $knewsOptions;
@@ -1950,9 +1987,25 @@ if (!function_exists("Knews_plugin_ap")) {
 			$content = '<h3>' . __('Welcome to Knews Pro','knews') . '</h3><p>' . sprintf(__('You can configure the new features <br />into %s Knews Pro Options tab','knews'), '<a href="admin.php?page=knews_config&tab=pro">') . '</a></p>';
 			knews_add_pointer_scripts_js($content, '#toplevel_page_knews_news', 'knews_pro_welcome');
 
-		} else if ($knewsOptions['should_advice_bounce_mode']==1 && !in_array( 'knews_bounce_advice', $dismissed ) && $Knews_plugin->im_pro()  ) {
-			$content = '<h3>Changes on email headers for bounce</h3><p>We\\\'re added a new choice on email configuration for bounce. Please, <strong>check if email sending still working</strong>. If it not, adjust the <strong>Bounce header option</strong> (return-path / sender) <a href="' . ($knewsOptions['smtp_knews']==0 ? 'admin.php?page=knews_config&tab=advanced&subtab=2' : 'admin.php?page=knews_config&tab=pro&subtab=2') . '">here</a>.</p>';
-			knews_add_pointer_scripts_js($content, '#toplevel_page_knews_news', 'knews_bounce_advice');
+		} else if ( !in_array( 'french_bug_knews', $dismissed ) && substr(get_bloginfo('language'), 0, 2) == 'fr') {
+			$content = '<h3>' . __('French release: Important bug solved.','knews') . '</h3><p>' . sprintf(__('Previous French releases can\'t test SMTP config or use our Real Anti-Spam test. Please, %s check it now.','knews') . "</a>", '<a href="' . get_admin_url() . 'admin.php?page=knews_config&tab=advanced&subtab=2">') . '</p>';
+			knews_add_pointer_scripts_js($content, '#toplevel_page_knews_news', 'french_bug_knews');
+
+		} else if (strpos($_SERVER['REQUEST_URI'],'knews_config') === false && !in_array( 'config_knews', $dismissed ) ) {
+			$content = '<h3>' . __('Welcome to Knews.','knews') . '</h3><p>' . sprintf(__('Please, go to %s configuration page','knews') . "</a>", '<a href="' . get_admin_url() . 'admin.php?page=knews_config">') . '</p>';
+			knews_add_pointer_scripts_js($content, '#toplevel_page_knews_news', 'config_knews');
+	
+		} else if (strpos($_SERVER['REQUEST_URI'],'knews_news&section=edit') !== false && !in_array( 'knews_videotutorial', $dismissed ) ) {
+			$content = '<h3>Videotutorial</h3><p>' . sprintf(__('There is a videotutorial about Knews WYSIWYG Editor, %s view it in Youtube','knews'), '<a href="http://www.youtube.com/watch?v=axDO5ZIW-9s" target="_blank">') . '</a></p>';
+			knews_add_pointer_scripts_js($content, '#toplevel_page_knews_news', 'knews_videotutorial');
+
+		} else if (strpos($_SERVER['REQUEST_URI'],'knews_news&section=send') !== false && !in_array( 'real_spam_test', $dismissed ) ) {
+			$content = '<h3>New diagnose tool: Real Spam Test</h3><p>We\\\'re just added a powerful and easy to use new tool: simple one button click and get real <strong>Spam Assassin</strong> live result about your SMTP configuration <a href="admin.php?page=knews_config&tab=advanced&subtab=2">here</a>.</p>';
+			knews_add_pointer_scripts_js($content, '#toplevel_page_knews_news', 'real_spam_test');
+
+		} else if (function_exists('is_plugin_active') && is_plugin_active('gravityforms/gravityforms.php') && !in_array( 'knews_gf', $dismissed )  ) {
+			$content = '<h3>Knews loves Gravity Forms</h3><p>Now you can add a subscription to Knews lists on any <strong>Gravity Forms</strong> form, with our new free plugin: <a href="https://wordpress.org/plugins/knews-gravity-forms-glue/" target="_blank">Knews + Gravity Forms Glue</a> hosted on wordpress.org</p>';
+			knews_add_pointer_scripts_js($content, '#toplevel_page_knews_news', 'knews_gf');
 
 		} else if (defined('WPCF7_VERSION') && !in_array( 'knews_cf7', $dismissed )  ) {
 			$content = '<h3>Knews loves Contact Form 7</h3><p>Now you can add a subscription to Knews lists on any <strong>Contact Form 7</strong> form, with our new free plugin: <a href="https://wordpress.org/plugins/knews-contact-form-7-glue/" target="_blank">Knews + Contact Form 7 Glue</a> hosted on wordpress.org</p>';
@@ -1964,16 +2017,16 @@ if (!function_exists("Knews_plugin_ap")) {
 		}
 
 	}
-	function knews_add_pointer_scripts_js($content, $handler, $pointer) {
+	function knews_add_pointer_scripts_js($content, $handler, $pointer, $edge = 'left', $align = 'center' ) {
 	?>
 		<script type="text/javascript">
 		//<![CDATA[
 		jQuery(document).ready( function($) {
 			$('<?php echo $handler; ?>').pointer({
-				content: '<?php echo $content; ?>',
+				content: '<?php echo str_replace("\\'", "\'", str_replace("'","\'",$content)); ?>',
 				position: {
-					edge: 'left',
-					align: 'center'
+					edge: '<?php echo $edge; ?>',
+					align: '<?php echo $align; ?>'
 				},
 				close:  function() {
 					$.post( ajaxurl, {
@@ -2034,6 +2087,7 @@ if (!function_exists("Knews_plugin_ap")) {
 			if (!in_array('n', $qvars)) $qvars[] = 'n';
 			if (!in_array('id', $qvars)) $qvars[] = 'id';
 			if (!in_array('m', $qvars)) $qvars[] = 'm';
+			if (!in_array('mbl', $qvars)) $qvars[] = 'mbl';
 		}
 		$wp->extra_query_vars=$qvars;
 	}

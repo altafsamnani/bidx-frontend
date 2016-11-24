@@ -288,7 +288,7 @@ if ($Knews_plugin->get_safe('tab')=='aux') $aux=true;
 							<option selected="selected" value="update_lists"><?php _e('Only update','knews'); ?></option>
 							<option value="delete_lists"><?php _e('Only delete','knews'); ?></option>
 						</select>
-						<input type="submit" value="<?php _e('Apply','knews'); ?>" class="button-secondary" />
+						<input type="submit" value="<?php _e('Apply','knews'); ?>" class="button button-primary" />
 					</div>
 					<?php 
 					//Security for CSRF attacks

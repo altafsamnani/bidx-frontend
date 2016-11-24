@@ -1,17 +1,17 @@
 <?php
-if( !defined( 'ABSPATH' ) ) {
+if(!defined('WPINC')) {
 	exit;
 }
 
-require_once( EL_PATH.'includes/db.php' );
-require_once( EL_PATH.'includes/options.php' );
-require_once( EL_PATH.'includes/categories.php' );
+require_once(EL_PATH.'includes/db.php');
+require_once(EL_PATH.'includes/options.php');
+require_once(EL_PATH.'includes/categories.php');
 
 // This class handles the shortcode [event-list]
 class SC_Event_List {
 	private static $instance;
-	private $db;
 	private $options;
+	private $db;
 	private $categories;
 	private $atts;
 	private $num_sc_loaded;
@@ -19,16 +19,16 @@ class SC_Event_List {
 
 	public static function &get_instance() {
 		// Create class instance if required
-		if( !isset( self::$instance ) ) {
-			self::$instance = new SC_Event_List();
+		if(!isset(self::$instance)) {
+			self::$instance = new self();
 		}
 		// Return class instance
 		return self::$instance;
 	}
 
 	private function __construct() {
-		$this->db = &EL_Db::get_instance();
 		$this->options = &EL_Options::get_instance();
+		$this->db = &EL_Db::get_instance();
 		$this->categories = &EL_Categories::get_instance();
 
 		// All available attributes
@@ -36,6 +36,7 @@ class SC_Event_List {
 			'initial_event_id' => array('std_val' => 'all'),
 			'initial_date'     => array('std_val' => 'upcoming'),
 			'initial_cat'      => array('std_val' => 'all'),
+			'initial_order'    => array('std_val' => 'date_asc'),
 			'date_filter'      => array('std_val' => 'all'),
 			'cat_filter'       => array('std_val' => 'all'),
 			'num_events'       => array('std_val' => '0'),
@@ -46,26 +47,23 @@ class SC_Event_List {
 			'show_cat'         => array('std_val' => 'false'),
 			'show_details'     => array('std_val' => 'true'),
 			'details_length'   => array('std_val' => '0'),
+			'collapse_details' => array('std_val' => 'false'),
 			'link_to_event'    => array('std_val' => 'event_list_only'),
 			'add_feed_link'    => array('std_val' => 'false'),
+			'url_to_page'      => array('std_val' => ''),
 			'title_length'     => array('std_val' => '0'),
 			'location_length'  => array('std_val' => '0'),
-			'url_to_page'      => array('std_val' => ''),
 			'sc_id_for_url'    => array('std_val' => ''),
 			// Internal attributes: This parameters will be added by the script and are not available in the shortcode
 			//  'sc_id'
 			//  'actual_date'
 			//  'actual_cat'
 		);
-
-		if(is_admin()) {
-			$this->load_sc_eventlist_helptexts();
-		}
 		$this->num_sc_loaded = 0;
 		$this->single_event = false;
 	}
 
-	private function load_sc_eventlist_helptexts() {
+	public function load_sc_eventlist_helptexts() {
 		require_once(EL_PATH.'includes/sc_event-list_helptexts.php');
 		foreach($sc_eventlist_helptexts as $name => $values) {
 			$this->atts[$name] = array_merge($this->atts[$name], $values);
@@ -145,20 +143,21 @@ class SC_Event_List {
 		return $out;
 	}
 
-	private function html_events( &$a ) {
+	private function html_events(&$a) {
 		// specify to show all events if not upcoming is selected
 		if('upcoming' != $a['actual_date']) {
 			$a['num_events'] = 0;
 		}
 		$date_filter = $this->get_date_filter($a['date_filter'], $a['actual_date']);
 		$cat_filter = $this->get_cat_filter($a['cat_filter'], $a['actual_cat']);
-		if( '1' !== $this->options->get( 'el_date_once_per_day' ) ) {
+		$order = 'date_desc' == $a['initial_order'] ? 'DESC' : 'ASC';
+		if('1' !== $this->options->get('el_date_once_per_day')) {
 			// normal sort
-			$sort_array = array( 'start_date ASC', 'time ASC', 'end_date ASC' );
+			$sort_array = array('start_date '.$order, 'time ASC', 'end_date '.$order);
 		}
 		else {
 			// sort according end_date before start time (required for option el_date_once_per_day)
-			$sort_array = array( 'start_date ASC', 'end_date ASC', 'time ASC' );
+			$sort_array = array('start_date '.$order, 'end_date '.$order, 'time ASC');
 		}
 		$events = $this->db->get_events($date_filter, $cat_filter, $a['num_events'], $sort_array);
 
@@ -167,17 +166,17 @@ class SC_Event_List {
 		$out .= $this->html_feed_link($a, 'top');
 		$out .= $this->html_filterbar($a);
 		$out .= $this->html_feed_link($a, 'below_nav');
-		if( empty( $events ) ) {
+		if(empty($events)) {
 			// no events found
-			$out .= '<p>'.$this->options->get( 'el_no_event_text' ).'</p>';
+			$out .= '<p>'.$this->options->get('el_no_event_text').'</p>';
 		}
 		else {
 			// print available events
 			$out .= '
 				<ul class="event-list-view">';
-			$single_day_only = $this->is_single_day_only( $events );
+			$single_day_only = $this->is_single_day_only($events);
 			foreach ($events as $event) {
-				$out .= $this->html_event( $event, $a, $single_day_only );
+				$out .= $this->html_event($event, $a, $single_day_only);
 			}
 			$out .= '</ul>';
 		}
@@ -207,8 +206,8 @@ class SC_Event_List {
 		// event title
 		$out .= '<div class="event-title"><h3>';
 		$title = esc_attr($this->db->truncate($event->title, $a['title_length'], $this->single_event));
-		if($this->is_visible($a['link_to_event']) || ('events_with_details_only' == $a['link_to_event'] && !$this->single_event && '' != $event->details)) {
-			$out .= '<a href="'.esc_html(add_query_arg('event_id'.$a['sc_id_for_url'], $event->id, $this->get_url($a))).'">'.$title.'</a>';
+		if($this->is_link_available($a, $event)) {
+			$out .= $this->get_event_url($a, $event->id, $title);
 		}
 		else {
 			$out .= $title;
@@ -241,7 +240,7 @@ class SC_Event_List {
 			$out .= '<div class="event-cat">'.esc_attr($this->categories->convert_db_string($event->categories)).'</div>';
 		}
 		if( $this->is_visible( $a['show_details'] ) ) {
-			$out .= '<div class="event-details">'.$this->db->truncate(do_shortcode(wpautop($event->details)), $a['details_length'], $this->single_event).'</div>';
+			$out .= $this->get_details($event, $a);
 		}
 		$out .= '</div>
 				</li>';
@@ -384,21 +383,67 @@ class SC_Event_List {
 		}
 	}
 
-	private function get_url( &$a ) {
-		if( '' !== $a['url_to_page'] ) {
+	private function get_details(&$event, &$a) {
+		// check if details are available
+		if('' == $event->details) {
+			return '';
+		}
+		// check and handle the read more tag if available
+		//search fore more-tag (no more tag handling if truncate of details is set)
+		if(preg_match('/<!--more(.*?)?-->/', $event->details, $matches)) {
+			$part = explode($matches[0], $event->details, 2);
+			if(!$this->is_link_available($a, $event->details) || 0 < $a['details_length'] || $this->single_event) {
+				//details with removed more-tag
+				$details = $part[0].$part[1];
+			}
+			else {
+				//set more-link text
+				if(!empty($matches[1])) {
+					$more_link_text = strip_tags(wp_kses_no_null(trim($matches[1])));
+				}
+				else {
+					$more_link_text = __('(more&hellip;)');
+				}
+				//details with more-link
+				$details = apply_filters('the_content_more_link', $part[0].$this->get_event_url($a, $event->id, $more_link_text));
+			}
+		}
+		else {
+			//normal details
+			$details = $event->details;
+		}
+		// last preparations of details
+		$details = $this->db->truncate(do_shortcode(wpautop($details)), $a['details_length'], $this->single_event);
+		// preparations for collapsed details
+		if($this->is_visible($a['collapse_details'])) {
+			wp_register_script('el_collapse_details', EL_URL.'includes/js/collapse_details.js', null, true);
+			add_action('wp_footer', array(&$this, 'print_collapse_details_script'));
+			return '<div class="event-details"><div id="event-details-'.$event->id.'" class="el-hidden">'.$details.
+			       '</div><a class="event-detail-link" id="event-detail-a'.$event->id.'" onclick="toggle_event_details('.$event->id.')" href="javascript:void(0)">'.$this->options->get('el_show_details_text').'</a></div>';
+		}
+		// return without collapsing
+		return '<div class="event-details">'.$details.'</div>';
+	}
+
+	private function get_url(&$a) {
+		if('' !== $a['url_to_page']) {
 			// use given url
 			$url = $a['url_to_page'];
 		}
 		else {
 			// use actual page
 			$url = get_permalink();
-			foreach( $_GET as  $k => $v ) {
+			foreach($_GET as  $k => $v) {
 				if('date'.$a['sc_id'] !== $k && 'event_id'.$a['sc_id'] !== $k) {
-					$url = add_query_arg( $k, $v, $url );
+					$url = add_query_arg($k, $v, $url);
 				}
 			}
 		}
 		return $url;
+	}
+
+	private function get_event_url(&$a, $event_id, $title) {
+		return '<a href="'.esc_html(add_query_arg('event_id'.$a['sc_id_for_url'], $event_id, $this->get_url($a))).'">'.$title.'</a>';
 	}
 
 	private function is_single_day_only( &$events ) {
@@ -410,20 +455,20 @@ class SC_Event_List {
 		return true;
 	}
 
-	private function is_visible( $attribute_value ) {
+	private function is_visible($attribute_value) {
 		switch ($attribute_value) {
 			case 'true':
 			case '1': // = 'true'
 				return true;
 			case 'event_list_only':
-				if( $this->single_event ) {
+				if($this->single_event) {
 					return false;
 				}
 				else {
 					return true;
 				}
 			case 'single_event_only':
-				if( $this->single_event ) {
+				if($this->single_event) {
 					return true;
 				}
 				else {
@@ -432,6 +477,17 @@ class SC_Event_List {
 			default: // 'false' or 0 or nothing handled by this function
 				return false;
 		}
+	}
+
+	private function is_link_available(&$a, &$event) {
+		return $this->is_visible($a['link_to_event']) || ('events_with_details_only' == $a['link_to_event'] && !$this->single_event && '' != $event->details);
+	}
+
+	public function print_collapse_details_script() {
+		// print variables for script
+		echo('<script type="text/javascript">el_show_details_text = "'.$this->options->get('el_show_details_text').'"; el_hide_details_text = "'.$this->options->get('el_hide_details_text').'"</script>');
+		// print script
+		wp_print_scripts('el_collapse_details');
 	}
 }
 ?>
