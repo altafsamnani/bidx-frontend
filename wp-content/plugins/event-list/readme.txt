@@ -1,10 +1,10 @@
 ﻿=== Event List ===
-Contributors: mibuthu
+Contributors: mibuthu, clhunsen
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W54LNZMWF9KW2
 Tags: event, events, list, listview, calendar, schedule, shortcode, page, category, categories, filter, admin, attribute, widget, sidebar, feed, rss
 Requires at least: 3.3
-Tested up to: 4.2
-Stable tag: 0.7.2
+Tested up to: 4.5
+Stable tag: 0.7.6
 Plugin URI: http://wordpress.org/extend/plugins/event-list
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -22,19 +22,28 @@ The purpose of this plugin is to to show a list of events with date, time, descr
 * Beginning and end dates for multi-day events
 * Wordpress's WYSIWYG editor for the event details. So you can include styled text, links, images and other media in your events.
 * A duplicate function for events to easier create similar event copies
+* Import multiple events via csv files
 * Event categories
 * Sync event categories with post categories
 * Filter events according to dates or categories
 * Include an event feed in your site
 
-The event list can be placed in any page or post on your Wordpress site. Just include the following short code where you want the events to appear:
+= Usage: =
+New events can be added in the WordPress admin area.
 
-‘[event-list]’
+To display the events on your site simply insert the shortcode `[event-list]` into a page or post.
+You can modify the listed events and their style with attributes. All available attributes can be found on the Event List -> About page in the Wordpress admin area.
 
-You can modify the listed events and their style with attributes. All available attributes can be found on the Event List -> About page.
-There is also a widget available to view the upcoming events in a sidebar with many options.
+Additionally there is also a widget available to show the upcoming events in your sidebar.
 
+= Development: =
 If you want to follow the development status have a look at the [git-repository on github](https://github.com/mibuthu/wp-event-list "wp-event-list git-repository").
+Feel free to add your merge requests there, if you want to help to improve the plugin.
+
+= Translations: =
+Please help translating this plugin into multiple languages.
+You can submit your translations at [transifex.com](https://www.transifex.com/projects/p/wp-event-list "wp-event-list at transifex").
+There the source strings will always be in sync with the actual development version.
 
 
 == Installation ==
@@ -72,6 +81,47 @@ Another possibility would be to call the wordpress function "do_shortcode()".
 
 
 == Changelog ==
+
+= 0.7.6 (2015-12-13) =
+* added shortcode attribute "collapse_details"
+* correct handling of "more"-tag in event details
+* show "url_to_page" shortcode attribute in the documentation
+* fixed wrong date format in events import sample
+* some help texts improvements
+* updated translation de_DE (78%) and fi_FI (35%)
+* added italian translation it_IT (69%)
+* added portuguese translation pt_BR (58%)
+* added dutch translation nl_NL (46%)
+* added spanish translation es_ES (39%)
+* added spanish translation es_AR (18%)
+* added frensh translation fr_FR (0%)
+* Thanks to all translators at transifex!
+
+= 0.7.5 (2015-07-19) =
+* added support for transifex localization platform
+* added sorting option (see initial_order shortcode option)
+* added relative date format for weeks
+* added import option to set date format in import file
+* several fixes and improvements in truncate function
+* some import improvements
+* set standard import date format to mysql dateformat
+* some speed improvements
+* updated some dates and daterange helptexts and added german translations
+* added finnish translation (thanks to jvesaladesign)
+
+= 0.7.4 (2015-05-16) =
+* fixed allowed daterange for datepicker with custom date formats
+* added option to disable event-list.css
+* added option to set considered daterange for multiday event
+
+= 0.7.3 (2015-05-15) =
+* added csv import functionality
+* added relative and special date selection options for date filter
+* changed required permission to view/edit category admin page
+* added some missing translation functions
+* added some more german translations
+* only allow valid dates (>= 1.1.1970)
+* only load some data on pages where they are required
 
 = 0.7.2 (2015-03-21) =
 * fixed an issue with multiday events when deleting a category

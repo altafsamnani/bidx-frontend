@@ -20,7 +20,7 @@
     font-size: 18px;
     font-weight: bold;	
 	padding:10px;
-    writing-mode:tb-rl;
+  	 writing-mode: inherit;
     -webkit-transform:rotate(90deg);
     -moz-transform:rotate(90deg);
     -o-transform: rotate(90deg);

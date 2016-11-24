@@ -15,7 +15,7 @@ class EL_Admin_Settings {
 	public static function &get_instance() {
 		// Create class instance if required
 		if(!isset(self::$instance)) {
-			self::$instance = new EL_Admin_Settings();
+			self::$instance = new self();
 		}
 		// Return class instance
 		return self::$instance;
@@ -28,9 +28,12 @@ class EL_Admin_Settings {
 
 	public function show_settings () {
 		if(!current_user_can('manage_options')) {
-			wp_die(__('You do not have sufficient permissions to access this page.','event-list'));
+			wp_die(__('You do not have sufficient permissions to access this page.'));
 		}
 		$out = '';
+		if(!isset($_GET['tab'])) {
+			$_GET['tab'] = 'general';
+		}
 		// check for changed settings
 		if(isset($_GET['settings-updated'])) {
 			// show "settings saved" message
@@ -48,12 +51,9 @@ class EL_Admin_Settings {
 		$out.= '
 				<div class="wrap">
 				<div id="icon-edit-pages" class="icon32"><br /></div><h2>'.__('Event List Settings','event-list').'</h2>';
-		if(!isset($_GET['tab'])) {
-			$_GET['tab'] = 'general';
-		}
 		$out .= $this->show_tabs($_GET['tab']);
 		$out .= '<div id="posttype-page" class="posttypediv">';
-		$out .= $this->show_option_tab($_GET['tab']);
+		$out .= $this->functions->show_option_form($_GET['tab']);
 		$out .= '
 				</div>
 			</div>';
@@ -65,68 +65,16 @@ class EL_Admin_Settings {
 	}
 */
 	private function show_tabs($current = 'category') {
-		$tabs = array('general' => 'General',
-		              'admin'   => 'Admin Page Settings',
-		              'feed'    => 'Feed Settings');
+		$tabs = array('general'  => __('General','event-list'),
+		              'frontend' => __('Frontend Settings','event-list'),
+		              'admin'    => __('Admin Page Settings','event-list'),
+		              'feed'     => __('Feed Settings','event-list'));
 		$out = '<h3 class="nav-tab-wrapper">';
 		foreach($tabs as $tab => $name){
 			$class = ($tab == $current) ? ' nav-tab-active' : '';
 			$out .= '<a class="nav-tab'.$class.'" href="?page=el_admin_settings&amp;tab='.$tab.'">'.$name.'</a>';
 		}
 		$out .= '</h3>';
-		return $out;
-	}
-
-	private function show_option_tab($section) {
-		$out = '
-			<form method="post" action="options.php">
-			';
-		ob_start();
-		settings_fields('el_'.$_GET['tab']);
-		$out .= ob_get_contents();
-		ob_end_clean();
-		$out .= '
-				<div class="el-settings">
-				<table class="form-table">';
-		foreach($this->options->options as $oname => $o) {
-			if($o['section'] == $section) {
-				$out .= '
-						<tr>
-							<th>';
-				if($o['label'] != '') {
-					$out .= '<label for="'.$oname.'">'.$o['label'].':</label>';
-				}
-				$out .= '</th>
-						<td>';
-				switch($o['type']) {
-					case 'checkbox':
-						$out .= $this->functions->show_checkbox($oname, $this->options->get($oname), $o['caption']);
-						break;
-					case 'radio':
-						$out .= $this->functions->show_radio($oname, $this->options->get($oname), $o['caption']);
-						break;
-					case 'text':
-						$out .= $this->functions->show_text($oname, $this->options->get($oname));
-						break;
-					case 'textarea':
-						$out .= $this->functions->show_textarea($oname, $this->options->get($oname));
-						break;
-				}
-				$out .= '
-						</td>
-						<td class="description">'.$o['desc'].'</td>
-					</tr>';
-			}
-		}
-		$out .= '
-			</table>
-			</div>';
-		ob_start();
-		submit_button();
-		$out .= ob_get_contents();
-		ob_end_clean();
-		$out .='
-		</form>';
 		return $out;
 	}
 

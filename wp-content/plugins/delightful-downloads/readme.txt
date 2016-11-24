@@ -1,10 +1,9 @@
 === Delightful Downloads ===
 Contributors: A5hleyRich
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S6KBW2ZSVZ8RE
 Tags: download, manager, downloads, monitor, shortcode, delightful downloads, file, counter, tracking
-Requires at least: 4.1
-Tested up to: 4.1
-Stable tag: 1.5.2
+Requires at least: 4.4
+Tested up to: 4.4
+Stable tag: 1.6.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +32,10 @@ Delightful Downloads is a super-awesome downloads manager for WordPress that all
 * Developer friendly.
 * Localisation support.
 
+**Add-Ons**
+
+* [Customizer](https://delightfuldownloads.com/add-ons/customizer/?utm_source=WordPress&utm_medium=Repo&utm_content=Customizer&utm_campaign=Description) - Button and list styles editor
+
 **Translations**
 
 Thanks to all of the WP-Translations Team Members.
@@ -47,7 +50,7 @@ Don't see yours yet? Join our community and make it happen! [WP-Translations.org
 
 **Documentation**
 
-The Delightful Downloads documentation can be found [here](http://delightfulwp.com/delightful-downloads/documentation/ "Delightful Downloads Documentation").
+The Delightful Downloads documentation can be found [here](https://delightfuldownloads.com/documentation/ "Delightful Downloads Documentation").
 
 **Requirements**
 
@@ -63,11 +66,11 @@ If you would like to contribute to the plugin, you can do so on [GitHub](https:/
 1. Activate the plugin through the 'Plugins' menu in WordPress.
 1. Go to Downloads > Settings and configure the options.
 
-Please refer to the [documentation](http://delightfulwp.com/delightful-downloads/documentation/installation/ "Delightful Downloads Documentation") for further instructions.
+Please refer to the [documentation](https://delightfuldownloads.com/documentation/installation/ "Delightful Downloads Documentation") for further instructions.
 
 == Frequently asked questions ==
 
-Please refer to the [FAQ](http://delightfulwp.com/delightful-downloads/faq/ "Delightful Downloads FAQ") section within the [documentation](http://delightfulwp.com/delightful-downloads/documentation/ "Delightful Downloads Documentation").
+Please refer to the [FAQ](https://delightfuldownloads.com/documentation/delightful-downloads-faqs/ "Delightful Downloads FAQ") section within the [documentation](https://delightfuldownloads.com/documentation/ "Delightful Downloads Documentation").
 
 
 == Screenshots ==
@@ -82,6 +85,51 @@ Please refer to the [FAQ](http://delightfulwp.com/delightful-downloads/faq/ "Del
 8. Settings screen
 
 == Changelog ==
+
+= 1.6.4 =
+
+* Bug fix: Fatal error when activating add-ons
+
+= 1.6.3 =
+
+* New: [Customizer Add-On](https://delightfuldownloads.com/add-ons/customizer/?utm_source=WordPress&utm_medium=Repo&utm_content=Customizer&utm_campaign=Changelogs) released
+* New: Add-Ons page added
+* Improvement: Automatically copy shortcodes to clipboard on click
+* Bug fix: Dashboard widget incorrect styling
+* Bug fix: Settings screen tabs incorrect styling
+
+= 1.6.2 =
+
+* Improvement: Code structure improvements
+* Improvement: Add-on subscribe form updated
+
+= 1.6.1 =
+
+* Bug fix: 'PHP Notice:  Undefined index: category'
+
+= 1.6 =
+
+* New: Download list widget
+* New: Customize upload directory from _Settings_ screen
+* Improvement: Admin notices now dismissible
+
+= 1.5.5 =
+
+* Improvement: Add text domain for translate.wordpress.org integration
+
+= 1.5.4 =
+
+* Bug fix: Minified JavaScript files missing
+
+= 1.5.3 =
+
+* New: Pro subscribe form added to _Settings_ screen
+* Improvement: Use minified JavaScript
+* Improvement: Translations updated
+* Bug fix: PHP warning when _Block User Agents_ option empty
+* Bug fix: PHP warning when IP address range supplied by server
+* Bug fix: `exclude_tags` attribute not working on `[ddownload_list]` shortcode
+* Bug fix: Conflict with Divi theme
 
 = 1.5.2 =
 
@@ -274,6 +322,15 @@ Please refer to the [FAQ](http://delightfulwp.com/delightful-downloads/faq/ "Del
 * Initial stable plugin release.
 
 == Upgrade Notice ==
+
+= 1.6 =
+
+* Compatibility with WordPress 4.4
+* Compatibility with PHP 7
+
+= 1.5.3 =
+
+* Bug fixes
 
 = 1.5.2 =
 

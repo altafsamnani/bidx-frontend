@@ -1,6 +1,6 @@
 <?php 
 
-/*############  Coming Soon Admin Menu Class ################*/
+/*############ Facebook Like Box Admin Menu Class ################*/
 
 class like_box_admin_menu{
 	
@@ -21,7 +21,6 @@ class like_box_admin_menu{
 			'sucsses_mailed'=>'Your message was sent successfully.',
 			'error_maied'=>'error sending email',
 			'authorize_problem' => 'Authorization Problem'
-			
 		);		
 		
 		$this->menu_name=$param['menu_name'];
@@ -32,14 +31,14 @@ class like_box_admin_menu{
 			$this->plugin_url=trailingslashit(dirname(plugins_url('',__FILE__)));
 
 
-		// post page insert button
+		// Insert button
 		add_action('media_buttons_context', array($this,'like_box_button'));
 		add_action( 'wp_ajax_like_box_window_manager', array($this,'like_box_window_insert_content') );
 		
 		add_action( 'wp_ajax_like_box_page_save', array($this,'save_in_databese') );
 		add_action( 'wp_ajax_like_box_send_mail', array($this,'sending_mail') );
 	}
-	/*############################### post page insert button  ########################################*/
+	/*############################### Posts/pages insert button functions  ########################################*/
 	public function like_box_button($context) {
 	  
 	  $img = $this->plugin_url. 'images/post.button.png';
@@ -89,32 +88,26 @@ class like_box_admin_menu{
 		  font-weight: bold;
 		  color: rgba(10, 154, 62, 1);
 		}
+		.input_placholder_small{ width: 85%;}
+		.input_placholder_small::-webkit-input-placeholder { font-size:11px; }
+		.input_placholder_small::-moz-placeholder {font-size:11px; } /* firefox 19+ */
+		.input_placholder_small:-ms-input-placeholder { font-size:11px; } /* ie */
+		.input_placholder_smallinput:-moz-placeholder { font-size:11px; }
         </style>
         <script>var pro_text='"If you want to use this feature upgrade to Like box Pro"'</script>
 			<table id="miain_like_box_window_manager" class="wp-list-table widefat fixed posts section_parametrs_table">  
                 <tbody> 
                     <tr>
                         <td>
-                          Page ID <span class="desription_class" title="Type here your Facebook like box page url(without https://www.facebook.com/, if your Facebook page url is https://www.facebook.com/uefacom then type here just uefacom).">?</span>
+                            Page ID <span class="desription_class" title="Type here your Facebook fan page url(without https://www.facebook.com/ or https://web.facebook.com, if your Facebook fan page url is https://web.facebook.com/AnIMals then type here just AnIMals).">?</span>
                         </td>
                         <td>
-                           <input onClick="" id="like_box_profile_id" type="text" value="" class="widefat">
-                        </td>                
-                    </tr>
-                     <tr>
-                        <td>
-                          Like box Theme <span class="pro_feature"> (pro)</span><span title="hoose theme for your Facebook Like box." class="desription_class">?</span>
-                        </td>
-                        <td>
-                          <select onClick="alert(pro_text); return false;" id="like_box_theme_color">
-                              <option selected="selected" value="light">Light</option>
-                              <option value="dark">Dark</option>
-                          </select>
+                           <input id="like_box_profile_id" type="text" value="" class="widefat">
                         </td>                
                     </tr>
                     <tr>
                         <td>
-                         	Like box Animation <span class="pro_feature"> (pro)</span> <span  class="desription_class" title="Choose Facebook like box Animation type.">?</span>
+                         	Like box Animation <span class="pro_feature"> (pro)</span><span  class="desription_class" title="Choose Facebook like box Animation type.">?</span>
                         </td>
                         <td>
                           <?php  like_box_setting::generete_animation_select('animation_efect','none') ?>
@@ -122,81 +115,95 @@ class like_box_admin_menu{
                     </tr>
                     <tr>
                         <td>
-                         	Like box background color<span class="pro_feature"> (pro)</span>  <span title="Choose Facebook like box background color." class="desription_class">?</span>
+                         	Like box border <span class="pro_feature"> (pro)</span><span title="Show Facebook like box border." class="desription_class">?</span>
                         </td>
                         <td>
-							<div onClick="alert(pro_text); return false;" class="disabled_picker">
+                            <select onMouseDown="alert(pro_text); return false;" id="like_box_show_border">
+                                <option selected="selected" value="show">Show</option>
+                                <option value="hide">Hide</option>
+                            </select>
+                        </td>                
+                    </tr>
+                     <tr>
+                        <td>
+                         	Like box border color <span class="pro_feature"> (pro)</span><span title="Select the Border Color of Facebook Like box." class="desription_class">?</span>
+                        </td>
+                        <td>
+                          <div onClick="alert(pro_text); return false;" class="disabled_picker">
                                 <div class="wp-picker-container"><a tabindex="0" class="wp-color-result" title="Select Color" data-current="Current Color" style="background-color: rgb(255, 255, 255);"></a></div>
-                            </div>                        </td>                
-                    </tr>
-                    <tr>
-                        <td>
-                         	Show/Hide Like box border<span class="pro_feature"> (pro)</span> <span title="Show/Hide Facebook like box border." class="desription_class">?</span>
-                        </td>
-                        <td>
-                          <input onMouseDown="alert(pro_text); return false;" id="like_box_show_border"  class="like_box_show_border" type="radio" name="like_box_show_border" value="yes" checked="checked" >Yes
-        				  <input onMouseDown="alert(pro_text); return false;" id="like_box_show_border1" class="like_box_show_border" type="radio" name="like_box_show_border" value="no" >No
-                        </td>                
-                    </tr>
-                     <tr>
-                        <td>
-                         	Like box Border color<span class="pro_feature"> (pro)</span> <span title="Type the Border Color of your Facebook Like box." class="desription_class">?</span>
-                        </td>
-                        <td>
-							<div onClick="alert(pro_text); return false;" class="disabled_picker">
-                                <div class="wp-picker-container"><a tabindex="0" class="wp-color-result" title="Select Color" data-current="Current Color" style="background-color: rgb(255, 255, 255);"></a></div>
-                            </div>                        </td>                
-                    </tr>
-                    <tr>
-                        <td>
-                         	Show/Hide latest posts <span class="pro_feature"> (pro)</span><span  class="desription_class" title="Show/Hide the latest posts from your Facebook Like box.">?</span>
-                        </td>
-                        <td>
-                          <input onMouseDown="alert(pro_text); return false;" id="like_box_stream"  type="checkbox" value="1" >
-                        </td>                
-                    </tr>
-                     <tr>
-                        <td>
-                         	Number of connections <span title="Type the number of connections that you want to see in your Facebook Like box." class="desription_class">?</span>
-                        </td>
-                        <td>
-                          <input id="like_box_connections" type="text" value="6" class="" size="3">
-                        </td>                
-                    </tr>
-                     <tr>
-                        <td>
-                         	Like box Width <span title="Type Facebook Like box width." class="desription_class">?</span>
-                        </td>
-                        <td>
-                          <input id="like_box_width"  type="text" value="300" class="" size="3"><small>(px)</small>
+                            </div>
                         </td>                
                     </tr>
                     <tr>
                         <td>
-                         	Like box Height <span title="Type Facebook Like box height." class="desription_class">?</span>
+                         	Facebook latest posts <span class="pro_feature"> (pro)</span><span  class="desription_class" title="Show the Latest Posts.">?</span>
                         </td>
                         <td>
-                          <input id="like_box_height" type="text" value="550" class="" size="3"><small>(px)</small>
+                          	<select onMouseDown="alert(pro_text); return false;" id="like_box_stream">
+                                <option  value="show">Show</option>
+                                <option selected="selected" value="hide">Hide</option>
+                            </select>
                         </td>                
                     </tr>
                      <tr>
                         <td>
-                         	Like box header <span title="Show/Hide the Facebook Like box header." class="desription_class">?</span>
+                         	Show Users Faces <span title="Show or Hide Users Faces" class="desription_class">?</span>
                         </td>
                         <td>
-                          <input id="like_box_header" type="checkbox" value="1" ><small>Show/Hide</small>
+                        	<select  id="like_box_connections">
+                                <option selected="selected" value="show">Show</option>
+                                <option value="hide">Hide</option>
+                            </select>
+                        </td>                
+             		</tr>
+                     <tr id="like_box_static_width">
+                        <td>
+                         	Like box Width <span title="Type here Facebook Like box width(px)" class="desription_class">?</span>
+                        </td>
+                        <td>
+                          <input placeholder="The pixel width of the embed (Min. 180px to Max. 500px)" id="like_box_width"  type="text" value="300" class="input_placholder_small" ><small>(px)</small>
                         </td>                
                     </tr>
                     <tr>
                         <td>
-                         	Like box language <span title="Type the Facebook Like box language code." class="desription_class">?</span>
+                         	Like box Height <span title="Type here Facebook Like box height(px)" class="desription_class">?</span>
+                        </td>
+                        <td>
+                          <input placeholder="The pixel height of the embed (Min. 70px)" id="like_box_height" type="text" value="550" class="input_placholder_small" ><small>(px)</small>
+                        </td>                
+                    </tr>
+                     <tr>
+                        <td>
+                         	Like box Header <span title="Select Like box Header size(Small/Big)" class="desription_class">?</span>
+                        </td>
+                        <td>
+                          <select id="like_box_header_size">
+                                <option selected="selected" value="small">Small</option>
+                                <option value="big">Big</option>
+                          </select>
+                        </td>                
+                    </tr>
+                     <tr>
+                        <td>
+                         	Like box cover photo <span title="Select to show/hide Like box cover photo" class="desription_class">?</span>
+                        </td>
+                        <td>
+                          <select id="like_box_cover_photo">
+                                <option selected="selected" value="show">Show</option>
+                                <option value="hide">Hide</option>
+                          </select>
+                        </td>                
+                    </tr>
+                    <tr>
+                        <td>
+                         	Language <span title="Type here the Facebook Like box language code." class="desription_class">?</span>
                         </td>
                         <td>
                          <input id="like_box_locale" type="text" value="en_US" class="" size="4"><small>(en_US, de_DE...)</small>
                         </td>                
                     </tr>
                 </tbody>
-                <tfoot>
+               <tfoot>
                 	<tr>                      
                         <td colspan="2">
                         	 <div style="display:inline-block; float:left;" class="mceActionPanel"><input type="button" id="cancel" name="cancel" value="Insert Like Box" class="button button-primary" onClick="insert_like_box();"/></div>
@@ -216,20 +223,18 @@ class like_box_admin_menu{
 	   jQuery('#miain_like_box_window_manager').ready(function(e) {
                 jQuery(".color_my_likbox").wpColorPicker();
         });
-        function insert_like_box() {          
-			if(jQuery('#poll_answer_id').val()!='0'){
+        function insert_like_box() {
+          
+			if(jQuery('#like_box_profile_id').val()!=''){
                 var tagtext;
-				like_box_header=0;
-				if(jQuery('#like_box_header').prop('checked'))
-					like_box_header=1;
-				var generete_atributes = 'profile_id="'+jQuery('#like_box_profile_id').val()+'" connections="'+jQuery('#like_box_connections').val()+'" width="'+jQuery('#like_box_width').val()+'" height="'+jQuery('#like_box_height').val()+'" header="'+like_box_header+'" locale="'+jQuery('#like_box_locale').val()+'"'
+				var generete_atributes = 'profile_id="'+jQuery('#like_box_profile_id').val()+'" connections="'+jQuery('#like_box_connections').val()+'" width="'+jQuery('#like_box_width').val()+'" height="'+jQuery('#like_box_height').val()+'" header="'+jQuery('#like_box_header_size').val()+'" cover_photo="'+jQuery('#like_box_cover_photo').val()+'" locale="'+jQuery('#like_box_locale').val()+'"'
 
                 tagtext = '[wpdevart_like_box '+generete_atributes+']';
                 window.send_to_editor(tagtext);
               	tb_remove()
             }
 			else{
-				tb_remove()
+				alert('Page id field is required')				
 			}
         }
 
@@ -345,9 +350,9 @@ die;
 	}
 	
 	
-	/*#########################  LIKE BOX POPUP SECTION  #################################*/
+	/*#########################  LIKE BOX POPUP SECTION CODE #################################*/
 	public function generete_popup_section($page_parametrs){
-		//for updated parametrs
+		//for updated parameters
 			$jsone_enable_like_box= json_decode(stripslashes($page_parametrs['like_box_enable_like_box']), true); 
 			if($jsone_enable_like_box!=NULL){
 				if($jsone_enable_like_box['yes']==true){
@@ -358,6 +363,7 @@ die;
 					$page_parametrs['like_box_enable_like_box']='yes';
 				}
 			}
+			
 			
 			$jsone_like_box_header= json_decode(stripslashes($page_parametrs['like_box_header']), true); 
 			if($jsone_like_box_header!=NULL){
@@ -392,10 +398,10 @@ die;
 					</tr>
                 	<tr>
 						<td>
-							Display Like box popup on<span class="pro_feature"> (pro)</span> <span title="Select where to display the like box popup." class="desription_class">?</span>
+							Display Popup on <span class="pro_feature"> (pro)</span> <span title="Select where to display the like box popup." class="desription_class">?</span>
 						</td>
-						<td>						                               
-                            <input class="pro_checkbox" id="like_box_show_in_home" type="checkbox" value="home" class="" size="" checked="checked"><small>Home</small><br>
+						<td>					                            
+                           <input class="pro_checkbox" id="like_box_show_in_home" type="checkbox" value="home" class="" size="" checked="checked"><small>Home</small><br>
                             <input class="pro_checkbox" id="like_box_show_in_post" type="checkbox" value="post" class="" size="" checked="checked"><small>Post</small><br>
                             <input class="pro_checkbox" id="like_box_show_in_page" type="checkbox" value="page" class="" size="" checked="checked"><small>Page</small><br>
                             <input class="pro_checkbox" id="like_box_show_in_everywhere" type="checkbox" value="everywhere" class="" size="" checked="checked"><small>Everywhere</small><br>
@@ -403,7 +409,7 @@ die;
 					</tr>                            
 					<tr>
 						<td>
-							Popup display periodicity <span class="pro_feature"> (pro)</span> <span title="Select the popup display periodicity." class="desription_class">?</span>
+							Popup display periodicity  <span class="pro_feature"> (pro)</span> <span title="Select the popup display periodicity." class="desription_class">?</span>
 						</td>
 						<td>
                            <select class="pro_select" id="like_box_popup_show_quantity">
@@ -414,7 +420,7 @@ die;
 					</tr>
                     <tr>
 						<td>
-							Time to show Popup <span class="pro_feature"> (pro)</span><span title="Type the time when Like box popup will appear." class="desription_class">?</span>
+							Time to show Popup <span class="pro_feature"> (pro)</span> <span title="Type the time when Like box popup will appear." class="desription_class">?</span>
 						</td>
 						<td>
 							<input class="pro_input" type="text" name="like_box_secont_befor_show"  id="like_box_secont_befor_show" value="1">(Seconds)
@@ -422,7 +428,7 @@ die;
 					</tr>
                     <tr>
 						<td>
-							Popup width <span title="Type here the popup width." class="desription_class">?</span>
+							Popup width <span title="Type here the popup width" class="desription_class">?</span>
 						</td>
 						<td>
 							<input type="text" name="like_box_width" id="like_box_width" value="<?php echo $page_parametrs['like_box_width'] ?>">(Px)
@@ -430,7 +436,7 @@ die;
 					</tr>
                     <tr>
 						<td>
-							Popup height <span title="Type here the popup height." class="desription_class">?</span>
+							Popup height <span title="Type here the popup height" class="desription_class">?</span>
 						</td>
 						<td>
 							<input type="text" name="like_box_height" id="like_box_height" value="<?php echo $page_parametrs['like_box_height'] ?>">(Px)
@@ -439,7 +445,7 @@ die;
                     
                     <tr>
 						<td>
-							 Popup Title <span title="Type here the popup title." class="desription_class">?</span>
+							 Popup title <span title="Type here the popup title" class="desription_class">?</span>
 						</td>
 						<td>
 							<input type="text" name="like_box_popup_title" id="like_box_popup_title" value="<?php echo $page_parametrs['like_box_popup_title'] ?>">
@@ -447,7 +453,7 @@ die;
 					</tr>
                      <tr >
                         <td>
-                           Popup Title color <span title="Type here the title color." class="desription_class">?</span>
+                           Popup title color <span title="Type here the popup title color" class="desription_class">?</span>
                         </td>
                         <td>
                             <input type="text" class="color_option" id="like_box_popup_title_color" name="like_box_popup_title_color"  value="<?php echo $page_parametrs['like_box_popup_title_color'] ?>"/>
@@ -455,7 +461,7 @@ die;
                     </tr>
                     <tr>
 						<td>
-							Popup Title Font family <span title="Choose the title Font family." class="desription_class">?</span>
+							Popup title Font Family <span title="Choose the title Font family" class="desription_class">?</span>
 						</td>
 						<td>
 							<?php $this->create_select_element_for_font('like_box_popup_title_font_famely',$page_parametrs['like_box_popup_title_font_famely']) ?>
@@ -463,33 +469,22 @@ die;
 					</tr>
                     <tr>
 						<td>
-							Page ID  <span title="Type here your Facebook like box page url(without https://www.facebook.com/, if your Facebook page url is https://www.facebook.com/uefacom then type here just uefacom)." class="desription_class">?</span>
+							Page ID  <span title="Type here your Facebook like box page url(without https://www.facebook.com/, if your Facebook page url is https://web.facebook.com/AnIMals then type here just AnIMals)." class="desription_class">?</span>
 						</td>
 						<td>
 							<input type="text" name="like_box_profile_id"   id="like_box_profile_id" value="<?php echo $page_parametrs['like_box_profile_id'] ?>">
 						</td>                
 					</tr>
+                    
                     <tr>
                   
 						<td>
-							Like box Theme <span class="pro_feature"> (pro)</span>  <span title="Choose theme for your Facebook Like box." class="desription_class">?</span>
-						</td>
-						<td>
-                           <select class="pro_select" id="like_box_theme_color">
-                                <option selected="selected" value="light">light</option>
-                                <option value="dark">dark</option>
-                        	</select>
-                         </td>                
-					</tr>
-                    <tr>
-                  
-						<td>
-							Show/Hide border<span class="pro_feature"> (pro)</span>  <span title="Show/Hide Facebook like box border." class="desription_class">?</span>
+							Show/Hide border <span class="pro_feature"> (pro)</span>  <span title="Show/Hide Facebook like box border." class="desription_class">?</span>
 						</td>
 						<td>
                            <select class="pro_select" id="like_box_show_border">
-                                <option selected="selected" value="yes">Show</option>
-                                <option value="no">Hide</option>
+                                <option selected="selected" value="show">Show</option>
+                                <option  value="hide">Hide</option>
                         	</select>
                          </td>                
 					</tr>
@@ -498,52 +493,54 @@ die;
                            Border color <span class="pro_feature"> (pro)</span> <span title="Type the Border Color of your Facebook Like box." class="desription_class">?</span>
                         </td>
                         <td>
-                           <div class="disabled_picker">
+							<div class="disabled_picker">
                                 <div class="wp-picker-container"><a tabindex="0" class="wp-color-result" title="Select Color" data-current="Current Color" style="background-color: rgb(255, 255, 255);"></a></div>
-                            </div>
-                         </td>                
+                            </div>                        
+                        </td>                
                     </tr>
-                     <tr >
-                        <td>
-                           Background color <span class="pro_feature"> (pro)</span> <span title="Choose Facebook like box background color." class="desription_class">?</span>
-                        </td>
-                        <td>
-                            <div class="disabled_picker">
-                                <div class="wp-picker-container"><a tabindex="0" class="wp-color-result" title="Select Color" data-current="Current Color" style="background-color: rgb(255,255, 255);"></a></div>
-                            </div>
-                         </td>                
-                    </tr>
+                     
                   <tr>
                   
 						<td>
-							Number of connections  <span title="Type the number of connections that you want to see in your Facebook Like box." class="desription_class">?</span>
+							Show Users Faces  <span title="Select to Show/Hide Users Faces" class="desription_class">?</span>
 						</td>
-						<td>
-                        	<input type="text"  id="like_box_connections" name="like_box_connections"  value="<?php echo $page_parametrs['like_box_connections'] ?>"/>
-
-                          
+						<td>                  
+                          <select id="like_box_connections">
+                                <option <?php selected($page_parametrs['like_box_connections'],'show') ?> value="show">Show</option>
+                                <option <?php selected($page_parametrs['like_box_connections'],'hide') ?> value="hide">Hide</option>
+                        	</select>
                          </td>                
 					</tr>
                      <tr>
 						<td>
-							Like box header  <span title="Show/Hide the Facebook Like box header. " class="desription_class">?</span>
+							Like box Header size <span title="Select Like box Header size" class="desription_class">?</span>
 						</td>
 						<td>
                            <select id="like_box_header">
-                                <option <?php selected($page_parametrs['like_box_header'],'yes') ?> value="yes">Show</option>
-                                <option <?php selected($page_parametrs['like_box_header'],'no') ?> value="no">Hide</option>
+                                <option <?php selected($page_parametrs['like_box_header'],'small') ?> value="small">Small</option>
+                                <option <?php selected($page_parametrs['like_box_header'],'big') ?> value="big">Big</option>
                         	</select>
                          </td>                
 					</tr>
-                  
+                  <tr>
+						<td>
+							Like box cover photo  <span title="Select to show/hide Like box cover photo" class="desription_class">?</span>
+						</td>
+						<td>
+                           <select id="like_box_cover_photo">
+                                <option <?php selected($page_parametrs['like_box_cover_photo'],'show') ?> value="show">Show</option>
+                                <option <?php selected($page_parametrs['like_box_cover_photo'],'hide') ?> value="hide">Hide</option>
+                        	</select>
+                         </td>                
+					</tr>
                     <tr>
 						<td>
-							Show/Hide latest posts<span class="pro_feature"> (pro)</span>  <span title="Show/Hide the latest posts from your Facebook Like box." class="desription_class">?</span>
+							Show/Hide latest posts <span class="pro_feature"> (pro)</span> <span title="Show/Hide the latest posts from your Facebook Like box." class="desription_class">?</span>
 						</td>
 						<td>
                            <select class="pro_select" id="like_box_stream">
-                                <option  value="yes">Show</option>
-                                <option selected="selected" value="no">Hide</option>
+                                <option  value="show">Show</option>
+                                <option selected="selected" value="hide">Hide</option>
                         	</select>
                          </td>                
 					</tr>
@@ -568,7 +565,7 @@ die;
 		</div>        
 		<?php	
 	}
-	/*#########################  SIDBAR SLIDER SECTION   #################################*/
+	/*#########################  STICKY BOX SECTION   #################################*/
 	public function generete_sidbar_slide_section($page_parametrs){
 
 		?>
@@ -584,7 +581,7 @@ die;
 				<tbody> 
                		<tr>
 						<td>
-							Enable/Disable Sticky box <span title="Select Enable/Disable to show or hide Sticky box." class="desription_class">?</span>
+							Enable/Diasable Sticky box <span title="Select Enable/Disable to show or hide Sticky box." class="desription_class">?</span>
 						</td>
 						<td>
 							<select id="like_box_sidebar_slide_mode">
@@ -625,7 +622,7 @@ die;
 					</tr>
                     <tr>
                         <td>
-                           Sticky box button bg color <span class="pro_feature"> (pro)</span> <span title="Type here the Sticky box button background color." class="desription_class">?</span>
+                           Sticky box button bg color  <span class="pro_feature"> (pro)</span> <span title="Type here the Sticky box button background color." class="desription_class">?</span>
                         </td>
                         <td>
                          <div class="disabled_picker">
@@ -669,35 +666,14 @@ die;
 					</tr>
                      <tr>
 						<td>
-							Page ID  <span title=" Type here your Facebook like box page url(without https://www.facebook.com/, if your Facebook page url is https://www.facebook.com/uefacom then type here just uefacom)." class="desription_class">?</span>
+							Page ID  <span title=" Type here your Facebook like box page url(without https://www.facebook.com/, if your Facebook page url is https://web.facebook.com/AnIMals then type here just AnIMals)." class="desription_class">?</span>
 						</td>
 						<td>
 							<input type="text" name="like_box_sidebar_slide_profile_id"   id="like_box_sidebar_slide_profile_id" value="<?php echo $page_parametrs['like_box_sidebar_slide_profile_id'] ?>">
 						</td>                
 					</tr>
-                    <tr>
-                  
-						<td>
-							Like box Theme <span class="pro_feature"> (pro)</span> <span title="Choose theme for your Facebook Like box." class="desription_class">?</span>
-						</td>
-						<td>
-                           <select class="pro_select" id="like_box_sidebar_slide_theme_color">
-                                <option selected="selected" value="light">light</option>
-                                <option  value="dark">dark</option>
-                        	</select>
-                         </td>                
-					</tr> 
-                    </tr>
-                     <tr>
-                        <td>
-                           Background color <span class="pro_feature"> (pro)</span> <span title="Choose Facebook like box background color." class="desription_class">?</span>
-                        </td>
-                        <td>
-                            <div class="disabled_picker">
-                                <div class="wp-picker-container"><a tabindex="0" class="wp-color-result" title="Select Color" data-current="Current Color" style="background-color: rgb(255, 255, 255);"></a></div>
-                            </div>
-                         </td>                
-                    </tr>               
+                     
+                                
                     <tr>
 						<td>
 							Like box width <span title=" Type here the Like box width." class="desription_class">?</span>
@@ -717,32 +693,45 @@ die;
                      
                   <tr>
 						<td>
-							Number of connections <span title="Type the number of connections that you want to see in your Facebook Like box." class="desription_class">?</span>
+							Show/Hide Users Faces <span title="Select to Show/Hide Users Faces" class="desription_class">?</span>
 						</td>
 						<td>
-							<input type="text" name="like_box_sidebar_slide_connections"   id="like_box_sidebar_slide_connections" value="<?php echo $page_parametrs['like_box_sidebar_slide_connections'] ?>">
+                        	<select id="like_box_sidebar_slide_connections">
+                                <option <?php selected($page_parametrs['like_box_sidebar_slide_connections'],'show') ?>  value="show">Show</option>
+                                <option <?php selected($page_parametrs['like_box_sidebar_slide_connections'],'hide') ?> value="hide">Hide</option>
+                            </select>
                          </td>                
 					</tr>
                      <tr>
 						<td>
-							Like box header <span title="Show/Hide the Facebook Like box header. " class="desription_class">?</span>
+							Like box Header size <span title="Select Like box Header size" class="desription_class">?</span>
 						</td>
 						<td>
                            <select id="like_box_sidebar_slide_header">
-                                <option <?php selected($page_parametrs['like_box_sidebar_slide_header'],'yes') ?> value="yes">Show</option>
-                                <option <?php selected($page_parametrs['like_box_sidebar_slide_header'],'no') ?> value="no">Hide</option>
+                                <option <?php selected($page_parametrs['like_box_sidebar_slide_header'],'small') ?> value="small">Small</option>
+                                <option <?php selected($page_parametrs['like_box_sidebar_slide_header'],'big') ?> value="big">Big</option>
                         	</select>
                          </td>                
 					</tr>
-                  
+                   <tr>
+						<td>
+							Like box cover photo <span title="Select to show/hide Like box cover photo" class="desription_class">?</span>
+						</td>
+						<td>
+                           <select id="like_box_sidebar_slide_cover_photo">
+                                <option <?php selected($page_parametrs['like_box_sidebar_slide_cover_photo'],'show') ?> value="show">Show</option>
+                                <option <?php selected($page_parametrs['like_box_sidebar_slide_cover_photo'],'hide') ?> value="hide">Hide</option>
+                        	</select>
+                         </td>                
+					</tr>
                     <tr>
 						<td>
 							Show/Hide latest posts <span class="pro_feature"> (pro)</span> <span title="Show/Hide the latest posts from your Facebook Like box." class="desription_class">?</span>
 						</td>
 						<td>
                            <select class="pro_select" id="like_box_sidebar_slide_stream">
-                                <option  value="yes">Show</option>
-                                <option selected="selected" value="no">Hide</option>
+                                <option  value="show">Show</option>
+                                <option selected="selected" value="hide">Hide</option>
                         	</select>
                          </td>                
 					</tr>
@@ -776,19 +765,42 @@ die;
 						'title'			=>	'Coming soon and Maintenance mode',
 						'description'	=>	'Coming soon and Maintenance mode plugin is an awesome tool to show your visitors that you are working on your website to make it better.'
 						),
-			'lightbox'=>array(
-						'image_url'		=>	$this->plugin_url.'images/featured_plugins/lightbox.png',
-						'site_url'		=>	'http://wpdevart.com/wordpress-lightbox-plugin/',
-						'title'			=>	'WP Lightbox 2',
-						'description'	=>	'WP Lightbox 2 is awesome tool for adding responsive lightbox effect for images and also create lightbox for photo album/gallery on your WordPress blog.'
+			'Contact forms'=>array(
+						'image_url'		=>	$this->plugin_url.'images/featured_plugins/contact_forms.png',
+						'site_url'		=>	'http://wpdevart.com/wordpress-contact-form-plugin/',
+						'title'			=>	'Contact form Builder',
+						'description'	=>	'Contact Form Builder plugin is an nice and handy tool for creating different types of contact forms on your WordPress websites.'
 						),
-			
+			'Booking Calendar'=>array(
+						'image_url'		=>	$this->plugin_url.'images/featured_plugins/Booking_calendar_featured.png',
+						'site_url'		=>	'http://wpdevart.com/wordpress-booking-calendar-plugin/',
+						'title'			=>	'Booking Calendar',
+						'description'	=>	'WordPress Booking Calendar plugin is an awesome tool to create a booking system for your website. Create booking calendars in a few minutes.'
+						),	
 			'youtube'=>array(
 						'image_url'		=>	$this->plugin_url.'images/featured_plugins/youtube.png',
 						'site_url'		=>	'http://wpdevart.com/wordpress-youtube-embed-plugin',
 						'title'			=>	'WordPress YouTube Embed',
 						'description'	=>	'YouTube Embed plugin is an convenient tool for adding video to your website. Use YouTube Embed plugin to add YouTube videos in posts/pages, widgets.'
 						),
+			'countdown'=>array(
+						'image_url'		=>	$this->plugin_url.'images/featured_plugins/countdown.jpg',
+						'site_url'		=>	'http://wpdevart.com/wordpress-countdown-plugin/',
+						'title'			=>	'WordPress Countdown plugin',
+						'description'	=>	'WordPress Countdown plugin is an nice tool to create and insert countdown timers into your posts/pages and widgets.'
+						),
+			'lightbox'=>array(
+						'image_url'		=>	$this->plugin_url.'images/featured_plugins/lightbox.png',
+						'site_url'		=>	'http://wpdevart.com/wordpress-lightbox-plugin',
+						'title'			=>	'WordPress Lightbox plugin',
+						'description'	=>	'WordPress lightbox plugin is an high customizable and responsive product for displaying images and videos in popup.'
+						),
+            'facebook-comments'=>array(
+						'image_url'		=>	$this->plugin_url.'images/featured_plugins/facebook-comments-icon.png',
+						'site_url'		=>	'http://wpdevart.com/wordpress-facebook-comments-plugin/',
+						'title'			=>	'WordPress Facebook comments',
+						'description'	=>	'Our Facebook comments plugin will help you to display Facebook Comments on your website. You can use Facebook Comments on your pages/posts.'
+						),						
 			'facebook'=>array(
 						'image_url'		=>	$this->plugin_url.'images/featured_plugins/facebook.jpg',
 						'site_url'		=>	'http://wpdevart.com/wordpress-facebook-like-box-plugin',
@@ -800,14 +812,7 @@ die;
 						'site_url'		=>	'http://wpdevart.com/wordpress-polls-plugin',
 						'title'			=>	'Poll',
 						'description'	=>	'WordPress Polls plugin is an wonderful tool for creating polls and survey forms for your visitors. You can use our polls on widgets, posts and pages.'
-						),
-			'twitter'=>array(
-						'image_url'		=>	$this->plugin_url.'images/featured_plugins/twitter.png',
-						'site_url'		=>	'http://wpdevart.com/wordpress-twitter-plugin',
-						'title'			=>	'Twitter button plus',
-						'description'	=>	'Twitter button plus is nice and useful tool to show Twitter tweet button on your website.'
-						),															
-			
+						),														
 		);
 		?>
         <style>
@@ -883,7 +888,7 @@ die;
             </div>
             <?php } 
 	}
-	/*######################################### SUBSCRIBE #######################################*/
+	/*######################################### SUBSCRIBE SECTION #######################################*/
 
 	private function create_select_element_for_font($select_id='',$curent_font='none'){
 	?>

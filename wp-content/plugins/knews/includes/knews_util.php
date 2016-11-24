@@ -237,6 +237,13 @@ function knews_rgb2hex($code) {
 	}
 	return $code;
 }
+function clean_permalinks($code) {
+	for ($n=0; $n<21; $n++) {
+		$code = str_replace('%the_permalink_' . $n . '%', '#', $code);
+	}
+	return $code;
+}
+
 function knews_examine_template($templateID, $template_path, $template_url, $popup=false, $mode='selection') {
 	global $Knews_plugin;
 	$xml_info = array (
@@ -339,6 +346,19 @@ function knews_examine_template($templateID, $template_path, $template_url, $pop
 			}
 			?>
 		</div>
+		<?php
+		$skins = apply_filters('knews_skins_' . $templateID, array());
+		echo '<div class="skin_opts_' . $templateID . '" style="display:none;">';
+		if (count($skins) > 0) {
+			echo '<h3>Choose ' . $xml_info['shortname'] . ' skin:</h3>';
+			$n=0;
+			foreach ($skins as $key=>$val) {
+				$n++;
+				echo '<p style="margin:0; padding:0 0 1em 0;"><input type="radio" name="skin_' . $templateID . '" value="' . $key . '"' . ($n==1 ? ' checked="checked"' : '') . ' /> ' . $val['label'] . '</p>';
+			}
+		}
+		echo '</div>';
+		?>
 	</div>
 <?php
 		return true;

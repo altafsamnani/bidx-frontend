@@ -10,6 +10,7 @@ if ($Knews_plugin) {
 	$theHtml .= '<p>' . __('If you can read this e-mail, SMTP is correctly configured and you can activate it in Knews preferences','knews').'</p>';
 	
 	$test_array = array(
+					'SMTPDebug' => 1,
 					'from_mail_knews' => trim($Knews_plugin->post_safe('from_mail_knews')),
 					'from_name_knews' => trim($Knews_plugin->post_safe('from_name_knews')),
 					'smtp_host_knews' => trim($Knews_plugin->post_safe('smtp_host_knews')),

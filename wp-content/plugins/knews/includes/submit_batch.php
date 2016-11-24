@@ -36,7 +36,7 @@ if (count($targets) > 0) {
 		"(.*?)[\"\']+.*?>"."([^<]+|.*?)?<\/(a|A)>/", 
 		$theHtml, $matches);*/
 		
-preg_match_all('/<a[^>]+href=([\'"])(.+?)\1[^>]*>/i', $theHtml, $matches);
+	preg_match_all('/<a[^>]+href=([\'"])(.+?)\1[^>]*>/i', $theHtml, $matches);
 
 	$matches = $matches[2];
 
@@ -44,20 +44,35 @@ preg_match_all('/<a[^>]+href=([\'"])(.+?)\1[^>]*>/i', $theHtml, $matches);
 		knews_insert_unique_key(1, $submit_id, $link);
 	}
 
+	$tracking_code=false;
 	if ($knewsOptions['pixel_tracking']==1) {
 
-		preg_match_all ("/(img|IMG)[\s]+[^>]*?src[\s]?=[\s\"\']+".
+		/*preg_match_all ("/(img|IMG)[\s]+[^>]*?src[\s]?=[\s\"\']+".
 			"(.*?)[\"\']+.*?>"."([^<]+|.*?)?>/", 
-			$theHtml, $matches_img);
+			$theHtml, $matches_img);*/
 
-		$matches_img = $matches_img[2];
-		foreach ($matches_img as $img) {
-			if (knews_insert_unique_key(6, $submit_id, $img)) break;
-			//echo $img . ' ha fallat';
+		/* http://stackoverflow.com/questions/138313/how-to-extract-img-src-title-and-alt-from-html-using-php */
+		preg_match_all('/<img[^>]+>/i',$theHtml, $result);
+		foreach( $result[0] as $img_tag) {
+		    //preg_match_all('/(alt|title|src)=("[^"]*")/i',$img_tag, $img);
+		    preg_match_all('/(src)=("[^"]*")/i',$img_tag, $img);
+		    preg_match_all('/(src)=(\'[^\']*\')/i',$img_tag, $img2);
+			if (isset($img[2][0])) {
+				if (knews_insert_unique_key(6, $submit_id, substr($img[2][0], 1, -1))) {
+					$tracking_code=true;
+					break;
 		}
-	} else {
-		while (!knews_insert_unique_key(6, $submit_id, KNEWS_URL . '/images/unpix.gif')) {}
+			} elseif (isset($img2[2][0])) {
+				if (knews_insert_unique_key(6, $submit_id, substr($img2[2][0], 1, -1))) {
+					$tracking_code=true;
+					break;
 	}
+			}
+		}
+	}
+
+	if (!$tracking_code) while (!knews_insert_unique_key(6, $submit_id, KNEWS_URL . '/images/unpix.gif')) {}
+	
 	echo '<div class="updated"><p>' . __('Batch submit process has been properly scheduled.','knews') . '</p></div>';				
 	$submit_enqueued=true;
 } else {

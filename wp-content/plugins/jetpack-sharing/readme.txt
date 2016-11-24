@@ -1,9 +1,9 @@
 === JP Sharing ===
 Contributors: wpjp
-Tags: share, social, facebook, google, twitter, pinterest, linkedin, stumbleupon, reddit, digg, tumblr, sharing, jetpack
+Tags: share, sharing, sharedaddy, buttons, icons, social, email, facebook, google+, twitter, pinterest, linkedin, reddit, tumblr, jetpack, pocket, press this, print
 Requires at least: 3.5
-Tested up to: 4.1.1
-Stable tag: 3.4.1
+Tested up to: 4.5
+Stable tag: 3.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,19 +11,20 @@ Share content with Facebook, Twitter, and many more.
 
 == Description ==
 
->>**Retiring on June 2015**
+>_This plugin will is no longer maintained._
+>_Feel free to fork it._
 
->>JP plugins will not be maintained after the end of June 2015.
->>Thanks for everyone who used these plugins.
->>Speical thanks for those who gave good ratings.
+Just the [Sharing](http://jetpack.me/support/sharing/) module from [Jetpack](http://wordpress.org/plugins/jetpack/).
 
-Just the [Sharing module](http://jetpack.me/support/sharing/) from [Jetpack](http://wordpress.org/plugins/jetpack/).
+All credits go to [Jetpack developers](https://jetpack.com/about/). Just saved you the trouble of taking [Sharing](http://jetpack.me/support/sharing/) module out of Jetpack and making it into an independent plugin.
 
-*No support* will be provided unless the issue cannot be reproduced using the original [Jetpack](http://wordpress.org/plugins/jetpack/) module.
+= But.. Why? =
 
-[Download Translations](https://downloads.wordpress.org/plugin/jetpack-sharing.zip).
+* Why not?
+* Privacy?
+* Boilerplate?
 
-= JP Family =
+= Similar Plugins =
 
 * [JP Sharing](http://wordpress.org/plugins/jetpack-sharing/) - Share content with Facebook, Twitter, and many more.
 * [JP Widget Visibility](http://wordpress.org/plugins/jetpack-widget-visibility/) - Control what pages your widgets appear on.
@@ -33,6 +34,46 @@ Just the [Sharing module](http://jetpack.me/support/sharing/) from [Jetpack](htt
 * [JP Omnisearch](http://wordpress.org/plugins/jetpack-omnisearch/) - A single search box, that lets you search many different things.
 
 == Changelog ==
+
+= 3.9.6 =
+
+* New sharing button: let users share your content using Skype.
+* Added a new filter to customize the default OpenGraph description.
+
+= 3.8 =
+
+* Enhancement: Added a possibility to opt-out of sharing for a single post
+* Enhancement: Added bbPress support
+* Enhancement: Added more configuration to the Likes modal
+* Enhancement: Made the reddit button open a new tab
+* Enhancement: Removed unused files
+* Enhancement: Updated the Google logo
+* Enhancement: New filter to choose if sharing meta box should be shown.
+* Enhancement: New filter to allow sharing button markup to be editable.
+* Enhancement: New filter to allow you to specify a custom Facebook app ID.
+* Bug Fix: Added a thumbnail image to OpenGraph tags on pages with DailyMotion embeds
+* Bug Fix: Fixed Twitter Cards tags escaping
+* Bug Fix: Made OpenGraph tags for title and description use proper punctuation
+* Bug Fix: Made sure Likes can be disabled on the front page
+* Bug Fix: Fixed OpenGraph tags for Instagram embeds
+* Bug Fix: Fixed compatibility issues with bbPress
+* Bug Fix: Use full SSL Pinterest url instead of protocol relative.
+* Bug Fix: Fixed plus signs appearing in tweets shared from iOS.
+
+= 3.6 =
+
+* Enhancement: Retire StumbleUpon
+* Enhancement: Upgrade to reCAPTCHA 2.0 for Email Sharing
+* Enhancement: LinkedIn always uses https for share counts. (saved extra http request)
+* Bug Fix: Fix Facebook share button not showing for Australian & Canadian locale
+
+= 3.5.3 =
+
+* Enhancement: Reduce spam through email sharing
+* Bug Fix: Styling fixes
+* Enhancement: Changes Facebook share count method per Facebook API change
+* Bug Fix: Changes Facebook share count endpoint
+* Security Hardening: Remove Genericons example.html file.
 
 = 3.4.1 =
 
@@ -78,11 +119,11 @@ Just the [Sharing module](http://jetpack.me/support/sharing/) from [Jetpack](htt
 
 = 2.9.3 =
 
-* Update to 2.9.3
+* Update to Jetpack 2.9.3
 
 = 2.9 =
 
-* Update to 2.9:
+* Update to Jetpack 2.9:
 * Add filter sharing_display_link
 * Add get_share_title function and filter
 * Display buttons on CPT archive pages
@@ -90,7 +131,7 @@ Just the [Sharing module](http://jetpack.me/support/sharing/) from [Jetpack](htt
 
 = 2.7 = 
 
-* Update to 2.7
+* Update to Jetpack 2.7
 
 = 2.5 =
 

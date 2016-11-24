@@ -97,6 +97,7 @@ var like_box_slideup={
 		
 	
 }
+/*############################### ANImation Effekts ########################33*/
 function like_box_animated_element(animation,element_id){	
 		jQuery('#'+element_id).ready(function(e) {	
 			if(!jQuery(jQuery('#'+element_id)).hasClass('animated') && like_box_isScrolledIntoView(jQuery('#'+element_id)))	{	
@@ -114,10 +115,55 @@ function like_box_isScrolledIntoView(elem)
     var $window = jQuery(window);
     var docViewTop = $window.scrollTop();
     var docViewBottom = docViewTop + $window.height();
-    var elemTop = jQuery(elem).offset().top;
+	if(typeof(jQuery(elem).offset())!='undefined')
+    	var elemTop = jQuery(elem).offset().top;
+	else
+		var elemTop = 0;
     var elemBottom = elemTop + parseInt(jQuery(elem).css('height'));	
     return ( ( (docViewTop<=elemTop) && (elemTop<=docViewBottom) )  || ( (docViewTop<=elemBottom) && (elemBottom<=docViewBottom) ));
 }
 jQuery(document).ready(function(e) {
     like_box_slideup.construct_function();
 });
+/*####################### other element resize ###################################*/
+
+
+function like_box_set_width_cur_element(element_id,element_initial_width){
+	var element_id='#'+element_id
+	// initial variables
+	var parent_width=jQuery(element_id).parent().width();
+	var curent_src=jQuery(element_id).attr('src');
+	// corect seted width
+	var element_initial_width=Math.min(500,parseInt(element_initial_width));
+	var element_initial_width=Math.max(180,parseInt(element_initial_width));
+
+	// corect width with parent element
+	
+	if(parent_width<=180){
+		curent_src=like_box_replace_src(curent_src,180)
+		jQuery(element_id).css('width',180);
+	}
+	if(parent_width>=180){
+		curent_src=like_box_replace_src(curent_src,Math.min(element_initial_width,parent_width));
+		jQuery(element_id).css('width',Math.min(element_initial_width,parent_width));
+	}
+	//set replaced url
+	jQuery(element_id).attr('src',curent_src);
+}
+
+// replace url in src
+function like_box_replace_src(old_src,width){
+	old_src=old_src.replace(/&width=[\d]+/,'&width='+width)
+	old_src=old_src.replace(/&container_width=[\d]+/,'&container_width='+width)
+	return old_src
+}
+
+
+
+
+
+
+
+
+
+

@@ -16,6 +16,10 @@ $sc_eventlist_helptexts = array(
 	                            'desc'   => __('This attribute specifies the category of which events are initially shown. The standard is to show events of all categories.<br />
 	                                            Specify a category slug to change this behavior. It is still possible to change the displayed categories via the filterbar or url parameters.','event-list')),
 
+	'initial_order'    => array('val'    => 'date_asc<br />date_desc',
+	                            'desc'   => __('This attribute specifies the initial order of the events.<br />
+	                                            With "date_asc" (standard value) the events are sorted from old to new, with "date_desc" in the opposite direction (from new to old).','event-list')),
+
 	'date_filter'      => array('val'    => 'all<br />upcoming<br />past<br />year',
 	                            'desc'   => __('This attribute specifies the dates and date ranges of which events are displayed. The standard is "all" to show all events.<br />
 	                                            Filtered events according to date_filter value are not available in the event list.<br />
@@ -96,6 +100,12 @@ $sc_eventlist_helptexts = array(
 	                                            With the standard value 0 the full details are displayed.<br />
 	                                            This attribute has no influence if only a single event is shown.','event-list')),
 
+	'collapse_details' => array('val'    => 'false',
+	                            'desc'   => __('This attribute specifies if the details should be collapsed initially.<br />
+	                                            Then a link will be displayed instead of the details. By clicking this link the details are getting visible.<br />
+	                                            Available option are "false" to always disable collapsing and "true" to always enable collapsing of the details.<br />
+	                                            With "event_list_only" the details are only collapsed in the event list view and with "single_event_only" only in single event view.','event-list')),
+
 	'link_to_event'    => array('val'    => 'false<br />true<br />event_list_only<br />single_event_only<br />events_with_details_only',
 	                            'desc'   => __('This attribute specifies if a link to the single event should be added onto the event name in the event list.<br />
 	                                            Choose "false" to never add and "true" to always add the link.<br />
@@ -108,6 +118,11 @@ $sc_eventlist_helptexts = array(
 	                                            On that page you can also find some settings to modify the output.<br />
 	                                            Choose "false" to never add and "true" to always add the link.<br />
 	                                            With "event_list_only" the link is only added in the event list and with "single_event_only" only for a single event','event-list')),
+	'url_to_page'      => array('val'    => 'url',
+	                            'desc'   => __('This attribute specifies the page or post url for event links.<br />
+	                                            The standard is an empty string. Then the url will be calculated automatically.<br />
+	                                            An url is normally only required for the use of the shortcode in sidebars. It is also used in the event-list widget.','event-list')),
+
 	// Invisible attributes ('hidden' = true): This attributes are required for the widget but will not be listed in the attributes table on the admin info page
 	'title_length'     => array('val'    => 'number',
 	                            'hidden' => true,
@@ -120,12 +135,6 @@ $sc_eventlist_helptexts = array(
 	                            'desc'   => __('This attribute specifies if the title should be truncate to the given number of characters in the event list.<br />
 	                                            With the standard value 0 the full details are displayed.<br />
 	                                            This attribute has no influence if only a single event is shown.','event-list')),
-
-	'url_to_page'      => array('val'    => 'url',
-	                            'hidden' => true,
-	                            'desc'   => __('This attribute specifies that the link should follow the given url.<br />
-	                                            The standard is to leave this attribute empty, then the url will be calculated automatically from the actual page or post url.<br />
-	                                            This is o.k. for the normal use of the shortcode. This attribute is normally only required for the event-list widget.','event-list')),
 
 	'sc_id_for_url'    => array('val'    => 'number',
 	                            'hidden' => true,

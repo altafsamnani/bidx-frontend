@@ -1,10 +1,10 @@
 <?php 
 
-/// class for install databese
+/// Class for installing database
 
 class like_box_install_database{
 	
-	public $installed_options; // all standart_options
+	public $installed_options; // Plugin default options value
 	private $plugin_url;
 
 	function __construct(){
@@ -21,26 +21,30 @@ class like_box_install_database{
 				"like_box_sidebar_slide_title_color"			=> "#FFFFFF",	
 				"like_box_sidebar_slide_title"					=> 'Facebook',
 				"like_box_sidebar_slide_title_font_famely"		=> 'Times New Roman,Times,Georgia,serif',
-				"like_box_sidebar_slide_pntik_height"			=> "130",			
+				"like_box_sidebar_slide_pntik_height"			=> "215",			
 				
 				"like_box_sidebar_slide_profile_id"			=> "",
+					
 				"like_box_sidebar_slide_width"				=> "360",
 				"like_box_sidebar_slide_height"				=> "450",
-				"like_box_sidebar_slide_header"				=> 'yes',	
-				"like_box_sidebar_slide_connections"		=> '6',	
+				"like_box_sidebar_slide_header"				=> 'small',	
+				"like_box_sidebar_slide_cover_photo"		=> 'show',	
+				"like_box_sidebar_slide_connections"		=> 'show',								
 				"like_box_sidebar_slide_locale"				=> "en_US",				
 			),
 			"popup_like_box"=>array(
-				'like_box_enable_like_box' 			=>  'no',				
+				'like_box_enable_like_box' 			=>  'no',
+								
 				'like_box_popup_title' 				=>  'Facebook like box',
 				'like_box_popup_title_color' 		=>  '#000000',
 				'like_box_popup_title_font_famely'	=>  'Times New Roman,Times,Georgia,serif',
 				
-				"like_box_profile_id"			=> "",					
+				"like_box_profile_id"			=> "",							
 				"like_box_width"				=> "600",
 				"like_box_height"				=> "450",
-				"like_box_header"				=> 'yes',	
-				"like_box_connections"			=> '6',	
+				"like_box_cover_photo"			=> 'show',	
+				"like_box_header"				=> 'show',	
+				"like_box_connections"			=> 'show',								
 				"like_box_locale"				=> "en_US",
 			),
 			

@@ -7,11 +7,13 @@ if ($Knews_plugin) {
 
 	global $wpdb;
 		
-	$query = "SELECT * FROM ".KNEWS_NEWSLETTERS." WHERE id=" . $id_newsletter;
-	$results = $wpdb->get_results( $query );
+	if ($id_newsletter != 'preview') {
+		$query = "SELECT * FROM ".KNEWS_NEWSLETTERS." WHERE id=" . $id_newsletter;
+		$results = $wpdb->get_results( $query );
 
-	$theSubject = $results[0]->subject;
-	$theHtml = $results[0]->html_head . '<body>' . $results[0]->html_mailing;
+		$theSubject = $results[0]->subject;
+		$theHtml = $results[0]->html_head . '<body>' . $results[0]->html_mailing;
+	}
 
 	if (isset($knewsOptions['pixel_tracking']) && $knewsOptions['pixel_tracking']!=1) $theHtml .= '<img src="' . KNEWS_URL . '/images/unpix.gif" width="1" height="1" alt="" />';
 

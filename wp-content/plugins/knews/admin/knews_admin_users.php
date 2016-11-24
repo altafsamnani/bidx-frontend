@@ -261,8 +261,9 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 						if ($submit_confirm) {
 							
 							$lang_locale = $Knews_plugin->localize_lang($languages, $lang);
-												
-							if ($Knews_plugin->submit_confirmation ($email, $confkey, $lang_locale)) {
+							
+							//if ($Knews_plugin->submit_confirmation ($email, $confkey, $lang_locale, $lang, $user_id)) {
+							if (apply_filters('knews_submit_confirmation', $email, $confkey, $lang_locale, $lang, $user_id)) {
 								echo '<div class="updated"><p>' . __('The user has been added and an e-mail confirmation has been sent','knews') . '</p></div>';
 							} else {
 								echo '<div class="error"><p><strong>' . __('Error','knews') . ':</strong> ' . __('The user has been added but an error occurred in sending e-mail confirmation','knews') . '</p></div>';
