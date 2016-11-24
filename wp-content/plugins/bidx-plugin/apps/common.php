@@ -77,6 +77,8 @@ class BidxCommon
 
         if (!$is_ajax || $isFacebookReferer ) 
         {
+
+           
             // To check whther its login page or q= redirect already checked session.
             $checkSession = $this->checkSession ();
 
@@ -89,10 +91,15 @@ class BidxCommon
                     //Check Session Variables from Second call, dont need to make session call from second request
 
                     $sessionVars = $this->getSessionVariables ($subDomain);
+                     
 
-                    if (!$sessionVars) { // If Session set dont do anything
+                    if (!$sessionVars) 
+                    { // If Session set dont do anything
+                     
                         $sessionObj = new SessionService();
                         $bidxSessionVars = $sessionObj->isLoggedIn ();
+
+
 
                         //Set firsttime/new session variables
                         $sessionVars = $this->setSessionVariables ($subDomain, $bidxSessionVars);

@@ -194,15 +194,18 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
 
     $logger->trace (sprintf ('Calling API URL: %s Method: %s Body: %s Headers: %s Cookies: %s', $url, $bidxMethod, var_export ($body, true), var_export ($headers, true), var_export ($cookieArr, true)));
 
+    $request    =   new WP_Http;
 
-    $request    = new WP_Http;
+    $args       =   array ( 'method'  => $bidxMethod,
+                            'body'    => $body,
+                            'headers' => $headers,
+                            'cookies' => $cookieArr,
+                            'timeout' => apply_filters ('http_request_timeout', 60 ));
 
-    $result     = $request->request ($url, array ('method'  => $bidxMethod,
-                                                  'body'    => $body,
-                                                  'headers' => $headers,
-                                                  'cookies' => $cookieArr,
-                                                  'timeout' => apply_filters ('http_request_timeout', 60)
-                                    ));
+    $request->buildCookieHeader( $args );   
+
+    $result     = $request->request ( $url, $args );
+
     $logger->trace (sprintf ('Response for API URL: %s Response: %s', $url, var_export ($result, true)));
 
     /************* 5. Set Cookies if Exist **************************/
