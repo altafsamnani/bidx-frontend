@@ -202,29 +202,53 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
                             'cookies' => $cookieArr,
                             'timeout' => apply_filters ('http_request_timeout', 60 ));
 
-    $request->buildCookieHeader( $args );   
+    $request->buildCookieHeader( $args ); //Strangely it was removed in 4.6 after the upgrade so have to do it here manually as backend expects it.    
 
     $result     = $request->request ( $url, $args );
 
     $logger->trace (sprintf ('Response for API URL: %s Response: %s', $url, var_export ($result, true)));
-
+   
     /************* 5. Set Cookies if Exist **************************/
     if (is_array ($result))
     {
-        if (isset ($result['cookies']) && count ($result['cookies']))
+        $headers    =   $result['headers'];
+
+        //BIDX-4248 Have to fix this due to wordpress upgrade because it compares REQUEST URL & RESPONSE cookie senddomain attribute
+        // Refer Cookie.php file function parse_from_headers and domain_matches there
+
+        if (isset ($headers['set-cookie']) && count ($headers['set-cookie']))
         {
-            $cookies = $result['cookies'];
-            foreach ($cookies as $bidxAuthCookie)
+            $cookies = $headers['set-cookie'];
+
+            $cookiesArr    =  ( is_array($cookies) ) ? $cookies : array( $cookies );
+
+            foreach ($cookiesArr as $cookieVal)
             {
+                $bidxAuthCookie =   Requests_Cookie::parse($cookieVal);
+
+                $cookieName     =   $bidxAuthCookie->name;
+
+                $cookieVal      =   $bidxAuthCookie->value;
+
+                $cookieAttr     =   $bidxAuthCookie->attributes;
+
+                $cookieExpiry   =   $cookieAttr['expires'];
+
+                $cookiePath     =   $cookieAttr['path'];
+
+                $cookieIsHttp   =   $cookieAttr['httpOnly'];
+
                 if (preg_match ("/^".BIDX_ALLOWED_COOKIES."/i", $bidxAuthCookie->name))
                 {
-                    setrawcookie ($bidxAuthCookie->name, urlencode($bidxAuthCookie->value), $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
-                    $_COOKIE[$bidxAuthCookie->name] = urlencode($bidxAuthCookie->value);
+  
+                    setrawcookie ( $cookieName, urlencode( $cookieVal ), $cookieExpiry, $cookiePath, $sendDomain, FALSE, $cookieIsHttp );
 
-                    $competitionCookieVals = array('expires'  => $bidxAuthCookie->expires,
-                                                   'path'     => $bidxAuthCookie->path,
+                    $_COOKIE[ $cookieName ] = urlencode( $cookieVal );
+
+                    $competitionCookieVals = array('expires'  => $cookieExpiry,
+                                                   'path'     => $cookiePath,
                                                    'domain'   => $sendDomain,
-                                                   'httpOnly' => $bidxAuthCookie->httponly);
+                                                   'httpOnly' => $cookieIsHttp);
                 }
             }
 

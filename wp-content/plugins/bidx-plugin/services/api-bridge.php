@@ -91,7 +91,10 @@ abstract class APIbridge
         // 4. WP Http Request
         $url = API_URL . $urlService . $bidxGetParams;
 
+
         /*$this->logger->trace (sprintf ('Calling API URL: %s Method: %s Body: %s Headers: %s Cookies: %s', $url, $method, $body, var_export ($headers, true), var_export ($cookieArr, true)));*/
+
+        //$request = new WP_Http;
         $request    = new WP_Http;
 
         $args       = array ( 'method'  => $bidxMethod,
@@ -103,22 +106,44 @@ abstract class APIbridge
         $request->buildCookieHeader( $args );   
                              
         $result = $request->request ($url, $args );
+    
 
         $this->logger->trace (sprintf ('Response for API URL: %s Response: %s', $url, var_export ($result, true)));
 
         // 5. Set Cookies if Exist
+
         if (is_array ($result))
         {
-            if (isset ($result['cookies']) && count ($result['cookies']))
+            $headers    =   $result['headers'];
+        
+            //BIDX-4248 Have to fix this due to wordpress upgrade because it compares REQUEST URL & RESPONSE cookie senddomain attribute
+            // Refer Cookie.php file function parse_from_headers and domain_matches there
+            if (isset ($headers['set-cookie']))
             {
-                $cookies = $result['cookies'];
-                foreach ($cookies as $bidxAuthCookie)
-                {
-                    if (!empty ($bidxAuthCookie->name) && $bidxAuthCookie->name && preg_match ("/^".BIDX_ALLOWED_COOKIES."/i", $bidxAuthCookie->name))
-                    {
+                $cookies    = $headers['set-cookie'];
 
+                $cookiesArr    =  ( is_array($cookies) ) ? $cookies : array( $cookies );
+
+                foreach ($cookiesArr as $cookieVal)
+                {
+                    $bidxAuthCookie =   Requests_Cookie::parse($cookieVal);
+
+                    $cookieName     =   $bidxAuthCookie->name;
+
+                    $cookieVal      =   $bidxAuthCookie->value;
+
+                    $cookieAttr     =   $bidxAuthCookie->attributes;
+
+                    $cookieExpiry   =   $cookieAttr['expires'];
+
+                    $cookiePath     =   $cookieAttr['path'];
+
+                    $cookieIsHttp   =   $cookieAttr['httpOnly'];
+
+                    if ( !empty ($cookieName) && $cookieName && $cookieVal != '""' && preg_match ("/^".BIDX_ALLOWED_COOKIES."/i", $cookieName))
+                    {
                         ob_start (); // To avoid error headers already sent in apibridge setcookie
-                        setrawcookie ($bidxAuthCookie->name, urlencode($bidxAuthCookie->value), $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
+                        setrawcookie ($cookieName, urlencode($cookieVal), $cookieExpiry, $cookiePath, $sendDomain, FALSE, $cookieIsHttp);
                         ob_end_flush ();
                     }
                 }
